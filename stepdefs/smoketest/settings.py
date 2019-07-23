@@ -1,5 +1,7 @@
 from pytest_bdd import scenario, given, when, then
 
+from models.pageobject.settings import SettingsPageObject
+
 
 @scenario('./../../features/smoketest/settings.feature', 'User choose settings when start up browser is opened a new '
                                                          'tab')
@@ -13,8 +15,8 @@ def step_impl(url):
 
 
 @when("Choose '<option>' when start up browser")
-def step_impl():
-    raise NotImplementedError(u'STEP: When Choose \'<option>\' when start up browser')
+def step_impl(option):
+    SettingsPageObject.click_continue_where_left_off_button()
 
 
 @then("Verify start up browser with new tab")
