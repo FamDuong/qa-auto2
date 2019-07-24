@@ -30,11 +30,12 @@ def _capture_screenshot(name):
     driver.get_screenshot_as_file("screenshots/" + name)
 
 
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope='package', autouse=True)
 def browser():
     global driver
     if driver is None:
         driver = webdriver.Chrome()
+        driver.maximize_window()
     yield driver
     driver.quit()
-    return driver
+    return
