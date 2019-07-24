@@ -1,17 +1,18 @@
 from pytest_bdd import scenario, given, when, then
 
+
 from models.pageobject.settings import SettingsPageObject
 
 
-@scenario('./../../features/smoketest/settings.feature', 'User choose settings when start up browser is opened a new '
+@scenario('../../features/smoketest/settings.feature', 'User choose settings when start up browser is opened a new '
                                                          'tab')
 def test_setting():
     print("End of settings feature")
 
 
 @given("Navigate to '<url>'")
-def step_impl(url):
-    raise NotImplementedError(u'STEP: Given Navigate to \'<url>\'')
+def step_impl(url, browser):
+    browser.get(url)
 
 
 @when("Choose '<option>' when start up browser")
