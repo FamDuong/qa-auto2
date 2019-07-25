@@ -2,6 +2,7 @@
 import time
 
 
+
 class TestBrowser:
 
     def select_shadow_element_by_css_selector(self, browser, selector):

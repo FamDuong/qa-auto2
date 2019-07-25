@@ -13,3 +13,11 @@ class SettingsPageObject(BasePageObject):
         element_open_new_tab = self.settings_elem.find_open_new_tab(driver)
         element_open_new_tab.click()
 
+    def click_open_a_specific_page(self, driver):
+        element_open_a_specific_page = self.settings_elem.find_open_a_specific_set_of_pages(driver)
+        element_open_a_specific_page.click()
+
+    def click_add_a_new_page(self, driver):
+        element_add_a_new_page = self.settings_elem.find_add_a_new_page(driver)
+        element_add_a_new_page.click()
+

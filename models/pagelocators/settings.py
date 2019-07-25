@@ -7,10 +7,12 @@ class SettingsPageLocators(object):
     SETTINGS_BASIC_PAGE_TEXT = 'settings-basic-page'
     SETTINGS_ON_START_UP_PAGE_TEXT = 'settings-on-startup-page'
     SETTINGS_LANGUAGES_PAGE_TEXT = 'settings-languages-page'
+    SETTINGS_START_UP_URLS_PAGE_TEXT = 'settings-startup-urls-page'
     OPEN_SPECIFIC_PAGE_OR_SET_OF_PAGES_TEXT = '[label="Open a specific page or set of pages"]'
     CONTINUE_WHERE_LEFT_OFF_TEXT = '[label="Continue where you left off"]'
     SHOW_LANGUAGE_OPTIONS_TEXT = '[label="Show language options"]'
     OPEN_NEW_TAB_PAGE_TEXT = '[label="Open the New Tab page"]'
+    ADD_A_NEW_PAGE_TEXT = '[id="addPage"]'
 
     # SETTINGS_UI = (By.TAG_NAME, 'settings-ui')
     # SETTINGS_MAIN = (By.CSS_SELECTOR, 'settings-main')
