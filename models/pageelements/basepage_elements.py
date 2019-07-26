@@ -1,4 +1,6 @@
-from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
 
 
 class BasePageElement(object):
@@ -10,9 +12,10 @@ class BasePageElement(object):
 
     def find_shadow_element(self, driver, *string_text):
 
+        wait = WebDriverWait(driver, 5)
         i = 0
-        root = driver.find_element_by_tag_name(string_text[i])
-        print (0 + len(string_text))
+        root = wait.until(ec.presence_of_element_located((By.TAG_NAME, string_text[i])))
+        # root = driver.find_element_by_tag_name(string_text[i])
         while len(string_text) > (i+1):
             i = i+1
             shadow_root = self.select_shadow_element_by_css_selector(driver, root)

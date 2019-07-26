@@ -1,27 +1,23 @@
-
 import time
-
+from selenium import webdriver
 from models.pageobject.settings import SettingsPageObject
+from utils.const import Urls
 
 
-class TestInternalSettings:
+class TestOnStartUp:
 
     settings_page_object = SettingsPageObject()
-    coccoc_setting_url = "coccoc://settings"
 
     def test_click_continue_where_left_off(self, browser):
-        browser.get(self.coccoc_setting_url)
-        time.sleep(3)
+        browser.get(Urls.COCCOC_SETTINGS_URL)
         self.settings_page_object.click_continue_where_left_off_button(browser)
-        time.sleep(2)
 
     def test_click_open_with_new_tab(self, browser):
-        browser.get(self.coccoc_setting_url)
+        browser.get(Urls.COCCOC_SETTINGS_URL)
         self.settings_page_object.click_open_new_tab(browser)
-        time.sleep(2)
 
     def test_click_open_a_specific_set_of_pages(self, browser):
-        browser.get(self.coccoc_setting_url)
+        browser.get(Urls.COCCOC_SETTINGS_URL)
         self.settings_page_object.click_open_a_specific_page(browser)
         self.settings_page_object.click_add_a_new_page(browser)
         # browser.switch_to_active_element()
