@@ -2,13 +2,14 @@
 import time
 
 
+
 class TestBrowser:
 
     def select_shadow_element_by_css_selector(self, browser, selector):
         element = browser.execute_script('return arguments[0].shadowRoot', selector)
         return element
 
-    def test_click_on_open_a_set_of_pages(self,browser):
+    def test_click_on_open_a_set_of_pages(self, browser):
         browser.maximize_window()
         browser.get("coccoc://settings")
         root1 = browser.find_element_by_tag_name('settings-ui')
