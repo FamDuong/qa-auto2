@@ -1,6 +1,7 @@
 
 import time
 
+from pytest_testrail.plugin import pytestrail
 
 
 class TestBrowser:
@@ -9,6 +10,7 @@ class TestBrowser:
         element = browser.execute_script('return arguments[0].shadowRoot', selector)
         return element
 
+    @pytestrail.case('C43220')
     def test_click_on_open_a_set_of_pages(self, browser):
         browser.maximize_window()
         browser.get("coccoc://settings")
@@ -29,6 +31,7 @@ class TestBrowser:
 
         time.sleep(2)
 
+    @pytestrail.case('C43219')
     def test_click_on_continue_where_left_off(self,browser):
         browser.maximize_window()
         browser.get("coccoc://settings")
@@ -49,6 +52,7 @@ class TestBrowser:
 
         time.sleep(2)
 
+    @pytestrail.case('C43218')
     def test_click_on_show_language_option(self, browser):
         browser.maximize_window()
         browser.get("coccoc://settings")
