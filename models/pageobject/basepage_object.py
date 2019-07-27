@@ -1,7 +1,7 @@
 
 
 class BasePageObject(object):
-    print "abc"
+    pass
     # def find_element(self, *locator):
     #     if locator.__len__() == 2:
     #         return self.driver.find_element(*locator)
