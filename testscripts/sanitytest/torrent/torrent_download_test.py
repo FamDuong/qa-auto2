@@ -13,7 +13,6 @@ class TestTorrentDownload:
     #     browser.get(Urls.COCCOC_DOWNLOAD_URL)
     #     def cancel_download_process():
 
-
     download_page_object = DownloadsPageObject()
 
     pirate_bay_object = ThePirateBayPageObject()
@@ -38,7 +37,7 @@ class TestTorrentDownload:
         # self.upload_file("D:\\Automation Test Coc Coc\\qa-auto\\qa-auto\\testdata\\torrent_file.torrent")
         time.sleep(3)
 
-    @pytestrail.case('C44975')
+    @pytestrail.case('C54209')
     def test_pause_resume_torrent_download(self, browser):
         browser.get('https://fileslicious.tf/justcause4cpy')
         time.sleep(3)
@@ -50,7 +49,7 @@ class TestTorrentDownload:
         self.download_page_object.click_remove_torrent_download_current(browser)
         time.sleep(2)
 
-    @pytestrail.case('C44976')
+    @pytestrail.case('C54210')
     def test_download_from_magnet_link(self, browser):
         browser.get('https://www.thepiratebay.org/')
         self.pirate_bay_object.search_torrent_to_download(browser, "Python")
@@ -119,11 +118,6 @@ class TestTorrentDownload:
 
         self.download_page_object.verify_torrent_info_displayed(browser)
         time.sleep(2)
-
-
-
-
-
 
 
 

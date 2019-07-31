@@ -68,8 +68,8 @@ def browser():
     return
 
 
-# @pytest.fixture(scope='session', autouse=True)
-# def clear_screen_shot_folder():
-#     from utils.cleanup import Files
-#     files = Files()
-#     files.delete_files_in_folder("screenshots", "png")
+@pytest.fixture(scope='session', autouse=True)
+def clear_screen_shot_folder():
+    from utils.cleanup import Files
+    files = Files()
+    files.delete_files_in_folder("screenshots", "png")

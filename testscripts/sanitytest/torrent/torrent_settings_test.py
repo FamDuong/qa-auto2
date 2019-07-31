@@ -1,9 +1,6 @@
-import time
 
 import pytest
 from pytest_testrail.plugin import pytestrail
-from selenium.webdriver.firefox import webelement
-
 from models.pageobject.settings import SettingsPageObject
 from utils.const import Urls
 
@@ -11,7 +8,7 @@ from utils.const import Urls
 class TestTorrentSettings:
     settings_page_object = SettingsPageObject()
 
-    @pytestrail.case('C44971')
+    @pytestrail.case('C54205')
     def test_coccoc_as_torrent_client(self, browser):
         # Go to CocCoc Settings page
 
