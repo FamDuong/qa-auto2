@@ -39,32 +39,37 @@ def _capture_screenshot(filename):
 def browser():
     global driver
     if driver is None:
-        # chrome_options = webdriver.ChromeOptions()
-        # chrome_options.add_argument("--window-size=1920,1080")
-        # chrome_options.add_argument("--disable-extensions")
-        # chrome_options.add_argument("--proxy-server='direct://'")
-        # chrome_options.add_argument("--proxy-bypass-list=*")
-        # chrome_options.add_argument("--start-maximized")
-        # chrome_options.add_argument('--disable-gpu')
-        # chrome_options.add_argument('--disable-dev-shm-usage')
-        # chrome_options.add_argument('--no-sandbox')
-        # chrome_options.add_argument('--ignore-certificate-errors')
-        # chrome_options.add_argument("--allow-insecure-localhost")
-        # chrome_options.add_argument("--disable-infobars")
-        #
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument("--window-size=1920,1080")
+        chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_argument("--proxy-server='direct://'")
+        chrome_options.add_argument("--proxy-bypass-list=*")
+        chrome_options.add_argument("--start-maximized")
+        chrome_options.add_argument('--disable-gpu')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--ignore-certificate-errors')
+        chrome_options.add_argument("--allow-insecure-localhost")
+        chrome_options.add_argument("--disable-infobars")
+        # chrome_options.add_argument("--disable-popup-blocking")
+        # chrome_options.add_experimental_option("browser.download.panel.shown", False)
+        chrome_options.add_argument('--user-data-dir=C:\\Users\\cuongld\\AppData\\Local\\CocCoc\\Browser\\User Data')
+        # chrome_options.add_experimental_option("browser.helperApps.neverAsk.openFile","text/csv,application/vnd.ms-excel")
+        # chrome_options.add_experimental_option("browser.helperApps.neverAsk.saveToDisk", "text/csv,application/vnd.ms-excel")
+
         # capabilities = DesiredCapabilities.CHROME
         # capabilities['acceptSslCerts'] = True
         # capabilities['acceptInsecureCerts'] = True
 
-        driver = webdriver.Chrome()
+        driver = webdriver.Chrome(options=chrome_options)
         driver.maximize_window()
     yield driver
     driver.quit()
     return
 
 
-@pytest.fixture(scope='session', autouse=True)
-def clear_screen_shot_folder():
-    from utils.cleanup import Files
-    files = Files()
-    files.delete_files_in_folder("screenshots", "png")
+# @pytest.fixture(scope='session', autouse=True)
+# def clear_screen_shot_folder():
+#     from utils.cleanup import Files
+#     files = Files()
+#     files.delete_files_in_folder("screenshots", "png")

@@ -1,5 +1,5 @@
 
-from pytest_testrail.plugin import testrail, pytestrail
+from pytest_testrail.plugin import pytestrail
 from models.pageobject.settings import SettingsPageObject
 from utils.const import Urls
 
@@ -42,6 +42,3 @@ class TestOnStartUp:
         browser.get(Urls.COCCOC_SETTINGS_URL)
         self.settings_page_object.click_open_a_specific_page(browser)
         self.settings_page_object.click_add_a_new_page(browser)
-
-
-
