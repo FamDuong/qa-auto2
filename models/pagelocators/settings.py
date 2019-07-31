@@ -8,17 +8,22 @@ class SettingsPageLocators(object):
     SETTINGS_ON_START_UP_PAGE_TEXT = 'settings-on-startup-page'
     SETTINGS_LANGUAGES_PAGE_TEXT = 'settings-languages-page'
     SETTINGS_START_UP_URLS_PAGE_TEXT = 'settings-startup-urls-page'
+    SETTINGS_DEFAULT_BROWSER_PAGE_TEXT = 'settings-default-browser-page'
+    SETTINGS_COCCOC_SECTION_PAGE_TEXT = 'settings-section'
+    SETTINGS_COCCOC_TORRENTS_PAGE_TEXT = 'settings-coccoc-torrents-page'
+
     OPEN_SPECIFIC_PAGE_OR_SET_OF_PAGES_TEXT = '[label="Open a specific page or set of pages"]'
     CONTINUE_WHERE_LEFT_OFF_TEXT = '[label="Continue where you left off"]'
     SHOW_LANGUAGE_OPTIONS_TEXT = '[label="Show language options"]'
     OPEN_NEW_TAB_PAGE_TEXT = '[label="Open the New Tab page"]'
     ADD_A_NEW_PAGE_TEXT = '[id="addPage"]'
 
-    # SETTINGS_UI = (By.TAG_NAME, 'settings-ui')
-    # SETTINGS_MAIN = (By.CSS_SELECTOR, 'settings-main')
-    # SETTINGS_BASIC_PAGE = (By.CSS_SELECTOR, 'settings-basic-page')
-    # SETTINGS_ON_START_UP_PAGE = (By.CSS_SELECTOR, 'settings-on-startup-page')
-    # SETTINGS_LANGUAGES_PAGE = (By.CSS_SELECTOR, 'settings-languages-page')
-    # OPEN_SPECIFIC_PAGE_OR_SET_OF_PAGES = (By.CSS_SELECTOR, 'Open a specific page or set of pages')
-    # CONTINUE_WHERE_LEFT_OFF = (By.CSS_SELECTOR, 'Continue where you left off')
-    # SHOW_LANGUAGE_OPTIONS = (By.CSS_SELECTOR, 'Show language options')
+    DEFAULT_TORRENT_CLIENT_TEXT = '[class="settings-box two-line"]'
+
+    SETTINGS_MAX_NUMBER_OF_CONNECTION_TORRENT = '[size="6"]'
+
+
+class SettingsDownloadPageLocators(object):
+
+    AUTOMATIC_STOP_SEEDING_TORRENTS_CHECK_BOX = '[id="checkbox"]'
+
