@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 import pytest
 from pytest_testrail.plugin import pytestrail
 from models.pageobject.settings import SettingsPageObject
