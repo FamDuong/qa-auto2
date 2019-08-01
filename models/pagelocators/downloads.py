@@ -8,6 +8,8 @@ class DownloadsPageLocators:
     RESUME_TORRENT_CLASS_TEXT = '[class="js-resume resume-btn"]'
     CANCEL_TORRENT_CLASS_TEXT = '[class="js-cancel cancel-btn"]'
 
+    CANCEL_TORRENT_BTN = '//button[@class="js-cancel cancel-btn"]'
+
     REMOVE_TORRENT_FROM_LIST_TEXT = '[class="js-removeFromList removeFromList-btn"]'
 
     MORE_ICON_BTN = (By.XPATH, '//span[@class="more-icon"]')
@@ -33,6 +35,8 @@ class DownloadsPageLocators:
     TORRENT_CONTROL_BOTTOM_ITEM = (By.XPATH, '//div[@class="controls control-bottom"]')
 
     TORRENT_STOP_SEEDING_BTN = (By.XPATH, '//button[@class="js-stopSeeding stopSeeding-btn"]')
+
+    CLEAR_ALL_BTN = (By.XPATH, '//button[@class="js-clearAll clearButton headerButton"]')
 
 
 class ThePirateBayLocators(object):

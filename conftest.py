@@ -2,40 +2,41 @@ from datetime import datetime
 
 from selenium import webdriver
 import pytest
-from selenium.webdriver import DesiredCapabilities
+from simple_settings import settings
+
 
 driver = None
 
 
-@pytest.mark.hookwrapper
-def pytest_runtest_makereport(item):
-    """
-        Extends the PyTest Plugin to take and embed screenshot in html report right before close webdriver.
-        :param item:
-        """
-    pytest_html = item.config.pluginmanager.getplugin('html')
-    outcome = yield
-    report = outcome.get_result()
-    extra = getattr(report, 'extra', [])
+# @pytest.mark.hookwrapper
+# def pytest_runtest_makereport(item):
+#     """
+#         Extends the PyTest Plugin to take and embed screenshot in html report right before close webdriver.
+#         :param item:
+#         """
+#     pytest_html = item.config.pluginmanager.getplugin('html')
+#     outcome = yield
+#     report = outcome.get_result()
+#     extra = getattr(report, 'extra', [])
+#
+#     if report.when == 'call':
+#         hasattr(report, 'wasxfail')
+#         # file_name = report.nodeid.replace("::", "_") + ".png"
+#         timestamp = datetime.now().strftime('%H-%M-%S.%f')[:-3]
+#         filename = timestamp + ".png"
+#         _capture_screenshot(filename)
+#         # if file_name:
+#         html = '<div><img src="screenshots/%s" style="width:600px;height:228px;" ' \
+#                    'onclick="window.open(this.src)" align="right"/></div>' % filename
+#         extra.append(pytest_html.extras.html(html))
+#     report.extra = extra
+#
+#
+# def _capture_screenshot(filename):
+#     driver.save_screenshot("screenshots/" + filename)
 
-    if report.when == 'call':
-        hasattr(report, 'wasxfail')
-        # file_name = report.nodeid.replace("::", "_") + ".png"
-        timestamp = datetime.now().strftime('%H-%M-%S.%f')[:-3]
-        filename = timestamp + ".png"
-        _capture_screenshot(filename)
-        # if file_name:
-        html = '<div><img src="screenshots/%s" style="width:600px;height:228px;" ' \
-                   'onclick="window.open(this.src)" align="right"/></div>' % filename
-        extra.append(pytest_html.extras.html(html))
-    report.extra = extra
 
-
-def _capture_screenshot(filename):
-    driver.save_screenshot("screenshots/" + filename)
-
-
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope='session')
 def browser():
     global driver
     if driver is None:
@@ -53,7 +54,7 @@ def browser():
         chrome_options.add_argument("--disable-infobars")
         # chrome_options.add_argument("--disable-popup-blocking")
         # chrome_options.add_experimental_option("browser.download.panel.shown", False)
-        chrome_options.add_argument('--user-data-dir=C:\\Users\\cuongld\\AppData\\Local\\CocCoc\\Browser\\User Data')
+        chrome_options.add_argument('--user-data-dir=' + settings.USER_DATA_DIR)
         # chrome_options.add_experimental_option("browser.helperApps.neverAsk.openFile","text/csv,application/vnd.ms-excel")
         # chrome_options.add_experimental_option("browser.helperApps.neverAsk.saveToDisk", "text/csv,application/vnd.ms-excel")
 
@@ -68,8 +69,12 @@ def browser():
     return
 
 
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope='session')
 def clear_screen_shot_folder():
     from utils.cleanup import Files
     files = Files()
     files.delete_files_in_folder("screenshots", "png")
+
+
+def pytest_addoption(parser):
+    parser.addoption('--settings', action='store')

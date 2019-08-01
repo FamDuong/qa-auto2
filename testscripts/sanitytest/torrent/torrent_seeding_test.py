@@ -9,6 +9,16 @@ from utils.const import Urls
 from appium import webdriver
 
 
+# @pytest.fixture(scope='function', autouse=True)
+# def clear_download_data(browser):
+#     browser.get(Urls.COCCOC_DOWNLOAD_URL)
+#     from models.pageobject.downloads import DownloadsPageObject
+#     download_page_object = DownloadsPageObject()
+#     download_page_object.cancel_all_current_torrent(browser)
+#     download_page_object.clear_all_existed_torrent(browser)
+#     time.sleep(2)
+
+
 class TestTorrentSeeding:
 
     magnet_url_torrent = 'magnet:?xt=urn:btih:e1eed9d6a62423ecde25aa19765293a222780fce&dn=' \
@@ -24,14 +34,14 @@ class TestTorrentSeeding:
         browser.get(Urls.COCCOC_DOWNLOAD_URL)
 
     @pytestrail.case('C54215')
-    def test_seeding_state(self, browser):
+    def test_seeding_state(self, browser, clear_download_data):
         self.set_up_finished_torrent(browser)
         self.download_page_object.verify_torrent_seed_up_arrow(browser)
         time.sleep(2)
 
     @pytestrail.case('C54217')
     @pytest.mark.parametrize("param", [1, 2])
-    def test_set_to_not_seeding_one_torrent(self, browser, param):
+    def test_set_to_not_seeding_one_torrent(self, browser, clear_download_data, param):
         self.set_up_finished_torrent(browser)
         time.sleep(2)
         self.download_page_object.verify_torrent_seed_up_arrow(browser)
@@ -49,7 +59,7 @@ class TestTorrentSeeding:
         # Verify the up button is not displayed
         time.sleep(2)
         self.download_page_object.verify_torrent_seed_up_arrow_not_displayed(browser)
-        self.download_page_object.click_remove_torrent_download_current(browser)
+        # self.download_page_object.click_remove_torrent_download_current(browser)
         time.sleep(2)
 
     # def test_hard(self, browser):

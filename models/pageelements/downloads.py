@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
@@ -84,6 +86,15 @@ class DownloadsElement(BasePageElement):
         wait = WebDriverWait(driver, 10)
         return wait.until(
             ec.presence_of_element_located(DownloadsPageLocators.DO_NOT_SEED_BTN))
+
+    def find_all_cancel_current_torrent_btn(self, driver):
+        time.sleep(2)
+        return driver.find_elements_by_css_selector(DownloadsPageLocators.CANCEL_TORRENT_CLASS_TEXT)
+
+    def find_clear_all_button(self, driver):
+        wait = WebDriverWait(driver, 3)
+        return wait.until(
+            ec.presence_of_element_located(DownloadsPageLocators.CLEAR_ALL_BTN))
 
 
 class ThePirateBayElements(BasePageElement):

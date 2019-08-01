@@ -71,6 +71,18 @@ class DownloadsPageObject(BasePageObject):
         do_not_seed_btn = self.downloads_elem.find_do_not_seed_button(driver)
         do_not_seed_btn.click()
 
+    def cancel_all_current_torrent(self, driver):
+        elements = self.downloads_elem.find_all_cancel_current_torrent_btn(driver)
+        if len(elements) > 0:
+            for i in range(len(elements)):
+                elements[i].click()
+                time.sleep(2)
+        print('Number of current running torrents :', len(elements))
+
+    def clear_all_existed_torrent(self, driver):
+        element = self.downloads_elem.find_clear_all_button(driver)
+        element.click()
+
 
 class ThePirateBayPageObject(BasePageObject):
 
