@@ -1,89 +1,26 @@
-
-import time
-
-from pytest_testrail.plugin import pytestrail
+from models.pageobject.downloads import DownloadsPageObject
+from models.pageobject.version import VersionPageObject
+from utils.const import Urls
+from selenium import webdriver
 
 
 class TestBrowser:
+    download_page_object = DownloadsPageObject()
+    version_page_object = VersionPageObject()
 
     def select_shadow_element_by_css_selector(self, browser, selector):
         element = browser.execute_script('return arguments[0].shadowRoot', selector)
         return element
 
-    @pytestrail.case('C43220')
-    def test_click_on_open_a_set_of_pages(self, browser):
-        browser.maximize_window()
-        browser.get("coccoc://settings")
-        root1 = browser.find_element_by_tag_name('settings-ui')
-        shadow_root1 = self.select_shadow_element_by_css_selector(browser, root1)
+    def test_current_time_now(self, browser):
+        browser.get(Urls.COCCOC_DOWNLOAD_URL)
+        self.download_page_object.cancel_all_current_torrent(browser)
+        self.download_page_object.clear_all_existed_torrent(browser)
 
-        root2 = shadow_root1.find_element_by_css_selector('settings-main')
-        shadow_root2 = self.select_shadow_element_by_css_selector(browser, root2)
+    def test_get_profile_path(self):
+        driver = webdriver.Chrome()
+        driver.maximize_window()
+        driver.get(Urls.COCCOC_VERSION_URL)
+        full_path_value = self.version_page_object.get_profile_path(driver)
+        print(full_path_value)
 
-        root3 = shadow_root2.find_element_by_css_selector('settings-basic-page')
-        shadow_root3 = self.select_shadow_element_by_css_selector(browser, root3)
-
-        root4 = shadow_root3.find_element_by_css_selector('settings-on-startup-page')
-        shadow_root4 = self.select_shadow_element_by_css_selector(browser, root4)
-
-        root5 = shadow_root4.find_element_by_css_selector('[label="Open a specific page or set of pages"]')
-        root5.click()
-
-        time.sleep(2)
-
-    @pytestrail.case('C43219')
-    def test_click_on_continue_where_left_off(self,browser):
-        browser.maximize_window()
-        browser.get("coccoc://settings")
-        root1 = browser.find_element_by_tag_name('settings-ui')
-        shadow_root1 = self.select_shadow_element_by_css_selector(browser, root1)
-
-        root2 = shadow_root1.find_element_by_css_selector('settings-main')
-        shadow_root2 = self.select_shadow_element_by_css_selector(browser,root2)
-
-        root3 = shadow_root2.find_element_by_css_selector('settings-basic-page')
-        shadow_root3 = self.select_shadow_element_by_css_selector(browser,root3)
-
-        root4 = shadow_root3.find_element_by_css_selector('settings-on-startup-page')
-        shadow_root4 = self.select_shadow_element_by_css_selector(browser,root4)
-
-        root5 = shadow_root4.find_element_by_css_selector('[label="Continue where you left off"]')
-        root5.click()
-
-        time.sleep(2)
-
-    @pytestrail.case('C43218')
-    def test_click_on_show_language_option(self, browser):
-        browser.maximize_window()
-        browser.get("coccoc://settings")
-        root1 = browser.find_element_by_tag_name('settings-ui')
-        shadow_root1 = self.select_shadow_element_by_css_selector(browser,root1)
-
-        root2 = shadow_root1.find_element_by_css_selector('settings-main')
-        shadow_root2 = self.select_shadow_element_by_css_selector(browser,root2)
-
-        root3 = shadow_root2.find_element_by_css_selector('settings-basic-page')
-        shadow_root3 = self.select_shadow_element_by_css_selector(browser,root3)
-
-        root5 = shadow_root3.find_element_by_css_selector('settings-languages-page')
-        time.sleep(1)
-        shadow_root5 = self.select_shadow_element_by_css_selector(browser,root5)
-        time.sleep(1)
-
-        root7 = shadow_root5.find_element_by_css_selector('[alt="Show language options"]')
-
-        root7.click()
-        time.sleep(2)
-
-    # def test_facebook(self,browser):
-    #     Value = "Under 20"
-    #     browser.get("http://www.facebook.com/")
-    #     # browser.save_screenshot("Test2.png")
-    #     assert "xyy" in browser.title
-    #
-    # def test_google(self,browser):
-    #     Value = "Under 20"
-    #     browser.get("http://www.google.com/")
-    #     # browser.save_screenshot("Test2.png")
-    #     assert "xyy" in browser.title
-    #     assert True

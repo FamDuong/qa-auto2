@@ -38,31 +38,31 @@ class TestTorrentDownload:
         time.sleep(3)
 
     @pytestrail.case('C54209')
-    def test_pause_resume_torrent_download(self, browser):
+    def test_pause_resume_torrent_download(self, browser, clear_download_data):
         browser.get('https://fileslicious.tf/justcause4cpy')
         time.sleep(3)
         # browser.find_element_by_tag_name('body').send_keys(Keys.COMMAND + 't')
         browser.get(Urls.COCCOC_DOWNLOAD_URL)
         self.download_page_object.click_pause_torrent_download_current(browser)
         self.download_page_object.click_resume_torrent_download_current(browser)
-        self.download_page_object.click_cancel_torrent_download_current(browser)
-        self.download_page_object.click_remove_torrent_download_current(browser)
+        # self.download_page_object.click_cancel_torrent_download_current(browser)
+        # self.download_page_object.click_remove_torrent_download_current(browser)
         time.sleep(2)
 
     @pytestrail.case('C54210')
-    def test_download_from_magnet_link(self, browser):
+    def test_download_from_magnet_link(self, browser, clear_download_data):
         browser.get('https://www.thepiratebay.org/')
         self.pirate_bay_object.search_torrent_to_download(browser, "Python")
 
         self.pirate_bay_search_result.click_download_magnet_value(browser)
 
-        browser.get(Urls.COCCOC_DOWNLOAD_URL)
-        self.download_page_object.click_cancel_torrent_download_current(browser)
-        self.download_page_object.click_remove_torrent_download_current(browser)
+        # browser.get(Urls.COCCOC_DOWNLOAD_URL)
+        # self.download_page_object.click_cancel_torrent_download_current(browser)
+        # self.download_page_object.click_remove_torrent_download_current(browser)
         time.sleep(2)
 
     @pytestrail.case('C54211')
-    def test_copy_magnet_link(self, browser):
+    def test_copy_magnet_link(self, browser, clear_download_data):
         """
         Prepare data for copy magnet link
         :param browser:
@@ -94,14 +94,14 @@ class TestTorrentDownload:
         browser.get(magnet_link)
 
         # Remove torrent
-        browser.get(Urls.COCCOC_DOWNLOAD_URL)
-        self.download_page_object.click_cancel_torrent_download_current(browser)
-        self.download_page_object.click_remove_torrent_download_current(browser)
+        # browser.get(Urls.COCCOC_DOWNLOAD_URL)
+        # self.download_page_object.click_cancel_torrent_download_current(browser)
+        # self.download_page_object.click_remove_torrent_download_current(browser)
 
         time.sleep(2)
 
     @pytestrail.case('C54212')
-    def test_torrent_download_tree_view(self, browser):
+    def test_torrent_download_tree_view(self, browser, clear_download_data):
         """
 
         :param browser:
