@@ -1,5 +1,5 @@
-from datetime import datetime
 
+from datetime import datetime
 from selenium import webdriver
 import pytest
 from simple_settings import settings
@@ -38,6 +38,10 @@ def _capture_screenshot(filename):
 
 @pytest.fixture(scope='session')
 def browser():
+    import subprocess
+    import os
+    prog = subprocess.Popen("taskkill /im browser.exe /f", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    prog.communicate()  # Returns (stdoutdata, stderrdata): stdout and stderr are ignored, here
     global driver
     if driver is None:
         chrome_options = webdriver.ChromeOptions()
@@ -52,6 +56,7 @@ def browser():
         chrome_options.add_argument('--ignore-certificate-errors')
         chrome_options.add_argument("--allow-insecure-localhost")
         chrome_options.add_argument("--disable-infobars")
+        # chrome_options.add_argument('--user-data-dir=' + os.environ['user-dir-path'])
         chrome_options.add_argument('--user-data-dir=' + settings.USER_DATA_DIR)
 
         driver = webdriver.Chrome(options=chrome_options)
