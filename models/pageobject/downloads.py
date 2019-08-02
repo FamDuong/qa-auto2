@@ -27,14 +27,17 @@ class DownloadsPageObject(BasePageObject):
     def click_cancel_torrent_download_current(self, driver):
         cancel_torrent_btn = self.downloads_elem.find_cancel_torrent_download_element(driver)
         cancel_torrent_btn.click()
+        time.sleep(1)
 
     def click_remove_torrent_download_current(self, driver):
         remove_torrent_btn = self.downloads_elem.find_remove_torrent_download_element(driver)
         remove_torrent_btn.click()
+        time.sleep(1)
 
     def click_more_icon_button(self, driver):
         more_icon_btn = self.downloads_elem.find_more_icon(driver)
         more_icon_btn.click()
+        time.sleep(1)
 
     def hover_more_icon_button(self, driver):
         more_icon_btn = self.downloads_elem.find_more_icon(driver)
@@ -45,6 +48,7 @@ class DownloadsPageObject(BasePageObject):
     def click_copy_settings_button(self, driver):
         copy_settings_btn = self.downloads_elem.find_copy_settings_btn(driver)
         copy_settings_btn.click()
+        time.sleep(1)
 
     def click_tree_view_button(self, driver):
         tree_view_btn = self.downloads_elem.find_tree_view_torrent_btn(driver)

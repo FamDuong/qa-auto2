@@ -1,6 +1,8 @@
 import time
 import pytest
 import win32clipboard
+
+import win32con
 from pytest_testrail.plugin import pytestrail
 from models.pageobject.downloads import DownloadsPageObject, ThePirateBayPageObject, PirateBaySearchResult
 from utils.const import Urls
@@ -56,6 +58,9 @@ class TestTorrentDownload:
 
         self.pirate_bay_search_result.click_download_magnet_value(browser)
 
+        browser.get(Urls.COCCOC_DOWNLOAD_URL)
+        self.download_page_object.verify_torrent_seed_up_arrow(browser)
+
         # browser.get(Urls.COCCOC_DOWNLOAD_URL)
         # self.download_page_object.click_cancel_torrent_download_current(browser)
         # self.download_page_object.click_remove_torrent_download_current(browser)
@@ -79,22 +84,25 @@ class TestTorrentDownload:
         self.download_page_object.click_more_icon_button(browser)
         self.download_page_object.click_copy_settings_button(browser)
 
+        # Get magnet link from clipboard
+        win32clipboard.OpenClipboard()
+        magnet_link = win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
+        win32clipboard.CloseClipboard()
+
         # Stop and remove torrent
         self.download_page_object.click_cancel_torrent_download_current(browser)
         self.download_page_object.click_remove_torrent_download_current(browser)
-
-        # Get magnet link from clipboard
-        win32clipboard.OpenClipboard()
-        magnet_link = win32clipboard.GetClipboardData()
-        win32clipboard.CloseClipboard()
+        time.sleep(3)
 
         print('Magnet link is:', magnet_link)
 
         # Download torrent from magnet link
         browser.get(magnet_link)
+        time.sleep(2)
+        # Verify
 
-        # Remove torrent
-        # browser.get(Urls.COCCOC_DOWNLOAD_URL)
+        self.download_page_object.verify_torrent_seed_up_arrow(browser)
+        time.sleep(2)
         # self.download_page_object.click_cancel_torrent_download_current(browser)
         # self.download_page_object.click_remove_torrent_download_current(browser)
 
