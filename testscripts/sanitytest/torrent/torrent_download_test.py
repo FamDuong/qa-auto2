@@ -126,11 +126,3 @@ class TestTorrentDownload:
 
         self.download_page_object.verify_torrent_info_displayed(browser)
         time.sleep(2)
-
-
-
-
-
-
-
-
