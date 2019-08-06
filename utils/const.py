@@ -8,3 +8,5 @@ class Urls:
     COCCOC_EXTENSIONS = 'coccoc://extensions'
     YOUTUBE_URL = 'https://www.youtube.com/'
 
+    GOOGLE_URL = 'https://www.google.com/'
+

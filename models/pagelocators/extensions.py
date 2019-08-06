@@ -18,3 +18,18 @@ class SaviorDetailsPageLocators:
     SAVIOR_ENABLE_BUTTON_CSS = '[id="checkbox"]'
     EXTENSION_DETAIL_VIEW = 'extensions-detail-view'
     EXTENSION_TOGGLE_ROW = 'extensions-toggle-row'
+    EXTENSION_OPTIONS_DIALOG = 'extensions-options-dialog'
+    EXTENSION_OPTIONS = 'extensionoptions'
+    CR_ICON_BUTTON = 'cr-icon-button'
+    CR_LINK_ROW = 'cr-link-row'
+    EXTENSION_OPTIONS_ICON = '[id="icon"]'
+
+
+class SaviorExtensionOptionsPageLocators:
+    SHOW_INSTANT_DOWNLOAD_YOUTUBE = (By.ID, 'instant-button-download')
+    SAVE_AND_CLOSE_BTN = (By.ID, 'button')
+    SHOW_DOWNLOAD_BTN_NEAR_DOWNLOAD_MEDIA = (By.ID, 'on-page-buttons')
+
+    VIDEO_QUALITY_HIGH_BTN = (By.XPATH, '//input[@name="optionsRadios" and @value="High"]')
+    REMEMBER_LAST_CHOSEN_OPTION = (By.ID, 'prefer-last-quality')
+

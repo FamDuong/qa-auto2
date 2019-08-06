@@ -28,4 +28,5 @@ class SaviorElements(BasePageElement):
         return self.select_shadow_element(driver)
 
     def not_found_download_button(self, driver):
-        assert 1 == self.select_shadow_element(driver)
+        print('Value for assertions isssss:',self.select_shadow_element(driver))
+        assert self.select_shadow_element(driver) in (1, None)

@@ -56,8 +56,8 @@ def browser():
         chrome_options.add_argument('--ignore-certificate-errors')
         chrome_options.add_argument("--allow-insecure-localhost")
         chrome_options.add_argument("--disable-infobars")
-        chrome_options.add_argument('--user-data-dir=' + os.environ['user-dir-path'])
-        # chrome_options.add_argument('--user-data-dir=' + settings.USER_DATA_DIR)
+        # chrome_options.add_argument('--user-data-dir=' + os.environ['user-dir-path'])
+        chrome_options.add_argument('--user-data-dir=' + settings.USER_DATA_DIR)
 
         driver = webdriver.Chrome(options=chrome_options)
         driver.maximize_window()

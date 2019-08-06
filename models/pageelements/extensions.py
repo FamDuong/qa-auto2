@@ -1,7 +1,11 @@
 import time
 
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
-from models.pagelocators.extensions import ExtensionsPageLocators, SaviorDetailsPageLocators
+from models.pagelocators.extensions import ExtensionsPageLocators, SaviorDetailsPageLocators, \
+    SaviorExtensionOptionsPageLocators
 
 
 class ExtensionsElement(BasePageElement):
@@ -38,6 +42,48 @@ class CocCocSaviorExtensionDetailElement(BasePageElement):
                                         SaviorDetailsPageLocators.EXTENSION_TOGGLE_ROW,
                                         SaviorDetailsPageLocators.EXTENSION_DETAIL_CR_CHECKBOX,
                                         SaviorDetailsPageLocators.SAVIOR_ENABLE_BUTTON_CSS)
+
+    def find_extension_options_button(self, driver):
+        return self.find_shadow_element(driver, ExtensionsPageLocators.EXTENSIONS_MANAGER_TEXT,
+                                        SaviorDetailsPageLocators.EXTENSION_DETAIL_VIEW,
+                                        SaviorDetailsPageLocators.CR_LINK_ROW,
+                                        SaviorDetailsPageLocators.CR_ICON_BUTTON,
+                                        SaviorDetailsPageLocators.EXTENSION_OPTIONS_ICON)
+
+
+class SaviorExtensionsOptionsElement(BasePageElement):
+
+    def find_extensions_wrapper(self, driver):
+        return self.find_shadow_element(driver, ExtensionsPageLocators.EXTENSIONS_MANAGER_TEXT,
+                                 SaviorDetailsPageLocators.EXTENSION_OPTIONS_DIALOG,
+                                 SaviorDetailsPageLocators.EXTENSION_OPTIONS)
+
+    def find_instant_download_youtube_option(self, driver):
+        wait = WebDriverWait(driver, 5)
+        return wait.until(
+            ec.presence_of_element_located(SaviorExtensionOptionsPageLocators.SHOW_INSTANT_DOWNLOAD_YOUTUBE))
+
+    def find_save_and_close_button(self, driver):
+        wait = WebDriverWait(driver, 5)
+        return wait.until(
+            ec.presence_of_element_located(SaviorExtensionOptionsPageLocators.SAVE_AND_CLOSE_BTN))
+
+    def find_show_download_button_near_downloadable_media(self, driver):
+        wait = WebDriverWait(driver, 5)
+        return wait.until(
+            ec.presence_of_element_located(SaviorExtensionOptionsPageLocators.SHOW_DOWNLOAD_BTN_NEAR_DOWNLOAD_MEDIA))
+
+    def find_video_quality_high_option(self, driver):
+        wait = WebDriverWait(driver, 5)
+        return wait.until(
+            ec.presence_of_element_located(SaviorExtensionOptionsPageLocators.VIDEO_QUALITY_HIGH_BTN))
+
+    def find_remember_last_chosen_option(self, driver):
+        wait = WebDriverWait(driver, 5)
+        return wait.until(
+            ec.presence_of_element_located(SaviorExtensionOptionsPageLocators.REMEMBER_LAST_CHOSEN_OPTION))
+
+
 
 
 
