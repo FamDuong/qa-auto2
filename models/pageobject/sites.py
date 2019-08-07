@@ -20,6 +20,9 @@ class YoutubePageObject(BasePageObject):
         hov.perform()
         time.sleep(2)
 
+    def click_video_item(self, driver):
+        self.youtube_element.find_video_player_item(driver).click()
+
 
 class GooglePageObject(BasePageObject):
     google_element = GooglePageElements()

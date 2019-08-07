@@ -31,5 +31,6 @@ class SaviorExtensionOptionsPageLocators:
     SHOW_DOWNLOAD_BTN_NEAR_DOWNLOAD_MEDIA = (By.ID, 'on-page-buttons')
 
     VIDEO_QUALITY_HIGH_BTN = (By.XPATH, '//input[@name="optionsRadios" and @value="High"]')
+    VIDEO_QUALITY_MEDIUM_BTN = (By.XPATH, '//input[@name="optionsRadios" and @value="Medium"]')
     REMEMBER_LAST_CHOSEN_OPTION = (By.ID, 'prefer-last-quality')
 

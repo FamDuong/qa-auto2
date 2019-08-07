@@ -1,4 +1,4 @@
-
+import os
 from datetime import datetime
 from selenium import webdriver
 import pytest
@@ -8,7 +8,7 @@ from simple_settings import settings
 driver = None
 
 
-@pytest.mark.hookwrapper
+@pytest.mark.trylast
 def pytest_runtest_makereport(item):
     """
         Extends the PyTest Plugin to take and embed screenshot in html report right before close webdriver.
@@ -24,7 +24,7 @@ def pytest_runtest_makereport(item):
         # file_name = report.nodeid.replace("::", "_") + ".png"
         timestamp = datetime.now().strftime('%H-%M-%S.%f')[:-3]
         filename = timestamp + ".png"
-        # _capture_screenshot(filename)
+        _capture_screenshot(filename)
         # if file_name:
         html = '<div><img src="screenshots/%s" style="width:600px;height:228px;" ' \
                    'onclick="window.open(this.src)" align="right"/></div>' % filename
@@ -33,7 +33,7 @@ def pytest_runtest_makereport(item):
 
 
 def _capture_screenshot(filename):
-    driver.save_screenshot("screenshots/" + filename)
+    driver.save_screenshot(os.getcwd()+"/screenshots/" + filename)
 
 
 @pytest.fixture(scope='session')
@@ -70,7 +70,7 @@ def browser():
 def clear_screen_shot_folder():
     from utils.cleanup import Files
     files = Files()
-    files.delete_files_in_folder("screenshots", "png")
+    files.delete_files_in_folder(os.getcwd()+"/screenshots", "png")
 
 
 def pytest_addoption(parser):

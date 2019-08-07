@@ -35,7 +35,7 @@ class SimpleCalculatorTests(unittest.TestCase):
         self.driver.find_element_by_name("Plus").click()
         self.driver.find_element_by_name("Seven").click()
         self.driver.find_element_by_name("Equals").click()
-        self.assertEqual(self.getresults(),"8")
+        self.assertEqual(self.getresults(), "8")
 
     def test_combination(self):
         self.driver.find_element_by_name("Seven").click()
@@ -47,7 +47,7 @@ class SimpleCalculatorTests(unittest.TestCase):
         self.driver.find_element_by_name("Divide by").click()
         self.driver.find_element_by_name("Eight").click()
         self.driver.find_element_by_name("Equals").click()
-        self.assertEqual(self.getresults(),"8")
+        self.assertEqual(self.getresults(), "8")
 
     def test_division(self):
         self.driver.find_element_by_name("Eight").click()
@@ -56,21 +56,21 @@ class SimpleCalculatorTests(unittest.TestCase):
         self.driver.find_element_by_name("One").click()
         self.driver.find_element_by_name("One").click()
         self.driver.find_element_by_name("Equals").click()
-        self.assertEqual(self.getresults(),"8")
+        self.assertEqual(self.getresults(), "8")
 
     def test_multiplication(self):
         self.driver.find_element_by_name("Nine").click()
         self.driver.find_element_by_name("Multiply by").click()
         self.driver.find_element_by_name("Nine").click()
         self.driver.find_element_by_name("Equals").click()
-        self.assertEqual(self.getresults(),"81")
+        self.assertEqual(self.getresults(), "81")
 
     def test_subtraction(self):
         self.driver.find_element_by_name("Nine").click()
         self.driver.find_element_by_name("Minus").click()
         self.driver.find_element_by_name("One").click()
         self.driver.find_element_by_name("Equals").click()
-        self.assertEqual(self.getresults(),"8")
+        self.assertEqual(self.getresults(), "8")
 
 
 if __name__ == '__main__':

@@ -78,6 +78,11 @@ class SaviorExtensionsOptionsElement(BasePageElement):
         return wait.until(
             ec.presence_of_element_located(SaviorExtensionOptionsPageLocators.VIDEO_QUALITY_HIGH_BTN))
 
+    def find_video_quality_medium_option(self, driver):
+        wait = WebDriverWait(driver, 5)
+        return wait.until(
+            ec.presence_of_element_located(SaviorExtensionOptionsPageLocators.VIDEO_QUALITY_MEDIUM_BTN))
+
     def find_remember_last_chosen_option(self, driver):
         wait = WebDriverWait(driver, 5)
         return wait.until(

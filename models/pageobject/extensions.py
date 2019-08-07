@@ -37,12 +37,20 @@ class ExtensionsDetailsPageObject(BasePageObject):
 class SaviorExtensionOptionsPageObject(BasePageObject):
     savior_extension = SaviorExtensionsOptionsElement()
 
+    def checked_value_condition(self, checked_value, element):
+        if checked_value is None:
+            element.click()
+        else:
+            return 0
+
     def get_show_instant_download_youtube_value(self, driver):
         show_instant_download_youtube = self.savior_extension.find_extensions_wrapper(driver)
         return show_instant_download_youtube.get_attribute('extension')
 
     def choose_show_instant_download_youtube(self, driver):
-        self.savior_extension.find_instant_download_youtube_option(driver).click()
+        show_instant = self.savior_extension.find_instant_download_youtube_option(driver)
+        checked_value = show_instant.get_attribute('checked')
+        self.checked_value_condition(checked_value, show_instant)
         time.sleep(1)
 
     def verify_return_value_show_instant_download_youtube(self, driver):
@@ -62,13 +70,16 @@ class SaviorExtensionOptionsPageObject(BasePageObject):
     def choose_video_quality_high(self, driver):
         self.savior_extension.find_video_quality_high_option(driver).click()
 
+    def verify_video_quality_medium_is_checked(self, driver):
+        return self.savior_extension.find_video_quality_medium_option(driver).get_attribute('checked')
+
+    def verify_video_quality_high_is_checked(self, driver):
+        return self.savior_extension.find_video_quality_high_option(driver).get_attribute('checked')
+
     def choose_remember_last_chosen_option(self, driver):
         remember_option_element = self.savior_extension.find_remember_last_chosen_option(driver)
         checked_value = remember_option_element.get_attribute('checked')
-        if checked_value is None:
-            remember_option_element.click()
-        else:
-            return 0
+        self.checked_value_condition(checked_value, remember_option_element)
 
 
 

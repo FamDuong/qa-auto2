@@ -9,6 +9,7 @@ from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetails
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import YoutubePageObject, GooglePageObject
 from pytest_testrail.plugin import pytestrail
+from testscripts.sanitytest.savior.common_setup import pause_any_video_youtube
 from utils.const import Urls
 from utils.setup import Browser
 from selenium.webdriver.support import expected_conditions as ec
@@ -50,6 +51,13 @@ class TestSaviorSettings:
         self.extension_detail_page_object.open_extension_options_view(browser)
         time.sleep(1)
         return self.savior_extension.get_show_instant_download_youtube_value(browser)
+
+    # def pause_any_video_youtube(self, browser):
+    #     browser.get(Urls.YOUTUBE_URL)
+    #     self.youtube_page_object.choose_any_video_item(browser)
+    #     time.sleep(2)
+    #     self.youtube_page_object.click_video_item(browser)
+    #     time.sleep(1)
 
     @pytestrail.case('C54140')
     def test_default_status_savior_browser(self, browser):
@@ -134,11 +142,34 @@ class TestSaviorSettings:
             self.savior_extension.click_show_download_button_near(browser)
             time.sleep(1)
 
+    @pytestrail.case('C54147')
     def test_if_remember_last_chosen_quality(self, browser):
         text = self.get_text_extension_option(browser)
         browser.get(u'chrome-extension://' + text + u'/options.html')
-        self.savior_extension.choose_show_instant_download_youtube(browser)
+        self.savior_extension.choose_video_quality_high(browser)
         self.savior_extension.choose_remember_last_chosen_option(browser)
         time.sleep(2)
+
+        pause_any_video_youtube(browser,self.youtube_page_object)
+        self.savior_page_object.choose_preferred_option(browser)
+        time.sleep(3)
+
+        self.savior_page_object.choose_medium_option(browser)
+        time.sleep(1)
+        # Assert value must be medium when choose another video
+        pause_any_video_youtube(browser, self.youtube_page_object)
+        self.savior_page_object.assert_value_preferred_quality(browser, 'Medium')
+        time.sleep(2)
+
+        # Assert value must be medium when go to savior extension
+        browser.get(u'chrome-extension://' + text + u'/options.html')
+        try:
+            assert self.savior_extension.verify_video_quality_medium_is_checked(browser) == 'true'
+            time.sleep(1)
+        finally:
+            self.savior_extension.choose_video_quality_high(browser)
+
+
+
 
 
