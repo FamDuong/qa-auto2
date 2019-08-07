@@ -1,3 +1,4 @@
+#!/usr/bin/env python -u
 import time
 import sys
 import settings_master as settings
