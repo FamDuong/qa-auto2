@@ -3,6 +3,8 @@ import sys
 import settings_master as settings
 import pytest
 import csv
+import os
+import pathlib as Path
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 from pytest_testrail.plugin import pytestrail
@@ -32,6 +34,8 @@ class TestPageLoadTime:
 
     def getFromCSV(self, filename):
         list = []
+        dirname, runname = os.path.split(os.path.abspath(__file__))
+        filename = dirname + filename
         with open(filename, 'r', newline='', encoding="utf-8") as f:
             reader = csv.reader(f)
             print("CSV Reader: READING CSV FILE >>", filename)
@@ -74,7 +78,7 @@ class TestPageLoadTime:
         return pageloadtime
 
     def get_page_load_time(self, binary_file, options_list=None):
-        listweb = self.getFromCSV(r'testbenchmark.csv')
+        listweb = self.getFromCSV(r".\testbenchmark.csv")
         loadtimes = {}
         startuptimes = {}
         for i in listweb:
