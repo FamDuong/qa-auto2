@@ -83,9 +83,15 @@ class DownloadsPageObject(BasePageObject):
                 time.sleep(2)
         print('Number of current running torrents :', len(elements))
 
+    def verify_cancel_button_is_existed(self, driver):
+        elements = self.downloads_elem.find_all_cancel_current_torrent_btn(driver)
+        assert len(elements) > 0
+
     def clear_all_existed_torrent(self, driver):
         element = self.downloads_elem.find_clear_all_button(driver)
+        time.sleep(1)
         element.click()
+        time.sleep(1)
 
 
 class ThePirateBayPageObject(BasePageObject):
