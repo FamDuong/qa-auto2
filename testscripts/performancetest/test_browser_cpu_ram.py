@@ -1,10 +1,10 @@
-import utils.excelfile as excelfile
 import time
 import settings_master as settings
 import psutil
 import os
 import multiprocessing as mp
 import concurrent.futures
+import utils.excelfile as excelfile
 from utils.cleanup import Browsers
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
