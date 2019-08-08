@@ -1,6 +1,6 @@
 import time
 
-from utils.const import Urls
+from utils_automation.const import Urls
 
 
 def pause_any_video_youtube(browser, youtube_page_object):

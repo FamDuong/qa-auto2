@@ -89,7 +89,7 @@ def win_app_driver():
 
 @pytest.fixture(scope='session')
 def clear_screen_shot_folder():
-    from utils.cleanup import Files
+    from utils_automation.cleanup import Files
     current_dir = get_current_dir()[0]
     files = Files()
     files.delete_files_in_folder(current_dir+"/screenshots", "png")

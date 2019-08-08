@@ -5,7 +5,7 @@ import win32clipboard
 import win32con
 from pytest_testrail.plugin import pytestrail
 from models.pageobject.downloads import DownloadsPageObject, ThePirateBayPageObject, PirateBaySearchResult
-from utils.const import Urls
+from utils_automation.const import Urls
 
 
 class TestTorrentDownload:

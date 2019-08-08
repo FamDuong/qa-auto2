@@ -1,6 +1,6 @@
 import pytest
 
-from utils.const import Urls
+from utils_automation.const import Urls
 
 
 @pytest.fixture(scope='function')

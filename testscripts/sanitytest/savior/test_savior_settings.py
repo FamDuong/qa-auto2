@@ -10,8 +10,8 @@ from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import YoutubePageObject, GooglePageObject
 from pytest_testrail.plugin import pytestrail
 from testscripts.sanitytest.savior.common_setup import pause_any_video_youtube
-from utils.const import Urls
-from utils.setup import Browser
+from utils_automation.const import Urls
+from utils_automation.setup import Browser
 from selenium.webdriver.support import expected_conditions as ec
 
 
