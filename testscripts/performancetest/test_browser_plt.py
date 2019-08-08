@@ -1,11 +1,10 @@
-import time
-import settings_master as settings
 import os
-from selenium.webdriver.chrome.options import Options
-from selenium import webdriver
-from pytest_testrail.plugin import pytestrail
+import settings_master as settings
+import time
 import utils.excelfile as excelfile
-import subprocess
+from pytest_testrail.plugin import pytestrail
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from utils.cleanup import Browsers
 # start = 0
 

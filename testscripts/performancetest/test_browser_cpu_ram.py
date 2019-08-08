@@ -5,10 +5,11 @@ import psutil
 import os
 import multiprocessing as mp
 import concurrent.futures
+from utils.cleanup import Browsers
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 from pytest_testrail.plugin import pytestrail
-from utils.cleanup import Browsers
+
 
 class TestCPURAM:
     def get_cpu_per_single_process(self, pid):
