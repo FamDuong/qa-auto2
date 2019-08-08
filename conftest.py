@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
-from selenium import webdriver
+from appium import webdriver
+from selenium import  webdriver as sele_webdriver
 import pytest
 from simple_settings import settings
 
@@ -8,7 +9,7 @@ from simple_settings import settings
 driver = None
 
 
-@pytest.mark.trylast
+@pytest.mark.hookwrapper
 def pytest_runtest_makereport(item):
     """
         Extends the PyTest Plugin to take and embed screenshot in html report right before close webdriver.
@@ -32,8 +33,14 @@ def pytest_runtest_makereport(item):
     report.extra = extra
 
 
+def get_current_dir():
+    before_split = os.getcwd()
+    return before_split.split('\\qa-auto\\')
+
+
 def _capture_screenshot(filename):
-    driver.save_screenshot(os.getcwd()+"/screenshots/" + filename)
+    current_dir = get_current_dir()[0]
+    driver.save_screenshot(current_dir + "/screenshots/" + filename)
 
 
 @pytest.fixture(scope='session')
@@ -44,7 +51,7 @@ def browser():
     prog.communicate()  # Returns (stdoutdata, stderrdata): stdout and stderr are ignored, here
     global driver
     if driver is None:
-        chrome_options = webdriver.ChromeOptions()
+        chrome_options = sele_webdriver.ChromeOptions()
         chrome_options.add_argument("--window-size=1920,1080")
         chrome_options.add_argument("--disable-extensions")
         chrome_options.add_argument("--proxy-server='direct://'")
@@ -59,8 +66,22 @@ def browser():
         # chrome_options.add_argument('--user-data-dir=' + os.environ['user-dir-path'])
         chrome_options.add_argument('--user-data-dir=' + settings.USER_DATA_DIR)
 
-        driver = webdriver.Chrome(options=chrome_options)
+        driver = sele_webdriver.Chrome(options=chrome_options)
         driver.maximize_window()
+    yield driver
+    driver.quit()
+    return
+
+
+@pytest.fixture(scope='session')
+def win_app_driver():
+    global driver
+    if driver is None:
+        desired_caps = {}
+        desired_caps["app"] = "Browser"
+        driver = webdriver.Remote(
+            command_executor='http://127.0.0.1:4723',
+            desired_capabilities=desired_caps)
     yield driver
     driver.quit()
     return
@@ -69,8 +90,9 @@ def browser():
 @pytest.fixture(scope='session')
 def clear_screen_shot_folder():
     from utils.cleanup import Files
+    current_dir = get_current_dir()[0]
     files = Files()
-    files.delete_files_in_folder(os.getcwd()+"/screenshots", "png")
+    files.delete_files_in_folder(current_dir+"/screenshots", "png")
 
 
 def pytest_addoption(parser):
