@@ -1,20 +1,18 @@
-import time
-import sys
-import settings_master as settings
-import pytest
-import csv
 import os
-import pathlib as Path
-from selenium.webdriver.chrome.options import Options
-from selenium import webdriver
+import settings_master as settings
+import time
+import utils.excelfile as excelfile
 from pytest_testrail.plugin import pytestrail
-from io import open
-
-
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from utils.cleanup import Browsers
 # start = 0
 
 class TestPageLoadTime:
-    def openWebpage(self, source, binary_file, options_list=None):
+    def open_webpage(self, source, binary_file, options_list=None):
+        browser = Browsers();
+        browser.kill_all_browsers()
+
         global startBrowser
 
         opts = Options()
@@ -30,32 +28,6 @@ class TestPageLoadTime:
 
         driver.get(source);
         return driver
-
-
-    def getFromCSV(self, filename):
-        list = []
-        dirname, runname = os.path.split(os.path.abspath(__file__))
-        filename = dirname + filename
-        with open(filename, 'r', newline='', encoding="utf-8") as f:
-            reader = csv.reader(f)
-            print("CSV Reader: READING CSV FILE >>", filename)
-            try:
-                for row in reader:
-                    for q in row:
-                        if q == None or len(q) == 0:
-                            pass
-                        else:
-                            list.append(q)
-                print("CSV Reader: FINISHED READING CSV FILE =>", filename)
-                return list
-            except csv.Error as i:
-                sys.exit('file {}, line {}: {}'.format(filename, reader.line_num, i))
-                return None
-            except EOFError as e:
-                print("Can not read file CSV:", filename)
-                print("System error:", e)
-                return None
-
 
     def measureTime(self, driver):
         global browserStartup
@@ -77,8 +49,8 @@ class TestPageLoadTime:
         driver.quit()
         return pageloadtime
 
-    def get_page_load_time(self, binary_file, options_list=None):
-        listweb = self.getFromCSV(r".\testbenchmark.csv")
+    def get_page_load_time(self, filename, binary_file, options_list=None):
+        listweb = excelfile.get_from_csv(filename)
         loadtimes = {}
         startuptimes = {}
         for i in listweb:
@@ -87,7 +59,7 @@ class TestPageLoadTime:
             looptime = 2
             for j in range(looptime):
                 print("Run time: %s" % j)
-                browser = self.openWebpage(i, binary_file, options_list)
+                browser = self.open_webpage(i, binary_file, options_list)
                 loadtime = loadtime + self.measureTime(browser)
                 startuptime = startuptime + browserStartup
             loadtimes[i] = loadtime / looptime
@@ -98,9 +70,13 @@ class TestPageLoadTime:
 
     @pytestrail.case('C82299')
     def test_browser_plt(self):
+        # Define test filename
+        dirname, runname = os.path.split(os.path.abspath(__file__))
+        filename = dirname + r"\testbenchmark.csv"
+
         options_list = {"--enable-features=NetworkService"}
-        self.get_page_load_time(settings.COCCOC_PATH, None)
-        self.get_page_load_time(settings.COCCOC_PATH, options_list)
-        self.get_page_load_time(settings.CHROME_PATH, None)
+        self.get_page_load_time(filename, settings.COCCOC_PATH, None)
+        self.get_page_load_time(filename, settings.COCCOC_PATH, options_list)
+        self.get_page_load_time(filename, settings.CHROME_PATH, None)
 
 
