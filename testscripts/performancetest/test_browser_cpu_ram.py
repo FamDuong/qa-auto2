@@ -61,6 +61,7 @@ class TestCPURAM:
         listweb = excelfile.get_from_csv(filename)
         opts = Options()
         opts.binary_location = binary_file
+        opts.add_argument("start-maximized")
         if options_list is not None:
             for i in options_list:
                 opts.add_argument(i)
