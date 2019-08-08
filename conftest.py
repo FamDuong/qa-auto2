@@ -7,6 +7,7 @@ from simple_settings import settings
 
 
 driver = None
+user_data_path = None
 
 
 @pytest.mark.hookwrapper
@@ -35,7 +36,7 @@ def pytest_runtest_makereport(item):
 
 def get_current_dir():
     before_split = os.getcwd()
-    return before_split.split('\\qa-auto\\')
+    return before_split.split('\\testscripts\\')
 
 
 def _capture_screenshot(filename):
@@ -50,6 +51,7 @@ def browser():
     prog = subprocess.Popen("taskkill /im browser.exe /f", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     prog.communicate()  # Returns (stdoutdata, stderrdata): stdout and stderr are ignored, here
     global driver
+    global user_data_path
     if driver is None:
         chrome_options = sele_webdriver.ChromeOptions()
         chrome_options.add_argument("--window-size=1920,1080")
@@ -64,7 +66,7 @@ def browser():
         chrome_options.add_argument("--allow-insecure-localhost")
         chrome_options.add_argument("--disable-infobars")
         # chrome_options.add_argument('--user-data-dir=' + os.environ['user-dir-path'])
-        chrome_options.add_argument('--user-data-dir=' + settings.USER_DATA_DIR)
+        chrome_options.add_argument('--user-data-dir=' + user_data_path)
 
         driver = sele_webdriver.Chrome(options=chrome_options)
         driver.maximize_window()
@@ -87,7 +89,24 @@ def win_app_driver():
     return
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='session', autouse=True)
+def get_user_data_path():
+    from models.pageobject.version import VersionPageObject
+    from utils_automation.const import Urls
+    global user_data_path, local_driver
+    version_page_object = VersionPageObject()
+    try:
+        local_driver = sele_webdriver.Chrome()
+        local_driver.maximize_window()
+        local_driver.get(Urls.COCCOC_VERSION_URL)
+        path_full = version_page_object.get_profile_path(local_driver)
+        split_after = path_full.split('\\Local')
+        user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
+    finally:
+        local_driver.quit()
+
+
+@pytest.fixture(scope='session', autouse=True)
 def clear_screen_shot_folder():
     from utils_automation.cleanup import Files
     current_dir = get_current_dir()[0]
