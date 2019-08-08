@@ -1,4 +1,5 @@
 import os
+import platform
 import sys
 from selenium import  webdriver as sele_webdriver
 import pytz
@@ -10,7 +11,7 @@ class TestBrowser:
 
     @pytestrail.case('C36161')
     def test_current_time_now(self):
-        assert 0 == 1, 'abc'
+        print(platform.release())
 
     def get_user_data_path(self):
         from models.pageobject.version import VersionPageObject

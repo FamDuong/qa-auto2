@@ -26,7 +26,7 @@ def pytest_runtest_makereport(item):
         # file_name = report.nodeid.replace("::", "_") + ".png"
         timestamp = datetime.now().strftime('%H-%M-%S.%f')[:-3]
         filename = timestamp + ".png"
-        _capture_screenshot(filename)
+        # _capture_screenshot(filename)
         # if file_name:
         html = '<div><img src="screenshots/%s" style="width:600px;height:228px;" ' \
                    'onclick="window.open(this.src)" align="right"/></div>' % filename
