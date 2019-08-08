@@ -1,7 +1,7 @@
 
 from pytest_testrail.plugin import pytestrail
 from models.pageobject.settings import SettingsPageObject
-from utils.const import Urls
+from utils_automation.const import Urls
 
 
 # driver = None

@@ -5,7 +5,7 @@ from pytest_testrail.plugin import pytestrail
 from selenium.webdriver.common.keys import Keys
 
 from models.pageobject.downloads import DownloadsPageObject
-from utils.const import Urls
+from utils_automation.const import Urls
 from appium import webdriver
 
 

@@ -1,11 +1,11 @@
 import os
 import settings_master as settings
 import time
-import utils.excelfile as excelfile
+import utils_automation.excelfile as excelfile
 from pytest_testrail.plugin import pytestrail
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from utils.cleanup import Browsers
+from utils_automation.cleanup import Browsers
 # start = 0
 
 class TestPageLoadTime:

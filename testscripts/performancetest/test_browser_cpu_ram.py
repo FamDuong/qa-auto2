@@ -1,11 +1,11 @@
-import utils.excelfile as excelfile
+import utils_automation.excelfile as excelfile
 import time
 import settings_master as settings
 import psutil
 import os
 import multiprocessing as mp
 import concurrent.futures
-from utils.cleanup import Browsers
+from utils_automation.cleanup import Browsers
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 from pytest_testrail.plugin import pytestrail
