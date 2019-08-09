@@ -1,8 +1,10 @@
 import os
 import platform
 import sys
-from selenium import  webdriver as sele_webdriver
+
+from selenium import webdriver as sele_webdriver
 import pytz
+
 from pytest_testrail.plugin import pytestrail
 from utils_automation.const import Urls
 
@@ -10,8 +12,8 @@ from utils_automation.const import Urls
 class TestBrowser:
 
     @pytestrail.case('C36161')
-    def test_current_time_now(self):
-        print(platform.release())
+    def test_current_time_now(self, request):
+        print('Request node id is :', request.node.nodeid)
 
     def get_user_data_path(self):
         from models.pageobject.version import VersionPageObject
