@@ -8,12 +8,14 @@ from simple_settings import settings
 
 driver = None
 user_data_path = None
+winappdriver = None
 
 
 @pytest.mark.hookwrapper
 def pytest_runtest_makereport(item):
     """
         Extends the PyTest Plugin to take and embed screenshot in html report right before close webdriver.
+        :param request:
         :param item:
         """
     pytest_html = item.config.pluginmanager.getplugin('html')
@@ -26,7 +28,11 @@ def pytest_runtest_makereport(item):
         # file_name = report.nodeid.replace("::", "_") + ".png"
         timestamp = datetime.now().strftime('%H-%M-%S.%f')[:-3]
         filename = timestamp + ".png"
-        # _capture_screenshot(filename)
+        if driver is not None and ('winapp' not in item.name):
+            _capture_screenshot(filename)
+
+        elif win_app_driver is not None:
+            _capture_screenshot_win_app(filename)
         # if file_name:
         html = '<div><img src="screenshots/%s" style="width:600px;height:228px;" ' \
                    'onclick="window.open(this.src)" align="right"/></div>' % filename
@@ -42,6 +48,11 @@ def get_current_dir():
 def _capture_screenshot(filename):
     current_dir = get_current_dir()[0]
     driver.save_screenshot(current_dir + "/screenshots/" + filename)
+
+
+def _capture_screenshot_win_app(filename):
+    current_dir = get_current_dir()[0]
+    winappdriver.save_screenshot(current_dir + "/screenshots/" + filename)
 
 
 @pytest.fixture(scope='session')
@@ -77,15 +88,14 @@ def browser():
 
 @pytest.fixture(scope='session')
 def win_app_driver():
-    global driver
-    if driver is None:
-        desired_caps = {}
-        desired_caps["app"] = "Browser"
-        driver = webdriver.Remote(
+    global winappdriver
+    if winappdriver is None:
+        desired_caps = {"app": "Browser"}
+        winappdriver = webdriver.Remote(
             command_executor='http://127.0.0.1:4723',
             desired_capabilities=desired_caps)
-    yield driver
-    driver.quit()
+    yield winappdriver
+    winappdriver.quit()
     return
 
 
