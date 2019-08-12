@@ -11,3 +11,8 @@ class VersionPageElements(BasePageElement):
         wait = WebDriverWait(driver, 5)
         return wait.until(
             ec.presence_of_element_located(VersionPageLocators.PROFILE_PATH_ELEMENT))
+
+    def find_flash_path_element(self, driver):
+        wait = WebDriverWait(driver, 5)
+        return wait.until(
+            ec.presence_of_element_located(VersionPageLocators.FLASH_PATH_ELEMENT))

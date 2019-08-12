@@ -9,4 +9,8 @@ class VersionPageObject(BasePageObject):
         profile_path_elem = self.version_element.find_profile_path_element(driver)
         return profile_path_elem.text
 
+    def get_flash_path(self, driver):
+        flash_path = self.version_element.find_flash_path_element(driver)
+        return flash_path.text
+
 

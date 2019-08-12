@@ -10,3 +10,5 @@ class Urls:
 
     GOOGLE_URL = 'https://www.google.com/'
 
+    NEW_TAB_URL = 'http://coccoc.com/webhp'
+

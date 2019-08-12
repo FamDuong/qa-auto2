@@ -86,6 +86,7 @@ class TestSaviorSettings:
         self.savior_page_object.download_button_is_displayed(browser)
 
     @pytestrail.case('C54142')
+    @pytest.mark.skip(reason='Flaky test, unstable test, need improvements')
     def test_check_working_instant_download_youtube(self, browser):
         text = self.get_text_extension_option(browser)
         self.click_option_download_youtube_right_away(browser, text, None)
