@@ -90,7 +90,7 @@ def browser():
 def win_app_driver():
     global winappdriver
     if winappdriver is None:
-        desired_caps = {"app": "Browser"}
+        desired_caps = {"app": "browser"}
         winappdriver = webdriver.Remote(
             command_executor='http://127.0.0.1:4723',
             desired_capabilities=desired_caps)
