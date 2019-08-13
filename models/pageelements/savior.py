@@ -10,7 +10,7 @@ from models.pagelocators.savior import SaviorPageLocators
 class SaviorElements(BasePageElement):
 
     def find_first_layer(self, driver):
-        wait = WebDriverWait(driver, 5)
+        wait = WebDriverWait(driver, 20)
         return wait.until(
             ec.presence_of_element_located((By.CSS_SELECTOR, SaviorPageLocators.FIRST_LAYER)))
 
