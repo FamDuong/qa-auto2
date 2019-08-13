@@ -12,6 +12,7 @@ class YoutubePageElements(BasePageElement):
             ec.element_to_be_clickable(YoutubePageLocators.ANY_VIDEO_ITEM))
 
     def find_video_player_item(self, driver):
+        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS)
         wait = WebDriverWait(driver, 20)
         return wait.until(
             ec.element_to_be_clickable(YoutubePageLocators.VIDEO_PLAYER_ITEM))
