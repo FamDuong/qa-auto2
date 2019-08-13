@@ -78,6 +78,11 @@ class SaviorExtensionsOptionsElement(BasePageElement):
         return wait.until(
             ec.element_to_be_clickable(SaviorExtensionOptionsPageLocators.VIDEO_QUALITY_HIGH_BTN))
 
+    def find_video_quality_low_option(self, driver):
+        wait = WebDriverWait(driver, 20)
+        return wait.until(
+            ec.element_to_be_clickable(SaviorExtensionOptionsPageLocators.VIDEO_QUALITY_LOW_BTN))
+
     def find_video_quality_medium_option(self, driver):
         wait = WebDriverWait(driver, 20)
         return wait.until(

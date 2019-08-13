@@ -141,11 +141,11 @@ class TestSaviorSettings:
     def test_if_remember_last_chosen_quality(self, browser):
         text = self.get_text_extension_option(browser)
         browser.get(u'chrome-extension://' + text + u'/options.html')
-        self.savior_extension.choose_video_quality_high(browser)
+        self.savior_extension.choose_video_quality_low(browser)
         self.savior_extension.choose_remember_last_chosen_option(browser)
         time.sleep(2)
 
-        pause_any_video_youtube(browser,self.youtube_page_object)
+        pause_any_video_youtube(browser, self.youtube_page_object)
         self.savior_page_object.choose_preferred_option(browser)
         time.sleep(3)
 
@@ -162,7 +162,7 @@ class TestSaviorSettings:
             assert self.savior_extension.verify_video_quality_medium_is_checked(browser) == 'true'
             time.sleep(1)
         finally:
-            self.savior_extension.choose_video_quality_high(browser)
+            self.savior_extension.choose_video_quality_low(browser)
 
 
 
