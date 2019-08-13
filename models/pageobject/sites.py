@@ -12,7 +12,7 @@ class YoutubePageObject(BasePageObject):
 
     def choose_any_video_item(self, driver):
         profile_path_elem = self.youtube_element.find_any_video_item(driver)
-        profile_path_elem.click()
+        return profile_path_elem.get_attribute('href')
 
     def mouse_over_video_item(self, driver):
         video_element = self.youtube_element.find_video_player_item(driver)
