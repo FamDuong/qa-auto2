@@ -56,7 +56,7 @@ class TestPageLoadTime:
         for i in listweb:
             loadtime = 0
             startuptime = 0
-            looptime = 2
+            looptime = 10
             for j in range(looptime):
                 print("Run time: %s" % j)
                 browser = self.open_webpage(i, binary_file, options_list)
