@@ -22,12 +22,12 @@ class GooglePageElements(BasePageElement):
     def find_search_field(self, driver):
         wait = WebDriverWait(driver, 20)
         return wait.until(
-            ec.presence_of_element_located(GooglePageLocators.SEARCH_FIELD))
+            ec.element_to_be_clickable(GooglePageLocators.SEARCH_FIELD))
 
     def find_search_button(self, driver):
         wait = WebDriverWait(driver, 20)
         return wait.until(
-            ec.presence_of_element_located(GooglePageLocators.SEARCH_BUTTON))
+            ec.element_to_be_clickable(GooglePageLocators.SEARCH_BUTTON))
 
     def find_video_search_btn(self, driver):
         wait = WebDriverWait(driver, 20)
