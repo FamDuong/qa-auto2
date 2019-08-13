@@ -40,21 +40,13 @@ class TestTorrentSeeding:
         time.sleep(2)
 
     @pytestrail.case('C54217')
-    @pytest.mark.parametrize("param", [1, 2])
     def test_set_to_not_seeding_one_torrent(self, browser, clear_download_data, param):
         self.set_up_finished_torrent(browser)
         time.sleep(2)
         self.download_page_object.verify_torrent_seed_up_arrow(browser)
         time.sleep(2)
 
-        if param == 1:
-            self.download_page_object.stop_seeding_from_out_side_btn(browser)
-        if param == 2:
-            time.sleep(6)
-            browser.get(Urls.COCCOC_DOWNLOAD_URL)
-            self.download_page_object.click_more_icon_button(browser)
-            self.download_page_object.do_not_seed_action(browser)
-            time.sleep(2)
+        self.download_page_object.stop_seeding_from_out_side_btn(browser)
 
         # Verify the up button is not displayed
         time.sleep(2)
