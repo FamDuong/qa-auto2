@@ -81,6 +81,7 @@ def browser():
 
         driver = sele_webdriver.Chrome(options=chrome_options)
         driver.maximize_window()
+        driver.set_page_load_timeout(40)
     yield driver
     driver.quit()
     return
