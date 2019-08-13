@@ -12,4 +12,4 @@ class TestDownloadButtQualityBlock:
     @pytestrail.case('C54151')
     def test_check_default_state_download_button(self, browser):
         pause_any_video_youtube(browser, self.youtube_page_object)
-        self.savior_page_object.assert_value_preferred_quality(browser, 'High')
+        self.savior_page_object.assert_value_preferred_quality(browser, 'Low')
