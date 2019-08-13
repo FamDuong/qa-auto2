@@ -6,6 +6,10 @@ class YoutubePageLocators(object):
 
     VIDEO_PLAYER_ITEM = (By.ID, 'movie_player')
 
+    SEARCH_BOX = (By.ID, 'search')
+
+    SEARCH_BTN = (By.ID, 'search-icon-legacy')
+
 
 class GooglePageLocators(object):
 
