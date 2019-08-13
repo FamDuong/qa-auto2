@@ -79,12 +79,12 @@ class DownloadsElement(BasePageElement):
     def find_stop_seeding_button_out_side_displayed(self, driver):
         wait = WebDriverWait(driver, 20)
         return wait.until(
-            ec.presence_of_element_located(DownloadsPageLocators.TORRENT_STOP_SEEDING_BTN))
+            ec.element_to_be_clickable(DownloadsPageLocators.TORRENT_STOP_SEEDING_BTN))
 
     def find_do_not_seed_button(self, driver):
         wait = WebDriverWait(driver, 20)
         return wait.until(
-            ec.presence_of_element_located(DownloadsPageLocators.DO_NOT_SEED_BTN))
+            ec.element_to_be_clickable(DownloadsPageLocators.DO_NOT_SEED_BTN))
 
     def find_all_cancel_current_torrent_btn(self, driver):
         time.sleep(2)
@@ -93,7 +93,7 @@ class DownloadsElement(BasePageElement):
     def find_clear_all_button(self, driver):
         wait = WebDriverWait(driver, 20)
         return wait.until(
-            ec.presence_of_element_located(DownloadsPageLocators.CLEAR_ALL_BTN))
+            ec.element_to_be_clickable(DownloadsPageLocators.CLEAR_ALL_BTN))
 
 
 class ThePirateBayElements(BasePageElement):
