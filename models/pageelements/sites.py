@@ -11,6 +11,19 @@ class YoutubePageElements(BasePageElement):
         return wait.until(
             ec.presence_of_element_located(YoutubePageLocators.ANY_VIDEO_ITEM))
 
+    def find_search_button(self, driver):
+        wait = WebDriverWait(driver, 20)
+        return wait.until(
+            ec.presence_of_element_located(YoutubePageLocators.SEARCH_BTN))
+
+    def search_video(self, driver, text_search):
+        wait = WebDriverWait(driver, 20)
+        search_field = wait.until(
+            ec.presence_of_element_located(YoutubePageLocators.SEARCH_BOX))
+        search_field.click()
+        search_field.send_keys(text_search)
+        self.find_search_button(driver).click()
+
     def find_video_player_item(self, driver):
         # wait1 = WebDriverWait(driver, 60)
         # wait1.until(lambda driver1: driver.execute_script("return document.readyState") == "complete")
