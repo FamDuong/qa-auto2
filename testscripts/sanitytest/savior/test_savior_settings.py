@@ -1,8 +1,6 @@
 import time
 
 import pytest
-from selenium.webdriver.support.wait import WebDriverWait
-
 from models.pageobject.downloads import DownloadsPageObject
 from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetailsPageObject, \
     SaviorExtensionOptionsPageObject
@@ -12,7 +10,6 @@ from pytest_testrail.plugin import pytestrail
 from testscripts.sanitytest.savior.common_setup import pause_any_video_youtube
 from utils_automation.const import Urls
 from utils_automation.setup import Browser
-from selenium.webdriver.support import expected_conditions as ec
 
 
 class TestSaviorSettings:
@@ -33,9 +30,8 @@ class TestSaviorSettings:
         self.extension_page_object.savior_extension_is_displayed(browser)
         self.extension_page_object.savior_extension_detail_is_clicked(browser)
 
-    def click_option_download_youtube_right_away(self, browser, text, assert_value):
+    def check_instant_download(self, browser, text):
         browser.get(u'chrome-extension://' + text + u'/options.html')
-        assert self.savior_extension.verify_return_value_show_instant_download_youtube(browser) == assert_value
         self.savior_extension.choose_show_instant_download_youtube(browser)
         # self.savior_extension.choose_save_and_close_button(browser)
 
@@ -86,10 +82,9 @@ class TestSaviorSettings:
         self.savior_page_object.download_button_is_displayed(browser)
 
     @pytestrail.case('C54142')
-    @pytest.mark.skip(reason='Flaky test, unstable test, need improvements')
     def test_check_working_instant_download_youtube(self, browser):
         text = self.get_text_extension_option(browser)
-        self.click_option_download_youtube_right_away(browser, text, None)
+        self.check_instant_download(browser, text)
 
         # Navigate to google for download
         try:
@@ -108,7 +103,6 @@ class TestSaviorSettings:
             # Clear data
             self.download_page_object.cancel_all_current_torrent(browser)
             self.download_page_object.clear_all_existed_torrent(browser)
-            self.click_option_download_youtube_right_away(browser, text, 'true')
 
     @pytest.mark.skip
     @pytestrail.case('C54143')

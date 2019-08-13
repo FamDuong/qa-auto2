@@ -16,37 +16,37 @@ class DownloadsElement(BasePageElement):
     def find_pause_torrent_download_element(self, driver):
         wait = WebDriverWait(driver, 5)
         return wait.until(
-            ec.presence_of_element_located((By.CSS_SELECTOR, DownloadsPageLocators.PAUSE_TORRENT_CLASS_TEXT)))
+            ec.element_to_be_clickable((By.CSS_SELECTOR, DownloadsPageLocators.PAUSE_TORRENT_CLASS_TEXT)))
 
     def find_resume_torrent_download_element(self, driver):
         wait = WebDriverWait(driver, 5)
         return wait.until(
-            ec.presence_of_element_located((By.CSS_SELECTOR, DownloadsPageLocators.RESUME_TORRENT_CLASS_TEXT)))
+            ec.element_to_be_clickable((By.CSS_SELECTOR, DownloadsPageLocators.RESUME_TORRENT_CLASS_TEXT)))
 
     def find_cancel_torrent_download_element(self, driver):
         wait = WebDriverWait(driver, 5)
         return wait.until(
-            ec.presence_of_element_located((By.CSS_SELECTOR, DownloadsPageLocators.CANCEL_TORRENT_CLASS_TEXT)))
+            ec.element_to_be_clickable((By.CSS_SELECTOR, DownloadsPageLocators.CANCEL_TORRENT_CLASS_TEXT)))
 
     def find_remove_torrent_download_element(self, driver):
         wait = WebDriverWait(driver, 5)
         return wait.until(
-            ec.presence_of_element_located((By.CSS_SELECTOR, DownloadsPageLocators.REMOVE_TORRENT_FROM_LIST_TEXT)))
+            ec.element_to_be_clickable((By.CSS_SELECTOR, DownloadsPageLocators.REMOVE_TORRENT_FROM_LIST_TEXT)))
 
     def find_more_icon(self, driver):
         wait = WebDriverWait(driver, 5)
         return wait.until(
-            ec.presence_of_element_located(DownloadsPageLocators.MORE_ICON_BTN))
+            ec.element_to_be_clickable(DownloadsPageLocators.MORE_ICON_BTN))
 
     def find_copy_settings_btn(self, driver):
         wait = WebDriverWait(driver, 5)
         return wait.until(
-            ec.presence_of_element_located(DownloadsPageLocators.COPY_LINK_BTN))
+            ec.element_to_be_clickable(DownloadsPageLocators.COPY_LINK_BTN))
 
     def find_tree_view_torrent_btn(self, driver):
         wait = WebDriverWait(driver, 5)
         return wait.until(
-            ec.presence_of_element_located(DownloadsPageLocators.TORRENT_TREE_VIEW_BTN))
+            ec.element_to_be_clickable(DownloadsPageLocators.TORRENT_TREE_VIEW_BTN))
 
     def is_torrent_check_icon_displayed(self, driver):
         wait = WebDriverWait(driver, 5)
