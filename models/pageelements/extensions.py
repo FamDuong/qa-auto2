@@ -66,27 +66,27 @@ class SaviorExtensionsOptionsElement(BasePageElement):
     def find_save_and_close_button(self, driver):
         wait = WebDriverWait(driver, 5)
         return wait.until(
-            ec.presence_of_element_located(SaviorExtensionOptionsPageLocators.SAVE_AND_CLOSE_BTN))
+            ec.element_to_be_clickable(SaviorExtensionOptionsPageLocators.SAVE_AND_CLOSE_BTN))
 
     def find_show_download_button_near_downloadable_media(self, driver):
         wait = WebDriverWait(driver, 5)
         return wait.until(
-            ec.presence_of_element_located(SaviorExtensionOptionsPageLocators.SHOW_DOWNLOAD_BTN_NEAR_DOWNLOAD_MEDIA))
+            ec.element_to_be_clickable(SaviorExtensionOptionsPageLocators.SHOW_DOWNLOAD_BTN_NEAR_DOWNLOAD_MEDIA))
 
     def find_video_quality_high_option(self, driver):
         wait = WebDriverWait(driver, 5)
         return wait.until(
-            ec.presence_of_element_located(SaviorExtensionOptionsPageLocators.VIDEO_QUALITY_HIGH_BTN))
+            ec.element_to_be_clickable(SaviorExtensionOptionsPageLocators.VIDEO_QUALITY_HIGH_BTN))
 
     def find_video_quality_medium_option(self, driver):
         wait = WebDriverWait(driver, 5)
         return wait.until(
-            ec.presence_of_element_located(SaviorExtensionOptionsPageLocators.VIDEO_QUALITY_MEDIUM_BTN))
+            ec.element_to_be_clickable(SaviorExtensionOptionsPageLocators.VIDEO_QUALITY_MEDIUM_BTN))
 
     def find_remember_last_chosen_option(self, driver):
         wait = WebDriverWait(driver, 5)
         return wait.until(
-            ec.presence_of_element_located(SaviorExtensionOptionsPageLocators.REMEMBER_LAST_CHOSEN_OPTION))
+            ec.element_to_be_clickable(SaviorExtensionOptionsPageLocators.REMEMBER_LAST_CHOSEN_OPTION))
 
 
 

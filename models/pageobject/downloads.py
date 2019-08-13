@@ -19,25 +19,27 @@ class DownloadsPageObject(BasePageObject):
     def click_pause_torrent_download_current(self, driver):
         pause_torrent_btn = self.downloads_elem.find_pause_torrent_download_element(driver)
         pause_torrent_btn.click()
+        time.sleep(2)
 
     def click_resume_torrent_download_current(self, driver):
         resume_torrent_btn = self.downloads_elem.find_resume_torrent_download_element(driver)
         resume_torrent_btn.click()
+        time.sleep(2)
 
     def click_cancel_torrent_download_current(self, driver):
         cancel_torrent_btn = self.downloads_elem.find_cancel_torrent_download_element(driver)
         cancel_torrent_btn.click()
-        time.sleep(1)
+        time.sleep(2)
 
     def click_remove_torrent_download_current(self, driver):
         remove_torrent_btn = self.downloads_elem.find_remove_torrent_download_element(driver)
         remove_torrent_btn.click()
-        time.sleep(1)
+        time.sleep(2)
 
     def click_more_icon_button(self, driver):
         more_icon_btn = self.downloads_elem.find_more_icon(driver)
         more_icon_btn.click()
-        time.sleep(1)
+        time.sleep(2)
 
     def hover_more_icon_button(self, driver):
         more_icon_btn = self.downloads_elem.find_more_icon(driver)
@@ -48,11 +50,12 @@ class DownloadsPageObject(BasePageObject):
     def click_copy_settings_button(self, driver):
         copy_settings_btn = self.downloads_elem.find_copy_settings_btn(driver)
         copy_settings_btn.click()
-        time.sleep(1)
+        time.sleep(3)
 
     def click_tree_view_button(self, driver):
         tree_view_btn = self.downloads_elem.find_tree_view_torrent_btn(driver)
         tree_view_btn.click()
+        time.sleep(2)
 
     def verify_torrent_info_displayed(self, driver):
         self.downloads_elem.is_torrent_check_icon_displayed(driver)

@@ -67,7 +67,7 @@ class TestTorrentDownload:
         time.sleep(2)
 
     @pytestrail.case('C54211')
-    @pytest.mark.skip(reason='Unstable, Need improvements')
+    @pytest.mark.skip(reason='Need improvements')
     def test_copy_magnet_link(self, browser, clear_download_data):
         """
         Prepare data for copy magnet link
