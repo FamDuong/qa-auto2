@@ -32,6 +32,7 @@ class GooglePageObject(BasePageObject):
         search_field.click()
         search_field.send_keys(text_value)
         search_field.send_keys(Keys.RETURN)
+        time.sleep(4)
 
     def search_result_video(self, driver):
         self.google_element.find_video_search_btn(driver).click()
