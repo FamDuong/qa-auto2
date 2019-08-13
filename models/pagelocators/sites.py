@@ -13,5 +13,5 @@ class GooglePageLocators(object):
     SEARCH_BUTTON = (By.XPATH, '//div[@class="VlcLAe"]/input[@class="gNO89b"]')
     VIDEO_SEARCH_BTN = (By.XPATH, '//a[contains(text(),"Videos")]')
 
-    SHADOW_ROOT_CONTENT = (By.XPATH, '(//div[@data-hveid="38"]//div[@class="s"]//div)[6]')
+    SHADOW_ROOT_CONTENT = (By.XPATH, '(//div[starts-with(@data-hveid, "4")]//div[@class="s"]//div)[6]')
     SAVIOR_ICON = '[class="button-block shown"]'
