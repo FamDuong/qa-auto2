@@ -31,3 +31,6 @@ class SettingsPageObject(BasePageObject):
         test1_executed = driver.execute_script('return arguments[0].shadowRoot', max_connection)
         return test1_executed.text
 
+    def get_download_folder(self, driver):
+        return self.settings_elem.find_download_location_element(driver).text
+

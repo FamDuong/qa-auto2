@@ -1,7 +1,7 @@
 import os
 import settings_master as settings
 import time
-import utils_automation.excelfile as excelfile
+import utils_automation.common as excelfile
 from pytest_testrail.plugin import pytestrail
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options

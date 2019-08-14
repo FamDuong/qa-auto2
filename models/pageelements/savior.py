@@ -24,13 +24,16 @@ class SaviorElements(BasePageElement):
             return 1
 
     def select_shadow_element_savior_only_root(self, driver):
-        return driver.execute_script('return document.querySelector(arguments[0]).shadowRoot',SaviorPageLocators.FIRST_LAYER)
+        return driver.execute_script('return document.querySelector(arguments[0]).shadowRoot', SaviorPageLocators.
+                                     FIRST_LAYER)
 
     def select_shadow_element_download_button(self, driver):
-        return self.select_shadow_element_savior(driver, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.DOWNLOAD_BUTTON)
+        return self.select_shadow_element_savior(driver, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.
+                                                 DOWNLOAD_BUTTON)
 
     def select_shadow_element_preferred_select(self, driver):
-        return self.select_shadow_element_savior(driver, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFFERED_SELECT_BTN)
+        return self.select_shadow_element_savior(driver, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.
+                                                 PREFFERED_SELECT_BTN)
 
     def find_download_button(self, driver):
         return self.select_shadow_element_download_button(driver)
@@ -40,4 +43,9 @@ class SaviorElements(BasePageElement):
         assert self.select_shadow_element_download_button(driver) in (1, None)
 
     def find_preferred_option(self, driver):
-        return self.select_shadow_element_by_css_selector(driver, self.find_first_layer(driver)).find_element_by_css_selector(SaviorPageLocators.PREFFERED_SELECT_BTN)
+        return self.select_shadow_element_by_css_selector(driver, self.find_first_layer(driver)).\
+            find_element_by_css_selector(SaviorPageLocators.PREFFERED_SELECT_BTN)
+
+    def find_mobile_sharing_button(self, driver):
+        return self.select_shadow_element_by_css_selector(driver, self.find_first_layer(driver)). \
+            find_element_by_css_selector(SaviorPageLocators.MOBILE_SHARING_BUTTON)

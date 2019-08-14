@@ -2,7 +2,10 @@ from selenium.webdriver.common.by import By
 
 
 class YoutubePageLocators(object):
-    ANY_VIDEO_ITEM = (By.XPATH, '(//a[not(contains(text(), "Live"))][@id="video-title"])[10]')
+
+    @staticmethod
+    def any_video_item(text):
+        return By.XPATH, '//a[contains(text(), "%s")][@id="video-title"]' % text
 
     VIDEO_PLAYER_ITEM = (By.ID, 'movie_player')
 

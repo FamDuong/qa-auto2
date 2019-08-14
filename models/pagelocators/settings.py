@@ -12,6 +12,8 @@ class SettingsPageLocators(object):
     SETTINGS_COCCOC_SECTION_PAGE_TEXT = 'settings-section'
     SETTINGS_COCCOC_TORRENTS_PAGE_TEXT = 'settings-coccoc-torrents-page'
 
+    SETTINGS_DOWNLOAD_PAGE_TEXT = 'settings-downloads-page'
+
     OPEN_SPECIFIC_PAGE_OR_SET_OF_PAGES_TEXT = '[label="Open a specific page or set of pages"]'
     CONTINUE_WHERE_LEFT_OFF_TEXT = '[label="Continue where you left off"]'
     SHOW_LANGUAGE_OPTIONS_TEXT = '[label="Show language options"]'
@@ -21,6 +23,8 @@ class SettingsPageLocators(object):
     DEFAULT_TORRENT_CLIENT_TEXT = '[class="settings-box two-line"]'
 
     SETTINGS_MAX_NUMBER_OF_CONNECTION_TORRENT = '[size="6"]'
+
+    DEFAULT_DOWNLOAD_PATH_TEXT = '#defaultDownloadPath'
 
 
 class SettingsDownloadPageLocators(object):
