@@ -40,7 +40,7 @@ class TestTorrentSeeding:
         time.sleep(2)
 
     @pytestrail.case('C54217')
-    def test_set_to_not_seeding_one_torrent(self, browser, clear_download_data, param):
+    def test_set_to_not_seeding_one_torrent(self, browser, clear_download_data):
         self.set_up_finished_torrent(browser)
         time.sleep(2)
         self.download_page_object.verify_torrent_seed_up_arrow(browser)

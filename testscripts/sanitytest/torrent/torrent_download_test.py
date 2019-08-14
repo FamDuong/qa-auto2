@@ -22,7 +22,7 @@ class TestTorrentDownload:
     pirate_bay_search_result = PirateBaySearchResult()
 
     def prepare_torrent_running(self, browser):
-        browser.get('https://www.thepiratebay.org/')
+        browser.get(Urls.PIRATE_BAY_URL)
         self.pirate_bay_object.search_torrent_to_download(browser, "Python")
 
         self.pirate_bay_search_result.click_download_magnet_value(browser)
@@ -53,7 +53,7 @@ class TestTorrentDownload:
 
     @pytestrail.case('C54210')
     def test_download_from_magnet_link(self, browser, clear_download_data):
-        browser.get('https://www.thepiratebay.org/')
+        browser.get(Urls.PIRATE_BAY_URL)
         self.pirate_bay_object.search_torrent_to_download(browser, "Python")
 
         self.pirate_bay_search_result.click_download_magnet_value(browser)
