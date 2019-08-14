@@ -11,4 +11,5 @@ class Urls:
     GOOGLE_URL = 'https://www.google.com/'
 
     NEW_TAB_URL = 'http://coccoc.com/webhp'
+    PIRATE_BAY_URL = 'https://www.thepiratebay.org/search'
 
