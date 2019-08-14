@@ -10,8 +10,8 @@ from models.pageobject.basepage_object import BasePageObject
 class YoutubePageObject(BasePageObject):
     youtube_element = YoutubePageElements()
 
-    def choose_any_video_item(self, driver):
-        profile_path_elem = self.youtube_element.find_any_video_item(driver)
+    def choose_any_video_item(self, driver, text):
+        profile_path_elem = self.youtube_element.find_any_video_item(driver, text)
         return profile_path_elem.get_attribute('href')
 
     def search_video_item(self, driver, text):

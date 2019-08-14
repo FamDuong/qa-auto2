@@ -14,6 +14,8 @@ class DownloadsPageLocators:
 
     MORE_ICON_BTN = (By.XPATH, '//span[@class="more-icon"]')
 
+    REMOVE_FILE_FROM_DISK = (By.XPATH, '//li[@class="js-removeFromDisk"]')
+
     DO_NOT_SEED_BTN = (By.XPATH, '//label[span="Do not seed"]')
 
     COPY_LINK_BTN = (By.XPATH, '//li[@class="js-copyMagnet"]')
@@ -37,6 +39,8 @@ class DownloadsPageLocators:
     TORRENT_STOP_SEEDING_BTN = (By.XPATH, '//button[@class="js-stopSeeding stopSeeding-btn"]')
 
     CLEAR_ALL_BTN = (By.XPATH, '//button[@class="js-clearAll clearButton headerButton"]')
+
+    PLAY_BTN = (By.XPATH, '//button[@class="js-play play-btn"]')
 
 
 class ThePirateBayLocators(object):

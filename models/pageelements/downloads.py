@@ -38,6 +38,11 @@ class DownloadsElement(BasePageElement):
         return wait.until(
             ec.element_to_be_clickable(DownloadsPageLocators.MORE_ICON_BTN))
 
+    def find_remove_from_disk(self, driver):
+        wait = WebDriverWait(driver, 20)
+        return wait.until(
+            ec.element_to_be_clickable(DownloadsPageLocators.REMOVE_FILE_FROM_DISK))
+
     def find_copy_settings_btn(self, driver):
         wait = WebDriverWait(driver, 20)
         return wait.until(
@@ -94,6 +99,11 @@ class DownloadsElement(BasePageElement):
         wait = WebDriverWait(driver, 20)
         return wait.until(
             ec.element_to_be_clickable(DownloadsPageLocators.CLEAR_ALL_BTN))
+
+    def find_play_button(self, driver):
+        wait = WebDriverWait(driver, 90)
+        return wait.until(
+            ec.presence_of_element_located(DownloadsPageLocators.PLAY_BTN))
 
 
 class ThePirateBayElements(BasePageElement):

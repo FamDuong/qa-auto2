@@ -45,3 +45,10 @@ class SettingsElements(BasePageElement):
                                         SettingsPageLocators.SETTINGS_MAIN_TEXT,
                                         SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
                                         SettingsPageLocators.SETTINGS_COCCOC_SECTION_PAGE_TEXT)
+
+    def find_download_location_element(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsPageLocators.SETTINGS_MAIN_TEXT,
+                                        SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                        SettingsPageLocators.SETTINGS_DOWNLOAD_PAGE_TEXT,
+                                        SettingsPageLocators.DEFAULT_DOWNLOAD_PATH_TEXT)

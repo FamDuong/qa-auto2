@@ -39,7 +39,12 @@ class DownloadsPageObject(BasePageObject):
     def click_more_icon_button(self, driver):
         more_icon_btn = self.downloads_elem.find_more_icon(driver)
         more_icon_btn.click()
-        time.sleep(2)
+        time.sleep(1)
+
+    def remove_file_from_disk(self, driver):
+        self.click_more_icon_button(driver)
+        self.downloads_elem.find_remove_from_disk(driver).click()
+        time.sleep(4)
 
     def hover_more_icon_button(self, driver):
         more_icon_btn = self.downloads_elem.find_more_icon(driver)
@@ -90,11 +95,15 @@ class DownloadsPageObject(BasePageObject):
         elements = self.downloads_elem.find_all_cancel_current_torrent_btn(driver)
         assert len(elements) > 0
 
-    def clear_all_existed_torrent(self, driver):
+    def clear_all_existed_downloads(self, driver):
         element = self.downloads_elem.find_clear_all_button(driver)
         time.sleep(1)
         element.click()
         time.sleep(1)
+
+    def verify_play_button_existed(self, driver):
+        assert self.downloads_elem.find_play_button(driver).text == 'Play'
+        time.sleep(2)
 
 
 class ThePirateBayPageObject(BasePageObject):

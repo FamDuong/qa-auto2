@@ -6,10 +6,10 @@ from models.pagelocators.sites import YoutubePageLocators, GooglePageLocators
 
 class YoutubePageElements(BasePageElement):
 
-    def find_any_video_item(self, driver):
+    def find_any_video_item(self, driver, text):
         wait = WebDriverWait(driver, 20)
         return wait.until(
-            ec.presence_of_element_located(YoutubePageLocators.ANY_VIDEO_ITEM))
+            ec.presence_of_element_located(YoutubePageLocators.any_video_item(text)))
 
     def find_search_button(self, driver):
         wait = WebDriverWait(driver, 20)
