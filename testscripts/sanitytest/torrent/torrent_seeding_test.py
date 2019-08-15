@@ -17,6 +17,7 @@ from appium import webdriver
 #     download_page_object.cancel_all_current_torrent(browser)
 #     download_page_object.clear_all_existed_torrent(browser)
 #     time.sleep(2)
+from utils_automation.setup import WaitAfterEach
 
 
 class TestTorrentSeeding:
@@ -30,29 +31,29 @@ class TestTorrentSeeding:
 
     def set_up_finished_torrent(self,browser):
         browser.get(self.magnet_url_torrent)
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
         browser.get(Urls.COCCOC_DOWNLOAD_URL)
 
     @pytestrail.case('C54215')
     def test_seeding_state(self, browser, clear_download_data):
         self.set_up_finished_torrent(browser)
         self.download_page_object.verify_torrent_seed_up_arrow(browser)
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     @pytestrail.case('C54217')
     def test_set_to_not_seeding_one_torrent(self, browser, clear_download_data):
         self.set_up_finished_torrent(browser)
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
         self.download_page_object.verify_torrent_seed_up_arrow(browser)
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
 
         self.download_page_object.stop_seeding_from_out_side_btn(browser)
 
         # Verify the up button is not displayed
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
         self.download_page_object.verify_torrent_seed_up_arrow_not_displayed(browser)
         # self.download_page_object.click_remove_torrent_download_current(browser)
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     # def test_hard(self, browser):
     #     browser.get(Urls.COCCOC_DOWNLOAD_URL)

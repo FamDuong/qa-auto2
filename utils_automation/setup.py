@@ -1,3 +1,5 @@
+import time
+
 from selenium import webdriver
 
 from utils_automation.const import Urls
@@ -18,3 +20,13 @@ class Browser:
         path_full = version_page_object.get_profile_path(local_driver)
         split_after = path_full.split('\\Local')
         return split_after[0]+u'\\Local\\CocCoc\\Browser\\User Data'
+
+
+class WaitAfterEach:
+    @staticmethod
+    def sleep_timer_after_each_step():
+        time.sleep(2)
+
+    @staticmethod
+    def sleep_timer_after_click_download():
+        time.sleep(5)

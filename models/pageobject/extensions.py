@@ -4,6 +4,7 @@ from models.pageelements.extensions import ExtensionsElement, CocCocSaviorExtens
     SaviorExtensionsOptionsElement
 from models.pagelocators.extensions import ExtensionsPageLocators
 from models.pageobject.basepage_object import BasePageObject
+from utils_automation.setup import WaitAfterEach
 
 
 class ExtensionsPageObject(BasePageObject):
@@ -51,14 +52,14 @@ class SaviorExtensionOptionsPageObject(BasePageObject):
         show_instant = self.savior_extension.find_instant_download_youtube_option(driver)
         checked_value = show_instant.get_attribute('checked')
         self.checked_value_condition(checked_value, show_instant)
-        time.sleep(1)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def verify_return_value_show_instant_download_youtube(self, driver):
         return self.savior_extension.find_instant_download_youtube_option(driver).get_attribute('checked')
 
     def choose_save_and_close_button(self, driver):
         self.savior_extension.find_save_and_close_button(driver).click()
-        time.sleep(1)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def verify_show_download_button_near_is_checked(self, driver):
         element_checked = self.savior_extension.find_show_download_button_near_downloadable_media(driver)

@@ -6,6 +6,7 @@ import win32con
 from pytest_testrail.plugin import pytestrail
 from models.pageobject.downloads import DownloadsPageObject, ThePirateBayPageObject, PirateBaySearchResult
 from utils_automation.const import Urls
+from utils_automation.setup import WaitAfterEach
 
 
 class TestTorrentDownload:
@@ -30,26 +31,26 @@ class TestTorrentDownload:
     @pytest.mark.skip
     def test_download_fromt_torrent_link(self, browser):
         browser.get('https://fileslicious.tf/justcause4cpy')
-        time.sleep(3)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     @pytest.mark.skip
     def test_download_from_torrent_file(self, browser):
         browser.get(Urls.COCCOC_DOWNLOAD_URL)
         self.download_page_object.click_add_torrent(browser)
         # self.upload_file("D:\\Automation Test Coc Coc\\qa-auto\\qa-auto\\testdata\\torrent_file.torrent")
-        time.sleep(3)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     @pytestrail.case('C54209')
     def test_pause_resume_torrent_download(self, browser, clear_download_data):
         browser.get('https://fileslicious.tf/justcause4cpy')
-        time.sleep(3)
+        WaitAfterEach.sleep_timer_after_each_step()
         # browser.find_element_by_tag_name('body').send_keys(Keys.COMMAND + 't')
         browser.get(Urls.COCCOC_DOWNLOAD_URL)
         self.download_page_object.click_pause_torrent_download_current(browser)
         self.download_page_object.click_resume_torrent_download_current(browser)
         # self.download_page_object.click_cancel_torrent_download_current(browser)
         # self.download_page_object.click_remove_torrent_download_current(browser)
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     @pytestrail.case('C54210')
     def test_download_from_magnet_link(self, browser, clear_download_data):
@@ -64,7 +65,7 @@ class TestTorrentDownload:
         # browser.get(Urls.COCCOC_DOWNLOAD_URL)
         # self.download_page_object.click_cancel_torrent_download_current(browser)
         # self.download_page_object.click_remove_torrent_download_current(browser)
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     @pytestrail.case('C54211')
     @pytest.mark.skip(reason='Need improvements')
@@ -93,21 +94,21 @@ class TestTorrentDownload:
         # Stop and remove torrent
         self.download_page_object.click_cancel_torrent_download_current(browser)
         self.download_page_object.click_remove_torrent_download_current(browser)
-        time.sleep(3)
+        WaitAfterEach.sleep_timer_after_each_step()
 
         print('Magnet link is:', magnet_link)
 
         # Download torrent from magnet link
         browser.get(magnet_link)
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
         # Verify
 
         self.download_page_object.verify_torrent_seed_up_arrow(browser)
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
         # self.download_page_object.click_cancel_torrent_download_current(browser)
         # self.download_page_object.click_remove_torrent_download_current(browser)
 
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     @pytestrail.case('C54212')
     def test_torrent_download_tree_view(self, browser, clear_download_data):
@@ -126,4 +127,4 @@ class TestTorrentDownload:
         self.download_page_object.click_tree_view_button(browser)
 
         self.download_page_object.verify_torrent_info_displayed(browser)
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()

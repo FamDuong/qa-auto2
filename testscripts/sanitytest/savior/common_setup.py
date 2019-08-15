@@ -6,7 +6,7 @@ from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetails
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import YoutubePageObject, GooglePageObject
 from utils_automation.const import Urls
-from utils_automation.setup import Browser
+from utils_automation.setup import Browser, WaitAfterEach
 
 extension_page_object = ExtensionsPageObject()
 
@@ -24,16 +24,14 @@ download_page_object = DownloadsPageObject()
 def pause_any_video_youtube(browser):
     text_in_video = 'DDU-DU'
     browser.get(Urls.YOUTUBE_URL)
-    time.sleep(2)
+    WaitAfterEach.sleep_timer_after_each_step()
     youtube_page_object.search_video_item(browser, text_in_video)
-    time.sleep(3)
+    WaitAfterEach.sleep_timer_after_each_step()
     youtube_video_link = youtube_page_object.choose_any_video_item(browser,text_in_video)
     browser.get(youtube_video_link)
-    time.sleep(2)
+    WaitAfterEach.sleep_timer_after_each_step()
     youtube_page_object.mouse_over_video_item(browser)
-    time.sleep(2)
     youtube_page_object.click_video_item(browser)
-    time.sleep(2)
 
 
 def get_downloaded_folder_setting(browser,setting_page_object):
@@ -55,15 +53,15 @@ def check_instant_download(browser, text):
 
 def not_found_download_button_in_page(browser):
     pause_any_video_youtube(browser)
-    time.sleep(2)
+    WaitAfterEach.sleep_timer_after_each_step()
     savior_page_object.not_found_download_button(browser)
 
 
 def get_text_extension_option(browser):
     navigate_savior_details(browser)
-    time.sleep(1)
+    WaitAfterEach.sleep_timer_after_each_step()
     extension_detail_page_object.open_extension_options_view(browser)
-    time.sleep(1)
+    WaitAfterEach.sleep_timer_after_each_step()
     return savior_extension.get_show_instant_download_youtube_value(browser)
 
 
@@ -71,4 +69,4 @@ def revert_high_quality_default_option(browser):
     text = get_text_extension_option(browser)
     browser.get(u'chrome-extension://' + text + u'/options.html')
     savior_extension.choose_video_quality_high(browser)
-    time.sleep(1)
+    WaitAfterEach.sleep_timer_after_each_step()
