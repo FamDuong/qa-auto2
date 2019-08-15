@@ -12,6 +12,7 @@ from testscripts.sanitytest.savior.common_setup import pause_any_video_youtube, 
 from utils_automation.cleanup import Files
 from utils_automation.common import FilesHandle
 from utils_automation.const import Urls
+from utils_automation.setup import WaitAfterEach
 
 
 class TestDownloadButtQualityBlock:
@@ -30,9 +31,9 @@ class TestDownloadButtQualityBlock:
         return files_handle.find_files_in_folder_by_modified_date(mydir, endwith)
 
     def clear_data_download(self, driver):
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
         self.download_page_object.clear_all_existed_downloads(driver)
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def check_if_the_file_fully_downloaded(self, browser):
         browser.get(Urls.COCCOC_DOWNLOAD_URL)
@@ -44,31 +45,31 @@ class TestDownloadButtQualityBlock:
         self.delete_all_mp4_file_download(download_folder_path, '.mp4')
 
         pause_any_video_youtube(browser)
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
         return download_folder_path
 
     def download_file_default(self, browser):
         self.savior_page_object.download_file_via_savior_download_btn(browser)
-        time.sleep(3)
+        WaitAfterEach.sleep_timer_after_each_step()
 
         # Check the file is fully downloaded
         self.check_if_the_file_fully_downloaded(browser)
 
     def download_file_medium(self, browser):
         self.savior_page_object.download_file_medium_quality(browser)
-        time.sleep(3)
+        WaitAfterEach.sleep_timer_after_each_step()
 
         self.check_if_the_file_fully_downloaded(browser)
 
     def download_file_high(self, browser):
         self.savior_page_object.download_file_high_quality(browser)
-        time.sleep(3)
+        WaitAfterEach.sleep_timer_after_each_step()
 
         self.check_if_the_file_fully_downloaded(browser)
 
     def download_file_low(self, browser):
         self.savior_page_object.download_file_low_quality(browser)
-        time.sleep(3)
+        WaitAfterEach.sleep_timer_after_each_step()
 
         self.check_if_the_file_fully_downloaded(browser)
 

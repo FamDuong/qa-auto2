@@ -5,6 +5,7 @@ from selenium.webdriver import ActionChains
 
 from models.pageelements.downloads import DownloadsElement, ThePirateBayElements, PirateBaySearchResultElements
 from models.pageobject.basepage_object import BasePageObject
+from utils_automation.setup import WaitAfterEach
 
 
 class DownloadsPageObject(BasePageObject):
@@ -19,48 +20,48 @@ class DownloadsPageObject(BasePageObject):
     def click_pause_torrent_download_current(self, driver):
         pause_torrent_btn = self.downloads_elem.find_pause_torrent_download_element(driver)
         pause_torrent_btn.click()
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def click_resume_torrent_download_current(self, driver):
         resume_torrent_btn = self.downloads_elem.find_resume_torrent_download_element(driver)
         resume_torrent_btn.click()
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def click_cancel_torrent_download_current(self, driver):
         cancel_torrent_btn = self.downloads_elem.find_cancel_torrent_download_element(driver)
         cancel_torrent_btn.click()
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def click_remove_torrent_download_current(self, driver):
         remove_torrent_btn = self.downloads_elem.find_remove_torrent_download_element(driver)
         remove_torrent_btn.click()
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def click_more_icon_button(self, driver):
         more_icon_btn = self.downloads_elem.find_more_icon(driver)
         more_icon_btn.click()
-        time.sleep(1)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def remove_file_from_disk(self, driver):
         self.click_more_icon_button(driver)
         self.downloads_elem.find_remove_from_disk(driver).click()
-        time.sleep(4)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def hover_more_icon_button(self, driver):
         more_icon_btn = self.downloads_elem.find_more_icon(driver)
         hover = ActionChains(driver).move_to_element(more_icon_btn)
         hover.perform()
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def click_copy_settings_button(self, driver):
         copy_settings_btn = self.downloads_elem.find_copy_settings_btn(driver)
         copy_settings_btn.click()
-        time.sleep(3)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def click_tree_view_button(self, driver):
         tree_view_btn = self.downloads_elem.find_tree_view_torrent_btn(driver)
         tree_view_btn.click()
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def verify_torrent_info_displayed(self, driver):
         self.downloads_elem.is_torrent_check_icon_displayed(driver)
@@ -88,7 +89,7 @@ class DownloadsPageObject(BasePageObject):
         if len(elements) > 0:
             for i in range(len(elements)):
                 elements[i].click()
-                time.sleep(2)
+                WaitAfterEach.sleep_timer_after_each_step()
         print('Number of current running torrents :', len(elements))
 
     def verify_cancel_button_is_existed(self, driver):
@@ -97,13 +98,13 @@ class DownloadsPageObject(BasePageObject):
 
     def clear_all_existed_downloads(self, driver):
         element = self.downloads_elem.find_clear_all_button(driver)
-        time.sleep(1)
+        WaitAfterEach.sleep_timer_after_each_step()
         element.click()
-        time.sleep(1)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def verify_play_button_existed(self, driver):
         assert self.downloads_elem.find_play_button(driver).text == 'Play'
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
 
 
 class ThePirateBayPageObject(BasePageObject):

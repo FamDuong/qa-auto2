@@ -4,6 +4,8 @@ from models.pageelements.newtab import NewTabElement
 from models.pageobject.settings import SettingsPageObject
 import time
 
+from utils_automation.setup import WaitAfterEach
+
 
 @allure.severity(severity_level="CRITICAL")
 @scenario('../../features/smoketest/settings.feature', 'User choose settings when start up browser is opened a new '
@@ -28,7 +30,7 @@ def navigate_url(url, browser):
 
 @when("Choose open new tab when start up browser")
 def choose_open_new_tab_option(browser):
-    time.sleep(2)
+    WaitAfterEach.sleep_timer_after_each_step()
     settings_page_object.click_open_new_tab(browser)
 
 

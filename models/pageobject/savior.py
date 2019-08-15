@@ -5,6 +5,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 from models.pageelements.savior import SaviorElements
 from models.pagelocators.savior import SaviorPageLocators
 from models.pageobject.basepage_object import BasePageObject
+from utils_automation.setup import WaitAfterEach
 
 
 class SaviorPageObject(BasePageObject):
@@ -23,19 +24,19 @@ class SaviorPageObject(BasePageObject):
         driver.execute_script(
             self.script,
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFFERED_SELECT_BTN)
-        time.sleep(3)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def choose_medium_option(self, driver):
         driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MEDIUM_SELECT_OPTION)
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def choose_low_option(self, driver):
         driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.LOW_SELECT_OPTION)
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def choose_high_option(self, driver):
         driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.HIGH_SELECT_OPTION)
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def assert_value_preferred_quality(self, driver, assert_text):
         preferred_element = driver.execute_script(
@@ -73,7 +74,7 @@ class SaviorPageObject(BasePageObject):
         driver.execute_script(
             self.script,
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MOBILE_SHARING_BUTTON)
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_click_download()
 
     def verify_if_video_is_focused(self, driver):
         return driver.execute_script(
@@ -97,4 +98,3 @@ class SaviorPageObject(BasePageObject):
         return driver.execute_script(
             self.script_textContent,
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MOBILE_FOOTER_CONTENT_PART)
-

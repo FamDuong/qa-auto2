@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.extensions import ExtensionsPageLocators, SaviorDetailsPageLocators, \
     SaviorExtensionOptionsPageLocators
+from utils_automation.setup import WaitAfterEach
 
 
 class ExtensionsElement(BasePageElement):
@@ -17,9 +18,11 @@ class ExtensionsElement(BasePageElement):
 
     def find_savior_extension_wrapper(self, driver):
         list_elements = self.find_list_extensions(driver)
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
+
         savior_wrapper = list_elements.find_element_by_id(ExtensionsPageLocators.SAVIOR_EXTENSIONS_WRAPPER_ID)
-        time.sleep(1)
+        WaitAfterEach.sleep_timer_after_each_step()
+
         return self.select_shadow_element_by_css_selector(driver, savior_wrapper)
 
     def find_savior_extension(self, driver):

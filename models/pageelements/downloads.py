@@ -5,6 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.downloads import DownloadsPageLocators, ThePirateBayLocators, PythonSearchResult
+from utils_automation.setup import WaitAfterEach
 
 
 class DownloadsElement(BasePageElement):
@@ -92,7 +93,7 @@ class DownloadsElement(BasePageElement):
             ec.element_to_be_clickable(DownloadsPageLocators.DO_NOT_SEED_BTN))
 
     def find_all_cancel_current_torrent_btn(self, driver):
-        time.sleep(2)
+        WaitAfterEach.sleep_timer_after_each_step()
         return driver.find_elements_by_css_selector(DownloadsPageLocators.CANCEL_TORRENT_CLASS_TEXT)
 
     def find_clear_all_button(self, driver):
