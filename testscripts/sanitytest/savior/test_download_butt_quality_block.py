@@ -78,6 +78,7 @@ class TestDownloadButtQualityBlock:
         vid = cv2.VideoCapture(download_folder_path + '\\' + mp4_files[0])
         height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
         width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
+        vid.release()
         assert height == height_value
         assert width == width_value
 

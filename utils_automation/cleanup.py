@@ -6,6 +6,7 @@ class Files:
         import os
         filelist = [f for f in os.listdir(mydir) if f.endswith(endwith)]
         for f in filelist:
+            os.chmod(os.path.join(mydir, f), 0o777)
             os.remove(os.path.join(mydir, f))
 
 
