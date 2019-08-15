@@ -98,3 +98,19 @@ class SaviorPageObject(BasePageObject):
         return driver.execute_script(
             self.script_textContent,
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MOBILE_FOOTER_CONTENT_PART)
+
+    def choose_google_play_button(self, driver):
+        driver.execute_script(
+            self.script,
+            SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.GOOGLE_PLAY_BUTTON)
+        WaitAfterEach.sleep_timer_after_click_download()
+
+    def choose_app_store_button(self, driver):
+        driver.execute_script(
+            self.script,
+            SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.APP_STORE_BUTTON)
+        WaitAfterEach.sleep_timer_after_click_download()
+
+    def verify_all_subtitles_displayed(self, driver, *assert_language_sub):
+        list_elements = self.savior_elements.find_all_subtitles(driver)
+        assert len(list_elements) == len(assert_language_sub)

@@ -49,3 +49,8 @@ class SaviorElements(BasePageElement):
     def find_mobile_sharing_button(self, driver):
         return self.select_shadow_element_by_css_selector(driver, self.find_first_layer(driver)). \
             find_element_by_css_selector(SaviorPageLocators.MOBILE_SHARING_BUTTON)
+
+    def find_all_subtitles(self, driver):
+        return driver.execute_script('return document.querySelector(arguments[0]).shadowRoot'
+                                     '.querySelectorAll(arguments[1])', SaviorPageLocators.FIRST_LAYER,
+                                     SaviorPageLocators.SUBTITLE_ALL_SELECTOR)
