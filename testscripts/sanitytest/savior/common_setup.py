@@ -22,7 +22,7 @@ download_page_object = DownloadsPageObject()
 
 
 def pause_any_video_youtube(browser):
-    text_in_video = 'DDU-DU'
+    text_in_video = 'BLACKPINK - ‘뚜두뚜두 (DDU-DU DDU-DU)’ M/V'
     browser.get(Urls.YOUTUBE_URL)
     WaitAfterEach.sleep_timer_after_each_step()
     youtube_page_object.search_video_item(browser, text_in_video)

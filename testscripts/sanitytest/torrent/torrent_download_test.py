@@ -53,6 +53,7 @@ class TestTorrentDownload:
         WaitAfterEach.sleep_timer_after_each_step()
 
     @pytestrail.case('C54210')
+    @pytest.mark.skip(reason= 'PiratesBay site is unstable, need to find another site')
     def test_download_from_magnet_link(self, browser, clear_download_data):
         browser.get(Urls.PIRATE_BAY_URL)
         self.pirate_bay_object.search_torrent_to_download(browser, "Python")
@@ -111,6 +112,7 @@ class TestTorrentDownload:
         WaitAfterEach.sleep_timer_after_each_step()
 
     @pytestrail.case('C54212')
+    @pytest.mark.skip(reason='PiratesBay site is unstable, need to find another site')
     def test_torrent_download_tree_view(self, browser, clear_download_data):
         """
 

@@ -19,6 +19,8 @@ class SaviorPageLocators(object):
     MOBILE_SHARING_VIDEO_RADIO_BUTTON = 'input[id="switch-video"]'
 
     MOBILE_SHARING_BUTTON = '#open-mobile'
+    GOOGLE_PLAY_BUTTON = '#google-play'
+    APP_STORE_BUTTON = '#app-store'
     MOBILE_FOOTER_CONTENT_PART = '[class="mobile-content mobile-footer"]'
     INSTRUCTION_IMAGE_PART = 'img[class="instruction-image"]'
     QR_CODE_PART = '[class="qrcode"]'
@@ -26,3 +28,5 @@ class SaviorPageLocators(object):
     LOW_FILE_DOWNLOAD_BUTTON = 'a[class="download-btn j-quality-download"][data-quality="mp4/Small/240p"]'
     MEDIUM_FILE_DOWNLOAD_BUTTON = 'a[class="download-btn j-quality-download"][data-quality="mp4/Medium/360p"]'
     HIGH_FILE_DOWNLOAD_BUTTON = 'a[class="download-btn j-quality-download"][data-quality="mp4/HD/720p"]'
+
+    SUBTITLE_ALL_SELECTOR = 'div[data-quality-value*="yt_srt"]'
