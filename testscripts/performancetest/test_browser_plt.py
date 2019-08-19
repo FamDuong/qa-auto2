@@ -1,7 +1,8 @@
 import os
 import settings_master as settings
 import time
-import utils_automation.common as excelfile
+from utils_automation.common import CSVHandle
+from utils_automation.setup import Browser
 from pytest_testrail.plugin import pytestrail
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -50,7 +51,7 @@ class TestPageLoadTime:
         return pageloadtime
 
     def get_page_load_time(self, filename, binary_file, options_list=None):
-        listweb = excelfile.get_from_csv(filename)
+        listweb = CSVHandle().get_from_csv(filename)
         loadtimes = {}
         startuptimes = {}
         for i in listweb:
