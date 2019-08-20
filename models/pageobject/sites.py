@@ -3,7 +3,7 @@ import time
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 
-from models.pageelements.sites import YoutubePageElements, GooglePageElements
+from models.pageelements.sites import YoutubePageElements, GooglePageElements, AnySiteElements
 from models.pageobject.basepage_object import BasePageObject
 from utils_automation.setup import WaitAfterEach
 
@@ -46,4 +46,29 @@ class GooglePageObject(BasePageObject):
 
     def download_via_savior_icon_button(self, driver):
         self.google_element.find_savior_icon(driver).click()
+
+
+class AnySitePageObject(BasePageObject):
+
+    any_site_element = AnySiteElements()
+
+    def mouse_over_first_video_element(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        any_video_element = self.any_site_element.find_first_video_element(driver)
+        hov = ActionChains(driver).move_to_element(any_video_element)
+        hov.perform()
+
+    def click_first_video_element(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        self.any_site_element.click_first_video_element(driver)
+
+    def click_video_element_24h(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        self.any_site_element.find_video_element_24h(driver).click()
+
+    def mouse_over_video_element_24h(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_element_24h(driver))
+        hov.perform()
+
 

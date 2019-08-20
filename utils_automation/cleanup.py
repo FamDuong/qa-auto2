@@ -1,3 +1,4 @@
+import shutil
 import subprocess
 
 
@@ -8,6 +9,9 @@ class Files:
         for f in filelist:
             os.chmod(os.path.join(mydir, f), 0o777)
             os.remove(os.path.join(mydir, f))
+
+    def delete_all_files_in_folder(self, mydir):
+        shutil.rmtree(mydir, ignore_errors=True, onerror=None)
 
 
 class Browsers:

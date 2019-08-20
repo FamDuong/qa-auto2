@@ -102,7 +102,7 @@ class DownloadsElement(BasePageElement):
             ec.element_to_be_clickable(DownloadsPageLocators.CLEAR_ALL_BTN))
 
     def find_play_button(self, driver):
-        wait = WebDriverWait(driver, 90)
+        wait = WebDriverWait(driver, 120)
         return wait.until(
             ec.presence_of_element_located(DownloadsPageLocators.PLAY_BTN))
 

@@ -22,3 +22,9 @@ class GooglePageLocators(object):
 
     SHADOW_ROOT_CONTENT = (By.XPATH, '(//div[starts-with(@data-hveid, "4")]//div[@class="s"]//div)[6]')
     SAVIOR_ICON = '[class="button-block shown"]'
+
+
+class AnySite(object):
+    TWENTY_FOUR_H_VIDEO_ITEM = (By.ID, 'zoneViewVideoPlay')
+
+

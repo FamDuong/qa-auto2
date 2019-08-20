@@ -4,7 +4,7 @@ from models.pageobject.downloads import DownloadsPageObject
 from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetailsPageObject, \
     SaviorExtensionOptionsPageObject
 from models.pageobject.savior import SaviorPageObject
-from models.pageobject.sites import YoutubePageObject, GooglePageObject
+from models.pageobject.sites import YoutubePageObject, GooglePageObject, AnySitePageObject
 from utils_automation.const import Urls
 from utils_automation.setup import Browser, WaitAfterEach
 
@@ -19,6 +19,7 @@ savior_extension = SaviorExtensionOptionsPageObject()
 google_page_object = GooglePageObject()
 
 download_page_object = DownloadsPageObject()
+any_site_page_object = AnySitePageObject()
 
 
 def pause_any_video_youtube(browser):
@@ -34,7 +35,7 @@ def pause_any_video_youtube(browser):
     youtube_page_object.click_video_item(browser)
 
 
-def get_downloaded_folder_setting(browser,setting_page_object):
+def get_downloaded_folder_setting(browser, setting_page_object):
     browser.get(Urls.COCCOC_SETTINGS_URL)
     return setting_page_object.get_download_folder()
 
@@ -70,3 +71,27 @@ def revert_high_quality_default_option(browser):
     browser.get(u'chrome-extension://' + text + u'/options.html')
     savior_extension.choose_video_quality_high(browser)
     WaitAfterEach.sleep_timer_after_each_step()
+
+
+def choose_video_quality_medium_option(browser):
+    text = get_text_extension_option(browser)
+    browser.get(u'chrome-extension://' + text + u'/options.html')
+    savior_extension.choose_video_quality_medium(browser)
+    WaitAfterEach.sleep_timer_after_each_step()
+
+
+def choose_video_quality_low_option(browser):
+    text = get_text_extension_option(browser)
+    browser.get(u'chrome-extension://' + text + u'/options.html')
+    savior_extension.choose_video_quality_low(browser)
+    WaitAfterEach.sleep_timer_after_each_step()
+
+
+def pause_any_video_site(browser, url):
+    browser.get(url)
+    any_site_page_object.click_first_video_element(browser)
+    any_site_page_object.mouse_over_first_video_element(browser)
+
+
+
+

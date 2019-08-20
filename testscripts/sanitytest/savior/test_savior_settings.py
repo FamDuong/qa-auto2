@@ -71,7 +71,7 @@ class TestSaviorSettings:
             self.google_page_object.search_result_video(browser)
             WaitAfterEach.sleep_timer_after_each_step()
             self.google_page_object.download_via_savior_icon_button(browser)
-            WaitAfterEach.sleep_timer_after_click_download()
+            WaitAfterEach.sleep_timer_after_each_step_longer_load()
 
             # Go to download internal page
             browser.get(Urls.COCCOC_DOWNLOAD_URL)

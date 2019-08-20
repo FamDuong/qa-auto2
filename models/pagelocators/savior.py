@@ -30,3 +30,8 @@ class SaviorPageLocators(object):
     HIGH_FILE_DOWNLOAD_BUTTON = 'a[class="download-btn j-quality-download"][data-quality="mp4/HD/720p"]'
 
     SUBTITLE_ALL_SELECTOR = 'div[data-quality-value*="yt_srt"]'
+
+    CLASS_WRAPPER_VIDEO_OPTIONS = '[class*="quality-selector-box j-quality-selector ps"] > [class="extension-box"]'
+    ALL_VIDEO_OPTIONS_AVAILABLE = '[data-quality-value]:not([data-quality-value=""])'
+
+    CURRENT_VIDEO_QUALITY_ITEM = '[class*="quality-selector-box j-quality-selector ps"]'

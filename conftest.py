@@ -3,12 +3,12 @@ from datetime import datetime
 from appium import webdriver
 from selenium import  webdriver as sele_webdriver
 import pytest
-from simple_settings import settings
-
+from utils_automation.setup import WaitAfterEach
 
 driver = None
 user_data_path = None
 winappdriver = None
+download_folder = None
 
 
 @pytest.mark.hookwrapper
@@ -58,7 +58,6 @@ def _capture_screenshot_win_app(filename):
 @pytest.fixture(scope='session')
 def browser():
     import subprocess
-    import os
     prog = subprocess.Popen("taskkill /im browser.exe /f", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     prog.communicate()  # Returns (stdoutdata, stderrdata): stdout and stderr are ignored, here
     global driver
@@ -101,18 +100,25 @@ def win_app_driver():
 
 
 @pytest.fixture(scope='session', autouse=True)
-def get_user_data_path():
+def set_up_before_run_user_browser():
     from models.pageobject.version import VersionPageObject
     from utils_automation.const import Urls
     global user_data_path, local_driver
     version_page_object = VersionPageObject()
+    from models.pageobject.settings import SettingsPageObject
+    setting_page_object = SettingsPageObject()
+    global download_folder
     try:
         local_driver = sele_webdriver.Chrome()
         local_driver.maximize_window()
         local_driver.get(Urls.COCCOC_VERSION_URL)
         path_full = version_page_object.get_profile_path(local_driver)
+        local_driver.get(Urls.COCCOC_SETTINGS_URL)
+        WaitAfterEach.sleep_timer_after_each_step()
+        download_folder = setting_page_object.get_download_folder(local_driver)
         split_after = path_full.split('\\Local')
         user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
+        clear_downloaded_folder(download_folder)
     finally:
         local_driver.quit()
 
@@ -125,5 +131,17 @@ def clear_screen_shot_folder():
     files.delete_files_in_folder(current_dir+"/screenshots", "png")
 
 
+def clear_downloaded_folder(folder):
+    from utils_automation.cleanup import Files
+    files = Files()
+    files.delete_all_files_in_folder(folder)
+
+
 def pytest_addoption(parser):
     parser.addoption('--settings', action='store')
+
+
+@pytest.fixture(scope='session')
+def get_current_download_folder():
+    return download_folder
+
