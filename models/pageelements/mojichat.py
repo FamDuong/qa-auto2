@@ -7,6 +7,11 @@ from models.pagelocators.mojichat import MojichatLocators
 from utils_automation.setup import WaitAfterEach
 
 class MojichatElement(BasePageElement):
+    global chat_type
+
+    def __init__(self, type = MojichatLocators.BIG_CHAT):
+        self.chat_type = type
+
     def click_on_tooltip_button(self, driver, button):
         element = self.find_tooltip_button(driver, button)
         element.click()
@@ -25,17 +30,18 @@ class MojichatElement(BasePageElement):
         element = driver.execute_script('return arguments[0].shadowRoot', shadow_root)
         return element.find_elements_by_css_selector('#sticker-suggestion')[position]
 
-    def find_big_chat_input(self, driver):
+    def find_chat_input(self, driver):
         wait = WebDriverWait(driver, 20)
-        return wait.until(ec.presence_of_element_located(MojichatLocators.BIG_CHAT_INPUT))
+        if (self.chat_type == MojichatLocators.BIG_CHAT):
+            locator = MojichatLocators.BIG_CHAT_INPUT
+        elif (self.chat_type == MojichatLocators.SMALL_CHAT):
+            locator = MojichatLocators.SMALL_CHAT_INPUT
+            # locator = (By.XPATH, '//div[@class="fbNubFlyoutOuter" and descendant::span[text()="Coc Coc"]]//*[@data-text="true"]')
+        return wait.until(ec.presence_of_element_located(locator))
 
     def find_small_chat_icon(self, driver):
         wait = WebDriverWait(driver, 20)
         return wait.until(ec.presence_of_element_located(MojichatLocators.MESSAGE_FACEBOOK))
-
-    def find_small_chat_input(self, driver):
-        wait = WebDriverWait(driver, 20)
-        return wait.until(ec.presence_of_element_located(MojichatLocators.SMALL_CHAT_INPUT))
 
     def find_user_chat(self, driver, user_chat):
         wait = WebDriverWait(driver, 20)

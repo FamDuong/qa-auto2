@@ -20,3 +20,4 @@ class BasePageElement(object):
             shadow_root = self.select_shadow_element_by_css_selector(driver, root)
             root = shadow_root.find_element_by_css_selector(string_text[i])
         return root
+
