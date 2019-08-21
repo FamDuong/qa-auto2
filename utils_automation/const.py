@@ -9,7 +9,10 @@ class Urls:
     YOUTUBE_URL = 'https://www.youtube.com/'
 
     GOOGLE_URL = 'https://www.google.com/'
+    FACEBOOK_URL = 'https://www.facebook.com/'
 
     NEW_TAB_URL = 'http://coccoc.com/webhp'
     PIRATE_BAY_URL = 'https://www.thepiratebay.org/search'
+
+    MOJI_BIG_CHATBOX = 'https://www.messenger.com/t/100013968193318'
 

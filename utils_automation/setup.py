@@ -21,6 +21,11 @@ class Browser:
         split_after = path_full.split('\\Local')
         return split_after[0]+u'\\Local\\CocCoc\\Browser\\User Data'
 
+    # def browser_extension(self):
+    #     chrome_options = webdriver.ChromeOptions()
+    #     chrome_options.add_argument("--enable-extensions")
+    #   return webdriver.Chrome(options=chrome_options)
+
 
 class WaitAfterEach:
     @staticmethod
