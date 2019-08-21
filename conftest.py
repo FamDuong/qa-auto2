@@ -9,6 +9,7 @@ driver = None
 user_data_path = None
 winappdriver = None
 download_folder = None
+block_origin_extension_path = None
 
 
 @pytest.mark.hookwrapper
@@ -62,6 +63,8 @@ def browser():
     prog.communicate()  # Returns (stdoutdata, stderrdata): stdout and stderr are ignored, here
     global driver
     global user_data_path
+    global skip_ad_extension_path
+    global block_origin_extension_path
     if driver is None:
         chrome_options = sele_webdriver.ChromeOptions()
         chrome_options.add_argument("--window-size=1920,1080")
@@ -77,8 +80,10 @@ def browser():
         chrome_options.add_argument("--disable-infobars")
         # chrome_options.add_argument('--user-data-dir=' + os.environ['user-dir-path'])
         chrome_options.add_argument('--user-data-dir=' + user_data_path)
-
+        # chrome_options.add_experimental_option('useAutomationExtension', False)
+        chrome_options.add_argument('load-extension=' + skip_ad_extension_path)
         driver = sele_webdriver.Chrome(options=chrome_options)
+        driver.create_options()
         driver.maximize_window()
         driver.set_page_load_timeout(40)
     yield driver
@@ -108,6 +113,8 @@ def set_up_before_run_user_browser():
     from models.pageobject.settings import SettingsPageObject
     setting_page_object = SettingsPageObject()
     global download_folder
+    global skip_ad_extension_path
+    global block_origin_extension_path
     try:
         local_driver = sele_webdriver.Chrome()
         local_driver.maximize_window()
@@ -119,6 +126,8 @@ def set_up_before_run_user_browser():
         split_after = path_full.split('\\Local')
         user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
         clear_downloaded_folder(download_folder)
+        skip_ad_extension_path = user_data_path + u'\\Default\\Extensions\\lgblnfidahcdcjddiepkckcfdhpknnjh\\1.511_0'
+        print(skip_ad_extension_path)
     finally:
         local_driver.quit()
 

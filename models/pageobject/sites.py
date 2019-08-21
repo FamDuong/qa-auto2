@@ -71,4 +71,17 @@ class AnySitePageObject(BasePageObject):
         hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_element_24h(driver))
         hov.perform()
 
+    def click_video_element_phimmoi(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        self.any_site_element.find_video_element_phimmoi(driver).click()
+
+    def mouse_over_video_element_phimmoi(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_element_phimmoi(driver))
+        hov.perform()
+
+    def close_popup_continue_watching(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step()
+        self.any_site_element.find_close_popup_continue_watching(driver).click()
+
 

@@ -1,10 +1,14 @@
 import time
 
+import cv2
+
 from models.pageobject.downloads import DownloadsPageObject
 from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetailsPageObject, \
     SaviorExtensionOptionsPageObject
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import YoutubePageObject, GooglePageObject, AnySitePageObject
+from utils_automation.cleanup import Files
+from utils_automation.common import FilesHandle
 from utils_automation.const import Urls
 from utils_automation.setup import Browser, WaitAfterEach
 
@@ -20,6 +24,48 @@ google_page_object = GooglePageObject()
 
 download_page_object = DownloadsPageObject()
 any_site_page_object = AnySitePageObject()
+
+
+def delete_all_mp4_file_download(mydir, endwith):
+    files = Files()
+    files.delete_files_in_folder(mydir, endwith)
+
+
+def download_file_via_main_download_button(browser):
+    savior_page_object.download_file_via_savior_download_btn(browser)
+    WaitAfterEach.sleep_timer_after_each_step()
+
+    # Check the file is fully downloaded
+    check_if_the_file_fully_downloaded(browser)
+
+
+def find_mp4_file_download(mydir, endwith):
+    files_handle = FilesHandle()
+    return files_handle.find_files_in_folder_by_modified_date(mydir, endwith)
+
+
+def clear_data_download(driver):
+    driver.get(Urls.COCCOC_DOWNLOAD_URL)
+    WaitAfterEach.sleep_timer_after_each_step()
+    download_page_object.clear_all_existed_downloads(driver)
+    WaitAfterEach.sleep_timer_after_each_step()
+
+
+def assert_file_download_value(download_folder_path, height_value):
+    mp4_files = find_mp4_file_download(download_folder_path, '.mp4')
+    print(mp4_files)
+    vid = cv2.VideoCapture(download_folder_path + '\\' + mp4_files[0])
+    height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
+    vid.release()
+    if (height_value is not None) and (height_value != ''):
+        assert str(int(height)) in height_value
+    else:
+        assert height is not None
+
+
+def check_if_the_file_fully_downloaded(browser):
+    browser.get(Urls.COCCOC_DOWNLOAD_URL)
+    download_page_object.verify_play_button_existed(browser)
 
 
 def pause_any_video_youtube(browser):

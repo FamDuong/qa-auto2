@@ -25,6 +25,9 @@ class GooglePageLocators(object):
 
 
 class AnySite(object):
-    TWENTY_FOUR_H_VIDEO_ITEM = (By.ID, 'zoneViewVideoPlay')
+    TWENTY_FOUR_H_VIDEO_ITEM = (By.CSS_SELECTOR, '[class="v-24h-media-player"]')
+    PHIMMOI_VIDEO_ITEM = (By.ID, 'media-player-box')
+
+    PHIMMOI_CONTINUE_WATCHING_CLOSE_ELEMENT = (By.ID, 'watching-messbox-close')
 
 

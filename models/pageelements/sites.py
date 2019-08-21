@@ -74,7 +74,19 @@ class AnySiteElements(BasePageElement):
 
     @staticmethod
     def find_video_element_24h(driver):
-        wait = WebDriverWait(driver, 10)
+        wait = WebDriverWait(driver, 40)
         return wait.until(
             ec.element_to_be_clickable(AnySite.TWENTY_FOUR_H_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_element_phimmoi(driver):
+        wait = WebDriverWait(driver, 40)
+        return wait.until(
+            ec.element_to_be_clickable(AnySite.PHIMMOI_VIDEO_ITEM))
+
+    @staticmethod
+    def find_close_popup_continue_watching(driver):
+        wait = WebDriverWait(driver, 40)
+        return wait.until(
+            ec.element_to_be_clickable(AnySite.PHIMMOI_CONTINUE_WATCHING_CLOSE_ELEMENT))
 
