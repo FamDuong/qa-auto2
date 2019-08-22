@@ -1,22 +1,7 @@
-import time
-
-import pytest
 from pytest_testrail.plugin import pytestrail
-from selenium.webdriver.common.keys import Keys
-
 from models.pageobject.downloads import DownloadsPageObject
+from utils_automation.common import FilesHandle
 from utils_automation.const import Urls
-from appium import webdriver
-
-
-# @pytest.fixture(scope='function', autouse=True)
-# def clear_download_data(browser):
-#     browser.get(Urls.COCCOC_DOWNLOAD_URL)
-#     from models.pageobject.downloads import DownloadsPageObject
-#     download_page_object = DownloadsPageObject()
-#     download_page_object.cancel_all_current_torrent(browser)
-#     download_page_object.clear_all_existed_torrent(browser)
-#     time.sleep(2)
 from utils_automation.setup import WaitAfterEach
 
 
@@ -29,20 +14,21 @@ class TestTorrentSeeding:
                          '.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969'
     download_page_object = DownloadsPageObject()
 
-    def set_up_finished_torrent(self,browser):
+    def set_up_finished_torrent(self, browser, get_current_download_folder):
+        FilesHandle.clear_downloaded_folder(get_current_download_folder)
         browser.get(self.magnet_url_torrent)
         WaitAfterEach.sleep_timer_after_each_step()
         browser.get(Urls.COCCOC_DOWNLOAD_URL)
 
     @pytestrail.case('C54215')
-    def test_seeding_state(self, browser, clear_download_data):
-        self.set_up_finished_torrent(browser)
+    def test_seeding_state(self, browser, clear_download_data, get_current_download_folder):
+        self.set_up_finished_torrent(browser, get_current_download_folder)
         self.download_page_object.verify_torrent_seed_up_arrow(browser)
         WaitAfterEach.sleep_timer_after_each_step()
 
     @pytestrail.case('C54217')
-    def test_set_to_not_seeding_one_torrent(self, browser, clear_download_data):
-        self.set_up_finished_torrent(browser)
+    def test_set_to_not_seeding_one_torrent(self, browser, clear_download_data, get_current_download_folder):
+        self.set_up_finished_torrent(browser, get_current_download_folder)
         WaitAfterEach.sleep_timer_after_each_step()
         self.download_page_object.verify_torrent_seed_up_arrow(browser)
         WaitAfterEach.sleep_timer_after_each_step()
@@ -55,13 +41,6 @@ class TestTorrentSeeding:
         # self.download_page_object.click_remove_torrent_download_current(browser)
         WaitAfterEach.sleep_timer_after_each_step()
 
-    # def test_hard(self, browser):
-    #     browser.get(Urls.COCCOC_DOWNLOAD_URL)
-    #     self.download_page_object.click_more_icon_button(browser)
-    #     self.download_page_object.do_not_seed_action(browser)
-    #     time.sleep(2)
-    #     self.download_page_object.verify_torrent_seed_up_arrow_not_displayed(browser)
-    #     self.download_page_object.click_remove_torrent_download_current(browser)
 
 
 

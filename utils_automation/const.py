@@ -27,7 +27,7 @@ class VideoUrls:
 
 class DiffFormatFileUrls:
 
-    FACEBOOK_VIDEO_URL = 'https://www.facebook.com/watch/?v=2350592668328062'
+    FACEBOOK_VIDEO_URL = 'https://www.facebook.com/watch/?v=682897505204114'
     WEBM_URL = 'http://techslides.com/demos/sample-videos/small.webm'
 
     @classmethod
@@ -39,6 +39,7 @@ class OtherSiteUrls:
 
     TWENTY_FOUR_H_VIDEO_URL = 'https://www.24h.com.vn/bong-da/2-clb-viet-nam-thong-tri-afc-cup-bao-chau-a-noi-gi-c48a1061647.html'
     PHIMMOI_VIDEO_URL = 'http://www.phimmoi.net/phim/linh-kiem-ton-8199/xem-phim.html'
+    FACEBOOK_VIDEO_URL = 'https://www.facebook.com/watch/?v=682897505204114'
 
 
 
