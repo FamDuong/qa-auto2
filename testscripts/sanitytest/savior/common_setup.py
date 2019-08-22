@@ -1,10 +1,14 @@
 import time
 
+import cv2
+
 from models.pageobject.downloads import DownloadsPageObject
 from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetailsPageObject, \
     SaviorExtensionOptionsPageObject
 from models.pageobject.savior import SaviorPageObject
-from models.pageobject.sites import YoutubePageObject, GooglePageObject
+from models.pageobject.sites import YoutubePageObject, GooglePageObject, AnySitePageObject
+from utils_automation.cleanup import Files
+from utils_automation.common import FilesHandle
 from utils_automation.const import Urls
 from utils_automation.setup import Browser, WaitAfterEach
 
@@ -19,6 +23,49 @@ savior_extension = SaviorExtensionOptionsPageObject()
 google_page_object = GooglePageObject()
 
 download_page_object = DownloadsPageObject()
+any_site_page_object = AnySitePageObject()
+
+
+def delete_all_mp4_file_download(mydir, endwith):
+    files = Files()
+    files.delete_files_in_folder(mydir, endwith)
+
+
+def download_file_via_main_download_button(browser, file_type='clip'):
+    savior_page_object.download_file_via_savior_download_btn(browser)
+    WaitAfterEach.sleep_timer_after_each_step()
+
+    # Check the file is fully downloaded
+    check_if_the_file_fully_downloaded(browser, file_type=file_type)
+
+
+def find_mp4_file_download(mydir, endwith):
+    files_handle = FilesHandle()
+    return files_handle.find_files_in_folder_by_modified_date(mydir, endwith)
+
+
+def clear_data_download(driver):
+    driver.get(Urls.COCCOC_DOWNLOAD_URL)
+    WaitAfterEach.sleep_timer_after_each_step()
+    download_page_object.clear_all_existed_downloads(driver)
+    WaitAfterEach.sleep_timer_after_each_step()
+
+
+def assert_file_download_value(download_folder_path, height_value):
+    mp4_files = find_mp4_file_download(download_folder_path, '.mp4')
+    print(mp4_files)
+    vid = cv2.VideoCapture(download_folder_path + '\\' + mp4_files[0])
+    height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
+    vid.release()
+    if (height_value is not None) and (height_value != ''):
+        assert str(int(height)) in height_value
+    else:
+        assert height is not None
+
+
+def check_if_the_file_fully_downloaded(browser, file_type='clip'):
+    browser.get(Urls.COCCOC_DOWNLOAD_URL)
+    download_page_object.verify_play_button_existed(browser, file_type=file_type)
 
 
 def pause_any_video_youtube(browser):
@@ -34,7 +81,7 @@ def pause_any_video_youtube(browser):
     youtube_page_object.click_video_item(browser)
 
 
-def get_downloaded_folder_setting(browser,setting_page_object):
+def get_downloaded_folder_setting(browser, setting_page_object):
     browser.get(Urls.COCCOC_SETTINGS_URL)
     return setting_page_object.get_download_folder()
 
@@ -70,3 +117,27 @@ def revert_high_quality_default_option(browser):
     browser.get(u'chrome-extension://' + text + u'/options.html')
     savior_extension.choose_video_quality_high(browser)
     WaitAfterEach.sleep_timer_after_each_step()
+
+
+def choose_video_quality_medium_option(browser):
+    text = get_text_extension_option(browser)
+    browser.get(u'chrome-extension://' + text + u'/options.html')
+    savior_extension.choose_video_quality_medium(browser)
+    WaitAfterEach.sleep_timer_after_each_step()
+
+
+def choose_video_quality_low_option(browser):
+    text = get_text_extension_option(browser)
+    browser.get(u'chrome-extension://' + text + u'/options.html')
+    savior_extension.choose_video_quality_low(browser)
+    WaitAfterEach.sleep_timer_after_each_step()
+
+
+def pause_any_video_site(browser, url):
+    browser.get(url)
+    any_site_page_object.click_first_video_element(browser)
+    any_site_page_object.mouse_over_first_video_element(browser)
+
+
+
+

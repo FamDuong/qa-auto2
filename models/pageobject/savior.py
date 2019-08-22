@@ -1,6 +1,5 @@
 import time
-
-from selenium.common.exceptions import StaleElementReferenceException
+import re
 
 from models.pageelements.savior import SaviorElements
 from models.pagelocators.savior import SaviorPageLocators
@@ -74,7 +73,7 @@ class SaviorPageObject(BasePageObject):
         driver.execute_script(
             self.script,
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MOBILE_SHARING_BUTTON)
-        WaitAfterEach.sleep_timer_after_click_download()
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
 
     def verify_if_video_is_focused(self, driver):
         return driver.execute_script(
@@ -103,14 +102,96 @@ class SaviorPageObject(BasePageObject):
         driver.execute_script(
             self.script,
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.GOOGLE_PLAY_BUTTON)
-        WaitAfterEach.sleep_timer_after_click_download()
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
 
     def choose_app_store_button(self, driver):
         driver.execute_script(
             self.script,
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.APP_STORE_BUTTON)
-        WaitAfterEach.sleep_timer_after_click_download()
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
 
     def verify_all_subtitles_displayed(self, driver, *assert_language_sub):
         list_elements = self.savior_elements.find_all_subtitles(driver)
         assert len(list_elements) == len(assert_language_sub)
+
+    def get_quality_video_options_available(self, driver):
+        global video_quality_height_frame_value
+        all_video_options = self.savior_elements.find_all_video_options(driver)
+        text_content_list = []
+        len_options = len(all_video_options)
+        current_video_quality = self.savior_elements.get_current_video_quality_value(driver)
+        # Extract video quality height frame value
+        m = re.search('\\d+p', current_video_quality)
+        if m:
+            video_quality_height_frame_value = m.group()
+        else:
+            video_quality_height_frame_value = ''
+        for i in range(len_options):
+            text_content_list.append((self.savior_elements.
+                                      get_each_quality_info_video_options(driver, i)))
+        return len_options, text_content_list, current_video_quality, video_quality_height_frame_value
+
+    def verify_correct_video_options_chosen_high_quality_option(self, driver):
+        len_options, text_content_list, current_video_quality, video_quality_height = self.\
+            get_quality_video_options_available(driver)
+
+        if len_options >= 3:
+            if 'HD' in text_content_list:
+                assert 'HD' in current_video_quality
+            else:
+                assert 'Standard' or 'Medium' in current_video_quality
+        elif len_options == 2:
+            if ('Standard' or 'Medium') in text_content_list:
+                assert ('Standard' or 'Medium') in current_video_quality
+        elif len_options == 1:
+            print('Current video quality for len == 1 is:', self.savior_elements.
+                  get_current_video_quality_value(driver))
+            assert current_video_quality is not None
+        else:
+            raise Exception.__traceback__
+        return video_quality_height
+
+    def verify_correct_video_options_chosen_medium_quality_option(self, driver):
+        len_options, text_content_list, current_video_quality, video_quality_height = self.get_quality_video_options_available(driver)
+
+        if len_options >= 3:
+            if 'HD' in text_content_list:
+                assert 'HD' not in current_video_quality
+            else:
+                assert 'Standard' or 'Medium' in current_video_quality
+        elif len_options == 2:
+            if ('Standard' and 'Medium') in text_content_list:
+                assert 'Standard' in current_video_quality
+        elif len_options == 1:
+            print('Current video quality for len == 1 is:', self.savior_elements.
+                  get_current_video_quality_value(driver))
+            assert current_video_quality is not None
+        else:
+            raise Exception.__traceback__
+        return video_quality_height
+
+    def verify_correct_video_options_chosen_low_quality_option(self, driver):
+        len_options, text_content_list, current_video_quality, video_quality_height = self.get_quality_video_options_available(driver)
+
+        if len_options >= 3:
+            if 'HD' in text_content_list:
+                assert 'HD' not in current_video_quality
+            else:
+                assert 'Small' in current_video_quality
+        elif len_options == 2:
+            if 'Standard' and 'Medium' in text_content_list:
+                assert 'Medium' in current_video_quality
+            else:
+                pass
+        elif len_options == 1:
+            print('Current video quality for len == 1 is:', self.savior_elements.
+                  get_current_video_quality_value(driver))
+            assert current_video_quality is not None
+        else:
+            raise Exception.__traceback__
+        return video_quality_height
+
+
+
+
+

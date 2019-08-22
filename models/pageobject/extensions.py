@@ -74,6 +74,9 @@ class SaviorExtensionOptionsPageObject(BasePageObject):
     def choose_video_quality_low(self, driver):
         self.savior_extension.find_video_quality_low_option(driver).click()
 
+    def choose_video_quality_medium(self, driver):
+        self.savior_extension.find_video_quality_medium_option(driver).click()
+
     def verify_video_quality_medium_is_checked(self, driver):
         return self.savior_extension.find_video_quality_medium_option(driver).get_attribute('checked')
 

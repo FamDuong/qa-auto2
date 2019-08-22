@@ -22,3 +22,12 @@ class GooglePageLocators(object):
 
     SHADOW_ROOT_CONTENT = (By.XPATH, '(//div[starts-with(@data-hveid, "4")]//div[@class="s"]//div)[6]')
     SAVIOR_ICON = '[class="button-block shown"]'
+
+
+class AnySite(object):
+    TWENTY_FOUR_H_VIDEO_ITEM = (By.CSS_SELECTOR, '[class="v-24h-media-player"]')
+    PHIMMOI_VIDEO_ITEM = (By.ID, 'media-player-box')
+
+    PHIMMOI_CONTINUE_WATCHING_CLOSE_ELEMENT = (By.ID, 'watching-messbox-close')
+
+

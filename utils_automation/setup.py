@@ -28,5 +28,5 @@ class WaitAfterEach:
         time.sleep(2)
 
     @staticmethod
-    def sleep_timer_after_click_download():
+    def sleep_timer_after_each_step_longer_load():
         time.sleep(5)
