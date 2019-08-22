@@ -38,7 +38,7 @@ class DiffFormatFileUrls:
 class OtherSiteUrls:
 
     TWENTY_FOUR_H_VIDEO_URL = 'https://www.24h.com.vn/bong-da/2-clb-viet-nam-thong-tri-afc-cup-bao-chau-a-noi-gi-c48a1061647.html'
-    PHIMMOI_VIDEO_URL = 'http://www.phimmoi.net/phim/ky-sinh-trung-i1-8610/xem-phim.html'
+    PHIMMOI_VIDEO_URL = 'http://www.phimmoi.net/phim/linh-kiem-ton-8199/xem-phim.html'
 
 
 

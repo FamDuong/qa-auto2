@@ -31,12 +31,12 @@ def delete_all_mp4_file_download(mydir, endwith):
     files.delete_files_in_folder(mydir, endwith)
 
 
-def download_file_via_main_download_button(browser):
+def download_file_via_main_download_button(browser, file_type='clip'):
     savior_page_object.download_file_via_savior_download_btn(browser)
     WaitAfterEach.sleep_timer_after_each_step()
 
     # Check the file is fully downloaded
-    check_if_the_file_fully_downloaded(browser)
+    check_if_the_file_fully_downloaded(browser, file_type=file_type)
 
 
 def find_mp4_file_download(mydir, endwith):
@@ -63,9 +63,9 @@ def assert_file_download_value(download_folder_path, height_value):
         assert height is not None
 
 
-def check_if_the_file_fully_downloaded(browser):
+def check_if_the_file_fully_downloaded(browser, file_type='clip'):
     browser.get(Urls.COCCOC_DOWNLOAD_URL)
-    download_page_object.verify_play_button_existed(browser)
+    download_page_object.verify_play_button_existed(browser, file_type=file_type)
 
 
 def pause_any_video_youtube(browser):
