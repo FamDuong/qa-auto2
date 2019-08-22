@@ -14,32 +14,32 @@ class TestTorrentSeeding:
                          '.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969'
     download_page_object = DownloadsPageObject()
 
-    def set_up_finished_torrent(self, browser, get_current_download_folder):
-        FilesHandle.clear_downloaded_folder(get_current_download_folder)
+    def set_up_finished_torrent(self, browser):
         browser.get(self.magnet_url_torrent)
-        WaitAfterEach.sleep_timer_after_each_step()
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
         browser.get(Urls.COCCOC_DOWNLOAD_URL)
 
     @pytestrail.case('C54215')
     def test_seeding_state(self, browser, clear_download_data, get_current_download_folder):
-        self.set_up_finished_torrent(browser, get_current_download_folder)
+        FilesHandle.clear_downloaded_folder(get_current_download_folder)
+        self.set_up_finished_torrent(browser)
         self.download_page_object.verify_torrent_seed_up_arrow(browser)
         WaitAfterEach.sleep_timer_after_each_step()
+        FilesHandle.clear_downloaded_folder(get_current_download_folder)
 
     @pytestrail.case('C54217')
     def test_set_to_not_seeding_one_torrent(self, browser, clear_download_data, get_current_download_folder):
-        self.set_up_finished_torrent(browser, get_current_download_folder)
-        WaitAfterEach.sleep_timer_after_each_step()
+        FilesHandle.clear_downloaded_folder(get_current_download_folder)
+        self.set_up_finished_torrent(browser)
         self.download_page_object.verify_torrent_seed_up_arrow(browser)
         WaitAfterEach.sleep_timer_after_each_step()
 
         self.download_page_object.stop_seeding_from_out_side_btn(browser)
-
         # Verify the up button is not displayed
         WaitAfterEach.sleep_timer_after_each_step()
         self.download_page_object.verify_torrent_seed_up_arrow_not_displayed(browser)
         # self.download_page_object.click_remove_torrent_download_current(browser)
-        WaitAfterEach.sleep_timer_after_each_step()
+        FilesHandle.clear_downloaded_folder(get_current_download_folder)
 
 
 
