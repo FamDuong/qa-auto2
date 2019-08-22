@@ -38,3 +38,9 @@ class FilesHandle:
     def find_files_in_folder_by_modified_date(self, mydir, endwith):
         filelist = [f for f in os.listdir(mydir) if f.endswith(endwith)]
         return filelist
+
+    @staticmethod
+    def clear_downloaded_folder(folder):
+        from utils_automation.cleanup import Files
+        files = Files()
+        files.delete_all_files_in_folder(folder)

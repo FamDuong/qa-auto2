@@ -3,6 +3,8 @@ from datetime import datetime
 from appium import webdriver
 from selenium import  webdriver as sele_webdriver
 import pytest
+
+from utils_automation.common import FilesHandle
 from utils_automation.setup import WaitAfterEach
 
 driver = None
@@ -109,6 +111,7 @@ def win_app_driver():
 
 
 @pytest.fixture(scope='session', autouse=True)
+@pytest.mark.usefixtures('clear_downloaded_folder')
 def set_up_before_run_user_browser():
     from models.pageobject.version import VersionPageObject
     from utils_automation.const import Urls
@@ -130,7 +133,7 @@ def set_up_before_run_user_browser():
         download_folder = setting_page_object.get_download_folder(local_driver)
         split_after = path_full.split('\\Local')
         user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
-        clear_downloaded_folder(download_folder)
+        FilesHandle.clear_downloaded_folder(download_folder)
         # skip_ad_extension_path = user_data_path + u'\\Default\\Extensions\\lgblnfidahcdcjddiepkckcfdhpknnjh\\1.511_0'
         # ublock_ad_extension_path = user_data_path + u'\\Default\\Extensions\\adkfgdipgpojicddmeecncgapbomhjjl\\1.4.0_0'
     finally:
@@ -143,12 +146,6 @@ def clear_screen_shot_folder():
     current_dir = get_current_dir()[0]
     files = Files()
     files.delete_files_in_folder(current_dir+"/screenshots", "png")
-
-
-def clear_downloaded_folder(folder):
-    from utils_automation.cleanup import Files
-    files = Files()
-    files.delete_all_files_in_folder(folder)
 
 
 def pytest_addoption(parser):
