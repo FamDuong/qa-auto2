@@ -1,11 +1,11 @@
-import utils_automation.common as excelfile
 import time
 import settings_master as settings
 import psutil
 import os
 import multiprocessing as mp
 import concurrent.futures
-from utils_automation.cleanup import Browsers
+from utils_automation.common import CSVHandle
+from utils_automation.setup import Browser
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 from pytest_testrail.plugin import pytestrail
@@ -55,10 +55,10 @@ class TestCPURAM:
 
 
     def open_webpage_withtabs(self, filename, binary_file, options_list=None):
-        browser = Browsers();
-        browser.kill_all_browsers()
+        browser = Browser()
+        # browser.kill_all_browsers()
 
-        listweb = excelfile.get_from_csv(filename)
+        listweb = CSVHandle().get_from_csv(filename)
         opts = Options()
         opts.binary_location = binary_file
         opts.add_argument("start-maximized")
