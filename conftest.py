@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 from appium import webdriver
-from selenium import  webdriver as sele_webdriver
+from selenium import webdriver as sele_webdriver
 import pytest
 
 from utils_automation.common import FilesHandle
