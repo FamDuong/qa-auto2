@@ -30,4 +30,9 @@ class AnySite(object):
 
     PHIMMOI_CONTINUE_WATCHING_CLOSE_ELEMENT = (By.ID, 'watching-messbox-close')
 
+    FACEBOOK_VIDEO_ITEM = (By.XPATH, '//video[@muted="1"]')
 
+    MESSENGER_CHAT_VIDEO_ITEM = (By.XPATH, '//video')
+    MESSENGER_CHAT_VIDEO_ITEM_SELECTOR = 'button[data-testid="play_pause_control"]'
+    INSTAGRAM_VIDEO_ITEM = (By.XPATH, '//a[@role="button"]')
+    KIENTHUC_VIDEO_ITEM = (By.CSS_SELECTOR, 'div[id*="video"][class="vplugin-div-body"]')

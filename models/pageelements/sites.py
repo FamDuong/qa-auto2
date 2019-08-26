@@ -90,3 +90,32 @@ class AnySiteElements(BasePageElement):
         return wait.until(
             ec.element_to_be_clickable(AnySite.PHIMMOI_CONTINUE_WATCHING_CLOSE_ELEMENT))
 
+    @staticmethod
+    def find_video_item_in_facebook_page(driver):
+        wait = WebDriverWait(driver, 40)
+        return wait.until(
+            ec.element_to_be_clickable(AnySite.FACEBOOK_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_in_messenger_chat(driver):
+        wait = WebDriverWait(driver, 40)
+        return wait.until(
+            ec.element_to_be_clickable(AnySite.MESSENGER_CHAT_VIDEO_ITEM))
+
+    @staticmethod
+    def click_video_item_in_messenger_chat(driver):
+        driver.execute_script('document.querySelector(arguments[0]).click()', AnySite.MESSENGER_CHAT_VIDEO_ITEM_SELECTOR)
+
+    @staticmethod
+    def find_video_item_in_instagram(driver):
+        wait = WebDriverWait(driver, 40)
+        return wait.until(
+            ec.element_to_be_clickable(AnySite.INSTAGRAM_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_in_kienthuc(driver):
+        wait = WebDriverWait(driver, 40)
+        return wait.until(
+            ec.element_to_be_clickable(AnySite.KIENTHUC_VIDEO_ITEM))
+
+

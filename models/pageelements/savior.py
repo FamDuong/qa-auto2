@@ -38,7 +38,7 @@ class SaviorElements(BasePageElement):
 
     def select_shadow_element_preferred_select(self, driver):
         return self.select_shadow_element_savior(driver, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.
-                                                 PREFFERED_SELECT_BTN)
+                                                 PREFERRED_SELECT_BTN)
 
     def find_download_button(self, driver):
         return self.select_shadow_element_download_button(driver)
@@ -49,7 +49,7 @@ class SaviorElements(BasePageElement):
 
     def find_preferred_option(self, driver):
         return self.select_shadow_element_by_css_selector(driver, self.find_first_layer(driver)). \
-            find_element_by_css_selector(SaviorPageLocators.PREFFERED_SELECT_BTN)
+            find_element_by_css_selector(SaviorPageLocators.PREFERRED_SELECT_BTN)
 
     def find_mobile_sharing_button(self, driver):
         return self.select_shadow_element_by_css_selector(driver, self.find_first_layer(driver)). \

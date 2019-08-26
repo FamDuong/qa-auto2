@@ -1,3 +1,7 @@
+import time
+
+import pyautogui as pyautogui
+
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
@@ -15,7 +19,6 @@ class Test24H:
     @staticmethod
     def mouse_over_video_element_24h(browser):
         browser.get(OtherSiteUrls.TWENTY_FOUR_H_VIDEO_URL)
-        any_site_page_object.mouse_over_video_element_24h(browser)
         any_site_page_object.mouse_over_video_element_24h(browser)
 
     def prepare_check_download(self, browser, download_folder):
@@ -41,5 +44,19 @@ class Test24H:
             assert_file_download_value(get_current_download_folder, height_frame)
         finally:
             clear_data_download(browser)
+
+
+class TestKienThucDotNet:
+
+    @pytestrail.case('C54151')
+    def test_check_default_state_download_button(self, browser):
+        browser.get(OtherSiteUrls.KIENTHUC_VIDEO_ITEM)
+        time.sleep(2)
+        coords = pyautogui.locateOnScreen('video_item.PNG')
+        pyautogui.click(coords)
+        any_site_page_object.mouse_over_video_item_kienthuc(browser)
+        savior_page_object.assert_value_preferred_quality(browser, 'High')
+
+
 
 

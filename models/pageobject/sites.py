@@ -68,8 +68,9 @@ class AnySitePageObject(BasePageObject):
 
     def mouse_over_video_element_24h(self, driver):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_element_24h(driver))
-        hov.perform()
+        while BasePageObject.verify_savior_popup_appear(driver) is None:
+            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_element_24h(driver))
+            hov.perform()
 
     def click_video_element_phimmoi(self, driver):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
@@ -83,5 +84,39 @@ class AnySitePageObject(BasePageObject):
     def close_popup_continue_watching(self, driver):
         WaitAfterEach.sleep_timer_after_each_step()
         self.any_site_element.find_close_popup_continue_watching(driver).click()
+
+    def mouse_over_video_element_facebook(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        while BasePageObject.verify_savior_popup_appear(driver) is None:
+            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_item_in_facebook_page(driver))
+            hov.perform()
+
+    def mouse_over_video_element_messenger_chat(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        while BasePageObject.verify_savior_popup_appear(driver) is None:
+            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_item_in_messenger_chat(driver))
+            hov.perform()
+
+    def click_video_element_messenger_chat(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        self.any_site_element.click_video_item_in_messenger_chat(driver)
+
+    def mouse_over_video_element_instagram(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        while BasePageObject.verify_savior_popup_appear(driver) is None:
+            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_item_in_instagram(driver))
+            hov.perform()
+
+    def mouse_over_video_item_kienthuc(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        while BasePageObject.verify_savior_popup_appear(driver) is None:
+            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_item_in_kienthuc(driver))
+            hov.perform()
+
+    def click_video_item_kienthuc(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        self.any_site_element.find_video_item_in_kienthuc(driver).click()
+
+
 
 

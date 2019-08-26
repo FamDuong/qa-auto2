@@ -63,6 +63,11 @@ def assert_file_download_value(download_folder_path, height_value):
         assert height is not None
 
 
+def assert_file_download_exist(download_folder_path):
+    mp4_files = find_mp4_file_download(download_folder_path, '.mp4')
+    assert len(mp4_files) > 0
+
+
 def check_if_the_file_fully_downloaded(browser, file_type='clip'):
     browser.get(Urls.COCCOC_DOWNLOAD_URL)
     download_page_object.verify_play_button_existed(browser, file_type=file_type)

@@ -41,8 +41,9 @@ class OtherSiteUrls:
     TWENTY_FOUR_H_VIDEO_URL = 'https://www.24h.com.vn/bong-da/2-clb-viet-nam-thong-tri-afc-cup-bao-chau-a-noi-gi-c48a1061647.html'
     PHIMMOI_VIDEO_URL = 'http://www.phimmoi.net/phim/linh-kiem-ton-8199/xem-phim.html'
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/watch/?v=682897505204114'
-
-
+    MESSENGER_CHAT_ITEM = 'https://www.messenger.com/t/2035107526617289'
+    INSTAGRAM_VIDEO_ITEM = 'https://www.instagram.com/p/B1nlf9AhX4M/'
+    KIENTHUC_VIDEO_ITEM = 'https://kienthuc.net.vn/truyen-hinh-video/video-duong-pho-ha-noi-ngap-sau-sau-mua-bao-1259721.html'
 
     MOJI_BIG_CHATBOX = 'https://www.messenger.com/t/100013968193318'
 
