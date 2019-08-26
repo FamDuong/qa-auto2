@@ -14,7 +14,10 @@ class TestShareVideoFileQRCode:
 
     def handle_store_button(self, browser, text_assert):
         list_windows = browser.window_handles
-        browser.switch_to.window(list_windows[2])
+        if len(list_windows) == 2:
+            browser.switch_to.window(list_windows[1])
+        elif len(list_windows) == 3:
+            browser.switch_to.window(list_windows[2])
         assert text_assert in browser.current_url
         browser.close()
         browser.switch_to.window(list_windows[0])
