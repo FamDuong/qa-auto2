@@ -1,24 +1,16 @@
+import pytest
+
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
 from testscripts.sanitytest.savior.common_setup import download_file_via_main_download_button, \
-    assert_file_download_exist, clear_data_download, delete_all_mp4_file_download
+    assert_file_download_exist, clear_data_download, delete_all_mp4_file_download, implement_download_file, \
+    clear_data_download_in_browser_and_download_folder
 from utils_automation.const import OtherSiteUrls
 
 
 any_site_page_object = AnySitePageObject()
 savior_page_object = SaviorPageObject()
-
-
-def implement_download_file(browser, get_current_download_folder):
-    delete_all_mp4_file_download(get_current_download_folder, '.mp4')
-    download_file_via_main_download_button(browser)
-    assert_file_download_exist(get_current_download_folder)
-
-
-def clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder):
-    clear_data_download(browser)
-    delete_all_mp4_file_download(get_current_download_folder, '.mp4')
 
 
 class TestFacebook:
@@ -34,7 +26,7 @@ class TestMessenger:
 
     @staticmethod
     def setup_savior_option_appear(driver):
-        driver.get(OtherSiteUrls.MESSENGER_CHAT_ITEM)
+        driver.get(OtherSiteUrls.MESSENGER_CHAT_URL)
         any_site_page_object.click_video_element_messenger_chat(driver)
         any_site_page_object.mouse_over_video_element_messenger_chat(driver)
 
@@ -56,7 +48,7 @@ class TestInstagram:
 
     @staticmethod
     def prepare_appear_savior_option(browser):
-        browser.get(OtherSiteUrls.INSTAGRAM_VIDEO_ITEM)
+        browser.get(OtherSiteUrls.INSTAGRAM_VIDEO_URL)
         any_site_page_object.mouse_over_video_element_instagram(browser)
 
     @pytestrail.case('C54151')
@@ -71,5 +63,28 @@ class TestInstagram:
             implement_download_file(browser, get_current_download_folder)
         finally:
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
+
+
+class TestTwitter:
+
+    @staticmethod
+    def prepare_savior_option_appear(browser):
+        browser.get(OtherSiteUrls.TWITTER_VIDEO_URL)
+        any_site_page_object.mouse_over_video_item_twitter(browser)
+
+    @pytestrail.case('C54151')
+    def test_check_default_state_download_button(self, browser):
+        self.prepare_savior_option_appear(browser)
+        savior_page_object.assert_value_preferred_quality(browser, 'High')
+
+    @pytestrail.case('C54152')
+    @pytest.mark.skip(reason='Wait for this bug to be fixed QA-420')
+    def test_click_download_video_item(self, browser, get_current_download_folder):
+        self.prepare_savior_option_appear(browser)
+        try:
+            implement_download_file(browser, get_current_download_folder)
+        finally:
+            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
+
 
 

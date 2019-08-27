@@ -74,31 +74,31 @@ class AnySiteElements(BasePageElement):
 
     @staticmethod
     def find_video_element_24h(driver):
-        wait = WebDriverWait(driver, 40)
+        wait = WebDriverWait(driver, 10)
         return wait.until(
             ec.element_to_be_clickable(AnySite.TWENTY_FOUR_H_VIDEO_ITEM))
 
     @staticmethod
     def find_video_element_phimmoi(driver):
-        wait = WebDriverWait(driver, 40)
+        wait = WebDriverWait(driver, 10)
         return wait.until(
             ec.element_to_be_clickable(AnySite.PHIMMOI_VIDEO_ITEM))
 
     @staticmethod
     def find_close_popup_continue_watching(driver):
-        wait = WebDriverWait(driver, 40)
+        wait = WebDriverWait(driver, 10)
         return wait.until(
             ec.element_to_be_clickable(AnySite.PHIMMOI_CONTINUE_WATCHING_CLOSE_ELEMENT))
 
     @staticmethod
     def find_video_item_in_facebook_page(driver):
-        wait = WebDriverWait(driver, 40)
+        wait = WebDriverWait(driver, 10)
         return wait.until(
             ec.element_to_be_clickable(AnySite.FACEBOOK_VIDEO_ITEM))
 
     @staticmethod
     def find_video_item_in_messenger_chat(driver):
-        wait = WebDriverWait(driver, 40)
+        wait = WebDriverWait(driver, 10)
         return wait.until(
             ec.element_to_be_clickable(AnySite.MESSENGER_CHAT_VIDEO_ITEM))
 
@@ -108,14 +108,39 @@ class AnySiteElements(BasePageElement):
 
     @staticmethod
     def find_video_item_in_instagram(driver):
-        wait = WebDriverWait(driver, 40)
+        wait = WebDriverWait(driver, 10)
         return wait.until(
             ec.element_to_be_clickable(AnySite.INSTAGRAM_VIDEO_ITEM))
 
     @staticmethod
     def find_video_item_in_kienthuc(driver):
-        wait = WebDriverWait(driver, 40)
+        wait = WebDriverWait(driver, 10)
         return wait.until(
             ec.element_to_be_clickable(AnySite.KIENTHUC_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_vietnamnet(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.element_to_be_clickable(AnySite.VIETNAMNET_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_eva_vn(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.element_to_be_clickable(AnySite.EVA_VN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_twitter(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.element_to_be_clickable(AnySite.TWITTER_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_soha(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.element_to_be_clickable(AnySite.SOHA_VIDEO_ITEM))
+
 
 

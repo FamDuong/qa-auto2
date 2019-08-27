@@ -36,3 +36,10 @@ class AnySite(object):
     MESSENGER_CHAT_VIDEO_ITEM_SELECTOR = 'button[data-testid="play_pause_control"]'
     INSTAGRAM_VIDEO_ITEM = (By.XPATH, '//a[@role="button"]')
     KIENTHUC_VIDEO_ITEM = (By.CSS_SELECTOR, 'div[id*="video"][class="vplugin-div-body"]')
+    VIETNAMNET_VIDEO_ITEM = (By.ID, 'videoDetail')
+    TWITTER_VIDEO_ITEM = (By.XPATH, '(//video[@preload="none"])[1]')
+    SOHA_VIDEO_ITEM = (By.ID, 'video-embeb')
+    EVA_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="zplayer"]')
+
+
+

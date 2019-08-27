@@ -51,4 +51,9 @@ class TestPhimmoi:
             clear_data_download(browser)
 
 
+class TestTvZing:
+
+    @pytestrail.case('C54151')
+    def test_check_default_state_download_button(self, browser):
+        browser.get()
 

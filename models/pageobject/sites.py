@@ -53,10 +53,10 @@ class AnySitePageObject(BasePageObject):
     any_site_element = AnySiteElements()
 
     def mouse_over_first_video_element(self, driver):
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        any_video_element = self.any_site_element.find_first_video_element(driver)
-        hov = ActionChains(driver).move_to_element(any_video_element)
-        hov.perform()
+        while BasePageObject.verify_savior_popup_appear(driver) is None:
+            any_video_element = self.any_site_element.find_first_video_element(driver)
+            hov = ActionChains(driver).move_to_element(any_video_element)
+            hov.perform()
 
     def click_first_video_element(self, driver):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
@@ -116,6 +116,30 @@ class AnySitePageObject(BasePageObject):
     def click_video_item_kienthuc(self, driver):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         self.any_site_element.find_video_item_in_kienthuc(driver).click()
+
+    def mouse_over_video_item_vietnamnet(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        while BasePageObject.verify_savior_popup_appear(driver) is None:
+            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_item_vietnamnet(driver))
+            hov.perform()
+
+    def mouse_over_video_item_eva_vn(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        while BasePageObject.verify_savior_popup_appear(driver) is None:
+            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_item_eva_vn(driver))
+            hov.perform()
+
+    def mouse_over_video_item_twitter(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        while BasePageObject.verify_savior_popup_appear(driver) is None:
+            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_item_twitter(driver))
+            hov.perform()
+
+    def mouse_over_video_item_soha(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        while BasePageObject.verify_savior_popup_appear(driver) is None:
+            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_item_soha(driver))
+            hov.perform()
 
 
 
