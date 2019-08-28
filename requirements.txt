@@ -74,7 +74,6 @@ reportlab==3.5.23
 requests==2.22.0
 retry==0.9.2
 rsa==4.0
-rst2pdf==0.93.dev0
 selenium==3.141.0
 simple-settings==0.18.0
 simplejson==3.16.0
