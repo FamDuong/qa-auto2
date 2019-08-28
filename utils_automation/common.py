@@ -2,6 +2,10 @@ import os
 import csv
 import sys
 
+from selenium.webdriver import ActionChains
+
+from utils_automation.setup import WaitAfterEach
+
 
 class CSVHandle:
     def get_from_csv(self, filename):
@@ -44,3 +48,12 @@ class FilesHandle:
         from utils_automation.cleanup import Files
         files = Files()
         files.delete_all_files_in_folder(folder)
+
+
+class WebElements:
+
+    @staticmethod
+    def mouse_over_element(driver, element):
+            hov = ActionChains(driver).move_to_element(element)
+            hov.perform()
+

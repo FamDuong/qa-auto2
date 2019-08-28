@@ -137,10 +137,41 @@ class AnySiteElements(BasePageElement):
             ec.element_to_be_clickable(AnySite.TWITTER_VIDEO_ITEM))
 
     @staticmethod
+    def find_media_view_option_twitter(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.element_to_be_clickable(AnySite.TWITTER_MEDIA_VIEW_OPTION))
+
+    @staticmethod
     def find_video_item_soha(driver):
         wait = WebDriverWait(driver, 10)
         return wait.until(
             ec.element_to_be_clickable(AnySite.SOHA_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_2sao_vn(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.SAO_2_VN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_watch_beginning_fpt_play(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.FPT_PLAY_WATCH_FROM_BEGINNING_BTN))
+
+    @staticmethod
+    def find_video_item_fpt_play(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.FPT_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_phunu_giadinh(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.PHUNU_GIADINH_VIDEO_ITEM))
+
 
 
 

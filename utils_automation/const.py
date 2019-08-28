@@ -22,6 +22,7 @@ class VideoUrls:
     ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/Attention-J-Fla/ZW7F76D6.html'
     NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summer-girl-haim.Q1gHbL4BuuEXJ.html'
     TV_ZING_VIDEO_URL = 'https://tv.zing.vn/video/Goblin-Yeu-Tinh-Tap-1/IWZEIC7F.html'
+    BILU_TV_VIDEO_URL = 'https://bilutv.org/phim-bat-gap-hanh-phuc-tap-1-14433.211144.html'
 
     @classmethod
     def all(cls):
@@ -48,9 +49,12 @@ class OtherSiteUrls:
     KIENTHUC_VIDEO_URL = 'https://kienthuc.net.vn/truyen-hinh-video/video-duong-pho-ha-noi-ngap-sau-sau-mua-bao-1259721.html'
     MOJI_BIG_CHATBOX = 'https://www.messenger.com/t/100013968193318'
     VIETNAMNET_VIDEO_URL = 'https://video.vietnamnet.vn/thuoc-la-dien-tu-khong-nicotine-van-gay-hai-den-co-the-a-81979.html'
-    TWITTER_VIDEO_URL = 'https://twitter.com/TwitterVideo?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor'
+    TWITTER_VIDEO_URL = 'https://twitter.com/downloaderbot?lang=en'
     SOHA_VIDEO_URL = 'https://soha.vn/video.htm'
     EVA_VN_VIDEO_URL = 'https://eva.vn/clip-eva/5-con-giap-nam-vua-gioi-kiem-tien-vua-chieu-chuong-thuong-yeu-vo-het-long-c157a403553.html'
+    SAO_2_VN_VIDEO_URL = 'http://2sao.vn/clip/'
+    FPT_PLAY_VIDEO_URL = 'https://fptplay.vn/xem-video/ngoi-nha-chung-mua-9-love-house-series-9-5d36d6a92089bd053fc87240/tap-1.html'
+    PHUNU_GIADINH_VIDEO_URL = 'https://www.phunuvagiadinh.vn/video-185'
 
 
 class ExtensionIds:

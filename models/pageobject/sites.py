@@ -5,6 +5,7 @@ from selenium.webdriver.common.keys import Keys
 
 from models.pageelements.sites import YoutubePageElements, GooglePageElements, AnySiteElements
 from models.pageobject.basepage_object import BasePageObject
+from utils_automation.common import WebElements
 from utils_automation.setup import WaitAfterEach
 
 
@@ -53,10 +54,7 @@ class AnySitePageObject(BasePageObject):
     any_site_element = AnySiteElements()
 
     def mouse_over_first_video_element(self, driver):
-        while BasePageObject.verify_savior_popup_appear(driver) is None:
-            any_video_element = self.any_site_element.find_first_video_element(driver)
-            hov = ActionChains(driver).move_to_element(any_video_element)
-            hov.perform()
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_first_video_element(driver))
 
     def click_first_video_element(self, driver):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
@@ -67,80 +65,68 @@ class AnySitePageObject(BasePageObject):
         self.any_site_element.find_video_element_24h(driver).click()
 
     def mouse_over_video_element_24h(self, driver):
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        while BasePageObject.verify_savior_popup_appear(driver) is None:
-            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_element_24h(driver))
-            hov.perform()
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_element_24h(driver))
 
     def click_video_element_phimmoi(self, driver):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         self.any_site_element.find_video_element_phimmoi(driver).click()
 
     def mouse_over_video_element_phimmoi(self, driver):
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_element_phimmoi(driver))
-        hov.perform()
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_element_phimmoi(driver))
 
     def close_popup_continue_watching(self, driver):
         WaitAfterEach.sleep_timer_after_each_step()
         self.any_site_element.find_close_popup_continue_watching(driver).click()
 
     def mouse_over_video_element_facebook(self, driver):
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        while BasePageObject.verify_savior_popup_appear(driver) is None:
-            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_item_in_facebook_page(driver))
-            hov.perform()
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_in_facebook_page(driver))
 
     def mouse_over_video_element_messenger_chat(self, driver):
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        while BasePageObject.verify_savior_popup_appear(driver) is None:
-            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_item_in_messenger_chat(driver))
-            hov.perform()
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_in_messenger_chat(driver))
 
     def click_video_element_messenger_chat(self, driver):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         self.any_site_element.click_video_item_in_messenger_chat(driver)
 
     def mouse_over_video_element_instagram(self, driver):
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        while BasePageObject.verify_savior_popup_appear(driver) is None:
-            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_item_in_instagram(driver))
-            hov.perform()
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_in_instagram(driver))
 
     def mouse_over_video_item_kienthuc(self, driver):
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        while BasePageObject.verify_savior_popup_appear(driver) is None:
-            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_item_in_kienthuc(driver))
-            hov.perform()
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_in_kienthuc(driver))
 
     def click_video_item_kienthuc(self, driver):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         self.any_site_element.find_video_item_in_kienthuc(driver).click()
 
     def mouse_over_video_item_vietnamnet(self, driver):
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        while BasePageObject.verify_savior_popup_appear(driver) is None:
-            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_item_vietnamnet(driver))
-            hov.perform()
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_vietnamnet(driver))
 
     def mouse_over_video_item_eva_vn(self, driver):
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        while BasePageObject.verify_savior_popup_appear(driver) is None:
-            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_item_eva_vn(driver))
-            hov.perform()
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_eva_vn(driver))
+
+    def choose_media_view_option_twitter(self, driver):
+        self.any_site_element.find_media_view_option_twitter(driver).click()
 
     def mouse_over_video_item_twitter(self, driver):
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        while BasePageObject.verify_savior_popup_appear(driver) is None:
-            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_item_twitter(driver))
-            hov.perform()
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_twitter(driver))
 
     def mouse_over_video_item_soha(self, driver):
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        while BasePageObject.verify_savior_popup_appear(driver) is None:
-            hov = ActionChains(driver).move_to_element(self.any_site_element.find_video_item_soha(driver))
-            hov.perform()
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_soha(driver))
 
+    def mouse_over_video_item_sao_2_vn(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_2sao_vn(driver))
+
+    def choose_watch_from_beginning_fpt_play(self, driver):
+        self.any_site_element.find_watch_beginning_fpt_play(driver).click()
+
+    def mouse_over_video_item_fpt_play(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_fpt_play(driver))
+
+    def mouse_over_video_item_phunu_giadinh(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_phunu_giadinh(driver))
+
+    def click_video_item_phunu_giadinh(self, driver):
+        self.any_site_element.find_video_item_phunu_giadinh(driver).click()
 
 
 

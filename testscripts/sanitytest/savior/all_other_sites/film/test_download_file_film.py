@@ -1,4 +1,5 @@
 import pytest
+from selenium import webdriver
 
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
@@ -51,9 +52,6 @@ class TestPhimmoi:
             clear_data_download(browser)
 
 
-class TestTvZing:
 
-    @pytestrail.case('C54151')
-    def test_check_default_state_download_button(self, browser):
-        browser.get()
+
 

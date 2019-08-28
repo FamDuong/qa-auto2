@@ -1,8 +1,11 @@
+from datetime import datetime
+
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 
 from models.pagelocators.savior import SaviorPageLocators
+from utils_automation.common import WebElements
 from utils_automation.setup import WaitAfterEach
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -11,16 +14,8 @@ from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.mojichat import MojichatLocators
 from utils_automation.setup import WaitAfterEach
 
+
 class BasePageObject(object):
-    # def find_element(self, *locator):
-    #     if locator.__len__() == 2:
-    #         return self.driver.find_element(*locator)
-    #     return self.driver.find_element(*(locator[1], locator[2] % locator[0]))
-    #
-    # def find_elements(self, *locator):
-    #     if locator.__len__() == 2:
-    #         return self.driver.find_elements(*locator)
-    #     return self.driver.find_elements(*(locator[1], locator[2] % locator[0]))
 
     def wait_until_document_ready(self, driver):
         wait_document_ready = WebDriverWait(driver, 60)
@@ -49,11 +44,19 @@ class BasePageObject(object):
             driver.find_element_by_css_selector('body').send_keys(Keys.ARROW_UP)
             WaitAfterEach.sleep_timer_after_each_step()
 
-    @staticmethod
-    def verify_savior_popup_appear(driver):
+    def verify_savior_popup_appear(self, driver):
         return driver.execute_script('return document.querySelector(arguments[0]).'
                                      'shadowRoot.querySelector(arguments[1])', SaviorPageLocators.FIRST_LAYER,
                                      SaviorPageLocators.DOWNLOAD_BUTTON)
+
+    def mouse_over_video_element_site(self, driver, element):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        start_time = datetime.now()
+        while self.verify_savior_popup_appear(driver) is None:
+            WebElements.mouse_over_element(driver, element)
+            time_delta = datetime.now() - start_time
+            if time_delta.total_seconds() >= 10:
+                break
 
 
 

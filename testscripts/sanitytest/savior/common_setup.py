@@ -144,8 +144,8 @@ def clear_data_download_in_browser_and_download_folder(browser, get_current_down
     delete_all_mp4_file_download(get_current_download_folder, '.mp4')
 
 
-def verify_download_quality_high_frame(browser, get_current_download_folder, prepare_savior_option_displayed):
-    download_file_via_main_download_button(browser)
+def verify_download_quality_high_frame(browser, get_current_download_folder, prepare_savior_option_displayed, file_type='clip'):
+    download_file_via_main_download_button(browser, file_type=file_type)
     prepare_savior_option_displayed(browser)
     savior_page_object.choose_preferred_option(browser)
     height_frame = savior_page_object.verify_correct_video_options_chosen_high_quality_option(browser)
