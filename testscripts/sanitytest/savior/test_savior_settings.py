@@ -8,8 +8,8 @@ from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import YoutubePageObject, GooglePageObject
 from pytest_testrail.plugin import pytestrail
 from testscripts.sanitytest.savior.common_setup import pause_any_video_youtube, navigate_savior_details, \
-    not_found_download_button_in_page, get_text_extension_option, check_instant_download
-from utils_automation.const import Urls
+    not_found_download_button_in_page, check_instant_download
+from utils_automation.const import Urls, ExtensionIds
 from utils_automation.setup import Browser, WaitAfterEach
 
 
@@ -25,13 +25,6 @@ class TestSaviorSettings:
     google_page_object = GooglePageObject()
 
     download_page_object = DownloadsPageObject()
-
-    # def pause_any_video_youtube(self, browser):
-    #     browser.get(Urls.YOUTUBE_URL)
-    #     self.youtube_page_object.choose_any_video_item(browser)
-    #     time.sleep(2)
-    #     self.youtube_page_object.click_video_item(browser)
-    #     time.sleep(1)
 
     @pytestrail.case('C54140')
     def test_default_status_savior_browser(self, browser):
@@ -61,8 +54,7 @@ class TestSaviorSettings:
 
     @pytestrail.case('C54142')
     def test_check_working_instant_download_youtube(self, browser):
-        text = get_text_extension_option(browser)
-        check_instant_download(browser, text)
+        check_instant_download(browser, ExtensionIds.SAVIOR_EXTENSION_ID)
 
         # Navigate to google for download
         try:
@@ -99,8 +91,7 @@ class TestSaviorSettings:
 
     @pytestrail.case('C54146')
     def test_enable_disable_download_control(self, browser):
-        text = get_text_extension_option(browser)
-        browser.get(u'chrome-extension://' + text + u'/options.html')
+        browser.get(u'chrome-extension://' + ExtensionIds.SAVIOR_EXTENSION_ID + u'/options.html')
         WaitAfterEach.sleep_timer_after_each_step()
         # Verify default value is enabled
         assert self.savior_extension.verify_show_download_button_near_is_checked(browser) == 'true'
@@ -110,15 +101,14 @@ class TestSaviorSettings:
             browser.get(Urls.YOUTUBE_URL)
             not_found_download_button_in_page(browser)
         finally:
-            browser.get(u'chrome-extension://' + text + u'/options.html')
+            browser.get(u'chrome-extension://' + ExtensionIds.SAVIOR_EXTENSION_ID + u'/options.html')
             WaitAfterEach.sleep_timer_after_each_step()
             self.savior_extension.click_show_download_button_near(browser)
             WaitAfterEach.sleep_timer_after_each_step()
 
     @pytestrail.case('C54147')
     def test_if_remember_last_chosen_quality(self, browser):
-        text = get_text_extension_option(browser)
-        browser.get(u'chrome-extension://' + text + u'/options.html')
+        browser.get(u'chrome-extension://' + ExtensionIds.SAVIOR_EXTENSION_ID + u'/options.html')
         self.savior_extension.choose_video_quality_high(browser)
         self.savior_extension.choose_remember_last_chosen_option(browser)
         WaitAfterEach.sleep_timer_after_each_step()
@@ -135,7 +125,7 @@ class TestSaviorSettings:
         WaitAfterEach.sleep_timer_after_each_step()
 
         # Assert value must be medium when go to savior extension
-        browser.get(u'chrome-extension://' + text + u'/options.html')
+        browser.get(u'chrome-extension://' + ExtensionIds.SAVIOR_EXTENSION_ID + u'/options.html')
         try:
             assert self.savior_extension.verify_video_quality_medium_is_checked(browser) == 'true'
             WaitAfterEach.sleep_timer_after_each_step()

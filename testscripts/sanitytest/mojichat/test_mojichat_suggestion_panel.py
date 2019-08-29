@@ -1,4 +1,7 @@
 import time
+
+import pytest
+
 from pytest_testrail.plugin import pytestrail
 from models.pageobject.mojichat import MojichatObjects
 from models.pagelocators.mojichat import MojichatLocators
@@ -9,6 +12,8 @@ browser = Browser()
 user_chat = "Coc Coc"
 mojichat_file = "mojichat_list.csv"
 
+
+@pytest.mark.skip(reason='Skip mojchat')
 class TestSuggestionPanelBigBoxChat:
     mojichat_object = MojichatObjects()
 
@@ -31,6 +36,7 @@ class TestSuggestionPanelBigBoxChat:
         time.sleep(10)
 
 
+@pytest.mark.skip(reason='Skip mojchat')
 class TestSuggestionPanelSmallChat:
     mojichat_object = MojichatObjects(MojichatLocators.SMALL_CHAT)
 

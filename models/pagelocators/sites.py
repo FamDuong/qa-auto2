@@ -35,7 +35,7 @@ class AnySite(object):
     MESSENGER_CHAT_VIDEO_ITEM = (By.XPATH, '//video')
     MESSENGER_CHAT_VIDEO_ITEM_SELECTOR = 'button[data-testid="play_pause_control"]'
     INSTAGRAM_VIDEO_ITEM = (By.XPATH, '//a[@role="button"]')
-    KIENTHUC_VIDEO_ITEM = (By.CSS_SELECTOR, 'div[id*="video"][class="vplugin-div-body"]')
+    KIENTHUC_VIDEO_ITEM = (By.XPATH, '//div[@style="text-align:center; width:480px;"]')
     VIETNAMNET_VIDEO_ITEM = (By.ID, 'videoDetail')
     TWITTER_VIDEO_ITEM = (By.XPATH, '//video[@preload="auto"]')
     TWITTER_MEDIA_VIEW_OPTION = (By.XPATH, '(//a[contains(@href,"/media")])[2]')

@@ -1,12 +1,8 @@
-import time
-
-import pyautogui as pyautogui
-
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
 from testscripts.sanitytest.savior.common_setup import delete_all_mp4_file_download, \
-    download_file_via_main_download_button, assert_file_download_value, clear_data_download, implement_download_file, \
+    clear_data_download, implement_download_file, \
     clear_data_download_in_browser_and_download_folder, verify_download_quality_high_frame
 from utils_automation.const import OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
@@ -49,8 +45,9 @@ class TestKienThucDotNet:
     def prepare_appear_savior_option(browser):
         browser.get(OtherSiteUrls.KIENTHUC_VIDEO_URL)
         WaitAfterEach.sleep_timer_after_each_step()
-        coords = pyautogui.locateOnScreen('video_item.PNG')
-        pyautogui.click(coords)
+        # coords = pyautogui.locateOnScreen('video_item.PNG')
+        # pyautogui.click(coords)
+        any_site_page_object.click_video_item_kienthuc(browser)
         any_site_page_object.mouse_over_video_item_kienthuc(browser)
 
     @pytestrail.case('C54151')
@@ -175,6 +172,3 @@ class TestPhuNuVaGiaDinh:
             implement_download_file(browser, get_current_download_folder)
         finally:
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
-
-
-

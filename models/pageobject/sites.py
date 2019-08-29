@@ -95,7 +95,7 @@ class AnySitePageObject(BasePageObject):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_in_kienthuc(driver))
 
     def click_video_item_kienthuc(self, driver):
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        ActionChains(driver).move_to_element(self.any_site_element.find_video_item_in_kienthuc(driver)).perform()
         self.any_site_element.find_video_item_in_kienthuc(driver).click()
 
     def mouse_over_video_item_vietnamnet(self, driver):
