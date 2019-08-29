@@ -62,7 +62,7 @@ class TestDownloadButtQualityBlock:
     def test_check_click_download_button_default_quality(self, browser, url_site, get_current_download_folder):
         self.prepare_check_download(browser, url_site, get_current_download_folder)
         try:
-            if url_site == VideoUrls.BILU_TV_VIDEO_URL:
+            if url_site in [VideoUrls.BILU_TV_VIDEO_URL, VideoUrls.DONG_PHIM_VIDEO_URL]:
                 download_file_via_main_download_button(browser, file_type='movie')
             else:
                 download_file_via_main_download_button(browser)

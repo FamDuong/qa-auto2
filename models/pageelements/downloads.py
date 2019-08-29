@@ -105,6 +105,8 @@ class DownloadsElement(BasePageElement):
         wait = None
         if file_type == 'movie':
             wait = WebDriverWait(driver, 200)
+        elif file_type == 'slow':
+            wait = WebDriverWait(driver, 400)
         elif file_type == 'clip':
             wait = WebDriverWait(driver, 60)
         return wait.until(

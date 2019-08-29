@@ -172,6 +172,58 @@ class AnySiteElements(BasePageElement):
         return wait.until(
             ec.presence_of_element_located(AnySite.PHUNU_GIADINH_VIDEO_ITEM))
 
+    @staticmethod
+    def find_video_item_tien_phong(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.TIEN_PHONG_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_bong_da_dot_com(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.BONG_DA_DOT_COM_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_gia_dinh_dot_net(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.GIA_DINH_DOT_NET_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_a_family(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.A_FAMILY_VN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_gamek_vn(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.GAME_K_VN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_vu_vi_phim(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.VU_VI_PHIM_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_an_ninh_thu_do(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.AN_NINH_THU_DO_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_tuoi_tre(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.TUOI_TRE_VIDEO_ITEM))
+
+
+
+
+
 
 
 

@@ -46,6 +46,15 @@ class AnySite(object):
     FPT_VIDEO_ITEM = (By.XPATH, '(//video)[1]')
 
     PHUNU_GIADINH_VIDEO_ITEM = (By.ID, 'rmpPlayer')
+    TIEN_PHONG_VIDEO_ITEM = (By.XPATH, '//iframe[@class="cms-video"]')
+    BONG_DA_DOT_COM_VIDEO_ITEM = (By.XPATH, '//div[@class="exp_content"]')
+    GIA_DINH_DOT_NET_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
+    A_FAMILY_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
+    GAME_K_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
+
+    VU_VI_PHIM_VIDEO_ITEM = (By.ID, 'media')
+    AN_NINH_THU_DO_VIDEO_ITEM = (By.ID, 'main_detail')
+    TUOI_TRE_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
 
 
 

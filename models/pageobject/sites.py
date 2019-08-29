@@ -128,5 +128,39 @@ class AnySitePageObject(BasePageObject):
     def click_video_item_phunu_giadinh(self, driver):
         self.any_site_element.find_video_item_phunu_giadinh(driver).click()
 
+    def mouse_over_video_item_tien_phong(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_tien_phong(driver))
+
+    def click_video_item_tien_phong(self, driver):
+        ActionChains(driver).move_to_element(self.any_site_element.find_video_item_tien_phong(driver)).perform()
+        self.any_site_element.find_video_item_tien_phong(driver).click()
+
+    def mouse_over_video_item_bong_da_dot_com(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_bong_da_dot_com(driver))
+
+    def click_video_item_bong_da_dot_com(self, driver):
+        ActionChains(driver).move_to_element(self.any_site_element.find_video_item_bong_da_dot_com(driver)).perform()
+        self.any_site_element.find_video_item_bong_da_dot_com(driver).click()
+
+    def mouse_over_video_item_gia_dinh_dot_net(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_gia_dinh_dot_net(driver))
+
+    def mouse_over_video_item_a_family(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_a_family(driver))
+
+    def mouse_over_video_item_gamek_vn(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_gamek_vn(driver))
+
+    def mouse_over_video_item_vu_vi_phim(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_vu_vi_phim(driver))
+
+    def click_video_item_an_ninh_thu_do(self, driver):
+        self.any_site_element.find_video_item_an_ninh_thu_do(driver).click()
+
+    def mouse_over_video_item_an_ninh_thu_do(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_an_ninh_thu_do(driver))
+
+    def mouse_over_video_item_tuoi_tre(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_tuoi_tre(driver))
 
 

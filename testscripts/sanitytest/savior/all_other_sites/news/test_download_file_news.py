@@ -172,3 +172,164 @@ class TestPhuNuVaGiaDinh:
             implement_download_file(browser, get_current_download_folder)
         finally:
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
+
+
+class TestTienPhong:
+
+    @staticmethod
+    def prepare_savior_option_appear(browser):
+        browser.get(OtherSiteUrls.TIEN_PHONG_VIDEO_URL)
+        any_site_page_object.click_video_item_tien_phong(browser)
+        any_site_page_object.mouse_over_video_item_tien_phong(browser)
+
+    @pytestrail.case('C54151')
+    def test_check_default_state_download_button(self, browser):
+        self.prepare_savior_option_appear(browser)
+        savior_page_object.assert_value_preferred_quality(browser, 'High')
+
+    @pytestrail.case('C54152')
+    def test_check_click_download_button_default_quality(self, browser, get_current_download_folder):
+        self.prepare_savior_option_appear(browser)
+        try:
+            implement_download_file(browser, get_current_download_folder)
+        finally:
+            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
+
+
+class TestBongDaDotCom:
+
+    @staticmethod
+    def prepare_savior_option_appear(browser):
+        browser.get(OtherSiteUrls.BONG_DA_DOT_COM_VIDEO_URL)
+        any_site_page_object.click_video_item_bong_da_dot_com(browser)
+        any_site_page_object.mouse_over_video_item_bong_da_dot_com(browser)
+
+    @pytestrail.case('C54151')
+    def test_check_default_state_download_button(self, browser):
+        self.prepare_savior_option_appear(browser)
+        savior_page_object.assert_value_preferred_quality(browser, 'High')
+
+    @pytestrail.case('C54152')
+    def test_check_click_download_button_default_quality(self, browser, get_current_download_folder):
+        self.prepare_savior_option_appear(browser)
+        try:
+            verify_download_quality_high_frame(browser, get_current_download_folder,
+                                               self.prepare_savior_option_appear)
+        finally:
+            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
+
+
+class TestGiaDinhDotNet:
+
+    @staticmethod
+    def prepare_savior_option_appear(browser):
+        browser.get(OtherSiteUrls.GIA_DINH_DOT_NET_VIDEO_URL)
+        any_site_page_object.mouse_over_video_item_gia_dinh_dot_net(browser)
+
+    @pytestrail.case('C54151')
+    def test_check_default_state_download_button(self, browser):
+        self.prepare_savior_option_appear(browser)
+        savior_page_object.assert_value_preferred_quality(browser, 'High')
+
+    @pytestrail.case('C54152')
+    def test_check_click_download_button_default_quality(self, browser, get_current_download_folder):
+        self.prepare_savior_option_appear(browser)
+        try:
+            verify_download_quality_high_frame(browser, get_current_download_folder,
+                                               self.prepare_savior_option_appear)
+        finally:
+            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
+
+
+class TestAFamily:
+
+    @staticmethod
+    def prepare_savior_option_appear(browser):
+        browser.get(OtherSiteUrls.A_FAMILY_VIDEO_URL)
+        any_site_page_object.mouse_over_video_item_a_family(browser)
+
+    @pytestrail.case('C54151')
+    def test_check_default_state_download_button(self, browser):
+        self.prepare_savior_option_appear(browser)
+        savior_page_object.assert_value_preferred_quality(browser, 'High')
+
+    @pytestrail.case('C54152')
+    def test_check_click_download_button_default_quality(self, browser, get_current_download_folder):
+        self.prepare_savior_option_appear(browser)
+        try:
+            verify_download_quality_high_frame(browser, get_current_download_folder,
+                                               self.prepare_savior_option_appear)
+        finally:
+            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
+
+
+class TestGamek:
+
+    @staticmethod
+    def prepare_savior_option_appear(browser):
+        browser.get(OtherSiteUrls.GAMEK_VN_VIDEO_URL)
+        any_site_page_object.mouse_over_video_item_gamek_vn(browser)
+
+    @pytestrail.case('C54151')
+    def test_check_default_state_download_button(self, browser):
+        self.prepare_savior_option_appear(browser)
+        savior_page_object.assert_value_preferred_quality(browser, 'High')
+
+    @pytestrail.case('C54152')
+    def test_check_click_download_button_default_quality(self, browser, get_current_download_folder):
+        self.prepare_savior_option_appear(browser)
+        try:
+            verify_download_quality_high_frame(browser, get_current_download_folder,
+                                               self.prepare_savior_option_appear)
+        finally:
+            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
+
+
+class TestAnNinhThuDo:
+
+    @staticmethod
+    def prepare_savior_option_appear(browser):
+        browser.get(OtherSiteUrls.AN_NINH_THU_DO_VIDEO_URL)
+        any_site_page_object.click_video_item_an_ninh_thu_do(browser)
+        any_site_page_object.mouse_over_video_item_an_ninh_thu_do(browser)
+
+    @pytestrail.case('C54151')
+    def test_check_default_state_download_button(self, browser):
+        self.prepare_savior_option_appear(browser)
+        savior_page_object.assert_value_preferred_quality(browser, 'High')
+
+    @pytestrail.case('C54152')
+    def test_check_click_download_button_default_quality(self, browser, get_current_download_folder):
+        self.prepare_savior_option_appear(browser)
+        try:
+            implement_download_file(browser, get_current_download_folder)
+        finally:
+            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
+
+
+class TestTuoiTre:
+
+    @staticmethod
+    def prepare_savior_option_appear(browser):
+        browser.get(OtherSiteUrls.TUOI_TRE_VIDEO_URL)
+        any_site_page_object.mouse_over_video_item_tuoi_tre(browser)
+
+    @pytestrail.case('C54151')
+    def test_check_default_state_download_button(self, browser):
+        self.prepare_savior_option_appear(browser)
+        savior_page_object.assert_value_preferred_quality(browser, 'High')
+
+    @pytestrail.case('C54152')
+    def test_check_click_download_button_default_quality(self, browser, get_current_download_folder):
+        self.prepare_savior_option_appear(browser)
+        try:
+            verify_download_quality_high_frame(browser, get_current_download_folder,
+                                               self.prepare_savior_option_appear)
+        finally:
+            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
+
+
+
+
+
+

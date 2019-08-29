@@ -55,7 +55,7 @@ class BasePageObject(object):
         while self.verify_savior_popup_appear(driver) is None:
             WebElements.mouse_over_element(driver, element)
             time_delta = datetime.now() - start_time
-            if time_delta.total_seconds() >= 10:
+            if time_delta.total_seconds() >= 12:
                 break
 
 
