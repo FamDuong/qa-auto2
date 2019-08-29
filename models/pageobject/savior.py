@@ -22,7 +22,7 @@ class SaviorPageObject(BasePageObject):
     def choose_preferred_option(self, driver):
         driver.execute_script(
             self.script,
-            SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFFERED_SELECT_BTN)
+            SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
         WaitAfterEach.sleep_timer_after_each_step()
 
     def choose_medium_option(self, driver):
@@ -41,7 +41,7 @@ class SaviorPageObject(BasePageObject):
         preferred_element = driver.execute_script(
             'return document.querySelector(arguments[0]).shadowRoot.querySelector(arguments[1]).getAttribute('
             '"data-selected-value")',
-            SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFFERED_SELECT_BTN)
+            SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
         assert preferred_element == assert_text
 
     def download_file_via_savior_download_btn(self, driver):

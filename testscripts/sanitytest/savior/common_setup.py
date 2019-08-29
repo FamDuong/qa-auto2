@@ -9,7 +9,7 @@ from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import YoutubePageObject, GooglePageObject, AnySitePageObject
 from utils_automation.cleanup import Files
 from utils_automation.common import FilesHandle
-from utils_automation.const import Urls
+from utils_automation.const import Urls, ExtensionIds
 from utils_automation.setup import Browser, WaitAfterEach
 
 extension_page_object = ExtensionsPageObject()
@@ -63,6 +63,11 @@ def assert_file_download_value(download_folder_path, height_value):
         assert height is not None
 
 
+def assert_file_download_exist(download_folder_path):
+    mp4_files = find_mp4_file_download(download_folder_path, '.mp4')
+    assert len(mp4_files) > 0
+
+
 def check_if_the_file_fully_downloaded(browser, file_type='clip'):
     browser.get(Urls.COCCOC_DOWNLOAD_URL)
     download_page_object.verify_play_button_existed(browser, file_type=file_type)
@@ -104,31 +109,20 @@ def not_found_download_button_in_page(browser):
     savior_page_object.not_found_download_button(browser)
 
 
-def get_text_extension_option(browser):
-    navigate_savior_details(browser)
-    WaitAfterEach.sleep_timer_after_each_step()
-    extension_detail_page_object.open_extension_options_view(browser)
-    WaitAfterEach.sleep_timer_after_each_step()
-    return savior_extension.get_show_instant_download_youtube_value(browser)
-
-
 def revert_high_quality_default_option(browser):
-    text = get_text_extension_option(browser)
-    browser.get(u'chrome-extension://' + text + u'/options.html')
+    browser.get(u'chrome-extension://' + ExtensionIds.SAVIOR_EXTENSION_ID + u'/options.html')
     savior_extension.choose_video_quality_high(browser)
     WaitAfterEach.sleep_timer_after_each_step()
 
 
 def choose_video_quality_medium_option(browser):
-    text = get_text_extension_option(browser)
-    browser.get(u'chrome-extension://' + text + u'/options.html')
+    browser.get(u'chrome-extension://' + ExtensionIds.SAVIOR_EXTENSION_ID + u'/options.html')
     savior_extension.choose_video_quality_medium(browser)
     WaitAfterEach.sleep_timer_after_each_step()
 
 
 def choose_video_quality_low_option(browser):
-    text = get_text_extension_option(browser)
-    browser.get(u'chrome-extension://' + text + u'/options.html')
+    browser.get(u'chrome-extension://' + ExtensionIds.SAVIOR_EXTENSION_ID + u'/options.html')
     savior_extension.choose_video_quality_low(browser)
     WaitAfterEach.sleep_timer_after_each_step()
 
@@ -138,6 +132,25 @@ def pause_any_video_site(browser, url):
     any_site_page_object.click_first_video_element(browser)
     any_site_page_object.mouse_over_first_video_element(browser)
 
+
+def implement_download_file(browser, get_current_download_folder):
+    delete_all_mp4_file_download(get_current_download_folder, '.mp4')
+    download_file_via_main_download_button(browser)
+    assert_file_download_exist(get_current_download_folder)
+
+
+def clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder):
+    clear_data_download(browser)
+    delete_all_mp4_file_download(get_current_download_folder, '.mp4')
+
+
+def verify_download_quality_high_frame(browser, get_current_download_folder, prepare_savior_option_displayed, file_type='clip'):
+    download_file_via_main_download_button(browser, file_type=file_type)
+    prepare_savior_option_displayed(browser)
+    savior_page_object.choose_preferred_option(browser)
+    height_frame = savior_page_object.verify_correct_video_options_chosen_high_quality_option(browser)
+    # File mp4 file and assert
+    assert_file_download_value(get_current_download_folder, height_frame)
 
 
 

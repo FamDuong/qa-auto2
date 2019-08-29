@@ -6,10 +6,10 @@ class SaviorPageLocators(object):
 
     FIRST_LAYER = '[style="position: absolute; top: 0px;"]'
 
-    PREFFERED_SELECT_BTN = '[id="preferred-select"]'
+    PREFERRED_SELECT_BTN = '[id="preferred-select"]'
     BASE_OVERLAY_CLASS = '[class="base overlay"]'
 
-    HIGH_PREFFERRED_SELECT_BTN = '//span[@data-selected-value="High"]'
+    HIGH_PREFERRED_SELECT_BTN = '//span[@data-selected-value="High"]'
 
     MEDIUM_SELECT_OPTION = '[data-quality-value="mp4/Medium/360p"]'
 

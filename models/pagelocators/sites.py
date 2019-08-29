@@ -30,4 +30,23 @@ class AnySite(object):
 
     PHIMMOI_CONTINUE_WATCHING_CLOSE_ELEMENT = (By.ID, 'watching-messbox-close')
 
+    FACEBOOK_VIDEO_ITEM = (By.XPATH, '//video[@muted="1"]')
+
+    MESSENGER_CHAT_VIDEO_ITEM = (By.XPATH, '//video')
+    MESSENGER_CHAT_VIDEO_ITEM_SELECTOR = 'button[data-testid="play_pause_control"]'
+    INSTAGRAM_VIDEO_ITEM = (By.XPATH, '//a[@role="button"]')
+    KIENTHUC_VIDEO_ITEM = (By.XPATH, '//div[@style="text-align:center; width:480px;"]')
+    VIETNAMNET_VIDEO_ITEM = (By.ID, 'videoDetail')
+    TWITTER_VIDEO_ITEM = (By.XPATH, '//video[@preload="auto"]')
+    TWITTER_MEDIA_VIEW_OPTION = (By.XPATH, '(//a[contains(@href,"/media")])[2]')
+    SOHA_VIDEO_ITEM = (By.ID, 'video-embeb')
+    EVA_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="zplayer"]')
+    SAO_2_VN_VIDEO_ITEM = (By.XPATH, '//div[@class="main-article-embed"]')
+    FPT_PLAY_WATCH_FROM_BEGINNING_BTN = (By.ID, 'onCancel')
+    FPT_VIDEO_ITEM = (By.XPATH, '(//video)[1]')
+
+    PHUNU_GIADINH_VIDEO_ITEM = (By.ID, 'rmpPlayer')
+
+
+
 

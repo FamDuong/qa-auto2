@@ -60,11 +60,12 @@ class TestDownloadButtQualityBlock:
     @pytestrail.case('C54152')
     @pytest.mark.parametrize('url_site', [i for i in VideoUrls.all()])
     def test_check_click_download_button_default_quality(self, browser, url_site, get_current_download_folder):
-        # time.sleep(2)
-        # Deletes all mp4 files and pause any video youtube
         self.prepare_check_download(browser, url_site, get_current_download_folder)
         try:
-            download_file_via_main_download_button(browser)
+            if url_site == VideoUrls.BILU_TV_VIDEO_URL:
+                download_file_via_main_download_button(browser, file_type='movie')
+            else:
+                download_file_via_main_download_button(browser)
             pause_any_video_site(browser, url_site)
             self.savior_page_object.choose_preferred_option(browser)
             height_frame = self.savior_page_object.verify_correct_video_options_chosen_high_quality_option(browser)
@@ -89,14 +90,13 @@ class TestDownloadButtQualityBlock:
             revert_high_quality_default_option(browser)
 
     @pytestrail.case('C54154')
-    @pytest.mark.parametrize('url_site', [i for i in VideoUrls.all()])
     @pytest.mark.skip(reason='Duplicated test with C54152')
-    def test_check_when_preferred_quality_high(self, browser, url_site, get_current_download_folder):
+    def test_check_when_preferred_quality_high(self, browser, get_current_download_folder):
         revert_high_quality_default_option(browser)
-        self.prepare_check_download(browser, url_site, get_current_download_folder)
+        self.prepare_check_download(browser, VideoUrls.YOUTUBE_VIDEO_URL, get_current_download_folder)
         try:
             download_file_via_main_download_button(browser)
-            pause_any_video_site(browser, url_site)
+            pause_any_video_site(browser, VideoUrls.YOUTUBE_VIDEO_URL)
             self.savior_page_object.choose_preferred_option(browser)
             height_frame = self.savior_page_object.verify_correct_video_options_chosen_high_quality_option(browser)
 
@@ -106,13 +106,12 @@ class TestDownloadButtQualityBlock:
             clear_data_download(browser)
 
     @pytestrail.case('C54155')
-    @pytest.mark.parametrize('url_site', [i for i in VideoUrls.all()])
-    def test_check_when_preferred_quality_medium(self, browser, url_site, get_current_download_folder):
+    def test_check_when_preferred_quality_medium(self, browser, get_current_download_folder):
         choose_video_quality_medium_option(browser)
-        self.prepare_check_download(browser, url_site, get_current_download_folder)
+        self.prepare_check_download(browser, VideoUrls.YOUTUBE_VIDEO_URL, get_current_download_folder)
         try:
             download_file_via_main_download_button(browser)
-            pause_any_video_site(browser, url_site)
+            pause_any_video_site(browser, VideoUrls.YOUTUBE_VIDEO_URL)
             self.savior_page_object.choose_preferred_option(browser)
             height_frame = self.savior_page_object.verify_correct_video_options_chosen_medium_quality_option(browser)
 
@@ -124,13 +123,12 @@ class TestDownloadButtQualityBlock:
             revert_high_quality_default_option(browser)
 
     @pytestrail.case('C54156')
-    @pytest.mark.parametrize('url_site', [i for i in VideoUrls.all()])
-    def test_check_when_preferred_quality_low(self, browser, url_site, get_current_download_folder):
+    def test_check_when_preferred_quality_low(self, browser, get_current_download_folder):
         choose_video_quality_low_option(browser)
-        self.prepare_check_download(browser, url_site, get_current_download_folder)
+        self.prepare_check_download(browser, VideoUrls.YOUTUBE_VIDEO_URL, get_current_download_folder)
         try:
             download_file_via_main_download_button(browser)
-            pause_any_video_site(browser, url_site)
+            pause_any_video_site(browser, VideoUrls.YOUTUBE_VIDEO_URL)
             self.savior_page_object.choose_preferred_option(browser)
             height_frame = self.savior_page_object.verify_correct_video_options_chosen_low_quality_option(browser)
 

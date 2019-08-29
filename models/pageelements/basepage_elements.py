@@ -11,7 +11,6 @@ class BasePageElement(object):
         return element
 
     def find_shadow_element(self, driver, *string_text):
-
         wait = WebDriverWait(driver, 20)
         i = 0
         root = wait.until(ec.presence_of_element_located((By.TAG_NAME, string_text[i])))
@@ -21,3 +20,4 @@ class BasePageElement(object):
             shadow_root = self.select_shadow_element_by_css_selector(driver, root)
             root = shadow_root.find_element_by_css_selector(string_text[i])
         return root
+
