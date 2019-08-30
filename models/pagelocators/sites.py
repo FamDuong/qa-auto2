@@ -38,10 +38,10 @@ class AnySite(object):
     KIENTHUC_VIDEO_ITEM = (By.XPATH, '//div[@style="text-align:center; width:480px;"]')
     VIETNAMNET_VIDEO_ITEM = (By.ID, 'videoDetail')
     TWITTER_VIDEO_ITEM = (By.XPATH, '//video[@preload="auto"]')
-    TWITTER_MEDIA_VIEW_OPTION = (By.XPATH, '(//a[contains(@href,"/media")])[2]')
+    TWITTER_MEDIA_VIEW_OPTION = (By.XPATH, '(//span[contains(text(), "Media")])[2]')
     SOHA_VIDEO_ITEM = (By.ID, 'video-embeb')
     EVA_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="zplayer"]')
-    SAO_2_VN_VIDEO_ITEM = (By.XPATH, '//div[@class="main-article-embed"]')
+    SAO_2_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'iframe[src*="https://embed.vietnamnettv.vn"]')
     FPT_PLAY_WATCH_FROM_BEGINNING_BTN = (By.ID, 'onCancel')
     FPT_VIDEO_ITEM = (By.XPATH, '(//video)[1]')
 
