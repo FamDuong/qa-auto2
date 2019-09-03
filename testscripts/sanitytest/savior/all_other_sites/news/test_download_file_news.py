@@ -25,8 +25,8 @@ class Test24H:
         WaitAfterEach.sleep_timer_after_each_step()
 
     @pytestrail.case('C54151')
-    def test_check_default_state_download_button(self, browser):
-        self.mouse_over_video_element_24h(browser)
+    def test_check_default_state_download_button(self, browser, get_current_download_folder):
+        self.prepare_check_download(browser, get_current_download_folder)
         savior_page_object.assert_value_preferred_quality(browser, 'High')
 
     @pytestrail.case('C54152')
@@ -179,6 +179,7 @@ class TestTienPhong:
     @staticmethod
     def prepare_savior_option_appear(browser):
         browser.get(OtherSiteUrls.TIEN_PHONG_VIDEO_URL)
+        WaitAfterEach.sleep_timer_after_each_step()
         any_site_page_object.click_video_item_tien_phong(browser)
         any_site_page_object.mouse_over_video_item_tien_phong(browser)
 
@@ -201,6 +202,7 @@ class TestBongDaDotCom:
     @staticmethod
     def prepare_savior_option_appear(browser):
         browser.get(OtherSiteUrls.BONG_DA_DOT_COM_VIDEO_URL)
+        WaitAfterEach.sleep_timer_after_each_step()
         any_site_page_object.click_video_item_bong_da_dot_com(browser)
         any_site_page_object.mouse_over_video_item_bong_da_dot_com(browser)
 

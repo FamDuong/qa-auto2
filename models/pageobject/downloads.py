@@ -103,6 +103,7 @@ class DownloadsPageObject(BasePageObject):
         WaitAfterEach.sleep_timer_after_each_step()
 
     def verify_play_button_existed(self, driver, file_type='clip'):
+        assert self.downloads_elem.find_more_icon(driver) is not None
         assert self.downloads_elem.find_play_button(driver, file_type=file_type).text == 'Play'
         WaitAfterEach.sleep_timer_after_each_step()
 

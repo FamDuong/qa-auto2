@@ -25,10 +25,9 @@ class TestDownloadButtQualityBlock:
     download_page_object = DownloadsPageObject()
 
     def prepare_check_download(self, browser, url_site, download_folder):
-        browser.get(Urls.COCCOC_SETTINGS_URL)
+        # browser.get(Urls.COCCOC_SETTINGS_URL)
         # download_folder_path = self.setting_page_obeject.get_download_folder(browser)
         delete_all_mp4_file_download(download_folder, '.mp4')
-
         pause_any_video_site(browser, url_site)
         WaitAfterEach.sleep_timer_after_each_step()
         # return download_folder_path
@@ -62,8 +61,8 @@ class TestDownloadButtQualityBlock:
     def test_check_click_download_button_default_quality(self, browser, url_site, get_current_download_folder):
         self.prepare_check_download(browser, url_site, get_current_download_folder)
         try:
-            if url_site in [VideoUrls.BILU_TV_VIDEO_URL, VideoUrls.DONG_PHIM_VIDEO_URL]:
-                download_file_via_main_download_button(browser, file_type='movie')
+            if url_site is VideoUrls.DONG_PHIM_VIDEO_URL:
+                download_file_via_main_download_button(browser, file_type='slow')
             else:
                 download_file_via_main_download_button(browser)
             pause_any_video_site(browser, url_site)

@@ -174,9 +174,27 @@ class AnySiteElements(BasePageElement):
 
     @staticmethod
     def find_video_item_tien_phong(driver):
-        wait = WebDriverWait(driver, 10)
+        wait = WebDriverWait(driver, 20)
         return wait.until(
             ec.presence_of_element_located(AnySite.TIEN_PHONG_VIDEO_ITEM))
+
+    @staticmethod
+    def find_play_video_item_tien_phong(driver):
+        wait = WebDriverWait(driver, 20)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.TIEN_PHONG_PLAY_VIDEO_ITEM))
+
+    @staticmethod
+    def find_iframe_tien_phong(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.TIEN_PHONG_IFRAME))
+
+    @staticmethod
+    def find_iframe_bong_da_dot_com(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.BONG_DA_DOT_COM_IFRAME))
 
     @staticmethod
     def find_video_item_bong_da_dot_com(driver):
@@ -203,10 +221,20 @@ class AnySiteElements(BasePageElement):
             ec.presence_of_element_located(AnySite.GAME_K_VN_VIDEO_ITEM))
 
     @staticmethod
+    def find_iframe_vu_vi_phim(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.VU_VI_PHIM_IFRAME))
+
+    @staticmethod
     def find_video_item_vu_vi_phim(driver):
         wait = WebDriverWait(driver, 10)
         return wait.until(
             ec.presence_of_element_located(AnySite.VU_VI_PHIM_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_vu_vi_phim_js(driver):
+        return driver.execute_script('return document.getElementById("media")')
 
     @staticmethod
     def find_video_item_an_ninh_thu_do(driver):

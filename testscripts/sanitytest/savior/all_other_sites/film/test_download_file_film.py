@@ -54,7 +54,7 @@ class TestVuViPhim:
     @staticmethod
     def prepare_savior_option_displayed(browser):
         browser.get(OtherSiteUrls.VU_VI_PHIM_VIDEO_URL)
-        WaitAfterEach.sleep_timer_after_each_step()
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
         any_site_page_object.mouse_over_video_item_vu_vi_phim(browser)
 
     @pytestrail.case('C54151')
@@ -71,6 +71,11 @@ class TestVuViPhim:
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
 
 
+class TestMotPhim:
+
+    @pytestrail.case('C54151')
+    def test_check_default_state_download_button(self, browser):
+        pass
 
 
 

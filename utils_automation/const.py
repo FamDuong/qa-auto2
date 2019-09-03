@@ -22,7 +22,7 @@ class VideoUrls:
     ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/Attention-J-Fla/ZW7F76D6.html'
     NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summer-girl-haim.Q1gHbL4BuuEXJ.html'
     TV_ZING_VIDEO_URL = 'https://tv.zing.vn/video/Goblin-Yeu-Tinh-Tap-1/IWZEIC7F.html'
-    BILU_TV_VIDEO_URL = 'https://bilutv.org/phim-truong-quan-doi-liet-hoa-tap-1-14358.209809.html'
+    # BILU_TV_VIDEO_URL = 'https://bilutv.org/phim-bat-gap-hanh-phuc-tap-1-14433.211144.html'
     DONG_PHIM_VIDEO_URL = 'http://dongphim.net/movie/tap-57-tam-sinh-tam-the-thap-ly-dao-hoa-eternal-love_r9ofmQv5.html'
 
     @classmethod
