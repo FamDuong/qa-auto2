@@ -94,13 +94,13 @@ class AnySiteElements(BasePageElement):
     def find_video_item_in_facebook_page(driver):
         wait = WebDriverWait(driver, 10)
         return wait.until(
-            ec.element_to_be_clickable(AnySite.FACEBOOK_VIDEO_ITEM))
+            ec.presence_of_element_located(AnySite.FACEBOOK_VIDEO_ITEM))
 
     @staticmethod
     def find_video_item_in_messenger_chat(driver):
         wait = WebDriverWait(driver, 10)
         return wait.until(
-            ec.element_to_be_clickable(AnySite.MESSENGER_CHAT_VIDEO_ITEM))
+            ec.presence_of_element_located(AnySite.MESSENGER_CHAT_VIDEO_ITEM))
 
     @staticmethod
     def click_video_item_in_messenger_chat(driver):
@@ -110,37 +110,37 @@ class AnySiteElements(BasePageElement):
     def find_video_item_in_instagram(driver):
         wait = WebDriverWait(driver, 10)
         return wait.until(
-            ec.element_to_be_clickable(AnySite.INSTAGRAM_VIDEO_ITEM))
+            ec.presence_of_element_located(AnySite.INSTAGRAM_VIDEO_ITEM))
 
     @staticmethod
     def find_video_item_in_kienthuc(driver):
         wait = WebDriverWait(driver, 10)
         return wait.until(
-            ec.element_to_be_clickable(AnySite.KIENTHUC_VIDEO_ITEM))
+            ec.presence_of_element_located(AnySite.KIENTHUC_VIDEO_ITEM))
 
     @staticmethod
     def find_video_item_vietnamnet(driver):
         wait = WebDriverWait(driver, 10)
         return wait.until(
-            ec.element_to_be_clickable(AnySite.VIETNAMNET_VIDEO_ITEM))
+            ec.presence_of_element_located(AnySite.VIETNAMNET_VIDEO_ITEM))
 
     @staticmethod
     def find_video_item_eva_vn(driver):
         wait = WebDriverWait(driver, 10)
         return wait.until(
-            ec.element_to_be_clickable(AnySite.EVA_VN_VIDEO_ITEM))
+            ec.presence_of_element_located(AnySite.EVA_VN_VIDEO_ITEM))
 
     @staticmethod
     def find_video_item_twitter(driver):
         wait = WebDriverWait(driver, 10)
         return wait.until(
-            ec.element_to_be_clickable(AnySite.TWITTER_VIDEO_ITEM))
+            ec.presence_of_element_located(AnySite.TWITTER_VIDEO_ITEM))
 
     @staticmethod
     def find_media_view_option_twitter(driver):
         wait = WebDriverWait(driver, 10)
         return wait.until(
-            ec.element_to_be_clickable(AnySite.TWITTER_MEDIA_VIEW_OPTION))
+            ec.presence_of_element_located(AnySite.TWITTER_MEDIA_VIEW_OPTION))
 
     @staticmethod
     def find_video_item_soha(driver):
@@ -171,6 +171,86 @@ class AnySiteElements(BasePageElement):
         wait = WebDriverWait(driver, 10)
         return wait.until(
             ec.presence_of_element_located(AnySite.PHUNU_GIADINH_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_tien_phong(driver):
+        wait = WebDriverWait(driver, 20)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.TIEN_PHONG_VIDEO_ITEM))
+
+    @staticmethod
+    def find_play_video_item_tien_phong(driver):
+        wait = WebDriverWait(driver, 20)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.TIEN_PHONG_PLAY_VIDEO_ITEM))
+
+    @staticmethod
+    def find_iframe_tien_phong(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.TIEN_PHONG_IFRAME))
+
+    @staticmethod
+    def find_iframe_bong_da_dot_com(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.BONG_DA_DOT_COM_IFRAME))
+
+    @staticmethod
+    def find_video_item_bong_da_dot_com(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.BONG_DA_DOT_COM_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_gia_dinh_dot_net(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.GIA_DINH_DOT_NET_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_a_family(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.A_FAMILY_VN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_gamek_vn(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.GAME_K_VN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_iframe_vu_vi_phim(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.VU_VI_PHIM_IFRAME))
+
+    @staticmethod
+    def find_video_item_vu_vi_phim(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.VU_VI_PHIM_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_vu_vi_phim_js(driver):
+        return driver.execute_script('return document.getElementById("media")')
+
+    @staticmethod
+    def find_video_item_an_ninh_thu_do(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.AN_NINH_THU_DO_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_tuoi_tre(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.TUOI_TRE_VIDEO_ITEM))
+
+
+
+
 
 
 

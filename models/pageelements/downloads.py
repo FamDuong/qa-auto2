@@ -35,7 +35,7 @@ class DownloadsElement(BasePageElement):
             ec.element_to_be_clickable((By.CSS_SELECTOR, DownloadsPageLocators.REMOVE_TORRENT_FROM_LIST_TEXT)))
 
     def find_more_icon(self, driver):
-        wait = WebDriverWait(driver, 20)
+        wait = WebDriverWait(driver, 5)
         return wait.until(
             ec.element_to_be_clickable(DownloadsPageLocators.MORE_ICON_BTN))
 
@@ -104,9 +104,11 @@ class DownloadsElement(BasePageElement):
     def find_play_button(self, driver, file_type='clip'):
         wait = None
         if file_type == 'movie':
-            wait = WebDriverWait(driver, 200)
+            wait = WebDriverWait(driver, 240)
+        elif file_type == 'slow':
+            wait = WebDriverWait(driver, 480)
         elif file_type == 'clip':
-            wait = WebDriverWait(driver, 60)
+            wait = WebDriverWait(driver, 120)
         return wait.until(
             ec.presence_of_element_located(DownloadsPageLocators.PLAY_BTN))
 
