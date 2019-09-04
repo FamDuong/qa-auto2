@@ -141,7 +141,7 @@ class AnySitePageObject(BasePageObject):
             WebElements.mouse_over_element(driver, self.any_site_element.find_play_video_item_tien_phong(driver))
             driver.switch_to.default_content()
             time_delta = datetime.now() - start_time
-            if time_delta.total_seconds() >= 20:
+            if time_delta.total_seconds() >= 1:
                 break
 
     def click_video_item_tien_phong(self, driver):

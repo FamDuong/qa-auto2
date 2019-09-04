@@ -56,7 +56,7 @@ class OtherSiteUrls:
     SAO_2_VN_VIDEO_URL = 'https://2sao.vn/tran-thanh-to-hari-won-an-nhieu-den-chu-quan-cung-khiep-so-n-194597.html'
     FPT_PLAY_VIDEO_URL = 'https://fptplay.vn/xem-video/ngoi-nha-chung-mua-9-love-house-series-9-5d36d6a92089bd053fc87240/tap-1.html'
     PHUNU_GIADINH_VIDEO_URL = 'https://www.phunuvagiadinh.vn/video-185'
-    TIEN_PHONG_VIDEO_URL = 'https://www.tienphong.vn/video-clip/xep-hang-an-bun-bo-khong-ten-o-sai-gon-1457693.tpo'
+    TIEN_PHONG_VIDEO_URL = 'https://www.tienphong.vn/video-clip/singapore-tham-vong-ngam-hoa-dat-nuoc-1459961.tpo'
     BONG_DA_DOT_COM_VIDEO_URL = 'http://www.bongda.com.vn/highlights-bayern-munich-2-2-hertha-berlin-bundesliga-v516328.html'
     GIA_DINH_DOT_NET_VIDEO_URL = 'http://giadinh.net.vn/video-6805/meo-lam-tuong-ot-chua-ngot-dam-da-sanh-sot.htm'
     A_FAMILY_VIDEO_URL = 'http://video.afamily.vn/'

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
@@ -179,9 +181,17 @@ class TestTienPhong:
     @staticmethod
     def prepare_savior_option_appear(browser):
         browser.get(OtherSiteUrls.TIEN_PHONG_VIDEO_URL)
-        WaitAfterEach.sleep_timer_after_each_step()
         any_site_page_object.click_video_item_tien_phong(browser)
-        any_site_page_object.mouse_over_video_item_tien_phong(browser)
+        WaitAfterEach.sleep_timer_after_each_step_longest_load()
+        start_time = datetime.now()
+        browser.switch_to.default_content()
+        while savior_page_object.verify_savior_popup_appear(browser) is None:
+            any_site_page_object.mouse_over_video_item_tien_phong(browser)
+            browser.minimize_window()
+            browser.maximize_window()
+            time_delta = datetime.now() - start_time
+            if time_delta.total_seconds() >= 40:
+                break
 
     @pytestrail.case('C54151')
     def test_check_default_state_download_button(self, browser):
