@@ -56,7 +56,8 @@ class AnySite(object):
     GAME_K_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
 
     VU_VI_PHIM_IFRAME = (By.XPATH, '//iframe[@allow="autoplay"]')
-    VU_VI_PHIM_VIDEO_ITEM = (By.XPATH, '//div[@class="html5-vpl_panel_btn html5-vpl_play"]')
+    VU_VI_PHIM_VIDEO_ITEM = (By.ID, 'embedVideoE')
+    VU_VI_PHIM_PLAY_VIDEO_BUTTON = (By.XPATH, '//div[@class="html5-vpl_panel_btn html5-vpl_play"]')
     AN_NINH_THU_DO_VIDEO_ITEM = (By.ID, 'main_detail')
     TUOI_TRE_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
 
