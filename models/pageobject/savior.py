@@ -177,7 +177,7 @@ class SaviorPageObject(BasePageObject):
             if 'HD' in text_content_list:
                 assert 'HD' not in current_video_quality
             else:
-                assert 'Small' in current_video_quality
+                assert ('Small' in current_video_quality) or ('Mobile' in current_video_quality)
         elif len_options == 2:
             if 'Standard' and 'Medium' in text_content_list:
                 assert 'Medium' in current_video_quality

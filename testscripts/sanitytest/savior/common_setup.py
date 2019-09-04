@@ -8,7 +8,7 @@ from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetails
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import YoutubePageObject, GooglePageObject, AnySitePageObject
 from utils_automation.cleanup import Files
-from utils_automation.common import FilesHandle
+from utils_automation.common import FilesHandle, if_height_frame_so_width_frame
 from utils_automation.const import Urls, ExtensionIds
 from utils_automation.setup import Browser, WaitAfterEach
 
@@ -56,6 +56,10 @@ def assert_file_download_value(download_folder_path, height_value):
     print(mp4_files)
     vid = cv2.VideoCapture(download_folder_path + '\\' + mp4_files[0])
     height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
+    width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
+    assert vid.isOpened()
+    if int(height) > 720:
+        assert width == if_height_frame_so_width_frame(height)
     vid.release()
     if (height_value is not None) and (height_value != ''):
         assert str(int(height)) in height_value
