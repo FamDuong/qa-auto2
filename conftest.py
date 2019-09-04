@@ -12,8 +12,6 @@ user_data_path = None
 winappdriver = None
 download_folder = None
 block_origin_extension_path = None
-# skip_ad_extension_path = None
-# ublock_ad_extension_path = None
 
 
 @pytest.mark.hookwrapper
@@ -67,9 +65,7 @@ def browser():
     prog.communicate()  # Returns (stdoutdata, stderrdata): stdout and stderr are ignored, here
     global driver
     global user_data_path
-    # global skip_ad_extension_path
     global block_origin_extension_path
-    # global ublock_ad_extension_path
     if driver is None:
         chrome_options = sele_webdriver.ChromeOptions()
         chrome_options.add_argument("--window-size=1920,1080")

@@ -20,12 +20,10 @@ class TestDownloadButtQualityBlock:
     download_page_object = DownloadsPageObject()
 
     def prepare_check_download(self, browser, url_site, download_folder):
-        # browser.get(Urls.COCCOC_SETTINGS_URL)
-        # download_folder_path = self.setting_page_obeject.get_download_folder(browser)
         delete_all_mp4_file_download(download_folder, '.mp4')
         pause_any_video_site(browser, url_site)
         WaitAfterEach.sleep_timer_after_each_step()
-        # return download_folder_path
+
 
     def download_file_medium(self, browser):
         self.savior_page_object.download_file_medium_quality(browser)
