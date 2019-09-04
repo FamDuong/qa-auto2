@@ -1,8 +1,5 @@
-import platform
 import time
-
 import pytest
-
 from pytest_testrail.plugin import pytestrail
 
 
