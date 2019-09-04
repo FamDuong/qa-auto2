@@ -48,7 +48,7 @@ class AnySite(object):
     PHUNU_GIADINH_VIDEO_ITEM = (By.ID, 'rmpPlayer')
     TIEN_PHONG_IFRAME = (By.XPATH, '//iframe[@class="cms-video"]')
     TIEN_PHONG_VIDEO_ITEM = (By.XPATH, '//div[@aria-label="Start Playback"]')
-    TIEN_PHONG_PLAY_VIDEO_ITEM = (By.XPATH, '//div[@aria-label="Play"]')
+    TIEN_PHONG_PLAY_VIDEO_ITEM = (By.XPATH, '//video')
     BONG_DA_DOT_COM_IFRAME = (By.ID, 'youtube_iframe')
     BONG_DA_DOT_COM_VIDEO_ITEM = (By.XPATH, '//button[@class="ytp-play-button ytp-button"]')
     GIA_DINH_DOT_NET_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')

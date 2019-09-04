@@ -35,3 +35,10 @@ class WaitAfterEach:
     @staticmethod
     def sleep_timer_after_each_step_longer_load():
         time.sleep(5)
+
+    @staticmethod
+    def sleep_timer_after_each_step_longest_load():
+        time.sleep(15)
+
+
+
