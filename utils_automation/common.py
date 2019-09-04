@@ -4,7 +4,18 @@ import sys
 
 from selenium.webdriver import ActionChains
 
-from utils_automation.setup import WaitAfterEach
+
+def if_height_frame_so_width_frame(height_frame):
+    if int(height_frame) == 4320:
+        return 7680
+    elif int(height_frame) == 2160:
+        return 3840
+    elif int(height_frame) == 1440:
+        return 2560
+    elif int(height_frame) == 1080:
+        return 1920
+    elif int(height_frame) == 720:
+        return 1280
 
 
 class CSVHandle:
