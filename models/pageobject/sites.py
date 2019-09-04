@@ -197,6 +197,14 @@ class AnySitePageObject(BasePageObject):
         ActionChains(driver).move_to_element(self.any_site_element.find_video_item_vu_vi_phim(driver)).perform()
         self.any_site_element.find_video_item_vu_vi_phim(driver).click()
 
+    def double_click_video_item_vu_vi_phim(self, driver):
+        self.switch_to_iframe_vu_vi_phim(driver)
+        ActionChains(driver).move_to_element(self.any_site_element.find_video_item_vu_vi_phim(driver)).double_click().perform()
+
+    def click_full_screen_vu_vi_phim(self, driver):
+        ActionChains(driver).move_to_element(self.any_site_element.find_full_screen_button_vu_vi_phim(driver)).perform()
+        self.any_site_element.find_full_screen_button_vu_vi_phim(driver).click()
+
     def click_video_item_an_ninh_thu_do(self, driver):
         self.any_site_element.find_video_item_an_ninh_thu_do(driver).click()
 

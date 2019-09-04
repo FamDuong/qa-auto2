@@ -58,6 +58,7 @@ class AnySite(object):
     VU_VI_PHIM_IFRAME = (By.XPATH, '//iframe[@allow="autoplay"]')
     VU_VI_PHIM_VIDEO_ITEM = (By.ID, 'embedVideoE')
     VU_VI_PHIM_PLAY_VIDEO_BUTTON = (By.XPATH, '//div[@class="html5-vpl_panel_btn html5-vpl_play"]')
+    VU_VI_PHIM_FULL_SCREEN_BUTTON = (By.XPATH, '//div[@class="html5-vpl_panel_btn html5-vpl_fullscreen"]')
     AN_NINH_THU_DO_VIDEO_ITEM = (By.ID, 'main_detail')
     TUOI_TRE_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
 

@@ -233,6 +233,12 @@ class AnySiteElements(BasePageElement):
             ec.presence_of_element_located(AnySite.VU_VI_PHIM_VIDEO_ITEM))
 
     @staticmethod
+    def find_full_screen_button_vu_vi_phim(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.VU_VI_PHIM_FULL_SCREEN_BUTTON))
+
+    @staticmethod
     def find_play_video_button_vu_vi_phim(driver):
         wait = WebDriverWait(driver, 10)
         return wait.until(
