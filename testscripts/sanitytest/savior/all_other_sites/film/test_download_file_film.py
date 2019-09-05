@@ -26,6 +26,8 @@ class TestPhimmoi:
         if len(list_windows) >= 2:
             browser.switch_to.window(list_windows[0])
             any_site_page_object.close_popup_continue_watching(browser)
+        else:
+            any_site_page_object.close_popup_continue_watching(browser)
         self.pause_video_element_phimmoi(browser)
 
     @pytestrail.case('C54151')
