@@ -19,3 +19,6 @@ class TestSaviorIcon:
         time.sleep(10)
         value = self.check_savior_icon(win_app_driver)
         assert value == 'not found'
+
+
+
