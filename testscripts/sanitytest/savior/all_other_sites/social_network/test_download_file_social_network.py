@@ -12,7 +12,7 @@ savior_page_object = SaviorPageObject()
 
 class TestFacebook:
 
-    @pytestrail.case('C54151')
+    @pytestrail.case('C96691')
     def test_check_default_state_download_button(self, browser):
         browser.get(OtherSiteUrls.FACEBOOK_VIDEO_URL)
         any_site_page_object.mouse_over_video_element_facebook(browser)
