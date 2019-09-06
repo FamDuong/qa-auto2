@@ -1,14 +1,11 @@
-import allure
 from pytest_bdd import scenario, given, when, then
 from models.pageelements.newtab import NewTabElement
 from models.pageobject.settings import SettingsPageObject
-import time
 
 from utils_automation.setup import WaitAfterEach
 
 
-@allure.severity(severity_level="CRITICAL")
-@scenario('../../features/smoketest/settings.feature', 'User choose settings when start up browser is opened a new '
+@scenario('../../../features/smoketest/settings.feature', 'User choose settings when start up browser is opened a new '
                                                        'tab')
 def test_click_start_up_new_tab():
     print("End of settings feature")
