@@ -2,6 +2,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.sites import YoutubePageLocators, GooglePageLocators, AnySite
+from utils_automation.setup import WaitAfterEach
 
 
 class YoutubePageElements(BasePageElement):
@@ -141,6 +142,17 @@ class AnySiteElements(BasePageElement):
         wait = WebDriverWait(driver, 10)
         return wait.until(
             ec.presence_of_element_located(AnySite.TWITTER_MEDIA_VIEW_OPTION))
+
+    @staticmethod
+    def find_elements_user_restricted_twitter(driver):
+        WaitAfterEach.sleep_timer_after_each_step()
+        return driver.find_elements_by_xpath(AnySite.TWITTER_AUTHORIZE_RESTRICTED_USER_BTN)
+
+    @staticmethod
+    def find_element_user_restricted_parent_twitter(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.TWITTER_AUTHORIZE_RESTRICTER_USER_PARENT_BTN))
 
     @staticmethod
     def find_video_item_soha(driver):

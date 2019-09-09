@@ -6,6 +6,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 
 from models.pageelements.sites import YoutubePageElements, GooglePageElements, AnySiteElements
+from models.pagelocators.sites import AnySite
 from models.pageobject.basepage_object import BasePageObject
 from utils_automation.common import WebElements
 from utils_automation.setup import WaitAfterEach
@@ -108,6 +109,14 @@ class AnySitePageObject(BasePageObject):
 
     def choose_media_view_option_twitter(self, driver):
         self.any_site_element.find_media_view_option_twitter(driver).click()
+
+    def handle_user_restricted_twitter(self, driver):
+        elements = self.any_site_element.find_elements_user_restricted_twitter(driver)
+        print('Elements restricted_user_twitter got are :', elements)
+        if len(elements) > 0:
+            driver.execute_script('document.querySelector(arguments[0]).click()', AnySite.TWITTER_AUTHORIZE_RESTRICTED_USER_BTN_JAVASCRIPT)
+        else:
+            print('This twitter user is not restricted')
 
     def mouse_over_video_item_twitter(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_twitter(driver))

@@ -39,6 +39,9 @@ class AnySite(object):
     VIETNAMNET_VIDEO_ITEM = (By.ID, 'videoDetail')
     TWITTER_VIDEO_ITEM = (By.XPATH, '//video[@preload="auto"]')
     TWITTER_MEDIA_VIEW_OPTION = (By.XPATH, '(//span[contains(text(), "Media")])[2]')
+    TWITTER_AUTHORIZE_RESTRICTED_USER_BTN = '//span[text()="Yes, view profile"]'
+    TWITTER_AUTHORIZE_RESTRICTER_USER_PARENT_BTN = (By.XPATH, '//span[text()="Yes, view profile"]/parent::span/parent::div')
+    TWITTER_AUTHORIZE_RESTRICTED_USER_BTN_JAVASCRIPT = 'div:nth-of-type(3)[role="button"] > div > span'
     SOHA_VIDEO_ITEM = (By.ID, 'video-embeb')
     EVA_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="zplayer"]')
     SAO_2_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'iframe[src*="https://embed.vietnamnettv.vn"]')
