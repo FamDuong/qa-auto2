@@ -67,7 +67,8 @@ class TestTwitter:
     @staticmethod
     def prepare_savior_option_appear(browser):
         browser.get(OtherSiteUrls.TWITTER_VIDEO_URL)
-        any_site_page_object.choose_media_view_option_twitter(browser)
+        # any_site_page_object.handle_user_restricted_twitter(browser)
+        # any_site_page_object.choose_media_view_option_twitter(browser)
         any_site_page_object.mouse_over_video_item_twitter(browser)
 
     @pytestrail.case('C54151')
