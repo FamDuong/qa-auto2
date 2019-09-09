@@ -9,3 +9,4 @@ py.test --testrail --tr-config=testrail.cfg --tr-plan-id=712 Test_Runner.py --tr
 py.test --testrail --tr-config=testrail.cfg testscripts\smoketest\settings\general.py --tr-plan-id=712 --tr-skip-missing --html=report.html
 
 // Test auto build in jenkins
+// Test auto build in jenkins
