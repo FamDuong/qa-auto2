@@ -3,7 +3,8 @@ from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
 from testscripts.sanitytest.savior.common_setup import download_file_via_main_download_button, clear_data_download, \
-    assert_file_download_value, implement_download_file, clear_data_download_in_browser_and_download_folder
+    assert_file_download_value, implement_download_file, clear_data_download_in_browser_and_download_folder, \
+    pause_any_video_site
 from utils_automation.const import OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
 
@@ -84,5 +85,9 @@ class TestMotPhim:
         pass
 
 
+class TestTvZing:
 
-
+    @pytestrail.case('C54151')
+    def test_check_default_state_download_button(self, browser):
+        pause_any_video_site(browser, OtherSiteUrls.TV_ZING_VIDEO_URL)
+        savior_page_object.assert_value_preferred_quality(browser, 'High')
