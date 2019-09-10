@@ -1,10 +1,9 @@
-import pytest
+
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
-from testscripts.sanitytest.savior.common_setup import download_file_via_main_download_button, clear_data_download, \
-    assert_file_download_value, implement_download_file, clear_data_download_in_browser_and_download_folder, \
-    pause_any_video_site
+from testscripts.sanitytest.savior.common_setup import implement_download_file, \
+    clear_data_download_in_browser_and_download_folder, pause_any_video_site
 from utils_automation.const import OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
 
@@ -31,25 +30,10 @@ class TestPhimmoi:
             any_site_page_object.close_popup_continue_watching(browser)
         self.pause_video_element_phimmoi(browser)
 
-    @pytestrail.case('C54151')
-    def test_check_default_state_download_button(self, browser):
+    @pytestrail.case('C96721')
+    def test_check_default_option(self, browser):
         self.prepare_displayed_savior_popup(browser)
         savior_page_object.assert_value_preferred_quality(browser, 'High')
-
-    @pytestrail.case('C54152')
-    @pytest.mark.skip(reason='Unstable for downloading file')
-    def test_check_click_download_button_default_quality(self, browser, get_current_download_folder):
-        self.prepare_displayed_savior_popup(browser)
-        try:
-            download_file_via_main_download_button(browser, file_type='movie')
-            self.prepare_displayed_savior_popup(browser)
-            savior_page_object.choose_preferred_option(browser)
-            height_frame = savior_page_object.verify_correct_video_options_chosen_high_quality_option(browser)
-        # File mp4 file and assert
-            assert_file_download_value(get_current_download_folder, height_frame)
-
-        finally:
-            clear_data_download(browser)
 
 
 class TestVuViPhim:
@@ -64,13 +48,10 @@ class TestVuViPhim:
         any_site_page_object.mouse_over_video_item_vu_vi_phim(browser)
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
 
-    @pytestrail.case('C54151')
-    def test_check_default_state_download_button(self, browser):
+    @pytestrail.case('C98751')
+    def test_download_file_vuviphim(self, browser, get_current_download_folder):
         self.prepare_savior_option_displayed(browser)
         savior_page_object.assert_value_preferred_quality(browser, 'High')
-
-    @pytestrail.case('C54152')
-    def test_check_click_download_button_default_quality(self, browser, get_current_download_folder):
         self.prepare_savior_option_displayed(browser)
         try:
             implement_download_file(browser, get_current_download_folder, file_type='slow')
@@ -80,14 +61,13 @@ class TestVuViPhim:
 
 class TestMotPhim:
 
-    @pytestrail.case('C54151')
     def test_check_default_state_download_button(self, browser):
         pass
 
 
 class TestTvZing:
 
-    @pytestrail.case('C54151')
+    @pytestrail.case('C96763')
     def test_check_default_state_download_button(self, browser):
         pause_any_video_site(browser, OtherSiteUrls.TV_ZING_VIDEO_URL)
         savior_page_object.assert_value_preferred_quality(browser, 'High')
