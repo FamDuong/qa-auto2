@@ -24,7 +24,6 @@ class TestDownloadButtQualityBlock:
         pause_any_video_site(browser, url_site)
         WaitAfterEach.sleep_timer_after_each_step()
 
-
     def download_file_medium(self, browser):
         self.savior_page_object.download_file_medium_quality(browser)
         WaitAfterEach.sleep_timer_after_each_step()
@@ -44,21 +43,16 @@ class TestDownloadButtQualityBlock:
         check_if_the_file_fully_downloaded(browser)
 
     @pytestrail.case('C54151')
-    @pytest.mark.parametrize('url_site', [i for i in VideoUrls.all()])
-    def test_check_default_state_download_button(self, browser, url_site):
-        pause_any_video_site(browser, url_site)
+    def test_check_default_state_download_button(self, browser):
+        pause_any_video_site(browser, VideoUrls.YOUTUBE_VIDEO_URL)
         self.savior_page_object.assert_value_preferred_quality(browser, 'High')
 
     @pytestrail.case('C54152')
-    @pytest.mark.parametrize('url_site', [i for i in VideoUrls.all()])
-    def test_check_click_download_button_default_quality(self, browser, url_site, get_current_download_folder):
-        self.prepare_check_download(browser, url_site, get_current_download_folder)
+    def test_check_click_download_button_default_quality(self, browser, get_current_download_folder):
+        self.prepare_check_download(browser, VideoUrls.YOUTUBE_VIDEO_URL, get_current_download_folder)
         try:
-            if url_site is VideoUrls.DONG_PHIM_VIDEO_URL:
-                download_file_via_main_download_button(browser, file_type='slow')
-            else:
-                download_file_via_main_download_button(browser)
-            pause_any_video_site(browser, url_site)
+            download_file_via_main_download_button(browser)
+            pause_any_video_site(browser, VideoUrls.YOUTUBE_VIDEO_URL)
             self.savior_page_object.choose_preferred_option(browser)
             height_frame = self.savior_page_object.verify_correct_video_options_chosen_high_quality_option(browser)
             # File mp4 file and assert

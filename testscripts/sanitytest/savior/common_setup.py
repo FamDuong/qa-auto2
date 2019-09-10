@@ -9,7 +9,7 @@ from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import YoutubePageObject, GooglePageObject, AnySitePageObject
 from utils_automation.cleanup import Files
 from utils_automation.common import FilesHandle, if_height_frame_so_width_frame
-from utils_automation.const import Urls, ExtensionIds
+from utils_automation.const import Urls, ExtensionIds, VideoUrls
 from utils_automation.setup import Browser, WaitAfterEach
 
 extension_page_object = ExtensionsPageObject()
@@ -78,13 +78,13 @@ def check_if_the_file_fully_downloaded(browser, file_type='clip'):
 
 
 def pause_any_video_youtube(browser):
-    text_in_video = 'BLACKPINK - ‘뚜두뚜두 (DDU-DU DDU-DU)’ M/V'
-    browser.get(Urls.YOUTUBE_URL)
-    WaitAfterEach.sleep_timer_after_each_step()
-    youtube_page_object.search_video_item(browser, text_in_video)
-    WaitAfterEach.sleep_timer_after_each_step()
-    youtube_video_link = youtube_page_object.choose_any_video_item(browser,text_in_video)
-    browser.get(youtube_video_link)
+    # text_in_video = 'BLACKPINK - ‘뚜두뚜두 (DDU-DU DDU-DU)’ M/V'
+    # browser.get(Urls.YOUTUBE_URL)
+    # WaitAfterEach.sleep_timer_after_each_step()
+    # youtube_page_object.search_video_item(browser, text_in_video)
+    # WaitAfterEach.sleep_timer_after_each_step()
+    # youtube_video_link = youtube_page_object.choose_any_video_item(browser,text_in_video)
+    browser.get(VideoUrls.YOUTUBE_VIDEO_URL)
     WaitAfterEach.sleep_timer_after_each_step()
     youtube_page_object.mouse_over_video_item(browser)
     youtube_page_object.click_video_item(browser)
