@@ -272,6 +272,24 @@ class AnySiteElements(BasePageElement):
         return wait.until(
             ec.presence_of_element_located(AnySite.TUOI_TRE_VIDEO_ITEM))
 
+    @staticmethod
+    def find_video_item_mot_phim(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.MOT_PHIM_VIDEO_ITEM))
+
+    @staticmethod
+    def find_play_button_video_mot_phim(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.MOT_PHIM_PLAY_VIDEO_BUTTON))
+
+    @staticmethod
+    def find_video_item_player_mot_phim(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.MOT_PHIM_VIDEO_PLAYER))
+
 
 
 

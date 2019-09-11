@@ -14,8 +14,7 @@ class ExtensionsPageLocators:
 
 
 class SaviorDetailsPageLocators:
-    EXTENSION_DETAIL_CR_CHECKBOX = 'cr-checkbox'
-    SAVIOR_ENABLE_BUTTON_CSS = '[id="checkbox"]'
+    SAVIOR_ENABLE_BUTTON_CSS = '[id="crToggle"]'
     EXTENSION_DETAIL_VIEW = 'extensions-detail-view'
     EXTENSION_TOGGLE_ROW = 'extensions-toggle-row'
     EXTENSION_OPTIONS_DIALOG = 'extensions-options-dialog'

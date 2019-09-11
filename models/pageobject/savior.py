@@ -151,8 +151,13 @@ class SaviorPageObject(BasePageObject):
             raise Exception.__traceback__
         return video_quality_height
 
+    # Currently there is no specific requirement about file size => no need to assert this
+    def verify_current_file_size_selected_not_null(self, driver):
+        assert ('MB' or 'KB' or 'GB') in self.savior_elements.get_current_video_file_size(driver)
+
     def verify_correct_video_options_chosen_medium_quality_option(self, driver):
-        len_options, text_content_list, current_video_quality, video_quality_height = self.get_quality_video_options_available(driver)
+        len_options, text_content_list, current_video_quality, video_quality_height = \
+            self.get_quality_video_options_available(driver)
 
         if len_options >= 3:
             if 'HD' in text_content_list:
@@ -171,7 +176,8 @@ class SaviorPageObject(BasePageObject):
         return video_quality_height
 
     def verify_correct_video_options_chosen_low_quality_option(self, driver):
-        len_options, text_content_list, current_video_quality, video_quality_height = self.get_quality_video_options_available(driver)
+        len_options, text_content_list, current_video_quality, video_quality_height = \
+            self.get_quality_video_options_available(driver)
 
         if len_options >= 3:
             if 'HD' in text_content_list:

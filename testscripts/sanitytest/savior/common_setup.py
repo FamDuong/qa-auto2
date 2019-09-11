@@ -140,8 +140,8 @@ def pause_any_video_site(browser, url):
 def implement_download_file(browser, get_current_download_folder, file_type='clip'):
     delete_all_mp4_file_download(get_current_download_folder, '.mp4')
     download_file_via_main_download_button(browser, file_type=file_type)
+    # assert file download exist
     assert_file_download_exist(get_current_download_folder)
-
 
 def clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder):
     clear_data_download(browser)

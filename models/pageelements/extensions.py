@@ -36,14 +36,12 @@ class CocCocSaviorExtensionDetailElement(BasePageElement):
     def find_coccoc_savior_enable_button(self, driver):
         return self.find_shadow_element(driver, ExtensionsPageLocators.EXTENSIONS_MANAGER_TEXT,
                                         SaviorDetailsPageLocators.EXTENSION_DETAIL_VIEW,
-                                        SaviorDetailsPageLocators.EXTENSION_DETAIL_CR_CHECKBOX,
                                         SaviorDetailsPageLocators.SAVIOR_ENABLE_BUTTON_CSS)
 
     def find_coccoc_savior_incognitor_checkbox_button(self, driver):
         return self.find_shadow_element(driver, ExtensionsPageLocators.EXTENSIONS_MANAGER_TEXT,
                                         SaviorDetailsPageLocators.EXTENSION_DETAIL_VIEW,
                                         SaviorDetailsPageLocators.EXTENSION_TOGGLE_ROW,
-                                        SaviorDetailsPageLocators.EXTENSION_DETAIL_CR_CHECKBOX,
                                         SaviorDetailsPageLocators.SAVIOR_ENABLE_BUTTON_CSS)
 
     def find_extension_options_button(self, driver):

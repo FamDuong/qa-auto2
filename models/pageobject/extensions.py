@@ -24,12 +24,12 @@ class ExtensionsDetailsPageObject(BasePageObject):
     def savior_button_is_enabled(self, driver):
         savior_button_enabled_element = self.extensions_details.find_coccoc_savior_enable_button(driver)
         assert savior_button_enabled_element.get_attribute('aria-disabled') == 'true'
-        assert savior_button_enabled_element.get_attribute('aria-checked') == 'true'
+        assert savior_button_enabled_element.get_attribute('aria-pressed') == 'true'
 
     def savior_incognito_is_disabled(self, driver):
         savior_incognito_element = self.extensions_details.find_coccoc_savior_incognitor_checkbox_button(driver)
         assert savior_incognito_element.get_attribute('aria-disabled') == 'false'
-        assert savior_incognito_element.get_attribute('aria-checked') == 'false'
+        assert savior_incognito_element.get_attribute('aria-pressed') == 'false'
 
     def open_extension_options_view(self, driver):
         self.extensions_details.find_extension_options_button(driver).click()
