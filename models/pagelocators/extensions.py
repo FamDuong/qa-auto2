@@ -14,7 +14,8 @@ class ExtensionsPageLocators:
 
 
 class SaviorDetailsPageLocators:
-    SAVIOR_ENABLE_BUTTON_CSS = '[id="crToggle"]'
+    SAVIOR_INCOGNITO_ENABLE_BUTTON_CSS = '[id="crToggle"]'
+    SAVIOR_ENABLE_BUTTON_CSS = '#enable-toggle'
     EXTENSION_DETAIL_VIEW = 'extensions-detail-view'
     EXTENSION_TOGGLE_ROW = 'extensions-toggle-row'
     EXTENSION_OPTIONS_DIALOG = 'extensions-options-dialog'
