@@ -42,7 +42,7 @@ class CocCocSaviorExtensionDetailElement(BasePageElement):
         return self.find_shadow_element(driver, ExtensionsPageLocators.EXTENSIONS_MANAGER_TEXT,
                                         SaviorDetailsPageLocators.EXTENSION_DETAIL_VIEW,
                                         SaviorDetailsPageLocators.EXTENSION_TOGGLE_ROW,
-                                        SaviorDetailsPageLocators.SAVIOR_ENABLE_BUTTON_CSS)
+                                        SaviorDetailsPageLocators.SAVIOR_INCOGNITO_ENABLE_BUTTON_CSS)
 
     def find_extension_options_button(self, driver):
         return self.find_shadow_element(driver, ExtensionsPageLocators.EXTENSIONS_MANAGER_TEXT,
