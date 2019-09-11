@@ -65,6 +65,9 @@ class AnySite(object):
     AN_NINH_THU_DO_VIDEO_ITEM = (By.ID, 'main_detail')
     TUOI_TRE_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
 
+    MOT_PHIM_VIDEO_ITEM = (By.XPATH, '//video')
+    MOT_PHIM_PLAY_VIDEO_BUTTON = (By.XPATH, '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]')
+    MOT_PHIM_VIDEO_PLAYER = (By.ID, 'player')
 
 
 

@@ -35,3 +35,8 @@ class SaviorPageLocators(object):
     ALL_VIDEO_OPTIONS_AVAILABLE = '[data-quality-value]:not([data-quality-value=""])'
 
     CURRENT_VIDEO_QUALITY_ITEM = '[class*="quality-selector-box j-quality-selector ps"]'
+
+    CURRENT_VIDEO_QUALITY_SELECTED_ITEM = '[class="quality-label j-quality selected"]'
+    CURRENT_VIDEO_FILE_SIZE_ITEM = '[class="media-sub-info j-checked-size'
+
+

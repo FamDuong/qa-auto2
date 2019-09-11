@@ -223,4 +223,11 @@ class AnySitePageObject(BasePageObject):
     def mouse_over_video_item_tuoi_tre(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_tuoi_tre(driver))
 
+    def click_video_item_mot_phim(self, driver):
+        ActionChains(driver).move_to_element(self.any_site_element.find_video_item_player_mot_phim(driver)).perform()
+        self.any_site_element.find_video_item_player_mot_phim(driver).click()
+
+    def mouse_over_video_item_mot_phim(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_mot_phim(driver))
+
 
