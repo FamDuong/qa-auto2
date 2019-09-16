@@ -69,5 +69,42 @@ class AnySite(object):
     MOT_PHIM_PLAY_VIDEO_BUTTON = (By.XPATH, '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]')
     MOT_PHIM_VIDEO_PLAYER = (By.ID, 'player')
 
+    MOT_PHIM_EPISODE_ITEM = (By.XPATH, '//a[text()="Tập 1"]')
+    MOT_PHIM_BOX_PLAYER = (By.ID, 'box-player')
+
+    VTV_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
+    TV_HAY_VN_PLAY_BTN = (By.XPATH, '//div[@aria-label="Play"][1]')
+    TV_HAY_VN_SKIP_ADD_BTN = (By.XPATH, '//span[text()="Bỏ qua quảng cáo"]')
+    TV_HAY_VN_VIDEO_ITEM = (By.XPATH, '//video')
+
+    NGOI_SAO_VN_VIDEO_ITEM = (By.XPATH, '(//video[@class="jw-video jw-reset"])[1]')
+    VTC_VN_VIDEO_PLAY_ITEM = (By.ID, 'myElementV0')
+    VTC_VN_VIDEO_ITEM = (By.XPATH, '//video')
+
+    KENH14_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
+    CAFE_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
+
+    TIN_TUC_VN_VIDEO_IFRAME = (By.XPATH, '//iframe[@onload]')
+    TIN_TUC_VN_VIDEO_ITEM = (By.XPATH, '//div[@id="vnnplayer"]')
+    TIN_TUC_VN_VIDEO_DETAIL = (By.ID, 'videoDetail')
+
+    GIAO_DUC_THOI_DAI_VIDEO_ITEM = (By.CSS_SELECTOR, 'div[id*="video"]')
+    VN_EXPRESS_VIDEO_ITEM = (By.ID, 'videoContainter')
+    THANH_NIEN_VIDEO_ITEM = (By.ID, 'mainplayer')
+    DAN_TRI_VIDEO_ITEM = (By.ID, 'video-embeb')
+
+    NGUOI_LAO_DONG_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="streamid"]')
+
+    ANIME_VSBUT_TV_CLOSE_POP_UP_WHERE_TO_START_VIDEO = (By.XPATH, '//button[@class="lobibox-btn lobibox-btn-no"]')
+    ANIME_VSUB_TV_VIDEO_ITEM = (By.ID, 'media-player')
+    ANIME_VSUB_TV_CLOSE_AD_BUTTON = (By.ID, 'close-and-play')
+
+    NHAC_VN_VIDEO_URL = (By.ID, 'myvideo')
+    XVIDEO_VIDEO_ITEM = (By.XPATH, '//video')
+    XNXX_VIDEO_ITEM = (By.XPATH, '//video[@preload="auto"]')
+    FR_PORN_HUB_VIDEO_ITEM = (By.ID, 'player')
+
+
+
 
 

@@ -290,6 +290,168 @@ class AnySiteElements(BasePageElement):
         return wait.until(
             ec.presence_of_element_located(AnySite.MOT_PHIM_VIDEO_PLAYER))
 
+    @staticmethod
+    def find_video_episode_mot_phim(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.MOT_PHIM_EPISODE_ITEM))
+
+    @staticmethod
+    def find_video_box_player_mot_phim(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.MOT_PHIM_BOX_PLAYER))
+
+    @staticmethod
+    def find_video_item_vtv_vn(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.VTV_VN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_skip_ads_btn_tv_hay(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.TV_HAY_VN_SKIP_ADD_BTN))
+
+    @staticmethod
+    def find_play_btn_tv_hay(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.TV_HAY_VN_PLAY_BTN))
+
+    @staticmethod
+    def find_video_item_tv_hay(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.TV_HAY_VN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_ngoi_sao_vn(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.NGOI_SAO_VN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_vtc_vn(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.VTC_VN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_play_item_vtc_vn(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.VTC_VN_VIDEO_PLAY_ITEM))
+
+    @staticmethod
+    def find_video_item_kenh14_vn(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.KENH14_VN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_cafe_vn(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.CAFE_VN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_tin_tuc_online_vn(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.TIN_TUC_VN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_iframe_tin_tuc_online_vn(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.TIN_TUC_VN_VIDEO_IFRAME))
+
+    @staticmethod
+    def find_video_detail_tin_tuc_online_vn(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.TIN_TUC_VN_VIDEO_DETAIL))
+
+    @staticmethod
+    def find_video_item_giao_duc_thoi_dai(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.GIAO_DUC_THOI_DAI_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_vn_express(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.VN_EXPRESS_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_thanh_nien(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.THANH_NIEN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_dan_tri_vn(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.DAN_TRI_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_nguoi_lao_dong_tv(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.NGUOI_LAO_DONG_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_anime_sub_tv(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.ANIME_VSUB_TV_VIDEO_ITEM))
+
+    @staticmethod
+    def find_continue_from_start_popup_btn_anime_sub_tv(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.ANIME_VSBUT_TV_CLOSE_POP_UP_WHERE_TO_START_VIDEO))
+
+    @staticmethod
+    def find_close_ad_btn_anime_vsub_tv(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.ANIME_VSUB_TV_CLOSE_AD_BUTTON))
+
+    @staticmethod
+    def find_video_item_nhac_vn(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.NHAC_VN_VIDEO_URL))
+
+    @staticmethod
+    def find_video_item_xvideos(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.XVIDEO_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_xnxx(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.XNXX_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_fr_porn_hub(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.FR_PORN_HUB_VIDEO_ITEM))
+
+
+
+
+
+
+
 
 
 

@@ -1,3 +1,5 @@
+import pytest
+
 from models.pageobject.savior import SaviorPageObject
 from pytest_testrail.plugin import pytestrail
 from testscripts.sanitytest.savior.common_setup import pause_any_video_site, download_file_via_main_download_button, \
@@ -34,6 +36,7 @@ class TestDownloadGroup:
             clear_data_download(browser)
 
     @pytestrail.case('C96719')
+    @pytest.mark.ten_popular_sites
     def test_download_youtube(self, browser, get_current_download_folder):
         self.implement_test_site(browser, VideoUrls.YOUTUBE_VIDEO_URL, get_current_download_folder)
 
@@ -46,10 +49,12 @@ class TestDownloadGroup:
         self.implement_test_site(browser, VideoUrls.ZING_MP3_VN_VIDEO_URL, get_current_download_folder)
 
     @pytestrail.case('C96758')
+    @pytest.mark.ten_popular_sites
     def test_download_nhaccuatui(self, browser, get_current_download_folder):
         self.implement_test_site(browser, VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM, get_current_download_folder)
 
     @pytestrail.case('C98735')
+    @pytest.mark.ten_popular_sites
     def test_download_dongphim(self, browser, get_current_download_folder):
         self.implement_test_site(browser, VideoUrls.DONG_PHIM_VIDEO_URL, get_current_download_folder)
 

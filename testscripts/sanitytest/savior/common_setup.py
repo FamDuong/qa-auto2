@@ -69,6 +69,8 @@ def assert_file_download_value(download_folder_path, height_value):
 
 def assert_file_download_exist(download_folder_path):
     mp4_files = find_mp4_file_download(download_folder_path, '.mp4')
+    vid = cv2.VideoCapture(download_folder_path + '\\' + mp4_files[0])
+    assert vid.isOpened()
     assert len(mp4_files) > 0
 
 
@@ -140,8 +142,9 @@ def pause_any_video_site(browser, url):
 def implement_download_file(browser, get_current_download_folder, file_type='clip'):
     delete_all_mp4_file_download(get_current_download_folder, '.mp4')
     download_file_via_main_download_button(browser, file_type=file_type)
-    # assert file download exist
+    # assert file download exist and can be opened
     assert_file_download_exist(get_current_download_folder)
+
 
 def clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder):
     clear_data_download(browser)
@@ -157,4 +160,19 @@ def verify_download_quality_high_frame(browser, get_current_download_folder, pre
     assert_file_download_value(get_current_download_folder, height_frame)
 
 
+def verify_video_step_then_clear_data(implement_and_verify, clear_data_step):
+    try:
+        implement_and_verify
+    finally:
+        clear_data_step
+
+
+def handle_windows_watch_option(browser, close_popup_continue_watching):
+    WaitAfterEach.sleep_timer_after_each_step()
+    list_windows = browser.window_handles
+    if len(list_windows) >= 2:
+        browser.switch_to.window(list_windows[0])
+        close_popup_continue_watching
+    else:
+        close_popup_continue_watching
 
