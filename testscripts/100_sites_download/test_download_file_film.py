@@ -1,3 +1,4 @@
+import pytest
 
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
@@ -27,6 +28,7 @@ class TestPhimmoi:
         self.pause_video_element_phimmoi(browser)
 
     @pytestrail.case('C96721')
+    @pytest.mark.ten_popular_sites
     def test_check_default_option(self, browser):
         self.prepare_displayed_savior_popup(browser)
         savior_page_object.assert_value_preferred_quality(browser, 'High')
@@ -54,6 +56,7 @@ class TestVuViPhim:
 class TestTvZing:
 
     @pytestrail.case('C96763')
+    @pytest.mark.ten_popular_sites
     def test_check_default_state_download_button(self, browser):
         pause_any_video_site(browser, OtherSiteUrls.TV_ZING_VIDEO_URL)
         savior_page_object.assert_value_preferred_quality(browser, 'High')

@@ -1,3 +1,4 @@
+import pytest
 from pytest_testrail.plugin import pytestrail
 
 from models.pageobject.savior import SaviorPageObject
@@ -14,6 +15,7 @@ savior_page_object = SaviorPageObject()
 class TestXVideos:
 
     @pytestrail.case('C96723')
+    @pytest.mark.ten_popular_sites
     def test_download_file_x_videos(self, browser, get_current_download_folder):
         browser.get(OtherSiteUrls.XVIDEOS_DOT_COM_VIDEO_URL)
         any_site_page_object.mouse_over_video_x_videos(browser)
@@ -26,6 +28,7 @@ class TestXVideos:
 class TestXNXX:
 
     @pytestrail.case('C96754')
+    @pytest.mark.ten_popular_sites
     def test_download_file_x_videos(self, browser, get_current_download_folder):
         browser.get(OtherSiteUrls.XNXX_VIDEO_URL)
         any_site_page_object.mouse_over_video_xnxx(browser)
@@ -38,6 +41,7 @@ class TestXNXX:
 class TestPornHub:
 
     @pytestrail.case('C98771')
+    @pytest.mark.ten_popular_sites
     def test_download_file_x_videos(self, browser, get_current_download_folder):
         browser.get(OtherSiteUrls.FR_PORN_HUB_VIDEO_URL)
         any_site_page_object.mouse_over_video_fr_porn_hub(browser)

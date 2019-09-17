@@ -1,3 +1,5 @@
+import pytest
+
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
@@ -13,6 +15,7 @@ savior_page_object = SaviorPageObject()
 class TestFacebook:
 
     @pytestrail.case('C96691')
+    @pytest.mark.ten_popular_sites
     def test_check_default_state_download_button(self, browser):
         browser.get(OtherSiteUrls.FACEBOOK_VIDEO_URL)
         any_site_page_object.mouse_over_video_element_facebook(browser)
@@ -28,6 +31,7 @@ class TestMessenger:
         any_site_page_object.mouse_over_video_element_messenger_chat(driver)
 
     @pytestrail.case('C96722')
+    @pytest.mark.ten_popular_sites
     def test_download_file_messenger(self, browser, get_current_download_folder):
         self.setup_savior_option_appear(browser)
         savior_page_object.assert_value_preferred_quality(browser, 'High')
