@@ -2,7 +2,7 @@ from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
 from testscripts.sanitytest.savior.common_setup import implement_download_file, \
-    clear_data_download_in_browser_and_download_folder
+    clear_data_download_in_browser_and_download_folder, verify_video_step_then_clear_data
 from utils_automation.const import OtherSiteUrls
 
 
@@ -31,11 +31,9 @@ class TestMessenger:
     def test_download_file_messenger(self, browser, get_current_download_folder):
         self.setup_savior_option_appear(browser)
         savior_page_object.assert_value_preferred_quality(browser, 'High')
-        self.setup_savior_option_appear(browser)
-        try:
-            implement_download_file(browser, get_current_download_folder)
-        finally:
-            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
+        verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
+                                          clear_data_download_in_browser_and_download_folder(browser,
+                                                                                             get_current_download_folder))
 
 
 class TestInstagram:
@@ -49,11 +47,9 @@ class TestInstagram:
     def test_download_file_instagram(self, browser, get_current_download_folder):
         self.prepare_appear_savior_option(browser)
         savior_page_object.assert_value_preferred_quality(browser, 'High')
-        self.prepare_appear_savior_option(browser)
-        try:
-            implement_download_file(browser, get_current_download_folder)
-        finally:
-            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
+        verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
+                                          clear_data_download_in_browser_and_download_folder(browser,
+                                                                                             get_current_download_folder))
 
 
 class TestTwitter:
@@ -67,11 +63,9 @@ class TestTwitter:
     def test_download_file_twitter(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
         savior_page_object.assert_value_preferred_quality(browser, 'High')
-        self.prepare_savior_option_appear(browser)
-        try:
-            implement_download_file(browser, get_current_download_folder)
-        finally:
-            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
+        verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
+                                          clear_data_download_in_browser_and_download_folder(browser,
+                                                                                             get_current_download_folder))
 
 
 

@@ -21,9 +21,7 @@ class VideoUrls:
     NEWS_ZING_VIDEO_URL = 'https://news.zing.vn/video'
     ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/Attention-J-Fla/ZW7F76D6.html'
     NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summer-girl-haim.Q1gHbL4BuuEXJ.html'
-    # TV_ZING_VIDEO_URL = 'https://tv.zing.vn/video/Goblin-Yeu-Tinh-Tap-1/IWZEIC7F.html'
-    # BILU_TV_VIDEO_URL = 'https://bilutv.org/phim-bat-gap-hanh-phuc-tap-1-14433.211144.html'
-    DONG_PHIM_VIDEO_URL = 'http://dongphim.net/movie/tap-57-tam-sinh-tam-the-thap-ly-dao-hoa-eternal-love_r9ofmQv5.html'
+    DONG_PHIM_VIDEO_URL = 'http://dongphim.net/movie/tap-1-trailer-dao-kiem-than-vuc-phan-4-chien-tranh-ngam-sword-art-online-alicization-war-of-underworld_gvwmHQQh.html'
 
     @classmethod
     def all(cls):
@@ -61,11 +59,32 @@ class OtherSiteUrls:
     GIA_DINH_DOT_NET_VIDEO_URL = 'http://giadinh.net.vn/video-6805/meo-lam-tuong-ot-chua-ngot-dam-da-sanh-sot.htm'
     A_FAMILY_VIDEO_URL = 'http://video.afamily.vn/'
     GAMEK_VN_VIDEO_URL = 'http://gamek.vn/joker-tung-trailer-thu-2-he-lo-qua-khu-dau-thuong-cua-chang-hoang-tu-he-20190829101517375.chn'
-    VU_VI_PHIM_VIDEO_URL = 'https://vuviphim.com/xem-phim-bo-lo-mot-nua-222545'
+    VU_VI_PHIM_VIDEO_URL = 'https://vuviphim.com/xem-phim-kochouki-wakaki-nobunaga-212770'
     AN_NINH_THU_DO_VIDEO_URL = 'https://anninhthudo.vn/truyen-hinh-atv/146.antd'
     TUOI_TRE_VIDEO_URL = 'https://tuoitre.vn/video.htm'
     TV_ZING_VIDEO_URL = 'https://tv.zing.vn/video/Goblin-Yeu-Tinh-Tap-1/IWZEIC7F.html'
-    MOT_PHIM_VIDEO_URL = 'https://motphim.net/xem-phim/cuoc-doi-thu-2-tap-2-7099_90350.html'
+    MOT_PHIM_VIDEO_URL = 'https://motphim.net/xem-phim/cuoc-doi-thu-2-tap-4-7099_90578.html'
+
+    VTV_VN_TRUYEN_HINH_URL = 'https://vtv.vn/video/vut-xac-lon-benh-nguy-co-lay-lan-dich-ta-lon-chau-phi-theo-nguon-nuoc-390682.htm'
+    TV_HAY_VIDEO_URL = 'http://tvhay.org/xem-phim-tram-yeu-360727'
+    NGOI_SAO_VN_URL = 'https://ngoisao.vn/video/lieu-linh-bang-qua-dong-nuoc-lu-nguoi-dan-ong-suyt-phai-tra-gia-bang-ca-tinh-mang-273892.htm'
+
+    VTC_VN_VIDEO_URL = 'https://vtc.vn/truyen-hinh-27.html'
+    KENH14_VN_VIDEO_URL = 'http://video.kenh14.vn/dang-sau-moi-buc-anh-dep-la-mot-anh-chong-the-nay-day-245984.chn'
+
+    CAFE_VN_VIDEO_URL = 'http://cafef.vn/videos/17236-btv-ngoc-trinh-len-tieng-truoc-tin-don-so-huu-loat-xe-sang-ca-chuc-ty-dong.chn'
+    TIN_TUC_ONLINE_VIDEO_URL = 'https://tintuconline.com.vn/video/hoa-hong-tren-nguc-trai-tap-12-thai-doi-tieu-tam-phai-co-trach-nhiem-voi-minh-n-408464.html'
+    GIAO_DUC_THOI_DAI_VIDEO_URL = 'https://giaoducthoidai.vn/chuyen-la/tai-xe-ngu-gat-khi-lai-xe-hanh-khach-van-than-nhien-nhu-khong-co-chuyen-gi-4032898-d.html'
+
+    VN_EXPRESS_VIDEO_URL = 'https://video.vnexpress.net/tin-tuc/nhip-song/cay-si-co-thu-moc-100-than-3980758.html'
+    THANH_NIEN_VIDEO_URL = 'https://video.thanhnien.vn/thoi-su/trom-ga-noi-hang-loat-bi-phat-tu-thi-bo-tron-bi-bat-lai-khi-dang-phuc-vu-trong-quan-karaoke-140814.html'
+    DAN_TRI_VIDEO_URL = 'https://dantri.com.vn/video/tan-mat-xem-quy-trinh-lam-com-o-lang-nghe-noi-tieng-nhat-ha-noi-106661.htm'
+    NGUOI_LAO_DONG_TV_URL = 'https://tv.nld.com.vn/Home-3.htm'
+    ANIME_VSUB_TV_URL = 'http://animevsub.tv/phim/tay-du-3194/tap-01-61130.html'
+    NHAC_VN_VIDEO_URL = 'https://nhac.vn/video/doi-that-la-phoi-phoi-hoang-yen-chibi-uni5-mvG38e'
+    XVIDEOS_DOT_COM_VIDEO_URL = 'https://www.xvideos.com/video50625357/_'
+    XNXX_VIDEO_URL = 'https://www.xnxx.com/video-rjo7d8b/step_son_caught_masturbating_shoots_load_into_stepmom_s_panties'
+    FR_PORN_HUB_VIDEO_URL = 'https://fr.pornhub.com/view_video.php?viewkey=ph5bd4e9b96091f'
 
 
 class ExtensionIds:

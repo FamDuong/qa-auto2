@@ -26,4 +26,14 @@ class TestFptPlay:
         savior_page_object.assert_value_preferred_quality(browser, 'High')
 
 
+class TestVTV:
+
+    @pytestrail.case('C98759')
+    def test_check_default_state_download_button(self, browser):
+        browser.get(OtherSiteUrls.VTV_VN_TRUYEN_HINH_URL)
+        any_site_page_object.mouse_over_video_item_vtv_vn(browser)
+        savior_page_object.assert_value_preferred_quality(browser, 'High')
+
+
+
 
