@@ -19,6 +19,7 @@ class TestPageLoadTime:
         opts = Options()
         opts.binary_location = binary_file
         opts.add_argument("start-maximized")
+        opts.add_argument('--user-data-dir=' + settings.USER_DATA_DIR)
         if options_list is not None:
             for i in options_list:
                 opts.add_argument(i)
@@ -73,11 +74,15 @@ class TestPageLoadTime:
     def test_browser_plt(self):
         # Define test filename
         dirname, runname = os.path.split(os.path.abspath(__file__))
-        filename = dirname + r"\testbenchmark.csv"
+        # filename = dirname + r"\testbenchmark.csv"
+        filename = dirname + r"\ads_block_standard.csv"
 
-        options_list = {"--enable-features=NetworkService"}
+        # Test for NetworkService
+        # options_list = {"--enable-features=NetworkService"}
+        # Test for ads block
+        options_list = {"--component-updater=url-source=http://dev-update.coccoc.com/service/update2/json"}
         self.get_page_load_time(filename, settings.COCCOC_PATH, None)
-        self.get_page_load_time(filename, settings.COCCOC_PATH, options_list)
-        self.get_page_load_time(filename, settings.CHROME_PATH, None)
+        # self.get_page_load_time(filename, settings.COCCOC_PATH, options_list)
+        # self.get_page_load_time(filename, settings.CHROME_PATH, None)
 
 
