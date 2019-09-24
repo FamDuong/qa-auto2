@@ -1,10 +1,10 @@
 
 import time
 from datetime import datetime
-
+from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
-
+from selenium.webdriver.support.wait import WebDriverWait
 from models.pageelements.sites import YoutubePageElements, GooglePageElements, AnySiteElements
 from models.pagelocators.sites import AnySite
 from models.pageobject.basepage_object import BasePageObject
@@ -82,15 +82,20 @@ class AnySitePageObject(BasePageObject):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_element_24h(driver))
 
     def click_video_element_phimmoi(self, driver):
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
         self.any_site_element.find_video_element_phimmoi(driver).click()
 
     def mouse_over_video_element_phimmoi(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_element_phimmoi(driver))
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_element_mouse_over_phimmoi(driver))
+
+    def verify_exist_ads_pop_up_phim_moi(self, driver):
+        return len(self.any_site_element.find_elements_close_pop_up_ads_phim_moi(driver))
 
     def close_popup_continue_watching(self, driver):
         WaitAfterEach.sleep_timer_after_each_step()
         self.any_site_element.find_close_popup_continue_watching(driver).click()
+
+    def close_image_popup_phim_moi(self, driver):
+        self.any_site_element.find_close_image_popup_phim_moi(driver).click()
 
     def mouse_over_video_element_facebook(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_in_facebook_page(driver))
@@ -306,6 +311,18 @@ class AnySitePageObject(BasePageObject):
 
     def mouse_over_video_fr_porn_hub(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_fr_porn_hub(driver))
+
+    def switch_to_iframe_skip_ad_phim_moi(self, driver):
+        iframe_main_perol_ads = driver.find_elements_by_css_selector(AnySite.PHIMMOI_IFRAME_MAIN_PEROL_ADS_ID_TEXT)
+        # i = 0
+        while len(iframe_main_perol_ads) > 0:
+            driver.switch_to.frame(driver.find_element_by_css_selector(AnySite.PHIMMOI_IFRAME_MAIN_PEROL_ADS_ID_TEXT))
+            # if i >= 1:
+            #     time.sleep(60)
+            self.any_site_element.find_skip_ad_button_phimmoi(driver).click()
+            driver.switch_to_default_content()
+            iframe_main_perol_ads = driver.find_elements_by_css_selector(AnySite.PHIMMOI_IFRAME_MAIN_PEROL_ADS_ID_TEXT)
+        return len(iframe_main_perol_ads)
 
 
 

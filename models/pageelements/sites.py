@@ -86,10 +86,32 @@ class AnySiteElements(BasePageElement):
             ec.element_to_be_clickable(AnySite.PHIMMOI_VIDEO_ITEM))
 
     @staticmethod
+    def find_video_element_mouse_over_phimmoi(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.element_to_be_clickable(AnySite.PHIMMOI_VIDEO_MOUSE_OVER))
+
+    @staticmethod
     def find_close_popup_continue_watching(driver):
         wait = WebDriverWait(driver, 10)
         return wait.until(
             ec.element_to_be_clickable(AnySite.PHIMMOI_CONTINUE_WATCHING_CLOSE_ELEMENT))
+
+    @staticmethod
+    def find_close_image_popup_phim_moi(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.element_to_be_clickable(AnySite.PHIMMOI_CLOSE_IMAGE_AD))
+
+    @staticmethod
+    def find_elements_close_pop_up_ads_phim_moi(driver):
+        return driver.find_elements_by_xpath('//a[@class="close"]')
+
+    @staticmethod
+    def find_video_ad_length_phim_moi(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.PHIMMOI_VIDEO_AD_LENGTH_LOCATOR))
 
     @staticmethod
     def find_video_item_in_facebook_page(driver):
@@ -105,7 +127,8 @@ class AnySiteElements(BasePageElement):
 
     @staticmethod
     def click_video_item_in_messenger_chat(driver):
-        driver.execute_script('document.querySelector(arguments[0]).click()', AnySite.MESSENGER_CHAT_VIDEO_ITEM_SELECTOR)
+        driver.execute_script('document.querySelector(arguments[0]).click()',
+                              AnySite.MESSENGER_CHAT_VIDEO_ITEM_SELECTOR)
 
     @staticmethod
     def find_video_item_in_instagram(driver):
@@ -446,16 +469,21 @@ class AnySiteElements(BasePageElement):
         return wait.until(
             ec.presence_of_element_located(AnySite.FR_PORN_HUB_VIDEO_ITEM))
 
+    @staticmethod
+    def find_iframe_skip_ad_phimmoi(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.PHIMMOI_IFRAME_SKIP_AD_ITEM))
 
+    @staticmethod
+    def find_iframe_perol_skip_ad_phimmoi(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.PHIMMOI_IFRAME_MAIN_PEROL_ADS_ID))
 
-
-
-
-
-
-
-
-
-
-
+    @staticmethod
+    def find_skip_ad_button_phimmoi(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.PHIMMOI_SKIP_AD_BUTTON))
 

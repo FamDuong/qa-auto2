@@ -40,5 +40,7 @@ class WaitAfterEach:
     def sleep_timer_after_each_step_longest_load():
         time.sleep(15)
 
-
+    @staticmethod
+    def sleep_timer_for_ads_to_show():
+        time.sleep(120)
 
