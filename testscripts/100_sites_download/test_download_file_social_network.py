@@ -16,10 +16,13 @@ class TestFacebook:
 
     @pytestrail.case('C96691')
     @pytest.mark.ten_popular_sites
-    def test_check_default_state_download_button(self, browser):
+    def test_check_default_state_download_button(self, browser, get_current_download_folder):
         browser.get(OtherSiteUrls.FACEBOOK_VIDEO_URL)
         any_site_page_object.mouse_over_video_element_facebook(browser)
         savior_page_object.assert_value_preferred_quality(browser, 'High')
+        verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
+                                          clear_data_download_in_browser_and_download_folder(browser,
+                                                                                             get_current_download_folder))
 
 
 class TestMessenger:

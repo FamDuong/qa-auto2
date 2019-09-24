@@ -27,8 +27,19 @@ class GooglePageLocators(object):
 class AnySite(object):
     TWENTY_FOUR_H_VIDEO_ITEM = (By.CSS_SELECTOR, '[class="v-24h-media-player"]')
     PHIMMOI_VIDEO_ITEM = (By.ID, 'media-player-box')
-
+    PHIMMOI_VIDEO_MOUSE_OVER = (By.ID, 'media-player')
+    PHIMMOI_IFRAME_SKIP_AD_ITEM = (By.CSS_SELECTOR, 'iframe[gesture="media"][src="javascript:false"]')
+    PHIMMOI_IFRAME_MAIN_PEROL_ADS_ID = (By.ID, 'main_preroll_ads')
+    PHIMMOI_IFRAME_MAIN_PEROL_ADS_ID_TEXT = 'iframe[id="main_preroll_ads"]'
+    PHIMMOI_IFRAME_SKIP_AD_ITEM_CSS_SELECTOR = 'iframe[gesture="media"][src="javascript:false"]'
+    # PHIMMOI_SKIP_VIDEO_AD = 'an_skip_button'
+    PHIMMOI_SKIP_BY_ID = 'preroll-skip'
+    PHIMMOI_IFRAME_NOT_DISPLAYED_SKIP_BTN_XPATH = '//div[@id="an_skip_button"][text()][@style="display: none;"]'
+    PHIMMOI_SKIP_AD_BUTTON = (By.XPATH, '//div[@class="jw-skip jw-reset jw-skippable"]')
     PHIMMOI_CONTINUE_WATCHING_CLOSE_ELEMENT = (By.ID, 'watching-messbox-close')
+    PHIMMOI_CLOSE_IMAGE_AD = (By.XPATH, '//a[@class="close"]')
+
+    PHIMMOI_VIDEO_AD_LENGTH_LOCATOR = (By.XPATH, '//div[@class="jw-icon jw-icon-inline jw-text jw-reset jw-text-duration"]')
 
     FACEBOOK_VIDEO_ITEM = (By.XPATH, '//video[@muted="1"]')
 

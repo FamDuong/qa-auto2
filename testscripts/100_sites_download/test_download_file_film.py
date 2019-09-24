@@ -1,5 +1,4 @@
 import pytest
-
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
@@ -17,21 +16,33 @@ class TestPhimmoi:
 
     @staticmethod
     def pause_video_element_phimmoi(browser):
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        any_site_page_object.switch_to_iframe_skip_ad_phim_moi(browser)
         any_site_page_object.click_video_element_phimmoi(browser)
         any_site_page_object.mouse_over_video_element_phimmoi(browser)
 
     def prepare_displayed_savior_popup(self, browser):
         browser.get(OtherSiteUrls.PHIMMOI_VIDEO_URL)
-        WaitAfterEach.sleep_timer_after_each_step()
-        handle_windows_watch_option(browser, any_site_page_object.close_popup_continue_watching(browser))
+        windows_list = browser.window_handles
+        print(windows_list)
+        if len(windows_list) >= 2:
+            browser.switch_to.window(windows_list[0])
+            any_site_page_object.close_popup_continue_watching(browser)
+            browser.switch_to_active_element()
+            if any_site_page_object.verify_exist_ads_pop_up_phim_moi(browser) > 0:
+                any_site_page_object.close_image_popup_phim_moi(browser)
+            browser.switch_to_default_content()
+        else:
+            any_site_page_object.close_popup_continue_watching(browser)
         self.pause_video_element_phimmoi(browser)
+        browser.switch_to_default_content()
 
     @pytestrail.case('C96721')
     @pytest.mark.ten_popular_sites
-    def test_check_default_option(self, browser):
+    def test_download_file_phim_moi(self, browser, get_current_download_folder):
         self.prepare_displayed_savior_popup(browser)
         savior_page_object.assert_value_preferred_quality(browser, 'High')
+        verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder, file_type='slow'),
+                                          clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
 class TestVuViPhim:
