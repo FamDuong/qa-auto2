@@ -70,17 +70,16 @@ class TestPageLoadTime:
             print("Average load time of %s is %s" % (i, loadtimes.get(i)))
             print("Average browser startup time of %s is %s" % (i, startuptimes.get(i)))
 
-    @pytestrail.case('C82299')
     def test_browser_plt(self):
         # Define test filename
         dirname, runname = os.path.split(os.path.abspath(__file__))
-        filename = dirname + r"\testbenchmark.csv"
+        filename = dirname + r"\ads_block_standard.csv"
+        # filename = dirname + r"\ads_block_strict.csv"
 
         # Test for NetworkService
         # options_list = {"--enable-features=NetworkService"}
         # Test for ads block
+        options_list = {"--component-updater=url-source=http://dev-update.coccoc.com/service/update2/json"}
         self.get_page_load_time(filename, settings.COCCOC_PATH, None)
-        self.get_page_load_time(filename, settings.COCCOC_PATH, options_list)
-        self.get_page_load_time(filename, settings.CHROME_PATH, None)
 
 
