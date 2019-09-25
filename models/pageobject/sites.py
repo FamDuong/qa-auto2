@@ -324,6 +324,14 @@ class AnySitePageObject(BasePageObject):
             iframe_main_perol_ads = driver.find_elements_by_css_selector(AnySite.PHIMMOI_IFRAME_MAIN_PEROL_ADS_ID_TEXT)
         return len(iframe_main_perol_ads)
 
+    def click_video_vlxx(self, driver):
+        ActionChains(driver).move_to_element(self.any_site_element.find_video_item_wrapper_vlxx(driver)).perform()
+        self.any_site_element.find_video_item_wrapper_vlxx(driver).click()
+
+    def mouse_over_video_vlxx(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_vlxx(driver))
+
+
 
 
 
