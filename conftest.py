@@ -162,6 +162,7 @@ def clear_screen_shot_folder():
 def pytest_addoption(parser):
     parser.addoption('--settings', action='store')
     parser.addoption('--cc_version', action='store')
+    parser.addoption('--rm_user_data', action='store')
 
 
 @pytest.fixture(scope='session')
@@ -175,3 +176,7 @@ def get_flash_path():
 @pytest.fixture
 def cc_version(request):
     return request.config.getoption("--cc_version")
+
+@pytest.fixture
+def rm_user_data(request):
+    return request.config.getoption("--rm_user_data")

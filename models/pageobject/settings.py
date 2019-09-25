@@ -1,7 +1,7 @@
 from models.pageelements.settings import SettingsElements
 from models.pagelocators.settings import SettingsPageLocators
 from models.pageobject.basepage_object import BasePageObject
-
+from utils_automation.const import Urls
 
 class SettingsPageObject(BasePageObject):
     settings_elem = SettingsElements()
@@ -34,3 +34,13 @@ class SettingsPageObject(BasePageObject):
     def get_download_folder(self, driver):
         return self.settings_elem.find_download_location_element(driver).text
 
+    def verify_on_startup(self, driver, expect_option):
+        driver.get(Urls.COCCOC_SETTINGS_URL)
+        # element_open_new_tab = self.settings_elem.find_open_new_tab(driver)
+        if expect_option == SettingsPageLocators.LABEL_OPEN_NEW_TAB_PAGE:
+            checked = self.settings_elem.find_open_new_tab(driver).get_attribute("checked")
+        elif expect_option == SettingsPageLocators.LABEL_CONTINUE_WHERE_LEFT_OFF:
+            checked = self.settings_elem.find_continue_where_left_off(driver).get_attribute("checked")
+        else:
+            checked = self.settings_elem.find_open_a_specific_set_of_pages(driver).get_attribute("checked")
+        assert checked is not None

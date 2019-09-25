@@ -15,6 +15,7 @@ from models.pagelocators.mojichat import MojichatLocators
 from utils_automation.setup import WaitAfterEach
 
 
+
 class BasePageObject(object):
 
     def wait_until_document_ready(self, driver):
