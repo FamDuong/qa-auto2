@@ -115,6 +115,9 @@ class AnySite(object):
     XNXX_VIDEO_ITEM = (By.XPATH, '//video[@preload="auto"]')
     FR_PORN_HUB_VIDEO_ITEM = (By.ID, 'player')
 
+    VLXX_VIDEO_ITEM = (By.XPATH, '//video')
+    VLXX_VIDEO_ITEM_WRAPPER = (By.ID, 'vlxx')
+
 
 
 
