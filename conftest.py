@@ -32,10 +32,16 @@ def pytest_runtest_makereport(item):
         timestamp = datetime.now().strftime('%H-%M-%S.%f')[:-3]
         filename = timestamp + ".png"
         if driver is not None and ('winapp' not in item.name):
-            _capture_screenshot(filename)
+            try:
+                _capture_screenshot(filename)
+            except:
+                print("Cannot capture screenshot!!!")
 
         elif win_app_driver is not None:
-            _capture_screenshot_win_app(filename)
+            try:
+                _capture_screenshot_win_app(filename)
+            except:
+                print("Cannot capture screenshot!!!")
         # if file_name:
         html = '<div><img src="screenshots/%s" style="width:600px;height:228px;" ' \
                    'onclick="window.open(this.src)" align="right"/></div>' % filename

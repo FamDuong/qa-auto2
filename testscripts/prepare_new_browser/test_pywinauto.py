@@ -38,11 +38,13 @@ class TestWinAuto:
         self.test_install_from_cmd(download_file)
         self.version_page_object.verify_version_is_correct(cc_version)
 
+
     def remove_local_app_data(self):
         localappdata = path.expandvars(r'%LOCALAPPDATA%\CocCoc')
         appdata = path.expandvars(r'%APPDATA%\CocCoc')
-        cmdCommand = 'rmdir /q /s ' + localappdata  # specify your cmd command
-        WindowsCMD.execute_cmd(cmdCommand)
+        # Temporary do not download localappdata
+        # cmdCommand = 'rmdir /q /s ' + localappdata  # specify your cmd command
+        # WindowsCMD.execute_cmd(cmdCommand)
         cmdCommand = 'rmdir /q /s ' + appdata  # specify your cmd command
         WindowsCMD.execute_cmd(cmdCommand)
         cmdCommand = 'reg delete HKEY_CURRENT_USER\\Software\\CocCoc /f'
@@ -69,7 +71,9 @@ class TestWinAuto:
             coccoc_install = Desktop(backend='uia').Cốc_Cốc_Installer
             coccoc_install.Button1.click()
             time.sleep(60)
+            # coccoc_install = Desktop(backend='uia').
             WindowsCMD.execute_cmd('taskkill /im CocCocUpdate.exe /f')
+            WindowsCMD.execute_cmd('taskkill /im browser.exe /f')
         finally:
             print("Finish installing!!!")
 
