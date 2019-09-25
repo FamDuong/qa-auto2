@@ -1,17 +1,23 @@
 
 import subprocess
-import sys
 import time
+import os
 
+from models.pageobject.coccocpage import CocCocPageObjects
+from models.pageobject.downloads import DownloadsPageObject
+from os import path
 from pywinauto import Desktop, timings
 from pywinauto.application import Application
+from utils_automation.common import wait_for_stable
 
 from models.pageobject.version import VersionPageObject
 from utils_automation.const import Urls
-
+from utils_automation.common import WindowsCMD
 
 class TestWinAuto:
     version_page_object = VersionPageObject()
+    coccoc_page_object = CocCocPageObjects()
+    download_page_object = DownloadsPageObject()
 
     def get_dir_data(self, browser):
         browser.get(Urls.COCCOC_VERSION_URL)
@@ -20,6 +26,27 @@ class TestWinAuto:
         split2 = split1[1].split('\\PepperFlash')
         value = u'C:\\Users\\' + split2[0] + u'\\Installer\\setup.exe --uninstall'
         return value
+
+    def test_install_latest_version_from_dev(self, browser, get_current_download_folder, cc_version):
+        # Please make sure to add hosts to C:\Windows\System32\drivers\etc\hosts
+        # Restriction: Cannot add hosts by script because of administration permission
+        # Download latest version
+        download_file = self.coccoc_page_object.download_coccoc_from_dev(browser, get_current_download_folder)
+        # Uninstall old version
+        self.test_uninstall_from_cmd(browser)
+        # Install downloaded version
+        self.test_install_from_cmd(download_file)
+        self.version_page_object.verify_version_is_correct(cc_version)
+
+    def remove_local_app_data(self):
+        localappdata = path.expandvars(r'%LOCALAPPDATA%\CocCoc')
+        appdata = path.expandvars(r'%APPDATA%\CocCoc')
+        cmdCommand = 'rmdir /q /s ' + localappdata  # specify your cmd command
+        WindowsCMD.execute_cmd(cmdCommand)
+        cmdCommand = 'rmdir /q /s ' + appdata  # specify your cmd command
+        WindowsCMD.execute_cmd(cmdCommand)
+        cmdCommand = 'reg delete HKEY_CURRENT_USER\\Software\\CocCoc /f'
+        WindowsCMD.execute_cmd(cmdCommand)
 
     def test_uninstall_from_cmd(self, browser):
         try:
@@ -30,18 +57,21 @@ class TestWinAuto:
             coccoc_uninstall = Desktop(backend='uia').Uninstall_Coc_Coc
             coccoc_uninstall.Uninstall.click()
             execute.communicate()
+            self.remove_local_app_data()
         except:
-            pass
+            print("Uninstall not success!!!")
 
-    def test_install_from_cmd(self):
-        subprocess.Popen('C:\\CoccocInstaller\\coccoc-en.exe')
-        time.sleep(14)
-        coccoc_install = Desktop(backend='uia').Cốc_Cốc_Installer
-        coccoc_install.Button1.click()
-        time.sleep(44)
-        prog = subprocess.Popen("taskkill /im browser.exe /f", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        prog.communicate()
-
+    def test_install_from_cmd(self, install_file):
+        try:
+            wait_for_stable
+            subprocess.Popen(install_file)
+            time.sleep(14)
+            coccoc_install = Desktop(backend='uia').Cốc_Cốc_Installer
+            coccoc_install.Button1.click()
+            time.sleep(60)
+            WindowsCMD.execute_cmd('taskkill /im CocCocUpdate.exe /f')
+        finally:
+            print("Finish installing!!!")
 
 def test_uninstall():
     Application().start('control.exe')

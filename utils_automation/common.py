@@ -1,6 +1,8 @@
 import os
 import csv
 import sys
+import time
+import subprocess
 
 from selenium.webdriver import ActionChains
 
@@ -17,6 +19,8 @@ def if_height_frame_so_width_frame(height_frame):
     elif int(height_frame) == 720:
         return 1280
 
+def wait_for_stable(wait_time = 3):
+    time.sleep(wait_time)
 
 class CSVHandle:
     def get_from_csv(self, filename):
@@ -68,3 +72,13 @@ class WebElements:
             hov = ActionChains(driver).move_to_element(element)
             hov.perform()
 
+class WindowsCMD:
+    @staticmethod
+    def execute_cmd(cmd_text):
+        try:
+            wait_for_stable()
+            process = subprocess.Popen(cmd_text.split(), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            output, error = process.communicate()
+            print(output)
+        finally:
+            print("Cannot execute command!")

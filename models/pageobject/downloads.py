@@ -107,7 +107,6 @@ class DownloadsPageObject(BasePageObject):
         assert self.downloads_elem.find_play_button(driver, file_type=file_type).text == 'Play'
         WaitAfterEach.sleep_timer_after_each_step()
 
-
 class ThePirateBayPageObject(BasePageObject):
 
     piratebay_elem = ThePirateBayElements()

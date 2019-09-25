@@ -112,6 +112,9 @@ class DownloadsElement(BasePageElement):
         return wait.until(
             ec.presence_of_element_located(DownloadsPageLocators.PLAY_BTN))
 
+    def find_location_info(self, driver):
+        wait = WebDriverWait(driver, 20)
+        return wait.until(ec.presence_of_element_located(DownloadsPageLocators.LOCATION))
 
 class ThePirateBayElements(BasePageElement):
 

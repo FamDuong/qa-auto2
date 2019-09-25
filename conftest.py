@@ -10,6 +10,7 @@ driver = None
 user_data_path = None
 winappdriver = None
 download_folder = None
+flash_path = None
 block_origin_extension_path = None
 
 
@@ -131,6 +132,7 @@ def set_up_before_run_user_browser():
         local_driver.maximize_window()
         local_driver.get(Urls.COCCOC_VERSION_URL)
         path_full = version_page_object.get_profile_path(local_driver)
+        flash_path = version_page_object.get_flash_path(local_driver)
         local_driver.get(Urls.COCCOC_SETTINGS_URL)
         WaitAfterEach.sleep_timer_after_each_step()
         download_folder = setting_page_object.get_download_folder(local_driver)
@@ -153,9 +155,17 @@ def clear_screen_shot_folder():
 
 def pytest_addoption(parser):
     parser.addoption('--settings', action='store')
+    parser.addoption('--cc_version', action='store')
 
 
 @pytest.fixture(scope='session')
 def get_current_download_folder():
     return download_folder
 
+@pytest.fixture(scope='session')
+def get_flash_path():
+    return flash_path
+
+@pytest.fixture
+def cc_version(request):
+    return request.config.getoption("--cc_version")

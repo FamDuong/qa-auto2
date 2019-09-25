@@ -6,6 +6,7 @@ class Urls:
     COCCOC_DOWNLOAD_URL = 'coccoc://downloads'
     COCCOC_VERSION_URL = 'coccoc://version/'
     COCCOC_EXTENSIONS = 'coccoc://extensions'
+    COCCOC_DEV_URL = 'https://dev.coccoc.com'
     YOUTUBE_URL = 'https://www.youtube.com/'
 
     GOOGLE_URL = 'https://www.google.com/'

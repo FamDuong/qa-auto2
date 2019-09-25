@@ -42,6 +42,7 @@ class DownloadsPageLocators:
 
     PLAY_BTN = (By.XPATH, '//button[@class="js-play play-btn"]')
 
+    LOCATION = (By.XPATH, '//div[@id="defaultDownloadPath"]')
 
 class ThePirateBayLocators(object):
     SEARCH_FIELD = (By.XPATH, '//p[@id="inp"]/input[@name="q"]')
