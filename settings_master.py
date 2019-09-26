@@ -1,4 +1,4 @@
-COCCOC_VERSION = '76.0.3809.143'
+COCCOC_VERSION = '76.0.3809.144'
 USER_DATA_DIR = r'C:\\Users\\bichngoc\\AppData\\Local\\CocCoc\\Browser\\User Data'
 COCCOC_PATH = r'C:\Users\bichngoc\AppData\Local\CocCoc\Browser\Application\browser.exe'
 CHROME_PATH = r'C:\Users\bichngoc\AppData\Local\Google\Chrome\Application\chrome.exe'

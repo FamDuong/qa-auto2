@@ -52,3 +52,10 @@ class SettingsElements(BasePageElement):
                                         SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
                                         SettingsPageLocators.SETTINGS_DOWNLOAD_PAGE_TEXT,
                                         SettingsPageLocators.DEFAULT_DOWNLOAD_PATH_TEXT)
+
+    def find_run_automatically_on_system_startup(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsPageLocators.SETTINGS_MAIN_TEXT,
+                                        SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                        SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_PAGE_TEXT,
+                                        SettingsPageLocators.DEFAULT_BROWSER_RUN_AUTO_ONSTARTUP)

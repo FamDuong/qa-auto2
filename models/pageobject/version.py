@@ -17,7 +17,7 @@ class VersionPageObject(BasePageObject):
 
     def verify_version_is_correct(self, expect_version):
         localappdata = path.expandvars(r'%LOCALAPPDATA%\CocCoc\Browser\Application\\')
-        assert os.path.isdir(localappdata + expect_version) == 1
+        assert str(os.path.isdir(localappdata + expect_version)) == "True"
 
 
 

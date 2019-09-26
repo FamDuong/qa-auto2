@@ -20,9 +20,7 @@ class SettingsPageLocators(object):
     OPEN_NEW_TAB_PAGE_TEXT = '[label="Open the New Tab page"]'
     ADD_A_NEW_PAGE_TEXT = '[id="addPage"]'
 
-    LABEL_OPEN_NEW_TAB_PAGE = 'Open the New Tab page'
-    LABEL_CONTINUE_WHERE_LEFT_OFF = 'Continue where you left off'
-    LABEL_OPEN_SPECIFIC_PAGE_OR_SET_OF_PAGES = 'Open a specific page or set of pages'
+    DEFAULT_BROWSER_RUN_AUTO_ONSTARTUP = '[label="Run automatically on system startup"]'
 
     DEFAULT_TORRENT_CLIENT_TEXT = '[class="settings-box two-line"]'
 

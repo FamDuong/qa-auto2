@@ -34,13 +34,22 @@ class SettingsPageObject(BasePageObject):
     def get_download_folder(self, driver):
         return self.settings_elem.find_download_location_element(driver).text
 
-    def verify_on_startup(self, driver, expect_option):
-        driver.get(Urls.COCCOC_SETTINGS_URL)
+    def verify_setting_on_startup(self, driver, expect_option):
+        driver.get(Urls.COCCOC_SETTINGS_ONSTARTUP)
         # element_open_new_tab = self.settings_elem.find_open_new_tab(driver)
-        if expect_option == SettingsPageLocators.LABEL_OPEN_NEW_TAB_PAGE:
+        if expect_option == SettingsPageLocators.OPEN_NEW_TAB_PAGE_TEXT:
             checked = self.settings_elem.find_open_new_tab(driver).get_attribute("checked")
-        elif expect_option == SettingsPageLocators.LABEL_CONTINUE_WHERE_LEFT_OFF:
+        elif expect_option == SettingsPageLocators.CONTINUE_WHERE_LEFT_OFF_TEXT:
             checked = self.settings_elem.find_continue_where_left_off(driver).get_attribute("checked")
         else:
             checked = self.settings_elem.find_open_a_specific_set_of_pages(driver).get_attribute("checked")
         assert checked is not None
+
+    def verify_setting_default_browser(self, driver, expect_option):
+        driver.get(Urls.COCCOC_SETTINGS_DEFAULT)
+        if expect_option == SettingsPageLocators.DEFAULT_BROWSER_RUN_AUTO_ONSTARTUP:
+            checked = self.settings_elem.find_run_automatically_on_system_startup(driver).get_attribute("checked")
+        assert checked is not None
+
+
+
