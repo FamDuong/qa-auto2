@@ -88,6 +88,7 @@ class OtherSiteUrls:
     XVIDEOS_DOT_COM_VIDEO_URL = 'https://www.xvideos.com/video50625357/_'
     XNXX_VIDEO_URL = 'https://www.xnxx.com/video-rjo7d8b/step_son_caught_masturbating_shoots_load_into_stepmom_s_panties'
     FR_PORN_HUB_VIDEO_URL = 'https://fr.pornhub.com/view_video.php?viewkey=ph5bd4e9b96091f'
+    VLXX_VIDEO_URL = 'http://vlxx.tv/video/bo-oi-con-khong-ngu-duoc/1410/'
 
 
 class ExtensionIds:

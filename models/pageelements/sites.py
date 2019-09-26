@@ -487,3 +487,18 @@ class AnySiteElements(BasePageElement):
         return wait.until(
             ec.presence_of_element_located(AnySite.PHIMMOI_SKIP_AD_BUTTON))
 
+    @staticmethod
+    def find_video_item_vlxx(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.VLXX_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_wrapper_vlxx(driver):
+        wait = WebDriverWait(driver, 10)
+        return wait.until(
+            ec.presence_of_element_located(AnySite.VLXX_VIDEO_ITEM_WRAPPER))
+
+
+
+

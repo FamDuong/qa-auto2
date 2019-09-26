@@ -13,15 +13,14 @@ class TestDownloadGroup:
     savior_page_object = SaviorPageObject()
 
     @staticmethod
-    def prepare_check_download(browser, url_site, download_folder):
+    def prepare_check_download(download_folder):
         delete_all_mp4_file_download(download_folder, '.mp4')
-        pause_any_video_site(browser, url_site)
         WaitAfterEach.sleep_timer_after_each_step()
 
     def implement_test_site(self, browser, url_site, get_current_download_folder):
         pause_any_video_site(browser, url_site)
         self.savior_page_object.assert_value_preferred_quality(browser, 'High')
-        self.prepare_check_download(browser, url_site, get_current_download_folder)
+        self.prepare_check_download(get_current_download_folder)
         try:
             if url_site is VideoUrls.DONG_PHIM_VIDEO_URL:
                 download_file_via_main_download_button(browser, file_type='slow')

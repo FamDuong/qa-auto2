@@ -49,3 +49,28 @@ class TestPornHub:
         verify_video_step_then_clear_data(
             implement_download_file(browser, get_current_download_folder, file_type='slow'),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
+
+
+class TestVLXX:
+
+    @pytestrail.case('C96762')
+    def test_download_file_vlxx_videos(self, browser, get_current_download_folder):
+        browser.get(OtherSiteUrls.VLXX_VIDEO_URL)
+        any_site_page_object.click_video_vlxx(browser)
+        any_site_page_object.mouse_over_video_vlxx(browser)
+        savior_page_object.assert_value_preferred_quality(browser, 'High')
+        verify_video_step_then_clear_data(
+            implement_download_file(browser, get_current_download_folder, file_type='slow'),
+            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
+
+
+
+
+
+
+
+
+
+
+
+
