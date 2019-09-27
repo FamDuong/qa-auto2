@@ -1,7 +1,6 @@
 
 import subprocess
 import time
-import os
 from models.pagelocators.settings import SettingsPageLocators
 from pytest_testrail.plugin import pytestrail
 from utils_automation.common import BrowserHandler
@@ -97,7 +96,7 @@ class TestInstall:
         self.test_install_from_cmd(download_file)
         self.version_page_object.verify_version_is_correct(cc_version)
 
-class TestOverrideSInstall(TestInstall):
+class TestOverrideInstall(TestInstall):
     @pytestrail.case('C44773')
     def test_check_install_new_version_above_old_version(self, browser, get_current_download_folder, cc_version,
                                                          rm_user_data = "Yes"):

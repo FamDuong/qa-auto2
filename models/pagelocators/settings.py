@@ -29,6 +29,18 @@ class SettingsPageLocators(object):
 
     DEFAULT_DOWNLOAD_PATH_TEXT = '#defaultDownloadPath'
 
+    EXTENSION_MAIN = 'extensions-manager'
+    EXTENSION_TOOLBAR = 'extensions-toolbar'
+    EXTENSION_LIST = '#items-list'
+    EXTENSION_NAME = '#name'
+    EXTENSION_VERSION = '#version'
+    EXTENSION_TOGGLE = '#enable-toggle'
+    EXTENSION_TOGGLE_DEV_MODE = '#devMode'
+    EXTENSION_DICTIONARY_ID = '#gfgbmghkdjckppeomloefmbphdfmokgd'
+    EXTENSION_SAVIOR_ID = '#jdfkmiabjpfjacifcmihfdjhpnjpiick'
+    EXTENSION_RUNGRINH_ID = '#paenbjlckelooppiepeiechkeehogoha'
+    EXTENSION_MOJICHAT_ID = '#paenbjlckelooppiepeiechkeehogoha'
+
 
 class SettingsDownloadPageLocators(object):
 
