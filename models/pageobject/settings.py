@@ -47,7 +47,7 @@ class SettingsPageObject(BasePageObject):
 
     def verify_setting_default_browser(self, driver, expect_option):
         driver.get(Urls.COCCOC_SETTINGS_DEFAULT)
-        if expect_option == SettingsPageLocators.DEFAULT_BROWSER_RUN_AUTO_ONSTARTUP:
+        if expect_option == SettingsPageLocators.DEFAULT_BROWSER_RUN_AUTO_ONSTARTUP_CHECKBOX:
             checked = self.settings_elem.find_run_automatically_on_system_startup(driver).get_attribute("checked")
         assert checked is not None
 

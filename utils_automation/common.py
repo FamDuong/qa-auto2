@@ -3,8 +3,10 @@ import csv
 import sys
 import time
 import subprocess
+from selenium import webdriver
 
 from selenium.webdriver import ActionChains
+
 
 
 def if_height_frame_so_width_frame(height_frame):
@@ -82,3 +84,26 @@ class WindowsCMD:
             print(output)
         finally:
             print("Cannot execute command!")
+
+class BrowserHandler:
+    def browser_init(self):
+        # browser = webdriver.Chrome()
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument("--window-size=1920,1080")
+        # chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_argument("--proxy-server='direct://'")
+        chrome_options.add_argument("--proxy-bypass-list=*")
+        chrome_options.add_argument("--start-maximized")
+        chrome_options.add_argument('--disable-gpu')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--ignore-certificate-errors')
+        chrome_options.add_argument("--allow-insecure-localhost")
+        # chrome_options.add_argument("--disable-infobars")
+        # chrome_options.add_argument('--user-data-dir=' + os.environ['user-dir-path'])
+        chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
+        browser = webdriver.Chrome(options=chrome_options)
+        browser.create_options()
+        browser.maximize_window()
+        browser.set_page_load_timeout(40)
+        return browser

@@ -21,6 +21,7 @@ class SettingsPageLocators(object):
     ADD_A_NEW_PAGE_TEXT = '[id="addPage"]'
 
     DEFAULT_BROWSER_RUN_AUTO_ONSTARTUP = '[label="Run automatically on system startup"]'
+    DEFAULT_BROWSER_RUN_AUTO_ONSTARTUP_CHECKBOX = '[aria-label="Run automatically on system startup"]'
 
     DEFAULT_TORRENT_CLIENT_TEXT = '[class="settings-box two-line"]'
 
