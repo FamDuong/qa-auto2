@@ -1,10 +1,11 @@
-
 import os
 import csv
 import sys
 import time
 import subprocess
 import psutil
+import win32api
+import glob
 from selenium import webdriver
 from os import path
 from selenium.webdriver import ActionChains
@@ -74,39 +75,76 @@ class FilesHandle:
     def is_dir_exist(self, directory):
         return str(os.path.isdir(directory))
 
-    def is_file_exist_in_app_data(self, filename):
-        appdata = path.expandvars(r'%APPDATA%\CocCoc\\')
-        check = self.is_file_exist(appdata + filename)
+    def is_file_exist_in_folder(self, filename, folder):
+        check = self.is_file_exist(folder + filename)
         if check == "True":
             return True
         else:
             return False
 
-    def is_file_exist_in_local_app_data(self, filename):
-        appdata = path.expandvars(r'%LOCALAPPDATA%\CocCoc\\')
-        check = self.is_file_exist(appdata + filename)
+    def is_subfolder_exist_in_folder(self, subfolder, folder):
+        check = self.is_dir_exist(folder + subfolder)
         if check == "True":
             return True
         else:
             return False
 
-    def is_dir_exist_in_app_data(self, filename):
-        localappdata = path.expandvars(r'%LOCALAPPDATA%\CocCoc\\')
-        check = self.is_dir_exist(localappdata + filename)
-        if check == "True":
-            return True
-        else:
-            return False
+    def get_file_properties(self, fname):
+        """
+        Read all properties of the given file return them as a dictionary.
+        """
+        propNames = ('Comments', 'InternalName', 'ProductName',
+                     'CompanyName', 'LegalCopyright', 'ProductVersion',
+                     'FileDescription', 'LegalTrademarks', 'PrivateBuild',
+                     'FileVersion', 'OriginalFilename', 'SpecialBuild')
 
-    def is_folder_exist_in_local_app_data(self, filename):
-        localappdata = path.expandvars(r'%LOCALAPPDATA%\CocCoc\\')
-        check = self.is_dir_exist(localappdata + filename)
-        if check == "True":
-            return True
-        else:
-            return False
+        props = {'FixedFileInfo': None, 'StringFileInfo': None, 'FileVersion': None}
 
+        try:
+            # backslash as parm returns dictionary of numeric info corresponding to VS_FIXEDFILEINFO struc
+            fixedInfo = win32api.GetFileVersionInfo(fname, '\\')
+            props['FixedFileInfo'] = fixedInfo
+            props['FileVersion'] = "%d.%d.%d.%d" % (fixedInfo['FileVersionMS'] / 65536,
+                                                    fixedInfo['FileVersionMS'] % 65536,
+                                                    fixedInfo['FileVersionLS'] / 65536,
+                                                    fixedInfo['FileVersionLS'] % 65536)
 
+            # \VarFileInfo\Translation returns list of available (language, codepage)
+            # pairs that can be used to retreive string info. We are using only the first pair.
+            lang, codepage = win32api.GetFileVersionInfo(fname, '\\VarFileInfo\\Translation')[0]
+
+            # any other must be of the form \StringfileInfo\%04X%04X\parm_name, middle
+            # two are language/codepage pair returned from above
+
+            strInfo = {}
+            for propName in propNames:
+                strInfoPath = u'\\StringFileInfo\\%04X%04X\\%s' % (lang, codepage, propName)
+                ## print str_info
+                strInfo[propName] = win32api.GetFileVersionInfo(fname, strInfoPath)
+
+            props['StringFileInfo'] = strInfo
+        except:
+            pass
+        return props
+
+    def get_all_files_in_folder(self, folder, filetype):
+        # r=root, d=directories, f = files
+        list_files = []
+        for r, d, f in os.walk(folder):
+            for file in f:
+                if file.endswith(filetype):
+                    list_files.append(os.path.join(r, file))
+        return list_files
+
+    def get_signature_of_files_in_folder(self, filetype, filepath):
+        signatures = []
+        dirname, runname = os.path.split(os.path.abspath(__file__))
+        list_files = self.get_all_files_in_folder(filepath, filetype)
+        for i in range(len(list_files)):
+            filepath = list_files[i]
+            argu = WindowsCMD.execute_cmd(dirname + r"\sigcheck.exe " + filepath)
+            signatures.append(argu)
+        return signatures
 
 class WebElements:
 
@@ -123,6 +161,7 @@ class WindowsCMD:
             process = subprocess.Popen(cmd_text.split(), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             output, error = process.communicate()
             print(output)
+            return output
         finally:
             print("Cannot execute command!")
 
