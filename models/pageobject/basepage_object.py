@@ -13,7 +13,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.mojichat import MojichatLocators
 from utils_automation.setup import WaitAfterEach
-
+import re
 
 
 class BasePageObject(object):
@@ -59,6 +59,8 @@ class BasePageObject(object):
             if time_delta.total_seconds() >= 12:
                 break
 
-
-
-
+    def verify_text_is_visible_on_page(self, driver, component_name):
+        # assert self.settings_elem.find_components_by_name(driver, component_name) == 1
+        src = driver.page_source
+        text_found = re.search(component_name, src)
+        assert text_found is not None

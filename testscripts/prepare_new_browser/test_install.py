@@ -1,9 +1,9 @@
 
 import subprocess
 import time
-import os
 from models.pagelocators.settings import SettingsPageLocators
 from pytest_testrail.plugin import pytestrail
+from utils_automation.common import BrowserHandler
 
 from models.pageobject.coccocpage import CocCocPageObjects
 from models.pageobject.downloads import DownloadsPageObject
@@ -63,21 +63,28 @@ class TestInstall:
         except:
             print("Uninstall not success!!!")
 
-    def test_install_from_cmd(self, install_file, option = None):
+    def test_install_from_cmd(self, install_file):
         try:
             wait_for_stable
-            if option is None:
-                subprocess.Popen(install_file)
-            else:
-                subprocess.Popen(install_file + option)
+            subprocess.Popen(install_file)
             time.sleep(14)
             coccoc_install = Desktop(backend='uia').Cốc_Cốc_Installer
             coccoc_install.Button1.click()
-            time.sleep(60)
+            time.sleep(40)
             self.cleanup()
-        finally:
-            print("Finish installing!!!")\
+        except:
+            print("Install unsuccessfully!!!")
 
+    def test_silent_install_from_cmd(self, install_file, option = None):
+        try:
+            wait_for_stable
+            subprocess.Popen(install_file + ' /silent /forcedcmdline "' + option + '" /install')
+            time.sleep(40)
+            self.cleanup()
+        except:
+            print("Install unsuccessfully!!!")
+
+    @pytestrail.case('C44777')
     def test_install_latest_version_from_dev(self, browser, get_current_download_folder, cc_version, rm_user_data):
         # Please make sure to add hosts to C:\Windows\System32\drivers\etc\hosts
         # Restriction: Cannot add hosts by script because of administration permission
@@ -89,6 +96,7 @@ class TestInstall:
         self.test_install_from_cmd(download_file)
         self.version_page_object.verify_version_is_correct(cc_version)
 
+class TestOverrideInstall(TestInstall):
     @pytestrail.case('C44773')
     def test_check_install_new_version_above_old_version(self, browser, get_current_download_folder, cc_version,
                                                          rm_user_data = "Yes"):
@@ -116,15 +124,26 @@ class TestInstall:
         self.test_install_from_cmd(download_file)
         self.version_page_object.verify_version_is_correct(cc_version)
 
+class TestSilentInstall(TestInstall):
+    new_browser = BrowserHandler()
+
     @pytestrail.case('C44785')
-    def test_check_with_make_coccoc_default(self, browser, get_current_download_folder, cc_version):
+    def test_check_with_make_coccoc_default(self, browser, get_current_download_folder, cc_version, rm_user_data):
         download_file = self.coccoc_page_object.download_coccoc_from_dev(browser, get_current_download_folder)  # Download latest version
-        self.test_uninstall_from_cmd(browser)   # Uninstall old version
-        self.test_install_from_cmd(download_file, ' /silent /forcedcmdline "make-coccoc-default" /install')  # Install downloaded version
+        self.test_uninstall_from_cmd(browser, rm_user_data)   # Uninstall old version
+        self.test_silent_install_from_cmd(download_file, 'make-coccoc-default')  # Install downloaded version
         self.version_page_object.verify_version_is_correct(cc_version)
-        self.setting_page_object.verify_on_startup(browser, SettingsPageLocators.LABEL_OPEN_NEW_TAB_PAGE)
+        browser = self.new_browser.browser_init()
+        self.setting_page_object.verify_setting_on_startup(browser, SettingsPageLocators.OPEN_NEW_TAB_PAGE_TEXT)
 
-
+    @pytestrail.case('C44786')
+    def test_check_with_auto_launch_coccoc(self, browser, get_current_download_folder, cc_version, rm_user_data):
+        download_file = self.coccoc_page_object.download_coccoc_from_dev(browser, get_current_download_folder)  # Download latest version
+        self.test_uninstall_from_cmd(browser, rm_user_data)  # Uninstall old version
+        self.test_silent_install_from_cmd(download_file, 'auto-launch-coccoc')  # Install downloaded version
+        self.version_page_object.verify_version_is_correct(cc_version)
+        browser = self.new_browser.browser_init()
+        self.setting_page_object.verify_setting_default_browser(browser, SettingsPageLocators.DEFAULT_BROWSER_RUN_AUTO_ONSTARTUP_CHECKBOX)
 
 
 

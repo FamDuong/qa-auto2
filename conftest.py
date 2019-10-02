@@ -3,6 +3,7 @@ from datetime import datetime
 from appium import webdriver
 from selenium import webdriver as sele_webdriver
 import pytest
+import settings_master as settings
 from utils_automation.common import FilesHandle
 from utils_automation.setup import WaitAfterEach
 
@@ -159,9 +160,16 @@ def get_flash_path():
 
 @pytest.fixture
 def cc_version(request):
-    return request.config.getoption("--cc_version")
+    # return request.config.getoption("--cc_version")
+    try:
+        return request.config.getoption("--cc_version")
+    finally:
+        return settings.COCCOC_VERSION
 
 
 @pytest.fixture
 def rm_user_data(request):
-    return request.config.getoption("--rm_user_data")
+    try:
+        return request.config.getoption("--rm_user_data")
+    finally:
+        return None

@@ -1,10 +1,14 @@
+
 import os
 import csv
 import sys
 import time
 import subprocess
-
+import psutil
+from selenium import webdriver
+from os import path
 from selenium.webdriver import ActionChains
+
 
 
 def if_height_frame_so_width_frame(height_frame):
@@ -64,6 +68,45 @@ class FilesHandle:
         files = Files()
         files.delete_all_files_in_folder(folder)
 
+    def is_file_exist(self, filepath):
+        return str(os.path.isfile(filepath))
+
+    def is_dir_exist(self, directory):
+        return str(os.path.isdir(directory))
+
+    def is_file_exist_in_app_data(self, filename):
+        appdata = path.expandvars(r'%APPDATA%\CocCoc\\')
+        check = self.is_file_exist(appdata + filename)
+        if check == "True":
+            return True
+        else:
+            return False
+
+    def is_file_exist_in_local_app_data(self, filename):
+        appdata = path.expandvars(r'%LOCALAPPDATA%\CocCoc\\')
+        check = self.is_file_exist(appdata + filename)
+        if check == "True":
+            return True
+        else:
+            return False
+
+    def is_dir_exist_in_app_data(self, filename):
+        localappdata = path.expandvars(r'%LOCALAPPDATA%\CocCoc\\')
+        check = self.is_dir_exist(localappdata + filename)
+        if check == "True":
+            return True
+        else:
+            return False
+
+    def is_folder_exist_in_local_app_data(self, filename):
+        localappdata = path.expandvars(r'%LOCALAPPDATA%\CocCoc\\')
+        check = self.is_dir_exist(localappdata + filename)
+        if check == "True":
+            return True
+        else:
+            return False
+
+
 
 class WebElements:
 
@@ -82,3 +125,42 @@ class WindowsCMD:
             print(output)
         finally:
             print("Cannot execute command!")
+
+    def is_process_exists(process_name):
+        wait_for_stable()
+        for proc in psutil.process_iter():
+            try:
+                # Check if process name contains the given name string.
+                if process_name.lower() in proc.name().lower():
+                    return True
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                pass
+        return False;
+
+class BrowserHandler:
+    def browser_init(self):
+        # browser = webdriver.Chrome()
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument("--window-size=1920,1080")
+        # chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_argument("--proxy-server='direct://'")
+        chrome_options.add_argument("--proxy-bypass-list=*")
+        chrome_options.add_argument("--start-maximized")
+        chrome_options.add_argument('--disable-gpu')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--ignore-certificate-errors')
+        chrome_options.add_argument("--allow-insecure-localhost")
+        # chrome_options.add_argument("--disable-infobars")
+        # chrome_options.add_argument('--user-data-dir=' + os.environ['user-dir-path'])
+        chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
+        browser = webdriver.Chrome(options=chrome_options)
+        browser.create_options()
+        browser.maximize_window()
+        browser.set_page_load_timeout(40)
+        return browser
+
+    def browser_cleanup(self):
+        WindowsCMD.execute_cmd('taskkill /im CocCocUpdate.exe /f')
+        WindowsCMD.execute_cmd('taskkill /im CocCocCrashHandler.exe /f')
+        WindowsCMD.execute_cmd('taskkill /im browser.exe /f')
