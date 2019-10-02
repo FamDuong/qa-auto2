@@ -1,3 +1,4 @@
+from os import path
 from testscripts.prepare_new_browser.test_install import TestInstall
 from pytest_testrail.plugin import pytestrail
 from utils_automation.const import Urls
@@ -6,6 +7,7 @@ from models.pageelements.settings import SettingsPageLocators
 from utils_automation.common import BrowserHandler, WindowsCMD, wait_for_stable, FilesHandle
 
 class TestFirstRun(TestInstall):
+
     new_browser = BrowserHandler()
     setting_page_object = SettingsPageObject()
     file = FilesHandle()
@@ -33,17 +35,34 @@ class TestFirstRun(TestInstall):
 
     @pytestrail.case('C44833')
     def test_folders_after_the_installation(self, cc_version):
-        assert self.file.is_file_exist_in_app_data('uid') is True
-        assert self.file.is_file_exist_in_app_data('hid3') is True
-        assert self.file.is_folder_exist_in_local_app_data(r'Browser') is True
-        assert self.file.is_folder_exist_in_local_app_data(r'CrashReports') is True
-        assert self.file.is_folder_exist_in_local_app_data(r'Update') is True
-        assert self.file.is_folder_exist_in_local_app_data(r'Browser\Application') is True
-        assert self.file.is_folder_exist_in_local_app_data(r'Browser\User Data') is True
-        assert self.file.is_folder_exist_in_local_app_data(r'Browser\Application\\' + cc_version) is True
-        assert self.file.is_folder_exist_in_local_app_data(r'Browser\Application\Dictionaries') is True
-        assert self.file.is_folder_exist_in_local_app_data(r'Browser\Application\SetupMetrics') is True
-        assert self.file.is_file_exist_in_local_app_data(r'Browser\Application\browser.exe') is True
-        assert self.file.is_file_exist_in_local_app_data(r'Browser\Application\browser_proxy.exe') is True
-        assert self.file.is_file_exist_in_local_app_data(r'Browser\Application\VisualElementsManifest.xml') is True
+        appdata = path.expandvars(r'%APPDATA%\CocCoc\\')
+        localappdata = path.expandvars(r'%LOCALAPPDATA%\CocCoc\\')
+        assert self.file.is_file_exist_in_folder('uid', appdata) is True
+        assert self.file.is_file_exist_in_folder('hid3', appdata) is True
+        assert self.file.is_subfolder_exist_in_folder(r'Browser', localappdata) is True
+        assert self.file.is_subfolder_exist_in_folder(r'CrashReports', localappdata) is True
+        assert self.file.is_subfolder_exist_in_folder(r'Update', localappdata) is True
+        assert self.file.is_subfolder_exist_in_folder(r'Browser\Application', localappdata) is True
+        assert self.file.is_subfolder_exist_in_folder(r'Browser\User Data', localappdata) is True
+        assert self.file.is_subfolder_exist_in_folder(r'Browser\Application\\' + cc_version, localappdata) is True
+        assert self.file.is_subfolder_exist_in_folder(r'Browser\Application\Dictionaries', localappdata) is True
+        assert self.file.is_subfolder_exist_in_folder(r'Browser\Application\SetupMetrics', localappdata) is True
+        assert self.file.is_file_exist_in_folder(r'Browser\Application\browser.exe', localappdata) is True
+        assert self.file.is_file_exist_in_folder(r'Browser\Application\browser_proxy.exe', localappdata) is True
+        assert self.file.is_file_exist_in_folder(r'Browser\Application\VisualElementsManifest.xml', localappdata) is True
+
+    @pytestrail.case('C44834')
+    def test_where_data_file_of_dictionaries_extension_is_saved(self, cc_version):
+        assert self.file.is_subfolder_exist_in_folder(r'Browser\Application\\' + cc_version + r'\Dictionaries', path.expandvars(r'%LOCALAPPDATA%\CocCoc\\')) is True
+
+    @pytestrail.case('C44838')
+    def test_the_company_signature_in_file_exe_and_dll(self):
+        signatures = self.file.get_signature_of_files_in_folder('.exe', path.expandvars(r'%LOCALAPPDATA%\CocCoc\\'))
+        for i in range(len(signatures)):
+            print(signatures[i])
+            assert "COC COC COMPANY LIMITED" in str(signatures[i])
+        signatures = self.file.get_signature_of_files_in_folder('.dll', path.expandvars(r'%LOCALAPPDATA%\CocCoc\\'))
+        for i in range(len(signatures)):
+            print(signatures[i])
+            assert "COC COC COMPANY LIMITED" in str(signatures[i])
 
