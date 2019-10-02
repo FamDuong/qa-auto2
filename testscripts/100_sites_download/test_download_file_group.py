@@ -4,7 +4,7 @@ from models.pageobject.savior import SaviorPageObject
 from pytest_testrail.plugin import pytestrail
 from testscripts.sanitytest.savior.common_setup import pause_any_video_site, download_file_via_main_download_button, \
     assert_file_download_value, clear_data_download, delete_all_mp4_file_download
-from utils_automation.const import VideoUrls
+from utils_automation.const import VideoUrls, OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
 
 
@@ -56,5 +56,8 @@ class TestDownloadGroup:
     @pytest.mark.ten_popular_sites
     def test_download_dongphim(self, browser, get_current_download_folder):
         self.implement_test_site(browser, VideoUrls.DONG_PHIM_VIDEO_URL, get_current_download_folder)
+
+    def test_download_daily_motion(self, browser, get_current_download_folder):
+        self.implement_test_site(browser, OtherSiteUrls.DAILY_MOTION_VIDEO_URL, get_current_download_folder)
 
 

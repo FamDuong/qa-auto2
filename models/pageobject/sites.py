@@ -331,6 +331,54 @@ class AnySitePageObject(BasePageObject):
     def mouse_over_video_vlxx(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_vlxx(driver))
 
+    def click_video_sex_top1(self, driver):
+        self.any_site_element.find_video_item_wrapper_sex_top1(driver).click()
+
+    def mouse_over_video_sex_top1(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_sex_top1(driver))
+
+    def click_video_sex_hihi(self, driver):
+        self.any_site_element.find_video_item_wrapper_sex_hihi(driver).click()
+
+    def mouse_over_video_sex_hihi(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_sex_hihi(driver))
+
+    def click_video_jav_hd_pro(self, driver):
+        self.any_site_element.find_video_wrapper_jav_hd_pro(driver).click()
+
+    def mouse_over_video_jav_hd_pro(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_jav_hd_pro(driver))
+
+    def click_video_phim_sex_porn(self, driver):
+        self.any_site_element.find_video_wrapper_phim_sex_porn(driver).click()
+
+    def mouse_over_video_phim_sex_porn(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_phim_sex_porn_item(driver))
+
+    def click_video_jav_phim(self, driver):
+        self.any_site_element.find_video_phim_jav_phim_wrapper(driver).click()
+
+    def mouse_over_video_jav_phim(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_phim_jav_phim_item(driver))
+
+    def mouse_over_video_tin_moi(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_tin_moi(driver))
+
+    def mouse_over_video_info_net(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_info_net(driver))
+
+    def mouse_over_video_bong_da_24h(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_bong_da_24h(driver))
+
+    def click_video_item_keo_nha_cai(self, driver):
+        self.any_site_element.find_video_item_keo_nha_cai(driver).click()
+
+    def mouse_over_video_item_keo_nha_cai(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_keo_nha_cai(driver))
+
+    def mouse_over_video_item_daily_motion(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_daily_motion(driver))
+
 
 
 

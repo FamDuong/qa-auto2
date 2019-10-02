@@ -118,6 +118,27 @@ class AnySite(object):
     VLXX_VIDEO_ITEM = (By.XPATH, '//video')
     VLXX_VIDEO_ITEM_WRAPPER = (By.ID, 'vlxx')
 
+    SEX_TOP1_VIDEO_ITEM = (By.XPATH, '//video')
+    SEX_TOP1_VIDEO_WRAPPER = (By.ID, 'player')
+
+    SEX_HIHI_VIDEO_WRAPPER = (By.ID, 'vlxx')
+    SEX_HIHI_VIDEO_ITEM = (By.XPATH, '//video')
+
+    JAV_HD_VIDEO_WRAPPER = (By.ID, 'javhd')
+    JAV_HD_VIDEO_ITEM = (By.XPATH, '//video')
+
+    PHIM_SEX_PORN_VIDEO_ITEM_WRAPPER = (By.XPATH, '//div[@class="margin-10"]')
+    PHIM_SEX_PORN_VIDEO_ITEM = (By.XPATH, '//iframe[@allowfullscreen="true"]')
+
+    JAV_PHIM_VIDEO_ITEM_WRAPPER = (By.ID, 'player')
+    JAV_PHIM_VIDEO_ITEM = (By.XPATH, '//video')
+
+    TIN_MOI_VIDEO_ITEM = (By.ID, 'rmpPlayer')
+    INFO_NET_VIDEO_ITEM = (By.XPATH, '//video[@id]')
+    BONGDA_24H_VIDEO_ITEM = (By.XPATH, '//video[@id]')
+    KEO_NHA_CAI_VIDEO_ITEM = (By.ID, 'player')
+    DAILY_MOTION_VIDEO_ITEM = (By.ID, 'player-body')
+
 
 
 

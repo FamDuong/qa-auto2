@@ -66,18 +66,14 @@ class OtherSiteUrls:
     TUOI_TRE_VIDEO_URL = 'https://tuoitre.vn/video.htm'
     TV_ZING_VIDEO_URL = 'https://tv.zing.vn/video/Goblin-Yeu-Tinh-Tap-1/IWZEIC7F.html'
     MOT_PHIM_VIDEO_URL = 'https://motphim.net/xem-phim/cuoc-doi-thu-2-tap-4-7099_90578.html'
-
     VTV_VN_TRUYEN_HINH_URL = 'https://vtv.vn/video/vut-xac-lon-benh-nguy-co-lay-lan-dich-ta-lon-chau-phi-theo-nguon-nuoc-390682.htm'
     TV_HAY_VIDEO_URL = 'http://tvhay.org/xem-phim-tram-yeu-360727'
     NGOI_SAO_VN_URL = 'https://ngoisao.vn/video/lieu-linh-bang-qua-dong-nuoc-lu-nguoi-dan-ong-suyt-phai-tra-gia-bang-ca-tinh-mang-273892.htm'
-
     VTC_VN_VIDEO_URL = 'https://vtc.vn/truyen-hinh-27.html'
     KENH14_VN_VIDEO_URL = 'http://video.kenh14.vn/dang-sau-moi-buc-anh-dep-la-mot-anh-chong-the-nay-day-245984.chn'
-
     CAFE_VN_VIDEO_URL = 'http://cafef.vn/videos/17236-btv-ngoc-trinh-len-tieng-truoc-tin-don-so-huu-loat-xe-sang-ca-chuc-ty-dong.chn'
     TIN_TUC_ONLINE_VIDEO_URL = 'https://tintuconline.com.vn/video/hoa-hong-tren-nguc-trai-tap-12-thai-doi-tieu-tam-phai-co-trach-nhiem-voi-minh-n-408464.html'
     GIAO_DUC_THOI_DAI_VIDEO_URL = 'https://giaoducthoidai.vn/chuyen-la/tai-xe-ngu-gat-khi-lai-xe-hanh-khach-van-than-nhien-nhu-khong-co-chuyen-gi-4032898-d.html'
-
     VN_EXPRESS_VIDEO_URL = 'https://video.vnexpress.net/tin-tuc/nhip-song/cay-si-co-thu-moc-100-than-3980758.html'
     THANH_NIEN_VIDEO_URL = 'https://video.thanhnien.vn/thoi-su/trom-ga-noi-hang-loat-bi-phat-tu-thi-bo-tron-bi-bat-lai-khi-dang-phuc-vu-trong-quan-karaoke-140814.html'
     DAN_TRI_VIDEO_URL = 'https://dantri.com.vn/video/tan-mat-xem-quy-trinh-lam-com-o-lang-nghe-noi-tieng-nhat-ha-noi-106661.htm'
@@ -88,6 +84,16 @@ class OtherSiteUrls:
     XNXX_VIDEO_URL = 'https://www.xnxx.com/video-rjo7d8b/step_son_caught_masturbating_shoots_load_into_stepmom_s_panties'
     FR_PORN_HUB_VIDEO_URL = 'https://fr.pornhub.com/view_video.php?viewkey=ph5bd4e9b96091f'
     VLXX_VIDEO_URL = 'http://vlxx.tv/video/bo-oi-con-khong-ngu-duoc/1410/'
+    SEX_TOP1_VIDEO_URL = 'http://sextop1.net/tinh-mot-dem-voi-nu-dong-nghiep/'
+    SEX_HIHI_VIDEO_URL = 'http://sexhihi.net/nu-sinh-thuc-tap-buoi-dau-lam-da-bi-sep-dit.html'
+    JAV_HD_PRO_VIDEO_URL = 'http://javhd.pro/phim-sex-au-my---anh-chu-nha-kho-tinh-lanna-carter-1536.html'
+    PHIM_SEX_PORN_VIDEO_URL = 'http://phimsexporn.com/goi-tinh-nhu-em-thi-sao-phai-tu-choi.html'
+    JAV_PHIM_VIDEO_URL = 'http://javphim.net/movie/cha-duong-du-hai-co-con-gai-xinh-dep/'
+    TIN_MOI_VIDEO_URL = 'https://www.tinmoi.vn/video/video-giai-tri/mo-hai-cao-thai-ha-huong-dan-cach-an-che-ma-khong-bi-troi-son-moi-011530843.html'
+    INFO_NET_VIDEO_URL = 'https://infonet.vn/video-giay-phut-xe-bon-lao-vao-nha-dan-no-tung-va-lam-chet-6-nguoi-post282661.info'
+    BONG_DA_24H_VIDEO_URL = 'https://bongda24h.vn/doi-tuyen-viet-nam/video-biet-doi-chan-thuong-tap-luyen-duoi-su-tro-giup-cua-bac-si-choi-292-231874.html'
+    KEO_NHA_CAI_VIDEO_URL = 'http://keonhacai.net/video-ac-milan-vs-fiorentina-5350.html'
+    DAILY_MOTION_VIDEO_URL = 'https://www.dailymotion.com/video/x7lxiix'
 
 
 class ExtensionIds:

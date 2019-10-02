@@ -109,6 +109,8 @@ class DownloadsElement(BasePageElement):
             wait = WebDriverWait(driver, 480)
         elif file_type == 'clip':
             wait = WebDriverWait(driver, 120)
+        elif file_type == 'very slow':
+            wait = WebDriverWait(driver, 660)
         return wait.until(
             ec.presence_of_element_located(DownloadsPageLocators.PLAY_BTN))
 

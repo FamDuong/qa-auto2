@@ -16,7 +16,7 @@ class TestFacebook:
 
     @pytestrail.case('C96691')
     @pytest.mark.ten_popular_sites
-    def test_check_default_state_download_button(self, browser, get_current_download_folder):
+    def test_download_file_facebook(self, browser, get_current_download_folder):
         browser.get(OtherSiteUrls.FACEBOOK_VIDEO_URL)
         any_site_page_object.mouse_over_video_element_facebook(browser)
         savior_page_object.assert_value_preferred_quality(browser, 'High')
@@ -34,7 +34,6 @@ class TestMessenger:
         any_site_page_object.mouse_over_video_element_messenger_chat(driver)
 
     @pytestrail.case('C96722')
-    @pytest.mark.ten_popular_sites
     def test_download_file_messenger(self, browser, get_current_download_folder):
         self.setup_savior_option_appear(browser)
         savior_page_object.assert_value_preferred_quality(browser, 'High')

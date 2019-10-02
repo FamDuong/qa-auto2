@@ -28,7 +28,6 @@ def pytest_runtest_makereport(item):
 
     if report.when == 'call':
         hasattr(report, 'wasxfail')
-        # file_name = report.nodeid.replace("::", "_") + ".png"
         timestamp = datetime.now().strftime('%H-%M-%S.%f')[:-3]
         filename = timestamp + ".png"
         if driver is not None and ('winapp' not in item.name):
@@ -75,7 +74,6 @@ def browser():
     if driver is None:
         chrome_options = sele_webdriver.ChromeOptions()
         chrome_options.add_argument("--window-size=1920,1080")
-        # chrome_options.add_argument("--disable-extensions")
         chrome_options.add_argument("--proxy-server='direct://'")
         chrome_options.add_argument("--proxy-bypass-list=*")
         chrome_options.add_argument("--start-maximized")
@@ -84,20 +82,9 @@ def browser():
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--ignore-certificate-errors')
         chrome_options.add_argument("--allow-insecure-localhost")
-        # chrome_options.add_argument("--disable-infobars")
-        # chrome_options.add_argument('--user-data-dir=' + os.environ['user-dir-path'])
         chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
         chrome_options.add_argument('--user-data-dir=' + user_data_path)
-        # chrome_options.add_experimental_option('useAutomationExtension', True)
-        # prefs = {
-        #     "profile.default_content_setting_values.plugins": 1,
-        #     "profile.content_settings.plugin_whitelist.adobe-flash-player": 1,
-        #     "profile.content_settings.exceptions.plugins.*,*.per_resource.adobe-flash-player": 1,
-        #     "PluginsAllowedForUrls": "https://kienthuc.net.vn"
-        # }
-        # chrome_options.add_experimental_option("prefs", prefs)
-        # chrome_options.add_argument('--load-extension=' + skip_ad_extension_path + ',' + ublock_ad_extension_path)
-        # print(skip_ad_extension_path)
+        # chrome_options.add_argument('--enable-features=CocCocNewDownloads')
         driver = sele_webdriver.Chrome(options=chrome_options)
         driver.create_options()
         driver.maximize_window()
@@ -130,23 +117,18 @@ def set_up_before_run_user_browser():
     from models.pageobject.settings import SettingsPageObject
     setting_page_object = SettingsPageObject()
     global download_folder
-    # global skip_ad_extension_path
     global block_origin_extension_path
-    # global ublock_ad_extension_path
     try:
         local_driver = sele_webdriver.Chrome()
         local_driver.maximize_window()
         local_driver.get(Urls.COCCOC_VERSION_URL)
         path_full = version_page_object.get_profile_path(local_driver)
-        flash_path = version_page_object.get_flash_path(local_driver)
         local_driver.get(Urls.COCCOC_SETTINGS_URL)
         WaitAfterEach.sleep_timer_after_each_step()
         download_folder = setting_page_object.get_download_folder(local_driver)
         split_after = path_full.split('\\Local')
         user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
         FilesHandle.clear_downloaded_folder(download_folder)
-        # skip_ad_extension_path = user_data_path + u'\\Default\\Extensions\\lgblnfidahcdcjddiepkckcfdhpknnjh\\1.511_0'
-        # ublock_ad_extension_path = user_data_path + u'\\Default\\Extensions\\adkfgdipgpojicddmeecncgapbomhjjl\\1.4.0_0'
     finally:
         local_driver.quit()
 
@@ -169,13 +151,16 @@ def pytest_addoption(parser):
 def get_current_download_folder():
     return download_folder
 
+
 @pytest.fixture(scope='session')
 def get_flash_path():
     return flash_path
 
+
 @pytest.fixture
 def cc_version(request):
     return request.config.getoption("--cc_version")
+
 
 @pytest.fixture
 def rm_user_data(request):
