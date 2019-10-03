@@ -1,4 +1,8 @@
 COCCOC_VERSION = '76.0.3809.144'
+OMAHA_VERSION = '2.5.15.106'
+EXTENSION_VERSION_DICTIONARY = '1.3.6'
+EXTENSION_VERSION_SAVIOR = '0.27.3'
+EXTENSION_VERSION_RUNGRINH = '1.5.0.8'
 USER_DATA_DIR = r'C:\\Users\\bichngoc\\AppData\\Local\\CocCoc\\Browser\\User Data'
 COCCOC_PATH = r'C:\Users\bichngoc\AppData\Local\CocCoc\Browser\Application\browser.exe'
 CHROME_PATH = r'C:\Users\bichngoc\AppData\Local\Google\Chrome\Application\chrome.exe'

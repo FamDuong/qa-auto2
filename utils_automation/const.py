@@ -9,7 +9,10 @@ class Urls:
     COCCOC_VERSION_URL = 'coccoc://version/'
     COCCOC_EXTENSIONS = 'coccoc://extensions'
     COCCOC_COMPONENTS = 'coccoc://components'
+    COCCOC_TERMS = 'coccoc://terms'
+    COCCOC_ABOUT = 'coccoc://settings/help'
     COCCOC_DEV_URL = 'https://dev.coccoc.com'
+    COCCOC_URL = 'https://coccoc.com'
     YOUTUBE_URL = 'https://www.youtube.com/'
 
     GOOGLE_URL = 'https://www.google.com/'

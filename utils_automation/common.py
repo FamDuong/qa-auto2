@@ -6,6 +6,7 @@ import subprocess
 import psutil
 import win32api
 import re
+from os import path
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 
@@ -24,10 +25,13 @@ def if_height_frame_so_width_frame(height_frame):
 def wait_for_stable(wait_time = 3):
     time.sleep(wait_time)
 
-def remove_spaces_in_string(string):
-    output = re.sub(' +', ' ', str(string))
-    print(output)
-    return output
+def remove_special_characters(string):
+    rm_r = re.sub(r'\\r', ' ', str(string))
+    rm_n = re.sub(r'\\n', ' ', str(rm_r))
+    rm_t = re.sub(r'\\t', ' ', str(rm_n))
+    rm_s = re.sub(' +', ' ', str(rm_t))
+    print(rm_s)
+    return rm_s
 
 class CSVHandle:
     def get_from_csv(self, filename):
@@ -56,6 +60,10 @@ class CSVHandle:
 
 
 class FilesHandle:
+    def __init__(self):
+        self.appdata = path.expandvars(r'%APPDATA%\CocCoc\\')
+        self.localappdata = path.expandvars(r'%LOCALAPPDATA%\CocCoc\\')
+
     def get_absolute_filename(self, filename):
         dirname, runname = os.path.split(os.path.abspath(__file__))
         filename = dirname + filename
@@ -138,16 +146,29 @@ class FilesHandle:
                     list_files.append(os.path.join(r, file))
         return list_files
 
-    def get_signature_of_files_in_folder(self, filetype, filepath):
-        signatures = []
+    def get_signature_of_file(self, filepath):
         dirname, runname = os.path.split(os.path.abspath(__file__))
+        argu = WindowsCMD.execute_cmd(dirname + r"\sigcheck.exe " + filepath)
+        signature = remove_special_characters(argu)
+        print(signature)
+        return signature
+
+    def get_signature_of_files_in_folder(self, filetype, filepath):
+        signature_list = []
+        # dirname, runname = os.path.split(os.path.abspath(__file__))
         list_files = self.get_all_files_in_folder(filepath, filetype)
         for i in range(len(list_files)):
             filepath = list_files[i]
-            argu = WindowsCMD.execute_cmd(dirname + r"\sigcheck.exe " + filepath)
-            string = remove_spaces_in_string(argu)
-            signatures.append(string)
-        return signatures
+            # argu = WindowsCMD.execute_cmd(dirname + r"\sigcheck.exe " + filepath)
+            # string = remove_special_characters(argu)
+            signature = self.get_signature_of_file(filepath)
+            signature_list.append(signature)
+        return signature_list
+
+    def verify_product_version(self, filename, expect_version):
+        signature = self.get_signature_of_file(filename)
+        pro_version = 'Prod version: ' + expect_version
+        assert pro_version in signature
 
 class WebElements:
 
@@ -183,7 +204,7 @@ class WindowsHandler:
 
     def get_netfirewall_rule(self, display_name):
         rule = WindowsCMD.execute_cmd("powershell get-netfirewallrule -DisplayName '" + display_name + "'")
-        string = remove_spaces_in_string(rule)
+        string = remove_special_characters(rule)
         return string
 
     def verify_netfirewall_rule(self, display_name, direction, action):
@@ -193,7 +214,7 @@ class WindowsHandler:
 
 
 class BrowserHandler:
-    def browser_init(self):
+    def browser_init(self, user_data_path):
         # browser = webdriver.Chrome()
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--window-size=1920,1080")
@@ -207,7 +228,7 @@ class BrowserHandler:
         chrome_options.add_argument('--ignore-certificate-errors')
         chrome_options.add_argument("--allow-insecure-localhost")
         # chrome_options.add_argument("--disable-infobars")
-        # chrome_options.add_argument('--user-data-dir=' + os.environ['user-dir-path'])
+        chrome_options.add_argument('--user-data-dir=' + user_data_path)
         chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
         browser = webdriver.Chrome(options=chrome_options)
         browser.create_options()
