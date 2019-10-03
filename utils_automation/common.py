@@ -5,12 +5,9 @@ import time
 import subprocess
 import psutil
 import win32api
-import glob
+import re
 from selenium import webdriver
-from os import path
 from selenium.webdriver import ActionChains
-
-
 
 def if_height_frame_so_width_frame(height_frame):
     if int(height_frame) == 4320:
@@ -26,6 +23,11 @@ def if_height_frame_so_width_frame(height_frame):
 
 def wait_for_stable(wait_time = 3):
     time.sleep(wait_time)
+
+def remove_spaces_in_string(string):
+    output = re.sub(' +', ' ', str(string))
+    print(output)
+    return output
 
 class CSVHandle:
     def get_from_csv(self, filename):
@@ -143,7 +145,8 @@ class FilesHandle:
         for i in range(len(list_files)):
             filepath = list_files[i]
             argu = WindowsCMD.execute_cmd(dirname + r"\sigcheck.exe " + filepath)
-            signatures.append(argu)
+            string = remove_spaces_in_string(argu)
+            signatures.append(string)
         return signatures
 
 class WebElements:
@@ -162,7 +165,7 @@ class WindowsCMD:
             output, error = process.communicate()
             print(output)
             return output
-        finally:
+        except:
             print("Cannot execute command!")
 
     def is_process_exists(process_name):
@@ -175,6 +178,19 @@ class WindowsCMD:
             except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                 pass
         return False;
+
+class WindowsHandler:
+
+    def get_netfirewall_rule(self, display_name):
+        rule = WindowsCMD.execute_cmd("powershell get-netfirewallrule -DisplayName '" + display_name + "'")
+        string = remove_spaces_in_string(rule)
+        return string
+
+    def verify_netfirewall_rule(self, display_name, direction, action):
+        rule = self.get_netfirewall_rule(display_name)
+        assert "Direction : " + direction in rule
+        assert "Action : " + action in rule
+
 
 class BrowserHandler:
     def browser_init(self):

@@ -106,7 +106,7 @@ class TestOverrideInstall(TestInstall):
         # Uninstall old version
         self.test_uninstall_from_cmd(browser, rm_user_data)
         # Install old version version
-        self.test_install_from_cmd("C:\CoccocInstaller\coccoc-en.exe")
+        self.test_install_from_cmd(r'C:\CoccocInstaller\coccoc-en.exe')
         self.version_page_object.verify_version_is_correct("75.0.3770.152")
         # Install latest version version
         self.test_install_from_cmd(download_file)
