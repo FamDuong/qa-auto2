@@ -4,12 +4,13 @@ from pytest_testrail.plugin import pytestrail
 from utils_automation.const import Urls
 from models.pageobject.settings import SettingsPageObject
 from models.pageelements.settings import SettingsPageLocators
-from utils_automation.common import BrowserHandler, WindowsCMD, wait_for_stable, FilesHandle
+from utils_automation.common import BrowserHandler, WindowsCMD, wait_for_stable, FilesHandle, WindowsHandler
 
 class TestFirstRun(TestInstall):
 
     new_browser = BrowserHandler()
     setting_page_object = SettingsPageObject()
+    windows = WindowsHandler()
     file = FilesHandle()
 
     @pytestrail.case('C44830')
@@ -66,3 +67,16 @@ class TestFirstRun(TestInstall):
             print(signatures[i])
             assert "COC COC COMPANY LIMITED" in str(signatures[i])
 
+    @pytestrail.case('C44840')
+    def test__rule_in_firewall_of_windows_if_user_selects_allow_access_btn(self):
+        # Note: Default when setting, user always select "Allow access" button
+        # Inbound
+        self.windows.verify_netfirewall_rule('Cốc Cốc (mDNS-In)', 'Inbound', 'Allow')
+        self.windows.verify_netfirewall_rule('Cốc Cốc (TCP-In)', 'Inbound', 'Allow')
+        self.windows.verify_netfirewall_rule('Cốc Cốc (UDP-In)', 'Inbound', 'Allow')
+        self.windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (TCP-In)', 'Inbound', 'Allow')
+        self.windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (UDP-In)', 'Inbound', 'Allow')
+        self.windows.verify_netfirewall_rule('Cốc Cốc (TCP-Out)', 'Outbound', 'Allow')
+        self.windows.verify_netfirewall_rule('Cốc Cốc (UDP-Out)', 'Outbound', 'Allow')
+        self.windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (TCP-Out)', 'Outbound', 'Allow')
+        self.windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (UDP-Out)', 'Outbound', 'Allow')
