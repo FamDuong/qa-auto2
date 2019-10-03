@@ -74,5 +74,17 @@ class TestTwitter:
                                                                                              get_current_download_folder))
 
 
+class TestWeibo:
+
+    @pytestrail.case('C98802')
+    def test_download_file_weibo(self, browser, get_current_download_folder):
+        browser.get(OtherSiteUrls.WEIBO_VIDEO_URL)
+        any_site_page_object.mouse_over_video_element_weibo(browser)
+        savior_page_object.assert_value_preferred_quality(browser, 'High')
+        verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
+                                          clear_data_download_in_browser_and_download_folder(browser,
+                                                                                             get_current_download_folder))
+
+
 
 

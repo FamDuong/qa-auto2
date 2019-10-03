@@ -145,15 +145,8 @@ class TestTienPhong:
         browser.get(OtherSiteUrls.TIEN_PHONG_VIDEO_URL)
         any_site_page_object.click_video_item_tien_phong(browser)
         WaitAfterEach.sleep_timer_after_each_step_longest_load()
-        start_time = datetime.now()
         browser.switch_to.default_content()
-        while savior_page_object.verify_savior_popup_appear(browser) is None:
-            any_site_page_object.mouse_over_video_item_tien_phong(browser)
-            browser.minimize_window()
-            browser.maximize_window()
-            time_delta = datetime.now() - start_time
-            if time_delta.total_seconds() >= 40:
-                break
+        any_site_page_object.mouse_over_video_item_tien_phong(browser)
 
     @pytestrail.case('C98743')
     def test_download_file_tienphong(self, browser, get_current_download_folder):
@@ -475,13 +468,19 @@ class TestKeoNhaCai:
             revert_high_quality_default_option(browser)
 
 
-class TestTvPloVn:
+class TestVoV:
 
-    @pytestrail.case('C98795')
-    def test_download_file_tv_plo_vn(self, browser, get_current_download_folder):
-        pass
-
-
+    @pytestrail.case('C98798')
+    def test_download_file_vov(self, browser, get_current_download_folder):
+        browser.get(OtherSiteUrls.VOV_VIDEO_URL)
+        # any_site_page_object.click_video_item_vov_vn(browser)
+        # WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        any_site_page_object.click_video_item_vov_vn(browser)
+        any_site_page_object.mouse_over_video_item_vov_vn_maximize_minimize(browser)
+        verify_video_step_then_clear_data(
+            implement_download_file(browser, get_current_download_folder, file_type='slow'),
+            clear_data_download_in_browser_and_download_folder(browser,
+                                                               get_current_download_folder))
 
 
 

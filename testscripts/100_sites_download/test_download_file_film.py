@@ -52,9 +52,7 @@ class TestVuViPhim:
         browser.get(OtherSiteUrls.VU_VI_PHIM_VIDEO_URL)
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         any_site_page_object.double_click_video_item_vu_vi_phim(browser)
-        browser.minimize_window()
-        browser.maximize_window()
-        any_site_page_object.mouse_over_video_item_vu_vi_phim(browser)
+        any_site_page_object.mouse_over_video_item_vu_vi_phim_maximize_minimize(browser)
 
     @pytestrail.case('C98751')
     def test_download_file_vuviphim(self, browser, get_current_download_folder):
@@ -100,8 +98,29 @@ class TestAnimeSub:
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
+class TestAnimeTVN:
+
+    @pytestrail.case('C98803')
+    def test_download_file_video_anime_tvn(self, browser, get_current_download_folder):
+        browser.get(OtherSiteUrls.ANIME_TVN_VIDEO_URL)
+        any_site_page_object.mouse_over_tvn_video_element(browser)
+        savior_page_object.assert_value_preferred_quality(browser, 'High')
+        verify_video_step_then_clear_data(
+            implement_download_file(browser, get_current_download_folder),
+            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
+class TestPhimBatHu:
+
+    @pytestrail.case('C98804')
+    def test_download_file_video_phim_bat_hu(self, browser, get_current_download_folder):
+        browser.get(OtherSiteUrls.PHIM_BAT_HU_VIDEO_URL)
+        any_site_page_object.click_video_phim_bat_hu_video_element(browser)
+        any_site_page_object.mouse_over_phim_bat_hu_video_element(browser)
+        savior_page_object.assert_value_preferred_quality(browser, 'High')
+        verify_video_step_then_clear_data(
+            implement_download_file(browser, get_current_download_folder),
+            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
 

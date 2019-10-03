@@ -99,6 +99,13 @@ class OtherSiteUrls:
     BONG_DA_24H_VIDEO_URL = 'https://bongda24h.vn/doi-tuyen-viet-nam/video-biet-doi-chan-thuong-tap-luyen-duoi-su-tro-giup-cua-bac-si-choi-292-231874.html'
     KEO_NHA_CAI_VIDEO_URL = 'http://keonhacai.net/video-ac-milan-vs-fiorentina-5350.html'
     DAILY_MOTION_VIDEO_URL = 'https://www.dailymotion.com/video/x7lxiix'
+    VOV_VIDEO_URL = 'https://vov.vn/the-thao/bong-da/hlv-park-hang-seo-da-tim-thay-phan-van-duc-moi-cho-u22-viet-nam-960993.vov'
+    SEX_NGON_VIDEO_URL = 'https://sexngon.net/phim-sex-my-hay-lop-hoc-tinh-duc-danh-cho-cac-quy-co/'
+    WEIBO_VIDEO_URL = 'https://www.weibo.com/1640601392/I9rIXuIRC?from=page_1002061640601392_profile&wvr=6&mod=weibotime&type=comment'
+    ANIME_TVN_VIDEO_URL = 'https://animetvn.tv/xem-phim/f160007-zx-code-reunion-tap-preview.html'
+    PHIM_BAT_HU_VIDEO_URL = 'https://phimbathu.org/phim-tuyet-menh-huong-ung-tap-1-14302.205754.html'
+    PHIM_SEX_SUB_VIDEO_URL = 'https://phimsexsub.com/quay-clip-vo-lam-ky-niem-hana-aoyama/'
+    VLIVE_TV_VIDEO_URL = 'https://www.vlive.tv/video/150718'
 
 
 class ExtensionIds:

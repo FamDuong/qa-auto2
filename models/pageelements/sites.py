@@ -496,6 +496,58 @@ class AnySiteElements(BasePageElement):
     def find_video_item_daily_motion(driver):
         return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DAILY_MOTION_VIDEO_ITEM))
 
+    @staticmethod
+    def find_video_vov_vn(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VOV_VN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_vov_vn_wrapper(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VOV_VN_VIDEO_ITEM_WRAPPER))
+
+    @staticmethod
+    def find_video_vov_vn_iframe(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VOV_VN_IFRAME))
+
+    @staticmethod
+    def find_video_sex_ngon(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.SEX_NGON_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_weibo(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.WEIBO_VIDEO_ITEM))
+
+    @staticmethod
+    def find_server_anime_tvn(driver, server_number):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.anime_tvn_server(server_number)))
+
+    @staticmethod
+    def find_iframe_video_item_anime_tvn(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.ANIME_TVN_IFRAME_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_item_anime_tvn(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.ANIME_TVN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_phim_bat_hu(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIM_BAT_HU_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_phim_bat_hu_play(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIM_BAT_HU_PLAY_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_phim_sex_sub_wrapper(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIM_SEX_SUB_VIDEO_ITEM_WRAPPER))
+
+    @staticmethod
+    def find_video_phim_sex_sub_element(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIM_SEX_SUB_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_vlive_tv_item(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VLIVE_TV_VIDEO_ITEM))
+
 
 
 
