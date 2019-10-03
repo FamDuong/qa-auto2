@@ -6,12 +6,8 @@ import subprocess
 import psutil
 import win32api
 import re
-import glob
 from selenium import webdriver
-from os import path
 from selenium.webdriver import ActionChains
-
-
 
 def if_height_frame_so_width_frame(height_frame):
     if int(height_frame) == 4320:
@@ -149,7 +145,8 @@ class FilesHandle:
         for i in range(len(list_files)):
             filepath = list_files[i]
             argu = WindowsCMD.execute_cmd(dirname + r"\sigcheck.exe " + filepath)
-            signatures.append(argu)
+            string = remove_spaces_in_string(argu)
+            signatures.append(string)
         return signatures
 
 class WebElements:

@@ -31,8 +31,8 @@ class TestFirstRun(TestInstall):
         browser.get(Urls.COCCOC_EXTENSIONS)
         self.setting_page_object.verify_extension_version(browser, SettingsPageLocators.EXTENSION_DICTIONARY_ID, '1.3.6')
         self.setting_page_object.verify_extension_version(browser, SettingsPageLocators.EXTENSION_SAVIOR_ID, '0.27.3')
-        self.setting_page_object.verify_extension_version(browser, SettingsPageLocators.EXTENSION_RUNGRINH_ID, '1.5.0.7', True)
-        self.setting_page_object.verify_extension_version(browser, SettingsPageLocators.EXTENSION_MOJICHAT_ID, "0.2.3")
+        self.setting_page_object.verify_extension_version(browser, SettingsPageLocators.EXTENSION_RUNGRINH_ID, '1.5.0.8', True)
+        # self.setting_page_object.verify_extension_version(browser, SettingsPageLocators.EXTENSION_MOJICHAT_ID, "0.2.3")
 
     @pytestrail.case('C44833')
     def test_folders_after_the_installation(self, cc_version):
