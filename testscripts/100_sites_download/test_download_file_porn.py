@@ -130,6 +130,33 @@ class TestJavaPhim:
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
+class TestSexNgon:
+
+    @pytestrail.case('C98799')
+    def test_download_file_sex_ngon(self, browser, get_current_download_folder):
+        browser.get(OtherSiteUrls.SEX_NGON_VIDEO_URL)
+        any_site_page_object.click_video_element_sex_ngon(browser)
+        any_site_page_object.mouse_over_video_element_sex_ngon(browser)
+        savior_page_object.assert_value_preferred_quality(browser, 'High')
+        verify_video_step_then_clear_data(
+            implement_download_file(browser, get_current_download_folder, file_type='slow'),
+            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
+
+
+class TestPhimSexSub:
+
+    @pytestrail.case('C98806')
+    def test_download_file_phim_sex_sub(self, browser, get_current_download_folder):
+        browser.get(OtherSiteUrls.PHIM_SEX_SUB_VIDEO_URL)
+        any_site_page_object.click_video_phim_sex_sub_video_element(browser)
+        any_site_page_object.mouse_over_video_element_phim_sex_sub(browser)
+        savior_page_object.assert_value_preferred_quality(browser, 'High')
+        verify_video_step_then_clear_data(
+            implement_download_file(browser, get_current_download_folder, file_type='slow'),
+            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
+
+
+
 
 
 
