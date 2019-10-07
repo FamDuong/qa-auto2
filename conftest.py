@@ -119,11 +119,13 @@ def set_up_before_run_user_browser():
     setting_page_object = SettingsPageObject()
     global download_folder
     global block_origin_extension_path
+    global flash_path
     try:
         local_driver = sele_webdriver.Chrome()
         local_driver.maximize_window()
         local_driver.get(Urls.COCCOC_VERSION_URL)
         path_full = version_page_object.get_profile_path(local_driver)
+        flash_path = version_page_object.get_flash_path(local_driver)
         local_driver.get(Urls.COCCOC_SETTINGS_URL)
         WaitAfterEach.sleep_timer_after_each_step()
         download_folder = setting_page_object.get_download_folder(local_driver)
