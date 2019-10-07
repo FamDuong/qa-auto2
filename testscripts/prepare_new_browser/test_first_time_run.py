@@ -1,4 +1,3 @@
-from os import path
 from testscripts.prepare_new_browser.test_install import TestInstall
 from pytest_testrail.plugin import pytestrail
 from utils_automation.const import Urls
@@ -27,7 +26,8 @@ class TestFirstRun(TestInstall):
         assert WindowsCMD.is_process_exists("CocCocCrashHandler") is True
 
     @pytestrail.case('C44832')
-    def test_extensions_version_after_the_installation(self, browser):
+    def test_extensions_version_after_the_installation(self, get_user_data_path):
+        browser = self.new_browser.browser_init(get_user_data_path)
         browser.get(Urls.COCCOC_EXTENSIONS)
         self.setting_page_object.verify_extension_version(browser, SettingsPageLocators.EXTENSION_DICTIONARY_ID, '1.3.6')
         self.setting_page_object.verify_extension_version(browser, SettingsPageLocators.EXTENSION_SAVIOR_ID, '0.27.3')
@@ -36,33 +36,36 @@ class TestFirstRun(TestInstall):
 
     @pytestrail.case('C44833')
     def test_folders_after_the_installation(self, cc_version):
-        appdata = path.expandvars(r'%APPDATA%\CocCoc\\')
-        localappdata = path.expandvars(r'%LOCALAPPDATA%\CocCoc\\')
-        assert self.file.is_file_exist_in_folder('uid', appdata) is True
-        assert self.file.is_file_exist_in_folder('hid3', appdata) is True
-        assert self.file.is_subfolder_exist_in_folder(r'Browser', localappdata) is True
-        assert self.file.is_subfolder_exist_in_folder(r'CrashReports', localappdata) is True
-        assert self.file.is_subfolder_exist_in_folder(r'Update', localappdata) is True
-        assert self.file.is_subfolder_exist_in_folder(r'Browser\Application', localappdata) is True
-        assert self.file.is_subfolder_exist_in_folder(r'Browser\User Data', localappdata) is True
-        assert self.file.is_subfolder_exist_in_folder(r'Browser\Application\\' + cc_version, localappdata) is True
-        assert self.file.is_subfolder_exist_in_folder(r'Browser\Application\Dictionaries', localappdata) is True
-        assert self.file.is_subfolder_exist_in_folder(r'Browser\Application\SetupMetrics', localappdata) is True
-        assert self.file.is_file_exist_in_folder(r'Browser\Application\browser.exe', localappdata) is True
-        assert self.file.is_file_exist_in_folder(r'Browser\Application\browser_proxy.exe', localappdata) is True
-        assert self.file.is_file_exist_in_folder(r'Browser\Application\VisualElementsManifest.xml', localappdata) is True
+        assert self.file.is_file_exist_in_folder('uid', self.file.appdata) is True
+        assert self.file.is_file_exist_in_folder('hid3', self.file.appdata) is True
+        assert self.file.is_subfolder_exist_in_folder(r'Browser', self.file.localappdata) is True
+        assert self.file.is_subfolder_exist_in_folder(r'CrashReports', self.file.localappdata) is True
+        assert self.file.is_subfolder_exist_in_folder(r'Update', self.file.localappdata) is True
+        assert self.file.is_subfolder_exist_in_folder(r'Browser\Application', self.file.localappdata) is True
+        assert self.file.is_subfolder_exist_in_folder(r'Browser\User Data', self.file.localappdata) is True
+        assert self.file.is_subfolder_exist_in_folder(r'Browser\Application\\' + cc_version, self.file.localappdata) is True
+        assert self.file.is_subfolder_exist_in_folder(r'Browser\Application\Dictionaries', self.file.localappdata) is True
+        assert self.file.is_subfolder_exist_in_folder(r'Browser\Application\SetupMetrics', self.file.localappdata) is True
+        assert self.file.is_file_exist_in_folder(r'Browser\Application\browser.exe', self.file.localappdata) is True
+        assert self.file.is_file_exist_in_folder(r'Browser\Application\browser_proxy.exe', self.file.localappdata) is True
+        assert self.file.is_file_exist_in_folder(r'Browser\Application\VisualElementsManifest.xml', self.file.localappdata) is True
 
     @pytestrail.case('C44834')
     def test_where_data_file_of_dictionaries_extension_is_saved(self, cc_version):
-        assert self.file.is_subfolder_exist_in_folder(r'Browser\Application\\' + cc_version + r'\Dictionaries', path.expandvars(r'%LOCALAPPDATA%\CocCoc\\')) is True
+        assert self.file.is_subfolder_exist_in_folder(r'Browser\Application\\' + cc_version + r'\Dictionaries', self.file.localappdata) is True
+
+    @pytestrail.case('C44837')
+    def test_browser_version_and_omaha_client_version_after_the_installation(self, ohama_version, cc_version):
+        self.file.verify_product_version(self.file.localappdata + r'Browser\Application\browser.exe', cc_version)
+        self.file.verify_product_version(self.file.localappdata + r'Update\\' + ohama_version + r'\CocCocUpdate.exe', ohama_version)
 
     @pytestrail.case('C44838')
     def test_the_company_signature_in_file_exe_and_dll(self):
-        signatures = self.file.get_signature_of_files_in_folder('.exe', path.expandvars(r'%LOCALAPPDATA%\CocCoc\\'))
+        signatures = self.file.get_signature_of_files_in_folder('.exe', self.file.localappdata)
         for i in range(len(signatures)):
             print(signatures[i])
             assert "COC COC COMPANY LIMITED" in str(signatures[i])
-        signatures = self.file.get_signature_of_files_in_folder('.dll', path.expandvars(r'%LOCALAPPDATA%\CocCoc\\'))
+        signatures = self.file.get_signature_of_files_in_folder('.dll', self.file.localappdata)
         for i in range(len(signatures)):
             print(signatures[i])
             assert "COC COC COMPANY LIMITED" in str(signatures[i])

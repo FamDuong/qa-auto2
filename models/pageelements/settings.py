@@ -77,3 +77,22 @@ class SettingsElements(BasePageElement):
         return self.find_shadow_element(driver, SettingsPageLocators.EXTENSION_MAIN,
                                         SettingsPageLocators.EXTENSION_TOOLBAR,
                                         SettingsPageLocators.EXTENSION_TOGGLE_DEV_MODE)
+
+    def find_extension_update_button(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.EXTENSION_MAIN,
+                                        SettingsPageLocators.EXTENSION_TOOLBAR,
+                                        SettingsPageLocators.EXTENSION_BTN_UPDATE)
+
+    def wait_until_extension_update(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.EXTENSION_MAIN,
+                                        SettingsPageLocators.EXTENSION_TOOLBAR,
+                                        SettingsPageLocators.EXTENSION_NOTIFY)
+
+    def wait_until_cc_version_update(self, driver):
+        element = self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsPageLocators.SETTINGS_MAIN_TEXT,
+                                        SettingsPageLocators.SETTINGS_ABOUT_TEXT,
+                                        SettingsPageLocators.ABOUT_MESSAGE)
+        self.text_to_be_present_in_shadow_element(element, "Cốc Cốc isdfsds up to date. dsdf")
+
+

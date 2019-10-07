@@ -23,6 +23,14 @@ class SettingsPageObject(BasePageObject):
         element_add_a_new_page = self.settings_elem.find_add_a_new_page(driver)
         element_add_a_new_page.click()
 
+    def disable_extension(self, driver, extension_id):
+        self.enable_extension_toggle_dev_mode(driver)
+        element = self.settings_elem.find_extension_on_off_by_id(driver, extension_id)
+        is_enable = element.get_attribute("checked")
+        if is_enable is not None:
+            element.click()
+            wait_for_stable()
+
     def enable_extension_toggle_dev_mode(self, driver):
         toggle_dev_mode = self.settings_elem.find_extension_toggle_developer_mode(driver)
         dev_mode_status = toggle_dev_mode.get_attribute("checked")
@@ -42,6 +50,13 @@ class SettingsPageObject(BasePageObject):
     def get_download_folder(self, driver):
         return self.settings_elem.find_download_location_element(driver).text
 
+    def update_extension(self, driver):
+        self.enable_extension_toggle_dev_mode(driver)
+        self.settings_elem.find_extension_update_button(driver).click()
+        self.settings_elem.wait_until_extension_update(driver)
+
+    def update_cc_version(self, driver):
+        self.settings_elem.wait_until_cc_version_update(driver)
 
 
     def verify_setting_on_startup(self, driver, expect_option):
@@ -68,6 +83,10 @@ class SettingsPageObject(BasePageObject):
         if expect_on is not None:
             actual_on = self.settings_elem.find_extension_on_off_by_id(driver, extension_id).get_attribute("checked")
             assert actual_on is not None
+
+    def verify_extension_status(self, driver, extension_id, expect_status):
+        actual_status = self.settings_elem.find_extension_on_off_by_id(driver, extension_id).get_attribute("checked")
+        assert actual_status is expect_status
 
 
 

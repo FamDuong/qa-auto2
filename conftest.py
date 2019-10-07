@@ -157,15 +157,21 @@ def get_current_download_folder():
 def get_flash_path():
     return flash_path
 
+@pytest.fixture(scope='session')
+def get_user_data_path():
+    return user_data_path
+
+@pytest.fixture(scope='session')
+def ohama_version():
+    return settings.OMAHA_VERSION
 
 @pytest.fixture
 def cc_version(request):
     # return request.config.getoption("--cc_version")
-    try:
-        return request.config.getoption("--cc_version")
-    finally:
-        return settings.COCCOC_VERSION
-
+    version = request.config.getoption("--cc_version")
+    if version is None:
+        version = settings.COCCOC_VERSION
+    return version
 
 @pytest.fixture
 def rm_user_data(request):

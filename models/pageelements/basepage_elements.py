@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
-
+from utils_automation.common import wait_for_stable
 
 class BasePageElement(object):
 
@@ -20,4 +20,15 @@ class BasePageElement(object):
             shadow_root = self.select_shadow_element_by_css_selector(driver, root)
             root = shadow_root.find_element_by_css_selector(string_text[i])
         return root
+
+    def text_to_be_present_in_shadow_element(self, element, expect_text):
+        try:
+            for i in range(20):
+                actual_text = element.text
+                if actual_text.contains(expect_text):
+                    return
+                wait_for_stable()
+        except:
+            print("Cannot find text: %s" % (expect_text))
+
 

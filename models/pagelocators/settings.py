@@ -5,6 +5,7 @@ class SettingsPageLocators(object):
     SETTINGS_UI_TEXT = 'settings-ui'
     SETTINGS_MAIN_TEXT = 'settings-main'
     SETTINGS_BASIC_PAGE_TEXT = 'settings-basic-page'
+    SETTINGS_ABOUT_TEXT = 'settings-about-page'
     SETTINGS_ON_START_UP_PAGE_TEXT = 'settings-on-startup-page'
     SETTINGS_LANGUAGES_PAGE_TEXT = 'settings-languages-page'
     SETTINGS_START_UP_URLS_PAGE_TEXT = 'settings-startup-urls-page'
@@ -34,12 +35,16 @@ class SettingsPageLocators(object):
     EXTENSION_LIST = '#items-list'
     EXTENSION_NAME = '#name'
     EXTENSION_VERSION = '#version'
+    EXTENSION_BTN_UPDATE = '#updateNow'
+    EXTENSION_NOTIFY = 'cr-toast > div'
     EXTENSION_TOGGLE = '#enable-toggle'
     EXTENSION_TOGGLE_DEV_MODE = '#devMode'
     EXTENSION_DICTIONARY_ID = '#gfgbmghkdjckppeomloefmbphdfmokgd'
     EXTENSION_SAVIOR_ID = '#jdfkmiabjpfjacifcmihfdjhpnjpiick'
     EXTENSION_RUNGRINH_ID = '#paenbjlckelooppiepeiechkeehogoha'
     EXTENSION_MOJICHAT_ID = '#paenbjlckelooppiepeiechkeehogoha'
+
+    ABOUT_MESSAGE = '#updateStatusMessage > div'
 
 
 class SettingsDownloadPageLocators(object):
