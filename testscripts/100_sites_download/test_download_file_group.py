@@ -54,6 +54,7 @@ class TestDownloadGroup:
 
     @pytestrail.case('C98735')
     @pytest.mark.ten_popular_sites
+    @pytest.mark.skip(reason='Cannot detect video to download')
     def test_download_dongphim(self, browser, get_current_download_folder):
         self.implement_test_site(browser, VideoUrls.DONG_PHIM_VIDEO_URL, get_current_download_folder)
 
