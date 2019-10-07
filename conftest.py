@@ -42,6 +42,7 @@ def pytest_runtest_makereport(item):
                 _capture_screenshot_win_app(filename)
             except:
                 print("Cannot capture screenshot!!!")
+
         # if file_name:
         html = '<div><img src="screenshots/%s" style="width:600px;height:228px;" ' \
                    'onclick="window.open(this.src)" align="right"/></div>' % filename
@@ -65,7 +66,8 @@ def _capture_screenshot_win_app(filename):
 
 
 @pytest.fixture(scope='session')
-def browser():
+@pytest.mark.usefixtures('set_up_before_run_user_browser')
+def browser(set_up_before_run_user_browser):
     import subprocess
     prog = subprocess.Popen("taskkill /im browser.exe /f", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     prog.communicate()  # Returns (stdoutdata, stderrdata): stdout and stderr are ignored, here
@@ -108,7 +110,25 @@ def win_app_driver():
     return
 
 
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope='session')
+def appium_android_driver():
+    global driver
+    desired_caps = {
+        'platformName': 'Android',
+        'platformVersion': '8.0.0',
+        'deviceName': 'ASUS_Z017D',
+        'browserName': 'Chrome',
+        'uiautomator2ServerInstallTimeout': 120000,
+        'adbExecTimeout': 120000,
+        'autoGrantPermissions': True,
+        # 'chromedriverExecutableDir': 'C:\\webdriver'
+    }
+    driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
+    yield driver
+    driver.quit()
+
+
+@pytest.fixture(scope='session')
 @pytest.mark.usefixtures('clear_downloaded_folder')
 def set_up_before_run_user_browser():
     from models.pageobject.version import VersionPageObject
