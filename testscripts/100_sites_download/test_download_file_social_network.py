@@ -67,6 +67,7 @@ class TestTwitter:
         any_site_page_object.mouse_over_video_item_twitter(browser)
 
     @pytestrail.case('C98721')
+    @pytestrail.defect('PF-467')
     def test_download_file_twitter(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
         savior_page_object.assert_value_preferred_quality(browser, 'High')

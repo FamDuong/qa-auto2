@@ -4,7 +4,7 @@ from appium import webdriver
 from selenium import webdriver as sele_webdriver
 import pytest
 import settings_master as settings
-from utils_automation.common import FilesHandle
+from utils_automation.common import FilesHandle, modify_file_as_text
 from utils_automation.setup import WaitAfterEach
 
 driver = None
@@ -13,6 +13,7 @@ winappdriver = None
 download_folder = None
 flash_path = None
 block_origin_extension_path = None
+user_data_default = None
 
 
 @pytest.mark.hookwrapper
@@ -42,9 +43,10 @@ def pytest_runtest_makereport(item):
                 _capture_screenshot_win_app(filename)
             except:
                 print("Cannot capture screenshot!!!")
+
         # if file_name:
         html = '<div><img src="screenshots/%s" style="width:600px;height:228px;" ' \
-                   'onclick="window.open(this.src)" align="right"/></div>' % filename
+               'onclick="window.open(this.src)" align="right"/></div>' % filename
         extra.append(pytest_html.extras.html(html))
     report.extra = extra
 
@@ -65,10 +67,8 @@ def _capture_screenshot_win_app(filename):
 
 
 @pytest.fixture(scope='session')
-def browser():
-    import subprocess
-    prog = subprocess.Popen("taskkill /im browser.exe /f", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    prog.communicate()  # Returns (stdoutdata, stderrdata): stdout and stderr are ignored, here
+@pytest.mark.usefixtures('set_up_before_run_user_browser', 'get_use_data_path')
+def browser(get_use_data_path):
     global driver
     global user_data_path
     global block_origin_extension_path
@@ -83,16 +83,22 @@ def browser():
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--ignore-certificate-errors')
         chrome_options.add_argument("--allow-insecure-localhost")
+        chrome_options.add_argument('--disable-application-cache')
+        chrome_options.add_argument("--disable-session-crashed-bubble")
         chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
-        chrome_options.add_argument('--user-data-dir=' + user_data_path)
+        if get_use_data_path is True or get_use_data_path is None:
+            import subprocess
+            prog = subprocess.Popen("taskkill /im browser.exe /f", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            prog.communicate()  # Returns (stdoutdata, stderrdata): stdout and stderr are ignored, here
+            set_up_before_run_user_browser()
+            chrome_options.add_argument('--user-data-dir=' + user_data_path)
         # chrome_options.add_argument('--enable-features=CocCocNewDownloads')
+            modify_file_as_text(user_data_path + '\\Default\\Preferences', 'Crashed', 'none')
         driver = sele_webdriver.Chrome(options=chrome_options)
-        driver.create_options()
         driver.maximize_window()
         driver.set_page_load_timeout(40)
     yield driver
     driver.quit()
-    return
 
 
 @pytest.fixture(scope='session')
@@ -108,8 +114,24 @@ def win_app_driver():
     return
 
 
-@pytest.fixture(scope='session', autouse=True)
-@pytest.mark.usefixtures('clear_downloaded_folder')
+@pytest.fixture(scope='session')
+def appium_android_driver():
+    global driver
+    desired_caps = {
+        'platformName': 'Android',
+        'platformVersion': '8.0.0',
+        'deviceName': 'ASUS_Z017D',
+        'browserName': 'Chrome',
+        'uiautomator2ServerInstallTimeout': 120000,
+        'adbExecTimeout': 120000,
+        'autoGrantPermissions': True,
+        # 'chromedriverExecutableDir': 'C:\\webdriver'
+    }
+    driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
+    yield driver
+    driver.quit()
+
+
 def set_up_before_run_user_browser():
     from models.pageobject.version import VersionPageObject
     from utils_automation.const import Urls
@@ -119,15 +141,18 @@ def set_up_before_run_user_browser():
     setting_page_object = SettingsPageObject()
     global download_folder
     global block_origin_extension_path
+    global flash_path
+    global user_data_default
     try:
         local_driver = sele_webdriver.Chrome()
         local_driver.maximize_window()
         local_driver.get(Urls.COCCOC_VERSION_URL)
-        path_full = version_page_object.get_profile_path(local_driver)
+        user_data_default = version_page_object.get_profile_path(local_driver)
+        flash_path = version_page_object.get_flash_path(local_driver)
         local_driver.get(Urls.COCCOC_SETTINGS_URL)
         WaitAfterEach.sleep_timer_after_each_step()
         download_folder = setting_page_object.get_download_folder(local_driver)
-        split_after = path_full.split('\\Local')
+        split_after = user_data_default.split('\\Local')
         user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
         FilesHandle.clear_downloaded_folder(download_folder)
     finally:
@@ -139,11 +164,11 @@ def clear_screen_shot_folder():
     from utils_automation.cleanup import Files
     current_dir = get_current_dir()[0]
     files = Files()
-    files.delete_files_in_folder(current_dir+"/screenshots", "png")
+    files.delete_files_in_folder(current_dir + "/screenshots", "png")
 
 
 def pytest_addoption(parser):
-    parser.addoption('--settings', action='store')
+    parser.addoption('--settings', '--use-user-data', action='store')
     parser.addoption('--cc_version', action='store')
     parser.addoption('--rm_user_data', action='store')
 
@@ -157,13 +182,16 @@ def get_current_download_folder():
 def get_flash_path():
     return flash_path
 
+
 @pytest.fixture(scope='session')
 def get_user_data_path():
     return user_data_path
 
+
 @pytest.fixture(scope='session')
 def ohama_version():
     return settings.OMAHA_VERSION
+
 
 @pytest.fixture
 def cc_version(request):
@@ -173,9 +201,15 @@ def cc_version(request):
         version = settings.COCCOC_VERSION
     return version
 
+
 @pytest.fixture
 def rm_user_data(request):
     try:
         return request.config.getoption("--rm_user_data")
     finally:
         return None
+
+
+@pytest.fixture(scope='session', autouse=True)
+def get_use_data_path(request):
+    return request.config.getoption("--use-user-data")

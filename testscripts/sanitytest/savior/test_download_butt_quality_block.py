@@ -62,7 +62,7 @@ class TestDownloadButtQualityBlock:
 
     @pytestrail.case('C54153')
     @pytest.mark.parametrize('url_site', [i for i in DiffFormatFileUrls.all()])
-    @pytest.mark.skip(reason='Waiting for implemented')
+    @pytest.mark.skip(reason='This test should be implemented in API or UI level')
     def test_check_download_different_format(self, browser, url_site, get_current_download_folder):
         self.prepare_check_download(browser, url_site, get_current_download_folder)
 
