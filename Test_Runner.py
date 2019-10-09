@@ -6,6 +6,8 @@ from selenium import webdriver as sele_webdriver
 import pytz
 
 from pytest_testrail.plugin import pytestrail
+
+from utils_automation.common import modify_file_as_text
 from utils_automation.const import Urls
 
 
@@ -23,8 +25,4 @@ class TestBrowser:
             print(m.group())
 
     def test_get_current_dir(self):
-        print(os.getcwd())
-        print(sys.argv[0])
-        before_split = os.getcwd()
-        split_things = before_split.split('\\qa-auto\\')
-        print(split_things)
+        modify_file_as_text("C:\\Users\\cuongld\\AppData\\Local\\CocCoc\\Browser\\User Data\\Default\\Preferences", 'Crashed', 'none')

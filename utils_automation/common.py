@@ -1,3 +1,5 @@
+import fileinput
+import glob
 import os
 import csv
 import sys
@@ -240,3 +242,32 @@ class BrowserHandler:
         WindowsCMD.execute_cmd('taskkill /im CocCocUpdate.exe /f')
         WindowsCMD.execute_cmd('taskkill /im CocCocCrashHandler.exe /f')
         WindowsCMD.execute_cmd('taskkill /im browser.exe /f')
+
+
+def modify_file_as_text(text_file_path, text_to_search, replacement_text):
+    # for infile in glob.glob((text_file_path, '*.')):
+    #     file = open(infile, 'r').read()
+    #     a = file.find('Crash')
+    #     assert a
+    # list_temp = []
+    # with open(text_file_path, 'r') as f:
+    #     rowiter = iter(f)
+    #     for row in rowiter:
+    #         if row.startswith('foo2'):  # Start of next section
+    #             break
+    #         print(row.rstrip(), repr(row))
+    #     print("foo bar")
+    #     print(row)
+    #     for row in rowiter:
+    #         print(row.rstrip())
+
+    with fileinput.FileInput(text_file_path, inplace=True, backup='.bak') as file:
+        for line in file:
+            print(line.replace(text_to_search, replacement_text), end='')
+
+
+
+
+
+
+
