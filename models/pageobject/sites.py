@@ -330,12 +330,23 @@ class AnySitePageObject(BasePageObject):
 
     def switch_to_iframe_skip_ad_phim_moi(self, driver):
         iframe_main_perol_ads = driver.find_elements_by_css_selector(AnySite.PHIMMOI_IFRAME_MAIN_PEROL_ADS_ID_TEXT)
-        # i = 0
         while len(iframe_main_perol_ads) > 0:
             driver.switch_to.frame(driver.find_element_by_css_selector(AnySite.PHIMMOI_IFRAME_MAIN_PEROL_ADS_ID_TEXT))
             # if i >= 1:
             #     time.sleep(60)
-            self.any_site_element.find_skip_ad_button_phimmoi(driver).click()
+            i = 0
+            start_time = datetime.now()
+            while i == 0:
+                if self.any_site_element.check_if_bo_qua_quang_cao_button_phimmoi_appear(driver) > 0:
+                    self.any_site_element.find_bo_qua_quang_cao_phimmoi(driver).click()
+                    i += 1
+                elif self.any_site_element.check_if_skip_button_phimmoi_appear(driver) > 0:
+                    self.any_site_element.find_an_skip_ad_button_phimmoi(driver).click()
+                    i += 1
+                elif (datetime.now() - start_time).total_seconds() > 20:
+                    i += 1
+                else:
+                    time.sleep(2)
             driver.switch_to_default_content()
             iframe_main_perol_ads = driver.find_elements_by_css_selector(AnySite.PHIMMOI_IFRAME_MAIN_PEROL_ADS_ID_TEXT)
         return len(iframe_main_perol_ads)

@@ -86,7 +86,7 @@ class AnySiteElements(BasePageElement):
     @staticmethod
     def find_close_popup_continue_watching(driver):
         return wait_for_element(driver).until(
-            ec.element_to_be_clickable(AnySite.PHIMMOI_CONTINUE_WATCHING_CLOSE_ELEMENT))
+            ec.presence_of_element_located(AnySite.PHIMMOI_CONTINUE_WATCHING_CLOSE_ELEMENT))
 
     @staticmethod
     def find_close_image_popup_phim_moi(driver):
@@ -415,6 +415,22 @@ class AnySiteElements(BasePageElement):
     def find_skip_ad_button_phimmoi(driver):
         return wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.PHIMMOI_SKIP_AD_BUTTON))
+
+    @staticmethod
+    def find_an_skip_ad_button_phimmoi(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIMMOI_SKIP_VIDEO_AD))
+
+    @staticmethod
+    def check_if_skip_button_phimmoi_appear(driver):
+        return len(driver.find_elements_by_id(AnySite.PHIMMOI_SKIP_VIDEO_AD_ID))
+    
+    @staticmethod
+    def check_if_bo_qua_quang_cao_button_phimmoi_appear(driver):
+        return len(driver.find_elements_by_xpath(AnySite.PHIMMOI_BO_QUA_QUANG_CAO_XPATH))
+
+    @staticmethod
+    def find_bo_qua_quang_cao_phimmoi(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIMMOI_BO_QUA_QUANG_CAO))
 
     @staticmethod
     def find_video_item_vlxx(driver):

@@ -27,7 +27,7 @@ class TestPhimmoi:
         if len(windows_list) >= 2:
             browser.switch_to.window(windows_list[0])
             any_site_page_object.close_popup_continue_watching(browser)
-            browser.switch_to_active_element()
+            # browser.switch_to_active_element()
             if any_site_page_object.verify_exist_ads_pop_up_phim_moi(browser) > 0:
                 any_site_page_object.close_image_popup_phim_moi(browser)
             browser.switch_to_default_content()
