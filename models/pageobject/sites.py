@@ -1,4 +1,3 @@
-
 import time
 from datetime import datetime
 from selenium.webdriver.support import expected_conditions as ec
@@ -53,7 +52,6 @@ class GooglePageObject(BasePageObject):
 
 
 class AnySitePageObject(BasePageObject):
-
     any_site_element = AnySiteElements()
 
     def mouse_over_video_iframe(self, driver, switch_to_iframe_video, find_video_item, time_out_sec, *args):
@@ -68,20 +66,11 @@ class AnySitePageObject(BasePageObject):
             if time_delta.total_seconds() >= time_out_sec:
                 break
 
-    def mouse_over_video_iframe_with_minimize_maximize(self, driver, switch_to_iframe_video, find_video_item, time_out_sec):
-        self.mouse_over_video_iframe(driver, switch_to_iframe_video,find_video_item,time_out_sec, driver.maximize_window(),
+    def mouse_over_video_iframe_with_minimize_maximize(self, driver, switch_to_iframe_video, find_video_item,
+                                                       time_out_sec):
+        self.mouse_over_video_iframe(driver, switch_to_iframe_video, find_video_item, time_out_sec,
+                                     driver.maximize_window(),
                                      driver.minimize_window())
-        # start_time = datetime.now()
-        # driver.switch_to.default_content()
-        # while self.verify_savior_popup_appear(driver) is None:
-        #     switch_to_iframe_video(driver)
-        #     WebElements.mouse_over_element(driver, find_video_item(driver))
-        #     driver.switch_to.default_content()
-        #     driver.maximize_window()
-        #     driver.minimize_window()
-        #     time_delta = datetime.now() - start_time
-        #     if time_delta.total_seconds() >= time_out_sec:
-        #         break
 
     def mouse_over_first_video_element(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_first_video_element(driver))
@@ -146,7 +135,8 @@ class AnySitePageObject(BasePageObject):
         elements = self.any_site_element.find_elements_user_restricted_twitter(driver)
         print('Elements restricted_user_twitter got are :', elements)
         if len(elements) > 0:
-            driver.execute_script('document.querySelector(arguments[0]).click()', AnySite.TWITTER_AUTHORIZE_RESTRICTED_USER_BTN_JAVASCRIPT)
+            driver.execute_script('document.querySelector(arguments[0]).click()',
+                                  AnySite.TWITTER_AUTHORIZE_RESTRICTED_USER_BTN_JAVASCRIPT)
         else:
             print('This twitter user is not restricted')
 
@@ -176,8 +166,8 @@ class AnySitePageObject(BasePageObject):
 
     def mouse_over_video_item_tien_phong(self, driver):
         self.mouse_over_video_iframe_with_minimize_maximize(driver, self.switch_to_iframe_tien_phong,
-                                     self.any_site_element.find_play_video_item_tien_phong,
-                                     10)
+                                                            self.any_site_element.find_play_video_item_tien_phong,
+                                                            10)
 
     def click_video_item_tien_phong(self, driver):
         self.switch_to_iframe_tien_phong(driver)
@@ -211,8 +201,8 @@ class AnySitePageObject(BasePageObject):
 
     def mouse_over_video_item_vu_vi_phim_maximize_minimize(self, driver):
         self.mouse_over_video_iframe_with_minimize_maximize(driver, self.switch_to_iframe_vu_vi_phim,
-                                     self.any_site_element.find_video_item_vu_vi_phim,
-                                     40)
+                                                            self.any_site_element.find_video_item_vu_vi_phim,
+                                                            40)
 
     def click_video_item_vu_vi_phim(self, driver):
         self.switch_to_iframe_vu_vi_phim(driver)
@@ -221,7 +211,8 @@ class AnySitePageObject(BasePageObject):
 
     def double_click_video_item_vu_vi_phim(self, driver):
         self.switch_to_iframe_vu_vi_phim(driver)
-        ActionChains(driver).move_to_element(self.any_site_element.find_video_item_vu_vi_phim(driver)).double_click().perform()
+        ActionChains(driver).move_to_element(
+            self.any_site_element.find_video_item_vu_vi_phim(driver)).double_click().perform()
 
     def click_full_screen_vu_vi_phim(self, driver):
         ActionChains(driver).move_to_element(self.any_site_element.find_full_screen_button_vu_vi_phim(driver)).perform()
@@ -237,7 +228,8 @@ class AnySitePageObject(BasePageObject):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_tuoi_tre(driver))
 
     def click_video_item_mot_phim(self, driver):
-        ActionChains(driver).move_to_element(self.any_site_element.find_play_button_video_mot_phim(driver)).click().perform()
+        ActionChains(driver).move_to_element(
+            self.any_site_element.find_play_button_video_mot_phim(driver)).click().perform()
 
     def click_video_episode_mot_phim(self, driver):
         self.any_site_element.find_video_episode_mot_phim(driver).click()
@@ -330,12 +322,23 @@ class AnySitePageObject(BasePageObject):
 
     def switch_to_iframe_skip_ad_phim_moi(self, driver):
         iframe_main_perol_ads = driver.find_elements_by_css_selector(AnySite.PHIMMOI_IFRAME_MAIN_PEROL_ADS_ID_TEXT)
-        # i = 0
         while len(iframe_main_perol_ads) > 0:
             driver.switch_to.frame(driver.find_element_by_css_selector(AnySite.PHIMMOI_IFRAME_MAIN_PEROL_ADS_ID_TEXT))
             # if i >= 1:
             #     time.sleep(60)
-            self.any_site_element.find_skip_ad_button_phimmoi(driver).click()
+            i = 0
+            start_time = datetime.now()
+            while i == 0:
+                if self.any_site_element.check_if_bo_qua_quang_cao_button_phimmoi_appear(driver) > 0:
+                    self.any_site_element.find_bo_qua_quang_cao_phimmoi(driver).click()
+                    i += 1
+                elif self.any_site_element.check_if_skip_button_phimmoi_appear(driver) > 0:
+                    self.any_site_element.find_an_skip_ad_button_phimmoi(driver).click()
+                    i += 1
+                elif (datetime.now() - start_time).total_seconds() > 20:
+                    i += 1
+                else:
+                    time.sleep(2)
             driver.switch_to_default_content()
             iframe_main_perol_ads = driver.find_elements_by_css_selector(AnySite.PHIMMOI_IFRAME_MAIN_PEROL_ADS_ID_TEXT)
         return len(iframe_main_perol_ads)
@@ -400,11 +403,8 @@ class AnySitePageObject(BasePageObject):
 
     def mouse_over_video_item_vov_vn_maximize_minimize(self, driver):
         self.mouse_over_video_iframe_with_minimize_maximize(driver, self.switch_to_frame_vov_vn,
-                                     self.any_site_element.find_video_vov_vn,
-                                     20)
-        # driver.switch_to.frame(driver.find_element_by_xpath(AnySite.VOV_VN_IFRAME))
-        # # self.any_site_element.find_video_vov_vn_wrapper(driver).click()
-        # self.mouse_over_video_element_site(driver, self.any_site_element.find_video_vov_vn_wrapper(driver))
+                                                            self.any_site_element.find_video_vov_vn,
+                                                            20)
         driver.switch_to.default_content()
 
     def click_video_item_vov_vn(self, driver):
@@ -439,6 +439,25 @@ class AnySitePageObject(BasePageObject):
 
     def mouse_over_video_element_vlive_tv(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_vlive_tv_item(driver))
+
+    def mouse_over_video_wrapper_element_anime_hay_tv(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_wrapper_anime_hay_tv(driver))
+
+    def click_video_wrapper_element_anime_hay_tv(self, driver):
+        self.any_site_element.find_video_wrapper_anime_hay_tv(driver).click()
+
+    def switch_to_iframe_anime_hay_tv(self, driver):
+        driver.switch_to.frame(self.any_site_element.find_video_iframe_anime_hay_tv(driver))
+
+    def switch_to_iframe_doi_song_phap_luat(self, driver):
+        driver.switch_to.frame(self.any_site_element.find_video_iframe_doi_song_phap_luat(driver))
+
+    def click_video_item_doi_song_phap_luat(self, driver):
+        self.switch_to_iframe_doi_song_phap_luat(driver)
+        self.any_site_element.find_video_player_doi_song_phap_luat(driver).click()
+        while self.verify_savior_popup_appear(driver) is None:
+            WaitAfterEach.sleep_timer_after_each_step()
+
 
 
 

@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from models.pageelements.sites import AnySiteElements
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
@@ -11,6 +13,7 @@ from utils_automation.setup import WaitAfterEach
 
 any_site_page_object = AnySitePageObject()
 savior_page_object = SaviorPageObject()
+any_site_element = AnySiteElements()
 
 
 class Test24H:
@@ -29,7 +32,6 @@ class Test24H:
     @pytestrail.case('C96720')
     def test_download_file_24h(self, browser, get_current_download_folder):
         self.prepare_check_download(browser, get_current_download_folder)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(verify_download_quality_high_frame(browser, get_current_download_folder,
                                                                              self.mouse_over_video_element_24h),
                                           clear_data_download(browser))
@@ -47,7 +49,6 @@ class TestKienThucDotNet:
     @pytestrail.case('C96755')
     def test_download_file_kiethuc_dotnet(self, browser, get_current_download_folder):
         self.prepare_appear_savior_option(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
                                           clear_data_download_in_browser_and_download_folder(browser,
                                                                                              get_current_download_folder))
@@ -63,7 +64,6 @@ class TestVietnamNet:
     @pytestrail.case('C96759')
     def test_download_file_vietnamnet(self, browser, get_current_download_folder):
         self.prepare_savior_option_displayed(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(verify_download_quality_high_frame(browser, get_current_download_folder,
                                                                              self.prepare_savior_option_displayed),
                                           clear_data_download_in_browser_and_download_folder(browser,
@@ -80,7 +80,6 @@ class TestEvaVn:
     @pytestrail.case('C96761')
     def test_download_file_eva_vn(self, browser, get_current_download_folder):
         self.prepare_savior_displayed(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(verify_download_quality_high_frame(browser, get_current_download_folder,
                                                                              self.prepare_savior_displayed),
                                           clear_data_download_in_browser_and_download_folder(browser,
@@ -97,7 +96,6 @@ class TestSoha:
     @pytestrail.case('C98722')
     def test_download_file_soha(self, browser, get_current_download_folder):
         self.prepare_savior_displayed(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(verify_download_quality_high_frame(browser, get_current_download_folder,
                                                                              self.prepare_savior_displayed),
                                           clear_data_download_in_browser_and_download_folder(browser,
@@ -114,7 +112,6 @@ class Test2SaoVn:
     @pytestrail.case('C98725')
     def test_download_file_test2sao(self, browser, get_current_download_folder):
         self.prepare_savior_displayed(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(verify_download_quality_high_frame(browser, get_current_download_folder,
                                                                              self.prepare_savior_displayed),
                                           clear_data_download_in_browser_and_download_folder(browser,
@@ -132,7 +129,6 @@ class TestPhuNuVaGiaDinh:
     @pytestrail.case('C98734')
     def test_download_file_phunu_giadinh(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
                                           clear_data_download_in_browser_and_download_folder(browser,
                                                                                              get_current_download_folder))
@@ -151,7 +147,6 @@ class TestTienPhong:
     @pytestrail.case('C98743')
     def test_download_file_tienphong(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         self.prepare_savior_option_appear(browser)
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
                                           clear_data_download_in_browser_and_download_folder(browser,
@@ -170,7 +165,6 @@ class TestBongDaDotCom:
     @pytestrail.case('C98746')
     def test_download_file_bongda_dotcom(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(verify_download_quality_high_frame(browser, get_current_download_folder,
                                                                              self.prepare_savior_option_appear),
                                           clear_data_download_in_browser_and_download_folder(browser,
@@ -187,7 +181,6 @@ class TestGiaDinhDotNet:
     @pytestrail.case('C98748')
     def test_download_file_gia_dinh_dotnet(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(verify_download_quality_high_frame(browser, get_current_download_folder,
                                                                              self.prepare_savior_option_appear),
                                           clear_data_download_in_browser_and_download_folder(browser,
@@ -204,7 +197,6 @@ class TestAFamily:
     @pytestrail.case('C98749')
     def test_download_file_video_a_family(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(verify_download_quality_high_frame(browser, get_current_download_folder,
                                                                              self.prepare_savior_option_appear),
                                           clear_data_download_in_browser_and_download_folder(browser,
@@ -221,7 +213,6 @@ class TestGamek:
     @pytestrail.case('C98750')
     def test_download_file_video_gamek(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(verify_download_quality_high_frame(browser, get_current_download_folder,
                                                                              self.prepare_savior_option_appear),
                                           clear_data_download_in_browser_and_download_folder(browser,
@@ -239,7 +230,6 @@ class TestAnNinhThuDo:
     @pytestrail.case('C98752')
     def test_download_file_video_an_ninh_thu_do(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
                                           clear_data_download_in_browser_and_download_folder(browser,
                                                                                              get_current_download_folder))
@@ -255,7 +245,6 @@ class TestTuoiTre:
     @pytestrail.case('C98754')
     def test_download_file_video_tuoi_tre(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(verify_download_quality_high_frame(browser, get_current_download_folder,
                                                                              self.prepare_savior_option_appear),
                                           clear_data_download_in_browser_and_download_folder(browser,
@@ -268,7 +257,6 @@ class TestNgoiSaoVN:
     def test_download_file_ngoi_sao_vn(self, browser, get_current_download_folder):
         browser.get(OtherSiteUrls.NGOI_SAO_VN_URL)
         any_site_page_object.mouse_over_video_item_ngoi_sao_vn(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
                                           clear_data_download_in_browser_and_download_folder(browser,
                                                                                              get_current_download_folder))
@@ -281,7 +269,6 @@ class TestVTCVN:
         browser.get(OtherSiteUrls.VTC_VN_VIDEO_URL)
         any_site_page_object.click_video_element_vtc_v(browser)
         any_site_page_object.mouse_over_video_element_vtc_vn(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
                                           clear_data_download_in_browser_and_download_folder(browser,
                                                                                              get_current_download_folder))
@@ -297,7 +284,6 @@ class TestKenh14VN:
     @pytestrail.case('C98765')
     def test_download_file_kenh14_vn(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(verify_download_quality_high_frame(browser, get_current_download_folder,
                                                                              self.prepare_savior_option_appear),
                                           clear_data_download_in_browser_and_download_folder(browser,
@@ -314,7 +300,6 @@ class TestCafeVN:
     @pytestrail.case('C98766')
     def test_download_file_cafe_vn(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(verify_download_quality_high_frame(browser, get_current_download_folder,
                                                                              self.prepare_savior_option_appear),
                                           clear_data_download_in_browser_and_download_folder(browser,
@@ -331,7 +316,6 @@ class TestTinTucOnlineVN:
     @pytestrail.case('C98768')
     def test_download_file_tin_tuc_online(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(verify_download_quality_high_frame(browser, get_current_download_folder,
                                                                              self.prepare_savior_option_appear),
                                           clear_data_download_in_browser_and_download_folder(browser,
@@ -349,7 +333,6 @@ class TestGiaoDucThoiDai:
     @pytestrail.case('C98770')
     def test_download_file_tin_tuc_online(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
                                           clear_data_download_in_browser_and_download_folder(browser,
                                                                                              get_current_download_folder))
@@ -365,7 +348,6 @@ class TestVNExpressNet:
     @pytestrail.case('C98772')
     def test_download_file_tin_tuc_online(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
                                           clear_data_download_in_browser_and_download_folder(browser,
                                                                                              get_current_download_folder))
@@ -381,7 +363,6 @@ class TestThanhNienVN:
     @pytestrail.case('C98773')
     def test_download_file_tin_tuc_online(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
                                           clear_data_download_in_browser_and_download_folder(browser,
                                                                                              get_current_download_folder))
@@ -397,7 +378,6 @@ class TestDanTriVN:
     @pytestrail.case('C98775')
     def test_download_file_tin_tuc_online(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
                                           clear_data_download_in_browser_and_download_folder(browser,
                                                                                              get_current_download_folder))
@@ -413,7 +393,6 @@ class TestNguoiLaoDongTV:
     @pytestrail.case('C98777')
     def test_download_file_nguoi_lao_dong_tv(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
                                           clear_data_download_in_browser_and_download_folder(browser,
                                                                                              get_current_download_folder))
@@ -473,8 +452,6 @@ class TestVoV:
     @pytestrail.case('C98798')
     def test_download_file_vov(self, browser, get_current_download_folder):
         browser.get(OtherSiteUrls.VOV_VIDEO_URL)
-        # any_site_page_object.click_video_item_vov_vn(browser)
-        # WaitAfterEach.sleep_timer_after_each_step_longer_load()
         any_site_page_object.click_video_item_vov_vn(browser)
         any_site_page_object.mouse_over_video_item_vov_vn_maximize_minimize(browser)
         verify_video_step_then_clear_data(
@@ -482,6 +459,17 @@ class TestVoV:
             clear_data_download_in_browser_and_download_folder(browser,
                                                                get_current_download_folder))
 
+
+class TestDoiSongPhapLuat:
+
+    @pytestrail.case('C98776')
+    def test_download_doi_song_phap_luat(self, browser, get_current_download_folder):
+        browser.get(OtherSiteUrls.DOI_SONG_PHAP_LUAT_VIDEO_URL)
+        any_site_page_object.click_video_item_doi_song_phap_luat(browser)
+        verify_video_step_then_clear_data(
+            implement_download_file(browser, get_current_download_folder),
+            clear_data_download_in_browser_and_download_folder(browser,
+                                                               get_current_download_folder))
 
 
 

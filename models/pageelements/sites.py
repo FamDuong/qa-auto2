@@ -1,6 +1,7 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
+from models.pagelocators.savior import SaviorPageLocators
 from models.pagelocators.sites import YoutubePageLocators, GooglePageLocators, AnySite
 from utils_automation.setup import WaitAfterEach
 
@@ -86,7 +87,7 @@ class AnySiteElements(BasePageElement):
     @staticmethod
     def find_close_popup_continue_watching(driver):
         return wait_for_element(driver).until(
-            ec.element_to_be_clickable(AnySite.PHIMMOI_CONTINUE_WATCHING_CLOSE_ELEMENT))
+            ec.presence_of_element_located(AnySite.PHIMMOI_CONTINUE_WATCHING_CLOSE_ELEMENT))
 
     @staticmethod
     def find_close_image_popup_phim_moi(driver):
@@ -417,6 +418,22 @@ class AnySiteElements(BasePageElement):
             ec.presence_of_element_located(AnySite.PHIMMOI_SKIP_AD_BUTTON))
 
     @staticmethod
+    def find_an_skip_ad_button_phimmoi(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIMMOI_SKIP_VIDEO_AD))
+
+    @staticmethod
+    def check_if_skip_button_phimmoi_appear(driver):
+        return len(driver.find_elements_by_id(AnySite.PHIMMOI_SKIP_VIDEO_AD_ID))
+    
+    @staticmethod
+    def check_if_bo_qua_quang_cao_button_phimmoi_appear(driver):
+        return len(driver.find_elements_by_xpath(AnySite.PHIMMOI_BO_QUA_QUANG_CAO_XPATH))
+
+    @staticmethod
+    def find_bo_qua_quang_cao_phimmoi(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIMMOI_BO_QUA_QUANG_CAO))
+
+    @staticmethod
     def find_video_item_vlxx(driver):
         return wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.VLXX_VIDEO_ITEM))
@@ -547,6 +564,23 @@ class AnySiteElements(BasePageElement):
     @staticmethod
     def find_video_vlive_tv_item(driver):
         return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VLIVE_TV_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_wrapper_anime_hay_tv(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.ANIME_HAY_TV_WRAPPER_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_iframe_anime_hay_tv(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.ANIME_HAY_TV_IFRAME_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_iframe_doi_song_phap_luat(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DOI_SONG_PHAP_LUAT_IFRAME_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_player_doi_song_phap_luat(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DOI_SONG_PHAP_LUAT_PLAYER_VIDEO))
+
 
 
 

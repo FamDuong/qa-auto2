@@ -3,18 +3,12 @@ from selenium.webdriver.common.by import By
 
 class SaviorPageLocators(object):
     DOWNLOAD_BUTTON = '#download-main'
-
     FIRST_LAYER = '[style="position: absolute; top: 0px;"]'
-
     PREFERRED_SELECT_BTN = '[id="preferred-select"]'
     BASE_OVERLAY_CLASS = '[class="base overlay"]'
-
     HIGH_PREFERRED_SELECT_BTN = '//span[@data-selected-value="High"]'
-
     MEDIUM_SELECT_OPTION = '[data-quality-value="mp4/Medium/360p"]'
-
     LOW_SELECT_OPTION = '[data-quality-value="mp4/Small/240p"]'
-
     HIGH_SELECT_OPTION = '[data-quality-value="mp4/HD/720p"]'
     MOBILE_SHARING_VIDEO_RADIO_BUTTON = 'input[id="switch-video"]'
 

@@ -27,7 +27,7 @@ class TestPhimmoi:
         if len(windows_list) >= 2:
             browser.switch_to.window(windows_list[0])
             any_site_page_object.close_popup_continue_watching(browser)
-            browser.switch_to_active_element()
+            # browser.switch_to_active_element()
             if any_site_page_object.verify_exist_ads_pop_up_phim_moi(browser) > 0:
                 any_site_page_object.close_image_popup_phim_moi(browser)
             browser.switch_to_default_content()
@@ -40,7 +40,6 @@ class TestPhimmoi:
     @pytest.mark.ten_popular_sites
     def test_download_file_phim_moi(self, browser, get_current_download_folder):
         self.prepare_displayed_savior_popup(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder, file_type='slow'),
                                           clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
@@ -57,7 +56,6 @@ class TestVuViPhim:
     @pytestrail.case('C98751')
     def test_download_file_vuviphim(self, browser, get_current_download_folder):
         self.prepare_savior_option_displayed(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder, file_type='slow'),
                                           clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
@@ -68,7 +66,6 @@ class TestTvZing:
     @pytest.mark.ten_popular_sites
     def test_check_default_state_download_button(self, browser):
         pause_any_video_site(browser, OtherSiteUrls.TV_ZING_VIDEO_URL)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
 
 
 class TestTVHay:
@@ -79,7 +76,6 @@ class TestTVHay:
         any_site_page_object.click_play_btn_tv_hay(browser)
         any_site_page_object.skip_ads_tv_hay(browser)
         any_site_page_object.mouse_over_video_item_tv_hay(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder, file_type='slow'),
                                           clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
@@ -92,7 +88,6 @@ class TestAnimeSub:
         handle_windows_watch_option(browser, any_site_page_object.choose_continue_from_start_anime_subtv(browser))
         any_site_page_object.close_and_watch_ad_button_anime_subtv(browser)
         any_site_page_object.mouse_over_video_anime_vsub_tv(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(
             implement_download_file(browser, get_current_download_folder, file_type='slow'),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
@@ -104,7 +99,6 @@ class TestAnimeTVN:
     def test_download_file_video_anime_tvn(self, browser, get_current_download_folder):
         browser.get(OtherSiteUrls.ANIME_TVN_VIDEO_URL)
         any_site_page_object.mouse_over_tvn_video_element(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(
             implement_download_file(browser, get_current_download_folder),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
@@ -117,9 +111,20 @@ class TestPhimBatHu:
         browser.get(OtherSiteUrls.PHIM_BAT_HU_VIDEO_URL)
         any_site_page_object.click_video_phim_bat_hu_video_element(browser)
         any_site_page_object.mouse_over_phim_bat_hu_video_element(browser)
-        savior_page_object.assert_value_preferred_quality(browser, 'High')
         verify_video_step_then_clear_data(
             implement_download_file(browser, get_current_download_folder),
+            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
+
+
+class TestAnimeHayTV:
+
+    @pytestrail.case('C98723')
+    def test_download_file_video_anime_hay_tv(self, browser, get_current_download_folder):
+        browser.get(OtherSiteUrls.ANIME_HAY_TV_VIDEO_URL)
+        any_site_page_object.mouse_over_video_wrapper_element_anime_hay_tv(browser)
+        any_site_page_object.switch_to_iframe_anime_hay_tv(browser)
+        verify_video_step_then_clear_data(
+            implement_download_file(browser, get_current_download_folder, file_type='slow'),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 

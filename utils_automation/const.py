@@ -106,6 +106,8 @@ class OtherSiteUrls:
     PHIM_BAT_HU_VIDEO_URL = 'https://phimbathu.org/phim-tuyet-menh-huong-ung-tap-1-14302.205754.html'
     PHIM_SEX_SUB_VIDEO_URL = 'https://phimsexsub.com/quay-clip-vo-lam-ky-niem-hana-aoyama/'
     VLIVE_TV_VIDEO_URL = 'https://www.vlive.tv/video/150718'
+    ANIME_HAY_TV_VIDEO_URL = 'http://animehay.tv/phim/black-clover-tap-1-e45482.html'
+    DOI_SONG_PHAP_LUAT_VIDEO_URL = 'https://www.doisongphapluat.com/video/video-hot/video-rung-tim-vi-khoanh-khac-doi-ban-than-2-tuoi-chay-toi-om-cham-lay-nhau-sau-2-ngay-xa-cach-a292398.html'
 
 
 class ExtensionIds:
