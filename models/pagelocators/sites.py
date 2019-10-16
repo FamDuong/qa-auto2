@@ -136,6 +136,10 @@ class AnySite(object):
     PHIM_SEX_SUB_VIDEO_ITEM_WRAPPER = (By.ID, 'player-v1')
     PHIM_SEX_SUB_VIDEO_ITEM = (By.XPATH, '//video')
     VLIVE_TV_VIDEO_ITEM = (By.XPATH, '//div[@data-video-overlay]')
+    ANIME_HAY_TV_WRAPPER_VIDEO_ITEM = (By.ID, 'ah-player')
+    ANIME_HAY_TV_IFRAME_VIDEO_ITEM = (By.XPATH, '//iframe[@style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;overflow:hidden;"]')
+    DOI_SONG_PHAP_LUAT_IFRAME_VIDEO_ITEM = (By.XPATH, '//iframe[@scrolling][@style][contains(@src,"doi-ban-than")]')
+    DOI_SONG_PHAP_LUAT_PLAYER_VIDEO = (By.ID, 'rmpPlayer')
 
 
 

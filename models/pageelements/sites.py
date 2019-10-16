@@ -1,6 +1,7 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
+from models.pagelocators.savior import SaviorPageLocators
 from models.pagelocators.sites import YoutubePageLocators, GooglePageLocators, AnySite
 from utils_automation.setup import WaitAfterEach
 
@@ -563,6 +564,23 @@ class AnySiteElements(BasePageElement):
     @staticmethod
     def find_video_vlive_tv_item(driver):
         return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VLIVE_TV_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_wrapper_anime_hay_tv(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.ANIME_HAY_TV_WRAPPER_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_iframe_anime_hay_tv(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.ANIME_HAY_TV_IFRAME_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_iframe_doi_song_phap_luat(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DOI_SONG_PHAP_LUAT_IFRAME_VIDEO_ITEM))
+
+    @staticmethod
+    def find_video_player_doi_song_phap_luat(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DOI_SONG_PHAP_LUAT_PLAYER_VIDEO))
+
 
 
 

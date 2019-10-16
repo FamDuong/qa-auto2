@@ -19,7 +19,6 @@ class TestDownloadGroup:
 
     def implement_test_site(self, browser, url_site, get_current_download_folder):
         pause_any_video_site(browser, url_site)
-        self.savior_page_object.assert_value_preferred_quality(browser, 'High')
         self.prepare_check_download(get_current_download_folder)
         try:
             if url_site is VideoUrls.DONG_PHIM_VIDEO_URL:
