@@ -4,7 +4,7 @@ from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
 from testscripts.sanitytest.savior.common_setup import implement_download_file, \
     clear_data_download_in_browser_and_download_folder, pause_any_video_site, verify_video_step_then_clear_data, \
-    handle_windows_watch_option
+    handle_windows_watch_option, check_if_the_file_fully_downloaded, assert_file_download_exist
 from utils_automation.const import OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
 
@@ -13,12 +13,6 @@ savior_page_object = SaviorPageObject()
 
 
 class TestPhimmoi:
-
-    @staticmethod
-    def pause_video_element_phimmoi(browser):
-        any_site_page_object.switch_to_iframe_skip_ad_phim_moi(browser)
-        any_site_page_object.click_video_element_phimmoi(browser)
-        any_site_page_object.mouse_over_video_element_phimmoi(browser)
 
     def prepare_displayed_savior_popup(self, browser):
         browser.get(OtherSiteUrls.PHIMMOI_VIDEO_URL)
@@ -33,8 +27,8 @@ class TestPhimmoi:
             browser.switch_to_default_content()
         else:
             any_site_page_object.close_popup_continue_watching(browser)
-        self.pause_video_element_phimmoi(browser)
         browser.switch_to_default_content()
+        any_site_page_object.mouse_over_video_element_phimmoi(browser)
 
     @pytestrail.case('C96721')
     @pytest.mark.ten_popular_sites
@@ -126,6 +120,26 @@ class TestAnimeHayTV:
         verify_video_step_then_clear_data(
             implement_download_file(browser, get_current_download_folder, file_type='slow'),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
+
+
+class TestVietSubTV:
+
+    @pytestrail.case('C98786')
+    def test_download_file_video_vietsub_tv(self, browser, get_current_download_folder):
+        browser.get(OtherSiteUrls.VIET_SUB_TV_VIDEO_URL)
+        any_site_page_object.play_video_viet_sub_tv(browser)
+        any_site_page_object.mouse_over_video_item_viet_sub_tv(browser)
+        savior_page_object.download_file_via_savior_download_btn(browser)
+        WaitAfterEach.sleep_timer_after_each_step()
+        savior_page_object.download_file_title_via_savior_download_btn(browser, 'VietSub')
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        # Check the file is fully downloaded
+        check_if_the_file_fully_downloaded(browser, file_type='very slow')
+        assert_file_download_exist(get_current_download_folder)
+        clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
+
+
+
 
 
 

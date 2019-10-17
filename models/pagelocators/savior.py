@@ -33,4 +33,8 @@ class SaviorPageLocators(object):
     CURRENT_VIDEO_QUALITY_SELECTED_ITEM = '[class="quality-label j-quality selected"]'
     CURRENT_VIDEO_FILE_SIZE_ITEM = '[class="media-sub-info j-checked-size'
 
+    @staticmethod
+    def download_option_css_locator(title):
+        return 'a[title*="%s"]' % title
+
 

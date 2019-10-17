@@ -49,6 +49,11 @@ class SaviorPageObject(BasePageObject):
             self.script,
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.DOWNLOAD_BUTTON)
 
+    def download_file_title_via_savior_download_btn(self, driver, title):
+        driver.execute_script(
+            self.script,
+            SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.download_option_css_locator(title))
+
     def download_file_medium_quality(self, driver):
         driver.execute_script(
             self.script,

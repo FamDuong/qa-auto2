@@ -75,11 +75,6 @@ class AnySiteElements(BasePageElement):
             ec.element_to_be_clickable(AnySite.TWENTY_FOUR_H_VIDEO_ITEM))
 
     @staticmethod
-    def find_video_element_phimmoi(driver):
-        return wait_for_element(driver).until(
-            ec.element_to_be_clickable(AnySite.PHIMMOI_VIDEO_ITEM))
-
-    @staticmethod
     def find_video_element_mouse_over_phimmoi(driver):
         return wait_for_element(driver).until(
             ec.element_to_be_clickable(AnySite.PHIMMOI_VIDEO_MOUSE_OVER))
@@ -167,16 +162,6 @@ class AnySiteElements(BasePageElement):
     def find_video_item_2sao_vn(driver):
         return wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.SAO_2_VN_VIDEO_ITEM))
-
-    @staticmethod
-    def find_watch_beginning_fpt_play(driver):
-        return wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.FPT_PLAY_WATCH_FROM_BEGINNING_BTN))
-
-    @staticmethod
-    def find_video_item_fpt_play(driver):
-        return wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.FPT_VIDEO_ITEM))
 
     @staticmethod
     def find_video_item_phunu_giadinh(driver):
@@ -281,11 +266,6 @@ class AnySiteElements(BasePageElement):
     def find_video_box_player_mot_phim(driver):
         return wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.MOT_PHIM_BOX_PLAYER))
-
-    @staticmethod
-    def find_video_item_vtv_vn(driver):
-        return wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.VTV_VN_VIDEO_ITEM))
 
     @staticmethod
     def find_skip_ads_btn_tv_hay(driver):
@@ -580,6 +560,34 @@ class AnySiteElements(BasePageElement):
     @staticmethod
     def find_video_player_doi_song_phap_luat(driver):
         return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DOI_SONG_PHAP_LUAT_PLAYER_VIDEO))
+
+    @staticmethod
+    def find_sao_star_video_item(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.SAO_STAR_VN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_elements_play_middle_button_viet_sub_tv(driver):
+        return driver.find_elements_by_xpath(AnySite.VIET_SUB_TV_PLAY_MIDDLE_BUTTON_XPATH)
+
+    @staticmethod
+    def find_play_middle_button_viet_sub_tv(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VIET_SUB_TV_PLAY_MIDDLE_BUTTON))
+
+    @staticmethod
+    def find_viet_sub_tv_video_item(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VIET_SUB_TV_PLAYER_VIDEO_ITEM))
+
+    @staticmethod
+    def find_elements_ad_not_appear(driver):
+        return driver.find_elements_by_xpath(AnySite.VIET_SUB_TV_AD_NOT_APPEAR_ITEM_XPATH)
+
+    @staticmethod
+    def find_dong_phim_video_item(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_VIDEO_ITEM))
+
+    @staticmethod
+    def find_dong_phim_play_video_item(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_PLAY_VIDEO_ITEM))
 
 
 
