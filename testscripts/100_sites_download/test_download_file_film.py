@@ -78,8 +78,8 @@ class TestTVHay:
 class TestAnimeSub:
 
     @pytestrail.case('C98781')
-    @pytest.mark.skip(reason='Cannot detect video')
     @pytestrail.defect('PF-559')
+    @pytest.mark.skip(reason='Cannot detect video')
     def test_download_file_video_anime_sub(self, browser, get_current_download_folder):
         browser.get(OtherSiteUrls.ANIME_VSUB_TV_URL)
         handle_windows_watch_option(browser, any_site_page_object.choose_continue_from_start_anime_subtv(browser))
