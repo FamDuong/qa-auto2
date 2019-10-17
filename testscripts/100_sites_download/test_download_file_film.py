@@ -58,8 +58,11 @@ class TestTvZing:
 
     @pytestrail.case('C96763')
     @pytest.mark.ten_popular_sites
-    def test_check_default_state_download_button(self, browser):
+    def test_check_default_state_download_button(self, browser, get_current_download_folder):
         pause_any_video_site(browser, OtherSiteUrls.TV_ZING_VIDEO_URL)
+        verify_video_step_then_clear_data(
+            implement_download_file(browser, get_current_download_folder, file_type='slow'),
+            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
 class TestTVHay:
