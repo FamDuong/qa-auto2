@@ -1,11 +1,14 @@
 import pytest
-
 from models.pageobject.savior import SaviorPageObject
 from pytest_testrail.plugin import pytestrail
+from models.pageobject.sites import AnySitePageObject
 from testscripts.sanitytest.savior.common_setup import pause_any_video_site, download_file_via_main_download_button, \
-    assert_file_download_value, clear_data_download, delete_all_mp4_file_download
+    assert_file_download_value, clear_data_download, delete_all_mp4_file_download, verify_video_step_then_clear_data, \
+    implement_download_file, clear_data_download_in_browser_and_download_folder
 from utils_automation.const import VideoUrls, OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
+
+any_site_page_object = AnySitePageObject()
 
 
 class TestDownloadGroup:
@@ -21,10 +24,7 @@ class TestDownloadGroup:
         pause_any_video_site(browser, url_site)
         self.prepare_check_download(get_current_download_folder)
         try:
-            if url_site is VideoUrls.DONG_PHIM_VIDEO_URL:
-                download_file_via_main_download_button(browser, file_type='slow')
-            else:
-                download_file_via_main_download_button(browser)
+            download_file_via_main_download_button(browser, file_type='slow')
             pause_any_video_site(browser, url_site)
             self.savior_page_object.choose_preferred_option(browser)
             height_frame = self.savior_page_object.verify_correct_video_options_chosen_high_quality_option(browser)
@@ -54,9 +54,17 @@ class TestDownloadGroup:
     @pytestrail.case('C98735')
     @pytest.mark.ten_popular_sites
     def test_download_dongphim(self, browser, get_current_download_folder):
-        self.implement_test_site(browser, VideoUrls.DONG_PHIM_VIDEO_URL, get_current_download_folder)
+        browser.get(VideoUrls.DONG_PHIM_VIDEO_URL)
+        any_site_page_object.click_video_item_dong_phim(browser)
+        any_site_page_object.mouse_over_video_item_dong_phim(browser)
+        verify_video_step_then_clear_data(
+            implement_download_file(browser, get_current_download_folder),
+            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
+    @pytestrail.case('C98793')
     def test_download_daily_motion(self, browser, get_current_download_folder):
         self.implement_test_site(browser, OtherSiteUrls.DAILY_MOTION_VIDEO_URL, get_current_download_folder)
+
+
 
 

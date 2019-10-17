@@ -56,8 +56,6 @@ class AnySite(object):
     SOHA_VIDEO_ITEM = (By.ID, 'video-embeb')
     EVA_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="zplayer"]')
     SAO_2_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'iframe[src*="https://embed.vietnamnettv.vn"]')
-    FPT_PLAY_WATCH_FROM_BEGINNING_BTN = (By.ID, 'onCancel')
-    FPT_VIDEO_ITEM = (By.XPATH, '(//video)[1]')
     PHUNU_GIADINH_VIDEO_ITEM = (By.ID, 'rmpPlayer')
     TIEN_PHONG_IFRAME = (By.XPATH, '//iframe[@class="cms-video"]')
     TIEN_PHONG_VIDEO_ITEM = (By.XPATH, '//div[@aria-label="Start Playback"]')
@@ -78,7 +76,6 @@ class AnySite(object):
     MOT_PHIM_VIDEO_PLAYER = (By.ID, 'player')
     MOT_PHIM_EPISODE_ITEM = (By.XPATH, '//a[text()="Tập 1"]')
     MOT_PHIM_BOX_PLAYER = (By.ID, 'box-player')
-    VTV_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
     TV_HAY_VN_PLAY_BTN = (By.XPATH, '//div[@aria-label="Play"][1]')
     TV_HAY_VN_SKIP_ADD_BTN = (By.XPATH, '//span[text()="Bỏ qua quảng cáo"]')
     TV_HAY_VN_VIDEO_ITEM = (By.XPATH, '//video')
@@ -140,6 +137,13 @@ class AnySite(object):
     ANIME_HAY_TV_IFRAME_VIDEO_ITEM = (By.XPATH, '//iframe[@style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;overflow:hidden;"]')
     DOI_SONG_PHAP_LUAT_IFRAME_VIDEO_ITEM = (By.XPATH, '//iframe[@scrolling][@style][contains(@src,"doi-ban-than")]')
     DOI_SONG_PHAP_LUAT_PLAYER_VIDEO = (By.ID, 'rmpPlayer')
+    SAO_STAR_VN_VIDEO_ITEM = (By.XPATH, '//div[@class="wp-video"]')
+    VIET_SUB_TV_PLAY_MIDDLE_BUTTON = (By.XPATH, '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]')
+    VIET_SUB_TV_PLAY_MIDDLE_BUTTON_XPATH = '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]'
+    VIET_SUB_TV_PLAYER_VIDEO_ITEM = (By.ID, 'player')
+    VIET_SUB_TV_AD_NOT_APPEAR_ITEM_XPATH = '//div[@id="adsmessage"][@style="display: none;"]'
+    DONG_PHIM_VIDEO_ITEM = (By.CSS_SELECTOR, 'div[id*="video-player"][playsinline]')
+    DONG_PHIM_PLAY_VIDEO_ITEM = (By.CSS_SELECTOR, 'button[class="cplayer-play-control cplayer-control cplayer-button cplayer-paused"]')
 
 
 

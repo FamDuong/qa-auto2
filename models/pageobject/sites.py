@@ -86,9 +86,6 @@ class AnySitePageObject(BasePageObject):
     def mouse_over_video_element_24h(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_element_24h(driver))
 
-    def click_video_element_phimmoi(self, driver):
-        self.any_site_element.find_video_element_phimmoi(driver).click()
-
     def mouse_over_video_element_phimmoi(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_element_mouse_over_phimmoi(driver))
 
@@ -148,12 +145,6 @@ class AnySitePageObject(BasePageObject):
 
     def mouse_over_video_item_sao_2_vn(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_2sao_vn(driver))
-
-    def choose_watch_from_beginning_fpt_play(self, driver):
-        self.any_site_element.find_watch_beginning_fpt_play(driver).click()
-
-    def mouse_over_video_item_fpt_play(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_fpt_play(driver))
 
     def mouse_over_video_item_phunu_giadinh(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_phunu_giadinh(driver))
@@ -240,9 +231,6 @@ class AnySitePageObject(BasePageObject):
     def mouse_over_video_item_mot_phim(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_mot_phim(driver))
 
-    def mouse_over_video_item_vtv_vn(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_vtv_vn(driver))
-
     def skip_ads_tv_hay(self, driver):
         self.any_site_element.find_skip_ads_btn_tv_hay(driver).click()
 
@@ -319,29 +307,6 @@ class AnySitePageObject(BasePageObject):
 
     def mouse_over_video_fr_porn_hub(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_fr_porn_hub(driver))
-
-    def switch_to_iframe_skip_ad_phim_moi(self, driver):
-        iframe_main_perol_ads = driver.find_elements_by_css_selector(AnySite.PHIMMOI_IFRAME_MAIN_PEROL_ADS_ID_TEXT)
-        while len(iframe_main_perol_ads) > 0:
-            driver.switch_to.frame(driver.find_element_by_css_selector(AnySite.PHIMMOI_IFRAME_MAIN_PEROL_ADS_ID_TEXT))
-            # if i >= 1:
-            #     time.sleep(60)
-            i = 0
-            start_time = datetime.now()
-            while i == 0:
-                if self.any_site_element.check_if_bo_qua_quang_cao_button_phimmoi_appear(driver) > 0:
-                    self.any_site_element.find_bo_qua_quang_cao_phimmoi(driver).click()
-                    i += 1
-                elif self.any_site_element.check_if_skip_button_phimmoi_appear(driver) > 0:
-                    self.any_site_element.find_an_skip_ad_button_phimmoi(driver).click()
-                    i += 1
-                elif (datetime.now() - start_time).total_seconds() > 20:
-                    i += 1
-                else:
-                    time.sleep(2)
-            driver.switch_to_default_content()
-            iframe_main_perol_ads = driver.find_elements_by_css_selector(AnySite.PHIMMOI_IFRAME_MAIN_PEROL_ADS_ID_TEXT)
-        return len(iframe_main_perol_ads)
 
     def click_video_vlxx(self, driver):
         ActionChains(driver).move_to_element(self.any_site_element.find_video_item_wrapper_vlxx(driver)).perform()
@@ -457,6 +422,29 @@ class AnySitePageObject(BasePageObject):
         self.any_site_element.find_video_player_doi_song_phap_luat(driver).click()
         while self.verify_savior_popup_appear(driver) is None:
             WaitAfterEach.sleep_timer_after_each_step()
+
+    def mouse_over_video_sao_star_vn(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_sao_star_video_item(driver))
+
+    def play_video_viet_sub_tv(self, driver):
+        while len(self.any_site_element.find_elements_play_middle_button_viet_sub_tv(driver)) >= 1:
+            self.any_site_element.find_play_middle_button_viet_sub_tv(driver).click()
+            WaitAfterEach.sleep_timer_after_each_step()
+            if len(self.any_site_element.find_elements_ad_not_appear(driver)) >= 1:
+                break
+
+    def mouse_over_video_item_viet_sub_tv(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_viet_sub_tv_video_item(driver))
+
+    def mouse_over_video_item_dong_phim(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_dong_phim_video_item(driver))
+
+    def click_video_item_dong_phim(self, driver):
+        self.any_site_element.find_dong_phim_play_video_item(driver).click()
+        WaitAfterEach.sleep_timer_after_each_step()
+
+
+
 
 
 

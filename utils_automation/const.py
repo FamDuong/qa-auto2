@@ -59,7 +59,6 @@ class OtherSiteUrls:
     SOHA_VIDEO_URL = 'https://soha.vn/video.htm'
     EVA_VN_VIDEO_URL = 'https://eva.vn/clip-eva/5-con-giap-nam-vua-gioi-kiem-tien-vua-chieu-chuong-thuong-yeu-vo-het-long-c157a403553.html'
     SAO_2_VN_VIDEO_URL = 'https://2sao.vn/tran-thanh-to-hari-won-an-nhieu-den-chu-quan-cung-khiep-so-n-194597.html'
-    FPT_PLAY_VIDEO_URL = 'https://fptplay.vn/xem-video/ngoi-nha-chung-mua-9-love-house-series-9-5d36d6a92089bd053fc87240/tap-1.html'
     PHUNU_GIADINH_VIDEO_URL = 'https://www.phunuvagiadinh.vn/video-185'
     TIEN_PHONG_VIDEO_URL = 'https://www.tienphong.vn/video-clip/singapore-tham-vong-ngam-hoa-dat-nuoc-1459961.tpo'
     BONG_DA_DOT_COM_VIDEO_URL = 'http://www.bongda.com.vn/highlights-bayern-munich-2-2-hertha-berlin-bundesliga-v516328.html'
@@ -71,7 +70,6 @@ class OtherSiteUrls:
     TUOI_TRE_VIDEO_URL = 'https://tuoitre.vn/video.htm'
     TV_ZING_VIDEO_URL = 'https://tv.zing.vn/video/Goblin-Yeu-Tinh-Tap-1/IWZEIC7F.html'
     MOT_PHIM_VIDEO_URL = 'https://motphim.net/xem-phim/cuoc-doi-thu-2-tap-4-7099_90578.html'
-    VTV_VN_TRUYEN_HINH_URL = 'https://vtv.vn/video/vut-xac-lon-benh-nguy-co-lay-lan-dich-ta-lon-chau-phi-theo-nguon-nuoc-390682.htm'
     TV_HAY_VIDEO_URL = 'http://tvhay.org/xem-phim-tram-yeu-360727'
     NGOI_SAO_VN_URL = 'https://ngoisao.vn/video/lieu-linh-bang-qua-dong-nuoc-lu-nguoi-dan-ong-suyt-phai-tra-gia-bang-ca-tinh-mang-273892.htm'
     VTC_VN_VIDEO_URL = 'https://vtc.vn/truyen-hinh-27.html'
@@ -108,6 +106,8 @@ class OtherSiteUrls:
     VLIVE_TV_VIDEO_URL = 'https://www.vlive.tv/video/150718'
     ANIME_HAY_TV_VIDEO_URL = 'http://animehay.tv/phim/black-clover-tap-1-e45482.html'
     DOI_SONG_PHAP_LUAT_VIDEO_URL = 'https://www.doisongphapluat.com/video/video-hot/video-rung-tim-vi-khoanh-khac-doi-ban-than-2-tuoi-chay-toi-om-cham-lay-nhau-sau-2-ngay-xa-cach-a292398.html'
+    SAO_STAR_VIDEO_URL = 'https://saostar.vn/xa-hoi/clip-tau-hoa-tong-xe-o-to-7-cho-tai-xe-thoat-nan-than-ky-6150975.html'
+    VIET_SUB_TV_VIDEO_URL = 'https://vietsubtv.org/xem-phim/doi-mat-12204/tap-3.html'
 
 
 class ExtensionIds:

@@ -1,6 +1,3 @@
-from datetime import datetime
-
-from models.pageelements.sites import AnySiteElements
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
@@ -13,7 +10,6 @@ from utils_automation.setup import WaitAfterEach
 
 any_site_page_object = AnySitePageObject()
 savior_page_object = SaviorPageObject()
-any_site_element = AnySiteElements()
 
 
 class Test24H:
@@ -470,6 +466,22 @@ class TestDoiSongPhapLuat:
             implement_download_file(browser, get_current_download_folder),
             clear_data_download_in_browser_and_download_folder(browser,
                                                                get_current_download_folder))
+
+
+class TestSaoStar:
+
+    @pytestrail.case('C98785')
+    def test_download_sao_star(self, browser, get_current_download_folder):
+        browser.get(OtherSiteUrls.SAO_STAR_VIDEO_URL)
+        any_site_page_object.mouse_over_video_sao_star_vn(browser)
+        verify_video_step_then_clear_data(
+            implement_download_file(browser, get_current_download_folder),
+            clear_data_download_in_browser_and_download_folder(browser,
+                                                               get_current_download_folder))
+
+
+
+
 
 
 
