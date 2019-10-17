@@ -190,20 +190,23 @@ class AnySitePageObject(BasePageObject):
     def switch_to_iframe_vu_vi_phim(self, driver):
         driver.switch_to.frame(self.any_site_element.find_iframe_vu_vi_phim(driver))
 
-    def mouse_over_video_item_vu_vi_phim_maximize_minimize(self, driver):
-        self.mouse_over_video_iframe_with_minimize_maximize(driver, self.switch_to_iframe_vu_vi_phim,
-                                                            self.any_site_element.find_video_item_vu_vi_phim,
-                                                            40)
+    # def mouse_over_video_item_vu_vi_phim_maximize_minimize(self, driver):
+    #     self.mouse_over_video_iframe_with_minimize_maximize(driver, self.switch_to_iframe_vu_vi_phim,
+    #                                                         self.any_site_element.find_video_item_vu_vi_phim,
+    #                                                         40)
+
+    def mouse_over_video_item_vu_vi_phim(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_iframe_vu_vi_phim(driver))
 
     def click_video_item_vu_vi_phim(self, driver):
         self.switch_to_iframe_vu_vi_phim(driver)
         ActionChains(driver).move_to_element(self.any_site_element.find_video_item_vu_vi_phim(driver)).perform()
         self.any_site_element.find_video_item_vu_vi_phim(driver).click()
 
-    def double_click_video_item_vu_vi_phim(self, driver):
-        self.switch_to_iframe_vu_vi_phim(driver)
-        ActionChains(driver).move_to_element(
-            self.any_site_element.find_video_item_vu_vi_phim(driver)).double_click().perform()
+    # def double_click_video_item_vu_vi_phim(self, driver):
+    #     self.switch_to_iframe_vu_vi_phim(driver)
+    #     ActionChains(driver).move_to_element(
+    #         self.any_site_element.find_video_item_vu_vi_phim(driver)).double_click().perform()
 
     def click_full_screen_vu_vi_phim(self, driver):
         ActionChains(driver).move_to_element(self.any_site_element.find_full_screen_button_vu_vi_phim(driver)).perform()
