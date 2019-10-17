@@ -43,9 +43,7 @@ class TestVuViPhim:
     @staticmethod
     def prepare_savior_option_displayed(browser):
         browser.get(OtherSiteUrls.VU_VI_PHIM_VIDEO_URL)
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        any_site_page_object.double_click_video_item_vu_vi_phim(browser)
-        any_site_page_object.mouse_over_video_item_vu_vi_phim_maximize_minimize(browser)
+        any_site_page_object.mouse_over_video_item_vu_vi_phim(browser)
 
     @pytestrail.case('C98751')
     def test_download_file_vuviphim(self, browser, get_current_download_folder):
@@ -80,6 +78,8 @@ class TestTVHay:
 class TestAnimeSub:
 
     @pytestrail.case('C98781')
+    @pytestrail.defect('PF-559')
+    @pytest.mark.skip(reason='Cannot detect video')
     def test_download_file_video_anime_sub(self, browser, get_current_download_folder):
         browser.get(OtherSiteUrls.ANIME_VSUB_TV_URL)
         handle_windows_watch_option(browser, any_site_page_object.choose_continue_from_start_anime_subtv(browser))
