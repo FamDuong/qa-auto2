@@ -20,7 +20,7 @@ class TestXVideos:
         browser.get(OtherSiteUrls.XVIDEOS_DOT_COM_VIDEO_URL)
         any_site_page_object.mouse_over_video_x_videos(browser)
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='slow'),
+            implement_download_file(browser, get_current_download_folder, file_type='very slow'),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
@@ -32,7 +32,7 @@ class TestXNXX:
         browser.get(OtherSiteUrls.XNXX_VIDEO_URL)
         any_site_page_object.mouse_over_video_xnxx(browser)
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='slow'),
+            implement_download_file(browser, get_current_download_folder, file_type='very slow'),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
