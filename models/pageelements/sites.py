@@ -209,28 +209,9 @@ class AnySiteElements(BasePageElement):
             ec.presence_of_element_located(AnySite.GAME_K_VN_VIDEO_ITEM))
 
     @staticmethod
-    def find_iframe_vu_vi_phim(driver):
-        return wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.VU_VI_PHIM_IFRAME))
-
-    @staticmethod
     def find_video_item_vu_vi_phim(driver):
         return wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.VU_VI_PHIM_VIDEO_ITEM))
-
-    @staticmethod
-    def find_full_screen_button_vu_vi_phim(driver):
-        return wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.VU_VI_PHIM_FULL_SCREEN_BUTTON))
-
-    @staticmethod
-    def find_play_video_button_vu_vi_phim(driver):
-        return wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.VU_VI_PHIM_PLAY_VIDEO_BUTTON))
-
-    @staticmethod
-    def find_video_item_vu_vi_phim_js(driver):
-        return driver.execute_script('return document.getElementById("media")')
 
     @staticmethod
     def find_video_item_an_ninh_thu_do(driver):

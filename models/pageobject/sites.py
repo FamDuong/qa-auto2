@@ -196,21 +196,7 @@ class AnySitePageObject(BasePageObject):
     #                                                         40)
 
     def mouse_over_video_item_vu_vi_phim(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_iframe_vu_vi_phim(driver))
-
-    def click_video_item_vu_vi_phim(self, driver):
-        self.switch_to_iframe_vu_vi_phim(driver)
-        ActionChains(driver).move_to_element(self.any_site_element.find_video_item_vu_vi_phim(driver)).perform()
-        self.any_site_element.find_video_item_vu_vi_phim(driver).click()
-
-    # def double_click_video_item_vu_vi_phim(self, driver):
-    #     self.switch_to_iframe_vu_vi_phim(driver)
-    #     ActionChains(driver).move_to_element(
-    #         self.any_site_element.find_video_item_vu_vi_phim(driver)).double_click().perform()
-
-    def click_full_screen_vu_vi_phim(self, driver):
-        ActionChains(driver).move_to_element(self.any_site_element.find_full_screen_button_vu_vi_phim(driver)).perform()
-        self.any_site_element.find_full_screen_button_vu_vi_phim(driver).click()
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_vu_vi_phim(driver))
 
     def click_video_item_an_ninh_thu_do(self, driver):
         self.any_site_element.find_video_item_an_ninh_thu_do(driver).click()
@@ -303,7 +289,7 @@ class AnySitePageObject(BasePageObject):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_nhac_vn(driver))
 
     def mouse_over_video_x_videos(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_xvideos(driver))
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_xvideos(driver), timeout=20)
 
     def mouse_over_video_xnxx(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_xnxx(driver))

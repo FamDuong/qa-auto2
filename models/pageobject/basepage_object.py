@@ -56,13 +56,13 @@ class BasePageObject(object):
     def get_element_first_layer_savior(self, driver):
         return driver.execute_script('return document.querySelector(arguments[0])', SaviorPageLocators.FIRST_LAYER)
 
-    def mouse_over_video_element_site(self, driver, element):
+    def mouse_over_video_element_site(self, driver, element, timeout=12):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         start_time = datetime.now()
         while self.verify_savior_popup_appear(driver) is None:
             WebElements.mouse_over_element(driver, element)
             time_delta = datetime.now() - start_time
-            if time_delta.total_seconds() >= 12:
+            if time_delta.total_seconds() >= timeout:
                 break
 
     def verify_text_is_visible_on_page(self, driver, component_name):
