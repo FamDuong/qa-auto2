@@ -74,6 +74,7 @@ class AnySite(object):
     MOT_PHIM_EPISODE_ITEM = (By.XPATH, '//a[text()="Tập 1"]')
     MOT_PHIM_BOX_PLAYER = (By.ID, 'box-player')
     TV_HAY_VN_PLAY_BTN = (By.XPATH, '//div[@aria-label="Play"][1]')
+    TV_HAY_VN_IFRAME = (By.XPATH, '//iframe[@width="100%"]')
     TV_HAY_VN_SKIP_ADD_BTN = (By.XPATH, '//span[text()="Bỏ qua quảng cáo"]')
     TV_HAY_VN_VIDEO_ITEM = (By.XPATH, '//video')
     NGOI_SAO_VN_VIDEO_ITEM = (By.XPATH, '(//video[@class="jw-video jw-reset"])[1]')

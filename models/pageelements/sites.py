@@ -6,8 +6,8 @@ from models.pagelocators.sites import YoutubePageLocators, GooglePageLocators, A
 from utils_automation.setup import WaitAfterEach
 
 
-def wait_for_element(driver):
-    return WebDriverWait(driver, 10)
+def wait_for_element(driver, timeout=10):
+    return WebDriverWait(driver, timeout)
 
 class YoutubePageElements(BasePageElement):
 
@@ -250,7 +250,7 @@ class AnySiteElements(BasePageElement):
 
     @staticmethod
     def find_skip_ads_btn_tv_hay(driver):
-        return wait_for_element(driver).until(
+        return wait_for_element(driver, 100).until(
             ec.presence_of_element_located(AnySite.TV_HAY_VN_SKIP_ADD_BTN))
 
     @staticmethod
@@ -259,8 +259,12 @@ class AnySiteElements(BasePageElement):
             ec.presence_of_element_located(AnySite.TV_HAY_VN_PLAY_BTN))
 
     @staticmethod
+    def find_iframe_tv_hay(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.TV_HAY_VN_IFRAME))
+
+    @staticmethod
     def find_video_item_tv_hay(driver):
-        return wait_for_element(driver).until(
+        return wait_for_element(driver, 20).until(
             ec.presence_of_element_located(AnySite.TV_HAY_VN_VIDEO_ITEM))
 
     @staticmethod
