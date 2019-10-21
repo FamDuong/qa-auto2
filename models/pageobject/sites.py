@@ -226,8 +226,14 @@ class AnySitePageObject(BasePageObject):
     def click_play_btn_tv_hay(self, driver):
         self.any_site_element.find_play_btn_tv_hay(driver).click()
 
+    def switch_to_tv_hay_iframe(self, driver):
+        driver.switch_to.frame(self.any_site_element.find_iframe_tv_hay(driver))
+
     def mouse_over_video_item_tv_hay(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_tv_hay(driver))
+
+    def click_video_item_tv_hay(self, driver):
+        driver.execute_script('document.querySelector("#embedVideoC > div.vid_play").click();')
 
     def mouse_over_video_item_ngoi_sao_vn(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_ngoi_sao_vn(driver))
