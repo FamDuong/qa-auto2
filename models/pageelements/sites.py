@@ -215,7 +215,11 @@ class AnySiteElements(BasePageElement):
 
     @staticmethod
     def find_vu_vi_phim_video(driver):
-        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VU_VI_PHIM_VIDEO_ITEM))
+        return wait_for_element(driver).until(ec.element_to_be_clickable(AnySite.VU_VI_PHIM_VIDEO_ITEM))
+
+    @staticmethod
+    def find_vu_vi_phim_mute_btn(driver):
+        return wait_for_element(driver).until(ec.element_to_be_clickable(AnySite.VU_VI_PHIM_MUTE_BTN))
 
     @staticmethod
     def find_video_item_an_ninh_thu_do(driver):

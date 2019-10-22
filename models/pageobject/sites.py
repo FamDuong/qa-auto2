@@ -60,8 +60,10 @@ class AnySitePageObject(BasePageObject):
         while self.verify_savior_popup_appear(driver) is None:
             switch_to_iframe_video(driver)
             WebElements.mouse_over_element(driver, find_video_item(driver))
+            for arg in args:
+                arg
+                time.sleep(1)
             driver.switch_to.default_content()
-            args
             time_delta = datetime.now() - start_time
             if time_delta.total_seconds() >= time_out_sec:
                 break
@@ -69,8 +71,8 @@ class AnySitePageObject(BasePageObject):
     def mouse_over_video_iframe_with_minimize_maximize(self, driver, switch_to_iframe_video, find_video_item,
                                                        time_out_sec):
         self.mouse_over_video_iframe(driver, switch_to_iframe_video, find_video_item, time_out_sec,
-                                     driver.maximize_window(),
-                                     driver.minimize_window())
+                                     driver.minimize_window(),
+                                     driver.maximize_window())
 
     def mouse_over_first_video_element(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_first_video_element(driver))
@@ -188,10 +190,14 @@ class AnySitePageObject(BasePageObject):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_gamek_vn(driver))
 
     def mouse_over_video_item_vu_vi_phim(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_vu_vi_phim_video(driver))
+        self.mouse_over_video_iframe_with_minimize_maximize(driver, self.switch_to_iframe_vu_vi_phim, self.
+                                                            any_site_element.find_vu_vi_phim_video, 60)
 
     def click_video_item_vu_vi_phim(self, driver):
-        self.any_site_element.find_vu_vi_phim_video(driver).click()
+        self.any_site_element.find_vu_vi_phim_mute_btn(driver).click()
+
+    def click_video_item_vu_vi_phim_js(self, driver):
+        driver.execute_script('document.querySelector("#media").click();')
 
     def switch_to_iframe_vu_vi_phim(self, driver):
         driver.switch_to.frame(self.any_site_element.find_vu_vi_phim_iframe(driver))
