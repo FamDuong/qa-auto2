@@ -196,6 +196,9 @@ class AnySitePageObject(BasePageObject):
     def click_video_item_vu_vi_phim(self, driver):
         self.any_site_element.find_vu_vi_phim_mute_btn(driver).click()
 
+    def click_replay_btn_vu_vi_phim(self, driver):
+        self.any_site_element.find_vu_vi_phim_replay_btn(driver).click()
+
     def click_video_item_vu_vi_phim_js(self, driver):
         driver.execute_script('document.querySelector("#media").click();')
 
