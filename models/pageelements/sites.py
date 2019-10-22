@@ -362,6 +362,10 @@ class AnySiteElements(BasePageElement):
             ec.presence_of_element_located(AnySite.XVIDEO_VIDEO_ITEM))
 
     @staticmethod
+    def find_play_btn_x_videos(driver):
+        return wait_for_element(driver).until(ec.element_to_be_clickable(AnySite.XVIDEO_PLAY_BTN))
+
+    @staticmethod
     def find_video_item_xnxx(driver):
         return wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.XNXX_VIDEO_ITEM))

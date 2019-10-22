@@ -293,7 +293,7 @@ class AnySitePageObject(BasePageObject):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_nhac_vn(driver))
 
     def click_video_x_videos(self, driver):
-        self.any_site_element.find_video_item_xvideos(driver).click()
+        self.any_site_element.find_play_btn_x_videos(driver).click()
 
     def mouse_over_video_x_videos(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_xvideos(driver), timeout=20)

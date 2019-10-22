@@ -96,6 +96,7 @@ class AnySite(object):
     ANIME_VSUB_TV_CLOSE_AD_BUTTON = (By.ID, 'close-and-play')
     NHAC_VN_VIDEO_URL = (By.ID, 'myvideo')
     XVIDEO_VIDEO_ITEM = (By.XPATH, '//div[@id="html5video"]')
+    XVIDEO_PLAY_BTN = (By.XPATH, '//img[@title="Play"]')
     XNXX_VIDEO_ITEM = (By.XPATH, '//video[@preload="auto"]')
     FR_PORN_HUB_VIDEO_ITEM = (By.ID, 'player')
     VLXX_VIDEO_ITEM = (By.XPATH, '//video')
