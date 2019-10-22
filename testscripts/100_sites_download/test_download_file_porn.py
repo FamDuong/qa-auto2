@@ -18,6 +18,7 @@ class TestXVideos:
     @pytest.mark.ten_popular_sites
     def test_download_file_x_videos(self, browser, get_current_download_folder):
         browser.get(OtherSiteUrls.XVIDEOS_DOT_COM_VIDEO_URL)
+        any_site_page_object.click_video_x_videos(browser)
         any_site_page_object.mouse_over_video_x_videos(browser)
         verify_video_step_then_clear_data(
             implement_download_file(browser, get_current_download_folder, file_type='very slow'),
