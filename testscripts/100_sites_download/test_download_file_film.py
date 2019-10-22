@@ -45,8 +45,9 @@ class TestVuViPhim:
     def prepare_savior_option_displayed(browser):
         browser.get(OtherSiteUrls.VU_VI_PHIM_VIDEO_URL)
         # any_site_page_object.click_video_item_vu_vi_phim_js(browser)
-        # any_site_page_object.switch_to_iframe_vu_vi_phim(browser)
+        any_site_page_object.switch_to_iframe_vu_vi_phim(browser)
         # any_site_page_object.click_video_item_vu_vi_phim(browser)
+        any_site_page_object.click_replay_btn_vu_vi_phim(browser)
         any_site_page_object.mouse_over_video_item_vu_vi_phim(browser)
         WaitAfterEach.sleep_timer_after_each_step()
 

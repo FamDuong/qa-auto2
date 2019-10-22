@@ -68,6 +68,7 @@ class AnySite(object):
     VU_VI_PHIM_IFRAME_ELEMENT = (By.XPATH, '//iframe[@width="100%"]')
     VU_VI_PHIM_VIDEO_ITEM = (By.XPATH, '//div[@id="embedVideoE"]')
     VU_VI_PHIM_MUTE_BTN = (By.XPATH, '//div[@class="html5-vpl_volume_horn html5-vpl_panel_btn"]')
+    VU_VI_PHIM_REPLAY_BTN = (By.XPATH, '//div[@class="html5-vpl_panel_btn html5-vpl_play"]')
     AN_NINH_THU_DO_VIDEO_ITEM = (By.ID, 'main_detail')
     TUOI_TRE_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
     MOT_PHIM_VIDEO_ITEM = (By.XPATH, '//video')
