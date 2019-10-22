@@ -187,16 +187,14 @@ class AnySitePageObject(BasePageObject):
     def mouse_over_video_item_gamek_vn(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_gamek_vn(driver))
 
-    def switch_to_iframe_vu_vi_phim(self, driver):
-        driver.switch_to.frame(self.any_site_element.find_iframe_vu_vi_phim(driver))
-
-    # def mouse_over_video_item_vu_vi_phim_maximize_minimize(self, driver):
-    #     self.mouse_over_video_iframe_with_minimize_maximize(driver, self.switch_to_iframe_vu_vi_phim,
-    #                                                         self.any_site_element.find_video_item_vu_vi_phim,
-    #                                                         40)
-
     def mouse_over_video_item_vu_vi_phim(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_vu_vi_phim(driver))
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_vu_vi_phim_video(driver))
+
+    def click_video_item_vu_vi_phim(self, driver):
+        self.any_site_element.find_vu_vi_phim_video(driver).click()
+
+    def switch_to_iframe_vu_vi_phim(self, driver):
+        driver.switch_to.frame(self.any_site_element.find_vu_vi_phim_iframe(driver))
 
     def click_video_item_an_ninh_thu_do(self, driver):
         self.any_site_element.find_video_item_an_ninh_thu_do(driver).click()

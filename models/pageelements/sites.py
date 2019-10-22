@@ -209,9 +209,13 @@ class AnySiteElements(BasePageElement):
             ec.presence_of_element_located(AnySite.GAME_K_VN_VIDEO_ITEM))
 
     @staticmethod
-    def find_video_item_vu_vi_phim(driver):
+    def find_vu_vi_phim_iframe(driver):
         return wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.VU_VI_PHIM_VIDEO_ITEM))
+            ec.presence_of_element_located(AnySite.VU_VI_PHIM_IFRAME_ELEMENT))
+
+    @staticmethod
+    def find_vu_vi_phim_video(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VU_VI_PHIM_VIDEO_ITEM))
 
     @staticmethod
     def find_video_item_an_ninh_thu_do(driver):

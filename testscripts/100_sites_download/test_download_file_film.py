@@ -44,11 +44,15 @@ class TestVuViPhim:
     @staticmethod
     def prepare_savior_option_displayed(browser):
         browser.get(OtherSiteUrls.VU_VI_PHIM_VIDEO_URL)
+        any_site_page_object.switch_to_iframe_vu_vi_phim(browser)
+        any_site_page_object.click_video_item_vu_vi_phim(browser)
         any_site_page_object.mouse_over_video_item_vu_vi_phim(browser)
+        WaitAfterEach.sleep_timer_after_each_step()
 
     @pytestrail.case('C98751')
     def test_download_file_vuviphim(self, browser, get_current_download_folder):
         self.prepare_savior_option_displayed(browser)
+        browser.switch_to.default_content()
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder, file_type='slow'),
                                           clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
