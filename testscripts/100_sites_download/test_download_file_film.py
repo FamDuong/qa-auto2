@@ -63,7 +63,7 @@ class TestTvZing:
 
     @pytestrail.case('C96763')
     @pytest.mark.ten_popular_sites
-    def test_check_default_state_download_button(self, browser, get_current_download_folder):
+    def test_download_file_tv_zing(self, browser, get_current_download_folder):
         pause_any_video_site(browser, OtherSiteUrls.TV_ZING_VIDEO_URL)
         verify_video_step_then_clear_data(
             implement_download_file(browser, get_current_download_folder, file_type='slow'),
@@ -112,6 +112,8 @@ class TestAnimeSub:
 class TestAnimeTVN:
 
     @pytestrail.case('C98803')
+    @pytestrail.defect('US-43')
+    @pytest.mark.skip(reason='Cannot video file on link')
     def test_download_file_video_anime_tvn(self, browser, get_current_download_folder):
         browser.get(OtherSiteUrls.ANIME_TVN_VIDEO_URL)
         any_site_page_object.mouse_over_tvn_video_element(browser)

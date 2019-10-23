@@ -58,7 +58,7 @@ class TestDownloadGroup:
         any_site_page_object.click_video_item_dong_phim(browser)
         any_site_page_object.mouse_over_video_item_dong_phim(browser)
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder),
+            implement_download_file(browser, get_current_download_folder, file_type='slow'),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
     @pytestrail.case('C98793')
