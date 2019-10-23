@@ -376,7 +376,13 @@ class AnySiteElements(BasePageElement):
     @staticmethod
     def find_video_item_xnxx(driver):
         return wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.XNXX_VIDEO_ITEM))
+            ec.element_to_be_clickable(AnySite.XNXX_VIDEO_ITEM))
+
+    @staticmethod
+    def find_play_btn_xnxx(driver):
+        return wait_for_element(driver).until(
+            ec.element_to_be_clickable(AnySite.XNXX_PLAY_BTN)
+        )
 
     @staticmethod
     def find_video_item_fr_porn_hub(driver):
