@@ -310,6 +310,10 @@ class AnySitePageObject(BasePageObject):
     def mouse_over_video_xnxx(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_xnxx(driver))
 
+    def click_play_video_item_xnxx(self, driver):
+        ActionChains(driver).move_to_element(self.any_site_element.find_play_btn_xnxx(driver)).perform()
+        self.any_site_element.find_play_btn_xnxx(driver).click()
+
     def mouse_over_video_fr_porn_hub(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_fr_porn_hub(driver))
 
