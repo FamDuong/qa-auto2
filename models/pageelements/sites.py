@@ -179,16 +179,6 @@ class AnySiteElements(BasePageElement):
             ec.presence_of_element_located(AnySite.TIEN_PHONG_PLAY_VIDEO_ITEM))
 
     @staticmethod
-    def find_iframe_tien_phong(driver):
-        return wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.TIEN_PHONG_IFRAME))
-
-    @staticmethod
-    def find_iframe_bong_da_dot_com(driver):
-        return wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.BONG_DA_DOT_COM_IFRAME))
-
-    @staticmethod
     def find_video_item_bong_da_dot_com(driver):
         return wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.BONG_DA_DOT_COM_VIDEO_ITEM))
@@ -340,9 +330,17 @@ class AnySiteElements(BasePageElement):
             ec.presence_of_element_located(AnySite.DAN_TRI_VIDEO_ITEM))
 
     @staticmethod
+    def find_play_btn_dan_tri_vn(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DAN_TRI_PLAY_VIDEO_BTN))
+
+    @staticmethod
     def find_video_item_nguoi_lao_dong_tv(driver):
         return wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.NGUOI_LAO_DONG_VIDEO_ITEM))
+            ec.element_to_be_clickable(AnySite.NGUOI_LAO_DONG_VIDEO_ITEM))
+
+    @staticmethod
+    def find_nguoi_lao_dong_pause_btn(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.NGUOI_LAO_DONG_PAUSE_BTN))
 
     @staticmethod
     def find_video_item_anime_sub_tv(driver):
@@ -461,14 +459,17 @@ class AnySiteElements(BasePageElement):
             ec.presence_of_element_located(AnySite.JAV_HD_VIDEO_ITEM))
 
     @staticmethod
-    def find_video_wrapper_phim_sex_porn(driver):
+    def find_iframe_phim_sex_porn_item(driver):
         return wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.PHIM_SEX_PORN_VIDEO_ITEM_WRAPPER))
+            ec.presence_of_element_located(AnySite.PHIM_SEX_PORN_IFRAME))
 
     @staticmethod
-    def find_video_phim_sex_porn_item(driver):
-        return wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.PHIM_SEX_PORN_VIDEO_ITEM))
+    def find_phim_sex_porn_play_btn(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIM_SEX_PORN_PLAY_BTN))
+
+    @staticmethod
+    def find_phim_sex_porn_video_item(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIM_SEX_PORN_VIDEO_ITEM))
 
     @staticmethod
     def find_video_phim_jav_phim_wrapper(driver):

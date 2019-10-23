@@ -3,7 +3,7 @@ from pytest_testrail.plugin import pytestrail
 
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
-from testscripts.sanitytest.savior.common_setup import verify_video_step_then_clear_data, implement_download_file, \
+from testscripts.common_setup import verify_video_step_then_clear_data, implement_download_file, \
     clear_data_download_in_browser_and_download_folder
 from utils_automation.const import OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
@@ -21,7 +21,7 @@ class TestXVideos:
         any_site_page_object.click_video_x_videos(browser)
         any_site_page_object.mouse_over_video_x_videos(browser)
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='very slow'),
+            implement_download_file(browser, get_current_download_folder, ),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
@@ -34,7 +34,7 @@ class TestXNXX:
         any_site_page_object.click_play_video_item_xnxx(browser)
         any_site_page_object.mouse_over_video_xnxx(browser)
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='very slow'),
+            implement_download_file(browser, get_current_download_folder, ),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
@@ -46,7 +46,7 @@ class TestPornHub:
         browser.get(OtherSiteUrls.FR_PORN_HUB_VIDEO_URL)
         any_site_page_object.mouse_over_video_fr_porn_hub(browser)
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='slow'),
+            implement_download_file(browser, get_current_download_folder, ),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
@@ -58,7 +58,7 @@ class TestVLXX:
         any_site_page_object.click_video_vlxx(browser)
         any_site_page_object.mouse_over_video_vlxx(browser)
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='slow'),
+            implement_download_file(browser, get_current_download_folder, ),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
@@ -70,7 +70,7 @@ class TestSexTop1:
         any_site_page_object.click_video_sex_top1(browser)
         any_site_page_object.mouse_over_video_sex_top1(browser)
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='very slow'),
+            implement_download_file(browser, get_current_download_folder, ),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
@@ -83,7 +83,7 @@ class TestSexHiHi:
         any_site_page_object.click_video_sex_hihi(browser)
         any_site_page_object.mouse_over_video_sex_hihi(browser)
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='very slow'),
+            implement_download_file(browser, get_current_download_folder, ),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
@@ -95,7 +95,7 @@ class TestJavHdPro:
         any_site_page_object.click_video_jav_hd_pro(browser)
         any_site_page_object.mouse_over_video_jav_hd_pro(browser)
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='very slow'),
+            implement_download_file(browser, get_current_download_folder, ),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
@@ -104,22 +104,24 @@ class TestPhimSexPorn:
     @pytestrail.case('C98774')
     def test_download_file_phim_sex_porn(self, browser, get_current_download_folder):
         browser.get(OtherSiteUrls.PHIM_SEX_PORN_VIDEO_URL)
+        any_site_page_object.switch_to_iframe_phim_sex_porn(browser)
         any_site_page_object.click_video_phim_sex_porn(browser)
         any_site_page_object.mouse_over_video_phim_sex_porn(browser)
+        browser.switch_to.default_content()
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='slow'),
+            implement_download_file(browser, get_current_download_folder),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
-class TestJavaPhim:
+class TestJavPhim:
 
     @pytestrail.case('C98783')
-    def test_download_file_java_phim(self, browser, get_current_download_folder):
+    def test_download_file_jav_phim(self, browser, get_current_download_folder):
         browser.get(OtherSiteUrls.JAV_PHIM_VIDEO_URL)
         any_site_page_object.click_video_jav_phim(browser)
         any_site_page_object.mouse_over_video_jav_phim(browser)
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='slow'),
+            implement_download_file(browser, get_current_download_folder, ),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
@@ -131,7 +133,7 @@ class TestSexNgon:
         any_site_page_object.click_video_element_sex_ngon(browser)
         any_site_page_object.mouse_over_video_element_sex_ngon(browser)
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='slow'),
+            implement_download_file(browser, get_current_download_folder, ),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
@@ -143,7 +145,7 @@ class TestPhimSexSub:
         any_site_page_object.click_video_phim_sex_sub_video_element(browser)
         any_site_page_object.mouse_over_video_element_phim_sex_sub(browser)
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='slow'),
+            implement_download_file(browser, get_current_download_folder, ),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 

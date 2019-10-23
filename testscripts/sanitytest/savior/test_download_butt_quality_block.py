@@ -4,11 +4,11 @@ from models.pageobject.savior import SaviorPageObject
 from models.pageobject.settings import SettingsPageObject
 from models.pageobject.sites import YoutubePageObject
 from pytest_testrail.plugin import pytestrail
-from testscripts.sanitytest.savior.common_setup import revert_high_quality_default_option, pause_any_video_site, \
+from testscripts.common_setup import revert_high_quality_default_option, pause_any_video_site, \
     choose_video_quality_medium_option, \
     choose_video_quality_low_option, delete_all_mp4_file_download, download_file_via_main_download_button, \
     check_if_the_file_fully_downloaded, assert_file_download_value, clear_data_download
-from utils_automation.const import Urls, VideoUrls, DiffFormatFileUrls
+from utils_automation.const import VideoUrls, DiffFormatFileUrls
 from utils_automation.setup import WaitAfterEach
 
 

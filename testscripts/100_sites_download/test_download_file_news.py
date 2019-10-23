@@ -1,7 +1,7 @@
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
-from testscripts.sanitytest.savior.common_setup import delete_all_mp4_file_download, \
+from testscripts.common_setup import delete_all_mp4_file_download, \
     clear_data_download, implement_download_file, \
     clear_data_download_in_browser_and_download_folder, verify_download_quality_high_frame, \
     verify_video_step_then_clear_data, choose_video_quality_medium_option, revert_high_quality_default_option
@@ -21,7 +21,6 @@ class Test24H:
 
     def prepare_check_download(self, browser, download_folder):
         self.mouse_over_video_element_24h(browser)
-        # download_folder_path = self.setting_page_obeject.get_download_folder(browser)
         delete_all_mp4_file_download(download_folder, '.mp4')
         WaitAfterEach.sleep_timer_after_each_step()
 
@@ -103,6 +102,7 @@ class Test2SaoVn:
     @staticmethod
     def prepare_savior_displayed(browser):
         browser.get(OtherSiteUrls.SAO_2_VN_VIDEO_URL)
+        any_site_page_object.click_video_item_sao_2_vn(browser)
         any_site_page_object.mouse_over_video_item_sao_2_vn(browser)
 
     @pytestrail.case('C98725')
@@ -136,13 +136,10 @@ class TestTienPhong:
     def prepare_savior_option_appear(browser):
         browser.get(OtherSiteUrls.TIEN_PHONG_VIDEO_URL)
         any_site_page_object.click_video_item_tien_phong(browser)
-        WaitAfterEach.sleep_timer_after_each_step_longest_load()
-        browser.switch_to.default_content()
         any_site_page_object.mouse_over_video_item_tien_phong(browser)
 
     @pytestrail.case('C98743')
     def test_download_file_tienphong(self, browser, get_current_download_folder):
-        self.prepare_savior_option_appear(browser)
         self.prepare_savior_option_appear(browser)
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
                                           clear_data_download_in_browser_and_download_folder(browser,
@@ -154,7 +151,6 @@ class TestBongDaDotCom:
     @staticmethod
     def prepare_savior_option_appear(browser):
         browser.get(OtherSiteUrls.BONG_DA_DOT_COM_VIDEO_URL)
-        WaitAfterEach.sleep_timer_after_each_step()
         any_site_page_object.click_video_item_bong_da_dot_com(browser)
         any_site_page_object.mouse_over_video_item_bong_da_dot_com(browser)
 
@@ -354,10 +350,11 @@ class TestThanhNienVN:
     @staticmethod
     def prepare_savior_option_appear(browser):
         browser.get(OtherSiteUrls.THANH_NIEN_VIDEO_URL)
+        any_site_page_object.click_video_thanh_nien_vn(browser)
         any_site_page_object.mouse_over_video_thanh_nien_vn(browser)
 
     @pytestrail.case('C98773')
-    def test_download_file_tin_tuc_online(self, browser, get_current_download_folder):
+    def test_download_file_thanh_nien_viet_nam(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
                                           clear_data_download_in_browser_and_download_folder(browser,
@@ -369,10 +366,11 @@ class TestDanTriVN:
     @staticmethod
     def prepare_savior_option_appear(browser):
         browser.get(OtherSiteUrls.DAN_TRI_VIDEO_URL)
+        any_site_page_object.click_play_video_dan_tri_vn(browser)
         any_site_page_object.mouse_over_video_dan_tri_vn(browser)
 
     @pytestrail.case('C98775')
-    def test_download_file_tin_tuc_online(self, browser, get_current_download_folder):
+    def test_download_file_dan_tri_vn(self, browser, get_current_download_folder):
         self.prepare_savior_option_appear(browser)
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
                                           clear_data_download_in_browser_and_download_folder(browser,
@@ -384,6 +382,7 @@ class TestNguoiLaoDongTV:
     @staticmethod
     def prepare_savior_option_appear(browser):
         browser.get(OtherSiteUrls.NGUOI_LAO_DONG_TV_URL)
+        any_site_page_object.click_video_nguoi_lao_dong_tv(browser)
         any_site_page_object.mouse_over_video_nguoi_lao_dong_tv(browser)
 
     @pytestrail.case('C98777')
@@ -421,6 +420,7 @@ class TestBongda24h:
     @pytestrail.case('C98788')
     def test_download_file_bong_da_24h(self, browser, get_current_download_folder):
         browser.get(OtherSiteUrls.BONG_DA_24H_VIDEO_URL)
+        any_site_page_object.click_video_bong_da_24h(browser)
         any_site_page_object.mouse_over_video_bong_da_24h(browser)
         verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder),
                                           clear_data_download_in_browser_and_download_folder(browser,
@@ -436,7 +436,7 @@ class TestKeoNhaCai:
             browser.get(OtherSiteUrls.KEO_NHA_CAI_VIDEO_URL)
             any_site_page_object.click_video_item_keo_nha_cai(browser)
             any_site_page_object.mouse_over_video_item_keo_nha_cai(browser)
-            verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder, file_type='very slow'),
+            verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder, ),
                                               clear_data_download_in_browser_and_download_folder(browser,
                                                                                                  get_current_download_folder))
         finally:
@@ -451,7 +451,7 @@ class TestVoV:
         any_site_page_object.click_video_item_vov_vn(browser)
         any_site_page_object.mouse_over_video_item_vov_vn_maximize_minimize(browser)
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='slow'),
+            implement_download_file(browser, get_current_download_folder, ),
             clear_data_download_in_browser_and_download_folder(browser,
                                                                get_current_download_folder))
 

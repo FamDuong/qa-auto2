@@ -1,5 +1,3 @@
-import time
-
 import pytest
 from models.pageobject.downloads import DownloadsPageObject
 from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetailsPageObject, \
@@ -7,7 +5,7 @@ from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetails
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import YoutubePageObject, GooglePageObject
 from pytest_testrail.plugin import pytestrail
-from testscripts.sanitytest.savior.common_setup import pause_any_video_youtube, navigate_savior_details, \
+from testscripts.common_setup import pause_any_video_youtube, navigate_savior_details, \
     not_found_download_button_in_page, check_instant_download
 from utils_automation.const import Urls, ExtensionIds
 from utils_automation.setup import Browser, WaitAfterEach
