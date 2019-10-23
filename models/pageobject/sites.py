@@ -146,7 +146,10 @@ class AnySitePageObject(BasePageObject):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_soha(driver))
 
     def mouse_over_video_item_sao_2_vn(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_2sao_vn(driver))
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_2sao_vn(driver), timeout=30)
+
+    def click_video_item_sao_2_vn(self, driver):
+        self.any_site_element.find_video_item_2sao_vn(driver).click()
 
     def mouse_over_video_item_phunu_giadinh(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_phunu_giadinh(driver))
@@ -154,29 +157,19 @@ class AnySitePageObject(BasePageObject):
     def click_video_item_phunu_giadinh(self, driver):
         self.any_site_element.find_video_item_phunu_giadinh(driver).click()
 
-    def switch_to_iframe_tien_phong(self, driver):
-        driver.switch_to.frame(self.any_site_element.find_iframe_tien_phong(driver))
-
     def mouse_over_video_item_tien_phong(self, driver):
-        self.mouse_over_video_iframe_with_minimize_maximize(driver, self.switch_to_iframe_tien_phong,
-                                                            self.any_site_element.find_play_video_item_tien_phong,
-                                                            10)
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_tien_phong(driver))
 
     def click_video_item_tien_phong(self, driver):
-        self.switch_to_iframe_tien_phong(driver)
-        ActionChains(driver).move_to_element(self.any_site_element.find_video_item_tien_phong(driver)).perform()
-        self.any_site_element.find_video_item_tien_phong(driver).click()
-
-    def switch_to_iframe_bong_da_dot_com(self, driver):
-        driver.switch_to.frame(self.any_site_element.find_iframe_bong_da_dot_com(driver))
+        ActionChains(driver).move_to_element(self.any_site_element.find_play_video_item_tien_phong(driver)).perform()
+        self.any_site_element.find_play_video_item_tien_phong(driver).click()
 
     def mouse_over_video_item_bong_da_dot_com(self, driver):
-        self.mouse_over_video_iframe(driver, self.switch_to_iframe_bong_da_dot_com,
-                                     self.any_site_element.find_video_item_bong_da_dot_com,
-                                     20)
+        self.mouse_over_video_element_site(driver,
+                                           self.any_site_element.find_video_item_bong_da_dot_com(driver),
+                                           20)
 
     def click_video_item_bong_da_dot_com(self, driver):
-        self.switch_to_iframe_bong_da_dot_com(driver)
         ActionChains(driver).move_to_element(self.any_site_element.find_video_item_bong_da_dot_com(driver)).perform()
         self.any_site_element.find_video_item_bong_da_dot_com(driver).click()
 
@@ -280,11 +273,20 @@ class AnySitePageObject(BasePageObject):
     def mouse_over_video_thanh_nien_vn(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_thanh_nien(driver))
 
+    def click_video_thanh_nien_vn(self, driver):
+        self.any_site_element.find_video_item_thanh_nien(driver).click()
+
     def mouse_over_video_dan_tri_vn(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_dan_tri_vn(driver))
 
+    def click_play_video_dan_tri_vn(self, driver):
+        self.any_site_element.find_play_btn_dan_tri_vn(driver).click()
+
     def mouse_over_video_nguoi_lao_dong_tv(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_nguoi_lao_dong_tv(driver))
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_nguoi_lao_dong_tv(driver), timeout=30)
+
+    def click_video_nguoi_lao_dong_tv(self, driver):
+        self.any_site_element.find_nguoi_lao_dong_pause_btn(driver).click()
 
     def click_video_anime_vsub_tv(self, driver):
         self.any_site_element.find_video_item_anime_sub_tv(driver).click()
@@ -343,10 +345,13 @@ class AnySitePageObject(BasePageObject):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_jav_hd_pro(driver))
 
     def click_video_phim_sex_porn(self, driver):
-        self.any_site_element.find_video_wrapper_phim_sex_porn(driver).click()
+        self.any_site_element.find_phim_sex_porn_play_btn(driver).click()
 
     def mouse_over_video_phim_sex_porn(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_phim_sex_porn_item(driver))
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_phim_sex_porn_video_item(driver))
+
+    def switch_to_iframe_phim_sex_porn(self, driver):
+        driver.switch_to.frame(self.any_site_element.find_iframe_phim_sex_porn_item(driver))
 
     def click_video_jav_phim(self, driver):
         self.any_site_element.find_video_phim_jav_phim_wrapper(driver).click()
@@ -362,6 +367,9 @@ class AnySitePageObject(BasePageObject):
 
     def mouse_over_video_bong_da_24h(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_bong_da_24h(driver))
+
+    def click_video_bong_da_24h(self, driver):
+        self.any_site_element.find_video_item_bong_da_24h(driver).click()
 
     def click_video_item_keo_nha_cai(self, driver):
         self.any_site_element.find_video_item_keo_nha_cai(driver).click()
@@ -451,13 +459,3 @@ class AnySitePageObject(BasePageObject):
     def click_video_item_dong_phim(self, driver):
         self.any_site_element.find_dong_phim_play_video_item(driver).click()
         WaitAfterEach.sleep_timer_after_each_step()
-
-
-
-
-
-
-
-
-
-

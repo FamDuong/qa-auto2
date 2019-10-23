@@ -101,24 +101,15 @@ class DownloadsElement(BasePageElement):
         return wait.until(
             ec.element_to_be_clickable(DownloadsPageLocators.CLEAR_ALL_BTN))
 
-    def find_play_button(self, driver, file_type='clip'):
-        wait = None
-        if file_type == 'movie':
-            wait = WebDriverWait(driver, 240)
-        elif file_type == 'slow':
-            wait = WebDriverWait(driver, 480)
-        elif file_type == 'clip':
-            wait = WebDriverWait(driver, 120)
-        elif file_type == 'very slow':
-            wait = WebDriverWait(driver, 660)
-        elif file_type == 'like forever':
-            wait = WebDriverWait(driver, 1200)
-        return wait.until(
-            ec.presence_of_element_located(DownloadsPageLocators.PLAY_BTN))
+    def find_play_button(self, driver):
+        return driver.find_elements_by_xpath(DownloadsPageLocators.PLAY_BTN)
 
-    def find_location_info(self, driver):
-        wait = WebDriverWait(driver, 20)
-        return wait.until(ec.presence_of_element_located(DownloadsPageLocators.LOCATION))
+    def find_elements_not_deleted(self, driver):
+        return driver.find_elements_by_xpath(DownloadsPageLocators.ELEMENTS_NOT_DELETED)
+
+    def find_interrupted_elements(self, driver):
+        return driver.find_elements_by_xpath(DownloadsPageLocators.BADGE_BTN_INTERRUPTED)
+
 
 class ThePirateBayElements(BasePageElement):
 

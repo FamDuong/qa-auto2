@@ -2,7 +2,7 @@ import pytest
 from models.pageobject.savior import SaviorPageObject
 from pytest_testrail.plugin import pytestrail
 from models.pageobject.sites import AnySitePageObject
-from testscripts.sanitytest.savior.common_setup import pause_any_video_site, download_file_via_main_download_button, \
+from testscripts.common_setup import pause_any_video_site, download_file_via_main_download_button, \
     assert_file_download_value, clear_data_download, delete_all_mp4_file_download, verify_video_step_then_clear_data, \
     implement_download_file, clear_data_download_in_browser_and_download_folder
 from utils_automation.const import VideoUrls, OtherSiteUrls
@@ -24,7 +24,7 @@ class TestDownloadGroup:
         pause_any_video_site(browser, url_site)
         self.prepare_check_download(get_current_download_folder)
         try:
-            download_file_via_main_download_button(browser, file_type='slow')
+            download_file_via_main_download_button(browser, )
             pause_any_video_site(browser, url_site)
             self.savior_page_object.choose_preferred_option(browser)
             height_frame = self.savior_page_object.verify_correct_video_options_chosen_high_quality_option(browser)
@@ -58,7 +58,7 @@ class TestDownloadGroup:
         any_site_page_object.click_video_item_dong_phim(browser)
         any_site_page_object.mouse_over_video_item_dong_phim(browser)
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='slow'),
+            implement_download_file(browser, get_current_download_folder, ),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
     @pytestrail.case('C98793')

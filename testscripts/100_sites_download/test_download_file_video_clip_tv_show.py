@@ -2,10 +2,9 @@ from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
 
-from testscripts.sanitytest.savior.common_setup import download_file_via_main_download_button, \
+from testscripts.common_setup import download_file_via_main_download_button, \
     assert_file_download_value, delete_all_mp4_file_download
 from utils_automation.const import OtherSiteUrls
-from utils_automation.setup import WaitAfterEach
 
 savior_page_object = SaviorPageObject()
 any_site_page_object = AnySitePageObject()

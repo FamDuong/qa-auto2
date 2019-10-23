@@ -2,10 +2,9 @@ import pytest
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
-from testscripts.sanitytest.savior.common_setup import implement_download_file, \
+from testscripts.common_setup import implement_download_file, \
     clear_data_download_in_browser_and_download_folder, pause_any_video_site, verify_video_step_then_clear_data, \
-    handle_windows_watch_option, check_if_the_file_fully_downloaded, assert_file_download_exist, \
-    download_file_via_main_download_button
+    handle_windows_watch_option, check_if_the_file_fully_downloaded, assert_file_download_exist
 from utils_automation.const import OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
 
@@ -35,7 +34,7 @@ class TestPhimmoi:
     @pytest.mark.ten_popular_sites
     def test_download_file_phim_moi(self, browser, get_current_download_folder):
         self.prepare_displayed_savior_popup(browser)
-        verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder, file_type='slow'),
+        verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder, ),
                                           clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
@@ -55,7 +54,7 @@ class TestVuViPhim:
     def test_download_file_vuviphim(self, browser, get_current_download_folder):
         self.prepare_savior_option_displayed(browser)
         browser.switch_to.default_content()
-        verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder, file_type='slow'),
+        verify_video_step_then_clear_data(implement_download_file(browser, get_current_download_folder, ),
                                           clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
@@ -66,7 +65,7 @@ class TestTvZing:
     def test_download_file_tv_zing(self, browser, get_current_download_folder):
         pause_any_video_site(browser, OtherSiteUrls.TV_ZING_VIDEO_URL)
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='slow'),
+            implement_download_file(browser, get_current_download_folder, ),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
@@ -88,7 +87,7 @@ class TestTVHay:
             savior_page_object.download_file_via_savior_download_btn(browser)
             WaitAfterEach.sleep_timer_after_each_step()
             savior_page_object.download_file_title_via_savior_download_btn(browser, 'Xem Phim')
-            check_if_the_file_fully_downloaded(browser, file_type='like forever')
+            check_if_the_file_fully_downloaded(browser)
             assert_file_download_exist(get_current_download_folder)
         finally:
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
@@ -105,7 +104,7 @@ class TestAnimeSub:
         any_site_page_object.close_and_watch_ad_button_anime_subtv(browser)
         any_site_page_object.mouse_over_video_anime_vsub_tv(browser)
         verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='slow'),
+            implement_download_file(browser, get_current_download_folder, ),
             clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
 
 
@@ -125,31 +124,32 @@ class TestAnimeTVN:
 class TestPhimBatHu:
 
     @pytestrail.case('C98804')
-    def test_download_file_video_phim_bat_hu(self, browser, get_current_download_folder):
+    @pytest.mark.usefixtures('clear_download_page_and_download_folder')
+    def test_download_file_video_phim_bat_hu(self, browser, get_current_download_folder
+                                             , clear_download_page_and_download_folder):
         browser.get(OtherSiteUrls.PHIM_BAT_HU_VIDEO_URL)
         any_site_page_object.click_video_phim_bat_hu_video_element(browser)
         any_site_page_object.mouse_over_phim_bat_hu_video_element(browser)
-        verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder),
-            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
+        implement_download_file(browser, get_current_download_folder),
 
 
 class TestAnimeHayTV:
 
     @pytestrail.case('C98723')
-    def test_download_file_video_anime_hay_tv(self, browser, get_current_download_folder):
+    def test_download_file_video_anime_hay_tv(self, browser, get_current_download_folder
+                                              , clear_download_page_and_download_folder):
         browser.get(OtherSiteUrls.ANIME_HAY_TV_VIDEO_URL)
         any_site_page_object.mouse_over_video_wrapper_element_anime_hay_tv(browser)
         any_site_page_object.switch_to_iframe_anime_hay_tv(browser)
-        verify_video_step_then_clear_data(
-            implement_download_file(browser, get_current_download_folder, file_type='slow'),
-            clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder))
+        implement_download_file(browser, get_current_download_folder, ),
+        clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
 
 
 class TestVietSubTV:
 
     @pytestrail.case('C98786')
-    def test_download_file_video_vietsub_tv(self, browser, get_current_download_folder):
+    def test_download_file_video_vietsub_tv(self, browser, get_current_download_folder
+                                            , clear_download_page_and_download_folder):
         browser.get(OtherSiteUrls.VIET_SUB_TV_VIDEO_URL)
         any_site_page_object.play_video_viet_sub_tv(browser)
         any_site_page_object.mouse_over_video_item_viet_sub_tv(browser)
@@ -158,9 +158,8 @@ class TestVietSubTV:
         savior_page_object.download_file_title_via_savior_download_btn(browser, 'VietSub')
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         # Check the file is fully downloaded
-        check_if_the_file_fully_downloaded(browser, file_type='very slow')
+        check_if_the_file_fully_downloaded(browser, )
         assert_file_download_exist(get_current_download_folder)
-        clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
 
 
 

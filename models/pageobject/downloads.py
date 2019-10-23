@@ -1,5 +1,4 @@
-import os
-import time
+from datetime import datetime
 
 from selenium.webdriver import ActionChains
 
@@ -102,10 +101,21 @@ class DownloadsPageObject(BasePageObject):
         element.click()
         WaitAfterEach.sleep_timer_after_each_step()
 
-    def verify_play_button_existed(self, driver, file_type='clip'):
-        assert self.downloads_elem.find_more_icon(driver) is not None
-        assert self.downloads_elem.find_play_button(driver, file_type=file_type).text == 'Play'
+    def verify_play_button_existed(self, driver):
+        index = 0
+        if (self.downloads_elem.find_more_icon(driver) is not None) \
+                and (len(self.downloads_elem.find_elements_not_deleted(driver)) > 0):
+            start_time = datetime.now()
+            while (datetime.now() - start_time).total_seconds() < 2000:
+                if len(self.downloads_elem.find_play_button(driver)) > 0:
+                    index += 1
+                    break
+                elif len(self.downloads_elem.find_interrupted_elements(driver)) > 0:
+                    break
+            WaitAfterEach.sleep_timer_after_each_step()
+            # assert ((datetime.now() - start_time).total_seconds() < 2000) and index == 1, 'Verify if play button exist'
         WaitAfterEach.sleep_timer_after_each_step()
+        return index
 
 
 class ThePirateBayPageObject(BasePageObject):

@@ -63,7 +63,7 @@ pytest-bdd==3.1.1
 pytest-html==1.21.1
 pytest-metadata==1.8.0
 pytest-rerunfailures==7.0
-pytest-testrail==2.7.1
+pytest-testrail==2.8.2
 python-dateutil==2.8.0
 PyTweening==1.0.3
 pytz==2019.2

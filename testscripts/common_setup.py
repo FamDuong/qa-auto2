@@ -1,6 +1,7 @@
 import time
 
 import cv2
+import pytest
 
 from models.pageobject.downloads import DownloadsPageObject
 from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetailsPageObject, \
@@ -31,12 +32,12 @@ def delete_all_mp4_file_download(mydir, endwith):
     files.delete_files_in_folder(mydir, endwith)
 
 
-def download_file_via_main_download_button(browser, file_type='clip'):
+def download_file_via_main_download_button(browser):
     savior_page_object.download_file_via_savior_download_btn(browser)
     WaitAfterEach.sleep_timer_after_each_step_longer_load()
 
     # Check the file is fully downloaded
-    check_if_the_file_fully_downloaded(browser, file_type=file_type)
+    return check_if_the_file_fully_downloaded(browser)
 
 
 def find_mp4_file_download(mydir, endwith):
@@ -74,9 +75,9 @@ def assert_file_download_exist(download_folder_path):
     assert len(mp4_files) > 0
 
 
-def check_if_the_file_fully_downloaded(browser, file_type='clip'):
+def check_if_the_file_fully_downloaded(browser):
     browser.get(Urls.COCCOC_DOWNLOAD_URL)
-    download_page_object.verify_play_button_existed(browser, file_type=file_type)
+    return download_page_object.verify_play_button_existed(browser)
 
 
 def pause_any_video_youtube(browser):
@@ -139,9 +140,9 @@ def pause_any_video_site(browser, url):
     any_site_page_object.mouse_over_first_video_element(browser)
 
 
-def implement_download_file(browser, get_current_download_folder, file_type='clip'):
+def implement_download_file(browser, get_current_download_folder):
     delete_all_mp4_file_download(get_current_download_folder, '.mp4')
-    download_file_via_main_download_button(browser, file_type=file_type)
+    assert download_file_via_main_download_button(browser) == 1
     # assert file download exist and can be opened
     assert_file_download_exist(get_current_download_folder)
 
@@ -151,8 +152,8 @@ def clear_data_download_in_browser_and_download_folder(browser, get_current_down
     delete_all_mp4_file_download(get_current_download_folder, '.mp4')
 
 
-def verify_download_quality_high_frame(browser, get_current_download_folder, prepare_savior_option_displayed, file_type='clip'):
-    download_file_via_main_download_button(browser, file_type=file_type)
+def verify_download_quality_high_frame(browser, get_current_download_folder, prepare_savior_option_displayed, ):
+    download_file_via_main_download_button(browser, )
     prepare_savior_option_displayed(browser)
     savior_page_object.choose_preferred_option(browser)
     height_frame = savior_page_object.verify_correct_video_options_chosen_high_quality_option(browser)

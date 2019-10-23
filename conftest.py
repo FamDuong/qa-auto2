@@ -96,7 +96,7 @@ def browser(get_use_data_path):
             modify_file_as_text(user_data_path + '\\Default\\Preferences', 'Crashed', 'none')
         driver = sele_webdriver.Chrome(options=chrome_options)
         driver.maximize_window()
-        driver.set_page_load_timeout(40)
+        driver.set_page_load_timeout(120)
     yield driver
     driver.quit()
 

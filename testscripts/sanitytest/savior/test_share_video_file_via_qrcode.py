@@ -1,8 +1,6 @@
-import time
-
 from models.pageobject.savior import SaviorPageObject
 from pytest_testrail.plugin import pytestrail
-from testscripts.sanitytest.savior.common_setup import pause_any_video_youtube
+from testscripts.common_setup import pause_any_video_youtube
 
 
 class TestShareVideoFileQRCode:
