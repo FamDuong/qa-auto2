@@ -161,13 +161,6 @@ def verify_download_quality_high_frame(browser, get_current_download_folder, pre
     assert_file_download_value(get_current_download_folder, height_frame)
 
 
-def verify_video_step_then_clear_data(implement_and_verify, clear_data_step):
-    try:
-        implement_and_verify
-    finally:
-        clear_data_step
-
-
 def handle_windows_watch_option(browser, close_popup_continue_watching):
     WaitAfterEach.sleep_timer_after_each_step()
     list_windows = browser.window_handles
