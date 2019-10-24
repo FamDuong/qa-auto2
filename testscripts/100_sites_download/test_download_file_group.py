@@ -55,11 +55,7 @@ class TestDownloadGroup:
         any_site_page_object.click_video_item_dong_phim(browser)
         any_site_page_object.mouse_over_video_item_dong_phim(browser)
         implement_download_file(browser, get_current_download_folder, ),
-        clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
 
-    @pytestrail.case('C98793')
-    def test_download_daily_motion(self, browser, get_current_download_folder, clear_download_page_and_download_folder):
-        self.implement_test_site(browser, OtherSiteUrls.DAILY_MOTION_VIDEO_URL, get_current_download_folder)
 
 
 

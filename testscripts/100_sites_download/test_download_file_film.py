@@ -76,18 +76,17 @@ class TestTVHay:
     def test_download_file_video_tv_hay(self, browser, get_current_download_folder
                                         , clear_download_page_and_download_folder):
         browser.get(OtherSiteUrls.TV_HAY_VIDEO_URL)
-        any_site_page_object.switch_to_tv_hay_iframe(browser)
-        # any_site_page_object.click_play_btn_tv_hay(browser)
-        any_site_page_object.skip_ads_tv_hay(browser)
-        WaitAfterEach.sleep_timer_after_each_step()
-        any_site_page_object.switch_to_tv_hay_iframe(browser)
-        any_site_page_object.click_video_item_tv_hay(browser)
-        WaitAfterEach.sleep_timer_after_each_step_longest_load()
-        # any_site_page_object.mouse_over_video_item_tv_hay(browser)
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        any_site_page_object.switch_to_tv_hay_iframe_level_1(browser)
+        any_site_page_object.switch_to_tv_hay_iframe_level_2(browser)
+        any_site_page_object.click_play_btn_tv_hay(browser)
+        while "0:00" in any_site_page_object.get_video_time_tv_hay(browser):
+            WaitAfterEach.sleep_timer_after_each_step()
         browser.switch_to.default_content()
+        any_site_page_object.mouse_over_video_item_tv_hay(browser)
         savior_page_object.download_file_via_savior_download_btn(browser)
-        WaitAfterEach.sleep_timer_after_each_step()
         savior_page_object.download_file_title_via_savior_download_btn(browser, 'Xem Phim')
+        WaitAfterEach.sleep_timer_after_each_step()
         check_if_the_file_fully_downloaded(browser)
         assert_file_download_exist(get_current_download_folder)
 
@@ -125,7 +124,7 @@ class TestPhimBatHu:
     def test_download_file_video_phim_bat_hu(self, browser, get_current_download_folder
                                              , clear_download_page_and_download_folder):
         browser.get(OtherSiteUrls.PHIM_BAT_HU_VIDEO_URL)
-        any_site_page_object.click_video_phim_bat_hu_video_element(browser)
+        # any_site_page_object.click_video_phim_bat_hu_video_element(browser)
         any_site_page_object.mouse_over_phim_bat_hu_video_element(browser)
         implement_download_file(browser, get_current_download_folder),
 

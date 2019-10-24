@@ -3,8 +3,7 @@ from pytest_testrail.plugin import pytestrail
 
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
-from testscripts.common_setup import implement_download_file, \
-    clear_data_download_in_browser_and_download_folder
+from testscripts.common_setup import implement_download_file
 from utils_automation.const import OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
 
@@ -95,13 +94,14 @@ class TestJavHdPro:
 class TestPhimSexPorn:
 
     @pytestrail.case('C98774')
+    @pytest.mark.last
     def test_download_file_phim_sex_porn(self, browser, get_current_download_folder
                                          , clear_download_page_and_download_folder):
         browser.get(OtherSiteUrls.PHIM_SEX_PORN_VIDEO_URL)
         any_site_page_object.switch_to_iframe_phim_sex_porn(browser)
         any_site_page_object.click_video_phim_sex_porn(browser)
-        any_site_page_object.mouse_over_video_phim_sex_porn(browser)
         browser.switch_to.default_content()
+        any_site_page_object.mouse_over_video_phim_sex_porn(browser)
         implement_download_file(browser, get_current_download_folder),
 
 

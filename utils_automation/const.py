@@ -101,7 +101,7 @@ class OtherSiteUrls:
     SEX_NGON_VIDEO_URL = 'https://sexngon.net/phim-sex-my-hay-lop-hoc-tinh-duc-danh-cho-cac-quy-co/'
     WEIBO_VIDEO_URL = 'https://www.weibo.com/1640601392/I9rIXuIRC?from=page_1002061640601392_profile&wvr=6&mod=weibotime&type=comment'
     ANIME_TVN_VIDEO_URL = 'https://animetvn.tv/xem-phim/f152111-circlet-princess-tap-01.html'
-    PHIM_BAT_HU_VIDEO_URL = 'https://phimbathu.org/phim-nhiet-huyet-thieu-nien-tap-1-14790.215415.html'
+    PHIM_BAT_HU_VIDEO_URL = 'https://phimbathu.org/phim-tinh-yeu-voi-ke-bat-coc-tap-1-11480.135976.html'
     PHIM_SEX_SUB_VIDEO_URL = 'https://phimsexsub.com/quay-clip-vo-lam-ky-niem-hana-aoyama/'
     VLIVE_TV_VIDEO_URL = 'https://www.vlive.tv/video/150718'
     ANIME_HAY_TV_VIDEO_URL = 'http://animehay.tv/phim/black-clover-tap-1-e45482.html'

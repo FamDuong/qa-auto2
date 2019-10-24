@@ -419,9 +419,16 @@ class TestVoV:
     def test_download_file_vov(self, browser, get_current_download_folder
                                , clear_download_page_and_download_folder):
         browser.get(OtherSiteUrls.VOV_VIDEO_URL)
-        any_site_page_object.click_video_item_vov_vn(browser)
-        any_site_page_object.mouse_over_video_item_vov_vn_maximize_minimize(browser)
+        any_site_page_object.switch_to_frame_vov_vn(browser)
+        any_site_page_object.play_vov_vn_video(browser)
+        browser.switch_to.default_content()
+        any_site_page_object.mouse_over_video_item_vov_vn(browser)
+        window_handles = browser.window_handles
         implement_download_file(browser, get_current_download_folder, ),
+        print("Len of window_handles for test vov are: " + str(len(window_handles)))
+        browser.switch_to.window(window_handles[2])
+        browser.close()
+        browser.switch_to.window(window_handles[0])
 
 
 class TestDoiSongPhapLuat:
