@@ -6,7 +6,7 @@ from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import YoutubePageObject, GooglePageObject
 from pytest_testrail.plugin import pytestrail
 from testscripts.common_setup import pause_any_video_youtube, navigate_savior_details, \
-    not_found_download_button_in_page, check_instant_download
+    not_found_download_button_in_page, check_instant_download, check_if_the_file_fully_downloaded
 from utils_automation.const import Urls, ExtensionIds
 from utils_automation.setup import Browser, WaitAfterEach
 
@@ -62,11 +62,8 @@ class TestSaviorSettings:
             WaitAfterEach.sleep_timer_after_each_step()
             self.google_page_object.download_via_savior_icon_button(browser)
             WaitAfterEach.sleep_timer_after_each_step_longer_load()
-
-            # Go to download internal page
-            browser.get(Urls.COCCOC_DOWNLOAD_URL)
             # Assertion
-            self.download_page_object.verify_cancel_button_is_existed(browser)
+            check_if_the_file_fully_downloaded(browser)
         finally:
             # Clear data
             self.download_page_object.cancel_all_current_torrent(browser)
