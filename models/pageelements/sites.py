@@ -261,13 +261,21 @@ class AnySiteElements(BasePageElement):
             ec.presence_of_element_located(AnySite.TV_HAY_VN_PLAY_BTN))
 
     @staticmethod
-    def find_iframe_tv_hay(driver):
-        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.TV_HAY_VN_IFRAME))
+    def find_iframe_level_1_tv_hay(driver):
+        return wait_for_element(driver).until(ec.frame_to_be_available_and_switch_to_it(AnySite.TV_HAY_VN_IFRAME_LEVEL_1))
+
+    @staticmethod
+    def find_iframe_level_2_tv_hay(driver):
+        return wait_for_element(driver).until(ec.frame_to_be_available_and_switch_to_it(AnySite.TV_HAY_VN_IFRAME_LEVEL_2))
 
     @staticmethod
     def find_video_item_tv_hay(driver):
         return wait_for_element(driver, 20).until(
             ec.presence_of_element_located(AnySite.TV_HAY_VN_VIDEO_ITEM))
+
+    @staticmethod
+    def find_pause_btn_tv_hay(driver):
+        return wait_for_element(driver).until(ec.element_to_be_clickable(AnySite.TV_HAY_VN_PAUSE_BTN))
 
     @staticmethod
     def find_video_item_ngoi_sao_vn(driver):
@@ -514,6 +522,10 @@ class AnySiteElements(BasePageElement):
         return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VOV_VN_IFRAME))
 
     @staticmethod
+    def find_vov_vn_play_btn(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VOV_VN_PLAY_BTN))
+
+    @staticmethod
     def find_video_sex_ngon(driver):
         return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.SEX_NGON_VIDEO_ITEM))
 
@@ -538,8 +550,24 @@ class AnySiteElements(BasePageElement):
         return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIM_BAT_HU_VIDEO_ITEM))
 
     @staticmethod
+    def find_iframe_phim_bat_hu(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIM_BAT_HU_IFRAME))
+
+    @staticmethod
+    def find_video_inner_phim_bat_hu(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIM_BAT_HU_VIDEO_INNER_ITEM))
+
+    @staticmethod
     def find_video_phim_bat_hu_play(driver):
         return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIM_BAT_HU_PLAY_VIDEO_ITEM))
+
+    @staticmethod
+    def find_pause_btn_phim_bat_hu(driver):
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIM_BAT_HU_PAUSE_BTN))
+
+    @staticmethod
+    def find_pause_elements_phim_bat_hu(driver):
+        return driver.find_elements_by_xpath(AnySite.PHIM_BAT_HU_PAUSE_BTN_XPATH)
 
     @staticmethod
     def find_video_phim_sex_sub_wrapper(driver):

@@ -226,11 +226,27 @@ class AnySitePageObject(BasePageObject):
     def click_play_btn_tv_hay(self, driver):
         self.any_site_element.find_play_btn_tv_hay(driver).click()
 
-    def switch_to_tv_hay_iframe(self, driver):
-        driver.switch_to.frame(self.any_site_element.find_iframe_tv_hay(driver))
+    def switch_to_tv_hay_iframe_level_1(self, driver):
+        self.any_site_element.find_iframe_level_1_tv_hay(driver)
+
+    def switch_to_tv_hay_iframe_level_2(self, driver):
+        self.any_site_element.find_iframe_level_2_tv_hay(driver)
 
     def mouse_over_video_item_tv_hay(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_tv_hay(driver))
+
+    def get_video_time_tv_hay(self, driver):
+        i = 0
+        while i == 0:
+            if driver.execute_script('return document.querySelector(arguments[0])',
+                                     'div[class="html5-vpl_time_t"]') is not None:
+                time_value = driver.execute_script('return document.querySelector(arguments[0]).textContent',
+                                      'div[class="html5-vpl_time_t"]')
+                i += 1
+                return time_value
+
+    def click_pause_btn_tv_hay(self, driver):
+        self.any_site_element.find_pause_btn_tv_hay(driver).click()
 
     def click_video_item_tv_hay(self, driver):
         driver.execute_script('document.querySelector("#embedVideoC > div.vid_play").click();')
@@ -283,7 +299,8 @@ class AnySitePageObject(BasePageObject):
         self.any_site_element.find_play_btn_dan_tri_vn(driver).click()
 
     def mouse_over_video_nguoi_lao_dong_tv(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_nguoi_lao_dong_tv(driver), timeout=30)
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_nguoi_lao_dong_tv(driver),
+                                           timeout=30)
 
     def click_video_nguoi_lao_dong_tv(self, driver):
         self.any_site_element.find_nguoi_lao_dong_pause_btn(driver).click()
@@ -348,7 +365,14 @@ class AnySitePageObject(BasePageObject):
         self.any_site_element.find_phim_sex_porn_play_btn(driver).click()
 
     def mouse_over_video_phim_sex_porn(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_phim_sex_porn_video_item(driver))
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        start_time = datetime.now()
+        while self.verify_savior_popup_appear(driver) is None:
+            WebElements.mouse_over_element(driver, self.any_site_element.find_phim_sex_porn_video_item(driver))
+            self.any_site_element.find_phim_sex_porn_video_item(driver).click()
+            time_delta = datetime.now() - start_time
+            if time_delta.total_seconds() >= 20:
+                break
 
     def switch_to_iframe_phim_sex_porn(self, driver):
         driver.switch_to.frame(self.any_site_element.find_iframe_phim_sex_porn_item(driver))
@@ -383,14 +407,21 @@ class AnySitePageObject(BasePageObject):
     def switch_to_frame_vov_vn(self, driver):
         driver.switch_to.frame(self.any_site_element.find_video_vov_vn_iframe(driver))
 
-    def mouse_over_video_item_vov_vn_maximize_minimize(self, driver):
-        self.mouse_over_video_iframe_with_minimize_maximize(driver, self.switch_to_frame_vov_vn,
-                                                            self.any_site_element.find_video_vov_vn,
-                                                            20)
-        driver.switch_to.default_content()
+    def play_vov_vn_video(self, driver):
+        self.any_site_element.find_vov_vn_play_btn(driver).click()
+
+    def mouse_over_video_item_vov_vn(self, driver):
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        start_time = datetime.now()
+        while self.verify_savior_popup_appear(driver) is None:
+            WebElements.mouse_over_element(driver, self.any_site_element.find_video_vov_vn_iframe(driver))
+            self.click_video_item_vov_vn(driver)
+            time_delta = datetime.now() - start_time
+            if time_delta.total_seconds() >= 20:
+                break
 
     def click_video_item_vov_vn(self, driver):
-        self.any_site_element.find_video_vov_vn_iframe(driver).click()
+        self.any_site_element.find_video_vov_vn(driver).click()
 
     def mouse_over_video_element_sex_ngon(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_sex_ngon(driver))
@@ -408,10 +439,26 @@ class AnySitePageObject(BasePageObject):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_anime_tvn(driver))
 
     def mouse_over_phim_bat_hu_video_element(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_phim_bat_hu(driver))
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        start_time = datetime.now()
+        while self.verify_savior_popup_appear(driver) is None:
+            # WebElements.mouse_over_element(driver, self.any_site_element.find_video_phim_bat_hu(driver))
+            # WebElements.mouse_over_element(driver, self.any_site_element.find_video_phim_bat_hu_play(driver))
+            driver.switch_to.frame(self.any_site_element.find_iframe_phim_bat_hu(driver))
+            WebElements.mouse_over_element(driver, self.any_site_element.find_video_inner_phim_bat_hu(driver))
+            self.any_site_element.find_video_inner_phim_bat_hu(driver).click()
+            driver.switch_to.default_content()
+            # self.any_site_element.find_video_phim_bat_hu(driver).click()
+            # WaitAfterEach.sleep_timer_after_each_step()
+            time_delta = datetime.now() - start_time
+            if time_delta.total_seconds() >= 30:
+                break
 
     def click_video_phim_bat_hu_video_element(self, driver):
         self.any_site_element.find_video_phim_bat_hu_play(driver).click()
+
+    def click_pause_video_phim_bat_hu(self, driver):
+        self.any_site_element.find_pause_btn_phim_bat_hu(driver).click()
 
     def click_video_phim_sex_sub_video_element(self, driver):
         self.any_site_element.find_video_phim_sex_sub_wrapper(driver).click()
@@ -420,7 +467,7 @@ class AnySitePageObject(BasePageObject):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_phim_sex_sub_element(driver))
 
     def mouse_over_video_element_vlive_tv(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_vlive_tv_item(driver))
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_vlive_tv_item(driver), timeout=50)
 
     def mouse_over_video_wrapper_element_anime_hay_tv(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_wrapper_anime_hay_tv(driver))

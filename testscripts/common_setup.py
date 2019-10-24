@@ -37,7 +37,7 @@ def download_file_via_main_download_button(browser):
     WaitAfterEach.sleep_timer_after_each_step_longer_load()
 
     # Check the file is fully downloaded
-    return check_if_the_file_fully_downloaded(browser)
+    check_if_the_file_fully_downloaded(browser)
 
 
 def find_mp4_file_download(mydir, endwith):
@@ -77,7 +77,7 @@ def assert_file_download_exist(download_folder_path):
 
 def check_if_the_file_fully_downloaded(browser):
     browser.get(Urls.COCCOC_DOWNLOAD_URL)
-    return download_page_object.verify_play_button_existed(browser)
+    assert download_page_object.verify_play_button_existed(browser) == 1
 
 
 def pause_any_video_youtube(browser):
@@ -142,7 +142,7 @@ def pause_any_video_site(browser, url):
 
 def implement_download_file(browser, get_current_download_folder):
     delete_all_mp4_file_download(get_current_download_folder, '.mp4')
-    assert download_file_via_main_download_button(browser) == 1
+    download_file_via_main_download_button(browser)
     # assert file download exist and can be opened
     assert_file_download_exist(get_current_download_folder)
 
@@ -159,13 +159,6 @@ def verify_download_quality_high_frame(browser, get_current_download_folder, pre
     height_frame = savior_page_object.verify_correct_video_options_chosen_high_quality_option(browser)
     # File mp4 file and assert
     assert_file_download_value(get_current_download_folder, height_frame)
-
-
-def verify_video_step_then_clear_data(implement_and_verify, clear_data_step):
-    try:
-        implement_and_verify
-    finally:
-        clear_data_step
 
 
 def handle_windows_watch_option(browser, close_popup_continue_watching):

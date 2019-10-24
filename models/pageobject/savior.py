@@ -10,6 +10,7 @@ from utils_automation.setup import WaitAfterEach
 class SaviorPageObject(BasePageObject):
     savior_elements = SaviorElements()
     script = 'document.querySelector(arguments[0]).shadowRoot.querySelector(arguments[1]).click();'
+    script_find = 'return document.querySelector(arguments[0]).shadowRoot.querySelector(arguments[1])'
     script_textContent = 'return document.querySelector(arguments[0]).shadowRoot.querySelector(arguments[1]).' \
                          'textContent'
 
@@ -50,9 +51,14 @@ class SaviorPageObject(BasePageObject):
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.DOWNLOAD_BUTTON)
 
     def download_file_title_via_savior_download_btn(self, driver, title):
-        driver.execute_script(
-            self.script,
-            SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.download_option_css_locator(title))
+        i = 0
+        while i == 0:
+            if driver.execute_script(self.script_find, SaviorPageLocators.FIRST_LAYER,
+                                     SaviorPageLocators.download_option_css_locator(title)) is not None:
+                driver.execute_script(
+                    self.script,
+                    SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.download_option_css_locator(title))
+                i += 1
 
     def download_file_medium_quality(self, driver):
         driver.execute_script(
@@ -137,7 +143,7 @@ class SaviorPageObject(BasePageObject):
         return len_options, text_content_list, current_video_quality, video_quality_height_frame_value
 
     def verify_correct_video_options_chosen_high_quality_option(self, driver):
-        len_options, text_content_list, current_video_quality, video_quality_height = self.\
+        len_options, text_content_list, current_video_quality, video_quality_height = self. \
             get_quality_video_options_available(driver)
 
         if len_options >= 3:
@@ -201,8 +207,3 @@ class SaviorPageObject(BasePageObject):
         else:
             raise Exception.__traceback__
         return video_quality_height
-
-
-
-
-
