@@ -172,12 +172,36 @@ class FilesHandle:
         pro_version = 'Prod version: ' + expect_version
         assert pro_version in signature
 
+    def copy_file(self, source, destination):
+        import shutil
+        try:
+            shutil.copyfile(source, destination)
+            print("File copied successfully.")
+
+            # If source and destination are same
+        except shutil.SameFileError:
+            print("Source and destination represents the same file.")
+
+            # If destination is a directory.
+        except IsADirectoryError:
+            print("Destination is a directory.")
+
+            # If there is any permission issue
+        except PermissionError:
+            print("Permission denied.")
+
+            # For other errors
+        except:
+            print("Error occurred while copying file.")
+
+
 class WebElements:
 
     @staticmethod
     def mouse_over_element(driver, element):
             hov = ActionChains(driver).move_to_element(element)
             hov.perform()
+
 
 class WindowsCMD:
     @staticmethod
@@ -200,7 +224,8 @@ class WindowsCMD:
                     return True
             except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                 pass
-        return False;
+        return False
+
 
 class WindowsHandler:
 
@@ -245,22 +270,6 @@ class BrowserHandler:
 
 
 def modify_file_as_text(text_file_path, text_to_search, replacement_text):
-    # for infile in glob.glob((text_file_path, '*.')):
-    #     file = open(infile, 'r').read()
-    #     a = file.find('Crash')
-    #     assert a
-    # list_temp = []
-    # with open(text_file_path, 'r') as f:
-    #     rowiter = iter(f)
-    #     for row in rowiter:
-    #         if row.startswith('foo2'):  # Start of next section
-    #             break
-    #         print(row.rstrip(), repr(row))
-    #     print("foo bar")
-    #     print(row)
-    #     for row in rowiter:
-    #         print(row.rstrip())
-
     with fileinput.FileInput(text_file_path, inplace=True, backup='.bak') as file:
         for line in file:
             print(line.replace(text_to_search, replacement_text), end='')
