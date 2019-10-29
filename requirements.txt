@@ -1,3 +1,4 @@
+marshmallow
 alabaster==0.7.12
 Appium-Python-Client==0.46
 arrow==0.14.2
