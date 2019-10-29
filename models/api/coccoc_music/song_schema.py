@@ -13,6 +13,18 @@ class SongSchema(Schema):
     def validate_title(self, value):
         if value == '':
             raise ValidationError('Title should not be blank')
+        elif value == 'null':
+            raise ValidationError('Why are you doing like this, convert value to string "null" ')
+
+    @validates('artists')
+    def validate_artists(self, value):
+        if value == 'null':
+            raise ValidationError('Why are you doing like this, convert value to string "null" ')
+
+    @validates('image')
+    def validate_image(self, value):
+        if value == 'null':
+            raise ValidationError('Why are you doing like this, convert value to string "null" ')
 
 
 
