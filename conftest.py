@@ -15,6 +15,8 @@ flash_path = None
 block_origin_extension_path = None
 user_data_default = None
 
+files = FilesHandle()
+
 
 @pytest.mark.hookwrapper
 def pytest_runtest_makereport(item):
@@ -171,6 +173,8 @@ def pytest_addoption(parser):
     parser.addoption('--settings', '--use-user-data', action='store')
     parser.addoption('--cc_version', action='store')
     parser.addoption('--rm_user_data', action='store')
+    parser.addoption("--name", action="store", default="default name")
+    parser.addoption("--env", action="store", default="local")
 
 
 @pytest.fixture(scope='session')
@@ -213,3 +217,9 @@ def rm_user_data(request):
 @pytest.fixture(scope='session', autouse=True)
 def get_use_data_path(request):
     return request.config.getoption("--use-user-data")
+
+
+@pytest.fixture(scope='session', autouse=True)
+def get_env_value(pytestconfig):
+    files.copy_file(os.getcwd() + '/resources/env.' + str(pytestconfig.getoption('env')) + '.yaml',
+                    os.getcwd() + '/resources/env.yaml')
