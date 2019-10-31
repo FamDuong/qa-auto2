@@ -114,3 +114,9 @@ class ExtensionIds:
     SAVIOR_EXTENSION_ID = 'jdfkmiabjpfjacifcmihfdjhpnjpiick'
 
 
+class SkypeGroupIds:
+    COCCOC_MUSIC_GROUP_ID = '19:3cdd71db361c4d56ad8a69a7cf271c0f@thread.skype'
+
+
+
+
