@@ -16,6 +16,7 @@ class TestBrowser:
     @pytestrail.case('C36161')
     def test_current_time_now(self, request):
         print('Request node id is :', request.node.nodeid)
+        assert 1 == 0
 
     def test_get_user_data_path(self):
         text = 'mp4/Standard/'
