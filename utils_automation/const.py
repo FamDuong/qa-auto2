@@ -116,6 +116,7 @@ class ExtensionIds:
 
 class SkypeGroupIds:
     COCCOC_MUSIC_GROUP_ID = '19:3cdd71db361c4d56ad8a69a7cf271c0f@thread.skype'
+    TEST_GROUP_ID = '19:c4cf2ed7ac634b7f8efbd7afcaabdebd@thread.skype'
 
 
 
