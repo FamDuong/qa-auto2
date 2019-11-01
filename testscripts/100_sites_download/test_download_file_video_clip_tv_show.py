@@ -3,7 +3,7 @@ from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
 
 from testscripts.common_setup import download_file_via_main_download_button, \
-    assert_file_download_value, delete_all_mp4_file_download
+    assert_file_download_value
 from utils_automation.const import OtherSiteUrls
 
 savior_page_object = SaviorPageObject()

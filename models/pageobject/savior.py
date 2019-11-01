@@ -50,6 +50,10 @@ class SaviorPageObject(BasePageObject):
             self.script,
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.DOWNLOAD_BUTTON)
 
+    def current_media_info(self, driver):
+        element = driver.execute_script(self.script_find, SaviorPageLocators.FIRST_LAYER,
+                                        SaviorPageLocators.CURRENT_SELECTED_RESOLUTION)
+
     def download_file_title_via_savior_download_btn(self, driver, title):
         i = 0
         while i == 0:
