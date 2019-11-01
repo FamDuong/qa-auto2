@@ -1,11 +1,13 @@
 import pytest
 from models.pageobject.savior import SaviorPageObject
 from pytest_testrail.plugin import pytestrail
+
+from models.pageobject.settings import SettingsPageObject
 from models.pageobject.sites import AnySitePageObject
 from testscripts.common_setup import pause_any_video_site, download_file_via_main_download_button, \
     assert_file_download_value, delete_all_mp4_file_download, \
-    implement_download_file, clear_data_download_in_browser_and_download_folder
-from utils_automation.const import VideoUrls, OtherSiteUrls
+    implement_download_file
+from utils_automation.const import VideoUrls, Urls
 from utils_automation.setup import WaitAfterEach
 
 any_site_page_object = AnySitePageObject()
@@ -45,7 +47,8 @@ class TestDownloadGroup:
 
     @pytestrail.case('C96758')
     @pytest.mark.ten_popular_sites
-    def test_download_nhaccuatui(self, browser, get_current_download_folder, clear_download_page_and_download_folder):
+    def test_download_nhaccuatui(self, browser, get_current_download_folder, clear_download_page_and_download_folder
+                                 , disable_coccoc_block_ads):
         self.implement_test_site(browser, VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM, get_current_download_folder)
 
     @pytestrail.case('C98735')

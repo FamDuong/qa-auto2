@@ -88,6 +88,45 @@ class SettingsPageObject(BasePageObject):
         actual_status = self.settings_elem.find_extension_on_off_by_id(driver, extension_id).get_attribute("checked")
         assert actual_status is expect_status
 
+    def interact_ads_block(self, driver, action):
+        script_get_attribute_aria_pressed = 'return document.querySelector("body > settings-ui")' \
+                                            '.shadowRoot.querySelector("#main")' \
+                                            '.shadowRoot.querySelector("settings-basic-page")' \
+                                            '.shadowRoot.querySelector("#advancedPage ' \
+                                            '> settings-section:nth-child(5) ' \
+                                            '> settings-coccoc-subresource-filter-page")' \
+                                            '.shadowRoot.querySelector("settings-toggle-button")' \
+                                            '.shadowRoot.querySelector("#control").getAttribute("aria-pressed")'
+        script_click_ads_block = 'document.querySelector("body > settings-ui").shadowRoot.querySelector("#main")' \
+                                 '.shadowRoot.querySelector("settings-basic-page")' \
+                                 '.shadowRoot.querySelector("#advancedPage > settings-section:nth-child(5) ' \
+                                 '> settings-coccoc-subresource-filter-page")' \
+                                 '.shadowRoot.querySelector("settings-toggle-button")' \
+                                 '.shadowRoot.querySelector("#control").click()'
+
+        def disable_enabled_ads_block():
+            if driver.execute_script(script_get_attribute_aria_pressed) == 'true':
+                driver.execute_script(script_click_ads_block)
+            elif driver.execute_script(script_get_attribute_aria_pressed) == 'false':
+                print("Button is already disabled")
+            else:
+                print("Problem when get attribute aria-pressed of enabled ads blcok")
+
+        def enable_enabled_ads_block():
+            if driver.execute_script(script_get_attribute_aria_pressed) == 'true':
+                print("Button is already enabled")
+            elif driver.execute_script(script_get_attribute_aria_pressed) == 'false':
+                driver.execute_script(script_click_ads_block)
+            else:
+                print("Problem when get attribute aria-pressed of enabled ads blcok")
+
+        if action == 'disable':
+            return disable_enabled_ads_block()
+        elif action == 'enable':
+            return enable_enabled_ads_block()
+        else:
+            print("Please specify the action")
+
 
 
 

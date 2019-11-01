@@ -40,7 +40,7 @@ class TestPornHub:
     @pytestrail.case('C98771')
     @pytest.mark.ten_popular_sites
     def test_download_file_x_videos(self, browser, get_current_download_folder
-                                    , clear_download_page_and_download_folder):
+                                    , clear_download_page_and_download_folder, disable_coccoc_block_ads):
         browser.get(OtherSiteUrls.FR_PORN_HUB_VIDEO_URL)
         any_site_page_object.mouse_over_video_fr_porn_hub(browser)
         implement_download_file(browser, get_current_download_folder, )
