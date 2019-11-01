@@ -55,7 +55,6 @@ class TestDownloadGroup:
     @pytest.mark.ten_popular_sites
     def test_download_dongphim(self, browser, get_current_download_folder, clear_download_page_and_download_folder):
         browser.get(VideoUrls.DONG_PHIM_VIDEO_URL)
-        WaitAfterEach.sleep_timer_after_each_step()
         any_site_page_object.click_video_item_dong_phim(browser)
         any_site_page_object.choose_watch_option_if_any(browser)
         any_site_page_object.mouse_over_video_item_dong_phim(browser)

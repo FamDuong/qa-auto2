@@ -504,12 +504,21 @@ class AnySitePageObject(BasePageObject):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_dong_phim_video_item(driver))
 
     def choose_watch_option_if_any(self, driver):
-        elements = driver.find_elements_by_xpath(AnySite.DONG_PHIM_WATCH_OPTION_XPATH)
-        if len(elements) > 0:
-            wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_WATCH_OPTION)).click()
+        WaitAfterEach.sleep_timer_after_each_step()
+        windows = driver.window_handles
+        if len(windows) > 1:
+            driver.switch_to.window(windows[0])
+            elements = driver.find_elements_by_xpath(AnySite.DONG_PHIM_WATCH_OPTION_XPATH)
+            if len(elements) > 0:
+                wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_WATCH_OPTION)).click()
+            else:
+                print("Cannot find button for watch options")
         else:
             print("Watch options does not show uup")
 
     def click_video_item_dong_phim(self, driver):
-        self.any_site_element.find_dong_phim_play_video_item(driver).click()
-        WaitAfterEach.sleep_timer_after_each_step()
+        if len(self.any_site_element.find_elements_dong_phim_play_video_btn(driver)) > 0:
+            self.any_site_element.find_dong_phim_play_video_item(driver).click()
+            WaitAfterEach.sleep_timer_after_each_step()
+        else:
+            print("Play button does not show")

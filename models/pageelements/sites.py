@@ -625,6 +625,10 @@ class AnySiteElements(BasePageElement):
     def find_dong_phim_play_video_item(driver):
         return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_PLAY_VIDEO_ITEM))
 
+    @staticmethod
+    def find_elements_dong_phim_play_video_btn(driver):
+        return driver.find_elements_by_css_selector(AnySite.DONG_PHIM_PLAY_VIDEO_ITEM_CSS)
+
 
 
 
