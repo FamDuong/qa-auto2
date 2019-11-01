@@ -5,6 +5,7 @@ class SaviorPageLocators(object):
     DOWNLOAD_BUTTON = '#download-main'
     FIRST_LAYER = '[style="position: absolute; top: 0px;"]'
     PREFERRED_SELECT_BTN = '[id="preferred-select"]'
+    CURRENT_SELECTED_RESOLUTION = 'span:not([hidden])[class="j-quality-option quality-option"]'
     BASE_OVERLAY_CLASS = '[class="base overlay"]'
     HIGH_PREFERRED_SELECT_BTN = '//span[@data-selected-value="High"]'
     MEDIUM_SELECT_OPTION = '[data-quality-value="mp4/Medium/360p"]'

@@ -81,12 +81,6 @@ def check_if_the_file_fully_downloaded(browser):
 
 
 def pause_any_video_youtube(browser):
-    # text_in_video = 'BLACKPINK - ‘뚜두뚜두 (DDU-DU DDU-DU)’ M/V'
-    # browser.get(Urls.YOUTUBE_URL)
-    # WaitAfterEach.sleep_timer_after_each_step()
-    # youtube_page_object.search_video_item(browser, text_in_video)
-    # WaitAfterEach.sleep_timer_after_each_step()
-    # youtube_video_link = youtube_page_object.choose_any_video_item(browser,text_in_video)
     browser.get(VideoUrls.YOUTUBE_VIDEO_URL)
     WaitAfterEach.sleep_timer_after_each_step()
     youtube_page_object.mouse_over_video_item(browser)
