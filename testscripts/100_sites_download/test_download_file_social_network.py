@@ -1,10 +1,8 @@
 import pytest
-
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
-from testscripts.common_setup import implement_download_file, \
-    clear_data_download_in_browser_and_download_folder
+from testscripts.common_setup import implement_download_file
 from utils_automation.const import OtherSiteUrls
 
 
@@ -16,6 +14,8 @@ class TestFacebook:
 
     @pytestrail.case('C96691')
     @pytest.mark.ten_popular_sites
+    @pytestrail.defect('PF-530')
+    @pytest.mark.skip(reason="Skip until bug PF-530 is fixed")
     def test_download_file_facebook(self, browser, get_current_download_folder
                                     , clear_download_page_and_download_folder):
         browser.get(OtherSiteUrls.FACEBOOK_VIDEO_URL)
