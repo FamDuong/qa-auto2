@@ -619,7 +619,7 @@ class AnySiteElements(BasePageElement):
 
     @staticmethod
     def find_dong_phim_video_item(driver):
-        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_PAUSE_VIDEO_ITEM))
+        return wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_VIDEO_ITEM))
 
     @staticmethod
     def find_dong_phim_play_video_item(driver):
