@@ -504,7 +504,7 @@ class AnySitePageObject(BasePageObject):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_dong_phim_video_item(driver))
 
     def choose_watch_option_if_any(self, driver):
-        WaitAfterEach.sleep_timer_after_each_step()
+        WaitAfterEach.sleep_timer_after_each_step_longer_load()
         windows = driver.window_handles
         if len(windows) > 1:
             driver.switch_to.window(windows[0])
