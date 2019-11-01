@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
-from models.pageelements.sites import YoutubePageElements, GooglePageElements, AnySiteElements
+from models.pageelements.sites import YoutubePageElements, GooglePageElements, AnySiteElements, wait_for_element
 from models.pagelocators.sites import AnySite
 from models.pageobject.basepage_object import BasePageObject
 from utils_automation.common import WebElements
@@ -502,6 +502,13 @@ class AnySitePageObject(BasePageObject):
 
     def mouse_over_video_item_dong_phim(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_dong_phim_video_item(driver))
+
+    def choose_watch_option_if_any(self, driver):
+        elements = driver.find_elements_by_xpath(AnySite.DONG_PHIM_WATCH_OPTION_XPATH)
+        if len(elements) > 0:
+            wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_WATCH_OPTION)).click()
+        else:
+            print("Watch options does not show uup")
 
     def click_video_item_dong_phim(self, driver):
         self.any_site_element.find_dong_phim_play_video_item(driver).click()
