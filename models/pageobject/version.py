@@ -4,6 +4,7 @@ from models.pageobject.basepage_object import BasePageObject
 from os import path
 import pytest
 
+
 class VersionPageObject(BasePageObject):
     version_element = VersionPageElements()
 

@@ -13,6 +13,7 @@ class Urls:
     COCCOC_ABOUT = 'coccoc://settings/help'
     COCCOC_DEV_URL = 'https://dev.coccoc.com'
     COCCOC_URL = 'https://coccoc.com'
+    COCCOC_ADS_BLOCK_URL = 'coccoc://settings/adsBlock'
     YOUTUBE_URL = 'https://www.youtube.com/'
 
     GOOGLE_URL = 'https://www.google.com/'
