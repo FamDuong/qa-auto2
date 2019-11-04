@@ -1,6 +1,4 @@
-import time
 import re
-
 from models.pageelements.savior import SaviorElements
 from models.pagelocators.savior import SaviorPageLocators
 from models.pageobject.basepage_object import BasePageObject
@@ -10,7 +8,8 @@ from utils_automation.setup import WaitAfterEach
 class SaviorPageObject(BasePageObject):
     savior_elements = SaviorElements()
     script = 'document.querySelector(arguments[0]).shadowRoot.querySelector(arguments[1]).click();'
-    script_find = 'return document.querySelector(arguments[0]).shadowRoot.querySelector(arguments[1])'
+    script_find = 'return document.querySelector(arguments[0]).shadowRoot.querySelector(arguments[1])' \
+                  '.getAttribute("data-quality")'
     script_textContent = 'return document.querySelector(arguments[0]).shadowRoot.querySelector(arguments[1]).' \
                          'textContent'
 
@@ -51,7 +50,7 @@ class SaviorPageObject(BasePageObject):
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.DOWNLOAD_BUTTON)
 
     def current_media_info(self, driver):
-        element = driver.execute_script(self.script_find, SaviorPageLocators.FIRST_LAYER,
+        return driver.execute_script(self.script_find, SaviorPageLocators.FIRST_LAYER,
                                         SaviorPageLocators.CURRENT_SELECTED_RESOLUTION)
 
     def download_file_title_via_savior_download_btn(self, driver, title):
