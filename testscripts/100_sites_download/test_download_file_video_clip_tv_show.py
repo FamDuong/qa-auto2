@@ -3,7 +3,7 @@ from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
 
 from testscripts.common_setup import download_file_via_main_download_button, \
-    assert_file_download_value
+    assert_file_download_value, get_resolution_info
 from utils_automation.const import OtherSiteUrls
 
 savior_page_object = SaviorPageObject()
@@ -19,14 +19,11 @@ class TestDailyMotion:
 
     @pytestrail.case('C98793')
     def test_download_file_daily_motion(self, browser, get_current_download_folder,
-                                        clear_download_page_and_download_folder):
+                                        clear_download_page_and_download_folder, disable_fair_adblocker):
         self.mouse_over_video_for_displaying_savior(browser)
-        download_file_via_main_download_button(browser)
-        self.mouse_over_video_for_displaying_savior(browser)
-        savior_page_object.choose_preferred_option(browser)
-        height_frame = savior_page_object.verify_correct_video_options_chosen_high_quality_option(browser)
-        # File mp4 file and assert
-        assert_file_download_value(get_current_download_folder, height_frame)
+        media_info = download_file_via_main_download_button(browser)
+        resolution_info = get_resolution_info(media_info)
+        assert_file_download_value(get_current_download_folder, resolution_info)
 
 
 class TestVliveTV:
@@ -40,12 +37,9 @@ class TestVliveTV:
     def test_download_file_vlive_tv(self, browser, get_current_download_folder
                                     , clear_download_page_and_download_folder):
         self.mouse_over_video_for_displaying_savior(browser)
-        download_file_via_main_download_button(browser)
-        self.mouse_over_video_for_displaying_savior(browser)
-        savior_page_object.choose_preferred_option(browser)
-        height_frame = savior_page_object.verify_correct_video_options_chosen_high_quality_option(browser)
-        # File mp4 file and assert
-        assert_file_download_value(get_current_download_folder, height_frame)
+        media_info = download_file_via_main_download_button(browser)
+        resolution_info = get_resolution_info(media_info)
+        assert_file_download_value(get_current_download_folder, resolution_info)
 
 
 

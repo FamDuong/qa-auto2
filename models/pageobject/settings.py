@@ -88,22 +88,7 @@ class SettingsPageObject(BasePageObject):
         actual_status = self.settings_elem.find_extension_on_off_by_id(driver, extension_id).get_attribute("checked")
         assert actual_status is expect_status
 
-    def interact_ads_block(self, driver, action):
-        script_get_attribute_aria_pressed = 'return document.querySelector("body > settings-ui")' \
-                                            '.shadowRoot.querySelector("#main")' \
-                                            '.shadowRoot.querySelector("settings-basic-page")' \
-                                            '.shadowRoot.querySelector("#advancedPage ' \
-                                            '> settings-section:nth-child(5) ' \
-                                            '> settings-coccoc-subresource-filter-page")' \
-                                            '.shadowRoot.querySelector("settings-toggle-button")' \
-                                            '.shadowRoot.querySelector("#control").getAttribute("aria-pressed")'
-        script_click_ads_block = 'document.querySelector("body > settings-ui").shadowRoot.querySelector("#main")' \
-                                 '.shadowRoot.querySelector("settings-basic-page")' \
-                                 '.shadowRoot.querySelector("#advancedPage > settings-section:nth-child(5) ' \
-                                 '> settings-coccoc-subresource-filter-page")' \
-                                 '.shadowRoot.querySelector("settings-toggle-button")' \
-                                 '.shadowRoot.querySelector("#control").click()'
-
+    def interact_ads_block(self, driver, action, script_get_attribute_aria_pressed, script_click_ads_block):
         def disable_enabled_ads_block():
             if driver.execute_script(script_get_attribute_aria_pressed) == 'true':
                 driver.execute_script(script_click_ads_block)
@@ -126,6 +111,7 @@ class SettingsPageObject(BasePageObject):
             return enable_enabled_ads_block()
         else:
             print("Please specify the action")
+
 
 
 

@@ -1,13 +1,12 @@
+import re
 import pytest
 from models.pageobject.savior import SaviorPageObject
 from pytest_testrail.plugin import pytestrail
-
-from models.pageobject.settings import SettingsPageObject
 from models.pageobject.sites import AnySitePageObject
 from testscripts.common_setup import pause_any_video_site, download_file_via_main_download_button, \
     assert_file_download_value, delete_all_mp4_file_download, \
-    implement_download_file
-from utils_automation.const import VideoUrls, Urls
+    implement_download_file, get_resolution_info
+from utils_automation.const import VideoUrls
 from utils_automation.setup import WaitAfterEach
 
 any_site_page_object = AnySitePageObject()
@@ -25,12 +24,9 @@ class TestDownloadGroup:
     def implement_test_site(self, browser, url_site, get_current_download_folder):
         pause_any_video_site(browser, url_site)
         self.prepare_check_download(get_current_download_folder)
-        download_file_via_main_download_button(browser, )
-        pause_any_video_site(browser, url_site)
-        self.savior_page_object.choose_preferred_option(browser)
-        height_frame = self.savior_page_object.verify_correct_video_options_chosen_high_quality_option(browser)
-        # File mp4 file and assert
-        assert_file_download_value(get_current_download_folder, height_frame)
+        media_info = download_file_via_main_download_button(browser, )
+        resolution_info = get_resolution_info(media_info)
+        assert_file_download_value(get_current_download_folder, resolution_info)
 
     @pytestrail.case('C96719')
     @pytest.mark.ten_popular_sites

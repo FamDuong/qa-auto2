@@ -35,9 +35,11 @@ def delete_all_mp4_file_download(mydir, endwith):
 def download_file_via_main_download_button(browser):
     savior_page_object.download_file_via_savior_download_btn(browser)
     WaitAfterEach.sleep_timer_after_each_step_longer_load()
+    media_info_element = savior_page_object.current_media_info(browser)
 
     # Check the file is fully downloaded
     check_if_the_file_fully_downloaded(browser)
+    return media_info_element
 
 
 def find_mp4_file_download(mydir, endwith):
@@ -163,4 +165,14 @@ def handle_windows_watch_option(browser, close_popup_continue_watching):
         close_popup_continue_watching
     else:
         close_popup_continue_watching
+
+
+def get_resolution_info(media_info):
+    import re
+    m = re.search('\\d+p', media_info)
+    if m is not None:
+        m = m.group()
+    else:
+        m = ''
+    return m
 

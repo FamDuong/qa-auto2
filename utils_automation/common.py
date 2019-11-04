@@ -1,5 +1,4 @@
 import fileinput
-import glob
 import os
 import csv
 import sys
@@ -11,6 +10,7 @@ import re
 from os import path
 from selenium import webdriver
 from selenium.webdriver import ActionChains
+
 
 def if_height_frame_so_width_frame(height_frame):
     if int(height_frame) == 4320:
@@ -24,8 +24,10 @@ def if_height_frame_so_width_frame(height_frame):
     elif int(height_frame) == 720:
         return 1280
 
+
 def wait_for_stable(wait_time = 3):
     time.sleep(wait_time)
+
 
 def remove_special_characters(string):
     rm_r = re.sub(r'\\r', ' ', str(string))
@@ -34,6 +36,7 @@ def remove_special_characters(string):
     rm_s = re.sub(' +', ' ', str(rm_t))
     print(rm_s)
     return rm_s
+
 
 class CSVHandle:
     def get_from_csv(self, filename):
