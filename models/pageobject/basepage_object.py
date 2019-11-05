@@ -1,6 +1,7 @@
 import time
 from datetime import datetime
-
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
@@ -49,9 +50,13 @@ class BasePageObject(object):
     def verify_savior_popup_appear(self, driver):
         while self.get_element_first_layer_savior(driver) is None:
             time.sleep(1)
-        return driver.execute_script('return document.querySelector(arguments[0]).'
-                                     'shadowRoot.querySelector(arguments[1])', SaviorPageLocators.FIRST_LAYER,
-                                     SaviorPageLocators.DOWNLOAD_BUTTON)
+            try:
+                element = driver.execute_script('return document.querySelector(arguments[0]).'
+                                      'shadowRoot.querySelector(arguments[1])', SaviorPageLocators.FIRST_LAYER,
+                                      SaviorPageLocators.DOWNLOAD_BUTTON)
+                return element
+            except StaleElementReferenceException as e:
+                print(e)
 
     def get_element_first_layer_savior(self, driver):
         return driver.execute_script('return document.querySelector(arguments[0])', SaviorPageLocators.FIRST_LAYER)
@@ -60,10 +65,13 @@ class BasePageObject(object):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         start_time = datetime.now()
         while self.verify_savior_popup_appear(driver) is None:
-            WebElements.mouse_over_element(driver, element)
-            time_delta = datetime.now() - start_time
-            if time_delta.total_seconds() >= timeout:
-                break
+            try:
+                WebElements.mouse_over_element(driver, element)
+                time_delta = datetime.now() - start_time
+                if time_delta.total_seconds() >= timeout:
+                    break
+            except StaleElementReferenceException as e:
+                print(e)
 
     def verify_text_is_visible_on_page(self, driver, component_name):
         # assert self.settings_elem.find_components_by_name(driver, component_name) == 1

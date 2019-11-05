@@ -24,10 +24,7 @@ class YoutubePageObject(BasePageObject):
         WaitAfterEach.sleep_timer_after_each_step()
 
     def mouse_over_video_item(self, driver):
-        video_element = self.youtube_element.find_video_player_item(driver)
-        hov = ActionChains(driver).move_to_element(video_element)
-        hov.perform()
-        WaitAfterEach.sleep_timer_after_each_step()
+        self.mouse_over_video_element_site(driver, self.youtube_element.find_video_player_item(driver))
 
     def click_video_item(self, driver):
         self.youtube_element.find_video_player_item(driver).click()
