@@ -2,7 +2,7 @@ import re
 import pytest
 from models.pageobject.savior import SaviorPageObject
 from pytest_testrail.plugin import pytestrail
-from models.pageobject.sites import AnySitePageObject
+from models.pageobject.sites import AnySitePageObject, YoutubePageObject
 from testscripts.common_setup import pause_any_video_site, download_file_via_main_download_button, \
     assert_file_download_value, delete_all_mp4_file_download, \
     implement_download_file, get_resolution_info
@@ -31,7 +31,12 @@ class TestDownloadGroup:
     @pytestrail.case('C96719')
     @pytest.mark.ten_popular_sites
     def test_download_youtube(self, browser, get_current_download_folder, clear_download_page_and_download_folder):
-        self.implement_test_site(browser, VideoUrls.YOUTUBE_VIDEO_URL, get_current_download_folder)
+        youtube_page_object = YoutubePageObject()
+        browser.get(VideoUrls.YOUTUBE_VIDEO_URL)
+        youtube_page_object.mouse_over_video_item(browser)
+        media_info = download_file_via_main_download_button(browser, )
+        resolution_info = get_resolution_info(media_info)
+        assert_file_download_value(get_current_download_folder, resolution_info)
 
     @pytestrail.case('C96752')
     def test_download_news_zing(self, browser, get_current_download_folder, clear_download_page_and_download_folder):

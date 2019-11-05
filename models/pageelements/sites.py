@@ -31,7 +31,7 @@ class YoutubePageElements(BasePageElement):
     @staticmethod
     def find_video_player_item(driver):
         return wait_for_element(driver).until(
-            ec.presence_of_element_located(YoutubePageLocators.VIDEO_PLAYER_ITEM))
+            ec.element_to_be_clickable(YoutubePageLocators.VIDEO_PLAYER_ITEM))
 
 
 class GooglePageElements(BasePageElement):

@@ -7,7 +7,7 @@ class YoutubePageLocators(object):
     def any_video_item(text):
         return By.XPATH, '//a[contains(text(), "%s")][@id="video-title"]' % text
 
-    VIDEO_PLAYER_ITEM = (By.ID, 'movie_player')
+    VIDEO_PLAYER_ITEM = (By.XPATH, '//div[@id="player"][@class="style-scope ytd-watch-flexy"]')
 
     SEARCH_BOX = (By.ID, 'search')
 

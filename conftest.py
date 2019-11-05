@@ -14,7 +14,7 @@ download_folder = None
 flash_path = None
 block_origin_extension_path = None
 user_data_default = None
-
+username = None
 files = FilesHandle()
 
 
@@ -68,8 +68,10 @@ def browser(get_use_data_path):
     global driver
     global user_data_path
     global block_origin_extension_path
+    binary_path = f"C:\\Users\\{username}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
     if driver is None:
         chrome_options = sele_webdriver.ChromeOptions()
+        chrome_options.binary_location = binary_path
         chrome_options.add_argument("--window-size=1920,1080")
         chrome_options.add_argument("--proxy-server='direct://'")
         chrome_options.add_argument("--proxy-bypass-list=*")
@@ -139,8 +141,11 @@ def set_up_before_run_user_browser():
     global block_origin_extension_path
     global flash_path
     global user_data_default
+    chrome_options = sele_webdriver.ChromeOptions()
+    binary_path = f"C:\\Users\\{username}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
     try:
-        local_driver = sele_webdriver.Chrome()
+        chrome_options.binary_location = binary_path
+        local_driver = sele_webdriver.Chrome(options=chrome_options)
         local_driver.maximize_window()
         local_driver.get(Urls.COCCOC_VERSION_URL)
         user_data_default = version_page_object.get_profile_path(local_driver)
@@ -169,6 +174,7 @@ def pytest_addoption(parser):
     parser.addoption('--rm_user_data', action='store')
     parser.addoption("--name", action="store", default="default name")
     parser.addoption("--env", action="store", default="local")
+    parser.addoption("--user", action="store", default="cuongld")
 
 
 @pytest.fixture(scope='session')
@@ -217,3 +223,12 @@ def get_use_data_path(request):
 def get_env_value(pytestconfig):
     files.copy_file(os.getcwd() + '/resources/env.' + str(pytestconfig.getoption('env')) + '.yaml',
                     os.getcwd() + '/resources/env.yaml')
+
+
+@pytest.fixture(scope='session', autouse=True)
+def get_username(request):
+    global username
+    username = request.config.getoption("--user")
+    return username
+
+
