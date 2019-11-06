@@ -48,21 +48,24 @@ class BasePageObject(object):
             WaitAfterEach.sleep_timer_after_each_step()
 
     def verify_savior_popup_appear(self, driver):
+
+        def find_download_button():
+            return driver.execute_script('return document.querySelector(arguments[0]).'
+                                  'shadowRoot.querySelector(arguments[1])', SaviorPageLocators.FIRST_LAYER,
+                                  SaviorPageLocators.DOWNLOAD_BUTTON)
+
         while self.get_element_first_layer_savior(driver) is None:
             time.sleep(1)
-            try:
-                element = driver.execute_script('return document.querySelector(arguments[0]).'
-                                      'shadowRoot.querySelector(arguments[1])', SaviorPageLocators.FIRST_LAYER,
-                                      SaviorPageLocators.DOWNLOAD_BUTTON)
-                return element
-            except StaleElementReferenceException as e:
-                print(e)
+        try:
+            find_download_button()
+        except StaleElementReferenceException as e:
+            print(e)
+        return find_download_button()
 
     def get_element_first_layer_savior(self, driver):
         return driver.execute_script('return document.querySelector(arguments[0])', SaviorPageLocators.FIRST_LAYER)
 
     def mouse_over_video_element_site(self, driver, element, timeout=12):
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
         start_time = datetime.now()
         while self.verify_savior_popup_appear(driver) is None:
             try:

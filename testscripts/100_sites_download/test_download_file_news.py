@@ -2,9 +2,8 @@ from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
 from testscripts.common_setup import delete_all_mp4_file_download, \
-    clear_data_download, implement_download_file, \
-    clear_data_download_in_browser_and_download_folder, verify_download_quality_high_frame, \
-    choose_video_quality_medium_option, revert_high_quality_default_option
+     implement_download_file, verify_download_quality_high_frame, \
+     choose_video_quality_medium_option
 from utils_automation.const import OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
 
@@ -402,15 +401,12 @@ class TestKeoNhaCai:
 
     @pytestrail.case('C98792')
     def test_download_file_keo_nha_cai(self, browser, get_current_download_folder
-                                       , clear_download_page_and_download_folder):
+                                       , clear_download_page_and_download_folder, revert_high_quality_default_option):
         choose_video_quality_medium_option(browser)
-        try:
-            browser.get(OtherSiteUrls.KEO_NHA_CAI_VIDEO_URL)
-            any_site_page_object.click_video_item_keo_nha_cai(browser)
-            any_site_page_object.mouse_over_video_item_keo_nha_cai(browser)
-            implement_download_file(browser, get_current_download_folder, ),
-        finally:
-            revert_high_quality_default_option(browser)
+        browser.get(OtherSiteUrls.KEO_NHA_CAI_VIDEO_URL)
+        any_site_page_object.click_video_item_keo_nha_cai(browser)
+        any_site_page_object.mouse_over_video_item_keo_nha_cai(browser)
+        implement_download_file(browser, get_current_download_folder, ),
 
 
 class TestVoV:
@@ -449,3 +445,6 @@ class TestSaoStar:
         browser.get(OtherSiteUrls.SAO_STAR_VIDEO_URL)
         any_site_page_object.mouse_over_video_sao_star_vn(browser)
         implement_download_file(browser, get_current_download_folder),
+
+
+
