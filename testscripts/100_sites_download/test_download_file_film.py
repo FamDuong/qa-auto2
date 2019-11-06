@@ -1,4 +1,6 @@
 import pytest
+
+from models.pageelements.sites import AnySiteElements
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
@@ -41,22 +43,21 @@ class TestPhimmoi:
 
 class TestVuViPhim:
 
-    @staticmethod
-    def prepare_savior_option_displayed(browser):
+    any_site_element = AnySiteElements()
+
+    def prepare_savior_option_displayed(self, browser):
         browser.get(OtherSiteUrls.VU_VI_PHIM_VIDEO_URL)
-        # any_site_page_object.click_video_item_vu_vi_phim_js(browser)
-        any_site_page_object.switch_to_iframe_vu_vi_phim(browser)
-        # any_site_page_object.click_video_item_vu_vi_phim(browser)
-        any_site_page_object.click_replay_btn_vu_vi_phim(browser)
-        any_site_page_object.mouse_over_video_item_vu_vi_phim(browser)
+        self.any_site_element.find_vu_vi_phim_iframe(browser)
+        WaitAfterEach.sleep_timer_after_each_step()
+        any_site_page_object.scroll_to_iframe_element_vu_vi_phim(browser)
+        WaitAfterEach.sleep_timer_after_each_step_longest_load()
+        any_site_page_object.send_event_mouse_over_vu_vi_phim_js(browser)
         WaitAfterEach.sleep_timer_after_each_step()
 
     @pytestrail.case('C98751')
-    @pytest.mark.skip(reason='Not stable for mouse over to click on download')
     def test_download_file_vuviphim(self, browser, get_current_download_folder
                                     , clear_download_page_and_download_folder):
         self.prepare_savior_option_displayed(browser)
-        browser.switch_to.default_content()
         implement_download_file(browser, get_current_download_folder, ),
         clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
 

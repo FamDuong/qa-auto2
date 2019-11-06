@@ -74,6 +74,15 @@ class AnySitePageObject(BasePageObject):
     def mouse_over_first_video_element(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_first_video_element(driver))
 
+    def get_mouse_enter_event_js_element(self, driver):
+        return driver.execute_script('return new Event("mouseenter")')
+
+    def find_video_element_vu_vi_phim_js(self, driver):
+        return driver.execute_script('return document.querySelector("#media > iframe")')
+
+    def send_event_mouse_over_vu_vi_phim_js(self, driver):
+        driver.execute_script('document.querySelector("#media > iframe").dispatchEvent(new Event("mouseenter"))')
+
     def click_first_video_element(self, driver):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         self.any_site_element.click_first_video_element(driver)
@@ -191,6 +200,15 @@ class AnySitePageObject(BasePageObject):
 
     def click_video_item_vu_vi_phim_js(self, driver):
         driver.execute_script('document.querySelector("#media").click();')
+
+    def scroll_to_iframe_element_vu_vi_phim(self, driver):
+        driver.execute_script('document.querySelector("#media > iframe").scrollIntoView(true)')
+
+    def get_time_video_item_vu_vi_phim(self, driver):
+        return self.any_site_element.find_vu_vi_phim_time_element(driver).text
+
+    def click_on_iframe_vu_vi_phim(self, driver):
+        self.any_site_element.find_vu_vi_phim_iframe(driver).click()
 
     def switch_to_iframe_vu_vi_phim(self, driver):
         driver.switch_to.frame(self.any_site_element.find_vu_vi_phim_iframe(driver))
