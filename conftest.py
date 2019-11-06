@@ -169,12 +169,13 @@ def clear_screen_shot_folder():
 
 
 def pytest_addoption(parser):
+    import getpass
     parser.addoption('--settings', '--use-user-data', action='store')
     parser.addoption('--cc_version', action='store')
     parser.addoption('--rm_user_data', action='store')
     parser.addoption("--name", action="store", default="default name")
     parser.addoption("--env", action="store", default="local")
-    parser.addoption("--user", action="store", default="cuongld")
+    parser.addoption("--user", action="store", default=getpass.getuser())
 
 
 @pytest.fixture(scope='session')

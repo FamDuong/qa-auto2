@@ -112,12 +112,6 @@ def not_found_download_button_in_page(browser):
     savior_page_object.not_found_download_button(browser)
 
 
-def revert_high_quality_default_option(browser):
-    browser.get(u'chrome-extension://' + ExtensionIds.SAVIOR_EXTENSION_ID + u'/options.html')
-    savior_extension.choose_video_quality_high(browser)
-    WaitAfterEach.sleep_timer_after_each_step()
-
-
 def choose_video_quality_medium_option(browser):
     browser.get(u'chrome-extension://' + ExtensionIds.SAVIOR_EXTENSION_ID + u'/options.html')
     savior_extension.choose_video_quality_medium(browser)

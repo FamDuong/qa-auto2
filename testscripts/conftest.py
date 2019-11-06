@@ -2,7 +2,7 @@ import pytest
 
 from models.pageobject.settings import SettingsPageObject
 from testscripts.common_setup import clear_data_download, delete_all_mp4_file_download
-from utils_automation.const import Urls
+from utils_automation.const import Urls, ExtensionIds
 from utils_automation.setup import WaitAfterEach
 
 
@@ -63,5 +63,12 @@ def disable_fair_adblocker(browser):
     WaitAfterEach.sleep_timer_after_each_step()
 
 
-
+@pytest.fixture()
+def revert_high_quality_default_option(browser):
+    yield
+    from models.pageobject.extensions import SaviorExtensionOptionsPageObject
+    savior_extension = SaviorExtensionOptionsPageObject()
+    browser.get(u'chrome-extension://' + ExtensionIds.SAVIOR_EXTENSION_ID + u'/options.html')
+    savior_extension.choose_video_quality_high(browser)
+    WaitAfterEach.sleep_timer_after_each_step()
 

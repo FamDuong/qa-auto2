@@ -107,7 +107,7 @@ class OtherSiteUrls:
     VLIVE_TV_VIDEO_URL = 'https://www.vlive.tv/video/150718'
     ANIME_HAY_TV_VIDEO_URL = 'http://animehay.tv/phim/black-clover-tap-1-e45482.html'
     DOI_SONG_PHAP_LUAT_VIDEO_URL = 'https://www.doisongphapluat.com/video/video-hot/video-rung-tim-vi-khoanh-khac-doi-ban-than-2-tuoi-chay-toi-om-cham-lay-nhau-sau-2-ngay-xa-cach-a292398.html'
-    SAO_STAR_VIDEO_URL = 'https://saostar.vn/xa-hoi/clip-tau-hoa-tong-xe-o-to-7-cho-tai-xe-thoat-nan-than-ky-6150975.html'
+    SAO_STAR_VIDEO_URL = 'https://saostar.vn/am-nhac/fan-khoc-thet-voi-bts-doll-phien-ban-album-answer-6388198.html'
     VIET_SUB_TV_VIDEO_URL = 'https://vietsubtv.org/xem-phim/doi-mat-12204/tap-3.html'
 
 
