@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
-from models.pageelements.sites import YoutubePageElements, GooglePageElements, AnySiteElements, wait_for_element
+from models.pageelements.sites import YoutubePageElements, GooglePageElements, AnySiteElements
 from models.pagelocators.sites import AnySite
 from models.pageobject.basepage_object import BasePageObject
 from utils_automation.common import WebElements
