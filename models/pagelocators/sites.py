@@ -155,6 +155,7 @@ class AnySite(object):
     VIET_SUB_TV_PLAYER_VIDEO_ITEM = (By.ID, 'player')
     VIET_SUB_TV_AD_NOT_APPEAR_ITEM_XPATH = '//div[@id="adsmessage"][@style="display: none;"]'
     DONG_PHIM_VIDEO_ITEM = (By.CSS_SELECTOR, 'div[id*="video-player"][playsinline]')
+    DONG_PHIM_VIDEO_IFRAME = (By.CSS_SELECTOR, '[id*="video-wrap-video-player"] > div[style*="position"] > iframe')
     DONG_PHIM_WATCH_OPTION = (By.XPATH, '//button[@class="cplayer-discover-checkpoint-btn"]')
     DONG_PHIM_WATCH_OPTION_XPATH = '//button[@class="cplayer-discover-checkpoint-btn"]'
     DONG_PHIM_PLAY_VIDEO_ITEM = (By.CSS_SELECTOR, 'button[class="cplayer-play-control cplayer-control cplayer-button cplayer-paused"]')

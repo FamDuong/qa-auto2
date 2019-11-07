@@ -57,10 +57,10 @@ class BasePageObject(object):
         while self.get_element_first_layer_savior(driver) is None:
             time.sleep(1)
         try:
-            find_download_button()
+            a = find_download_button()
+            return a
         except StaleElementReferenceException as e:
             print(e)
-        return find_download_button()
 
     def get_element_first_layer_savior(self, driver):
         return driver.execute_script('return document.querySelector(arguments[0])', SaviorPageLocators.FIRST_LAYER)
