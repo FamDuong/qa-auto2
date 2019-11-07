@@ -516,12 +516,12 @@ class AnySitePageObject(BasePageObject):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_viet_sub_tv_video_item(driver))
 
     def mouse_over_video_item_dong_phim(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_dong_phim_video_item(driver))
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_dong_phim_video_iframe(driver))
 
     def choose_watch_option_if_any(self, driver):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         windows = driver.window_handles
-        if len(windows) > 1:
+        if len(windows) > 2:
             driver.switch_to.window(windows[0])
             elements = driver.find_elements_by_xpath(AnySite.DONG_PHIM_WATCH_OPTION_XPATH)
             if len(elements) > 0:
