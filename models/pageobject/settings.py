@@ -4,6 +4,7 @@ from models.pageobject.basepage_object import BasePageObject
 from utils_automation.const import Urls
 from utils_automation.common import wait_for_stable
 
+
 class SettingsPageObject(BasePageObject):
     settings_elem = SettingsElements()
 
