@@ -1,8 +1,4 @@
-import time
-
 import cv2
-import pytest
-
 from models.pageobject.downloads import DownloadsPageObject
 from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetailsPageObject, \
     SaviorExtensionOptionsPageObject

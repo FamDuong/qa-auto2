@@ -1,6 +1,5 @@
 from pytest_testrail.plugin import pytestrail
 from selenium.webdriver.common.keys import Keys
-
 from models.pageobject.newtab import NewTabSearchPageObject
 from utils_automation.const import Urls
 

@@ -1,3 +1,5 @@
+import random
+
 from models.pageelements.newtab import NewTabSearchElement
 from models.pageobject.basepage_object import BasePageObject
 
@@ -17,6 +19,16 @@ class NewTabSearchPageObject(BasePageObject):
 
     def click_search_button_element(self, driver):
         return self.new_tab_search_element.find_search_button_element(driver).click()
+
+    def get_total_number_most_visited_sites(self, driver):
+        return len(self.new_tab_search_element.find_all_most_visited_sites(driver))
+
+    def get_attribute_any_most_visited_site_element(self, driver, nth_element, attribute_name):
+        return self.new_tab_search_element.find_all_most_visited_sites(driver)[nth_element].get_attribute(attribute_name)
+
+    def click_any_most_visited_site_element(self, driver, nth_element):
+        self.new_tab_search_element.find_all_most_visited_sites(driver)[nth_element].click()
+
 
 
 
