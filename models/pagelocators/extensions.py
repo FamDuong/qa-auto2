@@ -12,6 +12,11 @@ class ExtensionsPageLocators:
     SAVIOR_EXTENSIONS_WRAPPER_ID = 'jdfkmiabjpfjacifcmihfdjhpnjpiick'
     SAVIOR_EXTENSION_NAME_TEXT = 'Cốc Cốc Savior'
 
+    class UblockPlusPageLocators:
+        UBLOCK_PLUS_ID_CSS_LOCATOR = '#oofnbdifeelbaidfgpikinijekkjcicg'
+        ENABLE_TOGGER_BTN = '#enable-toggle'
+        KNOB_BTN = '#knob'
+
 
 class SaviorDetailsPageLocators:
     SAVIOR_INCOGNITO_ENABLE_BUTTON_CSS = '[id="crToggle"]'

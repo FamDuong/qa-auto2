@@ -59,7 +59,6 @@ class SettingsPageObject(BasePageObject):
     def update_cc_version(self, driver):
         self.settings_elem.wait_until_cc_version_update(driver)
 
-
     def verify_setting_on_startup(self, driver, expect_option):
         driver.get(Urls.COCCOC_SETTINGS_ONSTARTUP)
         # element_open_new_tab = self.settings_elem.find_open_new_tab(driver)
@@ -112,6 +111,25 @@ class SettingsPageObject(BasePageObject):
             return enable_enabled_ads_block()
         else:
             print("Please specify the action")
+
+    class SettingsAdsBlockPageObject(BasePageObject):
+        settings_ad_block_elem = SettingsElements.SettingsAdsBlock()
+
+        def change_ads_block_mode(self, driver, block_mode='Strict'):
+            curr_block_mod_elem = self.settings_ad_block_elem.find_current_block_mod(driver)
+            if block_mode in curr_block_mod_elem.text:
+                print(f"Current block mode is already : {block_mode}")
+            else:
+                drop_down_elem = self.settings_ad_block_elem.find_drop_down_menu_coccoc_block_ads(driver)
+                if block_mode == 'Strict':
+                    self.choose_drop_down_value_js(driver, drop_down_elem, 1)
+                elif block_mode == 'Standard':
+                    self.choose_drop_down_value_js(driver, drop_down_elem, 0)
+                else:
+                    raise Exception
+
+
+
 
 
 

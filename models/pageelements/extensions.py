@@ -29,7 +29,23 @@ class ExtensionsElement(BasePageElement):
         return self.find_savior_extension_wrapper(driver).find_element_by_id('name')
 
     def find_savior_details(self, driver):
-        return self.find_savior_extension_wrapper(driver).find_element_by_id(ExtensionsPageLocators.EXTENSION_DETAIL_BUTTON)
+        return self.find_savior_extension_wrapper(driver).find_element_by_id(
+            ExtensionsPageLocators.EXTENSION_DETAIL_BUTTON)
+
+    class UblockPlusAdblockerElement(BasePageElement):
+
+        def find_ublock_toggle_knob_btn(self, driver):
+            return self.find_shadow_element(driver, ExtensionsPageLocators.EXTENSIONS_MANAGER_TEXT
+                                            , ExtensionsPageLocators.EXTENSIONS_ITEM_LIST
+                                            , ExtensionsPageLocators.UblockPlusPageLocators.UBLOCK_PLUS_ID_CSS_LOCATOR
+                                            , ExtensionsPageLocators.UblockPlusPageLocators.ENABLE_TOGGER_BTN
+                                            , ExtensionsPageLocators.UblockPlusPageLocators.KNOB_BTN)
+
+        def find_ublock_toggle_btn(self, driver):
+            return self.find_shadow_element(driver, ExtensionsPageLocators.EXTENSIONS_MANAGER_TEXT
+                                            , ExtensionsPageLocators.EXTENSIONS_ITEM_LIST
+                                            , ExtensionsPageLocators.UblockPlusPageLocators.UBLOCK_PLUS_ID_CSS_LOCATOR
+                                            , ExtensionsPageLocators.UblockPlusPageLocators.ENABLE_TOGGER_BTN)
 
 
 class CocCocSaviorExtensionDetailElement(BasePageElement):
@@ -56,8 +72,8 @@ class SaviorExtensionsOptionsElement(BasePageElement):
 
     def find_extensions_wrapper(self, driver):
         return self.find_shadow_element(driver, ExtensionsPageLocators.EXTENSIONS_MANAGER_TEXT,
-                                 SaviorDetailsPageLocators.EXTENSION_OPTIONS_DIALOG,
-                                 SaviorDetailsPageLocators.EXTENSION_OPTIONS)
+                                        SaviorDetailsPageLocators.EXTENSION_OPTIONS_DIALOG,
+                                        SaviorDetailsPageLocators.EXTENSION_OPTIONS)
 
     def find_instant_download_youtube_option(self, driver):
         wait = WebDriverWait(driver, 20)
@@ -93,9 +109,5 @@ class SaviorExtensionsOptionsElement(BasePageElement):
         wait = WebDriverWait(driver, 20)
         return wait.until(
             ec.element_to_be_clickable(SaviorExtensionOptionsPageLocators.REMEMBER_LAST_CHOSEN_OPTION))
-
-
-
-
 
 

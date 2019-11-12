@@ -17,6 +17,31 @@ class ExtensionsPageObject(BasePageObject):
     def savior_extension_detail_is_clicked(self, driver):
         self.extension_elem.find_savior_details(driver).click()
 
+    class UblockPlusPageObject(BasePageObject):
+        ublock_elem = ExtensionsElement.UblockPlusAdblockerElement()
+
+        def interact_with_ublock_knob_btn(self, driver, action='enable'):
+            ublock_toggle_elem = self.ublock_elem.find_ublock_toggle_btn(driver)
+            ublock_knob_elem = self.ublock_elem.find_ublock_toggle_knob_btn(driver)
+            if action == 'enable':
+                if ublock_toggle_elem.get_attribute('aria-pressed') == 'false':
+                    ublock_knob_elem.click()
+                elif ublock_toggle_elem.get_attribute('aria-pressed') == 'true':
+                    print("Already enable ublock")
+                else:
+                    raise Exception
+            elif action == 'disable':
+                if ublock_toggle_elem.get_attribute('aria-pressed') == 'true':
+                    ublock_knob_elem.click()
+                elif ublock_toggle_elem.get_attribute('aria-pressed') == 'false':
+                    print("Already disable ublock")
+                else:
+                    raise Exception
+            else:
+                raise Exception
+
+
+
 
 class ExtensionsDetailsPageObject(BasePageObject):
     extensions_details = CocCocSaviorExtensionDetailElement()

@@ -73,8 +73,7 @@ class AnySiteElements(BasePageElement):
         return self.wait_for_element(driver).until(
             ec.element_to_be_clickable(AnySite.PHIMMOI_CLOSE_IMAGE_AD))
 
-
-    def find_elements_close_pop_up_ads_phim_moi(driver):
+    def find_elements_close_pop_up_ads_phim_moi(self, driver):
         return driver.find_elements_by_xpath('//a[@class="close"]')
 
     def find_video_ad_length_phim_moi(self, driver):
@@ -89,8 +88,7 @@ class AnySiteElements(BasePageElement):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.MESSENGER_CHAT_VIDEO_ITEM))
 
-
-    def click_video_item_in_messenger_chat(driver):
+    def click_video_item_in_messenger_chat(self, driver):
         driver.execute_script('document.querySelector(arguments[0]).click()',
                               AnySite.MESSENGER_CHAT_VIDEO_ITEM_SELECTOR)
 
