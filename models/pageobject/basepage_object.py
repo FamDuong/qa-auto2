@@ -81,3 +81,6 @@ class BasePageObject(object):
         src = driver.page_source
         text_found = re.search(component_name, src)
         assert text_found is not None
+
+    def choose_drop_down_value_js(self, driver, element, option_index):
+        driver.execute_script('arguments[0].options[arguments[1]].selected = true;', element, option_index)

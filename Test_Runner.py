@@ -1,29 +1,29 @@
-import os
-import platform
-import sys
-import re
-from selenium import webdriver as sele_webdriver
-import pytz
-
-from pytest_testrail.plugin import pytestrail
-
-from utils_automation.common import modify_file_as_text
+from models.pageelements.extensions import ExtensionsElement
+from models.pageelements.settings import SettingsElements
+from models.pageobject.extensions import ExtensionsPageObject
+from models.pageobject.settings import SettingsPageObject
 from utils_automation.const import Urls
+from utils_automation.setup import WaitAfterEach
 
 
 class TestBrowser:
+    settings_cococ_ads_block_page_element = SettingsElements.SettingsAdsBlock()
+    settings_coccoc_ads_block_page_object = SettingsPageObject.SettingsAdsBlockPageObject()
 
-    @pytestrail.case('C36161')
-    def test_current_time_now(self, request):
-        print('Request node id is :', request.node.nodeid)
-        assert 1 == 0
+    extensions_cococ_page_element = ExtensionsElement.UblockPlusAdblockerElement()
+    extensions_cococ_page_object = ExtensionsPageObject.UblockPlusPageObject()
 
-    def test_get_user_data_path(self):
-        text = 'mp4/Standard/'
+    def test_debug(self, browser):
+        browser.get(Urls.COCCOC_EXTENSIONS)
+        WaitAfterEach.sleep_timer_after_each_step()
+        self.extensions_cococ_page_object.interact_with_ublock_knob_btn(browser, action='enable')
 
-        m = re.search('\\d+p', text)
-        if m:
-            print(m.group())
 
-    def test_get_current_dir(self):
-        modify_file_as_text("C:\\Users\\cuongld\\AppData\\Local\\CocCoc\\Browser\\User Data\\Default\\Preferences", 'Crashed', 'none')
+
+
+
+
+
+
+
+

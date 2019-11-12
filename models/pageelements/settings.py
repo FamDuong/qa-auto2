@@ -1,9 +1,6 @@
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.settings import SettingsPageLocators
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
+
 
 class SettingsElements(BasePageElement):
 
@@ -90,9 +87,27 @@ class SettingsElements(BasePageElement):
 
     def wait_until_cc_version_update(self, driver):
         element = self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
-                                        SettingsPageLocators.SETTINGS_MAIN_TEXT,
-                                        SettingsPageLocators.SETTINGS_ABOUT_TEXT,
-                                        SettingsPageLocators.ABOUT_MESSAGE)
+                                           SettingsPageLocators.SETTINGS_MAIN_TEXT,
+                                           SettingsPageLocators.SETTINGS_ABOUT_TEXT,
+                                           SettingsPageLocators.ABOUT_MESSAGE)
         self.text_to_be_present_in_shadow_element(element, "Cốc Cốc isdfsds up to date. dsdf")
 
+    class SettingsAdsBlock(BasePageElement):
+
+        def find_current_block_mod(self, driver):
+            return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                            SettingsPageLocators.SETTINGS_MAIN_TEXT,
+                                            SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                            SettingsPageLocators.SettingsAdsBlockPageLocators
+                                            .SUB_RESOURCE_FILTER_PAGE,
+                                            SettingsPageLocators.SettingsAdsBlockPageLocators
+                                            .CURRENT_BLOCK_MOD)
+
+        def find_drop_down_menu_coccoc_block_ads(self, driver):
+            return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                            SettingsPageLocators.SETTINGS_MAIN_TEXT,
+                                            SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                            SettingsPageLocators.SettingsAdsBlockPageLocators.SUB_RESOURCE_FILTER_PAGE,
+                                            SettingsPageLocators.SettingsAdsBlockPageLocators.SETTINGS_DROP_DOWN_MENU,
+                                            SettingsPageLocators.SettingsAdsBlockPageLocators.DROP_DOWN_MENU)
 

@@ -46,6 +46,12 @@ class SettingsPageLocators(object):
 
     ABOUT_MESSAGE = '#updateStatusMessage > div'
 
+    class SettingsAdsBlockPageLocators(object):
+        SUB_RESOURCE_FILTER_PAGE = 'settings-coccoc-subresource-filter-page'
+        CURRENT_BLOCK_MOD = '#subLabel'
+        SETTINGS_DROP_DOWN_MENU = 'settings-dropdown-menu'
+        DROP_DOWN_MENU = '#dropdownMenu'
+
 
 class SettingsDownloadPageLocators(object):
 

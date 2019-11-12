@@ -36,7 +36,8 @@ class TestPhimmoi:
     @pytestrail.case('C96721')
     @pytest.mark.ten_popular_sites
     def test_download_file_phim_moi(self, browser, get_current_download_folder
-                                    , clear_download_page_and_download_folder):
+                                    , clear_download_page_and_download_folder
+                                    , enable_ublock_plus_extension):
         self.prepare_displayed_savior_popup(browser)
         implement_download_file(browser, get_current_download_folder, )
 
