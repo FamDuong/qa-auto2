@@ -516,7 +516,7 @@ class AnySitePageObject(BasePageObject):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_viet_sub_tv_video_item(driver))
 
     def mouse_over_video_item_dong_phim(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_dong_phim_video_iframe(driver))
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_dong_phim_video_item(driver))
 
     def choose_watch_option_if_any(self, driver):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
@@ -532,11 +532,8 @@ class AnySitePageObject(BasePageObject):
             print("Watch options does not show uup")
 
     def click_video_item_dong_phim(self, driver):
-        if len(self.any_site_element.find_elements_dong_phim_play_video_btn(driver)) > 0:
-            self.any_site_element.find_dong_phim_play_video_item(driver).click()
-            WaitAfterEach.sleep_timer_after_each_step()
-        else:
-            print("Play button does not show")
+        self.any_site_element.find_dong_phim_play_video_item(driver).click()
+        WaitAfterEach.sleep_timer_after_each_step()
 
     def mouse_over_video_hentaiz_net(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_hentaiz_net_video_element(driver))
