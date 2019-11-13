@@ -15,6 +15,8 @@ class ExtensionsPageObject(BasePageObject):
         assert self.extension_elem.find_savior_extension(driver).text == 'Cốc Cốc Savior'
 
     def savior_extension_detail_is_clicked(self, driver):
+        driver.execute_script('arguments[0].scrollIntoView()', self.extension_elem.find_savior_details(driver))
+        WaitAfterEach.sleep_timer_after_each_step()
         self.extension_elem.find_savior_details(driver).click()
 
     class UblockPlusPageObject(BasePageObject):
