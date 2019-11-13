@@ -15,7 +15,7 @@ flash_path = None
 block_origin_extension_path = None
 user_data_default = None
 username = None
-files = FilesHandle()
+files_handle = FilesHandle()
 
 
 @pytest.mark.hookwrapper
@@ -63,11 +63,19 @@ def _capture_screenshot_win_app(filename):
 
 
 @pytest.fixture(scope='session')
-@pytest.mark.usefixtures('set_up_before_run_user_browser', 'get_use_data_path')
-def browser(get_use_data_path):
+def browser():
     global driver
     global user_data_path
     global block_origin_extension_path
+    from models.pageobject.version import VersionPageObject
+    from utils_automation.const import Urls
+    version_page_object = VersionPageObject()
+    from models.pageobject.settings import SettingsPageObject
+    setting_page_object = SettingsPageObject()
+    global download_folder
+    global block_origin_extension_path
+    global flash_path
+    global user_data_default
     binary_path = f"C:\\Users\\{username}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
     if driver is None:
         chrome_options = sele_webdriver.ChromeOptions()
@@ -84,17 +92,23 @@ def browser(get_use_data_path):
         chrome_options.add_argument('--disable-application-cache')
         chrome_options.add_argument("--disable-session-crashed-bubble")
         chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
-        if get_use_data_path is True or get_use_data_path is None:
-            import subprocess
-            prog = subprocess.Popen("taskkill /im browser.exe /f", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            prog.communicate()  # Returns (stdoutdata, stderrdata): stdout and stderr are ignored, here
-            set_up_before_run_user_browser()
-            chrome_options.add_argument('--user-data-dir=' + user_data_path)
-        # chrome_options.add_argument('--enable-features=CocCocNewDownloads')
-            modify_file_as_text(user_data_path + '\\Default\\Preferences', 'Crashed', 'none')
+        split_after = binary_path.split('\\Local')
+        user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
+        import subprocess
+        prog = subprocess.Popen("taskkill /im browser.exe /f", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        prog.communicate()  # Returns (stdoutdata, stderrdata): stdout and stderr are ignored, here
+        chrome_options.add_argument('--user-data-dir=' + user_data_path)
+        modify_file_as_text(user_data_path + '\\Default\\Preferences', 'Crashed', 'none')
         driver = sele_webdriver.Chrome(options=chrome_options)
         driver.maximize_window()
         driver.set_page_load_timeout(120)
+        driver.get(Urls.COCCOC_VERSION_URL)
+        user_data_default = version_page_object.get_profile_path(driver)
+        flash_path = version_page_object.get_flash_path(driver)
+        driver.get(Urls.COCCOC_SETTINGS_URL)
+        WaitAfterEach.sleep_timer_after_each_step()
+        download_folder = setting_page_object.get_download_folder(driver)
+        FilesHandle.clear_downloaded_folder(download_folder)
     yield driver
     driver.quit()
 
@@ -130,40 +144,10 @@ def appium_android_driver():
     driver.quit()
 
 
-def set_up_before_run_user_browser():
-    from models.pageobject.version import VersionPageObject
-    from utils_automation.const import Urls
-    global user_data_path, local_driver
-    version_page_object = VersionPageObject()
-    from models.pageobject.settings import SettingsPageObject
-    setting_page_object = SettingsPageObject()
-    global download_folder
-    global block_origin_extension_path
-    global flash_path
-    global user_data_default
-    chrome_options = sele_webdriver.ChromeOptions()
-    binary_path = f"C:\\Users\\{username}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
-    try:
-        chrome_options.binary_location = binary_path
-        local_driver = sele_webdriver.Chrome(options=chrome_options)
-        local_driver.maximize_window()
-        local_driver.get(Urls.COCCOC_VERSION_URL)
-        user_data_default = version_page_object.get_profile_path(local_driver)
-        flash_path = version_page_object.get_flash_path(local_driver)
-        local_driver.get(Urls.COCCOC_SETTINGS_URL)
-        WaitAfterEach.sleep_timer_after_each_step()
-        download_folder = setting_page_object.get_download_folder(local_driver)
-        split_after = user_data_default.split('\\Local')
-        user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
-        FilesHandle.clear_downloaded_folder(download_folder)
-    finally:
-        local_driver.quit()
-
-
 @pytest.fixture(scope='session', autouse=True)
 def clear_screen_shot_folder():
-    from utils_automation.cleanup import Files
     current_dir = get_current_dir()[0]
+    from utils_automation.cleanup import Files
     files = Files()
     files.delete_files_in_folder(current_dir + "/screenshots", "png")
 
@@ -216,14 +200,9 @@ def rm_user_data(request):
 
 
 @pytest.fixture(scope='session', autouse=True)
-def get_use_data_path(request):
-    return request.config.getoption("--use-user-data")
-
-
-@pytest.fixture(scope='session', autouse=True)
 def get_env_value(pytestconfig):
-    files.copy_file(os.getcwd() + '/resources/env.' + str(pytestconfig.getoption('env')) + '.yaml',
-                    os.getcwd() + '/resources/env.yaml')
+    files_handle.copy_file(os.getcwd() + '/resources/env.' + str(pytestconfig.getoption('env')) + '.yaml',
+                           os.getcwd() + '/resources/env.yaml')
 
 
 @pytest.fixture(scope='session', autouse=True)

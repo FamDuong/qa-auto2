@@ -49,12 +49,10 @@ class GooglePageElements(BasePageElement):
 
 class AnySiteElements(BasePageElement):
 
-
-    def click_first_video_element(driver):
+    def click_first_video_element(self, driver):
         return driver.execute_script('document.getElementsByTagName("video")[0].click()')
 
-
-    def find_first_video_element(driver):
+    def find_first_video_element(self, driver):
         return driver.execute_script('return document.getElementsByTagName("video")[0]')
 
     def find_video_element_24h(self, driver):
