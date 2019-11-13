@@ -2,8 +2,8 @@ from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
 from testscripts.common_setup import delete_all_mp4_file_download, \
-     implement_download_file, verify_download_quality_high_frame, \
-     choose_video_quality_medium_option
+    implement_download_file, verify_download_quality_high_frame, \
+    choose_video_quality_medium_option
 from utils_automation.const import OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
 
@@ -315,8 +315,11 @@ class TestVNExpressNet:
         any_site_page_object.mouse_over_video_vn_express(browser)
 
     @pytestrail.case('C98772')
-    def test_download_file_tin_tuc_online(self, browser, get_current_download_folder
-                                          , clear_download_page_and_download_folder):
+    @pytestrail.defect('US-27')
+    def test_download_file_vnexpress(self, browser, get_current_download_folder
+                                     , clear_download_page_and_download_folder
+                                     , choose_low_quality_option
+                                     , revert_high_quality_default_option):
         self.prepare_savior_option_appear(browser)
         implement_download_file(browser, get_current_download_folder),
 
@@ -447,4 +450,14 @@ class TestSaoStar:
         implement_download_file(browser, get_current_download_folder),
 
 
+class TestBestieVN:
 
+    @pytestrail.case('C98791')
+    def test_download_bestie_vn_video(self, browser, get_current_download_folder
+                                      , clear_download_page_and_download_folder
+                                      , choose_low_quality_option, revert_high_quality_default_option):
+        browser.get(OtherSiteUrls.BESTIE_VN_VIDEO_URL)
+        any_site_page_object.switch_to_first_iframe_bestie_vn(browser)
+        any_site_page_object.switch_to_second_iframe_bestie_vn(browser)
+        any_site_page_object.mouse_over_video_bestie_vn(browser)
+        implement_download_file(browser, get_current_download_folder),

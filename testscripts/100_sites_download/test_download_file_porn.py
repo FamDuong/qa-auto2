@@ -3,7 +3,8 @@ from pytest_testrail.plugin import pytestrail
 
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
-from testscripts.common_setup import implement_download_file
+from testscripts.common_setup import implement_download_file, download_file_via_main_download_button, \
+    get_resolution_info, assert_file_download_value
 from utils_automation.const import OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
 
@@ -138,6 +139,18 @@ class TestPhimSexSub:
         implement_download_file(browser, get_current_download_folder, ),
 
 
+class TestHentaizNet:
+
+    @pytestrail.case('C98729')
+    def test_download_file_hentaiz_net(self, browser, get_current_download_folder
+                                       , clear_download_page_and_download_folder, choose_low_quality_option
+                                       , revert_high_quality_default_option):
+        browser.get(OtherSiteUrls.HENTAIZ_NET_VIDEO_URL)
+        any_site_page_object.click_video_hentaiz_net(browser)
+        any_site_page_object.mouse_over_video_hentaiz_net(browser)
+        media_info = download_file_via_main_download_button(browser, )
+        resolution_info = get_resolution_info(media_info)
+        assert_file_download_value(get_current_download_folder, resolution_info)
 
 
 

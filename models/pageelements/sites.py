@@ -282,16 +282,26 @@ class AnySiteElements(BasePageElement):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.NGUOI_LAO_DONG_PAUSE_BTN))
 
     def find_video_item_anime_sub_tv(self, driver):
-        return self.wait_for_element(driver).until(
+        return self.wait_for_element(driver, timeout=20).until(
             ec.presence_of_element_located(AnySite.ANIME_VSUB_TV_VIDEO_ITEM))
 
     def find_continue_from_start_popup_btn_anime_sub_tv(self, driver):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.ANIME_VSBUT_TV_CLOSE_POP_UP_WHERE_TO_START_VIDEO))
 
+    def find_wait_for_player_load_anime_vsub_tv(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(
+            AnySite.ANIME_VSUB_WAIT_FOR_LOAD_PLAYER_ITEM))
+
+    def find_elements_wait_for_player_load_anime_vsub_tv(self, driver):
+        return driver.find_elements_by_xpath(AnySite.ANIME_VSUB_WAIT_FOR_LOAD_PLAYER_ITEM_XPATH)
+
     def find_close_ad_btn_anime_vsub_tv(self, driver):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.ANIME_VSUB_TV_CLOSE_AD_BUTTON))
+
+    def find_play_btn_anime_vsub_tv(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.ANIME_VSUB_TV_PLAY_BUTTON))
 
     def find_video_item_nhac_vn(self, driver):
         return self.wait_for_element(driver).until(
@@ -505,6 +515,30 @@ class AnySiteElements(BasePageElement):
     @staticmethod
     def find_elements_dong_phim_play_video_btn(driver):
         return driver.find_elements_by_css_selector(AnySite.DONG_PHIM_PLAY_VIDEO_ITEM_CSS)
+
+    def find_hentaiz_net_video_element(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.HENTAIZ_NET_VIDEO_ITEM))
+
+    def find_hentaiz_net_play_btn(self, driver):
+        return self.wait_for_element(driver).until(ec.element_to_be_clickable(AnySite.HENTAIZ_NET_PLAY_BTN))
+
+    def find_vtv16_info_net_video_element(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VTV16_INFO_NET_VIDEO_ITEM))
+
+    def find_vtv16_info_net_iframe(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VTV16_INFO_NET_IFRAME_ELEMENT))
+
+    def find_bestie_vn_iframe_1(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.BESTIE_VN_IFRAME_ELEMENT_1))
+
+    def find_bestie_vn_iframe_2(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.BESTIE_VN_IFRAME_ELEMENT_2))
+
+    def find_bestie_vn_video_player(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.BESTIE_VN_VIDEO_PLAYER))
+
+    def find_clip_anime_vn_video_player(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.CLIP_ANIME_COM_VIDEO_PLAYER))
 
 
 

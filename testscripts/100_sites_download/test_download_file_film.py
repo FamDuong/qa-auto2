@@ -1,4 +1,5 @@
 import pytest
+from selenium.common.exceptions import NoAlertPresentException
 
 from models.pageelements.sites import AnySiteElements
 from models.pageobject.savior import SaviorPageObject
@@ -98,12 +99,16 @@ class TestAnimeSub:
 
     @pytestrail.case('C98781')
     @pytestrail.defect('PF-559')
-    @pytest.mark.skip(reason='Cannot detect video')
     def test_download_file_video_anime_sub(self, browser, get_current_download_folder
                                            , clear_download_page_and_download_folder):
         browser.get(OtherSiteUrls.ANIME_VSUB_TV_URL)
-        handle_windows_watch_option(browser, any_site_page_object.choose_continue_from_start_anime_subtv(browser))
-        any_site_page_object.close_and_watch_ad_button_anime_subtv(browser)
+        try:
+            browser.switch_to.alert.dismiss()
+        except NoAlertPresentException as e:
+            print(e.stacktrace)
+        any_site_page_object.wait_until_player_finish_loading_anime_vsub_tv(browser)
+        handle_windows_watch_option(browser, any_site_page_object.choose_continue_from_start_anime_subtv)
+        any_site_page_object.click_play_button_anime_vsub_tv(browser)
         any_site_page_object.mouse_over_video_anime_vsub_tv(browser)
         implement_download_file(browser, get_current_download_folder, ),
 
@@ -158,6 +163,37 @@ class TestVietSubTV:
         # Check the file is fully downloaded
         check_if_the_file_fully_downloaded(browser, )
         assert_file_download_exist(get_current_download_folder)
+
+
+class TestVtv16Info:
+
+    @pytestrail.case('C98732')
+    def test_download_file_video_vtv16_info(self, browser, get_current_download_folder
+                                            , clear_download_page_and_download_folder):
+        browser.get(OtherSiteUrls.VTV16_INFO_VIDEO_URL)
+        any_site_page_object.mouse_over_video_vtv16_info_net(browser)
+        implement_download_file(browser, get_current_download_folder, ),
+
+
+class TestClipAnime:
+
+    @pytestrail.case('C98742')
+    def test_download_file_video_clip_anime(self, browser, get_current_download_folder
+                                            , clear_download_page_and_download_folder):
+        browser.get(OtherSiteUrls.CLIP_ANIME_VN_VIDEO_URL)
+        any_site_page_object.mouse_over_clip_anime_com(browser)
+        implement_download_file(browser, get_current_download_folder, ),
+
+
+class TestMotPhimNet:
+
+    @pytestrail.case('C98756')
+    @pytestrail.defect('PF-541')
+    @pytest.mark.skip(reason='Cannot download file video motphim')
+    def test_download_file_film_mot_phim_net(self, browser, get_current_download_folder
+                                             , clear_download_page_and_download_folder):
+        browser.get(OtherSiteUrls.MOT_PHIM_VIDEO_URL)
+
 
 
 

@@ -61,7 +61,7 @@ def assert_file_download_value(download_folder_path, height_value):
         assert width == if_height_frame_so_width_frame(height)
     vid.release()
     if (height_value is not None) and (height_value != ''):
-        assert str(int(height)) in height_value
+        assert (str(int(height)) in height_value or abs(int(height) - int(height_value.split('p')[0])) < 10)
     else:
         assert height is not None
 
@@ -150,11 +150,11 @@ def verify_download_quality_high_frame(browser, get_current_download_folder, pre
 def handle_windows_watch_option(browser, close_popup_continue_watching):
     WaitAfterEach.sleep_timer_after_each_step()
     list_windows = browser.window_handles
-    if len(list_windows) >= 2:
+    if len(list_windows) > 2:
         browser.switch_to.window(list_windows[0])
-        close_popup_continue_watching
+        close_popup_continue_watching(browser)
     else:
-        close_popup_continue_watching
+        print("Does not have pop up continue watching")
 
 
 def get_resolution_info(media_info):
