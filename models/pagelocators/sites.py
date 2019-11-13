@@ -160,6 +160,8 @@ class AnySite(object):
     DONG_PHIM_WATCH_OPTION_XPATH = '//button[@class="cplayer-discover-checkpoint-btn"]'
     DONG_PHIM_PLAY_VIDEO_ITEM = (By.CSS_SELECTOR, 'button[class="cplayer-play-control cplayer-control cplayer-button cplayer-paused"]')
     DONG_PHIM_PLAY_VIDEO_ITEM_CSS = 'button[class="cplayer-play-control cplayer-control cplayer-button cplayer-paused"]'
+    HENTAIZ_NET_VIDEO_ITEM = (By.ID, 'media-player')
+    HENTAIZ_NET_PLAY_BTN = (By.XPATH, '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]')
 
 
 

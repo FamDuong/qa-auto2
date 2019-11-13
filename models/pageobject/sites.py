@@ -525,7 +525,7 @@ class AnySitePageObject(BasePageObject):
             driver.switch_to.window(windows[0])
             elements = driver.find_elements_by_xpath(AnySite.DONG_PHIM_WATCH_OPTION_XPATH)
             if len(elements) > 0:
-                wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_WATCH_OPTION)).click()
+                self.any_site_element.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_WATCH_OPTION)).click()
             else:
                 print("Cannot find button for watch options")
         else:
@@ -537,3 +537,24 @@ class AnySitePageObject(BasePageObject):
             WaitAfterEach.sleep_timer_after_each_step()
         else:
             print("Play button does not show")
+
+    def mouse_over_video_hentaiz_net(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_hentaiz_net_video_element(driver))
+
+    def click_video_hentaiz_net(self, driver):
+        self.any_site_element.find_hentaiz_net_play_btn(driver).click()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

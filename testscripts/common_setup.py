@@ -61,7 +61,7 @@ def assert_file_download_value(download_folder_path, height_value):
         assert width == if_height_frame_so_width_frame(height)
     vid.release()
     if (height_value is not None) and (height_value != ''):
-        assert str(int(height)) in height_value
+        assert (str(int(height)) in height_value or abs(int(height) - int(height_value.split('p')[0])) < 10)
     else:
         assert height is not None
 

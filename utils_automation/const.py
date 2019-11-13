@@ -109,6 +109,7 @@ class OtherSiteUrls:
     DOI_SONG_PHAP_LUAT_VIDEO_URL = 'https://www.doisongphapluat.com/video/video-hot/video-rung-tim-vi-khoanh-khac-doi-ban-than-2-tuoi-chay-toi-om-cham-lay-nhau-sau-2-ngay-xa-cach-a292398.html'
     SAO_STAR_VIDEO_URL = 'https://saostar.vn/am-nhac/fan-khoc-thet-voi-bts-doll-phien-ban-album-answer-6388198.html'
     VIET_SUB_TV_VIDEO_URL = 'https://vietsubtv.org/xem-phim/doi-mat-12204/tap-3.html'
+    HENTAIZ_NET_VIDEO_URL = 'https://hentaiz.net/kutsujoku/xem-phim/tap-1.html'
 
 
 class ExtensionIds:
