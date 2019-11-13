@@ -110,6 +110,9 @@ class OtherSiteUrls:
     SAO_STAR_VIDEO_URL = 'https://saostar.vn/am-nhac/fan-khoc-thet-voi-bts-doll-phien-ban-album-answer-6388198.html'
     VIET_SUB_TV_VIDEO_URL = 'https://vietsubtv.org/xem-phim/doi-mat-12204/tap-3.html'
     HENTAIZ_NET_VIDEO_URL = 'https://hentaiz.net/kutsujoku/xem-phim/tap-1.html'
+    VTV16_INFO_VIDEO_URL = 'http://vtv16.info/phim/ve-nha-di-con-tron-bo-7116/xem-phim.html'
+    BESTIE_VN_VIDEO_URL = 'https://bestie.vn/2019/06/giam-thieu-tinh-trang-rang-e-buot-tai-nha-video'
+    CLIP_ANIME_VN_VIDEO_URL = 'https://clipanime.com/video/177008'
 
 
 class ExtensionIds:

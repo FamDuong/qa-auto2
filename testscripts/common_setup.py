@@ -150,11 +150,11 @@ def verify_download_quality_high_frame(browser, get_current_download_folder, pre
 def handle_windows_watch_option(browser, close_popup_continue_watching):
     WaitAfterEach.sleep_timer_after_each_step()
     list_windows = browser.window_handles
-    if len(list_windows) >= 2:
+    if len(list_windows) > 2:
         browser.switch_to.window(list_windows[0])
-        close_popup_continue_watching
+        close_popup_continue_watching(browser)
     else:
-        close_popup_continue_watching
+        print("Does not have pop up continue watching")
 
 
 def get_resolution_info(media_info):

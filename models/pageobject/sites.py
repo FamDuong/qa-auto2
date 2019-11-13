@@ -326,8 +326,20 @@ class AnySitePageObject(BasePageObject):
     def mouse_over_video_anime_vsub_tv(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_anime_sub_tv(driver))
 
+    def click_play_button_anime_vsub_tv(self, driver):
+        self.any_site_element.find_play_btn_anime_vsub_tv(driver).click()
+
     def choose_continue_from_start_anime_subtv(self, driver):
         self.any_site_element.find_continue_from_start_popup_btn_anime_sub_tv(driver).click()
+
+    def wait_until_player_finish_loading_anime_vsub_tv(self, driver):
+        self.any_site_element.find_wait_for_player_load_anime_vsub_tv(driver)
+        start_time = datetime.now()
+        while len(self.any_site_element.find_elements_wait_for_player_load_anime_vsub_tv(driver)) >= 1:
+            time.sleep(2)
+            time_delta = datetime.now() - start_time
+            if time_delta.total_seconds() >= 30:
+                break
 
     def close_and_watch_ad_button_anime_subtv(self, driver):
         self.any_site_element.find_close_ad_btn_anime_vsub_tv(driver).click()
@@ -540,6 +552,22 @@ class AnySitePageObject(BasePageObject):
 
     def click_video_hentaiz_net(self, driver):
         self.any_site_element.find_hentaiz_net_play_btn(driver).click()
+
+    def mouse_over_video_vtv16_info_net(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_vtv16_info_net_iframe(driver)
+                                           , timeout=20)
+
+    def mouse_over_video_bestie_vn(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_bestie_vn_video_player(driver))
+
+    def switch_to_first_iframe_bestie_vn(self, driver):
+        driver.switch_to.frame(self.any_site_element.find_bestie_vn_iframe_1(driver))
+
+    def switch_to_second_iframe_bestie_vn(self, driver):
+        driver.switch_to.frame(self.any_site_element.find_bestie_vn_iframe_2(driver))
+
+    def mouse_over_clip_anime_com(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_clip_anime_vn_video_player(driver))
 
 
 

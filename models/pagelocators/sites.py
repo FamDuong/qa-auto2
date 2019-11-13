@@ -97,8 +97,11 @@ class AnySite(object):
     NGUOI_LAO_DONG_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="streamid"]')
     NGUOI_LAO_DONG_PAUSE_BTN = (By.XPATH, '//button[@class="NLDPlayer-control  NLDPlayer-button play-control playing"]')
     ANIME_VSBUT_TV_CLOSE_POP_UP_WHERE_TO_START_VIDEO = (By.XPATH, '//button[@class="lobibox-btn lobibox-btn-no"]')
-    ANIME_VSUB_TV_VIDEO_ITEM = (By.ID, 'media-player')
+    ANIME_VSUB_WAIT_FOR_LOAD_PLAYER_ITEM = (By.XPATH, '//div[@id="media-player"]/center')
+    ANIME_VSUB_WAIT_FOR_LOAD_PLAYER_ITEM_XPATH = '//div[@id="media-player"]/center'
+    ANIME_VSUB_TV_VIDEO_ITEM = (By.ID, 'media-player-box')
     ANIME_VSUB_TV_CLOSE_AD_BUTTON = (By.ID, 'close-and-play')
+    ANIME_VSUB_TV_PLAY_BUTTON = (By.XPATH, '//div[@class="jw-icon jw-icon-inline jw-button-color jw-reset jw-icon-playback"]')
     NHAC_VN_VIDEO_URL = (By.ID, 'myvideo')
     XVIDEO_VIDEO_ITEM = (By.XPATH, '//div[@id="html5video"]')
     XVIDEO_PLAY_BTN = (By.XPATH, '//img[@title="Play"]')
@@ -162,6 +165,12 @@ class AnySite(object):
     DONG_PHIM_PLAY_VIDEO_ITEM_CSS = 'button[class="cplayer-play-control cplayer-control cplayer-button cplayer-paused"]'
     HENTAIZ_NET_VIDEO_ITEM = (By.ID, 'media-player')
     HENTAIZ_NET_PLAY_BTN = (By.XPATH, '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]')
+    VTV16_INFO_NET_VIDEO_ITEM = (By.ID, 'player-vtv')
+    VTV16_INFO_NET_IFRAME_ELEMENT = (By.XPATH, '//iframe[@width="100%"]')
+    BESTIE_VN_IFRAME_ELEMENT_1 = (By.XPATH, '//iframe[@allowfullscreen][@id="iframe_75083"]')
+    BESTIE_VN_IFRAME_ELEMENT_2 = (By.XPATH, '//iframe[@id="player"]')
+    BESTIE_VN_VIDEO_PLAYER = (By.ID, 'player')
+    CLIP_ANIME_COM_VIDEO_PLAYER = (By.ID, 'player')
 
 
 
