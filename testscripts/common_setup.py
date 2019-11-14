@@ -66,11 +66,16 @@ def assert_file_download_value(download_folder_path, height_value):
         assert height is not None
 
 
-def assert_file_download_exist(download_folder_path):
+def assert_file_download_exist(download_folder_path, file_size=2.00):
+    import os
     mp4_files = find_mp4_file_download(download_folder_path, '.mp4')
-    vid = cv2.VideoCapture(download_folder_path + '\\' + mp4_files[0])
+    file_path = download_folder_path + '\\' + mp4_files[0]
+    vid = cv2.VideoCapture(file_path)
+    size_file = round(os.path.getsize(file_path) / (1024*1024), 2)
     assert vid.isOpened()
     assert len(mp4_files) > 0
+    assert size_file > file_size
+    print(f"File size assertion is : {file_size}")
 
 
 def check_if_the_file_fully_downloaded(browser):
@@ -126,11 +131,11 @@ def pause_any_video_site(browser, url):
     any_site_page_object.mouse_over_first_video_element(browser)
 
 
-def implement_download_file(browser, get_current_download_folder):
+def implement_download_file(browser, get_current_download_folder, **kwargs):
     delete_all_mp4_file_download(get_current_download_folder, '.mp4')
     download_file_via_main_download_button(browser)
     # assert file download exist and can be opened
-    assert_file_download_exist(get_current_download_folder)
+    assert_file_download_exist(get_current_download_folder, **kwargs)
 
 
 def clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder):

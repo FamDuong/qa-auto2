@@ -57,10 +57,11 @@ class TestDownloadGroup:
     @pytestrail.defect('PF-517')
     def test_download_dongphim(self, browser, get_current_download_folder, clear_download_page_and_download_folder):
         browser.get(VideoUrls.DONG_PHIM_VIDEO_URL)
-        any_site_page_object.click_video_item_dong_phim(browser)
-        any_site_page_object.choose_watch_option_if_any(browser)
+        elements = any_site_page_object.choose_watch_option_if_any(browser)
+        if len(elements) == 0:
+            any_site_page_object.click_video_item_dong_phim(browser)
         any_site_page_object.mouse_over_video_item_dong_phim(browser)
-        implement_download_file(browser, get_current_download_folder, ),
+        implement_download_file(browser, get_current_download_folder, file_size=50.00),
 
 
 

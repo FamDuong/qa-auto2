@@ -532,20 +532,16 @@ class AnySitePageObject(BasePageObject):
 
     def choose_watch_option_if_any(self, driver):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        windows = driver.window_handles
-        if len(windows) > 2:
-            driver.switch_to.window(windows[0])
-            elements = driver.find_elements_by_xpath(AnySite.DONG_PHIM_WATCH_OPTION_XPATH)
-            if len(elements) > 0:
-                self.any_site_element.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_WATCH_OPTION)).click()
-            else:
-                print("Cannot find button for watch options")
+        elements = driver.find_elements_by_xpath(AnySite.DONG_PHIM_WATCH_OPTION_XPATH)
+        if len(elements) > 0:
+            self.any_site_element.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_WATCH_OPTION)).click()
         else:
-            print("Watch options does not show uup")
+            print("Cannot find button for watch options")
+        return elements
 
     def click_video_item_dong_phim(self, driver):
-        self.any_site_element.find_dong_phim_play_video_item(driver).click()
-        WaitAfterEach.sleep_timer_after_each_step()
+        if len(self.any_site_element.find_elements_dong_phim_play_video_btn(driver)) >= 1:
+            self.any_site_element.find_dong_phim_play_video_item(driver).click()
 
     def mouse_over_video_hentaiz_net(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_hentaiz_net_video_element(driver))
