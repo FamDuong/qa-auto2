@@ -29,7 +29,7 @@ class VideoUrls:
     NEWS_ZING_VIDEO_URL = 'https://news.zing.vn/video'
     ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/Attention-J-Fla/ZW7F76D6.html'
     NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summer-girl-haim.Q1gHbL4BuuEXJ.html'
-    DONG_PHIM_VIDEO_URL = 'https://www.dongphim.net/movie/tap-1-sword-art-online-du-an-alicization-dai-chien-underworld-sword-art-online-alicization-2nd-season-war-of-underworld-2019_gvwmHQQh.html'
+    DONG_PHIM_VIDEO_URL = 'https://www.dongphim.net/movie/tap-10-phim-bl-ngay-hom-ay-history3-make-our-days-count-2019_bJzjgwQL.html'
 
     @classmethod
     def all(cls):

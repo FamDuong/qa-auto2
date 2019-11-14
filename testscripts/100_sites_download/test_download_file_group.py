@@ -1,4 +1,3 @@
-import re
 import pytest
 from models.pageobject.savior import SaviorPageObject
 from pytest_testrail.plugin import pytestrail
