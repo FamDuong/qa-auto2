@@ -29,7 +29,7 @@ class VideoUrls:
     NEWS_ZING_VIDEO_URL = 'https://news.zing.vn/video'
     ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/Attention-J-Fla/ZW7F76D6.html'
     NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summer-girl-haim.Q1gHbL4BuuEXJ.html'
-    DONG_PHIM_VIDEO_URL = 'http://dongphim.net/movie/tap-1-trailer-dao-kiem-than-vuc-phan-4-chien-tranh-ngam-sword-art-online-alicization-war-of-underworld_gvwmHQQh.html'
+    DONG_PHIM_VIDEO_URL = 'https://www.dongphim.net/movie/tap-10-phim-bl-ngay-hom-ay-history3-make-our-days-count-2019_bJzjgwQL.html'
 
     @classmethod
     def all(cls):
@@ -49,7 +49,7 @@ class DiffFormatFileUrls:
 class OtherSiteUrls:
 
     TWENTY_FOUR_H_VIDEO_URL = 'https://www.24h.com.vn/bong-da/2-clb-viet-nam-thong-tri-afc-cup-bao-chau-a-noi-gi-c48a1061647.html'
-    PHIMMOI_VIDEO_URL = 'http://www.phimmoi.net/phim/thanh-phong-tom-phan-2-i2-8022/xem-phim.html'
+    PHIMMOI_VIDEO_URL = 'http://www.phimmoi.net/phim/linh-kiem-ton-8199/xem-phim.html'
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/thutinhtv/videos/770300356741609/'
     MESSENGER_CHAT_URL = 'https://www.messenger.com/t/kovakop.donald.3'
     INSTAGRAM_VIDEO_URL = 'https://www.instagram.com/p/B1nlf9AhX4M/'
