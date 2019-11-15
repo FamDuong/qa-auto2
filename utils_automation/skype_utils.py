@@ -1,4 +1,4 @@
-from skpy import Skype, SkypeChats
+from skpy import Skype
 
 
 class SkypeLocalUtils:
