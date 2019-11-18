@@ -1,3 +1,4 @@
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.sites import YoutubePageLocators, GooglePageLocators, AnySite
@@ -324,7 +325,12 @@ class AnySiteElements(BasePageElement):
         )
 
     def find_video_play_btn_fr_porn_hub(self, driver):
-        return self.wait_for_element(driver).until(ec.visibility_of_element_located(AnySite.FR_PORN_HUB_VIDEO_PLAY_BTN))
+        element = None
+        try:
+            element = self.wait_for_element(driver).until(ec.visibility_of_element_located(AnySite.FR_PORN_HUB_VIDEO_PLAY_BTN))
+        except TimeoutException as e:
+            print(e.stacktrace)
+        return element
 
     def find_video_item_fr_porn_hub(self, driver):
         return self.wait_for_element(driver).until(
