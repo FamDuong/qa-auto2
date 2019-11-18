@@ -360,6 +360,9 @@ class AnySitePageObject(BasePageObject):
         ActionChains(driver).move_to_element(self.any_site_element.find_play_btn_xnxx(driver)).perform()
         self.any_site_element.find_play_btn_xnxx(driver).click()
 
+    def click_video_fr_porn_hub(self, driver):
+        self.any_site_element.find_video_play_btn_fr_porn_hub(driver).click()
+
     def mouse_over_video_fr_porn_hub(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_fr_porn_hub(driver))
 

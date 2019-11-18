@@ -323,6 +323,9 @@ class AnySiteElements(BasePageElement):
             ec.element_to_be_clickable(AnySite.XNXX_PLAY_BTN)
         )
 
+    def find_video_play_btn_fr_porn_hub(self, driver):
+        return self.wait_for_element(driver).until(ec.visibility_of_element_located(AnySite.FR_PORN_HUB_VIDEO_PLAY_BTN))
+
     def find_video_item_fr_porn_hub(self, driver):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.FR_PORN_HUB_VIDEO_ITEM))

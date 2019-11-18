@@ -16,6 +16,7 @@ class TestXVideos:
 
     @pytestrail.case('C96723')
     @pytest.mark.ten_popular_sites
+    @pytest.mark.skip(reason='Unable to access xvideos.com')
     def test_download_file_x_videos(self, browser, get_current_download_folder
                                     , clear_download_page_and_download_folder):
         browser.get(OtherSiteUrls.XVIDEOS_DOT_COM_VIDEO_URL)
@@ -28,6 +29,7 @@ class TestXNXX:
 
     @pytestrail.case('C96754')
     @pytest.mark.ten_popular_sites
+    @pytest.mark.skip(reason='This site is blocked by internet provider in VN')
     def test_download_file_x_videos(self, browser, get_current_download_folder
                                     , clear_download_page_and_download_folder):
         browser.get(OtherSiteUrls.XNXX_VIDEO_URL)
@@ -40,9 +42,10 @@ class TestPornHub:
 
     @pytestrail.case('C98771')
     @pytest.mark.ten_popular_sites
-    def test_download_file_x_videos(self, browser, get_current_download_folder
-                                    , clear_download_page_and_download_folder, disable_coccoc_block_ads):
+    def test_download_file_porn_hub(self, browser, get_current_download_folder
+                                    , clear_download_page_and_download_folder,):
         browser.get(OtherSiteUrls.FR_PORN_HUB_VIDEO_URL)
+        any_site_page_object.click_video_fr_porn_hub(browser)
         any_site_page_object.mouse_over_video_fr_porn_hub(browser)
         implement_download_file(browser, get_current_download_folder, )
 
