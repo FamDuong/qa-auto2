@@ -25,17 +25,21 @@ class TestPhimmoi:
         if len(windows_list) >= 2:
             browser.switch_to.window(windows_list[0])
             any_site_page_object.close_popup_continue_watching(browser)
-            browser.switch_to_active_element()
+            if len(browser.find_elements_by_xpath('//a[@class="close"]')) > 0:
+                browser.find_element_by_xpath('//a[@class="close"]').click()
+            # browser.switch_to.active_element()
             if any_site_page_object.verify_exist_ads_pop_up_phim_moi(browser) > 0:
                 any_site_page_object.close_image_popup_phim_moi(browser)
-            browser.switch_to_default_content()
+            browser.switch_to.default_content()
         else:
             any_site_page_object.close_popup_continue_watching(browser)
-        browser.switch_to_default_content()
+        browser.switch_to.default_content()
         any_site_page_object.mouse_over_video_element_phimmoi(browser)
 
     @pytestrail.case('C96721')
     @pytest.mark.ten_popular_sites
+    @pytestrail.defect('BR-1187')
+    @pytest.mark.skip(reason="Cannot convert video to mp4")
     def test_download_file_phim_moi(self, browser, get_current_download_folder
                                     , clear_download_page_and_download_folder
                                     , enable_ublock_plus_extension):

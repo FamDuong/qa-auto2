@@ -107,6 +107,7 @@ class AnySite(object):
     XVIDEO_PLAY_BTN = (By.XPATH, '//img[@title="Play"]')
     XNXX_VIDEO_ITEM = (By.XPATH, '//video[@preload="auto"]')
     XNXX_PLAY_BTN = (By.XPATH, '//div[@class="big-button play"]')
+    FR_PORN_HUB_VIDEO_PLAY_BTN = (By.XPATH, '//div[@class="mhp1138_play"]')
     FR_PORN_HUB_VIDEO_ITEM = (By.ID, 'player')
     VLXX_VIDEO_ITEM = (By.XPATH, '//video')
     VLXX_VIDEO_ITEM_WRAPPER = (By.ID, 'vlxx')
