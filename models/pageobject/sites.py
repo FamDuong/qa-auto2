@@ -5,7 +5,6 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.wait import WebDriverWait
 from models.pageelements.sites import YoutubePageElements, GooglePageElements, AnySiteElements
 from models.pagelocators.sites import AnySite
 from models.pageobject.basepage_object import BasePageObject
@@ -189,31 +188,6 @@ class AnySitePageObject(BasePageObject):
 
     def mouse_over_video_item_gamek_vn(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_gamek_vn(driver))
-
-    def mouse_over_video_item_vu_vi_phim(self, driver):
-        self.mouse_over_video_iframe_with_minimize_maximize(driver, self.switch_to_iframe_vu_vi_phim, self.
-                                                            any_site_element.find_vu_vi_phim_video, 60)
-
-    def click_video_item_vu_vi_phim(self, driver):
-        self.any_site_element.find_vu_vi_phim_mute_btn(driver).click()
-
-    def click_replay_btn_vu_vi_phim(self, driver):
-        self.any_site_element.find_vu_vi_phim_replay_btn(driver).click()
-
-    def click_video_item_vu_vi_phim_js(self, driver):
-        driver.execute_script('document.querySelector("#media").click();')
-
-    def scroll_to_iframe_element_vu_vi_phim(self, driver):
-        driver.execute_script('document.querySelector("#media > iframe").scrollIntoView(true)')
-
-    def get_time_video_item_vu_vi_phim(self, driver):
-        return self.any_site_element.find_vu_vi_phim_time_element(driver).text
-
-    def click_on_iframe_vu_vi_phim(self, driver):
-        self.any_site_element.find_vu_vi_phim_iframe(driver).click()
-
-    def switch_to_iframe_vu_vi_phim(self, driver):
-        driver.switch_to.frame(self.any_site_element.find_vu_vi_phim_iframe(driver))
 
     def click_video_item_an_ninh_thu_do(self, driver):
         self.any_site_element.find_video_item_an_ninh_thu_do(driver).click()
@@ -468,6 +442,15 @@ class AnySitePageObject(BasePageObject):
 
     def mouse_over_video_element_weibo(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_weibo(driver))
+
+    def play_video_vu_vi_phim(self, driver):
+        self.click_on_element_if_exist(self.any_site_element.find_play_btn_vu_vi_phim(driver))
+
+    def switch_to_iframe_vu_vi_phim(self, driver):
+        driver.switch_to.frame(self.any_site_element.find_frame_vu_vi_phim(driver))
+
+    def mouse_over_video_vu_vi_phim(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_element_vu_vi_phim(driver))
 
     def choose_server_anime_tvn(self, driver, server_number):
         self.any_site_element.find_server_anime_tvn(driver, server_number).click()

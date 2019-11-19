@@ -53,12 +53,10 @@ class TestVuViPhim:
 
     def prepare_savior_option_displayed(self, browser):
         browser.get(OtherSiteUrls.VU_VI_PHIM_VIDEO_URL)
-        self.any_site_element.find_vu_vi_phim_iframe(browser)
-        WaitAfterEach.sleep_timer_after_each_step()
-        any_site_page_object.scroll_to_iframe_element_vu_vi_phim(browser)
-        WaitAfterEach.sleep_timer_after_each_step_longest_load()
-        any_site_page_object.send_event_mouse_over_vu_vi_phim_js(browser)
-        WaitAfterEach.sleep_timer_after_each_step()
+        any_site_page_object.switch_to_iframe_vu_vi_phim(browser)
+        any_site_page_object.play_video_vu_vi_phim(browser)
+        browser.switch_to.default_content()
+        any_site_page_object.mouse_over_video_vu_vi_phim(browser)
 
     @pytestrail.case('C98751')
     def test_download_file_vuviphim(self, browser, get_current_download_folder

@@ -1,6 +1,6 @@
 import time
 from datetime import datetime
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
@@ -51,8 +51,8 @@ class BasePageObject(object):
 
         def find_download_button():
             return driver.execute_script('return document.querySelector(arguments[0]).'
-                                  'shadowRoot.querySelector(arguments[1])', SaviorPageLocators.FIRST_LAYER,
-                                  SaviorPageLocators.DOWNLOAD_BUTTON)
+                                         'shadowRoot.querySelector(arguments[1])', SaviorPageLocators.FIRST_LAYER,
+                                         SaviorPageLocators.DOWNLOAD_BUTTON)
 
         while self.get_element_first_layer_savior(driver) is None:
             time.sleep(1)
@@ -86,8 +86,13 @@ class BasePageObject(object):
         driver.execute_script('arguments[0].options[arguments[1]].selected = true;', element, option_index)
 
     def click_on_element_if_exist(self, element):
+        i = 0
         try:
             if element is not None:
-                element.click()
+                while i == 0:
+                    element.click()
+                    i += 1
         except NoSuchElementException as e:
             print(e.stacktrace)
+        except ElementClickInterceptedException as intercepted:
+            print(intercepted.stacktrace)

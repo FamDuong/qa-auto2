@@ -159,22 +159,6 @@ class AnySiteElements(BasePageElement):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.GAME_K_VN_VIDEO_ITEM))
 
-    def find_vu_vi_phim_iframe(self, driver):
-        return self.wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.VU_VI_PHIM_IFRAME_ELEMENT))
-
-    def find_vu_vi_phim_video(self, driver):
-        return self.wait_for_element(driver).until(ec.element_to_be_clickable(AnySite.VU_VI_PHIM_VIDEO_ITEM))
-
-    def find_vu_vi_phim_mute_btn(self, driver):
-        return self.wait_for_element(driver).until(ec.element_to_be_clickable(AnySite.VU_VI_PHIM_MUTE_BTN))
-
-    def find_vu_vi_phim_replay_btn(self, driver):
-        return self.wait_for_element(driver, 180).until(ec.element_to_be_clickable(AnySite.VU_VI_PHIM_REPLAY_BTN))
-
-    def find_vu_vi_phim_time_element(self, driver):
-        return self.wait_for_element(driver, 20).until(ec.presence_of_element_located(AnySite.VU_VI_PHIM_TIME_ITEM))
-
     def find_video_item_an_ninh_thu_do(self, driver):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.AN_NINH_THU_DO_VIDEO_ITEM))
@@ -439,6 +423,15 @@ class AnySiteElements(BasePageElement):
 
     def find_video_weibo(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.WEIBO_VIDEO_ITEM))
+
+    def find_video_element_vu_vi_phim(self, driver):
+        return self.find_element_if_exist(driver, AnySite.VU_VI_PHIM_VIDEO_ELEMENT)
+
+    def find_play_btn_vu_vi_phim(self, driver):
+        return self.find_element_if_exist(driver, AnySite.VU_VI_PHIM_PLAY_BTN)
+
+    def find_frame_vu_vi_phim(self, driver):
+        return self.find_element_if_exist(driver, AnySite.VU_VI_PHIM_IFRAME)
 
     def find_server_anime_tvn(self, driver, server_number):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.anime_tvn_server(server_number)))
