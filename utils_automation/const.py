@@ -66,7 +66,7 @@ class OtherSiteUrls:
     GIA_DINH_DOT_NET_VIDEO_URL = 'http://giadinh.net.vn/video-6805/meo-lam-tuong-ot-chua-ngot-dam-da-sanh-sot.htm'
     A_FAMILY_VIDEO_URL = 'http://video.afamily.vn/'
     GAMEK_VN_VIDEO_URL = 'http://gamek.vn/joker-tung-trailer-thu-2-he-lo-qua-khu-dau-thuong-cua-chang-hoang-tu-he-20190829101517375.chn'
-    VU_VI_PHIM_VIDEO_URL = 'https://vuviphim.com/xem-phim-kochouki-wakaki-nobunaga-212770'
+    VU_VI_PHIM_VIDEO_URL = 'https://vuviphimmoi.com/xem-phim-rifle-is-beautiful-242681'
     AN_NINH_THU_DO_VIDEO_URL = 'https://anninhthudo.vn/truyen-hinh-atv/146.antd'
     TUOI_TRE_VIDEO_URL = 'https://tuoitre.vn/video.htm'
     TV_ZING_VIDEO_URL = 'https://tv.zing.vn/video/Goblin-Yeu-Tinh-Tap-1/IWZEIC7F.html'

@@ -63,11 +63,6 @@ class AnySite(object):
     GIA_DINH_DOT_NET_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
     A_FAMILY_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
     GAME_K_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
-    VU_VI_PHIM_IFRAME_ELEMENT = (By.XPATH, '//iframe[@width="100%"]')
-    VU_VI_PHIM_VIDEO_ITEM = (By.XPATH, '//div[@id="embedVideoE"]')
-    VU_VI_PHIM_MUTE_BTN = (By.XPATH, '//div[@class="html5-vpl_volume_horn html5-vpl_panel_btn"]')
-    VU_VI_PHIM_REPLAY_BTN = (By.XPATH, '//div[@class="html5-vpl_panel_btn html5-vpl_play"]')
-    VU_VI_PHIM_TIME_ITEM = (By.XPATH, '//div[@class="html5-vpl_time_t"]')
     AN_NINH_THU_DO_VIDEO_ITEM = (By.ID, 'main_detail')
     TUOI_TRE_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
     MOT_PHIM_VIDEO_ITEM = (By.XPATH, '//video')
@@ -133,6 +128,9 @@ class AnySite(object):
     VOV_VN_PLAY_BTN = (By.XPATH, '//div[@aria-label="Start Playback"]')
     SEX_NGON_VIDEO_ITEM = (By.ID, 'video')
     WEIBO_VIDEO_ITEM = (By.XPATH, '//video[@id]')
+    VU_VI_PHIM_VIDEO_ELEMENT = (By.ID, 'media')
+    VU_VI_PHIM_PLAY_BTN = (By.XPATH, '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]')
+    VU_VI_PHIM_IFRAME = (By.XPATH, '//iframe[@data-was-processed][not(@title)]')
 
     @staticmethod
     def anime_tvn_server(server_number):
