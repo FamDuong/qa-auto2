@@ -437,12 +437,14 @@ class TestDoiSongPhapLuat:
                                          , clear_download_page_and_download_folder):
         browser.get(OtherSiteUrls.DOI_SONG_PHAP_LUAT_VIDEO_URL)
         any_site_page_object.click_video_item_doi_song_phap_luat(browser)
+        any_site_page_object.mouse_over_video_doi_song_phap_luat(browser)
         implement_download_file(browser, get_current_download_folder),
 
 
 class TestSaoStar:
 
     @pytestrail.case('C98785')
+    @pytestrail.defect('PF-497')
     def test_download_sao_star(self, browser, get_current_download_folder
                                , clear_download_page_and_download_folder):
         browser.get(OtherSiteUrls.SAO_STAR_VIDEO_URL)

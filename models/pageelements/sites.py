@@ -325,12 +325,7 @@ class AnySiteElements(BasePageElement):
         )
 
     def find_video_play_btn_fr_porn_hub(self, driver):
-        element = None
-        try:
-            element = self.wait_for_element(driver).until(ec.visibility_of_element_located(AnySite.FR_PORN_HUB_VIDEO_PLAY_BTN))
-        except TimeoutException as e:
-            print(e.stacktrace)
-        return element
+        return self.find_element_if_exist(driver, AnySite.FR_PORN_HUB_VIDEO_PLAY_BTN)
 
     def find_video_item_fr_porn_hub(self, driver):
         return self.wait_for_element(driver).until(
@@ -493,7 +488,7 @@ class AnySiteElements(BasePageElement):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DOI_SONG_PHAP_LUAT_IFRAME_VIDEO_ITEM))
 
     def find_video_player_doi_song_phap_luat(self, driver):
-        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DOI_SONG_PHAP_LUAT_PLAYER_VIDEO))
+        return self.find_element_if_exist(driver, AnySite.DOI_SONG_PHAP_LUAT_PLAYER_VIDEO)
 
     def find_sao_star_video_item(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.SAO_STAR_VN_VIDEO_ITEM))
@@ -551,6 +546,12 @@ class AnySiteElements(BasePageElement):
 
     def find_vtv_go_vn_video_player(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VTV_GO_VN_VIDEO_ITEM))
+
+    def find_xem_vtv_net_video_player(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.XEM_VTV_NET_VIDEO_PLAYER))
+
+    def find_xem_vtv_net_play_btn(self, driver):
+        return self.find_element_if_exist(driver, AnySite.XEM_VTV_NET_PLAY_BTN)
 
 
 

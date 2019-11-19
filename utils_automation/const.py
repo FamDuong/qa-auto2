@@ -114,6 +114,7 @@ class OtherSiteUrls:
     BESTIE_VN_VIDEO_URL = 'https://bestie.vn/2019/06/giam-thieu-tinh-trang-rang-e-buot-tai-nha-video'
     CLIP_ANIME_VN_VIDEO_URL = 'https://clipanime.com/video/177008'
     VTV_GO_VN_VIDEO_URL = 'https://vtvgo.vn/kho-video/am-thuc-duong-pho-xoi-cade-751588.html'
+    XEM_VTV_NET = 'http://ww.xemvtv.net/xem-phim/nhan-sinh-cua-bach-ho-ly-tap-1/UUWOI65.html'
 
 
 class ExtensionIds:

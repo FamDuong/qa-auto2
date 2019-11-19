@@ -1,3 +1,4 @@
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
@@ -36,5 +37,13 @@ class BasePageElement(object):
     @staticmethod
     def wait_for_element(driver, timeout=10):
         return WebDriverWait(driver, timeout)
+
+    def find_element_if_exist(self, driver, locator):
+        element = None
+        try:
+            element = self.wait_for_element(driver).until(ec.presence_of_element_located(locator))
+        except TimeoutException as e:
+            print(e.stacktrace)
+        return element
 
 
