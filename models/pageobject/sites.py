@@ -575,6 +575,9 @@ class AnySitePageObject(BasePageObject):
     def mouse_over_clip_anime_com(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_clip_anime_vn_video_player(driver))
 
+    def mouse_over_video_vtv_go_vn(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_vtv_go_vn_video_player(driver))
+
 
 
 

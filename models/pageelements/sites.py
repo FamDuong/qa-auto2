@@ -549,6 +549,9 @@ class AnySiteElements(BasePageElement):
     def find_clip_anime_vn_video_player(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.CLIP_ANIME_COM_VIDEO_PLAYER))
 
+    def find_vtv_go_vn_video_player(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VTV_GO_VN_VIDEO_ITEM))
+
 
 
 

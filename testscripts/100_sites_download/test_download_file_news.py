@@ -461,3 +461,15 @@ class TestBestieVN:
         any_site_page_object.switch_to_second_iframe_bestie_vn(browser)
         any_site_page_object.mouse_over_video_bestie_vn(browser)
         implement_download_file(browser, get_current_download_folder),
+
+
+class TestVtvGoVN:
+
+    @pytestrail.case('C98796')
+    def test_download_vtv_go_vn(self, browser, get_current_download_folder
+                                , clear_download_page_and_download_folder):
+        browser.get(OtherSiteUrls.VTV_GO_VN_VIDEO_URL)
+        any_site_page_object.mouse_over_video_vtv_go_vn(browser)
+        implement_download_file(browser, get_current_download_folder)
+
+

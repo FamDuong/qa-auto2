@@ -172,6 +172,7 @@ class AnySite(object):
     BESTIE_VN_IFRAME_ELEMENT_2 = (By.XPATH, '//iframe[@id="player"]')
     BESTIE_VN_VIDEO_PLAYER = (By.ID, 'player')
     CLIP_ANIME_COM_VIDEO_PLAYER = (By.ID, 'player')
+    VTV_GO_VN_VIDEO_ITEM = (By.ID, 'flowplayer')
 
 
 
