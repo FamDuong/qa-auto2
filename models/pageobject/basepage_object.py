@@ -84,3 +84,10 @@ class BasePageObject(object):
 
     def choose_drop_down_value_js(self, driver, element, option_index):
         driver.execute_script('arguments[0].options[arguments[1]].selected = true;', element, option_index)
+
+    def click_on_element_if_exist(self, element):
+        try:
+            if element is not None:
+                element.click()
+        except NoSuchElementException as e:
+            print(e.stacktrace)

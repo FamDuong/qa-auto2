@@ -520,9 +520,14 @@ class AnySitePageObject(BasePageObject):
 
     def click_video_item_doi_song_phap_luat(self, driver):
         self.switch_to_iframe_doi_song_phap_luat(driver)
-        self.any_site_element.find_video_player_doi_song_phap_luat(driver).click()
+        element = self.any_site_element.find_video_player_doi_song_phap_luat(driver)
+        self.click_on_element_if_exist(element)
         while self.verify_savior_popup_appear(driver) is None:
             WaitAfterEach.sleep_timer_after_each_step()
+
+    def mouse_over_video_doi_song_phap_luat(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_player_doi_song_phap_luat(driver))
+
 
     def mouse_over_video_sao_star_vn(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_sao_star_video_item(driver))
@@ -574,6 +579,16 @@ class AnySitePageObject(BasePageObject):
 
     def mouse_over_clip_anime_com(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_clip_anime_vn_video_player(driver))
+
+    def mouse_over_video_vtv_go_vn(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_vtv_go_vn_video_player(driver))
+
+    def mouse_over_video_xem_vtv_net(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_xem_vtv_net_video_player(driver))
+
+    def click_play_btn_xem_vtv_net(self, driver):
+        element = self.any_site_element.find_xem_vtv_net_play_btn(driver)
+        self.click_on_element_if_exist(element)
 
 
 

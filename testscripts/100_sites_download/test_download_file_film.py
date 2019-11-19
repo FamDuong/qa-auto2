@@ -156,7 +156,8 @@ class TestVietSubTV:
 
     @pytestrail.case('C98786')
     def test_download_file_video_vietsub_tv(self, browser, get_current_download_folder
-                                            , clear_download_page_and_download_folder):
+                                            , clear_download_page_and_download_folder
+                                            , enable_ublock_plus_extension):
         browser.get(OtherSiteUrls.VIET_SUB_TV_VIDEO_URL)
         any_site_page_object.play_video_viet_sub_tv(browser)
         any_site_page_object.mouse_over_video_item_viet_sub_tv(browser)
@@ -199,6 +200,16 @@ class TestMotPhimNet:
         browser.get(OtherSiteUrls.MOT_PHIM_VIDEO_URL)
 
 
+class TestXemVtvNet:
+
+    @pytestrail.case('C98800')
+    @pytestrail.defect('PF-512')
+    def test_download_video_xem_vtv_net(self, browser, get_current_download_folder
+                                        , clear_download_page_and_download_folder):
+        browser.get(OtherSiteUrls.XEM_VTV_NET)
+        any_site_page_object.click_play_btn_xem_vtv_net(browser)
+        any_site_page_object.mouse_over_video_xem_vtv_net(browser)
+        implement_download_file(browser, get_current_download_folder,)
 
 
 
