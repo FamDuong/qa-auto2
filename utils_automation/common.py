@@ -25,7 +25,7 @@ def if_height_frame_so_width_frame(height_frame):
         return 1280
 
 
-def wait_for_stable(wait_time = 3):
+def wait_for_stable(wait_time=3):
     time.sleep(wait_time)
 
 
@@ -41,8 +41,8 @@ def remove_special_characters(string):
 class CSVHandle:
     def get_from_csv(self, filename):
         list_temp = []
-    # dirname, runname = os.path.split(os.path.abspath(__file__))
-    # filename = dirname + filename
+        # dirname, runname = os.path.split(os.path.abspath(__file__))
+        # filename = dirname + filename
         with open(filename, 'r', newline='', encoding="utf-8") as f:
             reader = csv.reader(f)
             print("CSV Reader: READING CSV FILE >>", filename)
@@ -202,8 +202,8 @@ class WebElements:
 
     @staticmethod
     def mouse_over_element(driver, element):
-            hov = ActionChains(driver).move_to_element(element)
-            hov.perform()
+        hov = ActionChains(driver).move_to_element(element)
+        hov.perform()
 
 
 class WindowsCMD:
@@ -278,8 +278,13 @@ def modify_file_as_text(text_file_path, text_to_search, replacement_text):
             print(line.replace(text_to_search, replacement_text), end='')
 
 
-
-
-
-
+def check_if_duplicates_list(list_of_elems):
+    """ Check if given list contains any duplicates """
+    set_of_elems = set()
+    for elem in list_of_elems:
+        if elem in set_of_elems:
+            return True
+        else:
+            set_of_elems.add(elem)
+    return False
 

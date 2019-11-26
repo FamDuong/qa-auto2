@@ -13,10 +13,11 @@ class TestBrowser:
     extensions_cococ_page_element = ExtensionsElement.UblockPlusAdblockerElement()
     extensions_cococ_page_object = ExtensionsPageObject.UblockPlusPageObject()
 
-    def test_debug(self, browser):
-        browser.get(Urls.COCCOC_EXTENSIONS)
-        WaitAfterEach.sleep_timer_after_each_step()
-        self.extensions_cococ_page_object.interact_with_ublock_knob_btn(browser, action='enable')
+    def test_debug(self):
+        current_url = 'http://game.kul.vn/cuuthien3250/landing-page12.html?utm_source=%&utm_medium=CPC&utm_campaign=C%E1%BB%ADu%20Thi%C3%AAn%20Phong%20Th%E1%BA%A7n%203%5FIcon&utm_term=Entertainment&utm_content=25344477'
+        for utm_type in ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']:
+            import re
+            assert re.search(rf'\b(\w*{utm_type}=\w*)\b(?!\s*$).+', current_url) is not None
 
 
 

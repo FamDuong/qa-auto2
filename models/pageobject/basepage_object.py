@@ -2,18 +2,11 @@ import time
 from datetime import datetime
 from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
 from selenium.common.exceptions import StaleElementReferenceException
-from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
-
 from models.pagelocators.savior import SaviorPageLocators
 from utils_automation.common import WebElements
-from utils_automation.setup import WaitAfterEach
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
-from models.pageelements.basepage_elements import BasePageElement
-from models.pagelocators.mojichat import MojichatLocators
 from utils_automation.setup import WaitAfterEach
 import re
 
@@ -47,27 +40,31 @@ class BasePageObject(object):
             driver.find_element_by_css_selector('body').send_keys(Keys.ARROW_UP)
             WaitAfterEach.sleep_timer_after_each_step()
 
-    def verify_savior_popup_appear(self, driver):
+    def verify_savior_popup_appear(self, driver, timeout=3):
 
         def find_download_button():
             return driver.execute_script('return document.querySelector(arguments[0]).'
                                          'shadowRoot.querySelector(arguments[1])', SaviorPageLocators.FIRST_LAYER,
                                          SaviorPageLocators.DOWNLOAD_BUTTON)
-
+        start_time = datetime.now()
         while self.get_element_first_layer_savior(driver) is None:
             time.sleep(1)
+            time_delta = datetime.now() - start_time
+            if time_delta.total_seconds() >= timeout:
+                break
         try:
-            a = find_download_button()
-            return a
+            if self.get_element_first_layer_savior(driver) is not None:
+                a = find_download_button()
+                return a
         except StaleElementReferenceException as e:
             print(e)
 
     def get_element_first_layer_savior(self, driver):
         return driver.execute_script('return document.querySelector(arguments[0])', SaviorPageLocators.FIRST_LAYER)
 
-    def mouse_over_video_element_site(self, driver, element, timeout=12):
+    def mouse_over_video_element_site(self, driver, element, timeout=12, timeout_verify_savior_popup=4):
         start_time = datetime.now()
-        while self.verify_savior_popup_appear(driver) is None:
+        while self.verify_savior_popup_appear(driver, timeout=timeout_verify_savior_popup) is None:
             try:
                 WebElements.mouse_over_element(driver, element)
                 time_delta = datetime.now() - start_time
@@ -96,3 +93,8 @@ class BasePageObject(object):
             print(e.stacktrace)
         except ElementClickInterceptedException as intercepted:
             print(intercepted.stacktrace)
+
+    def scroll_to_with_scroll_height(self, driver):
+        driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+
+
