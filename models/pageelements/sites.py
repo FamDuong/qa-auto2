@@ -192,18 +192,17 @@ class AnySiteElements(BasePageElement):
             ec.presence_of_element_located(AnySite.TV_HAY_VN_SKIP_ADD_BTN))
 
     def find_play_btn_tv_hay(self, driver):
-        return self.wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.TV_HAY_VN_PLAY_BTN))
+        return self.find_element_if_exist(driver, AnySite.TV_HAY_VN_PLAY_BTN)
 
-    def find_iframe_level_1_tv_hay(self, driver):
-        return self.wait_for_element(driver).until(ec.frame_to_be_available_and_switch_to_it(AnySite.TV_HAY_VN_IFRAME_LEVEL_1))
+    def find_play_btn_in_frame_tv_hay(self, driver):
+        return self.find_element_if_exist(driver, AnySite.TV_HAY_VN_PLAY_BTN_IN_FRAME)
 
-    def find_iframe_level_2_tv_hay(self, driver):
-        return self.wait_for_element(driver).until(ec.frame_to_be_available_and_switch_to_it(AnySite.TV_HAY_VN_IFRAME_LEVEL_2))
+    def find_iframe_tv_hay(self, driver):
+        return self.find_element_if_exist(driver, AnySite.TV_HAY_VN_IFRAME_LEVEL)
 
     def find_video_item_tv_hay(self, driver):
-        return self.wait_for_element(driver, 20).until(
-            ec.presence_of_element_located(AnySite.TV_HAY_VN_VIDEO_ITEM))
+        driver.switch_to.frame(self.find_element_if_exist(driver, AnySite.TV_HAY_VN_IFRAME_LEVEL))
+        return self.find_element_if_exist(driver, AnySite.TV_HAY_VN_IFRAME_LEVEL)
 
     def find_pause_btn_tv_hay(self, driver):
         return self.wait_for_element(driver).until(ec.element_to_be_clickable(AnySite.TV_HAY_VN_PAUSE_BTN))

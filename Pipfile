@@ -1,0 +1,23 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+pytest = "*"
+selenium = "*"
+requests = "*"
+pyyaml = "*"
+skpy = "*"
+jira = "*"
+psutil = "*"
+pywin32 = "*"
+appium-python-client = "*"
+opencv-python = "*"
+pytest-bdd = "*"
+pytest-html = "*"
+
+[requires]
+python_version = "3.7"

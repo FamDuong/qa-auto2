@@ -215,13 +215,13 @@ class AnySitePageObject(BasePageObject):
         self.any_site_element.find_skip_ads_btn_tv_hay(driver).click()
 
     def click_play_btn_tv_hay(self, driver):
-        self.any_site_element.find_play_btn_tv_hay(driver).click()
+        self.click_on_element_if_exist(self.any_site_element.find_play_btn_tv_hay(driver))
 
-    def switch_to_tv_hay_iframe_level_1(self, driver):
-        self.any_site_element.find_iframe_level_1_tv_hay(driver)
+    def click_play_btn_in_frame_tv_hay(self, driver):
+        self.click_on_element_if_exist(self.any_site_element.find_play_btn_in_frame_tv_hay(driver))
 
-    def switch_to_tv_hay_iframe_level_2(self, driver):
-        self.any_site_element.find_iframe_level_2_tv_hay(driver)
+    def switch_to_tv_hay_iframe(self, driver):
+        driver.switch_to.frame(self.any_site_element.find_iframe_tv_hay(driver))
 
     def mouse_over_video_item_tv_hay(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_tv_hay(driver))

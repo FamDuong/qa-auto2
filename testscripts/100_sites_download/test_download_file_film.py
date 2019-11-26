@@ -82,12 +82,11 @@ class TestTVHay:
     def test_download_file_video_tv_hay(self, browser, get_current_download_folder
                                         , clear_download_page_and_download_folder):
         browser.get(OtherSiteUrls.TV_HAY_VIDEO_URL)
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        any_site_page_object.switch_to_tv_hay_iframe_level_1(browser)
-        any_site_page_object.switch_to_tv_hay_iframe_level_2(browser)
+        any_site_page_object.switch_to_tv_hay_iframe(browser)
         any_site_page_object.click_play_btn_tv_hay(browser)
-        while "0:00" in any_site_page_object.get_video_time_tv_hay(browser):
-            WaitAfterEach.sleep_timer_after_each_step()
+        # any_site_page_object.click_play_btn_in_frame_tv_hay(browser)
+        # while "0:00" in any_site_page_object.get_video_time_tv_hay(browser):
+        #     WaitAfterEach.sleep_timer_after_each_step()
         browser.switch_to.default_content()
         any_site_page_object.mouse_over_video_item_tv_hay(browser)
         savior_page_object.download_file_via_savior_download_btn(browser)
