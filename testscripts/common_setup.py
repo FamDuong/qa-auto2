@@ -4,7 +4,6 @@ from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetails
     SaviorExtensionOptionsPageObject
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import YoutubePageObject, GooglePageObject, AnySitePageObject
-from utils_automation.cleanup import Files
 from utils_automation.common import FilesHandle, if_height_frame_so_width_frame
 from utils_automation.const import Urls, ExtensionIds, VideoUrls
 from utils_automation.setup import Browser, WaitAfterEach
@@ -24,13 +23,14 @@ any_site_page_object = AnySitePageObject()
 
 
 def delete_all_mp4_file_download(mydir, endwith):
-    files = Files()
-    files.delete_files_in_folder(mydir, endwith)
+    files_handle = FilesHandle()
+    files_handle.delete_files_in_folder(mydir, endwith)
 
 
-def download_file_via_main_download_button(browser):
+def download_file_via_main_download_button(browser, time_sleep=5):
+    import time
     savior_page_object.download_file_via_savior_download_btn(browser)
-    WaitAfterEach.sleep_timer_after_each_step_longer_load()
+    time.sleep(time_sleep)
     media_info_element = savior_page_object.current_media_info(browser)
 
     # Check the file is fully downloaded
@@ -71,8 +71,10 @@ def assert_file_download_exist(download_folder_path, file_size=2.00):
     mp4_files = find_mp4_file_download(download_folder_path, '.mp4')
     file_path = download_folder_path + '\\' + mp4_files[0]
     vid = cv2.VideoCapture(file_path)
-    size_file = round(os.stat(file_path).st_size / (1024*1024), 2)
-    assert vid.isOpened()
+    size_file = round(os.stat(file_path).st_size / (1024 * 1024), 2)
+    video_is_opened = vid.isOpened()
+    vid.release()
+    assert video_is_opened is True
     assert len(mp4_files) > 0
     assert size_file > file_size
 
@@ -130,9 +132,9 @@ def pause_any_video_site(browser, url):
     any_site_page_object.mouse_over_first_video_element(browser)
 
 
-def implement_download_file(browser, get_current_download_folder, **kwargs):
+def implement_download_file(browser, get_current_download_folder, time_sleep=5, **kwargs):
     delete_all_mp4_file_download(get_current_download_folder, '.mp4')
-    download_file_via_main_download_button(browser)
+    download_file_via_main_download_button(browser, time_sleep=time_sleep)
     # assert file download exist and can be opened
     assert_file_download_exist(get_current_download_folder, **kwargs)
 
@@ -169,4 +171,3 @@ def get_resolution_info(media_info):
     else:
         m = ''
     return m
-

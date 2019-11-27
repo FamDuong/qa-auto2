@@ -2,8 +2,7 @@ from models.pageelements.extensions import ExtensionsElement
 from models.pageelements.settings import SettingsElements
 from models.pageobject.extensions import ExtensionsPageObject
 from models.pageobject.settings import SettingsPageObject
-from utils_automation.const import Urls
-from utils_automation.setup import WaitAfterEach
+
 
 
 class TestBrowser:
@@ -18,6 +17,13 @@ class TestBrowser:
         for utm_type in ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']:
             import re
             assert re.search(rf'\b(\w*{utm_type}=\w*)\b(?!\s*$).+', current_url) is not None
+
+    def test_singleton(self):
+        from utils_automation.common import FilesHandle
+        instance_1 = FilesHandle()
+        instance_2 = FilesHandle()
+        print(f"Instance 1 is : {instance_1} \n")
+        print(f"Instance 2 is : {instance_2} \n")
 
 
 

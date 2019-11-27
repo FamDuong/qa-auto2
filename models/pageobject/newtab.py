@@ -49,7 +49,6 @@ class NewTabZenPageObject(BasePageObject):
 
     def click_on_any_zen_element(self, driver):
         driver.execute_script('arguments[0].click();', self.new_tab_zen_elem.find_any_zen_element(driver))
-        # self.new_tab_zen_elem.find_any_zen_element(driver).click()
 
     def move_to_any_zen_element(self, driver):
         actions = ActionChains(driver)

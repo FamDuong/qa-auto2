@@ -1,3 +1,5 @@
+import pytest
+
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
@@ -385,8 +387,9 @@ class TestInfoNet:
     def test_download_file_info_net(self, browser, get_current_download_folder
                                     , clear_download_page_and_download_folder):
         browser.get(OtherSiteUrls.INFO_NET_VIDEO_URL)
+        any_site_page_object.click_video_info_net(browser)
         any_site_page_object.mouse_over_video_info_net(browser)
-        implement_download_file(browser, get_current_download_folder),
+        implement_download_file(browser, get_current_download_folder, file_size=1.00),
 
 
 class TestBongda24h:
@@ -403,6 +406,8 @@ class TestBongda24h:
 class TestKeoNhaCai:
 
     @pytestrail.case('C98792')
+    @pytestrail.defect('BR-1200')
+    @pytest.mark.skip('Cannot convert to mp4 due to BR-1200')
     def test_download_file_keo_nha_cai(self, browser, get_current_download_folder
                                        , clear_download_page_and_download_folder, revert_high_quality_default_option):
         choose_video_quality_medium_option(browser)
@@ -416,18 +421,14 @@ class TestVoV:
 
     @pytestrail.case('C98798')
     def test_download_file_vov(self, browser, get_current_download_folder
-                               , clear_download_page_and_download_folder):
+                               , clear_download_page_and_download_folder
+                               , enable_ublock_plus_extension):
         browser.get(OtherSiteUrls.VOV_VIDEO_URL)
         any_site_page_object.switch_to_frame_vov_vn(browser)
         any_site_page_object.play_vov_vn_video(browser)
         browser.switch_to.default_content()
         any_site_page_object.mouse_over_video_item_vov_vn(browser)
-        window_handles = browser.window_handles
-        implement_download_file(browser, get_current_download_folder, ),
-        print("Len of window_handles for test vov are: " + str(len(window_handles)))
-        browser.switch_to.window(window_handles[2])
-        browser.close()
-        browser.switch_to.window(window_handles[0])
+        implement_download_file(browser, get_current_download_folder, time_sleep=8,),
 
 
 class TestDoiSongPhapLuat:

@@ -397,8 +397,13 @@ class AnySitePageObject(BasePageObject):
     def mouse_over_video_tin_moi(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_tin_moi(driver))
 
+    def click_video_info_net(self, driver):
+        driver.switch_to.frame(self.any_site_element.find_video_iframe_info_net(driver))
+        self.click_on_element_if_exist(self.any_site_element.find_video_play_btn_info_net(driver))
+
     def mouse_over_video_info_net(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_info_net(driver))
+        driver.switch_to.default_content()
 
     def mouse_over_video_bong_da_24h(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_bong_da_24h(driver))
@@ -510,7 +515,6 @@ class AnySitePageObject(BasePageObject):
 
     def mouse_over_video_doi_song_phap_luat(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_player_doi_song_phap_luat(driver))
-
 
     def mouse_over_video_sao_star_vn(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_sao_star_video_item(driver))
