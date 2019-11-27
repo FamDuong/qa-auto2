@@ -108,7 +108,7 @@ def browser():
         driver.get(Urls.COCCOC_SETTINGS_URL)
         WaitAfterEach.sleep_timer_after_each_step()
         download_folder = setting_page_object.get_download_folder(driver)
-        FilesHandle.clear_downloaded_folder(download_folder)
+        files_handle.clear_downloaded_folder(download_folder)
     yield driver
     driver.quit()
 
@@ -147,9 +147,7 @@ def appium_android_driver():
 @pytest.fixture(scope='session', autouse=True)
 def clear_screen_shot_folder():
     current_dir = get_current_dir()[0]
-    from utils_automation.cleanup import Files
-    files = Files()
-    files.delete_files_in_folder(current_dir + "/screenshots", "png")
+    files_handle.delete_files_in_folder(current_dir + "/screenshots", "png")
 
 
 def pytest_addoption(parser):

@@ -389,7 +389,7 @@ class TestInfoNet:
         browser.get(OtherSiteUrls.INFO_NET_VIDEO_URL)
         any_site_page_object.click_video_info_net(browser)
         any_site_page_object.mouse_over_video_info_net(browser)
-        implement_download_file(browser, get_current_download_folder, file_size=3.00),
+        implement_download_file(browser, get_current_download_folder, file_size=1.00),
 
 
 class TestBongda24h:

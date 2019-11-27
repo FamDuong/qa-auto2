@@ -1,11 +1,9 @@
-from os import path
 from testscripts.prepare_new_browser.test_install import TestInstall
 from pytest_testrail.plugin import pytestrail
 from utils_automation.const import Urls
-from models.pageobject.settings import SettingsPageObject
 from models.pageelements.settings import SettingsPageLocators
-from utils_automation.common import BrowserHandler, WindowsCMD, wait_for_stable, FilesHandle, WindowsHandler
 import settings_master as settings
+
 
 class TestUpdate(TestInstall):
 

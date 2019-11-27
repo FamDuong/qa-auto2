@@ -1,6 +1,7 @@
 import fileinput
 import os
 import csv
+import shutil
 import sys
 import time
 import subprocess
@@ -65,6 +66,14 @@ class CSVHandle:
 
 
 class FilesHandle:
+
+    def __new__(cls):
+
+        if not hasattr(cls, 'instance'):
+            cls.instance = super(FilesHandle, cls).__new__(cls)
+
+        return cls.instance
+
     def __init__(self):
         self.appdata = path.expandvars(r'%APPDATA%\CocCoc\\')
         self.localappdata = path.expandvars(r'%LOCALAPPDATA%\CocCoc\\')
@@ -78,11 +87,18 @@ class FilesHandle:
         filelist = [f for f in os.listdir(mydir) if f.endswith(endwith)]
         return filelist
 
-    @staticmethod
-    def clear_downloaded_folder(folder):
-        from utils_automation.cleanup import Files
-        files = Files()
-        files.delete_all_files_in_folder(folder)
+    def delete_files_in_folder(self, mydir, endwith):
+        import os
+        filelist = [f for f in os.listdir(mydir) if f.endswith(endwith)]
+        for f in filelist:
+            os.chmod(os.path.join(mydir, f), 0o777)
+            os.remove(os.path.join(mydir, f))
+
+    def delete_all_files_in_folder(self, mydir):
+        shutil.rmtree(mydir, ignore_errors=True, onerror=None)
+
+    def clear_downloaded_folder(self, folder):
+        self.delete_all_files_in_folder(folder)
 
     def is_file_exist(self, filepath):
         return str(os.path.isfile(filepath))
