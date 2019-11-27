@@ -30,6 +30,11 @@ class NewTabZenElements(BasePageElement):
         self.wait_for_element(driver).until(ec.presence_of_element_located(NewTabZenLocators.ZEN_NEWS_ITEM))
         return driver.find_elements_by_css_selector(NewTabZenLocators.ZEN_NEWS_ITEM_CSS_SELECTOR)
 
+    def find_all_current_zen_except_ads_elements(self, driver):
+        self.wait_for_element(driver).until(ec.presence_of_element_located(NewTabZenLocators
+                                                                           .ZEN_NEWS_NOT_CONTAINS_ADS_ITEM))
+        return driver.find_elements_by_css_selector(NewTabZenLocators.ZEN_NEWS_NOT_CONTAINS_ADS_ITEM_CSS_SELECTOR)
+
 
 
 
