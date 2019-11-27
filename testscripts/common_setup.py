@@ -28,9 +28,10 @@ def delete_all_mp4_file_download(mydir, endwith):
     files.delete_files_in_folder(mydir, endwith)
 
 
-def download_file_via_main_download_button(browser):
+def download_file_via_main_download_button(browser, time_sleep=5):
+    import time
     savior_page_object.download_file_via_savior_download_btn(browser)
-    WaitAfterEach.sleep_timer_after_each_step_longer_load()
+    time.sleep(time_sleep)
     media_info_element = savior_page_object.current_media_info(browser)
 
     # Check the file is fully downloaded
@@ -130,9 +131,9 @@ def pause_any_video_site(browser, url):
     any_site_page_object.mouse_over_first_video_element(browser)
 
 
-def implement_download_file(browser, get_current_download_folder, **kwargs):
+def implement_download_file(browser, get_current_download_folder, time_sleep=5, **kwargs):
     delete_all_mp4_file_download(get_current_download_folder, '.mp4')
-    download_file_via_main_download_button(browser)
+    download_file_via_main_download_button(browser, time_sleep=time_sleep)
     # assert file download exist and can be opened
     assert_file_download_exist(get_current_download_folder, **kwargs)
 

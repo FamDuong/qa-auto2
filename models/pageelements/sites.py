@@ -396,6 +396,12 @@ class AnySiteElements(BasePageElement):
     def find_video_item_info_net(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.INFO_NET_VIDEO_ITEM))
 
+    def find_video_iframe_info_net(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.INFO_NET_VIDEO_IFRAME))
+
+    def find_video_play_btn_info_net(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.INFO_NET_VIDEO_PLAY_BTN))
+
     def find_video_item_bong_da_24h(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.BONGDA_24H_VIDEO_ITEM))
 

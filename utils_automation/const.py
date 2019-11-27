@@ -96,7 +96,7 @@ class OtherSiteUrls:
     TIN_MOI_VIDEO_URL = 'https://www.tinmoi.vn/video/video-giai-tri/mo-hai-cao-thai-ha-huong-dan-cach-an-che-ma-khong-bi-troi-son-moi-011530843.html'
     INFO_NET_VIDEO_URL = 'https://infonet.vn/video-giay-phut-xe-bon-lao-vao-nha-dan-no-tung-va-lam-chet-6-nguoi-post282661.info'
     BONG_DA_24H_VIDEO_URL = 'https://bongda24h.vn/doi-tuyen-viet-nam/video-biet-doi-chan-thuong-tap-luyen-duoi-su-tro-giup-cua-bac-si-choi-292-231874.html'
-    KEO_NHA_CAI_VIDEO_URL = 'http://keonhacai.net/video-galatasaray-vs-real-madrid-5535.html'
+    KEO_NHA_CAI_VIDEO_URL = 'http://keonhacai.net/video-real-madrid-vs-psg-5879.html'
     DAILY_MOTION_VIDEO_URL = 'https://www.dailymotion.com/video/x7lxiix'
     VOV_VIDEO_URL = 'https://vov.vn/the-thao/bong-da/hlv-park-hang-seo-da-tim-thay-phan-van-duc-moi-cho-u22-viet-nam-960993.vov'
     SEX_NGON_VIDEO_URL = 'https://sexngon.net/phim-sex-my-hay-lop-hoc-tinh-duc-danh-cho-cac-quy-co/'

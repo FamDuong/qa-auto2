@@ -113,7 +113,6 @@ class DownloadsPageObject(BasePageObject):
                 elif len(self.downloads_elem.find_interrupted_elements(driver)) > 0:
                     break
             WaitAfterEach.sleep_timer_after_each_step()
-            # assert ((datetime.now() - start_time).total_seconds() < 2000) and index == 1, 'Verify if play button exist'
         WaitAfterEach.sleep_timer_after_each_step()
         return index
 
