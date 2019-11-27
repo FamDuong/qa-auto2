@@ -41,9 +41,30 @@ def test_check_no_duplicate_news_on_zen(browser):
     for x in range(0, 20):
         new_tab_zen_page_object.scroll_to_with_scroll_height(browser)
         WaitAfterEach.sleep_timer_after_each_step()
-    url_list = new_tab_zen_page_object.get_attribute_all_zen_element(browser, 'href')
-    print(f'List of urls is : {url_list}')
+    url_list = new_tab_zen_page_object.get_attribute_all_zen_elements(browser, 'href')
     assert check_if_duplicates_list(url_list)
+
+
+@pytestrail.case('C127501')
+def test_no_old_news_on_zen(browser):
+    import requests
+    from utils_automation.web_scraping_utils import WebScrapingTime
+    published_time_list = []
+    web_scraping_time = WebScrapingTime()
+    browser.get(Urls.NEW_TAB_URL)
+    for x in range(0, 5):
+        new_tab_zen_page_object.scroll_to_with_scroll_height(browser)
+        WaitAfterEach.sleep_timer_after_each_step()
+    url_list = new_tab_zen_page_object.get_attribute_all_zen_except_ads_elements(browser, 'href')
+    for url in url_list:
+        response = requests.get(url)
+        assert response.status_code == 200
+        published_time = web_scraping_time.get_published_time_of_web_page(response.text)
+        if published_time is not None:
+            published_time_list.append(published_time)
+    for each_published_time in published_time_list:
+        print(f"published time is : {each_published_time}")
+
 
 
 

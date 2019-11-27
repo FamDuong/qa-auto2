@@ -16,6 +16,10 @@ class NewTabIconSitesLocators:
 class NewTabZenLocators:
     ZEN_NEWS_ITEM_CSS_SELECTOR = 'div[class] > a:not(.qc-link)[href]:not(.context-content)'
     ZEN_NEWS_ITEM = (By.CSS_SELECTOR, ZEN_NEWS_ITEM_CSS_SELECTOR)
+    ZEN_NEWS_NOT_CONTAINS_ADS_ITEM_CSS_SELECTOR = 'div[class] > a:not(.qc-link)[href]:not(.context-content)' \
+                                                  ':not(.zen-ads__context):not([href*="utm"])' \
+                                                  ':not([data-click-url*="click"])'
+    ZEN_NEWS_NOT_CONTAINS_ADS_ITEM = (By.CSS_SELECTOR, ZEN_NEWS_NOT_CONTAINS_ADS_ITEM_CSS_SELECTOR)
 
 
 

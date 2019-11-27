@@ -60,9 +60,15 @@ class NewTabZenPageObject(BasePageObject):
     def get_number_of_all_current_zen_elements(self, driver):
         return len(self.new_tab_zen_elem.find_all_current_zen_elements(driver))
 
-    def get_attribute_all_zen_element(self, driver, attribute_name):
+    def get_attribute_all_zen_elements(self, driver, attribute_name):
         attribute_value = []
         for element in self.new_tab_zen_elem.find_all_current_zen_elements(driver):
+            attribute_value.append(element.get_attribute(attribute_name))
+        return attribute_value
+
+    def get_attribute_all_zen_except_ads_elements(self, driver, attribute_name):
+        attribute_value = []
+        for element in self.new_tab_zen_elem.find_all_current_zen_except_ads_elements(driver):
             attribute_value.append(element.get_attribute(attribute_name))
         return attribute_value
 
