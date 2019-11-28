@@ -59,14 +59,19 @@ def test_no_old_news_on_zen(browser):
     url_list = new_tab_zen_page_object.get_attribute_all_zen_except_ads_elements(browser, 'href')
     print(f'Total of the sites collected is : {len(url_list)}')
     for url in url_list:
-        response = requests.get(url)
+        response = None
+        try:
+            response = requests.get(url)
+        except ConnectionError as e:
+            print(e)
+        expect(response is not None, f'Assert response not None for site {url}')
         expect(response.status_code == 200, f'Assert response status code for site {url}')
         published_time = web_scraping_time.get_published_time_of_web_page(response.text)
         if published_time is not None:
             from utils_automation.date_time_utils import how_many_days_til_now
             expect(how_many_days_til_now(published_time) <= 30, f'Verify date of page {url}')
-        else:
-            print(f'Url of the site is : {url}')
+        # else:
+            # print(f'Url of the site which cannot get published date is : {url}')
     assert_expectations()
 
 
