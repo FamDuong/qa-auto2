@@ -49,21 +49,25 @@ def test_check_no_duplicate_news_on_zen(browser):
 def test_no_old_news_on_zen(browser):
     import requests
     from utils_automation.web_scraping_utils import WebScrapingTime
-    published_time_list = []
+    from delayed_assert import expect
+    from delayed_assert import assert_expectations
     web_scraping_time = WebScrapingTime()
     browser.get(Urls.NEW_TAB_URL)
-    for x in range(0, 5):
+    for x in range(0, 10):
         new_tab_zen_page_object.scroll_to_with_scroll_height(browser)
         WaitAfterEach.sleep_timer_after_each_step()
     url_list = new_tab_zen_page_object.get_attribute_all_zen_except_ads_elements(browser, 'href')
+    print(f'Total of the sites collected is : {len(url_list)}')
     for url in url_list:
         response = requests.get(url)
-        assert response.status_code == 200
+        expect(response.status_code == 200, f'Assert response status code for site {url}')
         published_time = web_scraping_time.get_published_time_of_web_page(response.text)
         if published_time is not None:
-            published_time_list.append(published_time)
-    for each_published_time in published_time_list:
-        print(f"published time is : {each_published_time}")
+            from utils_automation.date_time_utils import how_many_days_til_now
+            expect(how_many_days_til_now(published_time) <= 30, f'Verify date of page {url}')
+        else:
+            print(f'Url of the site is : {url}')
+    assert_expectations()
 
 
 
