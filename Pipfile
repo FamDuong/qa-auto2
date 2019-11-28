@@ -19,6 +19,8 @@ opencv-python = "*"
 pytest-bdd = "*"
 pytest-html = "*"
 beautifulsoup4 = "*"
+python-dateutil = "*"
+delayed-assert = "*"
 
 [requires]
 python_version = "3.7"
