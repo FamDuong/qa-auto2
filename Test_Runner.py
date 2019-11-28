@@ -4,7 +4,6 @@ from models.pageobject.extensions import ExtensionsPageObject
 from models.pageobject.settings import SettingsPageObject
 
 
-
 class TestBrowser:
     settings_cococ_ads_block_page_element = SettingsElements.SettingsAdsBlock()
     settings_coccoc_ads_block_page_object = SettingsPageObject.SettingsAdsBlockPageObject()
@@ -18,12 +17,17 @@ class TestBrowser:
             import re
             assert re.search(rf'{utm_type}=[a-zA-Z0-9*]', current_url) is not None
 
-    def test_singleton(self):
-        from utils_automation.common import FilesHandle
-        instance_1 = FilesHandle()
-        instance_2 = FilesHandle()
-        print(f"Instance 1 is : {instance_1} \n")
-        print(f"Instance 2 is : {instance_2} \n")
+    def test_string_date(self):
+        from utils_automation.date_time_utils import how_many_days_til_now
+        import re
+        string_date_time = 'Wed, 27/11/2019 | 19:10 GMT+7'
+        check_if_found_regex = re.findall(r'[0-9]{2}/[0-9]{2}/[0-9]{4}', string_date_time)
+        if check_if_found_regex is not []:
+            date_found = re.search('[0-9]{2}/[0-9]{2}/[0-9]{4}', string_date_time).group(0)
+            print(date_found)
+            print(how_many_days_til_now(date_found))
+        else:
+            print("Not found that regex")
 
 
 

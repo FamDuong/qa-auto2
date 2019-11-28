@@ -91,6 +91,7 @@ def browser():
         chrome_options.add_argument("--allow-insecure-localhost")
         chrome_options.add_argument('--disable-application-cache')
         chrome_options.add_argument("--disable-session-crashed-bubble")
+        chrome_options.add_argument("--disable-features=RendererCodeIntegrity")
         chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
         split_after = binary_path.split('\\Local')
         user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
