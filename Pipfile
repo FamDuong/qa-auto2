@@ -21,6 +21,7 @@ pytest-html = "*"
 beautifulsoup4 = "*"
 python-dateutil = "*"
 delayed-assert = "*"
+mysql-connector-python = "*"
 
 [requires]
 python_version = "3.7"
