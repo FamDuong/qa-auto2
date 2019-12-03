@@ -38,7 +38,7 @@ def test_create_time(cococ_music_crawler_db_interact):
     import datetime
     # Validate format of time
     datetime.datetime.strptime(str(create_time), '%Y-%m-%d %H:%M:%S')
-    assert how_many_days_til_now(create_time) > 0
+    assert how_many_days_til_now(create_time) >= 0
 
 
 @pytestrail.case('C131157')

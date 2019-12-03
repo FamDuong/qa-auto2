@@ -12,9 +12,7 @@ class TestBrowser:
     extensions_cococ_page_object = ExtensionsPageObject.UblockPlusPageObject()
 
     def test_debug(self):
-        string = 'abc'
-        print(type(string))
-        assert type(string) == str
+        pass
 
 
 
