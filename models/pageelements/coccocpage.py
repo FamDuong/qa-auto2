@@ -1,9 +1,8 @@
-import time
-
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.coccocpage import CocCocPageLocators
+
 
 class CocCocPageElement(BasePageElement):
 

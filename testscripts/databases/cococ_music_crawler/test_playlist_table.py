@@ -132,7 +132,7 @@ def test_status(cococ_music_crawler_db_interact):
     status_tuple = cococ_music_crawler.get_all_distinct_value_from_column_in_table(cococ_music_crawler_db_interact
                                                                                    , 'status', 'playlists')
     for each_status in status_tuple:
-        assert each_status[0] in ['new', 'ready for review', 'published', 'rejected', 'unlisted']
+        assert each_status[0] in ['new', 'ready for review', 'published', 'rejected', 'unlisted', 'error']
 
 
 @pytestrail.case('C131170')

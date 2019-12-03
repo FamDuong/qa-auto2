@@ -6,6 +6,7 @@ from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.mojichat import MojichatLocators
 from utils_automation.setup import WaitAfterEach
 
+
 class MojichatElement(BasePageElement):
     global chat_type
 
