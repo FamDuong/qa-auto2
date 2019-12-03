@@ -4,3 +4,7 @@ api:
   blog: /blog
   coccoc_music:
     listing: /listing
+
+
+coccoc_music_cms:
+  login: /login
