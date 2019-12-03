@@ -60,6 +60,13 @@ class CocCocMusicCrawler:
         row = dict(zip(cursor.column_names, cursor.fetchone()))
         return row
 
+    def get_one_result_from_table_with_condition(self, connection, column_check, column_value, table_name):
+        sql_query = f'select * from {table_name} where {column_check} = "{column_value}"'
+        cursor = connection.cursor(buffered=True)
+        cursor.execute(sql_query)
+        row = dict(zip(cursor.column_names, cursor.fetchone()))
+        return row
+
     def get_all_distinct_value_from_column_in_table(self, connection, column_check, table_name):
         sql_query = f'select distinct {column_check} from {table_name};'
         cursor = connection.cursor()
