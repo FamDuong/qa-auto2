@@ -8,6 +8,7 @@ class TestGetPlaylist:
 
     playlist_api = Playlist()
     playlist_schema = playlist_model.PlaylistSchema()
+
     @pytestrail.case('C119381')
     def test_number_of_songs(self):
         list_playlists_response = self.playlist_api.get_all_playlist()
