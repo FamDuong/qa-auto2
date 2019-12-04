@@ -6,20 +6,20 @@ cococ_music_crawler = CocCocMusicCrawler()
 
 
 @pytestrail.case('C131153')
-def test_artist_id(cococ_music_crawler_db_interact):
-    rows = cococ_music_crawler.check_if_duplicate_value_in_column(cococ_music_crawler_db_interact, 'artist_id', 'artists')
+def test_artist_id(coccoc_music_crawler_db_interact):
+    rows = cococ_music_crawler.check_if_duplicate_value_in_column(coccoc_music_crawler_db_interact, 'artist_id', 'artists')
     assert len(rows) == 0
 
 
 @pytestrail.case('C131154')
-def test_artist_name(cococ_music_crawler_db_interact):
-    row = cococ_music_crawler.check_if_value_null_or_empty_in_column(cococ_music_crawler_db_interact, 'name', 'artists')
+def test_artist_name(coccoc_music_crawler_db_interact):
+    row = cococ_music_crawler.check_if_value_null_or_empty_in_column(coccoc_music_crawler_db_interact, 'name', 'artists')
     assert row[0] == 0
 
 
 @pytestrail.case('C131155')
-def test_image_url(cococ_music_crawler_db_interact):
-    row = cococ_music_crawler.get_one_result_from_table(cococ_music_crawler_db_interact, 'artists')
+def test_image_url(coccoc_music_crawler_db_interact):
+    row = cococ_music_crawler.get_one_result_from_table(coccoc_music_crawler_db_interact, 'artists')
     image_url = row['image_url']
     if image_url is not None:
         import re
@@ -31,8 +31,8 @@ def test_image_url(cococ_music_crawler_db_interact):
 
 
 @pytestrail.case('C131156')
-def test_create_time(cococ_music_crawler_db_interact):
-    row = cococ_music_crawler.get_one_result_from_table(cococ_music_crawler_db_interact, 'artists')
+def test_create_time(coccoc_music_crawler_db_interact):
+    row = cococ_music_crawler.get_one_result_from_table(coccoc_music_crawler_db_interact, 'artists')
     create_time = row['create_time']
     from utils_automation.date_time_utils import how_many_days_til_now
     import datetime
@@ -42,8 +42,8 @@ def test_create_time(cococ_music_crawler_db_interact):
 
 
 @pytestrail.case('C131157')
-def test_update_time(cococ_music_crawler_db_interact):
-    row = cococ_music_crawler.get_one_result_from_table(cococ_music_crawler_db_interact, 'artists')
+def test_update_time(coccoc_music_crawler_db_interact):
+    row = cococ_music_crawler.get_one_result_from_table(coccoc_music_crawler_db_interact, 'artists')
     create_time = row['create_time']
     update_time = row['update_time']
     from utils_automation.date_time_utils import how_many_seconds_between_times
