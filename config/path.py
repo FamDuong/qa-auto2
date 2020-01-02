@@ -6,22 +6,17 @@ yaml = YamlCustom()
 
 
 def get_path_info():
+    print(yaml.read_data_from_file(os.getcwd().split('testscripts')[0] + '/resources/path.yaml'))
     return yaml.read_data_from_file(os.getcwd().split('testscripts')[0] + '/resources/path.yaml')
 
 
+API_PATH = get_path_info()['api']
 API_USER_PATH = get_path_info()['api']['user']
 API_AUTHENTICATE_PATH = get_path_info()['api']['authenticate']
 API_BLOG_PATH = get_path_info()['api']['blog']
 
 API_COCCOC_MUSIC_LISTING = get_path_info()['api']['coccoc_music']['listing']
 
-
-
-
-
-
-
-
-
-
-
+COCCOC_MUSIC_DATA_API = get_path_info()['coccoc_music_data']['api']
+COCCOC_MUSIC_DATA_API_VERSION = get_path_info()['coccoc_music_data']['version']
+COCCOC_MUSIC_DATA_API_VERSION_DATA_FEEDS = get_path_info()['coccoc_music_data']['datafeeds_for_crawler']

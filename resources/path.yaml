@@ -5,6 +5,10 @@ api:
   coccoc_music:
     listing: /listing
 
+coccoc_music_data:
+  api: /api
+  version: /version
+  datafeeds_for_crawler: /data-feeds-for-crawler
 
 coccoc_music_cms:
   login: /login
