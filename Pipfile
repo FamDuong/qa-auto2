@@ -23,6 +23,7 @@ python-dateutil = "*"
 delayed-assert = "*"
 mysql-connector-python = "*"
 marshmallow = "*"
+pywinauto = "*"
 
 [requires]
 python_version = "3.7"

@@ -17,6 +17,7 @@ from models.pageobject.version import VersionPageObject
 from utils_automation.const import Urls
 from utils_automation.common import WindowsCMD
 
+
 class TestInstall:
     version_page_object = VersionPageObject()
     coccoc_page_object = CocCocPageObjects()

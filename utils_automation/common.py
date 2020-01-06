@@ -258,6 +258,13 @@ class WindowsHandler:
         assert "Direction : " + direction in rule
         assert "Action : " + action in rule
 
+    def get_current_login_user(self):
+        import subprocess, re
+        p1 = subprocess.Popen(["powershell.exe", "whoami"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        who_am_i = p1.communicate()[0]
+        user_name = re.split(r'\\r', (re.split(r'.\\\\', str(who_am_i))[1]))[0]
+        return user_name
+
 
 class BrowserHandler:
     def browser_init(self, user_data_path):
