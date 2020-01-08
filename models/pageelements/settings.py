@@ -92,6 +92,20 @@ class SettingsElements(BasePageElement):
                                            SettingsPageLocators.ABOUT_MESSAGE)
         self.text_to_be_present_in_shadow_element(element, "Cốc Cốc isdfsds up to date. dsdf")
 
+    def find_default_browser_element(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsPageLocators.SETTINGS_MAIN_TEXT,
+                                        SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                        "#basicPage > settings-section:nth-child(10) > settings-default-browser-page",
+                                        "#isDefault")
+
+    def find_make_default_browser_element(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsPageLocators.SETTINGS_MAIN_TEXT,
+                                        SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                        "#basicPage > settings-section:nth-child(10) > settings-default-browser-page",
+                                        "div.settings-box.first > div.start.settings-box-text > div.secondary")
+
     class SettingsAdsBlock(BasePageElement):
 
         def find_current_block_mod(self, driver):

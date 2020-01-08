@@ -112,6 +112,16 @@ class SettingsPageObject(BasePageObject):
         else:
             print("Please specify the action")
 
+    def get_text_default_browser_element(self, driver):
+        from utils_automation.setup import WaitAfterEach
+        WaitAfterEach.sleep_timer_after_each_step()
+        return self.settings_elem.find_default_browser_element(driver).text
+
+    def get_text_make_default_browser_element(self, driver):
+        from utils_automation.setup import WaitAfterEach
+        WaitAfterEach.sleep_timer_after_each_step()
+        return self.settings_elem.find_make_default_browser_element(driver).text
+
     class SettingsAdsBlockPageObject(BasePageObject):
         settings_ad_block_elem = SettingsElements.SettingsAdsBlock()
 
