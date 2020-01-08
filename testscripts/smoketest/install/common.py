@@ -1,10 +1,7 @@
 import time
-
 from pywinauto import Desktop
-
 from testscripts.prepare_new_browser.test_install import TestInstall
 from utils_automation.common import WindowsHandler
-
 
 windows_handler = WindowsHandler()
 current_user = windows_handler.get_current_login_user()
@@ -104,9 +101,9 @@ def install_coccoc_not_set_as_default():
                 index += 1
     coccoc_installer = Desktop(backend='uia').Cốc_Cốc_Installer
     print(coccoc_installer)
-    time.sleep(1)
+    time.sleep(5)
     coccoc_installer.Make_Cốc_Cốc_your_default_browserCheckBox.click()
-    time.sleep(1)
+    time.sleep(5)
     coccoc_installer.Button.click()
     time.sleep(1)
     while check_if_coccoc_is_installed() is False:
@@ -114,5 +111,70 @@ def install_coccoc_not_set_as_default():
     test_install.cleanup()
 
 
+def open_link_from_powershell():
+    import subprocess
+    try:
+        subprocess.Popen(["powershell.exe",
+                          "taskkill /im browser.exe /f; start https://www.google.com;"],
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        time.sleep(2)
+    except:
+        print("Ignore error code")
 
 
+def get_coccoc_process():
+    import subprocess
+    processes = None
+    try:
+        processes = subprocess.Popen(["powershell.exe",
+                                      "Get-Process browser"],
+                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    except:
+        print("Ignore error code")
+    return str(processes.communicate()[0])
+
+
+def kill_coccoc_process():
+    import subprocess
+    try:
+        subprocess.Popen(["powershell.exe",
+                          "taskkill /im browser.exe /f"],
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    except:
+        print("Ignore error code")
+
+
+def set_chrome_default_browser():
+    import subprocess
+    try:
+        p = subprocess.Popen(["powershell.exe",
+                              "cd C:\\Script; .\\SetDefaultPrograms.ps1"],
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        p.communicate()
+    except:
+        print("Ignore error code")
+
+
+def set_system_date_to_after_30_days():
+    import subprocess
+    subprocess.Popen(["powershell.exe",
+                      "cd C:\\Script; .\\setSystemDate_more_30.ps1"],
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+
+def set_system_date_to_before_30_days():
+    import subprocess
+    subprocess.Popen(["powershell.exe",
+                      "cd C:\\Script; .\\setSystemDate_less_30.ps1"],
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+
+def kill_power_shell_process():
+    import subprocess
+    time.sleep(3)
+    try:
+        p = subprocess.Popen(["powershell.exe",
+                              "taskkill /im powershell.exe /f"],
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    except:
+        print("Ignore error code")
