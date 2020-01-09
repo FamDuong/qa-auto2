@@ -96,15 +96,22 @@ class SettingsElements(BasePageElement):
         return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
                                         SettingsPageLocators.SETTINGS_MAIN_TEXT,
                                         SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
-                                        "#basicPage > settings-section:nth-child(10) > settings-default-browser-page",
+                                        SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_PAGE_TEXT,
                                         "#isDefault")
 
     def find_make_default_browser_element(self, driver):
         return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
                                         SettingsPageLocators.SETTINGS_MAIN_TEXT,
                                         SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
-                                        "#basicPage > settings-section:nth-child(10) > settings-default-browser-page",
-                                        "div.settings-box.first > div.start.settings-box-text > div.secondary")
+                                        SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_PAGE_TEXT,
+                                        SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_SECONDARY_TEXT)
+
+    def find_make_default_browser_button(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsPageLocators.SETTINGS_MAIN_TEXT,
+                                        SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                        SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_PAGE_TEXT,
+                                        SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_BUTTON_TEXT)
 
     class SettingsAdsBlock(BasePageElement):
 

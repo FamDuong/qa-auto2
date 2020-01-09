@@ -12,6 +12,8 @@ class SettingsPageLocators(object):
     SETTINGS_DEFAULT_BROWSER_PAGE_TEXT = 'settings-default-browser-page'
     SETTINGS_COCCOC_SECTION_PAGE_TEXT = 'settings-section'
     SETTINGS_COCCOC_TORRENTS_PAGE_TEXT = 'settings-coccoc-torrents-page'
+    SETTINGS_DEFAULT_BROWSER_SECONDARY_TEXT = 'div.secondary'
+    SETTINGS_DEFAULT_BROWSER_BUTTON_TEXT = 'cr-button'
 
     SETTINGS_DOWNLOAD_PAGE_TEXT = 'settings-downloads-page'
 

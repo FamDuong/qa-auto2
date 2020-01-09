@@ -122,6 +122,12 @@ class SettingsPageObject(BasePageObject):
         WaitAfterEach.sleep_timer_after_each_step()
         return self.settings_elem.find_make_default_browser_element(driver).text
 
+    def click_make_default_browser_button(self, driver):
+        from utils_automation.setup import WaitAfterEach
+        WaitAfterEach.sleep_timer_after_each_step()
+        self.settings_elem.find_make_default_browser_button(driver).click()
+        WaitAfterEach.sleep_timer_after_each_step()
+
     class SettingsAdsBlockPageObject(BasePageObject):
         settings_ad_block_elem = SettingsElements.SettingsAdsBlock()
 
