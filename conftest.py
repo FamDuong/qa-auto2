@@ -114,7 +114,7 @@ def browser():
     driver.quit()
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='function')
 def win_app_driver():
     global winappdriver
     if winappdriver is None:
@@ -127,7 +127,7 @@ def win_app_driver():
     return
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='function')
 def appium_android_driver():
     global driver
     desired_caps = {

@@ -3,8 +3,8 @@ import time
 import pytest
 from selenium import webdriver
 
-from testscripts.smoketest.install.common import check_if_coccoc_is_installed, uninstall_coccoc_silently, \
-    install_coccoc_silently, install_coccoc_not_set_as_default, kill_coccoc_process
+from testscripts.smoketest.installations.common import check_if_coccoc_is_installed, uninstall_coccoc_silently, \
+    install_coccoc_silently, kill_coccoc_process, install_coccoc_not_set_as_default
 from utils_automation.common import WindowsHandler
 
 windows_handler = WindowsHandler()
