@@ -8,3 +8,8 @@ Feature: Allow regular users to change settings of browser
     Examples:
     |url|
     |coccoc://settings|
+
+
+
+
+

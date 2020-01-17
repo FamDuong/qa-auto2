@@ -128,6 +128,9 @@ class SettingsPageObject(BasePageObject):
         self.settings_elem.find_make_default_browser_button(driver).click()
         WaitAfterEach.sleep_timer_after_each_step()
 
+    def get_attribute_aria_pressed_system_start_up_coccoc_toggle_btn(self, driver):
+        return self.settings_elem.find_run_automatically_on_system_start_up_toggle(driver).get_attribute('aria-pressed')
+
     class SettingsAdsBlockPageObject(BasePageObject):
         settings_ad_block_elem = SettingsElements.SettingsAdsBlock()
 

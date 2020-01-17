@@ -1,12 +1,10 @@
 from pytest_testrail.plugin import pytestrail
-from testscripts.prepare_new_browser.test_install import TestInstall
 from utils_automation.common import WindowsHandler
 from utils_automation.const import Urls
 from models.pageobject.settings import SettingsPageObject
 
 
 windows_handler = WindowsHandler()
-test_install = TestInstall()
 settings_page_object = SettingsPageObject()
 
 
@@ -57,11 +55,12 @@ class TestCcDefaultBrowser:
             uninstall_coccoc_silently()
         from testscripts.smoketest.installations.common import install_coccoc_not_set_as_default
         install_coccoc_not_set_as_default()
-        from testscripts.smoketest.installations.conftest import coccoc_instance
-        driver = coccoc_instance()
+        driver = None
         try:
             from testscripts.smoketest.installations.common import set_system_date_to_after_30_days
+            from testscripts.smoketest.installations.conftest import coccoc_instance
             set_system_date_to_after_30_days()
+            driver = coccoc_instance()
             driver.get(Urls.COCCOC_SETTINGS_DEFAULT)
             assert "Make Cốc Cốc the default browser" in settings_page_object.get_text_make_default_browser_element(driver)
         finally:

@@ -301,6 +301,16 @@ def modify_file_as_text(text_file_path, text_to_search, replacement_text):
             print(line.replace(text_to_search, replacement_text), end='')
 
 
+def find_text_in_file(text_file_path, text_to_search):
+    found = 0
+    with fileinput.FileInput(text_file_path, inplace=True) as file:
+        for line in file:
+            if text_to_search in line:
+                found += 1
+                break
+    return found
+
+
 def check_if_duplicates_list(list_of_elems):
     """ Check if given list contains any duplicates """
     set_of_elems = set()
