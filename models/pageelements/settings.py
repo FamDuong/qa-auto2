@@ -113,6 +113,15 @@ class SettingsElements(BasePageElement):
                                         SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_PAGE_TEXT,
                                         SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_BUTTON_TEXT)
 
+    def find_run_automatically_on_system_start_up_toggle(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsPageLocators.SETTINGS_MAIN_TEXT,
+                                        SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                        SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_PAGE_TEXT,
+                                        SettingsPageLocators.SETTINGS_TOGGLE_BUTTON_TEXT,
+                                        SettingsPageLocators.SETTINGS_SYSTEM_START_UP_CONTROL_TEXT
+                                        )
+
     class SettingsAdsBlock(BasePageElement):
 
         def find_current_block_mod(self, driver):

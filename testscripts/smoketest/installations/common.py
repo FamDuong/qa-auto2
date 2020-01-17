@@ -1,12 +1,10 @@
 import time
 from pywinauto import Desktop
-from testscripts.prepare_new_browser.test_install import TestInstall
-from utils_automation.common import WindowsHandler
+from utils_automation.common import WindowsHandler, WindowsCMD, find_text_in_file
 
 windows_handler = WindowsHandler()
 current_user = windows_handler.get_current_login_user()
 coccoc_installer_name = "standalone_coccoc_en.exe"
-test_install = TestInstall()
 
 
 def check_if_coccoc_is_installed():
@@ -87,20 +85,21 @@ def install_coccoc_silently():
     p.communicate()
 
 
+def cleanup():
+    # Kill all unncessary task
+    WindowsCMD.execute_cmd('taskkill /im CocCocUpdate.exe /f')
+    WindowsCMD.execute_cmd('taskkill /im browser.exe /f')
+    WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
+    WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
+
+
 def install_coccoc_not_set_as_default():
     import subprocess
     subprocess.Popen(["powershell.exe",
                       f"cd C:\\coccoc-dev; .\\{coccoc_installer_name}"],
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    index = 0
-    while index == 0:
-        time.sleep(1)
-        all_windows = Desktop(backend='uia').windows()
-        for window in all_windows:
-            if "Cốc Cốc Installer" in window.window_text():
-                index += 1
+    wait_for_cococ_installer_appear()
     coccoc_installer = Desktop(backend='uia').Cốc_Cốc_Installer
-    print(coccoc_installer)
     time.sleep(5)
     coccoc_installer.Make_Cốc_Cốc_your_default_browserCheckBox.click()
     time.sleep(5)
@@ -108,7 +107,48 @@ def install_coccoc_not_set_as_default():
     time.sleep(1)
     while check_if_coccoc_is_installed() is False:
         time.sleep(2)
-    test_install.cleanup()
+    cleanup()
+
+
+def install_coccoc_set_as_default():
+    import subprocess
+    subprocess.Popen(["powershell.exe",
+                      f"cd C:\\coccoc-dev; .\\{coccoc_installer_name}"],
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    wait_for_cococ_installer_appear()
+    coccoc_installer = Desktop(backend='uia').Cốc_Cốc_Installer
+    time.sleep(5)
+    coccoc_installer.Button.click()
+    time.sleep(1)
+    while check_if_coccoc_is_installed() is False:
+        time.sleep(2)
+    cleanup()
+
+
+def install_coccoc_set_system_start_up_on():
+    import subprocess
+    subprocess.Popen(["powershell.exe",
+                      f"cd C:\\coccoc-dev; .\\{coccoc_installer_name}"],
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    wait_for_cococ_installer_appear()
+    coccoc_installer = Desktop(backend='uia').Cốc_Cốc_Installer
+    time.sleep(5)
+    coccoc_installer.Run_browser_on_system_start.click()
+    time.sleep(5)
+    coccoc_installer.Button.click()
+    time.sleep(1)
+    while check_if_coccoc_is_installed() is False:
+        time.sleep(2)
+
+
+def wait_for_cococ_installer_appear():
+    index = 0
+    while index == 0:
+        time.sleep(1)
+        all_windows = Desktop(backend='uia').windows()
+        for window in all_windows:
+            if "Cốc Cốc Installer" in window.window_text():
+                index += 1
 
 
 def open_link_from_powershell():
@@ -132,6 +172,19 @@ def get_coccoc_process():
     except:
         print("Ignore error code")
     return str(processes.communicate()[0])
+
+
+def get_list_start_up_apps():
+    import subprocess
+    try:
+        p = subprocess.Popen(["powershell.exe",
+                              "cd C:\\Script; .\\ShowStartUpApps.ps1"],
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        response = p.communicate()
+        return str(response[0])
+    except:
+        print("Ignore error code")
+
 
 
 def kill_coccoc_process():
@@ -178,3 +231,19 @@ def kill_power_shell_process():
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     except:
         print("Ignore error code")
+
+
+def check_if_auto_launch_enabled_is_true():
+    time.sleep(2)
+    binary_path = f"C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
+    split_after = binary_path.split('\\Local')
+    user_data_local_state = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data\\Local State'
+    return find_text_in_file(user_data_local_state, '"autolaunch_enabled":true')
+
+
+def check_if_auto_launch_enabled_is_false():
+    time.sleep(2)
+    binary_path = f"C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
+    split_after = binary_path.split('\\Local')
+    user_data_local_state = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data\\Local State'
+    return find_text_in_file(user_data_local_state, '"autolaunch_enabled":true')

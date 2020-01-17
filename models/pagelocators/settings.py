@@ -14,6 +14,8 @@ class SettingsPageLocators(object):
     SETTINGS_COCCOC_TORRENTS_PAGE_TEXT = 'settings-coccoc-torrents-page'
     SETTINGS_DEFAULT_BROWSER_SECONDARY_TEXT = 'div.secondary'
     SETTINGS_DEFAULT_BROWSER_BUTTON_TEXT = 'cr-button'
+    SETTINGS_TOGGLE_BUTTON_TEXT = 'settings-toggle-button'
+    SETTINGS_SYSTEM_START_UP_CONTROL_TEXT = '#control'
 
     SETTINGS_DOWNLOAD_PAGE_TEXT = 'settings-downloads-page'
 
