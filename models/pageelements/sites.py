@@ -88,8 +88,9 @@ class AnySiteElements(BasePageElement):
             ec.presence_of_element_located(AnySite.MESSENGER_CHAT_VIDEO_ITEM))
 
     def click_video_item_in_messenger_chat(self, driver):
-        driver.execute_script('document.querySelector(arguments[0]).click()',
-                              AnySite.MESSENGER_CHAT_VIDEO_ITEM_SELECTOR)
+        if driver.execute_script('document.querySelector(arguments[0])', AnySite.MESSENGER_CHAT_VIDEO_ITEM_SELECTOR) is not None:
+            driver.execute_script('document.querySelector(arguments[0]).click()',
+                                  AnySite.MESSENGER_CHAT_VIDEO_ITEM_SELECTOR)
 
     def find_video_item_in_instagram(self, driver):
         return self.wait_for_element(driver).until(
