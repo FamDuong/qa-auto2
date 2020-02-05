@@ -11,8 +11,8 @@ from utils_automation.cleanup import Browsers
 
 class TestPageLoadTime:
     def open_webpage(self, source, binary_file, options_list=None):
-        browser = Browsers();
-        browser.kill_all_browsers()
+        # browser = Browsers();
+        # browser.kill_all_browsers()
 
         global startBrowser
 
@@ -48,6 +48,8 @@ class TestPageLoadTime:
         print("DOM Load Event completed: %s" % frontendPerformance)
         print("Total PageLoad Time: %s" % pageloadtime)
 
+        time.sleep(2)
+        
         driver.quit()
         return pageloadtime
 
