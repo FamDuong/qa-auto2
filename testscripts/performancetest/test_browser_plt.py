@@ -49,7 +49,7 @@ class TestPageLoadTime:
         print("DOM Load Event completed: %s" % frontendPerformance)
         print("Total PageLoad Time: %s" % pageloadtime)
 
-        time.sleep(2)
+        # time.sleep(2)
 
         # driver.close()
         driver.quit()
