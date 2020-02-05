@@ -80,7 +80,7 @@ class TestPageLoadTime:
         # options_list = {"--enable-features=NetworkService"}
         # Test for ads block
         self.get_page_load_time(filename, settings.COCCOC_PATH, None)
-        self.get_page_load_time(filename, settings.COCCOC_PATH, options_list)
-        self.get_page_load_time(filename, settings.CHROME_PATH, None)
+        # self.get_page_load_time(filename, settings.COCCOC_PATH, options_list)
+        # self.get_page_load_time(filename, settings.CHROME_PATH, None)
 
 
