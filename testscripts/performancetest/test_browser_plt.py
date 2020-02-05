@@ -19,7 +19,8 @@ class TestPageLoadTime:
         opts = Options()
         opts.binary_location = binary_file
         opts.add_argument("start-maximized")
-        opts.add_argument('--user-data-dir=' + settings.USER_DATA_DIR)
+        opts.add_argument('user-data-dir=' + settings.USER_DATA_DIR)
+        # opts.add_argument("--headless --disable-gpu")
         if options_list is not None:
             for i in options_list:
                 opts.add_argument(i)
@@ -28,7 +29,7 @@ class TestPageLoadTime:
         driver = webdriver.Chrome(chrome_options=opts)
         # driver = webdriver.Chrome('/Users/itim/Downloads/python/chromedriver') #Environment: MAC OS
 
-        driver.get(source);
+        driver.get(source)
         return driver
 
     def measureTime(self, driver):
@@ -49,7 +50,8 @@ class TestPageLoadTime:
         print("Total PageLoad Time: %s" % pageloadtime)
 
         time.sleep(2)
-        
+
+        # driver.close()
         driver.quit()
         return pageloadtime
 
