@@ -44,6 +44,7 @@ class AnySite(object):
     PHIMMOI_VIDEO_AD_LENGTH_LOCATOR = (By.XPATH, '//div[@class="jw-icon jw-icon-inline jw-text jw-reset jw-text-duration"]')
     FACEBOOK_VIDEO_ITEM = (By.XPATH, '//video[@preload]')
     MESSENGER_CHAT_VIDEO_ITEM = (By.XPATH, '//video')
+    MESSENGER_CHAT_VIDEO_PLAY_BTN = (By.XPATH, '//*[@id="u_1a_0"]')
     MESSENGER_CHAT_VIDEO_ITEM_SELECTOR = 'button[data-testid="play_pause_control"]'
     INSTAGRAM_VIDEO_ITEM = (By.XPATH, '//a[@role="button"]')
     KIENTHUC_VIDEO_ITEM = (By.XPATH, '//div[@style="text-align:center; width:480px;"]')

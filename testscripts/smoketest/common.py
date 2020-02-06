@@ -1,6 +1,8 @@
 import time
 from pywinauto import Desktop
-from utils_automation.common import WindowsHandler, WindowsCMD, find_text_in_file
+from selenium import webdriver
+
+from utils_automation.common import WindowsHandler, WindowsCMD, find_text_in_file, modify_file_as_text
 
 windows_handler = WindowsHandler()
 current_user = windows_handler.get_current_login_user()
@@ -132,7 +134,7 @@ def install_coccoc_set_system_start_up_on():
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     wait_for_cococ_installer_appear()
     coccoc_installer = Desktop(backend='uia').Cốc_Cốc_Installer
-    time.sleep(5)
+    time.sleep(10)
     coccoc_installer.Run_browser_on_system_start.click()
     time.sleep(5)
     coccoc_installer.Button.click()
@@ -247,3 +249,49 @@ def check_if_auto_launch_enabled_is_false():
     split_after = binary_path.split('\\Local')
     user_data_local_state = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data\\Local State'
     return find_text_in_file(user_data_local_state, '"autolaunch_enabled":true')
+
+
+def coccoc_instance():
+    return webdriver.Chrome(options=chrome_options_preset())
+
+
+def chrome_options_preset():
+    binary_path = f"C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.binary_location = binary_path
+    chrome_options.add_argument("--window-size=1920,1080")
+    chrome_options.add_argument("--proxy-server='direct://'")
+    chrome_options.add_argument("--proxy-bypass-list=*")
+    chrome_options.add_argument("--start-maximized")
+    chrome_options.add_argument("--allow-insecure-localhost")
+    chrome_options.add_argument("--disable-session-crashed-bubble")
+    chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
+    split_after = binary_path.split('\\Local')
+    user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
+    chrome_options.add_argument('--user-data-dir=' + user_data_path)
+    modify_file_as_text(user_data_path + '\\Default\\Preferences', 'Crashed', 'none')
+    return chrome_options
+
+
+def install_coccoc_with_default():
+    if check_if_coccoc_is_installed():
+        uninstall_coccoc_silently()
+    install_coccoc_set_as_default()
+    while check_if_coccoc_is_installed() is False:
+        time.sleep(1)
+    kill_coccoc_process()
+    time.sleep(2)
+
+
+def activate_dev_hosts():
+    import subprocess
+    subprocess.Popen(["powershell.exe",
+                      "cd C:\\Script; .\\activateDevHost.ps1"],
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+
+def deactivate_dev_hosts():
+    import subprocess
+    subprocess.Popen(["powershell.exe",
+                      "cd C:\\Script; .\\deactivateDevHost.ps1"],
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
