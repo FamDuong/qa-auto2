@@ -116,7 +116,7 @@ class AnySitePageObject(BasePageObject):
 
     def click_video_element_messenger_chat(self, driver):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        self.any_site_element.click_video_item_in_messenger_chat(driver)
+        self.any_site_element.find_play_button_in_messenger_chat(driver).click()
 
     def mouse_over_video_element_instagram(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_in_instagram(driver))
@@ -455,7 +455,7 @@ class AnySitePageObject(BasePageObject):
         driver.switch_to.frame(self.any_site_element.find_frame_vu_vi_phim(driver))
 
     def mouse_over_video_vu_vi_phim(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_element_vu_vi_phim(driver))
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_frame_vu_vi_phim(driver))
 
     def choose_server_anime_tvn(self, driver, server_number):
         self.any_site_element.find_server_anime_tvn(driver, server_number).click()

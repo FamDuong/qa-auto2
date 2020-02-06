@@ -40,11 +40,13 @@ class MySQL:
 class CocCocMusicCrawler:
 
     def check_if_duplicate_value_in_column(self, connection, column_check, table_name):
+        import logging
         sql_query = f'select count({column_check}) from {table_name} group by {column_check}' \
                     f' having count({column_check}) >1;'
         cursor = connection.cursor()
         cursor.execute(sql_query)
         rows = cursor.fetchall()
+        logging.debug(f"Duplicate rows are : {rows}")
         return rows
 
     def check_if_value_null_or_empty_in_column(self, connection, column_check, table_name):
@@ -54,10 +56,12 @@ class CocCocMusicCrawler:
         return cursor.fetchone()
 
     def get_one_result_from_table(self, connection, table_name):
+        import logging
         sql_query = f'select * from {table_name} limit 1;'
         cursor = connection.cursor()
         cursor.execute(sql_query)
         row = dict(zip(cursor.column_names, cursor.fetchone()))
+        logging.debug(f"One result from table {table_name} is : {row}")
         return row
 
     def get_one_result_from_table_with_condition(self, connection, column_check, column_value, table_name):
