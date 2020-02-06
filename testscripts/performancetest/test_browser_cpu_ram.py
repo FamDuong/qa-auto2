@@ -62,6 +62,7 @@ class TestCPURAM:
         opts = Options()
         opts.binary_location = binary_file
         opts.add_argument("start-maximized")
+        opts.add_argument('user-data-dir=' + settings.USER_DATA_DIR)
         if options_list is not None:
             for i in options_list:
                 opts.add_argument(i)
@@ -102,9 +103,9 @@ class TestCPURAM:
         filename = dirname + r"\testbenchmark.csv"
         # filename = os.path.abspath(r".\testbenchmark.csv")
 
-        options_list = {"--enable-features=NetworkService"}
+        # options_list = {"--enable-features=NetworkService"}
         self.get_ram_cpu(filename, settings.COCCOC_PATH, None)
-        self.get_ram_cpu(filename, settings.COCCOC_PATH, options_list)
-        self.get_ram_cpu(filename, settings.CHROME_PATH, None)
+        # self.get_ram_cpu(filename, settings.COCCOC_PATH, options_list)
+        # self.get_ram_cpu(filename, settings.CHROME_PATH, None)
 
 
