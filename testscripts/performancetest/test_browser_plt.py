@@ -11,8 +11,8 @@ from utils_automation.cleanup import Browsers
 
 class TestPageLoadTime:
     def open_webpage(self, source, binary_file, options_list=None):
-        # browser = Browsers();
-        # browser.kill_all_browsers()
+        browser = Browsers();
+        browser.kill_all_browsers()
 
         global startBrowser
 
