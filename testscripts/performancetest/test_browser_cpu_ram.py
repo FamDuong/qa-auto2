@@ -55,8 +55,8 @@ class TestCPURAM:
 
 
     def open_webpage_withtabs(self, filename, binary_file, options_list=None):
-        # browser = Browser()
-        # browser.kill_all_browsers()
+        browser = Browser()
+        browser.kill_all_browsers()
 
         listweb = CSVHandle().get_from_csv(filename)
         opts = Options()
