@@ -55,7 +55,7 @@ class TestCPURAM:
 
 
     def open_webpage_withtabs(self, filename, binary_file, options_list=None):
-        browser = Browser()
+        # browser = Browser()
         # browser.kill_all_browsers()
 
         listweb = CSVHandle().get_from_csv(filename)
@@ -66,7 +66,6 @@ class TestCPURAM:
         if options_list is not None:
             for i in options_list:
                 opts.add_argument(i)
-
         # driver = webdriver.Chrome(executable_path=cc_driver, chrome_options=opts)
         # driver = webdriver.Chrome('/Users/itim/Downloads/python/chromedriver') #Environment: MAC OS
         driver = webdriver.Chrome(chrome_options=opts)
@@ -91,6 +90,7 @@ class TestCPURAM:
             pid_list = self.PID('browser')
             cpu, mem = self.benchmark(pid_list)
             res.append({"cpu": cpu, "mem": mem})
+
             browser.quit()
         for i in range(len(res)):
             print("i is %d" % i)
