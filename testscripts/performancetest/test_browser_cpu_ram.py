@@ -9,7 +9,7 @@ from utils_automation.setup import Browser
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 from pytest_testrail.plugin import pytestrail
-
+from utils_automation.cleanup import Browsers
 
 class TestCPURAM:
     def get_cpu_per_single_process(self, pid):
@@ -55,7 +55,7 @@ class TestCPURAM:
 
 
     def open_webpage_withtabs(self, filename, binary_file, options_list=None):
-        browser = Browser()
+        browser = Browsers()
         browser.kill_all_browsers()
 
         listweb = CSVHandle().get_from_csv(filename)
