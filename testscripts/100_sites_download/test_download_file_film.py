@@ -55,7 +55,7 @@ class TestVuViPhim:
         browser.get(OtherSiteUrls.VU_VI_PHIM_VIDEO_URL)
         any_site_page_object.switch_to_iframe_vu_vi_phim(browser)
         any_site_page_object.play_video_vu_vi_phim(browser)
-        browser.switch_to.default_content()
+        # browser.switch_to.default_content()
         any_site_page_object.mouse_over_video_vu_vi_phim(browser)
 
     @pytestrail.case('C98751')

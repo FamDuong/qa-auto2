@@ -12,7 +12,12 @@ class TestBrowser:
     extensions_cococ_page_object = ExtensionsPageObject.UblockPlusPageObject()
 
     def test_debug(self):
-        pass
+        try:
+            from testscripts.smoketest.common import activate_dev_hosts
+            activate_dev_hosts()
+        finally:
+            from testscripts.smoketest.common import deactivate_dev_hosts
+            deactivate_dev_hosts()
 
 
 
