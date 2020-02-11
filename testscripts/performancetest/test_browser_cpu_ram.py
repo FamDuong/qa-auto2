@@ -9,7 +9,7 @@ from utils_automation.setup import Browser
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 from pytest_testrail.plugin import pytestrail
-
+from utils_automation.cleanup import Browsers
 
 class TestCPURAM:
     def get_cpu_per_single_process(self, pid):
@@ -55,17 +55,17 @@ class TestCPURAM:
 
 
     def open_webpage_withtabs(self, filename, binary_file, options_list=None):
-        browser = Browser()
-        # browser.kill_all_browsers()
+        browser = Browsers()
+        browser.kill_all_browsers()
 
         listweb = CSVHandle().get_from_csv(filename)
         opts = Options()
         opts.binary_location = binary_file
         opts.add_argument("start-maximized")
+        opts.add_argument('user-data-dir=' + settings.USER_DATA_DIR)
         if options_list is not None:
             for i in options_list:
                 opts.add_argument(i)
-
         # driver = webdriver.Chrome(executable_path=cc_driver, chrome_options=opts)
         # driver = webdriver.Chrome('/Users/itim/Downloads/python/chromedriver') #Environment: MAC OS
         driver = webdriver.Chrome(chrome_options=opts)
@@ -80,6 +80,7 @@ class TestCPURAM:
                 jscommand = "window.open('about:blank', \'" + tabname + "\');"
                 driver.execute_script(jscommand)
                 driver.switch_to.window(tabname)
+                print("%d . Open tab page: %s" % (i + 1, listweb[i + 1]))
                 driver.get(listweb[i + 1])
         return driver
 
@@ -90,6 +91,7 @@ class TestCPURAM:
             pid_list = self.PID('browser')
             cpu, mem = self.benchmark(pid_list)
             res.append({"cpu": cpu, "mem": mem})
+
             browser.quit()
         for i in range(len(res)):
             print("i is %d" % i)
@@ -102,9 +104,9 @@ class TestCPURAM:
         filename = dirname + r"\testbenchmark.csv"
         # filename = os.path.abspath(r".\testbenchmark.csv")
 
-        options_list = {"--enable-features=NetworkService"}
+        # options_list = {"--enable-features=NetworkService"}
         self.get_ram_cpu(filename, settings.COCCOC_PATH, None)
-        self.get_ram_cpu(filename, settings.COCCOC_PATH, options_list)
-        self.get_ram_cpu(filename, settings.CHROME_PATH, None)
+        # self.get_ram_cpu(filename, settings.COCCOC_PATH, options_list)
+        # self.get_ram_cpu(filename, settings.CHROME_PATH, None)
 
 
