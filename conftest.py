@@ -4,7 +4,7 @@ from appium import webdriver
 from selenium import webdriver as sele_webdriver
 import pytest
 import settings_master as settings
-from utils_automation.common import FilesHandle, modify_file_as_text
+from utils_automation.common import FilesHandle, modify_file_as_text, get_current_dir
 from utils_automation.setup import WaitAfterEach
 
 driver = None
@@ -45,11 +45,6 @@ def pytest_runtest_makereport(item):
                'onclick="window.open(this.src)" align="right"/></div>' % filename
         extra.append(pytest_html.extras.html(html))
     report.extra = extra
-
-
-def get_current_dir():
-    before_split = os.getcwd()
-    return before_split.split('\\testscripts\\')
 
 
 def _capture_screenshot(filename):
