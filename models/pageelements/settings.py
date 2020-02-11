@@ -122,6 +122,27 @@ class SettingsElements(BasePageElement):
                                         SettingsPageLocators.SETTINGS_SYSTEM_START_UP_CONTROL_TEXT
                                         )
 
+    def find_relaunch_browser_btn(self, driver):
+        index = 0
+        from datetime import datetime
+        start_time = datetime.now()
+        while index == 0:
+            try:
+                element = self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                                   SettingsPageLocators.SETTINGS_MAIN_TEXT,
+                                                   SettingsPageLocators.SETTINGS_ABOUT_TEXT,
+                                                   SettingsPageLocators.SETTINGS_ABOUT_RELAUNCH_BROWSER_TEXT)
+                hidden_attribute = driver.execute_script("return arguments[0].hasAttribute('hidden')", element)
+                if hidden_attribute is False:
+                    index += 1
+                    return element
+                time_delta = datetime.now() - start_time
+                if time_delta.total_seconds() >= 120:
+                    break
+            except:
+                import time
+                time.sleep(2)
+
     class SettingsAdsBlock(BasePageElement):
 
         def find_current_block_mod(self, driver):
@@ -140,4 +161,3 @@ class SettingsElements(BasePageElement):
                                             SettingsPageLocators.SettingsAdsBlockPageLocators.SUB_RESOURCE_FILTER_PAGE,
                                             SettingsPageLocators.SettingsAdsBlockPageLocators.SETTINGS_DROP_DOWN_MENU,
                                             SettingsPageLocators.SettingsAdsBlockPageLocators.DROP_DOWN_MENU)
-

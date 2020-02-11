@@ -6,7 +6,7 @@ from selenium import webdriver
 from testscripts.smoketest.common import check_if_coccoc_is_installed, uninstall_coccoc_silently, \
     install_coccoc_silently, kill_coccoc_process, install_coccoc_not_set_as_default, \
     install_coccoc_set_system_start_up_on, install_coccoc_set_as_default, install_coccoc_with_default, \
-    chrome_options_preset
+    chrome_options_preset, interact_dev_hosts
 from utils_automation.common import WindowsHandler, modify_file_as_text
 
 windows_handler = WindowsHandler()
@@ -54,6 +54,16 @@ def install_set_system_option_on():
     if check_if_coccoc_is_installed():
         uninstall_coccoc_silently()
     install_coccoc_set_system_start_up_on()
+
+
+@pytest.fixture(scope='function')
+def activate_then_deactive_hosts_for_coccoc_dev():
+    interact_dev_hosts()
+    yield
+    interact_dev_hosts(action='deactivate')
+
+
+
 
 
 
