@@ -131,6 +131,9 @@ class SettingsPageObject(BasePageObject):
     def get_attribute_aria_pressed_system_start_up_coccoc_toggle_btn(self, driver):
         return self.settings_elem.find_run_automatically_on_system_start_up_toggle(driver).get_attribute('aria-pressed')
 
+    def check_if_relaunch_browser_displayed(self, driver):
+        return self.settings_elem.find_relaunch_browser_btn(driver)
+
     class SettingsAdsBlockPageObject(BasePageObject):
         settings_ad_block_elem = SettingsElements.SettingsAdsBlock()
 

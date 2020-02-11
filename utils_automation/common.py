@@ -321,3 +321,8 @@ def check_if_duplicates_list(list_of_elems):
             set_of_elems.add(elem)
     return False
 
+
+def get_current_dir():
+    before_split = os.getcwd()
+    return before_split.split('\\testscripts\\')
+

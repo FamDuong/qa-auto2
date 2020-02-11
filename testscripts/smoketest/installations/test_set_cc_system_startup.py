@@ -12,10 +12,10 @@ class TestCocCocAutomaticallySystemStartup:
         from utils_automation.setup import WaitAfterEach
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         try:
-            from testscripts.smoketest.installations.common import get_list_start_up_apps
+            from testscripts.smoketest.common import get_list_start_up_apps
             assert 'browser.exe' not in get_list_start_up_apps()
         finally:
-            from testscripts.smoketest.installations.common import kill_coccoc_process
+            from testscripts.smoketest.common import kill_coccoc_process
             kill_coccoc_process()
 
     @pytestrail.case('C44851')
@@ -23,10 +23,10 @@ class TestCocCocAutomaticallySystemStartup:
         from utils_automation.setup import WaitAfterEach
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         try:
-            from testscripts.smoketest.installations.common import get_list_start_up_apps
-            assert 'browser.exe' in get_list_start_up_apps()
+            from testscripts.smoketest.common import get_list_start_up_apps
+            assert 'browser.com' in get_list_start_up_apps()
         finally:
-            from testscripts.smoketest.installations.common import kill_coccoc_process
+            from testscripts.smoketest.common import kill_coccoc_process
             kill_coccoc_process()
 
 

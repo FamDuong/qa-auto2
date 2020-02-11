@@ -1,5 +1,5 @@
 from pytest_testrail.plugin import pytestrail
-
+import logging
 from utils_automation.database import CocCocMusicCrawler
 
 cococ_music_crawler = CocCocMusicCrawler()
@@ -7,6 +7,7 @@ cococ_music_crawler = CocCocMusicCrawler()
 
 @pytestrail.case('C131161')
 def test_playlist_id(coccoc_music_crawler_db_interact):
+    logging.debug('Start the test')
     rows = cococ_music_crawler.check_if_duplicate_value_in_column(coccoc_music_crawler_db_interact, 'playlist_id'
                                                                   , 'playlists')
     row_one_result_playlists = cococ_music_crawler.get_one_result_from_table(coccoc_music_crawler_db_interact,
@@ -17,6 +18,7 @@ def test_playlist_id(coccoc_music_crawler_db_interact):
     rows_all_playlist_songs = cococ_music_crawler.get_all_rows_from_table_where_column_has_value(
         coccoc_music_crawler_db_interact, 'playlist_id', playlist_id_value, 'playlist_song'
     )
+    logging.debug('Right before assertion')
     assert len(rows_all_playlist_songs) > 0
     assert len(rows_all_playlist_category) > 0
     assert len(rows) == 0
@@ -24,6 +26,7 @@ def test_playlist_id(coccoc_music_crawler_db_interact):
 
 @pytestrail.case('C131162')
 def test_source_id(coccoc_music_crawler_db_interact):
+    logging.debug('Start the test for test_source_id')
     rows = cococ_music_crawler.get_all_distinct_value_from_column_in_table(coccoc_music_crawler_db_interact, 'source_id'
                                                                            , 'playlists')
     assert len(rows) == 2
@@ -176,5 +179,5 @@ def test_update_time(coccoc_music_crawler_db_interact):
     create_time = row['create_time']
     update_time = row['update_time']
     from utils_automation.date_time_utils import how_many_seconds_between_times
-    assert how_many_seconds_between_times(update_time, create_time) >= 0
+    assert how_many_seconds_between_times(create_time, update_time) >= 0
 
