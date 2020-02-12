@@ -82,7 +82,7 @@ class SettingsElements(BasePageElement):
 
     def wait_until_extension_update(self, driver):
         return self.find_shadow_element(driver, SettingsPageLocators.EXTENSION_MAIN,
-                                        SettingsPageLocators.EXTENSION_TOOLBAR,
+                                        SettingsPageLocators.EXTENSION_NOTIFY_PARENT,
                                         SettingsPageLocators.EXTENSION_NOTIFY)
 
     def wait_until_cc_version_update(self, driver):
