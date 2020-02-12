@@ -1,12 +1,9 @@
-import pytest
 from pytest_testrail.plugin import pytestrail
 from selenium import webdriver
-
 from models.pageobject.settings import SettingsPageObject
 
 
 class TestBrowserUpdate:
-
     settings_page_object = SettingsPageObject()
 
     def coccoc_instance(self):
@@ -44,22 +41,3 @@ class TestBrowserUpdate:
         assert 'Dictionaries' in list_files_folders
         assert 'SetupMetrics' in list_files_folders
         assert 'VisualElementsManifest' in list_files_folders
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
