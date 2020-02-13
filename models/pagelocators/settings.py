@@ -42,7 +42,7 @@ class SettingsPageLocators(object):
     EXTENSION_VERSION = '#version'
     EXTENSION_BTN_UPDATE = '#updateNow'
     EXTENSION_NOTIFY_PARENT = 'cr-toast-manager'
-    EXTENSION_NOTIFY = 'cr-toast > div'
+    EXTENSION_NOTIFY = '#toast[open]'
     EXTENSION_TOGGLE = '#enable-toggle'
     EXTENSION_TOGGLE_DEV_MODE = '#devMode'
     EXTENSION_DICTIONARY_ID = '#gfgbmghkdjckppeomloefmbphdfmokgd'

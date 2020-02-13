@@ -80,7 +80,7 @@ class SettingsElements(BasePageElement):
                                         SettingsPageLocators.EXTENSION_TOOLBAR,
                                         SettingsPageLocators.EXTENSION_BTN_UPDATE)
 
-    def wait_until_extension_update(self, driver):
+    def find_extension_update_popup(self, driver):
         return self.find_shadow_element(driver, SettingsPageLocators.EXTENSION_MAIN,
                                         SettingsPageLocators.EXTENSION_NOTIFY_PARENT,
                                         SettingsPageLocators.EXTENSION_NOTIFY)
