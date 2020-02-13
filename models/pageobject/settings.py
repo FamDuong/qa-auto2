@@ -54,7 +54,7 @@ class SettingsPageObject(BasePageObject):
     def update_extension(self, driver):
         self.enable_extension_toggle_dev_mode(driver)
         self.settings_elem.find_extension_update_button(driver).click()
-        self.settings_elem.wait_until_extension_update(driver)
+        self.settings_elem.find_extension_update_popup(driver)
 
     def update_cc_version(self, driver):
         self.settings_elem.wait_until_cc_version_update(driver)
