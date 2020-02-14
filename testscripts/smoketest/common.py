@@ -7,7 +7,10 @@ from utils_automation.common import WindowsHandler, WindowsCMD, find_text_in_fil
 windows_handler = WindowsHandler()
 current_user = windows_handler.get_current_login_user()
 powershell_script_path = "\\resources\\powershell_scripts"
-
+ftp_domain = "browser3v.dev.itim.vn"
+ftp_username = "anonymous"
+ftp_password = ""
+ftp_child_folder = "corom"
 
 def check_if_coccoc_is_installed():
     file_name = 'browser.exe'
@@ -76,6 +79,33 @@ def move_to_coccoc_installer_dir():
     p.communicate()
 
 
+def sorted_list_directories(folders_list):
+    from packaging import version
+    list_coccoc_folders = get_list_coccoc_installer_dirs(folders_list)
+    new_list = []
+    for each_folder in list_coccoc_folders:
+        import re
+        split_item = re.match(rf'\b\d+\.', each_folder)
+        integer_split_item = int(str(split_item).split("match='")[1].split('.')[0])
+        if integer_split_item not in new_list:
+            new_list.append(integer_split_item)
+    new_list.sort()
+    biggest_number = new_list[-1]
+    new_list_2 = []
+    new_list_biggest_number = []
+    for each_folder in list_coccoc_folders:
+        import re
+        split_item = re.match(rf'{biggest_number}\.\b\d+\.', each_folder)
+        if split_item is not None:
+            integer_split_item = int(str(split_item).split("match='")[1].split('.')[1].split('.')[0])
+            new_list_biggest_number.append(integer_split_item)
+            new_list_2.append(each_folder)
+    new_list_biggest_number.sort()
+    list_coccoc_folders = new_list_2
+    sorted_list = sorted(list_coccoc_folders, key=lambda x: version.Version(x))
+    return sorted_list
+
+
 def get_list_coccoc_installer_dirs(folders_list):
     coccoc_download_folder_list = []
     for each_folder in folders_list:
@@ -85,14 +115,29 @@ def get_list_coccoc_installer_dirs(folders_list):
     return coccoc_download_folder_list
 
 
-def download_latest_coccoc_dev_installer(coccoc_installer_name='standalone_coccoc_en.exe'):
+def get_latest_coccoc_dev_installer_version(ftp):
+    ftp.cwd(ftp_child_folder)
+    folders_list = ftp.nlst()
+    coccoc_download_folder_list = get_list_coccoc_installer_dirs(folders_list)
+    sorted_list_directory = sorted_list_directories(coccoc_download_folder_list)
+    latest_coccoc_download_dir = sorted_list_directory[-1]
+    return latest_coccoc_download_dir
+
+
+def login_then_get_latest_coccoc_dev_installer_version():
     from ftplib import FTP
-    with FTP('browser3v.dev.itim.vn') as ftp:
-        ftp.login('anonymous', '')
-        ftp.cwd('corom')
-        folders_list = ftp.nlst()
-        coccoc_download_folder_list = get_list_coccoc_installer_dirs(folders_list)
-        latest_coccoc_download_dir = coccoc_download_folder_list[-1]
+    latest_coccoc_download_dir = None
+    with FTP(ftp_domain) as ftp:
+        ftp.login(ftp_username, ftp_password)
+        latest_coccoc_download_dir = get_latest_coccoc_dev_installer_version(ftp)
+    return latest_coccoc_download_dir
+
+
+def login_then_download_latest_coccoc_dev_installer(coccoc_installer_name='standalone_coccoc_en.exe'):
+    from ftplib import FTP
+    with FTP(ftp_domain) as ftp:
+        ftp.login(ftp_username, ftp_password)
+        latest_coccoc_download_dir = get_latest_coccoc_dev_installer_version(ftp)
         ftp.cwd(f"{latest_coccoc_download_dir}/installers")
         try:
             ftp.retrbinary("RETR " + coccoc_installer_name,
