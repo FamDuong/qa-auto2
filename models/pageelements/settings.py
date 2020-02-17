@@ -80,9 +80,9 @@ class SettingsElements(BasePageElement):
                                         SettingsPageLocators.EXTENSION_TOOLBAR,
                                         SettingsPageLocators.EXTENSION_BTN_UPDATE)
 
-    def wait_until_extension_update(self, driver):
+    def find_extension_update_popup(self, driver):
         return self.find_shadow_element(driver, SettingsPageLocators.EXTENSION_MAIN,
-                                        SettingsPageLocators.EXTENSION_TOOLBAR,
+                                        SettingsPageLocators.EXTENSION_NOTIFY_PARENT,
                                         SettingsPageLocators.EXTENSION_NOTIFY)
 
     def wait_until_cc_version_update(self, driver):
@@ -105,6 +105,13 @@ class SettingsElements(BasePageElement):
                                         SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
                                         SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_PAGE_TEXT,
                                         SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_SECONDARY_TEXT)
+
+    def find_coccoc_is_default_browser_element(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsPageLocators.SETTINGS_MAIN_TEXT,
+                                        SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                        SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_PAGE_TEXT,
+                                        SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_IS_DEFAULT_TEXT)
 
     def find_make_default_browser_button(self, driver):
         return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
@@ -138,7 +145,7 @@ class SettingsElements(BasePageElement):
                     return element
                 time_delta = datetime.now() - start_time
                 if time_delta.total_seconds() >= 120:
-                    break
+                    raise Exception
             except:
                 import time
                 time.sleep(2)

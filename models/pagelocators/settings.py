@@ -17,6 +17,7 @@ class SettingsPageLocators(object):
     SETTINGS_TOGGLE_BUTTON_TEXT = 'settings-toggle-button'
     SETTINGS_SYSTEM_START_UP_CONTROL_TEXT = '#control'
     SETTINGS_ABOUT_RELAUNCH_BROWSER_TEXT = '#relaunch'
+    SETTINGS_DEFAULT_BROWSER_IS_DEFAULT_TEXT = '#isDefault'
 
     SETTINGS_DOWNLOAD_PAGE_TEXT = 'settings-downloads-page'
 
@@ -41,7 +42,8 @@ class SettingsPageLocators(object):
     EXTENSION_NAME = '#name'
     EXTENSION_VERSION = '#version'
     EXTENSION_BTN_UPDATE = '#updateNow'
-    EXTENSION_NOTIFY = 'cr-toast > div'
+    EXTENSION_NOTIFY_PARENT = 'cr-toast-manager'
+    EXTENSION_NOTIFY = '#toast[open]'
     EXTENSION_TOGGLE = '#enable-toggle'
     EXTENSION_TOGGLE_DEV_MODE = '#devMode'
     EXTENSION_DICTIONARY_ID = '#gfgbmghkdjckppeomloefmbphdfmokgd'

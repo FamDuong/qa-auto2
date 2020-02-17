@@ -54,7 +54,7 @@ class SettingsPageObject(BasePageObject):
     def update_extension(self, driver):
         self.enable_extension_toggle_dev_mode(driver)
         self.settings_elem.find_extension_update_button(driver).click()
-        self.settings_elem.wait_until_extension_update(driver)
+        self.settings_elem.find_extension_update_popup(driver)
 
     def update_cc_version(self, driver):
         self.settings_elem.wait_until_cc_version_update(driver)
@@ -121,6 +121,11 @@ class SettingsPageObject(BasePageObject):
         from utils_automation.setup import WaitAfterEach
         WaitAfterEach.sleep_timer_after_each_step()
         return self.settings_elem.find_make_default_browser_element(driver).text
+
+    def get_text_cococ_is_default_browser_element(self, driver):
+        from utils_automation.setup import WaitAfterEach
+        WaitAfterEach.sleep_timer_after_each_step()
+        return self.settings_elem.find_coccoc_is_default_browser_element(driver).text
 
     def click_make_default_browser_button(self, driver):
         from utils_automation.setup import WaitAfterEach

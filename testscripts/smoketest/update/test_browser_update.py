@@ -1,12 +1,9 @@
-import pytest
 from pytest_testrail.plugin import pytestrail
 from selenium import webdriver
-
 from models.pageobject.settings import SettingsPageObject
 
 
 class TestBrowserUpdate:
-
     settings_page_object = SettingsPageObject()
 
     def coccoc_instance(self):
@@ -20,21 +17,25 @@ class TestBrowserUpdate:
         return driver
 
     @pytestrail.case('C44855')
-    def test_check_update_browser_via_about_us_windows(self):
+    def test_check_update_browser_via_about_us_windows(self, activate_then_deactive_hosts_for_coccoc_dev):
         from testscripts.smoketest.common import install_old_coccoc_version
+        import time
         install_old_coccoc_version()
         from utils_automation.const import Urls
         from testscripts.smoketest.common import get_list_coccoc_version_folder_name
         driver = self.coccoc_instance()
         driver.get(Urls.COCCOC_ABOUT)
         element = self.settings_page_object.check_if_relaunch_browser_displayed(driver)
+        # Wait for creating new folder for new coccoc version
+        time.sleep(5)
         list_coccoc_version = get_list_coccoc_version_folder_name()
         assert len(list_coccoc_version) == 2
         element.click()
-        import time
+        # Wait for relaunching coccoc and delete old coccoc version
         time.sleep(5)
         from testscripts.smoketest.common import cleanup
         cleanup()
+        # Wait for browser_cleanup
         time.sleep(5)
         list_coccoc_version = get_list_coccoc_version_folder_name()
         from testscripts.smoketest.common import get_list_files_dirs_in_coccoc_application_folder
@@ -44,22 +45,3 @@ class TestBrowserUpdate:
         assert 'Dictionaries' in list_files_folders
         assert 'SetupMetrics' in list_files_folders
         assert 'VisualElementsManifest' in list_files_folders
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
