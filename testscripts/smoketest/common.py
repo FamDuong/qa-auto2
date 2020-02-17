@@ -1,3 +1,4 @@
+import datetime
 import time
 from pywinauto import Desktop
 from selenium import webdriver
@@ -11,6 +12,7 @@ ftp_domain = "browser3v.dev.itim.vn"
 ftp_username = "anonymous"
 ftp_password = ""
 ftp_child_folder = "corom"
+
 
 def check_if_coccoc_is_installed():
     file_name = 'browser.exe'
@@ -61,7 +63,6 @@ def get_list_coccoc_version_folder_name():
 
 def get_list_files_dirs_in_coccoc_application_folder():
     import subprocess
-    import re
     p = subprocess.Popen(["powershell.exe",
                           f"cd C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application; ls"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
@@ -74,7 +75,7 @@ def move_to_coccoc_installer_dir():
     p = subprocess.Popen(["powershell.exe",
                           f"cd C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application"
                           f"\\{get_coccoc_version_folder_name()}"
-                          f"\\Installer; ls"],
+                          f"\\Installer"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     p.communicate()
 
@@ -150,6 +151,14 @@ def install_coccoc_silently(coccoc_installer_name='standalone_coccoc_en.exe'):
     import subprocess
     p = subprocess.Popen(["powershell.exe",
                           f"cd C:\coccoc-dev; .\\{coccoc_installer_name} /silent /install"],
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    p.communicate()
+
+
+def install_coccoc_silentlty_make_coccoc_default_browser(coccoc_installer_name='standalone_coccoc_en.exe', cmd_options=None):
+    import subprocess
+    p = subprocess.Popen(["powershell.exe",
+                          f"cd C:\coccoc-dev; .\\{coccoc_installer_name} /silent {cmd_options} /install"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     p.communicate()
 
@@ -347,6 +356,35 @@ def install_coccoc_with_default():
         time.sleep(1)
     kill_coccoc_process()
     time.sleep(2)
+
+
+def uninstall_then_install_coccoc_silentlty_with_option(cmd_options):
+    from datetime import datetime
+    if check_if_coccoc_is_installed():
+        uninstall_coccoc_silently()
+    install_coccoc_silentlty_make_coccoc_default_browser(cmd_options=cmd_options)
+    start_time = datetime.now()
+    while check_if_coccoc_is_installed() is False:
+        time.sleep(1)
+        time_delta = datetime.now() - start_time
+        if time_delta.total_seconds() >= 300:
+            break
+    kill_coccoc_process()
+    time.sleep(2)
+
+
+def uninstall_then_install_coccoc_silentlty_with_option_without_kill_process(cmd_options):
+    from datetime import datetime
+    if check_if_coccoc_is_installed():
+        uninstall_coccoc_silently()
+    install_coccoc_silentlty_make_coccoc_default_browser(cmd_options=cmd_options)
+    start_time = datetime.now()
+    while check_if_coccoc_is_installed() is False:
+        time.sleep(1)
+        time_delta = datetime.now() - start_time
+        if time_delta.total_seconds() >= 300:
+            break
+
 
 
 def interact_dev_hosts(action="activate"):
