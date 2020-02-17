@@ -22,3 +22,18 @@ class TestFreshInstall:
             from testscripts.smoketest.common import cleanup
             cleanup()
             common.uninstall_coccoc_silently()
+
+    @pytestrail.case('C44779')
+    def test_popup_of_installer_confirm_during_the_installation(self):
+        common.cleanup()
+        # Uninstall old version
+        if common.check_if_coccoc_is_installed():
+            common.uninstall_coccoc_silently()
+        try:
+            # Open file Cốc Cốc installer
+            common.open_coccoc_installer(settings.COCCOC_INSTALLER_NAME)
+            # Verify popup appears
+            from models.pageobject.installs import verify_installer_popup_appears
+            verify_installer_popup_appears()
+        finally:
+            common.cleanup()

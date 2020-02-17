@@ -12,6 +12,7 @@ ftp_username = "anonymous"
 ftp_password = ""
 ftp_child_folder = "corom"
 
+
 def check_if_coccoc_is_installed():
     file_name = 'browser.exe'
 
@@ -208,6 +209,14 @@ def install_coccoc_set_system_start_up_on(coccoc_installer_name='standalone_cocc
     time.sleep(1)
     while check_if_coccoc_is_installed() is False:
         time.sleep(2)
+
+
+def open_coccoc_installer(coccoc_installer_name='standalone_coccoc_en.exe'):
+    import subprocess
+    subprocess.Popen(["powershell.exe",
+                      f"cd C:\\coccoc-dev; .\\{coccoc_installer_name}"],
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    wait_for_cococ_installer_appear()
 
 
 def wait_for_cococ_installer_appear():
