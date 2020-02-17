@@ -1,3 +1,4 @@
+import datetime
 import time
 from pywinauto import Desktop
 from selenium import webdriver
@@ -7,6 +8,10 @@ from utils_automation.common import WindowsHandler, WindowsCMD, find_text_in_fil
 windows_handler = WindowsHandler()
 current_user = windows_handler.get_current_login_user()
 powershell_script_path = "\\resources\\powershell_scripts"
+ftp_domain = "browser3v.dev.itim.vn"
+ftp_username = "anonymous"
+ftp_password = ""
+ftp_child_folder = "corom"
 
 
 def check_if_coccoc_is_installed():
@@ -58,7 +63,6 @@ def get_list_coccoc_version_folder_name():
 
 def get_list_files_dirs_in_coccoc_application_folder():
     import subprocess
-    import re
     p = subprocess.Popen(["powershell.exe",
                           f"cd C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application; ls"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
@@ -71,9 +75,36 @@ def move_to_coccoc_installer_dir():
     p = subprocess.Popen(["powershell.exe",
                           f"cd C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application"
                           f"\\{get_coccoc_version_folder_name()}"
-                          f"\\Installer; ls"],
+                          f"\\Installer"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     p.communicate()
+
+
+def sorted_list_directories(folders_list):
+    from packaging import version
+    list_coccoc_folders = get_list_coccoc_installer_dirs(folders_list)
+    new_list = []
+    for each_folder in list_coccoc_folders:
+        import re
+        split_item = re.match(rf'\b\d+\.', each_folder)
+        integer_split_item = int(str(split_item).split("match='")[1].split('.')[0])
+        if integer_split_item not in new_list:
+            new_list.append(integer_split_item)
+    new_list.sort()
+    biggest_number = new_list[-1]
+    new_list_2 = []
+    new_list_biggest_number = []
+    for each_folder in list_coccoc_folders:
+        import re
+        split_item = re.match(rf'{biggest_number}\.\b\d+\.', each_folder)
+        if split_item is not None:
+            integer_split_item = int(str(split_item).split("match='")[1].split('.')[1].split('.')[0])
+            new_list_biggest_number.append(integer_split_item)
+            new_list_2.append(each_folder)
+    new_list_biggest_number.sort()
+    list_coccoc_folders = new_list_2
+    sorted_list = sorted(list_coccoc_folders, key=lambda x: version.Version(x))
+    return sorted_list
 
 
 def get_list_coccoc_installer_dirs(folders_list):
@@ -85,14 +116,29 @@ def get_list_coccoc_installer_dirs(folders_list):
     return coccoc_download_folder_list
 
 
-def download_latest_coccoc_dev_installer(coccoc_installer_name='standalone_coccoc_en.exe'):
+def get_latest_coccoc_dev_installer_version(ftp):
+    ftp.cwd(ftp_child_folder)
+    folders_list = ftp.nlst()
+    coccoc_download_folder_list = get_list_coccoc_installer_dirs(folders_list)
+    sorted_list_directory = sorted_list_directories(coccoc_download_folder_list)
+    latest_coccoc_download_dir = sorted_list_directory[-1]
+    return latest_coccoc_download_dir
+
+
+def login_then_get_latest_coccoc_dev_installer_version():
     from ftplib import FTP
-    with FTP('browser3v.dev.itim.vn') as ftp:
-        ftp.login('anonymous', '')
-        ftp.cwd('corom')
-        folders_list = ftp.nlst()
-        coccoc_download_folder_list = get_list_coccoc_installer_dirs(folders_list)
-        latest_coccoc_download_dir = coccoc_download_folder_list[-1]
+    latest_coccoc_download_dir = None
+    with FTP(ftp_domain) as ftp:
+        ftp.login(ftp_username, ftp_password)
+        latest_coccoc_download_dir = get_latest_coccoc_dev_installer_version(ftp)
+    return latest_coccoc_download_dir
+
+
+def login_then_download_latest_coccoc_dev_installer(coccoc_installer_name='standalone_coccoc_en.exe'):
+    from ftplib import FTP
+    with FTP(ftp_domain) as ftp:
+        ftp.login(ftp_username, ftp_password)
+        latest_coccoc_download_dir = get_latest_coccoc_dev_installer_version(ftp)
         ftp.cwd(f"{latest_coccoc_download_dir}/installers")
         try:
             ftp.retrbinary("RETR " + coccoc_installer_name,
@@ -105,6 +151,14 @@ def install_coccoc_silently(coccoc_installer_name='standalone_coccoc_en.exe'):
     import subprocess
     p = subprocess.Popen(["powershell.exe",
                           f"cd C:\coccoc-dev; .\\{coccoc_installer_name} /silent /install"],
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    p.communicate()
+
+
+def install_coccoc_silentlty_make_coccoc_default_browser(coccoc_installer_name='standalone_coccoc_en.exe', cmd_options=None):
+    import subprocess
+    p = subprocess.Popen(["powershell.exe",
+                          f"cd C:\coccoc-dev; .\\{coccoc_installer_name} /silent {cmd_options} /install"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     p.communicate()
 
@@ -302,6 +356,35 @@ def install_coccoc_with_default():
         time.sleep(1)
     kill_coccoc_process()
     time.sleep(2)
+
+
+def uninstall_then_install_coccoc_silentlty_with_option(cmd_options):
+    from datetime import datetime
+    if check_if_coccoc_is_installed():
+        uninstall_coccoc_silently()
+    install_coccoc_silentlty_make_coccoc_default_browser(cmd_options=cmd_options)
+    start_time = datetime.now()
+    while check_if_coccoc_is_installed() is False:
+        time.sleep(1)
+        time_delta = datetime.now() - start_time
+        if time_delta.total_seconds() >= 300:
+            break
+    kill_coccoc_process()
+    time.sleep(2)
+
+
+def uninstall_then_install_coccoc_silentlty_with_option_without_kill_process(cmd_options):
+    from datetime import datetime
+    if check_if_coccoc_is_installed():
+        uninstall_coccoc_silently()
+    install_coccoc_silentlty_make_coccoc_default_browser(cmd_options=cmd_options)
+    start_time = datetime.now()
+    while check_if_coccoc_is_installed() is False:
+        time.sleep(1)
+        time_delta = datetime.now() - start_time
+        if time_delta.total_seconds() >= 300:
+            break
+
 
 
 def interact_dev_hosts(action="activate"):

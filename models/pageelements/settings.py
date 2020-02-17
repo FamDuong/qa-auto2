@@ -106,6 +106,13 @@ class SettingsElements(BasePageElement):
                                         SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_PAGE_TEXT,
                                         SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_SECONDARY_TEXT)
 
+    def find_coccoc_is_default_browser_element(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsPageLocators.SETTINGS_MAIN_TEXT,
+                                        SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                        SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_PAGE_TEXT,
+                                        SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_IS_DEFAULT_TEXT)
+
     def find_make_default_browser_button(self, driver):
         return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
                                         SettingsPageLocators.SETTINGS_MAIN_TEXT,
