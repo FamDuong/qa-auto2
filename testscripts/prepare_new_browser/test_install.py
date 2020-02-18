@@ -89,8 +89,7 @@ class TestInstall:
         # Please make sure to add hosts to C:\Windows\System32\drivers\etc\hosts
         # Restriction: Cannot add hosts by script because of administration permission
         # Download latest version
-        download_file = self.coccoc_page_object.download_coccoc_from_dev(browser, get_current_download_folder)
-        print("download_file::::::::::::" + download_file)
+        download_file = self.coccoc_page_object.get_path_of_downloaded_coccoc_installer_from_dev(browser, get_current_download_folder)
         # Uninstall old version
         self.test_uninstall_from_cmd(browser, rm_user_data)
         # Install downloaded version
@@ -104,7 +103,7 @@ class TestOverrideInstall(TestInstall):
                                                          rm_user_data="Yes"):
         # Precondition: Download latest file
         # Download latest version
-        download_file = self.coccoc_page_object.download_coccoc_from_dev(browser, get_current_download_folder)
+        download_file = self.coccoc_page_object.get_path_of_downloaded_coccoc_installer_from_dev(browser, get_current_download_folder)
         # Uninstall old version
         self.test_uninstall_from_cmd(browser, rm_user_data)
         # Install old version version
@@ -120,7 +119,7 @@ class TestOverrideInstall(TestInstall):
         # Please make sure to add hosts to C:\Windows\System32\drivers\etc\hosts
         # Restriction: Cannot add hosts by script because of administration permission
         # Download latest version
-        download_file = self.coccoc_page_object.download_coccoc_from_dev(browser, get_current_download_folder)
+        download_file = self.coccoc_page_object.get_path_of_downloaded_coccoc_installer_from_dev(browser, get_current_download_folder)
         # Uninstall old version
         self.test_uninstall_from_cmd(browser, rm_user_data)
         # Install downloaded version
@@ -133,7 +132,7 @@ class TestSilentInstall(TestInstall):
 
     @pytestrail.case('C44785')
     def test_check_with_make_coccoc_default(self, browser, get_current_download_folder, cc_version, rm_user_data):
-        download_file = self.coccoc_page_object.download_coccoc_from_dev(browser,
+        download_file = self.coccoc_page_object.get_path_of_downloaded_coccoc_installer_from_dev(browser,
                                                                          get_current_download_folder)  # Download latest version
         self.test_uninstall_from_cmd(browser, rm_user_data)  # Uninstall old version
         self.test_silent_install_from_cmd(download_file, 'make-coccoc-default')  # Install downloaded version
@@ -143,7 +142,7 @@ class TestSilentInstall(TestInstall):
 
     @pytestrail.case('C44786')
     def test_check_with_auto_launch_coccoc(self, browser, get_current_download_folder, cc_version, rm_user_data):
-        download_file = self.coccoc_page_object.download_coccoc_from_dev(browser,
+        download_file = self.coccoc_page_object.get_path_of_downloaded_coccoc_installer_from_dev(browser,
                                                                          get_current_download_folder)  # Download latest version
         self.test_uninstall_from_cmd(browser, rm_user_data)  # Uninstall old version
         self.test_silent_install_from_cmd(download_file, 'auto-launch-coccoc')  # Install downloaded version

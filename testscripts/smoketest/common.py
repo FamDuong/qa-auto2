@@ -1,11 +1,16 @@
 import time
+from datetime import datetime
+
 from pywinauto import Desktop
 from selenium import webdriver
+from os import path
 
-from utils_automation.common import WindowsHandler, WindowsCMD, find_text_in_file, modify_file_as_text, get_current_dir
+from utils_automation.common import WindowsHandler, WindowsCMD, find_text_in_file, modify_file_as_text, get_current_dir, \
+    wait_for_stable
 
 windows_handler = WindowsHandler()
 current_user = windows_handler.get_current_login_user()
+download_folder = None
 powershell_script_path = "\\resources\\powershell_scripts"
 ftp_domain = "browser3v.dev.itim.vn"
 ftp_username = "anonymous"
@@ -36,6 +41,18 @@ def uninstall_coccoc_silently():
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     p.communicate()
     time.sleep(5)
+
+
+def remove_local_app_data():
+    local_app_data = path.expandvars(r'%LOCALAPPDATA%\CocCoc')
+    app_data = path.expandvars(r'%APPDATA%\CocCoc')
+    # Temporary do not download delete
+    cmd_Command = 'rmdir /q /s ' + local_app_data  # specify your cmd command
+    WindowsCMD.execute_cmd(cmd_Command)
+    cmd_Command = 'rmdir /q /s ' + app_data  # specify your cmd command
+    WindowsCMD.execute_cmd(cmd_Command)
+    cmd_Command = 'reg delete HKEY_CURRENT_USER\\Software\\CocCoc /f'
+    WindowsCMD.execute_cmd(cmd_Command)
 
 
 def get_coccoc_version_folder_name():
@@ -206,9 +223,35 @@ def install_coccoc_set_system_start_up_on(coccoc_installer_name='standalone_cocc
     coccoc_installer.Run_browser_on_system_start.click()
     time.sleep(5)
     coccoc_installer.Button.click()
-    time.sleep(1)
+    time.sleep(5)
     while check_if_coccoc_is_installed() is False:
         time.sleep(2)
+    cleanup()
+
+
+def open_coccoc_installer_from_path(path_install_file):
+    wait_for_stable
+    import subprocess
+    subprocess.Popen(path_install_file)
+    coccoc_install = Desktop(backend='uia').Cốc_Cốc_Installer
+    coccoc_install.Button1.click()
+    time.sleep(5)
+    start_time = datetime.now()
+    while check_if_coccoc_is_installed() is False:
+        time.sleep(3)
+        time_delta = datetime.now() - start_time
+        if time_delta.total_seconds() >= 120:
+            break
+    time.sleep(3)
+    close_import_google_chome_settings_pannel()
+    time.sleep(3)
+    cleanup()
+
+
+def close_import_google_chome_settings_pannel():
+    import_google_chrome_settings_panel = Desktop(backend='uia').Import_Google_Chrome_Settings
+    if import_google_chrome_settings_panel.child_window(title='Cancel').is_visible():
+        import_google_chrome_settings_panel.child_window(title='Cancel').click()
 
 
 def open_coccoc_installer(coccoc_installer_name='standalone_coccoc_en.exe'):
@@ -338,8 +381,14 @@ def chrome_options_preset():
     chrome_options.add_argument("--proxy-server='direct://'")
     chrome_options.add_argument("--proxy-bypass-list=*")
     chrome_options.add_argument("--start-maximized")
+    chrome_options.add_argument('--disable-gpu')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--ignore-certificate-errors')
     chrome_options.add_argument("--allow-insecure-localhost")
+    chrome_options.add_argument('--disable-application-cache')
     chrome_options.add_argument("--disable-session-crashed-bubble")
+    chrome_options.add_argument("--disable-features=RendererCodeIntegrity")
     chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
     split_after = binary_path.split('\\Local')
     user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
@@ -370,3 +419,13 @@ def install_old_coccoc_version():
     if check_if_coccoc_is_installed():
         uninstall_coccoc_silently()
     install_coccoc_set_as_default(coccoc_installer_name='coccoc_en_old_version.exe')
+
+
+def get_current_download_folder(driver):
+    global download_folder
+    from utils_automation.const import Urls
+    driver.get(Urls.COCCOC_SETTINGS_URL)
+    from models.pageobject.settings import SettingsPageObject
+    setting_page_object = SettingsPageObject()
+    download_folder = setting_page_object.get_download_folder(driver)
+    return download_folder
