@@ -122,6 +122,11 @@ class SettingsPageObject(BasePageObject):
         WaitAfterEach.sleep_timer_after_each_step()
         return self.settings_elem.find_make_default_browser_element(driver).text
 
+    def get_text_cococ_is_default_browser_element(self, driver):
+        from utils_automation.setup import WaitAfterEach
+        WaitAfterEach.sleep_timer_after_each_step()
+        return self.settings_elem.find_coccoc_is_default_browser_element(driver).text
+
     def click_make_default_browser_button(self, driver):
         from utils_automation.setup import WaitAfterEach
         WaitAfterEach.sleep_timer_after_each_step()
