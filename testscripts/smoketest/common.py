@@ -179,7 +179,7 @@ def install_coccoc_silentlty_make_coccoc_default_browser(coccoc_installer_name='
     p.communicate()
 
 
-def cleanup(coccoc_update=True):
+def cleanup(coccoc_update=True, firefox=True):
     # Kill all unncessary task
     if coccoc_update:
         WindowsCMD.execute_cmd('taskkill /im CocCocUpdate.exe /f')
@@ -187,7 +187,8 @@ def cleanup(coccoc_update=True):
     WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
     WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
     WindowsCMD.execute_cmd('taskkill /im iexplore.exe /f')
-    WindowsCMD.execute_cmd('taskkill /im firefox.exe /f')
+    if firefox:
+        WindowsCMD.execute_cmd('taskkill /im firefox.exe /f')
 
 
 def wait_for_coccoc_install_finish():
