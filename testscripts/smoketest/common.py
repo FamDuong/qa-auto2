@@ -76,10 +76,11 @@ def get_list_coccoc_version_folder_name():
     return coccoc_version
 
 
-def get_list_files_dirs_in_coccoc_application_folder():
+def get_list_files_dirs_in_a_folder(application_path=None):
     import subprocess
+    print(current_user)
     p = subprocess.Popen(["powershell.exe",
-                          f"cd C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application; ls"],
+                          f"cd C:\\Users\\{current_user}\\{application_path}; ls"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     current_dir = str(p.communicate()[0])
     return current_dir
@@ -178,12 +179,15 @@ def install_coccoc_silentlty_make_coccoc_default_browser(coccoc_installer_name='
     p.communicate()
 
 
-def cleanup():
+def cleanup(coccoc_update=True):
     # Kill all unncessary task
-    WindowsCMD.execute_cmd('taskkill /im CocCocUpdate.exe /f')
+    if coccoc_update:
+        WindowsCMD.execute_cmd('taskkill /im CocCocUpdate.exe /f')
     WindowsCMD.execute_cmd('taskkill /im browser.exe /f')
     WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
     WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
+    WindowsCMD.execute_cmd('taskkill /im iexplore.exe /f')
+    WindowsCMD.execute_cmd('taskkill /im firefox.exe /f')
 
 
 def wait_for_coccoc_install_finish():
@@ -201,7 +205,7 @@ def install_coccoc_not_set_as_default(coccoc_installer_name='standalone_coccoc_e
     subprocess.Popen(["powershell.exe",
                       f"cd C:\\coccoc-dev; .\\{coccoc_installer_name}"],
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    wait_for_cococ_installer_appear()
+    wait_for_window_appear()
     coccoc_installer = Desktop(backend='uia').Cốc_Cốc_Installer
     time.sleep(5)
     coccoc_installer.Make_Cốc_Cốc_your_default_browserCheckBox.click()
@@ -217,7 +221,7 @@ def install_coccoc_set_as_default(coccoc_installer_name='standalone_coccoc_en.ex
     subprocess.Popen(["powershell.exe",
                       f"cd C:\\coccoc-dev; .\\{coccoc_installer_name}"],
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    wait_for_cococ_installer_appear()
+    wait_for_window_appear()
     coccoc_installer = Desktop(backend='uia').Cốc_Cốc_Installer
     time.sleep(5)
     coccoc_installer.Button.click()
@@ -234,7 +238,7 @@ def install_coccoc_set_system_start_up_on(coccoc_installer_name='standalone_cocc
     subprocess.Popen(["powershell.exe",
                       f"cd C:\\coccoc-dev; .\\{coccoc_installer_name}"],
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    wait_for_cococ_installer_appear()
+    wait_for_window_appear()
     coccoc_installer = Desktop(backend='uia').Cốc_Cốc_Installer
     time.sleep(10)
     coccoc_installer.Run_browser_on_system_start.click()
@@ -251,6 +255,13 @@ def change_default_browser(browser_name):
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     time.sleep(5)
     default_apps = Desktop(backend='uia').SettingsDialog
+    time.sleep(2)
+    default_apps.child_window(auto_id='TextBox').click_input()
+    from pywinauto import keyboard
+    time.sleep(2)
+    keyboard.SendKeys('browser')
+    time.sleep(2)
+    default_apps.Choose_a_default_web_browser.click_input()
     time.sleep(2)
     try:
         default_apps.child_window(auto_id='SystemSettings_DefaultApps_BrowserDefaultAssociation_TitleTextBlock').click_input()
@@ -275,8 +286,34 @@ def change_default_browser(browser_name):
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 
+def choose_import_browser_settings(action='Continue', browser_name='Chrome'):
+    default_apps = None
+    if browser_name in 'Chrome':
+        default_apps = Desktop(backend='uia').Import_Google_Chrome_Settings
+    elif browser_name in 'Firefox':
+        default_apps = Desktop(backend='uia').Import_Mozilla_Firefox_Settings
+    elif browser_name in 'Internet Explorer':
+        default_apps = Desktop(backend='uia').Import_Microsoft_Internet_Explorer_Settings
+    elif browser_name in 'Microsoft Edge':
+        default_apps = Desktop(backend='uia').Import_Microsoft_Edge_Settings
+    if action == 'Continue':
+        default_apps.Continue.click()
+    elif action == 'Cancel':
+        default_apps.Cancel.click()
 
-def wait_for_cococ_installer_appear():
+
+def is_popup_import_browser_settings_displayed(browser_import_name='Import Google Chrome Settings'):
+    time.sleep(5)
+    from pywinauto import Desktop
+    windows = Desktop(backend="uia").windows()
+    list_windows = []
+    for w in windows:
+        list_windows.append(w.window_text())
+    print(f"List windows are : {list_windows}")
+    return browser_import_name in list_windows
+
+
+def wait_for_window_appear(window_name='Cốc Cốc Installer'):
     from datetime import datetime
     index = 0
     start_time = datetime.now()
@@ -287,7 +324,7 @@ def wait_for_cococ_installer_appear():
             break
         all_windows = Desktop(backend='uia').windows()
         for window in all_windows:
-            if "Cốc Cốc Installer" in window.window_text():
+            if window_name in window.window_text():
                 index += 1
 
 
@@ -326,11 +363,11 @@ def get_list_start_up_apps():
         print("Ignore error code")
 
 
-def kill_coccoc_process():
+def kill_browser_process(browser_name='browser.exe'):
     import subprocess
     try:
         subprocess.Popen(["powershell.exe",
-                          "taskkill /im browser.exe /f"],
+                          f"taskkill /im {browser_name} /f"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     except:
         print("Ignore error code")
@@ -410,7 +447,7 @@ def chrome_options_preset():
     return chrome_options
 
 
-def install_coccoc_with_default(is_needed_clean_up=True, is_needed_clear_user_data=False):
+def uninstall_then_install_coccoc_with_default(is_needed_clean_up=True, is_needed_clear_user_data=False):
     if check_if_coccoc_is_installed():
         if is_needed_clear_user_data is False:
             uninstall_coccoc_silently()
@@ -430,7 +467,7 @@ def uninstall_then_install_coccoc_silentlty_with_option(cmd_options):
         time_delta = datetime.now() - start_time
         if time_delta.total_seconds() >= 300:
             break
-    kill_coccoc_process()
+    kill_browser_process()
     time.sleep(2)
 
 
