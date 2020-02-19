@@ -15,8 +15,8 @@ class TestCocCocAutomaticallySystemStartup:
             from testscripts.smoketest.common import get_list_start_up_apps
             assert 'browser.exe' not in get_list_start_up_apps()
         finally:
-            from testscripts.smoketest.common import kill_coccoc_process
-            kill_coccoc_process()
+            from testscripts.smoketest.common import kill_browser_process
+            kill_browser_process()
 
     @pytestrail.case('C44851')
     def test_check_autorun_with_system_option_set_on_installer_dialog(self, install_set_system_option_on):
@@ -26,8 +26,8 @@ class TestCocCocAutomaticallySystemStartup:
             from testscripts.smoketest.common import get_list_start_up_apps
             assert 'browser.com' in get_list_start_up_apps()
         finally:
-            from testscripts.smoketest.common import kill_coccoc_process
-            kill_coccoc_process()
+            from testscripts.smoketest.common import kill_browser_process
+            kill_browser_process()
 
 
 

@@ -9,8 +9,8 @@ class TestOverrideInstall:
         install_old_coccoc_version()
         from testscripts.smoketest.common import get_list_coccoc_version_folder_name
         old_version = get_list_coccoc_version_folder_name()[0]
-        from testscripts.smoketest.common import install_coccoc_with_default
-        install_coccoc_with_default()
+        from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
+        uninstall_then_install_coccoc_with_default()
         new_version = get_list_coccoc_version_folder_name()[0]
         from utils_automation.version import is_version_greater
         assert is_version_greater(new_version, old_version) is True

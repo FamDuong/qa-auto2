@@ -4,8 +4,8 @@ import pytest
 from selenium import webdriver
 
 from testscripts.smoketest.common import check_if_coccoc_is_installed, uninstall_coccoc_silently, \
-    install_coccoc_silently, kill_coccoc_process, install_coccoc_not_set_as_default, \
-    install_coccoc_set_system_start_up_on, install_coccoc_set_as_default, install_coccoc_with_default, \
+    install_coccoc_silently, kill_browser_process, install_coccoc_not_set_as_default, \
+    install_coccoc_set_system_start_up_on, install_coccoc_set_as_default, uninstall_then_install_coccoc_with_default, \
     chrome_options_preset, interact_dev_hosts
 from utils_automation.common import WindowsHandler, modify_file_as_text
 
@@ -15,7 +15,7 @@ current_user = windows_handler.get_current_login_user()
 
 @pytest.fixture(scope='function')
 def coccoc_install_instance_on_default_browser():
-    install_coccoc_with_default()
+    uninstall_then_install_coccoc_with_default()
     driver = webdriver.Chrome(options=chrome_options_preset())
     yield driver
     driver.quit()

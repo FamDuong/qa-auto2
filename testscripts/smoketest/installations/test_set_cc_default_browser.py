@@ -21,8 +21,8 @@ class TestCcDefaultBrowser:
             from testscripts.smoketest.common import get_coccoc_process
             assert 'browser' in get_coccoc_process()
         finally:
-            from testscripts.smoketest.common import kill_coccoc_process
-            kill_coccoc_process()
+            from testscripts.smoketest.common import kill_browser_process
+            kill_browser_process()
 
     @pytestrail.case('C44843')
     def test_check_if_user_not_set_cc_default_browser_setting_page(self, coccoc_install_instance_set_not_default_browser):
@@ -35,8 +35,8 @@ class TestCcDefaultBrowser:
 
     @pytestrail.case('C44845')
     def test_set_default_browser_coccoc_then_change_default_browser_to_chrome(self):
-        from testscripts.smoketest.conftest import install_coccoc_with_default
-        install_coccoc_with_default()
+        from testscripts.smoketest.conftest import uninstall_then_install_coccoc_with_default
+        uninstall_then_install_coccoc_with_default()
         from testscripts.smoketest.common import set_chrome_default_browser
         set_chrome_default_browser()
         from testscripts.smoketest.common import coccoc_instance
