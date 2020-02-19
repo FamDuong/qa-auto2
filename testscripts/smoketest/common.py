@@ -28,9 +28,66 @@ def check_if_coccoc_is_installed():
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     result = p.communicate()[0]
     if file_name in str(result):
+        print("True")
         return True
     else:
+        print("False")
         return False
+
+
+def check_if_preferences_is_created(user_data_path):
+    print("user_data_path"+user_data_path)
+    file_name = 'Preferences'
+    path = "C:\\Users"+user_data_path+"Default"
+    print("path" + path)
+    import subprocess
+    p = subprocess.Popen(["powershell.exe",
+                          f"Get-ChildItem -Path r'{path} -Filter {file_name} -Recurse " + "| %{$_.FullName}"],
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    result = p.communicate()[0]
+    if file_name in str(result):
+        print("True")
+        return True
+    else:
+        print("False")
+        return False
+
+
+def check_if_installer_is_downloaded(download_path, language):
+    file_name = 'coccoc_' + language + '.exe'
+
+    import subprocess
+    p = subprocess.Popen(["powershell.exe",
+                          f"Get-ChildItem -Path {download_path} -Filter {file_name} -Recurse " + "| %{$_.FullName}"],
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    result = p.communicate()[0]
+    if file_name in str(result):
+        print("True")
+        return True
+    else:
+        print("False")
+        return False
+
+
+def break_if_timeout(bool_value, bool_condition, sleep_time, timeout):
+    start_time = datetime.now()
+    while bool_value is bool_condition:
+        time.sleep(sleep_time)
+        time_delta = datetime.now() - start_time
+        if time_delta.total_seconds() >= timeout:
+            break
+
+
+def remove_local_app_data():
+    local_app_data = path.expandvars(r'%LOCALAPPDATA%\CocCoc')
+    app_data = path.expandvars(r'%APPDATA%\CocCoc')
+    # Temporary do not download delete
+    cmd_Command = 'rmdir /q /s ' + local_app_data  # specify your cmd command
+    WindowsCMD.execute_cmd(cmd_Command)
+    cmd_Command = 'rmdir /q /s ' + app_data  # specify your cmd command
+    WindowsCMD.execute_cmd(cmd_Command)
+    cmd_Command = 'reg delete HKEY_CURRENT_USER\\Software\\CocCoc /f'
+    WindowsCMD.execute_cmd(cmd_Command)
 
 
 def uninstall_coccoc_silently():
@@ -44,16 +101,11 @@ def uninstall_coccoc_silently():
     time.sleep(5)
 
 
-def remove_local_app_data():
-    local_app_data = path.expandvars(r'%LOCALAPPDATA%\CocCoc')
-    app_data = path.expandvars(r'%APPDATA%\CocCoc')
-    # Temporary do not download delete
-    cmd_Command = 'rmdir /q /s ' + local_app_data  # specify your cmd command
-    WindowsCMD.execute_cmd(cmd_Command)
-    cmd_Command = 'rmdir /q /s ' + app_data  # specify your cmd command
-    WindowsCMD.execute_cmd(cmd_Command)
-    cmd_Command = 'reg delete HKEY_CURRENT_USER\\Software\\CocCoc /f'
-    WindowsCMD.execute_cmd(cmd_Command)
+def uninstall_old_version_remove_local_app():
+    cleanup()
+    if check_if_coccoc_is_installed():
+        uninstall_coccoc_silently()
+        remove_local_app_data()
 
 
 def get_coccoc_version_folder_name():
@@ -172,7 +224,8 @@ def install_coccoc_silently(coccoc_installer_name='standalone_coccoc_en.exe'):
     p.communicate()
 
 
-def install_coccoc_silentlty_make_coccoc_default_browser(coccoc_installer_name='standalone_coccoc_en.exe', cmd_options=None):
+def install_coccoc_silentlty_make_coccoc_default_browser(coccoc_installer_name='standalone_coccoc_en.exe',
+                                                         cmd_options=None):
     import subprocess
     p = subprocess.Popen(["powershell.exe",
                           f"cd C:\coccoc-dev; .\\{coccoc_installer_name} /silent {cmd_options} /install"],
@@ -238,35 +291,28 @@ def install_coccoc_set_system_start_up_on(coccoc_installer_name='standalone_cocc
 
 
 def open_coccoc_installer_from_path(path_install_file):
-    wait_for_stable
-    import subprocess
-    subprocess.Popen(path_install_file)
+    open_coccoc_installer_by_path(path_install_file)
     coccoc_install = Desktop(backend='uia').Cốc_Cốc_Installer
     coccoc_install.Button1.click()
     time.sleep(5)
-    start_time = datetime.now()
-    while check_if_coccoc_is_installed() is False:
-        time.sleep(3)
-        time_delta = datetime.now() - start_time
-        if time_delta.total_seconds() >= 120:
-            break
-    time.sleep(3)
-    close_import_google_chome_settings_pannel()
+    bool_value = check_if_coccoc_is_installed()
+    break_if_timeout(bool_value, False, 3, 120)
     time.sleep(3)
     cleanup()
 
 
-def close_import_google_chome_settings_pannel():
-    import_google_chrome_settings_panel = Desktop(backend='uia').Import_Google_Chrome_Settings
-    if import_google_chrome_settings_panel.child_window(title='Cancel').is_visible():
-        import_google_chrome_settings_panel.child_window(title='Cancel').click()
-
-
-def open_coccoc_installer(coccoc_installer_name='standalone_coccoc_en.exe'):
+def open_coccoc_installer_by_name(coccoc_installer_name='standalone_coccoc_en.exe'):
     import subprocess
     subprocess.Popen(["powershell.exe",
                       f"cd C:\\coccoc-dev; .\\{coccoc_installer_name}"],
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    wait_for_cococ_installer_appear()
+
+
+def open_coccoc_installer_by_path(path_install_file):
+    wait_for_stable
+    import subprocess
+    subprocess.Popen(path_install_file)
     wait_for_cococ_installer_appear()
 
 
@@ -401,7 +447,8 @@ def chrome_options_preset():
     split_after = binary_path.split('\\Local')
     user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
     chrome_options.add_argument('--user-data-dir=' + user_data_path)
-    modify_file_as_text(user_data_path + '\\Default\\Preferences', 'Crashed', 'none')
+    if check_if_preferences_is_created(user_data_path):
+        modify_file_as_text(user_data_path + '\\Default\\Preferences', 'Crashed', 'none')
     return chrome_options
 
 
@@ -443,7 +490,6 @@ def uninstall_then_install_coccoc_silentlty_with_option_without_kill_process(cmd
             break
 
 
-
 def interact_dev_hosts(action="activate"):
     import subprocess
     current_dir = get_current_dir()[0] + powershell_script_path
@@ -458,7 +504,7 @@ def install_old_coccoc_version():
     install_coccoc_set_as_default(coccoc_installer_name='coccoc_en_old_version.exe')
 
 
-def get_current_download_folder(driver):
+def get_default_download_folder(driver):
     global download_folder
     from utils_automation.const import Urls
     driver.get(Urls.COCCOC_SETTINGS_URL)

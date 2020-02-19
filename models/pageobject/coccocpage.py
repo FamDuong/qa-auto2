@@ -1,4 +1,3 @@
-import os
 import time
 from datetime import datetime
 
@@ -8,35 +7,30 @@ from models.pageelements.coccocpage import CocCocPageElement
 from models.pageobject.downloads import DownloadsPageObject
 
 
-def get_path_of_downloaded_coccoc_installer_from_dev(download_folder, language="en"):
-    download_file = download_folder + '/coccoc_' + language + '.exe'
-    os.path.isfile(download_file)
-    return download_file
+def check_if_finished_with_timeout(download_folder, language):
+    start_time = datetime.now()
+    from testscripts.smoketest.common import check_if_installer_is_downloaded, break_if_timeout
+    bool_value = check_if_installer_is_downloaded(download_folder, language)
+    print("download_folder "+download_folder)
+    print("Value "+str(bool_value))
+    break_if_timeout(bool_value, False, 3, 60)
 
 
 class CocCocPageObjects(BasePageObject):
     coccocpage_elem = CocCocPageElement()
     download_elem = DownloadsPageObject()
 
-    def get_path_of_downloaded_coccoc_installer_from_dev(self, browser, download_folder, os="win", language="en"):
-        browser.get(Urls.COCCOC_DEV_URL)
+    def get_path_installer(self, browser, download_folder, os="win", language="en"):
         self.coccocpage_elem.find_download_element(browser, os, language).click()
         self.coccocpage_elem.find_privacy_button(browser).click()
-        path_downloaded = get_path_of_downloaded_coccoc_installer_from_dev(download_folder, language)
-        start_time = datetime.now()
-        while self.check_if_file_is_downloaded(language, path_downloaded) is False:
-            time.sleep(3)
-            time_delta = datetime.now() - start_time
-            if time_delta.total_seconds() >= 120:
-                break
+        path_downloaded = download_folder + '/coccoc_' + language + '.exe'
+        check_if_finished_with_timeout(download_folder, language)
         return path_downloaded
 
-    def download_coccoc_from_production(self, browser, download_folder, os="win", language="vi"):
-        browser.get(Urls.COCCOC_URL)
-        return self.download_latest_version(browser, download_folder, os, language)
+    def get_path_installer_that_download_from_dev(self, browser, download_folder, os="win", language="en"):
+        browser.get(Urls.COCCOC_DEV_URL)
+        return self.get_path_installer(browser, download_folder, os, language)
 
-    def check_if_file_is_downloaded(self, language, path_downloaded):
-        if '/coccoc_' + language + '.exe' in path_downloaded:
-            return True
-        else:
-            return False
+    def get_path_installer_that_download_from_production(self, browser, download_folder, os="win", language="vi"):
+        browser.get(Urls.COCCOC_URL)
+        return self.get_path_installer(browser, download_folder, os, language)
