@@ -1,6 +1,7 @@
 import datetime
 import time
 from datetime import datetime
+from idlelib.multicall import r
 
 from pywinauto import Desktop
 from selenium import webdriver
@@ -28,54 +29,43 @@ def check_if_coccoc_is_installed():
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     result = p.communicate()[0]
     if file_name in str(result):
-        print("True")
+        print("check_if_coccoc_is_installed: True")
         return True
     else:
-        print("False")
+        print("check_if_coccoc_is_installed: False")
         return False
 
 
 def check_if_preferences_is_created(user_data_path):
-    print("user_data_path"+user_data_path)
     file_name = 'Preferences'
-    path = "C:\\Users"+user_data_path+"Default"
-    print("path" + path)
+    path = "\"" + "C:\\Users" + user_data_path + "Default\""
     import subprocess
     p = subprocess.Popen(["powershell.exe",
-                          f"Get-ChildItem -Path r'{path} -Filter {file_name} -Recurse " + "| %{$_.FullName}"],
+                          f"Get-ChildItem -Path {path} -Filter {file_name} -Recurse " + "| %{$_.FullName}"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     result = p.communicate()[0]
     if file_name in str(result):
-        print("True")
+        print("check_if_preferences_is_created: True")
         return True
     else:
-        print("False")
+        print("check_if_preferences_is_created: False")
         return False
 
 
 def check_if_installer_is_downloaded(download_path, language):
     file_name = 'coccoc_' + language + '.exe'
-
+    path = "\"" + download_path + "\""
     import subprocess
     p = subprocess.Popen(["powershell.exe",
-                          f"Get-ChildItem -Path {download_path} -Filter {file_name} -Recurse " + "| %{$_.FullName}"],
+                          f"Get-ChildItem -Path {path} -Filter {file_name} -Recurse " + "| %{$_.FullName}"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     result = p.communicate()[0]
     if file_name in str(result):
-        print("True")
+        print("check_if_installer_is_downloaded: True")
         return True
     else:
-        print("False")
+        print("check_if_installer_is_downloaded: False")
         return False
-
-
-def break_if_timeout(bool_value, bool_condition, sleep_time, timeout):
-    start_time = datetime.now()
-    while bool_value is bool_condition:
-        time.sleep(sleep_time)
-        time_delta = datetime.now() - start_time
-        if time_delta.total_seconds() >= timeout:
-            break
 
 
 def remove_local_app_data():
@@ -102,10 +92,12 @@ def uninstall_coccoc_silently():
 
 
 def uninstall_old_version_remove_local_app():
+    print("Uninstalling........................")
     cleanup()
     if check_if_coccoc_is_installed():
         uninstall_coccoc_silently()
         remove_local_app_data()
+    print("Uninstalled")
 
 
 def get_coccoc_version_folder_name():
@@ -290,14 +282,18 @@ def install_coccoc_set_system_start_up_on(coccoc_installer_name='standalone_cocc
     cleanup()
 
 
-def open_coccoc_installer_from_path(path_install_file):
+def install_coccoc_installer_from_path(path_install_file):
     open_coccoc_installer_by_path(path_install_file)
     coccoc_install = Desktop(backend='uia').Cốc_Cốc_Installer
     coccoc_install.Button1.click()
     time.sleep(5)
-    bool_value = check_if_coccoc_is_installed()
-    break_if_timeout(bool_value, False, 3, 120)
-    time.sleep(3)
+    print("Instaling...............................")
+    start_time = datetime.now()
+    while check_if_coccoc_is_installed() is False:
+        time.sleep(2)
+        time_delta = datetime.now() - start_time
+        if time_delta.total_seconds() >= 120:
+            break
     cleanup()
 
 
@@ -443,6 +439,7 @@ def chrome_options_preset():
     chrome_options.add_argument('--disable-application-cache')
     chrome_options.add_argument("--disable-session-crashed-bubble")
     chrome_options.add_argument("--disable-features=RendererCodeIntegrity")
+    chrome_options.add_experimental_option("prefs", {'safebrowsing.enabled': 'false'})
     chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
     split_after = binary_path.split('\\Local')
     user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
@@ -504,11 +501,12 @@ def install_old_coccoc_version():
     install_coccoc_set_as_default(coccoc_installer_name='coccoc_en_old_version.exe')
 
 
-def get_default_download_folder(driver):
+def get_default_download_folder(browser):
     global download_folder
     from utils_automation.const import Urls
-    driver.get(Urls.COCCOC_SETTINGS_URL)
+    browser.maximize_window()
+    browser.get(Urls.COCCOC_SETTINGS_URL)
     from models.pageobject.settings import SettingsPageObject
     setting_page_object = SettingsPageObject()
-    download_folder = setting_page_object.get_download_folder(driver)
+    download_folder = setting_page_object.get_download_folder(browser)
     return download_folder
