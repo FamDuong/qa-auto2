@@ -25,7 +25,8 @@ def check_if_coccoc_is_installed():
 
     import subprocess
     p = subprocess.Popen(["powershell.exe",
-                          f"Get-ChildItem -Path C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application -Filter {file_name} -Recurse " + "| %{$_.FullName}"],
+                          f"Get-ChildItem -Path C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser"
+                          f"\\Application -Filter {file_name} -Recurse " + "| %{$_.FullName}"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     result = p.communicate()[0]
     if file_name in str(result):
@@ -90,6 +91,7 @@ def uninstall_coccoc_silently():
     p.communicate()
     time.sleep(5)
 
+
 def uninstall_old_version_remove_local_app():
     print("Uninstalling........................")
     cleanup()
@@ -102,10 +104,10 @@ def uninstall_old_version_remove_local_app():
 def uninstall_coccoc_and_delete_user_data():
     import subprocess
     subprocess.Popen(["powershell.exe",
-                          f"cd C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application"
-                          f"\\{get_coccoc_version_folder_name()}"
-                          f"\\Installer; .\\setup.exe --uninstall"],
-                         stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+                      f"cd C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application"
+                      f"\\{get_coccoc_version_folder_name()}"
+                      f"\\Installer; .\\setup.exe --uninstall"],
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     coccoc_uninstaller = Desktop(backend='uia').Uninstall
     time.sleep(4)
     coccoc_uninstaller.Also_delete_your_browsing_data.click()
@@ -309,7 +311,7 @@ def install_coccoc_set_system_start_up_on(coccoc_installer_name='standalone_cocc
     wait_for_coccoc_install_finish()
 
 
-def install_coccoc_installer_from_path(path_install_file):
+def install_coccoc_installer_from_path(path_install_file, is_needed_clean_up=True):
     open_coccoc_installer_by_path(path_install_file)
     coccoc_install = Desktop(backend='uia').Cốc_Cốc_Installer
     coccoc_install.Button1.click()
@@ -321,7 +323,10 @@ def install_coccoc_installer_from_path(path_install_file):
         time_delta = datetime.now() - start_time
         if time_delta.total_seconds() >= 120:
             break
-    cleanup()
+    if is_needed_clean_up is True:
+        cleanup()
+    else:
+        pass
 
 
 def open_coccoc_installer_by_name(coccoc_installer_name='standalone_coccoc_en.exe'):
@@ -348,10 +353,12 @@ def wait_for_cococ_installer_appear():
             if "Cốc Cốc Installer" in window.window_text():
                 index += 1
 
+
 def change_default_browser(browser_name):
     import subprocess
     subprocess.Popen(["powershell.exe",
-                      r"Start-Process $env:windir\system32\control.exe -LoadUserProfile -Wait -ArgumentList '/name Microsoft.DefaultPrograms /page pageDefaultProgram'"],
+                      r"Start-Process $env:windir\system32\control.exe -LoadUserProfile -Wait -ArgumentList '/name "
+                      r"Microsoft.DefaultPrograms /page pageDefaultProgram'"],
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     time.sleep(5)
     default_apps = Desktop(backend='uia').SettingsDialog
@@ -364,7 +371,8 @@ def change_default_browser(browser_name):
     default_apps.Choose_a_default_web_browser.click_input()
     time.sleep(2)
     try:
-        default_apps.child_window(auto_id='SystemSettings_DefaultApps_BrowserDefaultAssociation_TitleTextBlock').click_input()
+        default_apps.child_window(
+            auto_id='SystemSettings_DefaultApps_BrowserDefaultAssociation_TitleTextBlock').click_input()
     except:
         default_apps.child_window(
             auto_id='SystemSettings_DefaultApps_Browser_Button').click_input()
@@ -525,7 +533,11 @@ def check_if_auto_launch_enabled_is_false():
     return find_text_in_file(user_data_local_state, '"autolaunch_enabled":true')
 
 
-def coccoc_instance():
+def coccoc_instance(is_needed_clean_up=True):
+    if is_needed_clean_up is True:
+        cleanup()
+    else:
+        pass
     return webdriver.Chrome(options=chrome_options_preset())
 
 
@@ -607,6 +619,7 @@ def install_old_coccoc_version():
 
 
 def get_default_download_folder(browser):
+    print("Get Default download folder...")
     global download_folder
     from utils_automation.const import Urls
     browser.maximize_window()

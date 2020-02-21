@@ -31,3 +31,4 @@ class TestExtensionUpdate:
                                                                settings.EXTENSION_VERSION_RUNGRINH)
         finally:
             driver.quit()
+            common.interact_dev_hosts("activate")
