@@ -37,7 +37,7 @@ class TestImportDataWhileInstalling:
             assert 'Bookmarks' in get_list_files_dirs_in_a_folder(application_path="\"AppData/Local/CocCoc/Browser/User Data/Default\"")
         finally:
             from testscripts.smoketest.common import cleanup
-            cleanup(coccoc_update=False)
+            cleanup(coccoc_update=False, firefox=False)
 
     @pytestrail.case('C44826')
     def test_import_data_from_firefox(self):
@@ -84,7 +84,7 @@ class TestImportDataWhileInstalling:
                 application_path="\"AppData/Local/CocCoc/Browser/User Data/Default\"")
         finally:
             from testscripts.smoketest.common import cleanup
-            cleanup(coccoc_update=False)
+            cleanup(coccoc_update=False, firefox=False)
 
     @pytestrail.case('C44828')
     @pytest.mark.skip(reason='Bug BR-930')
@@ -106,7 +106,7 @@ class TestImportDataWhileInstalling:
                 application_path="\"AppData/Local/CocCoc/Browser/User Data/Default\"")
         finally:
             from testscripts.smoketest.common import cleanup
-            cleanup(coccoc_update=False)
+            cleanup(coccoc_update=False, firefox=False)
 
 
 

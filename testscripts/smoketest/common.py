@@ -99,26 +99,6 @@ def move_to_coccoc_installer_dir():
 def sorted_list_directories(folders_list):
     from packaging import version
     list_coccoc_folders = get_list_coccoc_installer_dirs(folders_list)
-    new_list = []
-    for each_folder in list_coccoc_folders:
-        import re
-        split_item = re.match(rf'\b\d+\.', each_folder)
-        integer_split_item = int(str(split_item).split("match='")[1].split('.')[0])
-        if integer_split_item not in new_list:
-            new_list.append(integer_split_item)
-    new_list.sort()
-    biggest_number = new_list[-1]
-    new_list_2 = []
-    new_list_biggest_number = []
-    for each_folder in list_coccoc_folders:
-        import re
-        split_item = re.match(rf'{biggest_number}\.\b\d+\.', each_folder)
-        if split_item is not None:
-            integer_split_item = int(str(split_item).split("match='")[1].split('.')[1].split('.')[0])
-            new_list_biggest_number.append(integer_split_item)
-            new_list_2.append(each_folder)
-    new_list_biggest_number.sort()
-    list_coccoc_folders = new_list_2
     sorted_list = sorted(list_coccoc_folders, key=lambda x: version.Version(x))
     return sorted_list
 
@@ -127,7 +107,7 @@ def get_list_coccoc_installer_dirs(folders_list):
     coccoc_download_folder_list = []
     for each_folder in folders_list:
         import re
-        if re.match(r'\b\d+\.+\b\d+\.\b\d+\.+\d*', each_folder):
+        if re.match(r'\b\d+\.+\b\d+\.\b\d+\.+\d*$', each_folder):
             coccoc_download_folder_list.append(each_folder)
     return coccoc_download_folder_list
 
@@ -136,9 +116,21 @@ def get_latest_coccoc_dev_installer_version(ftp):
     ftp.cwd(ftp_child_folder)
     folders_list = ftp.nlst()
     coccoc_download_folder_list = get_list_coccoc_installer_dirs(folders_list)
-    sorted_list_directory = sorted_list_directories(coccoc_download_folder_list)
-    latest_coccoc_download_dir = sorted_list_directory[-1]
-    return latest_coccoc_download_dir
+    return sorted_list_directories(coccoc_download_folder_list)
+
+
+def get_latest_directory_by_set_up_exe_date(ftp):
+    sorted_list_directories = get_latest_coccoc_dev_installer_version(ftp)
+    latest_timestamp = ''
+    latest_directory = ''
+    for each_directory in sorted_list_directories:
+        ftp.cwd(f'{each_directory}')
+        timestamp = ftp.voidcmd("MDTM setup.exe")[4:].strip()
+        if timestamp > latest_timestamp:
+            latest_timestamp = timestamp
+            latest_directory = each_directory
+        ftp.cwd("../")
+    return latest_directory
 
 
 def login_then_get_latest_coccoc_dev_installer_version():
@@ -146,7 +138,7 @@ def login_then_get_latest_coccoc_dev_installer_version():
     latest_coccoc_download_dir = None
     with FTP(ftp_domain) as ftp:
         ftp.login(ftp_username, ftp_password)
-        latest_coccoc_download_dir = get_latest_coccoc_dev_installer_version(ftp)
+        latest_coccoc_download_dir = get_latest_directory_by_set_up_exe_date(ftp)
     return latest_coccoc_download_dir
 
 
@@ -179,7 +171,7 @@ def install_coccoc_silentlty_make_coccoc_default_browser(coccoc_installer_name='
     p.communicate()
 
 
-def cleanup(coccoc_update=True):
+def cleanup(coccoc_update=True, firefox=True):
     # Kill all unncessary task
     if coccoc_update:
         WindowsCMD.execute_cmd('taskkill /im CocCocUpdate.exe /f')
@@ -187,7 +179,8 @@ def cleanup(coccoc_update=True):
     WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
     WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
     WindowsCMD.execute_cmd('taskkill /im iexplore.exe /f')
-    WindowsCMD.execute_cmd('taskkill /im firefox.exe /f')
+    if firefox:
+        WindowsCMD.execute_cmd('taskkill /im firefox.exe /f')
 
 
 def wait_for_coccoc_install_finish():
