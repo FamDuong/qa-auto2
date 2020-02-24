@@ -3,6 +3,7 @@ import time
 from datetime import datetime
 from idlelib.multicall import r
 
+from appium.webdriver.extensions.search_context import windows
 from pywinauto import Desktop
 from selenium import webdriver
 from os import path
@@ -93,12 +94,10 @@ def uninstall_coccoc_silently():
 
 
 def uninstall_old_version_remove_local_app():
-    print("Uninstalling........................")
     cleanup()
     if check_if_coccoc_is_installed():
         uninstall_coccoc_silently()
         remove_local_app_data()
-    print("Uninstalled")
 
 
 def uninstall_coccoc_and_delete_user_data():
@@ -303,22 +302,21 @@ def install_coccoc_set_system_start_up_on(coccoc_installer_name='standalone_cocc
     wait_for_coccoc_install_finish()
 
 
-def install_coccoc_installer_from_path(path_install_file, is_needed_clean_up=True):
-    open_coccoc_installer_by_path(path_install_file)
-    coccoc_install = Desktop(backend='uia').Cốc_Cốc_Installer
+def install_coccoc_installer_from_path(path_install_file, language='en'):
+    if language in 'en':
+        open_coccoc_installer_by_path(path_install_file)
+        coccoc_install = Desktop(backend='uia').Cốc_Cốc_Installer
+    else:
+        open_coccoc_installer_by_path(path_install_file, 'Trình cài đặt Cốc Cốc')
+        coccoc_install = Desktop(backend='uia').Trình_cài_đặt_Cốc_Cốc
     coccoc_install.Button1.click()
     time.sleep(5)
-    print("Instaling...............................")
     start_time = datetime.now()
     while check_if_coccoc_is_installed() is False:
         time.sleep(2)
         time_delta = datetime.now() - start_time
-        if time_delta.total_seconds() >= 120:
+        if time_delta.total_seconds() >= 10:
             break
-    if is_needed_clean_up is True:
-        cleanup()
-    else:
-        pass
 
 
 def open_coccoc_installer_by_name(coccoc_installer_name='standalone_coccoc_en.exe'):
@@ -329,20 +327,20 @@ def open_coccoc_installer_by_name(coccoc_installer_name='standalone_coccoc_en.ex
     wait_for_cococ_installer_appear()
 
 
-def open_coccoc_installer_by_path(path_install_file):
+def open_coccoc_installer_by_path(path_install_file, coccoc_installer="Cốc Cốc Installer"):
     wait_for_stable
     import subprocess
     subprocess.Popen(path_install_file)
-    wait_for_cococ_installer_appear()
+    wait_for_cococ_installer_appear(coccoc_installer)
 
 
-def wait_for_cococ_installer_appear():
+def wait_for_cococ_installer_appear(window_text="Cốc Cốc Installer"):
     index = 0
     while index == 0:
         time.sleep(1)
         all_windows = Desktop(backend='uia').windows()
         for window in all_windows:
-            if "Cốc Cốc Installer" in window.window_text():
+            if window_text in window.window_text():
                 index += 1
 
 

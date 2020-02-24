@@ -129,6 +129,21 @@ class SettingsElements(BasePageElement):
                                         SettingsPageLocators.SETTINGS_SYSTEM_START_UP_CONTROL_TEXT
                                         )
 
+    def find_left_menu_people(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsPageLocators.SETTINGS_MENU_TEXT,
+                                        SettingsPageLocators.SETTINGS_MENU_PEOPLE_LBL)
+
+    def find_left_menu_auto_fill(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsPageLocators.SETTINGS_MENU_TEXT,
+                                        SettingsPageLocators.SETTINGS_MENU_AUTO_FILL_LBL)
+
+    def find_left_menu_default_browser(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsPageLocators.SETTINGS_MENU_TEXT,
+                                        SettingsPageLocators.SETTINGS_MENU_DEFAULT_BROWSER_LBL)
+
     def find_relaunch_browser_btn(self, driver):
         index = 0
         from datetime import datetime
