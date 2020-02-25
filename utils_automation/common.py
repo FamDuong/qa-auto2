@@ -296,9 +296,12 @@ class BrowserHandler:
 
 
 def modify_file_as_text(text_file_path, text_to_search, replacement_text):
-    with fileinput.FileInput(text_file_path, inplace=True, backup='.bak') as file:
-        for line in file:
-            print(line.replace(text_to_search, replacement_text), end='')
+    try:
+        with fileinput.FileInput(text_file_path, inplace=True, backup='.bak') as file:
+            for line in file:
+                print(line.replace(text_to_search, replacement_text), end='')
+    except:
+        print("Preferences file is not existed")
 
 
 def find_text_in_file(text_file_path, text_to_search):

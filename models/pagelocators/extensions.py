@@ -8,9 +8,14 @@ class ExtensionsPageLocators:
     EXTENSIONS_ITEM = 'extensions-item'
     EXTENSION_ITEM_ID = 'jdfkmiabjpfjacifcmihfdjhpnjpiick'
     EXTENSION_DETAIL_BUTTON = 'detailsButton'
+    EXTENSION_DETAIL_BUTTON_ID = '#detailsButton'
 
     SAVIOR_EXTENSIONS_WRAPPER_ID = 'jdfkmiabjpfjacifcmihfdjhpnjpiick'
     SAVIOR_EXTENSION_NAME_TEXT = 'Cốc Cốc Savior'
+    EXTENSION_TOGGLE_BUTTON = '#enable-toggle'
+    EXTENSION_VIEW_MANAGER = '#viewManager'
+    EXTENSION_DETAIL_VIEW = '#viewManager > extensions-detail-view'
+    ITEMS_LIST = '#items-list'
 
     class UblockPlusPageLocators:
         UBLOCK_PLUS_ID_CSS_LOCATOR = '#oofnbdifeelbaidfgpikinijekkjcicg'

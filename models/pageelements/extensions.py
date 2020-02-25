@@ -32,6 +32,16 @@ class ExtensionsElement(BasePageElement):
         return self.find_savior_extension_wrapper(driver).find_element_by_id(
             ExtensionsPageLocators.EXTENSION_DETAIL_BUTTON)
 
+    def find_extension_detail_button(self, driver, extension_id):
+        return self.find_shadow_element(driver, ExtensionsPageLocators.EXTENSIONS_MANAGER_TEXT,
+                                        ExtensionsPageLocators.ITEMS_LIST, extension_id,
+                                        ExtensionsPageLocators.EXTENSION_DETAIL_BUTTON_ID)
+
+    def find_extension_toggle_button(self, driver):
+        return self.find_shadow_element(driver, ExtensionsPageLocators.EXTENSIONS_MANAGER_TEXT,
+                                        ExtensionsPageLocators.EXTENSION_DETAIL_VIEW,
+                                        ExtensionsPageLocators.EXTENSION_TOGGLE_BUTTON)
+
     class UblockPlusAdblockerElement(BasePageElement):
 
         def find_ublock_toggle_knob_btn(self, driver):

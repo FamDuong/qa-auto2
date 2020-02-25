@@ -8,17 +8,12 @@ class TestImportDataWhileInstalling:
     browser_name = 'chrome', 'firefox', 'microsoft-edge:', 'iexplore'
     """
 
-    def open_browser_from_command(self, browser_name='chrome'):
-        import subprocess
-        subprocess.Popen(["powershell.exe",
-                          f"start {browser_name}"],
-                         stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-
     @pytestrail.case('C44825')
     def test_import_data_from_chrome(self):
         from testscripts.smoketest.common import change_default_browser
         change_default_browser('Google Chrome')
-        self.open_browser_from_command(browser_name='chrome')
+        from testscripts.smoketest.installations.common import open_browser_from_command
+        open_browser_from_command(browser_name='chrome')
         from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
         uninstall_then_install_coccoc_with_default(is_needed_clean_up=False, is_needed_clear_user_data=True)
         from testscripts.smoketest.common import wait_for_window_appear
@@ -43,7 +38,8 @@ class TestImportDataWhileInstalling:
     def test_import_data_from_firefox(self):
         from testscripts.smoketest.common import change_default_browser
         change_default_browser('Firefox')
-        self.open_browser_from_command(browser_name='firefox')
+        from testscripts.smoketest.installations.common import open_browser_from_command
+        open_browser_from_command(browser_name='firefox')
         from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
         uninstall_then_install_coccoc_with_default(is_needed_clean_up=False, is_needed_clear_user_data=True)
         from testscripts.smoketest.common import wait_for_window_appear
@@ -69,7 +65,8 @@ class TestImportDataWhileInstalling:
     def test_import_data_from_internet_explorer(self):
         from testscripts.smoketest.common import change_default_browser
         change_default_browser('Internet Explorer')
-        self.open_browser_from_command(browser_name='iexplore')
+        from testscripts.smoketest.installations.common import open_browser_from_command
+        open_browser_from_command(browser_name='iexplore')
         from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
         uninstall_then_install_coccoc_with_default(is_needed_clean_up=False, is_needed_clear_user_data=True)
         from testscripts.smoketest.common import wait_for_window_appear
@@ -91,7 +88,8 @@ class TestImportDataWhileInstalling:
     def test_import_data_from_microsoft_edge(self):
         from testscripts.smoketest.common import change_default_browser
         change_default_browser('Microsoft Edge')
-        self.open_browser_from_command(browser_name='microsoft-edge:')
+        from testscripts.smoketest.installations.common import open_browser_from_command
+        open_browser_from_command(browser_name='microsoft-edge:')
         from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
         uninstall_then_install_coccoc_with_default(is_needed_clean_up=False, is_needed_clear_user_data=True)
         from testscripts.smoketest.common import wait_for_window_appear

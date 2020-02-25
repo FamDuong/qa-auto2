@@ -332,12 +332,12 @@ def open_link_from_powershell():
         print("Ignore error code")
 
 
-def get_coccoc_process():
+def get_application_process(application_name='browser'):
     import subprocess
     processes = None
     try:
         processes = subprocess.Popen(["powershell.exe",
-                                      "Get-Process browser"],
+                                      f"Get-Process {application_name}"],
                                      stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     except:
         print("Ignore error code")
@@ -432,6 +432,7 @@ def chrome_options_preset():
     chrome_options.add_argument("--start-maximized")
     chrome_options.add_argument("--allow-insecure-localhost")
     chrome_options.add_argument("--disable-session-crashed-bubble")
+    chrome_options.add_argument("--enable-features=CocCocMojichat")
     chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
     split_after = binary_path.split('\\Local')
     user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'

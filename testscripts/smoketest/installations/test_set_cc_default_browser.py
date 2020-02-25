@@ -18,8 +18,8 @@ class TestCcDefaultBrowser:
         try:
             from testscripts.smoketest.common import open_link_from_powershell
             open_link_from_powershell()
-            from testscripts.smoketest.common import get_coccoc_process
-            assert 'browser' in get_coccoc_process()
+            from testscripts.smoketest.common import get_application_process
+            assert 'browser' in get_application_process()
         finally:
             from testscripts.smoketest.common import kill_browser_process
             kill_browser_process()

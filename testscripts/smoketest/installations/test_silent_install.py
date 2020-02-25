@@ -36,8 +36,8 @@ class TestSilentInstall:
         uninstall_then_install_coccoc_silentlty_with_option_without_kill_process("/forcedcmdline 'do-not-launch-chrome'")
         from utils_automation.setup import WaitAfterEach
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        from testscripts.smoketest.common import get_coccoc_process
-        assert 'browser' not in get_coccoc_process()
+        from testscripts.smoketest.common import get_application_process
+        assert 'browser' not in get_application_process()
 
     @pytestrail.case('C44788')
     def test_check_combination_some_parameters(self):
@@ -47,8 +47,8 @@ class TestSilentInstall:
             "/forcedcmdline 'do-not-launch-chrome --make-coccoc-default --auto-launch-coccoc'")
         from utils_automation.setup import WaitAfterEach
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        from testscripts.smoketest.common import get_coccoc_process
-        assert 'browser' not in get_coccoc_process()
+        from testscripts.smoketest.common import get_application_process
+        assert 'browser' not in get_application_process()
         from testscripts.smoketest.common import get_list_start_up_apps
         assert 'browser.exe' in get_list_start_up_apps()
         from testscripts.smoketest.common import coccoc_instance
