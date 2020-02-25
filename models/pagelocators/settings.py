@@ -50,6 +50,9 @@ class SettingsPageLocators(object):
     EXTENSION_SAVIOR_ID = '#jdfkmiabjpfjacifcmihfdjhpnjpiick'
     EXTENSION_RUNGRINH_ID = '#paenbjlckelooppiepeiechkeehogoha'
     EXTENSION_MOJICHAT_ID = '#paenbjlckelooppiepeiechkeehogoha'
+    EXTENSIONS_ITEM_LIST = '#items-list'
+    EXTENSIONS_CONTENT_WRAPPER = '#content-wrapper > div:nth-child(5)'
+    EXTENSIONS_DETAIL_BUTTON = '#detailsButton'
 
     ABOUT_MESSAGE = '#updateStatusMessage > div'
 
@@ -63,4 +66,9 @@ class SettingsPageLocators(object):
 class SettingsDownloadPageLocators(object):
 
     AUTOMATIC_STOP_SEEDING_TORRENTS_CHECK_BOX = '[id="checkbox"]'
+
+
+class SettingsComponentsPageLocators(object):
+    CHECK_FOR_UPDATE_BUTTON = '//button[@class="button-check-update"]'
+    COMPONENT_VERSION_ELEMENT = '//span[@jscontent="version"]'
 
