@@ -11,9 +11,21 @@ class TestFirstTimeRun:
         all_windows = Desktop(backend='uia').windows()
         assert 'New Tab - Cốc Cốc' in str(all_windows)
 
+    def pre_condition_before_run_first_time(self):
+        from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
+        uninstall_then_install_coccoc_with_default(is_needed_clean_up=True, is_needed_clear_user_data=False)
+        from testscripts.smoketest.common import chrome_options_preset
+        from selenium import webdriver
+        driver = webdriver.Chrome(options=chrome_options_preset())
+        import time
+        time.sleep(4)
+        driver.quit()
+
     @pytestrail.case('C44829')
     @pytestrail.defect('BR-1398')
     def test_check_first_time_run(self):
+        from testscripts.smoketest.common import cleanup
+        cleanup(firefox=False)
         from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
         from testscripts.smoketest.common import change_default_browser
         change_default_browser('Google Chrome')
@@ -21,17 +33,18 @@ class TestFirstTimeRun:
         from testscripts.smoketest.common import wait_for_window_appear
         wait_for_window_appear(window_name='Import Google Chrome Settings')
         from testscripts.smoketest.common import choose_import_browser_settings
-        choose_import_browser_settings(action='Cancel')
+        choose_import_browser_settings(action='Continue')
         try:
             self.verify_new_tab_coccoc_exist()
         finally:
-            from testscripts.smoketest.common import cleanup
             cleanup(firefox=False)
 
     @pytestrail.case('C44830')
     @pytestrail.defect('BR-1415')
     @pytest.mark.skip(reason='Bug BR-1415')
     def test_if_widevine_flash_plugin_exist_by_default_right_after_installing_browser(self):
+        from testscripts.smoketest.common import cleanup
+        cleanup(firefox=False)
         from testscripts.smoketest.common import change_default_browser
         change_default_browser('Google Chrome')
         from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
@@ -59,6 +72,8 @@ class TestFirstTimeRun:
 
     @pytestrail.case('C44831')
     def test_check_task_manager_start_browser(self):
+        from testscripts.smoketest.common import cleanup
+        cleanup(firefox=False)
         from testscripts.smoketest.installations.common import open_browser_from_command
         try:
             open_browser_from_command(browser_name='browser')
@@ -73,8 +88,18 @@ class TestFirstTimeRun:
 
     @pytestrail.case('C44832')
     def test_check_extensions_version_after_installation(self):
+        from testscripts.smoketest.common import change_default_browser
+        change_default_browser('Google Chrome')
         from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
-        uninstall_then_install_coccoc_with_default(is_needed_clean_up=True, is_needed_clear_user_data=False)
+        uninstall_then_install_coccoc_with_default(is_needed_clean_up=False, is_needed_clear_user_data=True)
+        from testscripts.smoketest.common import wait_for_window_appear
+        wait_for_window_appear(window_name='Import Google Chrome Settings')
+        from testscripts.smoketest.common import choose_import_browser_settings
+        choose_import_browser_settings(action='Continue')
+        import time
+        time.sleep(5)
+        from testscripts.smoketest.common import cleanup
+        cleanup(firefox=False)
         from selenium import webdriver
         from testscripts.smoketest.common import chrome_options_preset
         driver = webdriver.Chrome(options=chrome_options_preset())
@@ -89,11 +114,88 @@ class TestFirstTimeRun:
         extension_page_object = ExtensionsPageObject()
         for each_extension_id in list_extensions_id:
             extension_page_object.click_extension_detail_button(driver, '#' + each_extension_id)
-            import time
             time.sleep(1)
             assert extension_page_object.get_attribute_toggle_button_in_detail_extension(driver,
                                                                                          'aria-pressed') == 'true'
             driver.get(Urls.COCCOC_EXTENSIONS)
+
+    @pytestrail.case('C44833')
+    def test_folders_after_the_installation(self):
+        from testscripts.smoketest.common import cleanup
+        cleanup(firefox=False)
+        self.pre_condition_before_run_first_time()
+        from utils_automation.common import FilesHandle
+        file = FilesHandle()
+        from testscripts.smoketest.common import get_coccoc_version_folder_name
+        coccoc_version = get_coccoc_version_folder_name()
+        assert file.is_file_exist_in_folder('uid', file.appdata) is True
+        assert file.is_file_exist_in_folder('hid3', file.appdata) is True
+        assert file.is_subfolder_exist_in_folder(r'Browser', file.localappdata) is True
+        assert file.is_subfolder_exist_in_folder(r'CrashReports', file.localappdata) is True
+        assert file.is_subfolder_exist_in_folder(r'Update', file.localappdata) is True
+        assert file.is_subfolder_exist_in_folder(r'Browser\Application', file.localappdata) is True
+        assert file.is_subfolder_exist_in_folder(r'Browser\User Data', file.localappdata) is True
+        assert file.is_subfolder_exist_in_folder(r'Browser\Application' + '\\' + coccoc_version,
+                                                 file.localappdata) is True
+        assert file.is_subfolder_exist_in_folder(r'Browser\Application\Dictionaries',
+                                                 file.localappdata) is True
+        assert file.is_subfolder_exist_in_folder(r'Browser\Application\SetupMetrics',
+                                                 file.localappdata) is True
+        assert file.is_file_exist_in_folder(r'Browser\Application\browser.exe', file.localappdata) is True
+        assert file.is_file_exist_in_folder(r'Browser\Application\browser_proxy.exe',
+                                            file.localappdata) is True
+        assert file.is_file_exist_in_folder(r'Browser\Application\VisualElementsManifest.xml',
+                                            file.localappdata) is True
+
+    @pytestrail.case('C44838')
+    def test_the_company_signature_in_file_exe_and_dll(self):
+        from testscripts.smoketest.common import cleanup
+        cleanup(firefox=False)
+        self.pre_condition_before_run_first_time()
+        from utils_automation.common import FilesHandle
+        file = FilesHandle()
+        signatures = file.get_signature_of_files_in_folder('.exe', file.localappdata)
+        for signature in signatures:
+            assert "COC COC COMPANY LIMITED" in signature
+        signatures = file.get_signature_of_files_in_folder('.dll', file.localappdata)
+        index = 0
+        for signature in signatures:
+            index += 1
+            print(f" {index} Signature is : {signature} \n")
+            assert "COC COC COMPANY LIMITED" in signature
+
+    @pytestrail.case('C44839')
+    def test_check_task_scheduler_after_installation(self):
+        from testscripts.smoketest.common import cleanup
+        cleanup(firefox=False)
+        self.pre_condition_before_run_first_time()
+        from testscripts.smoketest.installations.common import check_task_scheduler
+        coccoc_update_tasks = check_task_scheduler(task_name="CocCoc*")
+        import re
+        assert len(re.findall('CocCocUpdateTaskUser.*Core', coccoc_update_tasks)) == 1
+        assert len(re.findall('CocCocUpdateTaskUser.*UA', coccoc_update_tasks)) == 1
+
+    @pytestrail.case('C44840')
+    def test__rule_in_firewall_of_windows_if_user_selects_allow_access_btn(self):
+        # Note: Default when setting, user always select "Allow access" button
+        # Inbound
+        from testscripts.smoketest.common import cleanup
+        cleanup(firefox=False)
+        self.pre_condition_before_run_first_time()
+        from utils_automation.common import WindowsHandler
+        windows = WindowsHandler()
+        windows.verify_netfirewall_rule('Cốc Cốc (mDNS-In)', 'Inbound', 'Allow')
+        windows.verify_netfirewall_rule('Cốc Cốc (TCP-In)', 'Inbound', 'Allow')
+        windows.verify_netfirewall_rule('Cốc Cốc (UDP-In)', 'Inbound', 'Allow')
+        windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (TCP-In)', 'Inbound', 'Allow')
+        windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (UDP-In)', 'Inbound', 'Allow')
+        windows.verify_netfirewall_rule('Cốc Cốc (TCP-Out)', 'Outbound', 'Allow')
+        windows.verify_netfirewall_rule('Cốc Cốc (UDP-Out)', 'Outbound', 'Allow')
+        windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (TCP-Out)', 'Outbound', 'Allow')
+        windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (UDP-Out)', 'Outbound', 'Allow')
+
+
+
 
 
 
