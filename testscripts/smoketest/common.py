@@ -1,9 +1,6 @@
 import datetime
 import time
 from datetime import datetime
-from idlelib.multicall import r
-
-from appium.webdriver.extensions.search_context import windows
 from pywinauto import Desktop
 from selenium import webdriver
 from os import path
