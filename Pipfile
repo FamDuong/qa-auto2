@@ -24,6 +24,7 @@ delayed-assert = "*"
 mysql-connector-python = "*"
 marshmallow = "*"
 pywinauto = "*"
+pytest-testrail = "*"
 
 [requires]
 python_version = "3.7"

@@ -169,21 +169,23 @@ class FilesHandle:
 
     def get_signature_of_file(self, filepath):
         dirname, runname = os.path.split(os.path.abspath(__file__))
+        print(f"File path is : {filepath}")
         argu = WindowsCMD.execute_cmd(dirname + r"\sigcheck.exe " + filepath)
-        signature = remove_special_characters(argu)
-        print(signature)
-        return signature
+        # signature = remove_special_characters(argu)
+        return str(argu)
 
     def get_signature_of_files_in_folder(self, filetype, filepath):
         signature_list = []
         # dirname, runname = os.path.split(os.path.abspath(__file__))
         list_files = self.get_all_files_in_folder(filepath, filetype)
-        for i in range(len(list_files)):
-            filepath = list_files[i]
+        for file in list_files:
             # argu = WindowsCMD.execute_cmd(dirname + r"\sigcheck.exe " + filepath)
             # string = remove_special_characters(argu)
-            signature = self.get_signature_of_file(filepath)
-            signature_list.append(signature)
+            if 'pepflashplayer' in file:
+                pass
+            else:
+                signature = self.get_signature_of_file(file)
+                signature_list.append(signature)
         return signature_list
 
     def verify_product_version(self, filename, expect_version):
@@ -225,14 +227,11 @@ class WebElements:
 class WindowsCMD:
     @staticmethod
     def execute_cmd(cmd_text):
-        try:
-            wait_for_stable()
-            process = subprocess.Popen(cmd_text.split(), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            output, error = process.communicate()
-            print(output)
-            return output
-        except:
-            print("Cannot execute command!")
+        wait_for_stable()
+        process = subprocess.Popen(cmd_text.split(), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        output, error = process.communicate()
+        print(output)
+        return output
 
     def is_process_exists(process_name):
         wait_for_stable()

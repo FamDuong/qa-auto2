@@ -432,7 +432,6 @@ def chrome_options_preset():
     chrome_options.add_argument("--start-maximized")
     chrome_options.add_argument("--allow-insecure-localhost")
     chrome_options.add_argument("--disable-session-crashed-bubble")
-    chrome_options.add_argument("--enable-features=CocCocMojichat")
     chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
     split_after = binary_path.split('\\Local')
     user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
