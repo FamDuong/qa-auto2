@@ -7,3 +7,4 @@ USER_DATA_DIR = r'C:\\Users\\bichngoc\\AppData\\Local\\CocCoc\\Browser\\User Dat
 COCCOC_PATH = r'C:\Users\bichngoc\AppData\Local\CocCoc\Browser\Application\browser.exe'
 CHROME_PATH = r'C:\Users\bichngoc\AppData\Local\Google\Chrome\Application\chrome.exe'
 HOST_FILE = r'C:\Windows\System32\drivers\etc\hosts'
+COCCOC_INSTALLER_NAME = 'standalone_coccoc_en.exe'

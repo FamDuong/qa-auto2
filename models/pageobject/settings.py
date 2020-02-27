@@ -88,6 +88,20 @@ class SettingsPageObject(BasePageObject):
         actual_status = self.settings_elem.find_extension_on_off_by_id(driver, extension_id).get_attribute("checked")
         assert actual_status is expect_status
 
+    def verify_menu_base_on_language(self, driver, language):
+        driver.get(Urls.COCCOC_SETTINGS_URL)
+        actual_people_lbl = self.settings_elem.find_left_menu_people(driver).text
+        actual_auto_fill_lbl = self.settings_elem.find_left_menu_auto_fill(driver).text
+        actual_default_browser_lbl = self.settings_elem.find_left_menu_default_browser(driver).text
+        if language == 'en':
+            assert actual_people_lbl in 'People'
+            assert actual_auto_fill_lbl in 'Autofill'
+            assert actual_default_browser_lbl in 'Default browser'
+        else:
+            assert actual_people_lbl in 'Bạn và Google'
+            assert actual_auto_fill_lbl in 'Tự động điền'
+            assert actual_default_browser_lbl in 'Trình duyệt mặc định'
+
     def interact_ads_block(self, driver, action, script_get_attribute_aria_pressed, script_click_ads_block):
         def disable_enabled_ads_block():
             if driver.execute_script(script_get_attribute_aria_pressed) == 'true':
