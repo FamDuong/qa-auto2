@@ -63,10 +63,8 @@ def check_if_installer_is_downloaded(download_path, language):
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     result = p.communicate()[0]
     if file_name in str(result):
-        print("check_if_installer_is_downloaded: True")
         return True
     else:
-        print("check_if_installer_is_downloaded: False")
         return False
 
 
@@ -97,7 +95,6 @@ def uninstall_old_version_remove_local_app():
     cleanup()
     if check_if_coccoc_is_installed():
         uninstall_coccoc_silently()
-        remove_local_app_data()
 
 
 def uninstall_coccoc_and_delete_user_data():
@@ -304,6 +301,7 @@ def install_coccoc_set_system_start_up_on(coccoc_installer_name='standalone_cocc
 
 
 def install_coccoc_installer_from_path(path_install_file, language='en'):
+    coccoc_install = None
     if language in 'en':
         open_coccoc_installer_by_path(path_install_file)
         coccoc_install = Desktop(backend='uia').Cốc_Cốc_Installer
@@ -316,7 +314,7 @@ def install_coccoc_installer_from_path(path_install_file, language='en'):
     while check_if_coccoc_is_installed() is False:
         time.sleep(2)
         time_delta = datetime.now() - start_time
-        if time_delta.total_seconds() >= 10:
+        if time_delta.total_seconds() >= 200:
             break
 
 

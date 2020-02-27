@@ -33,5 +33,4 @@ class VersionPageObject(BasePageObject):
         assert get_coccoc_version_folder_name() in cc_expect_version
         # Verify in coccoc://version
         browser.get(Urls.COCCOC_VERSION_URL)
-        assert cc_expect_version in self.version_page_obj.get_flash_path(browser)
-        assert cc_expect_version in self.version_page_obj.get_user_agent(browser)
+        assert cc_expect_version in self.get_user_agent(browser)

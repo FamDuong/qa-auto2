@@ -12,38 +12,38 @@ class ComponentsPageObject(BasePageObject):
         browser.get(Urls.COCCOC_COMPONENTS)
         from models.pagelocators.cc_components import CoccocComponentPageLocators
         component_page_locators = CoccocComponentPageLocators()
-        mei_preload_version = BasePageObject.get_text_element_by_id(browser,
-                                                                    component_page_locators.COMPONENTS_MEI_PRELOAD_VERSION)
-        legacy_tls_deprection_configuration_version = BasePageObject.get_text_element_by_id(browser,
-                                                                                            component_page_locators.
-                                                                                            COMPONENTS_LEGACY_TLS_DEPRECATION_CONFIGURATION_VERSION)
-        third_party_module_list_version = BasePageObject.get_text_element_by_id(browser,
-                                                                                component_page_locators.
-                                                                                COMPONENTS_THIRD_PARTY_MODULE_LIST_VERSION)
-        certificate_error_assistant_version = BasePageObject.get_text_element_by_id(browser,
-                                                                                    component_page_locators.
-                                                                                    COMPONENTS_CERTIFICATE_ERROR_ASSISTANT_VERSION)
-        crlset_version = BasePageObject.get_text_element_by_id(browser,
-                                                               component_page_locators.COMPONENTS_CRLSET_VERSION)
-        pnacl_version = BasePageObject.get_text_element_by_id(browser,
-                                                              component_page_locators.COMPONENTS_PNACL_VERSION)
-        safety_tips_version = BasePageObject.get_text_element_by_id(browser,
-                                                                    component_page_locators.COMPONENTS_SAFETY_TIPS_VERSION)
-        file_type_polocies_version = BasePageObject.get_text_element_by_id(browser,
-                                                                           component_page_locators.
-                                                                           COMPONENTS_FILE_TYPE_POLOCIES_VERSION)
-        origin_trials_version = BasePageObject.get_text_element_by_id(browser,
+        mei_preload_version = self.get_text_element_by_id(browser,
+                                                          component_page_locators.COMPONENTS_MEI_PRELOAD_VERSION)
+        legacy_tls_deprection_configuration_version = self.get_text_element_by_id(browser,
+                                                                                  component_page_locators.
+                                                                                  COMPONENTS_LEGACY_TLS_DEPRECATION_CONFIGURATION_VERSION)
+        third_party_module_list_version = self.get_text_element_by_id(browser,
                                                                       component_page_locators.
-                                                                      COMPONENTS_ORIGIN_TRIALS_VERSION)
-        adobe_flash_player_version = BasePageObject.get_text_element_by_id(browser,
-                                                                           component_page_locators.
-                                                                           COMPONENTS_ADOBE_FLASH_PLAYER_VERSION)
-        widevine_content_decryption_module_version = BasePageObject.get_text_element_by_id(browser,
-                                                                                           component_page_locators.
-                                                                                           COMPONENTS_WIDEVINE_CONTENT_DECRYPTION_MODULE_VERSION)
-        coccoc_subresource_filter_rules_version = BasePageObject.get_text_element_by_id(browser,
-                                                                                        component_page_locators.
-                                                                                        COMPONENTS_COCCOC_SUBRESOURCE_FILTER_RULES_VERSION)
+                                                                      COMPONENTS_THIRD_PARTY_MODULE_LIST_VERSION)
+        certificate_error_assistant_version = self.get_text_element_by_id(browser,
+                                                                          component_page_locators.
+                                                                          COMPONENTS_CERTIFICATE_ERROR_ASSISTANT_VERSION)
+        crlset_version = self.get_text_element_by_id(browser,
+                                                     component_page_locators.COMPONENTS_CRLSET_VERSION)
+        pnacl_version = self.get_text_element_by_id(browser,
+                                                    component_page_locators.COMPONENTS_PNACL_VERSION)
+        safety_tips_version = self.get_text_element_by_id(browser,
+                                                          component_page_locators.COMPONENTS_SAFETY_TIPS_VERSION)
+        file_type_polocies_version = self.get_text_element_by_id(browser,
+                                                                 component_page_locators.
+                                                                 COMPONENTS_FILE_TYPE_POLOCIES_VERSION)
+        origin_trials_version = self.get_text_element_by_id(browser,
+                                                            component_page_locators.
+                                                            COMPONENTS_ORIGIN_TRIALS_VERSION)
+        adobe_flash_player_version = self.get_text_element_by_id(browser,
+                                                                 component_page_locators.
+                                                                 COMPONENTS_ADOBE_FLASH_PLAYER_VERSION)
+        widevine_content_decryption_module_version = self.get_text_element_by_id(browser,
+                                                                                 component_page_locators.
+                                                                                 COMPONENTS_WIDEVINE_CONTENT_DECRYPTION_MODULE_VERSION)
+        coccoc_subresource_filter_rules_version = self.get_text_element_by_id(browser,
+                                                                              component_page_locators.
+                                                                              COMPONENTS_COCCOC_SUBRESOURCE_FILTER_RULES_VERSION)
 
         from testscripts.smoketest.common import login_then_get_latest_coccoc_dev_installer_version
         expect_adobe_version = login_then_get_latest_coccoc_dev_installer_version()

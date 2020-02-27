@@ -1,3 +1,4 @@
+import pytest
 from pytest_testrail.plugin import pytestrail
 
 import testscripts.smoketest.common as common
@@ -18,18 +19,24 @@ class TestFreshInstall:
 
     # Precondition: Machine is installed Coc Coc
     @pytestrail.case('C44777')
+    @pytestrail.defect('BR-1071')
+    @pytest.mark.skip(reason="Bug BR-1071 with installer Vietnamese")
     def test_installing_fresh_package_successfully_on_windows(self):
         # Get default download forlder
         browser = common.coccoc_instance()
         download_folder = common.get_default_download_folder(browser)
+        languages = ['en', 'vi']
         try:
-            self.check_install_coccoc_in_vietnamese(browser, download_folder)
-            self.check_install_coccoc_in_english(browser, download_folder)
+            for language in languages:
+                if language == 'en':
+                    browser = self.check_install_coccoc_in_english(browser, download_folder)
 
+                elif language == 'vi':
+                    browser = self.check_install_coccoc_in_vietnamese(browser, download_folder)
         finally:
             # Delete downloaded installer
-            self.delete_installer_download(download_folder, 'en')
-            self.delete_installer_download(download_folder, 'vn')
+            for language in languages:
+                self.delete_installer_download(download_folder, language)
 
     @pytestrail.case('C44779')
     def test_popup_of_installer_confirm_during_the_installation(self):
@@ -58,7 +65,7 @@ class TestFreshInstall:
                                                                    , "en")
         try:
             # Install Cốc Cốc
-            self.install_coc_coc(coccoc_installer, False)
+            self.install_coc_coc(coccoc_installer, 'en')
             # Verify "Cốc Cốc installing panel" appears
             verify_installation_complete_popup_appears()
         finally:
@@ -89,6 +96,7 @@ class TestFreshInstall:
         common.cleanup()
         browser = common.coccoc_instance()
         self.settings_page_obj.verify_menu_base_on_language(browser, "vi")
+        return browser
 
     def check_install_coccoc_in_english(self, browser, download_folder):
         coc_coc_installer = self.coccoc_page_obj.get_path_installer(browser, Urls.COCCOC_DEV_URL, download_folder, "win"
@@ -98,12 +106,8 @@ class TestFreshInstall:
         browser = common.coccoc_instance()
         self.settings_page_obj.verify_menu_base_on_language(browser, "en")
         self.version_page_obj.verify_installed_coccoc_version(browser)
-        import time
-        time.sleep(30)
-        from models.pageobject.cc_components import ComponentsPageObject
-        components_page_obj = ComponentsPageObject()
-        components_page_obj.verify_component(browser, self.version_page_obj.get_flash_path(browser))
+        return browser
 
     def delete_installer_download(self, download_folder, language):
-        if self.files_handle_obj.is_file_exist(download_folder + 'coccoc' + language + '.exe'):
-            self.files_handle_obj.delete_files_in_folder(download_folder, 'coccoc' + language + '.exe')
+        if self.files_handle_obj.is_file_exist(download_folder + 'coccoc_' + language + '.exe'):
+            self.files_handle_obj.delete_files_in_folder(download_folder, 'coccoc_' + language + '.exe')
