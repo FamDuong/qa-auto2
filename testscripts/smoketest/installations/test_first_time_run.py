@@ -100,6 +100,11 @@ class TestFirstTimeRun:
         time.sleep(5)
         from testscripts.smoketest.common import cleanup
         cleanup(firefox=False)
+        # Enable coccoc mojichat by opening browser with --enable-features=CocCocMojichat
+        from testscripts.smoketest.installations.common import open_browser_from_command
+        open_browser_from_command(browser_name='browser --enable-features=CocCocMojichat')
+        time.sleep(5)
+        cleanup(firefox=False)
         from selenium import webdriver
         from testscripts.smoketest.common import chrome_options_preset
         driver = webdriver.Chrome(options=chrome_options_preset())
