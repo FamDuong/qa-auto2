@@ -5,6 +5,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from models.pagelocators.savior import SaviorPageLocators
+from models.pageelements.version import VersionPageElements
 from utils_automation.common import WebElements
 from selenium.webdriver.support.wait import WebDriverWait
 from utils_automation.setup import WaitAfterEach
@@ -12,6 +13,7 @@ import re
 
 
 class BasePageObject(object):
+    version_element = VersionPageElements()
 
     def wait_until_document_ready(self, driver):
         wait_document_ready = WebDriverWait(driver, 60)
@@ -34,6 +36,10 @@ class BasePageObject(object):
 
     def get_text_element(self, element):
         return element.get_attribute('innerHTML')
+
+    def get_text_element_by_id(self, driver, locator):
+        element = self.version_element.find_element(driver, locator)
+        return element.text
 
     def press_arrow_up(self, driver, loop=1):
         for i in range(loop):

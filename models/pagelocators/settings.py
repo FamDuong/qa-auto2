@@ -3,6 +3,10 @@ from selenium.webdriver.common.by import By
 
 class SettingsPageLocators(object):
     SETTINGS_UI_TEXT = 'settings-ui'
+    SETTINGS_MENU_TEXT = 'settings-menu'
+    SETTINGS_MENU_PEOPLE_LBL = '#people'
+    SETTINGS_MENU_AUTO_FILL_LBL = '#autofill'
+    SETTINGS_MENU_DEFAULT_BROWSER_LBL = '#defaultBrowser'
     SETTINGS_MAIN_TEXT = 'settings-main'
     SETTINGS_BASIC_PAGE_TEXT = 'settings-basic-page'
     SETTINGS_ABOUT_TEXT = 'settings-about-page'
