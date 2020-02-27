@@ -1,5 +1,5 @@
 from models.pageelements.basepage_elements import BasePageElement
-from models.pagelocators.settings import SettingsPageLocators
+from models.pagelocators.settings import SettingsPageLocators, SettingsComponentsPageLocators
 
 
 class SettingsElements(BasePageElement):
@@ -150,6 +150,11 @@ class SettingsElements(BasePageElement):
                 import time
                 time.sleep(2)
 
+    def find_item_container_list_extensions(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.EXTENSION_MAIN,
+                                        SettingsPageLocators.EXTENSIONS_ITEM_LIST,
+                                        SettingsPageLocators.EXTENSIONS_CONTENT_WRAPPER)
+
     class SettingsAdsBlock(BasePageElement):
 
         def find_current_block_mod(self, driver):
@@ -168,3 +173,16 @@ class SettingsElements(BasePageElement):
                                             SettingsPageLocators.SettingsAdsBlockPageLocators.SUB_RESOURCE_FILTER_PAGE,
                                             SettingsPageLocators.SettingsAdsBlockPageLocators.SETTINGS_DROP_DOWN_MENU,
                                             SettingsPageLocators.SettingsAdsBlockPageLocators.DROP_DOWN_MENU)
+
+
+class SettingsComponentsPageElement(BasePageElement):
+
+    def find_all_check_for_update_button(self, driver):
+        return driver.find_elements_by_xpath(SettingsComponentsPageLocators.CHECK_FOR_UPDATE_BUTTON)
+
+    def find_all_components_version(self, driver):
+        return driver.find_elements_by_xpath(SettingsComponentsPageLocators.COMPONENT_VERSION_ELEMENT)
+
+
+
+

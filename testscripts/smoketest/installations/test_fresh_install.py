@@ -1,7 +1,6 @@
 from pytest_testrail.plugin import pytestrail
 import testscripts.smoketest.common as common
 from models.pageobject.version import VersionPageObject
-import settings_master as settings
 
 
 class TestFreshInstall:
