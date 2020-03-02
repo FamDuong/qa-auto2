@@ -21,3 +21,8 @@ class TestFreshInstall:
             from testscripts.smoketest.common import cleanup
             cleanup()
             common.uninstall_coccoc_silently()
+
+
+
+
+
