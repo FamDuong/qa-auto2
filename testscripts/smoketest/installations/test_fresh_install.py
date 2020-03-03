@@ -41,7 +41,7 @@ class TestFreshInstall:
                 self.delete_installer_download(download_folder, language)
 
     @pytestrail.case('C44779')
-    @pytestrail.defect('BR-1424')
+    @pytestrail.defect('BR-810')
     @pytest.mark.skipif(platform.release() in ["8", "8.1"], reason="Cannot execute in Windows 8, Windows 8.1")
     def test_popup_of_installer_confirm_during_the_installation(self):
         # Get download folder

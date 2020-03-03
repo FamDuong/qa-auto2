@@ -38,6 +38,7 @@ class TestImportDataWhileInstalling:
             cleanup(coccoc_update=False, firefox=False)
 
     @pytestrail.case('C44826')
+    @pytest.mark.skip(reason='Bug BR-947')
     @pytest.mark.skipif(platform.release() in ["8", "8.1", "7"], reason="Takes time set default browser so later")
     def test_import_data_from_firefox(self):
         from testscripts.smoketest.common import change_default_browser
