@@ -84,7 +84,7 @@ class TestFirstTimeRun:
             import time
             time.sleep(4)
             assert 'browser' in get_application_process(application_name='browser')
-            assert 'CocCocCrashHandler' in get_application_process(application_name='CocCocCrashHandler')
+            assert 'CocCocCrash' in get_application_process(application_name='CocCocCrashHandler')
         finally:
             from testscripts.smoketest.common import cleanup
             cleanup(firefox=False)
