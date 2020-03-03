@@ -1,3 +1,5 @@
+import platform
+
 import pytest
 from pytest_testrail.plugin import pytestrail
 
@@ -23,6 +25,7 @@ class TestFirstTimeRun:
 
     @pytestrail.case('C44829')
     @pytestrail.defect('BR-1398')
+    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7"], reason="Takes time set default browser so later")
     def test_check_first_time_run(self):
         from testscripts.smoketest.common import cleanup
         cleanup(firefox=False)
@@ -81,12 +84,13 @@ class TestFirstTimeRun:
             import time
             time.sleep(4)
             assert 'browser' in get_application_process(application_name='browser')
-            assert 'CocCocCrashHandler' in get_application_process(application_name='CocCocCrashHandler')
+            assert 'CocCocCrash' in get_application_process(application_name='CocCocCrashHandler')
         finally:
             from testscripts.smoketest.common import cleanup
             cleanup(firefox=False)
 
     @pytestrail.case('C44832')
+    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7"], reason="Takes time set default browser so later")
     def test_check_extensions_version_after_installation(self):
         from testscripts.smoketest.common import change_default_browser
         change_default_browser('Google Chrome')

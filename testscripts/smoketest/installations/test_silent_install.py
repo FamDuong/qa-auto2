@@ -27,7 +27,7 @@ class TestSilentInstall:
         from testscripts.smoketest.common import get_list_start_up_apps
         from utils_automation.setup import WaitAfterEach
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        assert 'browser.exe' in get_list_start_up_apps()
+        assert 'browser' in get_list_start_up_apps()
 
     @pytestrail.case('C44787')
     def test_check_with_do_not_launch_chrome(self):
@@ -50,7 +50,7 @@ class TestSilentInstall:
         from testscripts.smoketest.common import get_application_process
         assert 'browser' not in get_application_process()
         from testscripts.smoketest.common import get_list_start_up_apps
-        assert 'browser.exe' in get_list_start_up_apps()
+        assert 'browser' in get_list_start_up_apps()
         from testscripts.smoketest.common import coccoc_instance
         driver = coccoc_instance()
         try:
