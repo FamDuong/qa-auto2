@@ -324,9 +324,10 @@ def open_coccoc_installer_by_name(coccoc_installer_name='standalone_coccoc_en.ex
 
 
 def open_coccoc_installer_by_path(path_install_file, coccoc_installer="Cốc Cốc Installer"):
-    wait_for_stable
+    wait_for_stable()
     import subprocess
-    subprocess.Popen(path_install_file)
+    subprocess.Popen(["powershell.exe",
+                      f"{path_install_file}"])
     wait_for_cococ_installer_appear(coccoc_installer)
 
 

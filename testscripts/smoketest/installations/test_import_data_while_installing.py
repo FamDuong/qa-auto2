@@ -1,3 +1,5 @@
+import platform
+
 import pytest
 from pytest_testrail.plugin import pytestrail
 
@@ -9,6 +11,7 @@ class TestImportDataWhileInstalling:
     """
 
     @pytestrail.case('C44825')
+    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7"], reason="Takes time set default browser so later")
     def test_import_data_from_chrome(self):
         from testscripts.smoketest.common import change_default_browser
         change_default_browser('Google Chrome')
@@ -35,6 +38,7 @@ class TestImportDataWhileInstalling:
             cleanup(coccoc_update=False, firefox=False)
 
     @pytestrail.case('C44826')
+    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7"], reason="Takes time set default browser so later")
     def test_import_data_from_firefox(self):
         from testscripts.smoketest.common import change_default_browser
         change_default_browser('Firefox')
@@ -62,6 +66,7 @@ class TestImportDataWhileInstalling:
             cleanup(coccoc_update=False)
 
     @pytestrail.case('C44827')
+    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7"], reason="Takes time set default browser so later")
     def test_import_data_from_internet_explorer(self):
         from testscripts.smoketest.common import change_default_browser
         change_default_browser('Internet Explorer')
