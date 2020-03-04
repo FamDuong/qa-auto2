@@ -38,8 +38,8 @@ class TestBrowserUpdate:
         # Wait for browser_cleanup
         time.sleep(5)
         list_coccoc_version = get_list_coccoc_version_folder_name()
-        from testscripts.smoketest.common import get_list_files_dirs_in_coccoc_application_folder
-        list_files_folders = get_list_files_dirs_in_coccoc_application_folder()
+        from testscripts.smoketest.common import get_list_coccoc_version_folder_name
+        list_files_folders = get_list_coccoc_version_folder_name()
         assert len(list_coccoc_version) == 1
         assert 'browser.exe' in list_files_folders
         assert 'Dictionaries' in list_files_folders
