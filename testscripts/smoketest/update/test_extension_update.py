@@ -1,3 +1,4 @@
+import pytest
 from pytest_testrail.plugin import pytestrail
 
 import settings_master as settings
@@ -12,6 +13,8 @@ class TestExtensionUpdate:
 
     # Precondition: Machine is installed Coc Coc
     @pytestrail.case('C44861')
+    @pytestrail.defect('BR-1426')
+    @pytest.mark.skip(reason='Contains bug BR-1426 in coccoc chromium version 80.0.3987.122')
     def test_if_coccoc_forced_install_extensions_can_be_updated_or_not(self):
         # Deactivate host because currently extension release directly to production
         common.interact_dev_hosts("deactivate")

@@ -1,7 +1,7 @@
 COCCOC_VERSION = '79.0.3945.132'
 OMAHA_VERSION = '2.5.15.106'
 EXTENSION_VERSION_DICTIONARY = '1.3.6'
-EXTENSION_VERSION_SAVIOR = '0.27.9'
+EXTENSION_VERSION_SAVIOR = '0.27.11'
 EXTENSION_VERSION_RUNGRINH = '1.6.0.6'
 USER_DATA_DIR = r'C:\\Users\\bichngoc\\AppData\\Local\\CocCoc\\Browser\\User Data'
 COCCOC_PATH = r'C:\Users\bichngoc\AppData\Local\CocCoc\Browser\Application\browser.exe'
