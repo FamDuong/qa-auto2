@@ -75,6 +75,8 @@ class TestFirstTimeRun:
 
     @pytestrail.case('C44831')
     def test_check_task_manager_start_browser(self):
+        from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
+        uninstall_then_install_coccoc_with_default()
         from testscripts.smoketest.common import cleanup
         cleanup(firefox=False)
         from testscripts.smoketest.installations.common import open_browser_from_command
@@ -82,7 +84,7 @@ class TestFirstTimeRun:
             open_browser_from_command(browser_name='browser')
             from testscripts.smoketest.common import get_application_process
             import time
-            time.sleep(4)
+            time.sleep(8)
             assert 'browser' in get_application_process(application_name='browser')
             assert 'CocCocCrash' in get_application_process(application_name='CocCocCrashHandler')
         finally:
