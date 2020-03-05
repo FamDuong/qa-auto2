@@ -44,6 +44,7 @@ class TestSilentInstall:
         assert 'browser' not in get_application_process()
 
     @pytestrail.case('C44788')
+    @pytest.mark.skipif(platform.release() in ["7"], reason="Cannot execute in Win7 cuz does not have Get-Cim command in powershell")
     def test_check_combination_some_parameters(self):
         from testscripts.smoketest.common import \
             uninstall_then_install_coccoc_silentlty_with_option_without_kill_process
