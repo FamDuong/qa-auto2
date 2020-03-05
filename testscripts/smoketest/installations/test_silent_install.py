@@ -1,3 +1,6 @@
+import platform
+
+import pytest
 from pytest_testrail.plugin import pytestrail
 
 from models.pageobject.settings import SettingsPageObject
@@ -21,6 +24,7 @@ class TestSilentInstall:
             driver.quit()
 
     @pytestrail.case('C44786')
+    @pytest.mark.skipif(platform.release() in ["7"], reason="Cannot execute in Win7 cuz does not have Get-Cim command in powershell")
     def test_check_with_auto_launch_coccoc(self):
         from testscripts.smoketest.common import uninstall_then_install_coccoc_silentlty_with_option
         uninstall_then_install_coccoc_silentlty_with_option("/forcedcmdline 'auto-launch-coccoc'")
@@ -40,6 +44,7 @@ class TestSilentInstall:
         assert 'browser' not in get_application_process()
 
     @pytestrail.case('C44788')
+    @pytest.mark.skipif(platform.release() in ["7"], reason="Cannot execute in Win7 cuz does not have Get-Cim command in powershell")
     def test_check_combination_some_parameters(self):
         from testscripts.smoketest.common import \
             uninstall_then_install_coccoc_silentlty_with_option_without_kill_process

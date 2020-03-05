@@ -160,7 +160,7 @@ class SettingsElements(BasePageElement):
                     return element
                 time_delta = datetime.now() - start_time
                 if time_delta.total_seconds() >= 120:
-                    raise Exception
+                    break
             except:
                 import time
                 time.sleep(2)

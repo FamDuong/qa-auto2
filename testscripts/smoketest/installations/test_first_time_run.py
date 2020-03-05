@@ -176,6 +176,7 @@ class TestFirstTimeRun:
             assert "COC COC COMPANY LIMITED" in signature
 
     @pytestrail.case('C44839')
+    @pytest.mark.skipif(platform.release() in ["7"], reason="Cannot execute Get-ScheduledTask in powershell Win 7")
     def test_check_task_scheduler_after_installation(self):
         from testscripts.smoketest.common import cleanup
         cleanup(firefox=False)
@@ -187,6 +188,7 @@ class TestFirstTimeRun:
         assert len(re.findall('CocCocUpdateTaskUser.*UA', coccoc_update_tasks)) == 1
 
     @pytestrail.case('C44840')
+    @pytest.mark.skipif(platform.release() in ["7"], reason="Cannot execute get-netfirewallrule in powershell Win 7")
     def test__rule_in_firewall_of_windows_if_user_selects_allow_access_btn(self):
         # Note: Default when setting, user always select "Allow access" button
         # Inbound
