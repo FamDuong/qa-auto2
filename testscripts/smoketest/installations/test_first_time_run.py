@@ -25,7 +25,8 @@ class TestFirstTimeRun:
 
     @pytestrail.case('C44829')
     @pytestrail.defect('BR-1398')
-    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7"], reason="Takes time set default browser so later")
+    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7", "10"], reason=
+    "Takes time set default browser so later and issue detect windows when not open monitor")
     def test_check_first_time_run(self):
         from testscripts.smoketest.common import cleanup
         cleanup(firefox=False)
@@ -92,7 +93,8 @@ class TestFirstTimeRun:
             cleanup(firefox=False)
 
     @pytestrail.case('C44832')
-    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7"], reason="Takes time set default browser so later")
+    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7", "10"], reason=
+    "Takes time set default browser so later and issue detect windows when not open monitor")
     def test_check_extensions_version_after_installation(self):
         from testscripts.smoketest.common import change_default_browser
         change_default_browser('Google Chrome')
@@ -176,7 +178,8 @@ class TestFirstTimeRun:
             assert "COC COC COMPANY LIMITED" in signature
 
     @pytestrail.case('C44839')
-    @pytest.mark.skipif(platform.release() in ["7"], reason="Cannot execute Get-ScheduledTask in powershell Win 7")
+    @pytest.mark.skipif(platform.release() in ["7", "10"], reason="Cannot execute Get-ScheduledTask in powershell Win 7"
+                                                                  "and bug in Windows 10 about task scheduler")
     def test_check_task_scheduler_after_installation(self):
         from testscripts.smoketest.common import cleanup
         cleanup(firefox=False)
