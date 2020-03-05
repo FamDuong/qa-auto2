@@ -5,13 +5,13 @@ from pytest_testrail.plugin import pytestrail
 
 
 class TestImportDataWhileInstalling:
-
     """
     browser_name = 'chrome', 'firefox', 'microsoft-edge:', 'iexplore'
     """
 
     @pytestrail.case('C44825')
-    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7"], reason="Takes time set default browser so later")
+    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7", "10"], reason=
+    "Takes time set default browser so later and cannot detect windows from pywinauto when open monitor")
     def test_import_data_from_chrome(self):
         from testscripts.smoketest.common import change_default_browser
         change_default_browser('Google Chrome')
@@ -32,7 +32,8 @@ class TestImportDataWhileInstalling:
             from testscripts.smoketest.common import get_list_files_dirs_in_a_folder
             import time
             time.sleep(5)
-            assert 'Bookmarks' in get_list_files_dirs_in_a_folder(application_path="\"AppData/Local/CocCoc/Browser/User Data/Default\"")
+            assert 'Bookmarks' in get_list_files_dirs_in_a_folder(
+                application_path="\"AppData/Local/CocCoc/Browser/User Data/Default\"")
         finally:
             from testscripts.smoketest.common import cleanup
             cleanup(coccoc_update=False, firefox=False)
@@ -53,10 +54,12 @@ class TestImportDataWhileInstalling:
         choose_import_browser_settings(action='Continue', browser_name='Firefox')
         from testscripts.smoketest.common import is_popup_import_browser_settings_displayed
         try:
-            assert is_popup_import_browser_settings_displayed(browser_import_name='Import Mozilla Firefox Settings') is True
+            assert is_popup_import_browser_settings_displayed(
+                browser_import_name='Import Mozilla Firefox Settings') is True
             from testscripts.smoketest.common import kill_browser_process
             kill_browser_process(browser_name='firefox.exe')
-            assert is_popup_import_browser_settings_displayed(browser_import_name='Import Mozilla Firefox Settings') is False
+            assert is_popup_import_browser_settings_displayed(
+                browser_import_name='Import Mozilla Firefox Settings') is False
             from testscripts.smoketest.common import get_list_files_dirs_in_a_folder
             import time
             time.sleep(5)
@@ -67,7 +70,8 @@ class TestImportDataWhileInstalling:
             cleanup(coccoc_update=False)
 
     @pytestrail.case('C44827')
-    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7"], reason="Takes time set default browser so later")
+    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7", "10"], reason=
+    "Takes time set default browser so later and cannot detect windows from pywinauto when open monitor")
     def test_import_data_from_internet_explorer(self):
         from testscripts.smoketest.common import change_default_browser
         change_default_browser('Internet Explorer')
@@ -111,11 +115,3 @@ class TestImportDataWhileInstalling:
         finally:
             from testscripts.smoketest.common import cleanup
             cleanup(coccoc_update=False, firefox=False)
-
-
-
-
-
-
-
-
