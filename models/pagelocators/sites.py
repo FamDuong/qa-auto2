@@ -46,7 +46,7 @@ class AnySite(object):
     MESSENGER_CHAT_VIDEO_ITEM = (By.XPATH, '//video')
     MESSENGER_CHAT_VIDEO_PLAY_BTN = (By.XPATH, '//*[@class="_1jto _bsl _4ubd _3htz"]')
     MESSENGER_CHAT_VIDEO_ITEM_SELECTOR = 'button[data-testid="play_pause_control"]'
-    INSTAGRAM_VIDEO_ITEM = (By.XPATH, '//a[@role="button"]')
+    INSTAGRAM_VIDEO_ITEM = (By.XPATH, '//div[@role="button"][@aria-label]')
     KIENTHUC_VIDEO_ITEM = (By.XPATH, '//div[@style="text-align:center; width:480px;"]')
     VIETNAMNET_VIDEO_ITEM = (By.ID, 'videoDetail')
     TWITTER_VIDEO_ITEM = (By.XPATH, '//video[@preload="auto"]')
