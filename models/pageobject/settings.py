@@ -1,7 +1,7 @@
 from models.pageelements.settings import SettingsElements, SettingsComponentsPageElement
 from models.pagelocators.settings import SettingsPageLocators
 from models.pageobject.basepage_object import BasePageObject
-from utils_automation.const import Urls
+from utils_automation.const import Urls, CocCocComponents
 from utils_automation.common import wait_for_stable
 
 
@@ -198,7 +198,13 @@ class SettingsComponentsPageObject(BasePageObject):
         elements = self.settings_component_page_element.find_all_components_version(driver)
         for each_element in elements:
             version = each_element.text
-            assert '0.0.0.0' not in version
+            each_element_id = each_element.get_attribute('id')
+            if CocCocComponents.THIRD_PARTY_MODULE_LIST_ID in each_element_id:
+                assert version == '2018.7.19.1'
+            elif CocCocComponents.ORIGIN_TRIALS_ID in each_element_id:
+                pass
+            else:
+                assert '0.0.0.0' not in version
 
 
 

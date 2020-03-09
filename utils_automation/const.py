@@ -128,5 +128,10 @@ class SkypeGroupIds:
     TEST_GROUP_ID = '19:c4cf2ed7ac634b7f8efbd7afcaabdebd@thread.skype'
 
 
+class CocCocComponents:
+    THIRD_PARTY_MODULE_LIST_ID = 'ehgidpndbllacpjalkiimkbadgjfnnmc'
+    ORIGIN_TRIALS_ID = 'llkgjffcdpffmhiakmfcdcblohccpfmo'
+
+
 
 
