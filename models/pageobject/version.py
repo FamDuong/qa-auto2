@@ -4,7 +4,8 @@ from models.pageobject.basepage_object import BasePageObject
 from os import path
 from models.pagelocators.version import VersionPageLocators
 from utils_automation.const import Urls
-from testscripts.smoketest.common import login_then_get_latest_coccoc_dev_installer_version, get_coccoc_version_folder_name
+from testscripts.smoketest.common import login_then_get_latest_coccoc_dev_installer_version, \
+    get_coccoc_version_folder_name
 
 
 class VersionPageObject(BasePageObject):
@@ -27,10 +28,20 @@ class VersionPageObject(BasePageObject):
         local_app_data = path.expandvars(r'%LOCALAPPDATA%\CocCoc\Browser\Application\\')
         assert str(os.path.isdir(local_app_data + expect_version)) == "True"
 
-    def verify_installed_coccoc_version(self, browser):
+    def verify_installed_coccoc_and_flash_versions(self, browser):
         # Verify in folder: %LOCALAPPDATA%\CocCoc\Browser\Application\\
         cc_expect_version = login_then_get_latest_coccoc_dev_installer_version()
         assert get_coccoc_version_folder_name() in cc_expect_version
-        # Verify in coccoc://version
+
+        # Verify version in coccoc://version
         browser.get(Urls.COCCOC_VERSION_URL)
-        assert cc_expect_version in self.get_user_agent(browser)
+        flash_coccoc_version = self.get_flash_path(browser)
+        assert cc_expect_version in flash_coccoc_version
+        assert '0.0.0.0' not in flash_coccoc_version
+
+        # Verify flash version in coccoc://version and coccoc://components
+        browser.get(Urls.COCCOC_COMPONENTS)
+        from models.pagelocators.cc_components import CoccocComponentPageLocators
+        component_page_locators = CoccocComponentPageLocators()
+        flash_coccoc_components = self.get_text_element_by_id(browser, component_page_locators.COMPONENTS_ADOBE_FLASH_PLAYER_VERSION)
+        assert flash_coccoc_components in flash_coccoc_version

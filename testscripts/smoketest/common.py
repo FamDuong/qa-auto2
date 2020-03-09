@@ -35,6 +35,16 @@ def check_if_coccoc_is_installed():
         return False
 
 
+def check_if_coccoc_is_finished_installing(coccoc_installer, language='en'):
+    installing_lbl_is_exist = coccoc_installer.child_window(title='coccoc.com', class_name='Static').exists()
+    if installing_lbl_is_exist is False:
+        print(str(installing_lbl_is_exist) + " Đã cài đặt xong.")
+        return True
+    else:
+        print(str(installing_lbl_is_exist) + " Đang cài đặt...")
+        return False
+
+
 def check_if_preferences_is_created(user_data_path):
     file_name = 'Preferences'
     path = "\"" + "C:\\Users" + user_data_path + "Default\""
@@ -88,10 +98,25 @@ def uninstall_coccoc_silently():
     time.sleep(5)
 
 
+def remove_coccoc_update_silently():
+    import subprocess
+    p = subprocess.Popen(["powershell.exe",
+                          f"cd C:\\Users\\{current_user}\\AppData\\Local\\CocCoc"
+                          f"\\Update\\CocCocUpdate.exe /uninstall"],
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    p.communicate()
+    time.sleep(5)
+
+
 def uninstall_old_version_remove_local_app():
     cleanup()
     if check_if_coccoc_is_installed():
+        from utils_automation.common import BrowserHandler
+        BrowserHandler().browser_cleanup()
         uninstall_coccoc_silently()
+        remove_coccoc_update_silently()
+        remove_local_app_data()
+    time.sleep(2)
 
 
 def uninstall_coccoc_and_delete_user_data():
@@ -309,10 +334,11 @@ def install_coccoc_installer_from_path(path_install_file, language='en'):
     time.sleep(5)
     start_time = datetime.now()
     while check_if_coccoc_is_installed() is False:
-        time.sleep(2)
-        time_delta = datetime.now() - start_time
-        if time_delta.total_seconds() >= 200:
-            break
+        if check_if_coccoc_is_finished_installing(coccoc_install, language) is False:
+            time.sleep(2)
+            time_delta = datetime.now() - start_time
+            if time_delta.total_seconds() >= 200:
+                break
 
 
 def open_coccoc_installer_by_name(coccoc_installer_name='standalone_coccoc_en.exe'):
@@ -395,6 +421,16 @@ def choose_import_browser_settings(action='Continue', browser_name='Chrome'):
         default_apps.Continue.click()
     elif action == 'Cancel':
         default_apps.Cancel.click()
+
+
+def choose_import_browser_settings_vietnamese(action='Cancel', browser_name='Chrome'):
+    default_apps = None
+    if browser_name in 'Chrome':
+        default_apps = Desktop(backend='uia').Nhập_cài_đặt_từ_Google_Chrome
+    if action == 'Continue':
+        default_apps.Tiếp_tục.click()
+    elif action == 'Cancel':
+        default_apps.Hủy.click()
 
 
 def is_popup_import_browser_settings_displayed(browser_import_name='Import Google Chrome Settings'):
