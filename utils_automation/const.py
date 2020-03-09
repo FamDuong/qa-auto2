@@ -12,6 +12,8 @@ class Urls:
     COCCOC_TERMS = 'coccoc://terms'
     COCCOC_ABOUT = 'coccoc://settings/help'
     COCCOC_DEV_URL = 'https://dev.coccoc.com'
+    COCCOC_THANK_YOU_URL_EN = 'https://dev.coccoc.com/en/win/thanks.html'
+    COCCOC_THANK_YOU_URL_VI = 'https://dev.coccoc.com/vi/win/thanks.html'
     COCCOC_URL = 'https://coccoc.com'
     COCCOC_ADS_BLOCK_URL = 'coccoc://settings/adsBlock'
     YOUTUBE_URL = 'https://www.youtube.com/'

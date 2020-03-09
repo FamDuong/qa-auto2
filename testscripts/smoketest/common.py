@@ -610,7 +610,7 @@ def get_default_download_folder(browser):
     global download_folder
     from utils_automation.const import Urls
     browser.maximize_window()
-    browser.get(Urls.COCCOC_SETTINGS_URL)
+    browser.get(Urls.COCCOC_SETTINGS_DOWNLOAD_URL)
     from models.pageobject.settings import SettingsPageObject
     setting_page_object = SettingsPageObject()
     download_folder = setting_page_object.get_download_folder(browser)
