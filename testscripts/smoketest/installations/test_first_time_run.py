@@ -2,6 +2,7 @@ import platform
 
 import pytest
 from pytest_testrail.plugin import pytestrail
+import testscripts.smoketest.common as common
 
 
 class TestFirstTimeRun:
@@ -23,25 +24,23 @@ class TestFirstTimeRun:
         time.sleep(4)
         driver.quit()
 
-    @pytestrail.case('C44829')
-    @pytestrail.defect('BR-1398')
-    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7", "10"], reason=
-    "Takes time set default browser so later and issue detect windows when not open monitor")
-    def test_check_first_time_run(self):
+    def verify_open_browser_for_the_first_time(self, coccoc_is_default):
         from testscripts.smoketest.common import cleanup
         cleanup(firefox=False)
-        from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
-        from testscripts.smoketest.common import change_default_browser
-        change_default_browser('Google Chrome')
-        uninstall_then_install_coccoc_with_default(is_needed_clean_up=False, is_needed_clear_user_data=True)
-        from testscripts.smoketest.common import wait_for_window_appear
-        wait_for_window_appear(window_name='Import Google Chrome Settings')
-        from testscripts.smoketest.common import choose_import_browser_settings
-        choose_import_browser_settings(action='Continue')
+        common.uninstall_then_install_coccoc_with_default(coccoc_is_default, is_needed_clean_up=False,
+                                                   is_needed_clear_user_data=True)
+        browser_name = common.get_browser_name()
+        common.choose_import_browser_settings('Continue', browser_name)
         try:
             self.verify_new_tab_coccoc_exist()
         finally:
             cleanup(firefox=False)
+
+    @pytestrail.case('C44829')
+    @pytest.mark.skipif(common.default_is_firefox() is True, reason="Bug BR-947")
+    def test_check_first_time_run(self):
+        self.verify_open_browser_for_the_first_time('yes')
+        self.verify_open_browser_for_the_first_time('no')
 
     @pytestrail.case('C44830')
     @pytestrail.defect('BR-1415')
@@ -209,14 +208,3 @@ class TestFirstTimeRun:
         windows.verify_netfirewall_rule('Cốc Cốc (UDP-Out)', 'Outbound', 'Allow')
         windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (TCP-Out)', 'Outbound', 'Allow')
         windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (UDP-Out)', 'Outbound', 'Allow')
-
-
-
-
-
-
-
-
-
-
-
