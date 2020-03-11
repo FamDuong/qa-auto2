@@ -626,7 +626,7 @@ def chrome_options_preset():
     return chrome_options
 
 
-def uninstall_then_install_coccoc_with_default(coccoc_is_default, is_needed_clean_up=True,
+def uninstall_then_install_coccoc_with_default(coccoc_is_default='yes', is_needed_clean_up=True,
                                                is_needed_clear_user_data=False):
     if check_if_coccoc_is_installed():
         if is_needed_clear_user_data is False:
@@ -677,9 +677,16 @@ def interact_dev_hosts(action="activate"):
                      stdin=subprocess.PIPE, stderr=subprocess.PIPE)
 
 
-def install_old_coccoc_version():
+def install_old_coccoc_version(is_needed_clear_user_data=True):
     if check_if_coccoc_is_installed():
-        uninstall_coccoc_silently()
+        if is_needed_clear_user_data is False:
+            uninstall_coccoc_silently()
+        else:
+            from utils_automation.common import BrowserHandler
+            BrowserHandler().browser_cleanup()
+            uninstall_coccoc_silently()
+            remove_coccoc_update_silently()
+            remove_local_app_data()
     install_coccoc_set_as_default(coccoc_installer_name='coccoc_en_old_version.exe')
 
 

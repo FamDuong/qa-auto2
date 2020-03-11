@@ -13,7 +13,7 @@ user_chat = "Coc Coc"
 mojichat_file = "mojichat_list.csv"
 
 
-@pytest.mark.skip(reason='Skip mojchat')
+#@pytest.mark.skip(reason='Skip mojchat')
 class TestSuggestionPanelBigBoxChat:
     mojichat_object = MojichatObjects()
 

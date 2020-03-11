@@ -17,6 +17,9 @@ class ExtensionsPageLocators:
     EXTENSION_DETAIL_VIEW = '#viewManager > extensions-detail-view'
     ITEMS_LIST = '#items-list'
 
+    GOOGLE_TRANSLATE_ID = '#aapbdbdomjkkjkaonfhkkikfgjllcleb'
+    GOOGLE_TRANSLATE_NAME_ID = '#name'
+
     class UblockPlusPageLocators:
         UBLOCK_PLUS_ID_CSS_LOCATOR = '#oofnbdifeelbaidfgpikinijekkjcicg'
         ENABLE_TOGGER_BTN = '#enable-toggle'
@@ -44,4 +47,3 @@ class SaviorExtensionOptionsPageLocators:
     VIDEO_QUALITY_MEDIUM_BTN = (By.XPATH, '//input[@name="optionsRadios" and @value="Medium"]')
     VIDEO_QUALITY_LOW_BTN = (By.XPATH, '//input[@name="optionsRadios" and @value="Low"]')
     REMEMBER_LAST_CHOSEN_OPTION = (By.ID, 'prefer-last-quality')
-
