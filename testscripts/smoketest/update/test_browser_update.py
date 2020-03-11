@@ -46,3 +46,5 @@ class TestBrowserUpdate:
         assert 'Dictionaries' in list_files_folders
         assert 'SetupMetrics' in list_files_folders
         assert 'VisualElementsManifest' in list_files_folders
+        from testscripts.smoketest.common import login_then_get_latest_coccoc_dev_installer_version
+        assert list_coccoc_version[0] == login_then_get_latest_coccoc_dev_installer_version()
