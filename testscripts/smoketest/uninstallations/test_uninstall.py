@@ -4,7 +4,7 @@ from pytest_testrail.plugin import pytestrail
 
 class TestUnInstallations:
 
-    @pytestrail.case('C9440')
+    @pytestrail.case('C94440')
     @pytestrail.defect('BR-1278')
     @pytest.mark.usefixtures('install_coccoc_after_finish_test')
     def test_uninstall_coccoc_browser_successfully_without_clear_user_data(self):

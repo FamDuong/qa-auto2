@@ -23,12 +23,14 @@ class TestBrowserUpdate:
         install_old_coccoc_version()
         from utils_automation.const import Urls
         from testscripts.smoketest.common import get_list_coccoc_version_folder_name
+        from packaging import version
         driver = self.coccoc_instance()
         driver.get(Urls.COCCOC_ABOUT)
         element = self.settings_page_object.check_if_relaunch_browser_displayed(driver)
         # Wait for creating new folder for new coccoc version
         time.sleep(5)
         list_coccoc_version = get_list_coccoc_version_folder_name()
+        old_version = list_coccoc_version[0]
         assert len(list_coccoc_version) == 2
         element.click()
         # Wait for relaunching coccoc and delete old coccoc version
@@ -42,9 +44,9 @@ class TestBrowserUpdate:
         list_files_folders = get_list_files_dirs_in_a_folder(application_path=
                                                              "\"AppData/Local/CocCoc/Browser/Application\"")
         assert len(list_coccoc_version) == 1
+        assert version.parse(list_coccoc_version[0]) > version.parse(old_version)
         assert 'browser.exe' in list_files_folders
         assert 'Dictionaries' in list_files_folders
         assert 'SetupMetrics' in list_files_folders
         assert 'VisualElementsManifest' in list_files_folders
-        from testscripts.smoketest.common import login_then_get_latest_coccoc_dev_installer_version
-        assert list_coccoc_version[0] == login_then_get_latest_coccoc_dev_installer_version()
+
