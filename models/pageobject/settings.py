@@ -76,9 +76,12 @@ class SettingsPageObject(BasePageObject):
             checked = self.settings_elem.find_run_automatically_on_system_startup(driver).get_attribute("checked")
         assert checked is not None
 
-    def verify_extension_version(self, driver, extension_id, expect_version, expect_on = None):
+    def get_extension_version(self, driver, extension_id):
         self.enable_extension_toggle_dev_mode(driver)
-        actual_version = self.settings_elem.find_extension_version_by_id(driver, extension_id).text
+        return self.settings_elem.find_extension_version_by_id(driver, extension_id).text
+
+    def verify_extension_version(self, driver, extension_id, expect_version, expect_on=None):
+        actual_version = self.get_extension_version(driver, extension_id)
         assert actual_version == expect_version
         if expect_on is not None:
             actual_on = self.settings_elem.find_extension_on_off_by_id(driver, extension_id).get_attribute("checked")

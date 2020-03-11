@@ -109,6 +109,19 @@ def uninstall_coccoc_and_delete_user_data():
     time.sleep(1)
 
 
+def uninstall_coccoc_without_delete_user_data():
+    import subprocess
+    subprocess.Popen(["powershell.exe",
+                      f"cd C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application"
+                      f"\\{get_coccoc_version_folder_name()}"
+                      f"\\Installer; .\\setup.exe --uninstall"],
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    coccoc_uninstaller = Desktop(backend='uia').Uninstall
+    time.sleep(2)
+    coccoc_uninstaller.Uninstall.click()
+    time.sleep(1)
+
+
 def get_coccoc_version_folder_name():
     import subprocess
     import re
@@ -215,7 +228,6 @@ def install_coccoc_silently(coccoc_installer_name='standalone_coccoc_en.exe'):
     p = subprocess.Popen(["powershell.exe",
                           f"cd C:\coccoc-dev; .\\{coccoc_installer_name} /silent /install"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    p.communicate()
 
 
 def install_coccoc_silentlty_make_coccoc_default_browser(coccoc_installer_name='standalone_coccoc_en.exe',

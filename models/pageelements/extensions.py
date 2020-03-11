@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.extensions import ExtensionsPageLocators, SaviorDetailsPageLocators, \
-    SaviorExtensionOptionsPageLocators
+    SaviorExtensionOptionsPageLocators, GoogleExtensionsStorePageLocators
 from utils_automation.setup import WaitAfterEach
 
 
@@ -119,5 +119,16 @@ class SaviorExtensionsOptionsElement(BasePageElement):
         wait = WebDriverWait(driver, 20)
         return wait.until(
             ec.element_to_be_clickable(SaviorExtensionOptionsPageLocators.REMEMBER_LAST_CHOSEN_OPTION))
+
+
+class GoogleExtensionsStorePageElements(BasePageElement):
+
+    def find_rung_rinh_extension_version(self, driver):
+        wait = WebDriverWait(driver, 20)
+        return wait.until(
+            ec.element_to_be_clickable(GoogleExtensionsStorePageLocators.RUNG_RINH_EXTENSION_VERSION))
+
+
+
 
 
