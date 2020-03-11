@@ -1,7 +1,7 @@
 from models.pageelements.settings import SettingsElements, SettingsComponentsPageElement
 from models.pagelocators.settings import SettingsPageLocators
 from models.pageobject.basepage_object import BasePageObject
-from utils_automation.const import Urls
+from utils_automation.const import Urls, CocCocComponents
 from utils_automation.common import wait_for_stable
 
 
@@ -76,9 +76,12 @@ class SettingsPageObject(BasePageObject):
             checked = self.settings_elem.find_run_automatically_on_system_startup(driver).get_attribute("checked")
         assert checked is not None
 
-    def verify_extension_version(self, driver, extension_id, expect_version, expect_on = None):
+    def get_extension_version(self, driver, extension_id):
         self.enable_extension_toggle_dev_mode(driver)
-        actual_version = self.settings_elem.find_extension_version_by_id(driver, extension_id).text
+        return self.settings_elem.find_extension_version_by_id(driver, extension_id).text
+
+    def verify_extension_version(self, driver, extension_id, expect_version, expect_on=None):
+        actual_version = self.get_extension_version(driver, extension_id)
         assert actual_version == expect_version
         if expect_on is not None:
             actual_on = self.settings_elem.find_extension_on_off_by_id(driver, extension_id).get_attribute("checked")
@@ -198,7 +201,13 @@ class SettingsComponentsPageObject(BasePageObject):
         elements = self.settings_component_page_element.find_all_components_version(driver)
         for each_element in elements:
             version = each_element.text
-            assert '0.0.0.0' not in version
+            each_element_id = each_element.get_attribute('id')
+            if CocCocComponents.THIRD_PARTY_MODULE_LIST_ID in each_element_id:
+                assert version == '2018.7.19.1'
+            elif CocCocComponents.ORIGIN_TRIALS_ID in each_element_id:
+                pass
+            else:
+                assert '0.0.0.0' not in version
 
 
 
