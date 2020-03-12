@@ -83,16 +83,26 @@ class FilesHandle:
         filename = dirname + filename
         return filename
 
-    def find_files_in_folder_by_modified_date(self, mydir, endwith):
-        filelist = [f for f in os.listdir(mydir) if f.endswith(endwith)]
-        return filelist
+    def find_files_in_folder_by_modified_date(self, mydir, endwith, startwith=None):
+        if startwith:
+            filelist = [f for f in os.listdir(mydir) if (f.endswith(endwith) and f.startswith(startwith))]
+            return filelist
+        else:
+            filelist = [f for f in os.listdir(mydir) if f.endswith(endwith)]
+            return filelist
 
-    def delete_files_in_folder(self, mydir, endwith):
+    def delete_files_in_folder(self, mydir, endwith, startwith=None):
         import os
-        filelist = [f for f in os.listdir(mydir) if f.endswith(endwith)]
-        for f in filelist:
-            os.chmod(os.path.join(mydir, f), 0o777)
-            os.remove(os.path.join(mydir, f))
+        if startwith:
+            filelist = [f for f in os.listdir(mydir) if (f.endswith(endwith) and f.startswith(startwith))]
+            for f in filelist:
+                os.chmod(os.path.join(mydir, f), 0o777)
+                os.remove(os.path.join(mydir, f))
+        else:
+            filelist = [f for f in os.listdir(mydir) if f.endswith(endwith)]
+            for f in filelist:
+                os.chmod(os.path.join(mydir, f), 0o777)
+                os.remove(os.path.join(mydir, f))
 
     def delete_all_files_in_folder(self, mydir):
         shutil.rmtree(mydir, ignore_errors=True, onerror=None)

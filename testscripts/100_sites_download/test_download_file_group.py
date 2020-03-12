@@ -28,8 +28,10 @@ class TestDownloadGroup:
         assert_file_download_value(get_current_download_folder, resolution_info)
 
     @pytestrail.case('C96719')
+    @pytestrail.defect('PF-776')
     @pytest.mark.ten_popular_sites
-    def test_download_youtube(self, browser, get_current_download_folder, clear_download_page_and_download_folder):
+    @pytest.mark.skip(reason='Due to bug PF-776 cannot play av1')
+    def test_download_youtube(self, browser, get_current_download_folder, clear_download_page):
         youtube_page_object = YoutubePageObject()
         browser.get(VideoUrls.YOUTUBE_VIDEO_URL)
         youtube_page_object.mouse_over_video_item(browser)
@@ -38,23 +40,23 @@ class TestDownloadGroup:
         assert_file_download_value(get_current_download_folder, resolution_info)
 
     @pytestrail.case('C96752')
-    def test_download_news_zing(self, browser, get_current_download_folder, clear_download_page_and_download_folder):
+    def test_download_news_zing(self, browser, get_current_download_folder, clear_download_page):
         self.implement_test_site(browser, VideoUrls.NEWS_ZING_VIDEO_URL, get_current_download_folder)
 
     @pytestrail.case('C96756')
-    def test_download_zing_mp3_vn(self, browser, get_current_download_folder, clear_download_page_and_download_folder):
+    def test_download_zing_mp3_vn(self, browser, get_current_download_folder, clear_download_page):
         self.implement_test_site(browser, VideoUrls.ZING_MP3_VN_VIDEO_URL, get_current_download_folder)
 
     @pytestrail.case('C96758')
     @pytest.mark.ten_popular_sites
-    def test_download_nhaccuatui(self, browser, get_current_download_folder, clear_download_page_and_download_folder
+    def test_download_nhaccuatui(self, browser, get_current_download_folder, clear_download_page
                                  , disable_coccoc_block_ads):
         self.implement_test_site(browser, VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM, get_current_download_folder)
 
     @pytestrail.case('C98735')
     @pytest.mark.ten_popular_sites
     @pytestrail.defect('PF-517')
-    def test_download_dongphim(self, browser, get_current_download_folder, clear_download_page_and_download_folder):
+    def test_download_dongphim(self, browser, get_current_download_folder, clear_download_page):
         browser.get(VideoUrls.DONG_PHIM_VIDEO_URL)
         elements = any_site_page_object.choose_watch_option_if_any(browser)
         if len(elements) == 0:

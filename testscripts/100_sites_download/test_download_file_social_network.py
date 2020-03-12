@@ -17,7 +17,7 @@ class TestFacebook:
     @pytestrail.defect('PF-530')
     @pytest.mark.skip(reason="Skip until bug PF-530 is fixed")
     def test_download_file_facebook(self, browser, get_current_download_folder
-                                    , clear_download_page_and_download_folder):
+                                    , clear_download_page):
         browser.get(OtherSiteUrls.FACEBOOK_VIDEO_URL)
         any_site_page_object.mouse_over_video_element_facebook(browser)
         implement_download_file(browser, get_current_download_folder)
@@ -34,7 +34,7 @@ class TestMessenger:
     @pytestrail.case('C96722')
     @pytest.mark.ten_popular_sites
     def test_download_file_messenger(self, browser, get_current_download_folder
-                                     , clear_download_page_and_download_folder):
+                                     , clear_download_page):
         self.setup_savior_option_appear(browser)
         implement_download_file(browser, get_current_download_folder),
 
@@ -48,7 +48,7 @@ class TestInstagram:
 
     @pytestrail.case('C96751')
     def test_download_file_instagram(self, browser, get_current_download_folder
-                                     , clear_download_page_and_download_folder):
+                                     , clear_download_page):
         self.prepare_appear_savior_option(browser)
         implement_download_file(browser, get_current_download_folder),
 
@@ -62,7 +62,7 @@ class TestTwitter:
 
     @pytestrail.case('C98721')
     def test_download_file_twitter(self, browser, get_current_download_folder
-                                   , clear_download_page_and_download_folder):
+                                   , clear_download_page):
         self.prepare_savior_option_appear(browser)
         implement_download_file(browser, get_current_download_folder),
 
@@ -71,7 +71,7 @@ class TestWeibo:
 
     @pytestrail.case('C98802')
     def test_download_file_weibo(self, browser, get_current_download_folder
-                                 , clear_download_page_and_download_folder):
+                                 , clear_download_page):
         browser.get(OtherSiteUrls.WEIBO_VIDEO_URL)
         any_site_page_object.mouse_over_video_element_weibo(browser)
         implement_download_file(browser, get_current_download_folder),

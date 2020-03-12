@@ -22,9 +22,9 @@ download_page_object = DownloadsPageObject()
 any_site_page_object = AnySitePageObject()
 
 
-def delete_all_mp4_file_download(mydir, endwith):
+def delete_all_mp4_file_download(mydir, endwith, startwith=None):
     files_handle = FilesHandle()
-    files_handle.delete_files_in_folder(mydir, endwith)
+    files_handle.delete_files_in_folder(mydir, endwith, startwith=startwith)
 
 
 def download_file_via_main_download_button(browser, time_sleep=5):
@@ -38,9 +38,9 @@ def download_file_via_main_download_button(browser, time_sleep=5):
     return media_info_element
 
 
-def find_mp4_file_download(mydir, endwith):
+def find_mp4_file_download(mydir, endwith, startwith=None):
     files_handle = FilesHandle()
-    return files_handle.find_files_in_folder_by_modified_date(mydir, endwith)
+    return files_handle.find_files_in_folder_by_modified_date(mydir, endwith, startwith=startwith)
 
 
 def clear_data_download(driver):
@@ -50,8 +50,8 @@ def clear_data_download(driver):
     WaitAfterEach.sleep_timer_after_each_step()
 
 
-def assert_file_download_value(download_folder_path, height_value):
-    mp4_files = find_mp4_file_download(download_folder_path, '.mp4')
+def assert_file_download_value(download_folder_path, height_value, startwith=None):
+    mp4_files = find_mp4_file_download(download_folder_path, '.mp4', startwith=startwith)
     print(mp4_files)
     vid = cv2.VideoCapture(download_folder_path + '\\' + mp4_files[0])
     height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
@@ -66,9 +66,9 @@ def assert_file_download_value(download_folder_path, height_value):
         assert height is not None
 
 
-def assert_file_download_exist(download_folder_path, file_size=2.00):
+def assert_file_download_exist(download_folder_path, file_size=2.00, startwith=None):
     import os
-    mp4_files = find_mp4_file_download(download_folder_path, '.mp4')
+    mp4_files = find_mp4_file_download(download_folder_path, '.mp4', startwith=startwith)
     file_path = download_folder_path + '\\' + mp4_files[0]
     vid = cv2.VideoCapture(file_path)
     size_file = round(os.stat(file_path).st_size / (1024 * 1024), 2)
@@ -133,7 +133,6 @@ def pause_any_video_site(browser, url):
 
 
 def implement_download_file(browser, get_current_download_folder, time_sleep=5, **kwargs):
-    delete_all_mp4_file_download(get_current_download_folder, '.mp4')
     download_file_via_main_download_button(browser, time_sleep=time_sleep)
     # assert file download exist and can be opened
     assert_file_download_exist(get_current_download_folder, **kwargs)
