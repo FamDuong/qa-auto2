@@ -1,7 +1,7 @@
 import time
 
 from models.pageelements.extensions import ExtensionsElement, CocCocSaviorExtensionDetailElement, \
-    SaviorExtensionsOptionsElement
+    SaviorExtensionsOptionsElement, GoogleExtensionsStorePageElements
 from models.pagelocators.extensions import ExtensionsPageLocators
 from models.pageobject.basepage_object import BasePageObject
 from utils_automation.setup import WaitAfterEach
@@ -120,3 +120,12 @@ class SaviorExtensionOptionsPageObject(BasePageObject):
         remember_option_element = self.savior_extension.find_remember_last_chosen_option(driver)
         checked_value = remember_option_element.get_attribute('checked')
         self.checked_value_condition(checked_value, remember_option_element)
+
+
+class GoogleExtensionsStorePageObject(BasePageObject):
+
+    google_extensions_store_elem = GoogleExtensionsStorePageElements()
+
+    def get_rung_rinh_extension_version(self, driver):
+        return self.google_extensions_store_elem.find_rung_rinh_extension_version(driver).text
+

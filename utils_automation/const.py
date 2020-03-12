@@ -13,6 +13,8 @@ class Urls:
     COCCOC_ABOUT = 'coccoc://settings/help'
     COCCOC_HISTORY_URL = 'coccoc://history/'
     COCCOC_DEV_URL = 'https://dev.coccoc.com'
+    COCCOC_THANK_YOU_URL_EN = 'https://dev.coccoc.com/en/win/thanks.html'
+    COCCOC_THANK_YOU_URL_VI = 'https://dev.coccoc.com/vi/win/thanks.html'
     COCCOC_URL = 'https://coccoc.com'
     COCCOC_ADS_BLOCK_URL = 'coccoc://settings/adsBlock'
     YOUTUBE_URL = 'https://www.youtube.com/'
@@ -126,6 +128,14 @@ class SkypeGroupIds:
     COCCOC_MUSIC_GROUP_ID = '19:3cdd71db361c4d56ad8a69a7cf271c0f@thread.skype'
     TEST_GROUP_ID = '19:c4cf2ed7ac634b7f8efbd7afcaabdebd@thread.skype'
 
+
+class CocCocComponents:
+    THIRD_PARTY_MODULE_LIST_ID = 'ehgidpndbllacpjalkiimkbadgjfnnmc'
+    ORIGIN_TRIALS_ID = 'llkgjffcdpffmhiakmfcdcblohccpfmo'
+
+
+class ChromeStoreUrls:
+    RUNG_RINH_EXTENSION_URL = 'https://chrome.google.com/webstore/detail/r%E1%BB%A7ng-r%E1%BB%89nh-d%E1%BB%8Bch-v%E1%BB%A5-ho%C3%A0n-ti/paenbjlckelooppiepeiechkeehogoha'
 
 
 

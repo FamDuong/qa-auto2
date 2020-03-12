@@ -43,8 +43,8 @@ class TestFirstTimeRun:
         self.verify_open_browser_for_the_first_time('no')
 
     @pytestrail.case('C44830')
-    @pytestrail.defect('BR-1415')
-    @pytest.mark.skip(reason='Bug BR-1415')
+    @pytestrail.defect('BR-1415', 'BR-1205')
+    @pytest.mark.skip(reason='Due to bug BR-1205')
     def test_if_widevine_flash_plugin_exist_by_default_right_after_installing_browser(self):
         from testscripts.smoketest.common import cleanup
         cleanup(firefox=False)

@@ -63,6 +63,13 @@ def activate_then_deactive_hosts_for_coccoc_dev():
     interact_dev_hosts(action='deactivate')
 
 
+@pytest.fixture(scope='function')
+def install_coccoc_after_finish_test():
+    yield
+    install_coccoc_not_set_as_default()
+    time.sleep(6)
+
+
 
 
 
