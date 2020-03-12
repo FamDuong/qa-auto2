@@ -28,11 +28,12 @@ class TestFreshInstall:
         browser = common.coccoc_instance()
         download_folder = common.get_default_download_folder(browser)
         languages = ['en', 'vi']
+        for language in languages:
+            self.delete_installer_download(download_folder, language)
         try:
             for language in languages:
                 if language == 'en':
                     browser = self.check_install_coccoc_in_english(browser, download_folder)
-
                 elif language == 'vi':
                     browser = self.check_install_coccoc_in_vietnamese(browser, download_folder)
         finally:
@@ -110,7 +111,7 @@ class TestFreshInstall:
         common.cleanup()
         browser = common.coccoc_instance()
         self.settings_page_obj.verify_menu_base_on_language(browser, "en")
-        self.version_page_obj.verify_installed_coccoc_version(browser)
+        self.version_page_obj.verify_installed_coccoc_and_flash_versions(browser)
         return browser
 
     def delete_installer_download(self, download_folder, language):

@@ -292,6 +292,8 @@ class BrowserHandler:
         WindowsCMD.execute_cmd('taskkill /im CocCocUpdate.exe /f')
         WindowsCMD.execute_cmd('taskkill /im CocCocCrashHandler.exe /f')
         WindowsCMD.execute_cmd('taskkill /im browser.exe /f')
+        WindowsCMD.execute_cmd('taskkill /im CocCocTorrentUpdate.exe /f')
+        WindowsCMD.execute_cmd('taskkill /im MicrosoftEdge.exe /f')
 
 
 def modify_file_as_text(text_file_path, text_to_search, replacement_text):
@@ -327,4 +329,3 @@ def check_if_duplicates_list(list_of_elems):
 def get_current_dir():
     before_split = os.getcwd()
     return before_split.split('\\testscripts\\')
-

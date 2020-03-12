@@ -55,7 +55,7 @@ class TestCcDefaultBrowser:
             driver.quit()
 
     @pytestrail.case('C44846')
-    @pytest.mark.skip(reason="Due to bug BR-1133")
+    #@pytest.mark.skip(reason="Due to bug BR-1133")
     @pytest.mark.skipif(platform.release() in ["8", "8.1", "7"], reason="Cannot execute in Windows 8, Windows 8.1, 7")
     def test_check_if_dialog_coccoc_is_not_your_default_after_1_month(self):
         from testscripts.smoketest.common import check_if_coccoc_is_installed
