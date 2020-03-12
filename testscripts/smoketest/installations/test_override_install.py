@@ -1,6 +1,4 @@
 from pytest_testrail.plugin import pytestrail
-from pywinauto import Desktop
-from selenium.webdriver.common.keys import Keys
 
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.history import HistoryPageLocators
