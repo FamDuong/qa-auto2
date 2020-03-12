@@ -288,6 +288,16 @@ def wait_for_coccoc_install_finish(coccoc_installer=Desktop(backend='uia').Cốc
                 break
 
 
+def wait_for_panel_is_exist(panel):
+    from datetime import datetime
+    start_time = datetime.now()
+    while panel.exists() is False:
+        time.sleep(2)
+        time_delta = datetime.now() - start_time
+        if time_delta.total_seconds() >= 12:
+            break
+
+
 def install_coccoc_not_set_as_default(is_needed_clean_up=True, coccoc_installer_name='standalone_coccoc_en.exe'):
     import subprocess
     subprocess.Popen(["powershell.exe",

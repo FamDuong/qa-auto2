@@ -43,6 +43,7 @@ class TestFreshInstall:
 
     @pytestrail.case('C44779')
     @pytestrail.defect('BR-810')
+    @pytest.mark.coccocdev
     @pytest.mark.skipif(platform.release() in ["8", "8.1"], reason="Cannot execute in Windows 8, Windows 8.1")
     def test_popup_of_installer_confirm_during_the_installation(self):
         # Get download folder
@@ -62,7 +63,7 @@ class TestFreshInstall:
             self.delete_installer_download(download_folder, 'en')
 
     @pytestrail.case('C44780')
-    @pytest.mark.skip(reason='Flaky test, will check it later')
+    @pytest.mark.coccocdev
     def test_installation_dialog_after_installing_successfully(self):
         # Get default download forlder
         browser = common.coccoc_instance()

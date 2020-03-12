@@ -70,8 +70,21 @@ def install_coccoc_after_finish_test():
     time.sleep(6)
 
 
+def pytest_addoption(parser):
+    parser.addoption(
+        "--coccocdev", action="store_true", default=False, help="run tests with coccocdev mark"
+    )
 
 
+def pytest_configure(config):
+    config.addinivalue_line("markers", "coccocdev: mark test as coccocdev to run")
 
 
-
+def pytest_collection_modifyitems(config, items):
+    if config.getoption("--coccocdev"):
+        # --coccocdev given in cli: do not skip coccocdev tests
+        return
+    skip_slow = pytest.mark.skip(reason="need --coccocdev option to run")
+    for item in items:
+        if "coccocdev" in item.keywords:
+            item.add_marker(skip_slow)
