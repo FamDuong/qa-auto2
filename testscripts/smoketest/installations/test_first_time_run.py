@@ -9,10 +9,13 @@ class TestFirstTimeRun:
 
     def verify_new_tab_coccoc_exist(self):
         from pywinauto import Desktop
-        coccoc_instance = Desktop(backend='uia').Welcome_to_Cốc_Cốc_Cốc_CốcPane
-        coccoc_instance.New_Tab.click_input()
-        all_windows = Desktop(backend='uia').windows()
-        assert 'New Tab - Cốc Cốc' in str(all_windows)
+        coccoc_instance = Desktop(backend='uia').Welcome_to_Cốc_Cốc_Cốc_Cốc
+        common.wait_for_panel_is_exist(coccoc_instance)
+        welcome_coccoc_tab_is_opened = coccoc_instance.child_window(title='Welcome to Cốc Cốc',
+                                                                    control_type=50019).exists()
+        new_tab_is_opened = coccoc_instance.child_window(title_re='New Tab', control_type=50019).exists()
+        assert welcome_coccoc_tab_is_opened is True
+        assert new_tab_is_opened is True
 
     def pre_condition_before_run_first_time(self):
         from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
@@ -28,7 +31,7 @@ class TestFirstTimeRun:
         from testscripts.smoketest.common import cleanup
         cleanup(firefox=False)
         common.uninstall_then_install_coccoc_with_default(coccoc_is_default, is_needed_clean_up=False,
-                                                   is_needed_clear_user_data=True)
+                                                          is_needed_clear_user_data=True)
         browser_name = common.get_browser_name()
         common.choose_import_browser_settings('Continue', browser_name)
         try:
