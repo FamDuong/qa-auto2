@@ -17,6 +17,9 @@ class ExtensionsPageLocators:
     EXTENSION_DETAIL_VIEW = '#viewManager > extensions-detail-view'
     ITEMS_LIST = '#items-list'
 
+    GOOGLE_TRANSLATE_ID = '#aapbdbdomjkkjkaonfhkkikfgjllcleb'
+    GOOGLE_TRANSLATE_NAME_ID = '#name'
+
     class UblockPlusPageLocators:
         UBLOCK_PLUS_ID_CSS_LOCATOR = '#oofnbdifeelbaidfgpikinijekkjcicg'
         ENABLE_TOGGER_BTN = '#enable-toggle'

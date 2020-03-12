@@ -11,6 +11,7 @@ class Urls:
     COCCOC_COMPONENTS = 'coccoc://components'
     COCCOC_TERMS = 'coccoc://terms'
     COCCOC_ABOUT = 'coccoc://settings/help'
+    COCCOC_HISTORY_URL = 'coccoc://history/'
     COCCOC_DEV_URL = 'https://dev.coccoc.com'
     COCCOC_THANK_YOU_URL_EN = 'https://dev.coccoc.com/en/win/thanks.html'
     COCCOC_THANK_YOU_URL_VI = 'https://dev.coccoc.com/vi/win/thanks.html'

@@ -97,8 +97,8 @@ class SettingsPageObject(BasePageObject):
         actual_auto_fill_lbl = self.settings_elem.find_left_menu_auto_fill(driver).text
         actual_default_browser_lbl = self.settings_elem.find_left_menu_default_browser(driver).text
         if language == 'en':
-            assert actual_people_lbl in 'People'
-            assert actual_auto_fill_lbl in 'Autofill'
+            assert actual_people_lbl in 'You and Google'
+            assert actual_auto_fill_lbl in 'Auto-fill'
             assert actual_default_browser_lbl in 'Default browser'
         else:
             assert actual_people_lbl in 'Bạn và Google'
