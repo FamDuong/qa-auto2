@@ -454,6 +454,7 @@ def default_is_firefox():
 
 def get_browser_name():
     browser_name = None
+    time.sleep(5)
     if Desktop(backend='uia').Import_Google_Chrome_Settings.exists():
         browser_name = 'Chrome'
     elif Desktop(backend='uia').Import_Mozilla_Firefox_Settings.exists():
@@ -475,6 +476,7 @@ def choose_import_browser_settings(action='Continue', browser_name='Chrome'):
         default_apps = Desktop(backend='uia').Import_Microsoft_Internet_Explorer_Settings
     elif browser_name in 'Microsoft Edge':
         default_apps = Desktop(backend='uia').Import_Microsoft_Edge_Settings
+
     if action == 'Continue':
         default_apps.Continue.click()
     elif action == 'Cancel':
