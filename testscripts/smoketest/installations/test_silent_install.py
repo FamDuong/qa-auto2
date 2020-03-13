@@ -24,27 +24,25 @@ class TestSilentInstall:
             driver.quit()
 
     @pytestrail.case('C44786')
-    @pytest.mark.skipif(platform.release() in ["7"], reason="Cannot execute in Win7 cuz does not have Get-Cim command in powershell")
     def test_check_with_auto_launch_coccoc(self):
         from testscripts.smoketest.common import uninstall_then_install_coccoc_silentlty_with_option
         uninstall_then_install_coccoc_silentlty_with_option("/forcedcmdline 'auto-launch-coccoc'")
         from testscripts.smoketest.common import get_list_start_up_apps
-        from utils_automation.setup import WaitAfterEach
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        assert 'browser' in get_list_start_up_apps()
+        assert 'AppData\\\\Local\\\\CocCoc\\\\Browser\\\\Application\\\\browser.exe" --auto-launch-at-startup' in get_list_start_up_apps()
+        assert 'AppData\\\\Local\\\\CocCoc\\\\Update\\\\CocCocUpdate.exe' in get_list_start_up_apps()
 
     @pytestrail.case('C44787')
     def test_check_with_do_not_launch_chrome(self):
         from testscripts.smoketest.common import \
             uninstall_then_install_coccoc_silentlty_with_option_without_kill_process
-        uninstall_then_install_coccoc_silentlty_with_option_without_kill_process("/forcedcmdline 'do-not-launch-chrome'")
+        uninstall_then_install_coccoc_silentlty_with_option_without_kill_process(
+            "/forcedcmdline 'do-not-launch-chrome'")
         from utils_automation.setup import WaitAfterEach
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         from testscripts.smoketest.common import get_application_process
         assert 'browser' not in get_application_process()
 
     @pytestrail.case('C44788')
-    @pytest.mark.skipif(platform.release() in ["7"], reason="Cannot execute in Win7 cuz does not have Get-Cim command in powershell")
     def test_check_combination_some_parameters(self):
         from testscripts.smoketest.common import \
             uninstall_then_install_coccoc_silentlty_with_option_without_kill_process
@@ -65,14 +63,3 @@ class TestSilentInstall:
                 driver)
         finally:
             driver.quit()
-
-
-
-
-
-
-
-
-
-
-

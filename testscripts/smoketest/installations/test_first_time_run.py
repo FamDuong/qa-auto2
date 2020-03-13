@@ -180,17 +180,15 @@ class TestFirstTimeRun:
             assert "COC COC COMPANY LIMITED" in signature
 
     @pytestrail.case('C44839')
-    @pytest.mark.skipif(platform.release() in ["7", "10"], reason="Cannot execute Get-ScheduledTask in powershell Win 7"
-                                                                  "and bug in Windows 10 about task scheduler")
     def test_check_task_scheduler_after_installation(self):
         from testscripts.smoketest.common import cleanup
         cleanup(firefox=False)
         self.pre_condition_before_run_first_time()
         from testscripts.smoketest.installations.common import check_task_scheduler
-        coccoc_update_tasks = check_task_scheduler(task_name="CocCoc*")
+        coccoc_update_tasks = check_task_scheduler(task_name="CocCoc")
         import re
-        assert len(re.findall('CocCocUpdateTaskUser.*Core', coccoc_update_tasks)) == 1
-        assert len(re.findall('CocCocUpdateTaskUser.*UA', coccoc_update_tasks)) == 1
+        assert len(re.findall('CocCocUpdateTaskUser.*Core.*Ready', coccoc_update_tasks)) == 1
+        assert len(re.findall('CocCocUpdateTaskUser.*UA.*Ready', coccoc_update_tasks)) == 1
 
     @pytestrail.case('C44840')
     @pytest.mark.skipif(platform.release() in ["7"], reason="Cannot execute get-netfirewallrule in powershell Win 7")
