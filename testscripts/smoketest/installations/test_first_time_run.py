@@ -18,8 +18,11 @@ class TestFirstTimeRun:
         assert new_tab_is_opened is True
 
     def pre_condition_before_run_first_time(self):
+        from utils_automation.common import WindowsHandler
+        windows_handler = WindowsHandler()
+        windows_handler.delete_coccoc_firewall_rules()
         from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
-        uninstall_then_install_coccoc_with_default(is_needed_clean_up=True, is_needed_clear_user_data=False)
+        uninstall_then_install_coccoc_with_default(is_needed_clean_up=True, is_needed_clear_user_data=True)
         from testscripts.smoketest.common import chrome_options_preset
         from selenium import webdriver
         driver = webdriver.Chrome(options=chrome_options_preset())
@@ -192,20 +195,23 @@ class TestFirstTimeRun:
 
     @pytestrail.case('C44840')
     @pytest.mark.skipif(platform.release() in ["7"], reason="Cannot execute get-netfirewallrule in powershell Win 7")
+    @pytest.mark.skip(reason="Take times to handle with User Account Control is Always notify")
     def test__rule_in_firewall_of_windows_if_user_selects_allow_access_btn(self):
         # Note: Default when setting, user always select "Allow access" button
         # Inbound
         from testscripts.smoketest.common import cleanup
         cleanup(firefox=False)
         self.pre_condition_before_run_first_time()
+        import time
+        time.sleep(100)
         from utils_automation.common import WindowsHandler
         windows = WindowsHandler()
-        windows.verify_netfirewall_rule('Cốc Cốc (mDNS-In)', 'Inbound', 'Allow')
-        windows.verify_netfirewall_rule('Cốc Cốc (TCP-In)', 'Inbound', 'Allow')
-        windows.verify_netfirewall_rule('Cốc Cốc (UDP-In)', 'Inbound', 'Allow')
-        windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (TCP-In)', 'Inbound', 'Allow')
-        windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (UDP-In)', 'Inbound', 'Allow')
-        windows.verify_netfirewall_rule('Cốc Cốc (TCP-Out)', 'Outbound', 'Allow')
-        windows.verify_netfirewall_rule('Cốc Cốc (UDP-Out)', 'Outbound', 'Allow')
-        windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (TCP-Out)', 'Outbound', 'Allow')
-        windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (UDP-Out)', 'Outbound', 'Allow')
+        windows.verify_netfirewall_rule('Cốc Cốc (mDNS-In)', 'In', 'Allow')
+        windows.verify_netfirewall_rule('Cốc Cốc (TCP-In)', 'In', 'Allow')
+        windows.verify_netfirewall_rule('Cốc Cốc (UDP-In)', 'In', 'Allow')
+        windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (TCP-In)', 'In', 'Allow')
+        windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (UDP-In)', 'In', 'Allow')
+        windows.verify_netfirewall_rule('Cốc Cốc (TCP-Out)', 'Out', 'Allow')
+        windows.verify_netfirewall_rule('Cốc Cốc (UDP-Out)', 'Out', 'Allow')
+        windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (TCP-Out)', 'Out', 'Allow')
+        windows.verify_netfirewall_rule('Cốc Cốc Torrent Update (UDP-Out)', 'Out', 'Allow')
