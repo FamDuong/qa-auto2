@@ -1,3 +1,6 @@
+from utils_automation.common import WindowsCMD
+
+
 def open_browser_from_command(browser_name='chrome'):
     """
         browser_name = 'chrome', 'firefox', 'microsoft-edge:', 'iexplore'
@@ -9,9 +12,5 @@ def open_browser_from_command(browser_name='chrome'):
 
 
 def check_task_scheduler(task_name):
-    import subprocess
-    p = subprocess.Popen(["powershell.exe",
-                          f"Get-ScheduledTask -TaskName {task_name} | Get-ScheduledTaskInfo"],
-                         stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    tasks = str(p.communicate()[0])
-    return tasks
+    list_start_up_apps = WindowsCMD.execute_cmd("schtasks /query /fo CSV | findstr "+task_name)
+    return str(list_start_up_apps)
