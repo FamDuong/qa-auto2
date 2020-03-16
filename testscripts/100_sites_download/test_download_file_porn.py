@@ -1,6 +1,6 @@
 import pytest
 from pytest_testrail.plugin import pytestrail
-from models.pageobject.top_savior_sites_title import TopSitesSaviorTitleAction
+from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from testscripts.common_setup import implement_download_file, download_file_via_main_download_button, \

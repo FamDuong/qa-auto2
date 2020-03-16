@@ -5,6 +5,9 @@ from models.pageelements.sites import AnySiteElements
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
+
+from models.pageobject.top_savior_sites.top_savior_sites_film import TopSaviorSitesFilmActions
+from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
 from testscripts.common_setup import implement_download_file, \
     clear_data_download_in_browser_and_download_folder, pause_any_video_site, \
     handle_windows_watch_option, check_if_the_file_fully_downloaded, assert_file_download_exist
@@ -68,12 +71,20 @@ class TestVuViPhim:
 
 class TestTvZing:
 
+    top_savior_sites_film_actions = TopSaviorSitesFilmActions()
+    top_sites_savior_title_actions = TopSitesSaviorTitleAction()
+
     @pytestrail.case('C96763')
     @pytest.mark.ten_popular_sites
     def test_download_file_tv_zing(self, browser, get_current_download_folder
                                    , clear_download_page):
-        pause_any_video_site(browser, OtherSiteUrls.TV_ZING_VIDEO_URL)
-        implement_download_file(browser, get_current_download_folder, )
+        browser.get(OtherSiteUrls.TV_ZING_VIDEO_URL)
+        self.top_savior_sites_film_actions.close_login_popup_tv_zing(browser)
+        browser.switch_to.default_content()
+        video_title = self.top_sites_savior_title_actions.get_tv_zing_video_title(browser)
+        any_site_page_object.click_first_video_element(browser)
+        any_site_page_object.mouse_over_first_video_element(browser)
+        implement_download_file(browser, get_current_download_folder, startwith=video_title)
 
 
 class TestTVHay:

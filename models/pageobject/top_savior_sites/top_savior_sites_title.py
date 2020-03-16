@@ -1,4 +1,4 @@
-from models.pageelements.top_savior_sites_title import TopSitesSaviorTitleElements
+from models.pageelements.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleElements
 from models.pageobject.basepage_object import BasePageObject
 
 
@@ -10,3 +10,10 @@ class TopSitesSaviorTitleAction(BasePageObject):
 
     def get_xnxx_video_title(self, driver):
         return self.top_sites_savior_title_elements.find_xnxx_video_title_element(driver).text
+
+    def get_tv_zing_video_title(self, driver):
+        return self.top_sites_savior_title_elements.find_tv_zing_video_title_element(driver).text
+
+
+
+
