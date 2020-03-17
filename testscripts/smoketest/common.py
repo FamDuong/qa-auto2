@@ -5,6 +5,8 @@ from pywinauto import Desktop
 from selenium import webdriver
 from os import path
 
+from selenium.webdriver.remote.webelement import WebElement
+
 from utils_automation.common import WindowsHandler, WindowsCMD, find_text_in_file, modify_file_as_text, get_current_dir, \
     wait_for_stable
 
@@ -293,6 +295,16 @@ def wait_for_panel_is_exist(panel):
         time.sleep(2)
         time_delta = datetime.now() - start_time
         if time_delta.total_seconds() >= 12:
+            break
+
+
+def wait_for_element_is_exist(element: WebElement):
+    from datetime import datetime
+    start_time = datetime.now()
+    while element.is_displayed() is False:
+        time.sleep(2)
+        time_delta = datetime.now() - start_time
+        if time_delta.total_seconds() >= 15:
             break
 
 

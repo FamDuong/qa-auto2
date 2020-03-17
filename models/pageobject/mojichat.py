@@ -1,6 +1,6 @@
 import traceback
 from utils_automation.setup import Browser, WaitAfterEach
-from utils_automation.const import Urls
+from utils_automation.const import Urls, OtherSiteUrls
 from models.pageobject.basepage_object import BasePageObject
 from models.pagelocators.mojichat import MojichatLocators
 from models.pageelements.mojichat import MojichatElement
@@ -14,7 +14,7 @@ class MojichatObjects(BasePageObject):
 
     def open_chat_browser(self, browser):
         if (self.chat_type == MojichatLocators.BIG_CHAT):
-            browser.get(Urls.MOJI_BIG_CHATBOX)
+            browser.get(OtherSiteUrls.MOJI_BIG_CHATBOX)
         else:
             browser.get(Urls.FACEBOOK_URL)
             element = self.mojichat_element.find_small_chat_icon(browser)
