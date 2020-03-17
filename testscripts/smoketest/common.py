@@ -38,10 +38,8 @@ def check_if_coccoc_is_installed():
 def check_if_coccoc_installer_is_closed(coccoc_installer):
     installing_lbl_is_exist = coccoc_installer.child_window(title='coccoc.com', class_name='Static').exists()
     if installing_lbl_is_exist is False:
-        print(str(installing_lbl_is_exist) + " Đã cài đặt xong.")
         return True
     else:
-        print(str(installing_lbl_is_exist) + " Đang cài đặt...")
         return False
 
 
@@ -543,15 +541,8 @@ def get_application_process(application_name='browser'):
 
 
 def get_list_start_up_apps():
-    import subprocess
-    try:
-        p = subprocess.Popen(["powershell.exe",
-                              "cd C:\\Script; .\\ShowStartUpApps.ps1"],
-                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        response = p.communicate()
-        return str(response[0])
-    except:
-        print("Ignore error code")
+    list_start_up_apps = WindowsCMD.execute_cmd("wmic startup get caption,command | findstr CocCoc")
+    return str(list_start_up_apps)
 
 
 def kill_browser_process(browser_name='browser.exe'):
