@@ -272,7 +272,7 @@ def cleanup(coccoc_update=True, firefox=True):
     WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
     WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
     WindowsCMD.execute_cmd('taskkill /im iexplore.exe /f')
-    WindowsCMD.execute_cmd('taskkill /im chrome.exe /f')
+    #WindowsCMD.execute_cmd('taskkill /im chrome.exe /f')
     if firefox:
         WindowsCMD.execute_cmd('taskkill /im firefox.exe /f')
 
@@ -295,16 +295,6 @@ def wait_for_panel_is_exist(panel):
         time.sleep(2)
         time_delta = datetime.now() - start_time
         if time_delta.total_seconds() >= 12:
-            break
-
-
-def wait_for_element_is_exist(element: WebElement):
-    from datetime import datetime
-    start_time = datetime.now()
-    while element.is_displayed() is False:
-        time.sleep(2)
-        time_delta = datetime.now() - start_time
-        if time_delta.total_seconds() >= 15:
             break
 
 
