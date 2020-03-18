@@ -32,7 +32,7 @@ class VideoUrls:
     NEWS_ZING_VIDEO_URL = 'https://news.zing.vn/video'
     ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/Attention-J-Fla/ZW7F76D6.html'
     NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summer-girl-haim.Q1gHbL4BuuEXJ.html'
-    DONG_PHIM_VIDEO_URL = 'https://www.dongphim.net/movie/tap-10-phim-bl-ngay-hom-ay-history3-make-our-days-count-2019_bJzjgwQL.html'
+    DONG_PHIM_VIDEO_URL = 'https://www.dongphim.net/movie/tap-1-thien-duong-giet-choc-phan-1-the-valhalla-murders-season-1-2020_KUzKIABB.html'
 
     @classmethod
     def all(cls):
@@ -54,7 +54,7 @@ class OtherSiteUrls:
     TWENTY_FOUR_H_VIDEO_URL = 'https://www.24h.com.vn/bong-da/2-clb-viet-nam-thong-tri-afc-cup-bao-chau-a-noi-gi-c48a1061647.html'
     PHIMMOI_VIDEO_URL = 'http://www.phimmoi.net/phim/linh-kiem-ton-8199/xem-phim.html'
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/thutinhtv/videos/770300356741609/'
-    MESSENGER_CHAT_URL = 'https://www.messenger.com/t/kovakop.donald.3'
+    MESSENGER_CHAT_URL = 'https://www.messenger.com/t/nganhanguyen0306'
     INSTAGRAM_VIDEO_URL = 'https://www.instagram.com/p/B1nlf9AhX4M/'
     KIENTHUC_VIDEO_URL = 'https://kienthuc.net.vn/truyen-hinh-video/video-duong-pho-ha-noi-ngap-sau-sau-mua-bao-1259721.html'
     MOJI_BIG_CHATBOX = 'https://www.messenger.com/t/100013968193318'
@@ -87,7 +87,7 @@ class OtherSiteUrls:
     NGUOI_LAO_DONG_TV_URL = 'https://tv.nld.com.vn/thoi-su-trong-nuoc/co-to-quoc-den-tay-ngu-dan-huyen-can-gio-14531.htm'
     ANIME_VSUB_TV_URL = 'http://animevsub.tv/phim/tay-du-3194/tap-01-61130.html'
     NHAC_VN_VIDEO_URL = 'https://nhac.vn/video/doi-that-la-phoi-phoi-hoang-yen-chibi-uni5-mvG38e'
-    XVIDEOS_DOT_COM_VIDEO_URL = 'https://fr.xvideos.com/video50625357/_'
+    XVIDEOS_DOT_COM_VIDEO_URL = 'https://www.xvideos.es/video50625357/_'
     XNXX_VIDEO_URL = 'http://www.xnxx.es/video-rjo7d8b/step_son_caught_masturbating_shoots_load_into_stepmom_s_panties'
     FR_PORN_HUB_VIDEO_URL = 'https://fr.pornhub.com/view_video.php?viewkey=ph5bd4e9b96091f'
     VLXX_VIDEO_URL = 'http://vlxx.tv/video/bo-oi-con-khong-ngu-duoc/1410/'

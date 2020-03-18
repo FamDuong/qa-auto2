@@ -20,12 +20,12 @@ class TestDownloadGroup:
         delete_all_mp4_file_download(download_folder, '.mp4')
         WaitAfterEach.sleep_timer_after_each_step()
 
-    def implement_test_site(self, browser, url_site, get_current_download_folder):
+    def implement_test_site(self, browser, url_site, get_current_download_folder, **kwargs):
         pause_any_video_site(browser, url_site)
         self.prepare_check_download(get_current_download_folder)
         media_info = download_file_via_main_download_button(browser, )
         resolution_info = get_resolution_info(media_info)
-        assert_file_download_value(get_current_download_folder, resolution_info)
+        assert_file_download_value(get_current_download_folder, resolution_info, **kwargs)
 
     @pytestrail.case('C96719')
     @pytestrail.defect('PF-776')
@@ -49,20 +49,27 @@ class TestDownloadGroup:
 
     @pytestrail.case('C96758')
     @pytest.mark.ten_popular_sites
-    def test_download_nhaccuatui(self, browser, get_current_download_folder, clear_download_page
-                                 , disable_coccoc_block_ads):
-        self.implement_test_site(browser, VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM, get_current_download_folder)
+    def test_download_nhaccuatui(self, browser, get_current_download_folder, clear_download_page):
+        video_title_start_with = "Haim"
+        try:
+            self.implement_test_site(browser, VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM, get_current_download_folder, startwith=video_title_start_with)
+        finally:
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title_start_with)
 
     @pytestrail.case('C98735')
     @pytest.mark.ten_popular_sites
     @pytestrail.defect('PF-517')
+    @pytest.mark.skip(reason='Bug PF-517')
     def test_download_dongphim(self, browser, get_current_download_folder, clear_download_page):
         browser.get(VideoUrls.DONG_PHIM_VIDEO_URL)
         elements = any_site_page_object.choose_watch_option_if_any(browser)
         if len(elements) == 0:
             any_site_page_object.click_video_item_dong_phim(browser)
         any_site_page_object.mouse_over_video_item_dong_phim(browser)
-        implement_download_file(browser, get_current_download_folder, file_size=50.00),
+        try:
+            implement_download_file(browser, get_current_download_folder, file_size=50.00)
+        finally:
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title_start_with)
 
 
 

@@ -10,7 +10,8 @@ from models.pageobject.top_savior_sites.top_savior_sites_film import TopSaviorSi
 from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
 from testscripts.common_setup import implement_download_file, \
     clear_data_download_in_browser_and_download_folder, pause_any_video_site, \
-    handle_windows_watch_option, check_if_the_file_fully_downloaded, assert_file_download_exist
+    handle_windows_watch_option, check_if_the_file_fully_downloaded, assert_file_download_exist, \
+    delete_all_mp4_file_download
 from utils_automation.const import OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
 
@@ -82,9 +83,12 @@ class TestTvZing:
         self.top_savior_sites_film_actions.close_login_popup_tv_zing(browser)
         browser.switch_to.default_content()
         video_title = self.top_sites_savior_title_actions.get_tv_zing_video_title(browser)
-        any_site_page_object.click_first_video_element(browser)
-        any_site_page_object.mouse_over_first_video_element(browser)
-        implement_download_file(browser, get_current_download_folder, startwith=video_title)
+        try:
+            any_site_page_object.click_first_video_element(browser)
+            any_site_page_object.mouse_over_first_video_element(browser)
+            implement_download_file(browser, get_current_download_folder, startwith=video_title)
+        finally:
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title)
 
 
 class TestTVHay:

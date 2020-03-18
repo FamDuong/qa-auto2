@@ -27,7 +27,7 @@ def delete_all_mp4_file_download(mydir, endwith, startwith=None):
     files_handle.delete_files_in_folder(mydir, endwith, startwith=startwith)
 
 
-def download_file_via_main_download_button(browser, time_sleep=5):
+def download_file_via_main_download_button(browser, time_sleep=7):
     import time
     savior_page_object.download_file_via_savior_download_btn(browser)
     time.sleep(time_sleep)
