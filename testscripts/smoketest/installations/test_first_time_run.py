@@ -43,14 +43,16 @@ class TestFirstTimeRun:
             cleanup(firefox=False)
 
     @pytestrail.case('C44829')
-    @pytest.mark.skipif(common.default_is_firefox() is True, reason="Bug BR-947")
     def test_check_first_time_run(self):
-        self.verify_open_browser_for_the_first_time('yes')
-        self.verify_open_browser_for_the_first_time('no')
+        self.verify_open_browser_for_the_first_time(coccoc_is_default='yes')
+        # In win 8, 8.1 not show checkbox "Make Cốc Cốc your default browser"
+        if platform.release() not in ["8", "8.1"]:
+            self.verify_open_browser_for_the_first_time(coccoc_is_default='no')
 
     @pytestrail.case('C44830')
     @pytestrail.defect('BR-1415', 'BR-1205')
-    @pytest.mark.skip(reason='Due to bug BR-1205')
+    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7", "10"], reason=
+    "Takes time set default browser so later and cannot detect windows from pywinauto when open monitor")
     def test_if_widevine_flash_plugin_exist_by_default_right_after_installing_browser(self):
         from testscripts.smoketest.common import cleanup
         cleanup(firefox=False)
@@ -194,7 +196,6 @@ class TestFirstTimeRun:
         assert len(re.findall('CocCocUpdateTaskUser.*UA.*Ready', coccoc_update_tasks)) == 1
 
     @pytestrail.case('C44840')
-    @pytest.mark.skipif(platform.release() in ["7"], reason="Cannot execute get-netfirewallrule in powershell Win 7")
     @pytest.mark.skip(reason="Take times to handle with User Account Control is Always notify")
     def test__rule_in_firewall_of_windows_if_user_selects_allow_access_btn(self):
         # Note: Default when setting, user always select "Allow access" button

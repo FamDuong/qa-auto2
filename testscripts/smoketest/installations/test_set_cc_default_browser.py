@@ -29,7 +29,7 @@ class TestCcDefaultBrowser:
 
     @pytestrail.case('C44843')
     @pytestrail.defect('BR-1133')
-    @pytest.mark.skip(reason="Due to bug BR-1133")
+    #@pytest.mark.skip(reason="Due to bug BR-1133")
     def test_check_if_user_can_set_cc_default_browser_setting_page(self, coccoc_install_instance_set_not_default_browser):
         coccoc_install_instance_set_not_default_browser.get(Urls.COCCOC_SETTINGS_DEFAULT)
         assert "Make Cốc Cốc the default browser" in settings_page_object.get_text_make_default_browser_element(
@@ -40,7 +40,7 @@ class TestCcDefaultBrowser:
 
     @pytestrail.case('C44845')
     @pytestrail.defect('BR-1133')
-    @pytest.mark.skip(reason="Due to bug BR-1133")
+    #@pytest.mark.skip(reason="Due to bug BR-1133")
     def test_set_default_browser_coccoc_then_change_default_browser_to_chrome(self):
         from testscripts.smoketest.conftest import uninstall_then_install_coccoc_with_default
         uninstall_then_install_coccoc_with_default()
@@ -55,8 +55,9 @@ class TestCcDefaultBrowser:
             driver.quit()
 
     @pytestrail.case('C44846')
-    #@pytest.mark.skip(reason="Due to bug BR-1133")
-    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7"], reason="Cannot execute in Windows 8, Windows 8.1, 7")
+    @pytestrail.defect('BR-1133')
+    @pytest.mark.skipif(platform.release() in ["8", "8.1"], reason="Windows 8, Windows 8.1 are not show"
+                                                                   "'Make Cốc Cốc the default browser'")
     def test_check_if_dialog_coccoc_is_not_your_default_after_1_month(self):
         from testscripts.smoketest.common import check_if_coccoc_is_installed
         if check_if_coccoc_is_installed():
