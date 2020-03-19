@@ -19,10 +19,10 @@ class TestFreshInstall:
     browser_handler_obj = BrowserHandler()
     files_handle_obj = FilesHandle()
 
-    # Precondition: Machine is installed Coc Coc
     @pytestrail.case('C44777')
     @pytestrail.defect('BR-1071')
-    @pytest.mark.skip(reason="Bug BR-1071 with installer Vietnamese")
+    @pytest.mark.coccocdev
+    #@pytest.mark.skip(reason="Bug BR-1071 with installer Vietnamese")
     def test_installing_fresh_package_successfully_on_windows(self):
         # Get default download forlder
         browser = common.coccoc_instance()
@@ -42,9 +42,9 @@ class TestFreshInstall:
                 self.delete_installer_download(download_folder, language)
 
     @pytestrail.case('C44779')
-    @pytestrail.defect('BR-810')
     @pytest.mark.coccocdev
-    @pytest.mark.skipif(platform.release() in ["8", "8.1"], reason="Cannot execute in Windows 8, Windows 8.1")
+    @pytest.mark.skipif(platform.release() in ["8", "8.1"], reason="BR-810: Windows 8, Windows 8.1 are not show"
+                                                                   "'Make Cốc Cốc the default browser'")
     def test_popup_of_installer_confirm_during_the_installation(self):
         # Get download folder
         browser = common.coccoc_instance()

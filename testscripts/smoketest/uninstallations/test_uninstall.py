@@ -1,12 +1,14 @@
 import pytest
+import platform
+
 from pytest_testrail.plugin import pytestrail
 
 
 class TestUnInstallations:
 
     @pytestrail.case('C94440')
-    @pytestrail.defect('BR-1278')
     @pytest.mark.usefixtures('install_coccoc_after_finish_test')
+    #@pytest.mark.skipif(platform.release() in ["7"], reason='Defect BR-1278 in win7')
     def test_uninstall_coccoc_browser_successfully_without_clear_user_data(self):
         from testscripts.smoketest.common import uninstall_coccoc_without_delete_user_data, \
             check_if_coccoc_is_installed, install_coccoc_set_as_default
