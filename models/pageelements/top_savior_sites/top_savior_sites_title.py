@@ -17,6 +17,9 @@ class TopSitesSaviorTitleElements(BasePageElement):
     def find_tv_zing_video_title_element(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(TopSaviorSitesTitleLocators.TV_ZING_VIDEO_TITLE))
 
+    def find_youtube_video_title_element(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(TopSaviorSitesTitleLocators.YOUTUBE_VIDEO_TITLE))
+
 
 
 

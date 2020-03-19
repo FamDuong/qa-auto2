@@ -28,7 +28,7 @@ class Urls:
 
 class VideoUrls:
 
-    YOUTUBE_VIDEO_URL = 'https://www.youtube.com/watch?v=IHNzOHi8sJs'
+    YOUTUBE_VIDEO_URL = 'https://www.youtube.com/watch?v=6WzJIp_U-oo'
     NEWS_ZING_VIDEO_URL = 'https://news.zing.vn/video'
     ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/Attention-J-Fla/ZW7F76D6.html'
     NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summer-girl-haim.Q1gHbL4BuuEXJ.html'

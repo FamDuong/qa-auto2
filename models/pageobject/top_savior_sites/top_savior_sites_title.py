@@ -14,6 +14,9 @@ class TopSitesSaviorTitleAction(BasePageObject):
     def get_tv_zing_video_title(self, driver):
         return self.top_sites_savior_title_elements.find_tv_zing_video_title_element(driver).text
 
+    def get_youtube_video_title(self, driver):
+        return self.top_sites_savior_title_elements.find_youtube_video_title_element(driver).text
+
 
 
 

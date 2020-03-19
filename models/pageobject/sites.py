@@ -343,7 +343,10 @@ class AnySitePageObject(BasePageObject):
         try:
             elem = self.any_site_element.find_video_play_btn_fr_porn_hub(driver)
             if elem is not None:
-                elem.click()
+                try:
+                    elem.click()
+                except:
+                    pass
         except NoSuchElementException as e:
             print(e.stacktrace)
 

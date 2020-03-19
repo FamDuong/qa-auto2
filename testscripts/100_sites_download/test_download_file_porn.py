@@ -53,7 +53,6 @@ class TestPornHub:
     @pytestrail.case('C98771')
     @pytestrail.defect('PF-620')
     @pytest.mark.ten_popular_sites
-    @pytest.mark.skip(reason='Cannot download due to network error or forbidden')
     def test_download_file_porn_hub(self, browser, get_current_download_folder
                                     , clear_download_page, ):
         browser.get(OtherSiteUrls.FR_PORN_HUB_VIDEO_URL)

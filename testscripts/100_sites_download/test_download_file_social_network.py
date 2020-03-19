@@ -2,7 +2,7 @@ import pytest
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
-from testscripts.common_setup import implement_download_file
+from testscripts.common_setup import implement_download_file, delete_all_mp4_file_download
 from utils_automation.const import OtherSiteUrls
 
 
@@ -36,7 +36,11 @@ class TestMessenger:
     def test_download_file_messenger(self, browser, get_current_download_folder
                                      , clear_download_page):
         self.setup_savior_option_appear(browser)
-        implement_download_file(browser, get_current_download_folder),
+        video_title_start_with = 'Messenger'
+        try:
+            implement_download_file(browser, get_current_download_folder, startwith=video_title_start_with),
+        finally:
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title_start_with)
 
 
 class TestInstagram:
