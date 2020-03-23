@@ -43,7 +43,6 @@ class TestPhimmoi:
     @pytestrail.case('C96721')
     @pytest.mark.ten_popular_sites
     @pytestrail.defect('BR-1187')
-    @pytest.mark.skip(reason="Cannot convert video to mp4")
     def test_download_file_phim_moi(self, browser, get_current_download_folder
                                     , clear_download_page
                                     , enable_ublock_plus_extension):
