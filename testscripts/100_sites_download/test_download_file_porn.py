@@ -18,7 +18,6 @@ class TestXVideos:
     @pytestrail.case('C96723')
     @pytestrail.defect('PF-859')
     @pytest.mark.ten_popular_sites
-    @pytest.mark.skip(reason='Cannot detect video PF-859')
     def test_download_file_x_videos(self, browser, get_current_download_folder, clear_download_page):
         browser.get(OtherSiteUrls.XVIDEOS_DOT_COM_VIDEO_URL)
         title = top_sites_savior_title_action.get_x_videos_title_video(browser)
@@ -35,7 +34,6 @@ class TestXNXX:
     @pytestrail.case('C96754')
     @pytestrail.defect('PF-833')
     @pytest.mark.ten_popular_sites
-    @pytest.mark.skip(reason='Skip due to bug PF-833')
     def test_download_file_xnxx_videos(self, browser, get_current_download_folder
                                     , clear_download_page):
         browser.get(OtherSiteUrls.XNXX_VIDEO_URL)
@@ -53,7 +51,6 @@ class TestPornHub:
     @pytestrail.case('C98771')
     @pytestrail.defect('PF-620')
     @pytest.mark.ten_popular_sites
-    @pytest.mark.skip(reason='Cannot access fr.pornhub')
     def test_download_file_porn_hub(self, browser, get_current_download_folder
                                     , clear_download_page, ):
         browser.get(OtherSiteUrls.FR_PORN_HUB_VIDEO_URL)

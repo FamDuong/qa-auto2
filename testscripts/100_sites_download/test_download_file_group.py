@@ -63,7 +63,6 @@ class TestDownloadGroup:
     @pytestrail.case('C98735')
     @pytest.mark.ten_popular_sites
     @pytestrail.defect('PF-517')
-    @pytest.mark.skip(reason='Bug PF-517')
     def test_download_dongphim(self, browser, get_current_download_folder, clear_download_page):
         browser.get(VideoUrls.DONG_PHIM_VIDEO_URL)
         elements = any_site_page_object.choose_watch_option_if_any(browser)
