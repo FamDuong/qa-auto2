@@ -17,12 +17,6 @@ class TopSitesSaviorTitleAction(BasePageObject):
     def get_youtube_video_title(self, driver):
         return self.top_sites_savior_title_elements.find_youtube_video_title_element(driver).text
 
-    def get_instagram_video_title(self, driver):
-        return self.top_sites_savior_title_elements.find_video_instagram_title_element(driver).text
-
-    def get_messenger_video_title(self, driver):
-        return self.top_sites_savior_title_elements.find_video_messenger_title_element(driver).text
-
 
 
 

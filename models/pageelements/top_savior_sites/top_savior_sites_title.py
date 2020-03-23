@@ -20,12 +20,6 @@ class TopSitesSaviorTitleElements(BasePageElement):
     def find_youtube_video_title_element(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(TopSaviorSitesTitleLocators.YOUTUBE_VIDEO_TITLE))
 
-    def find_video_instagram_title_element(self, driver):
-        return self.wait_for_element(driver).until(ec.presence_of_element_located(TopSaviorSitesTitleLocators.INSTAGRAM_VIDEO_TITLE))
-
-    def find_video_messenger_title_element(self, driver):
-        return self.wait_for_element(driver).until(ec.presence_of_element_located(TopSaviorSitesTitleLocators.MESSENGER_VIDEO_TITLE))
-
 
 
 
