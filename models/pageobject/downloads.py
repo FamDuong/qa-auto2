@@ -113,6 +113,8 @@ class DownloadsPageObject(BasePageObject):
                     break
                 elif len(self.downloads_elem.find_interrupted_elements(driver)) > 0:
                     break
+                elif len(self.downloads_elem.find_status_text_dangerous(driver)) > 0:
+                    break
             WaitAfterEach.sleep_timer_after_each_step()
         WaitAfterEach.sleep_timer_after_each_step()
         return index
