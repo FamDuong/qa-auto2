@@ -36,6 +36,7 @@ class TestMessenger:
 
     @pytestrail.case('C96722')
     @pytest.mark.ten_popular_sites
+    @pytest.mark.skip(reason='Cannot access to messenger.com')
     def test_download_file_messenger(self, browser, get_current_download_folder
                                      , clear_download_page):
         self.setup_savior_option_appear(browser)
