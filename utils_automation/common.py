@@ -232,7 +232,7 @@ class WebElements:
 
 class WindowsCMD:
     @staticmethod
-    def execute_cmd(cmd_text, is_split=True):
+    def execute_cmd(cmd_text, is_split=False):
         wait_for_stable()
         if is_split:
             process = subprocess.Popen(cmd_text.split(), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)

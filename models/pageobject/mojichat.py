@@ -1,11 +1,19 @@
-import traceback
+import time
+from datetime import datetime
+from models.pagelocators.extensions import MojiChatLocators
+from models.pagelocators.facebook import FacebookPageLocators, FacebookMessagePageLocators
+from models.pageobject.settings import SettingsPageObject
 from utils_automation.setup import Browser, WaitAfterEach
 from utils_automation.const import Urls, OtherSiteUrls
 from models.pageobject.basepage_object import BasePageObject
 from models.pagelocators.mojichat import MojichatLocators
 from models.pageelements.mojichat import MojichatElement
+from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetailsPageObject
 
 class MojichatObjects(BasePageObject):
+    settings_page_object = SettingsPageObject()
+    extensions_page_object = ExtensionsPageObject()
+    extensions_details_page_object = ExtensionsDetailsPageObject()
     # mojichat_element = MojichatElement(self.chat_type)
 
     def __init__(self, type = MojichatLocators.BIG_CHAT):
@@ -71,6 +79,98 @@ class MojichatObjects(BasePageObject):
         element = self.mojichat_element.find_chat_input(driver)
         chat = self.get_text_element(element)
         assert chat == ""
+
+    def logout_facebook(self, driver):
+        driver.find_element_by_id(FacebookPageLocators.COCCOC_AT_NAME_XPATH).click()
+        logout_btn_count = driver.find_elements_by_xpath(FacebookPageLocators.LOGOUT_BTN_XPATH)
+
+        start_time = datetime.now()
+        while len(logout_btn_count) == 0:
+            time.sleep(2)
+            logout_btn_count = driver.find_elements_by_xpath(FacebookPageLocators.LOGOUT_BTN_XPATH)
+            time_delta = datetime.now() - start_time
+            if time_delta.total_seconds() >= 15:
+                break
+        driver.find_element_by_xpath(FacebookPageLocators.LOGOUT_BTN_XPATH).click()
+
+    def login_facebook(self, driver):
+        driver.get(Urls.FACEBOOK_URL)
+        coccoc_at_user_lbl = driver.find_elements_by_xpath(FacebookPageLocators.COCCOC_AT_NAME_XPATH)
+        if len(coccoc_at_user_lbl) == 0:
+            show_menu_setting_icon = driver.find_elements_by_xpath(FacebookPageLocators.SHOW_MENU_SETTING_ICON_XPATH)
+            if len(show_menu_setting_icon) == 1:
+                self.logout_facebook(driver)
+            email_txt = driver.find_element_by_id(FacebookPageLocators.EMAIL_TXT_ID)
+            pass_txt = driver.find_element_by_id(FacebookPageLocators.PASS_TXT_ID)
+            from utils_automation.common import WebElements
+            WebElements.enter_string_into_element(email_txt, FacebookPageLocators.EMAIL)
+            WebElements.enter_string_into_element(pass_txt, FacebookPageLocators.PASS)
+            driver.find_element_by_xpath(FacebookPageLocators.SUBMIT_BTN_XPATH).click()
+            show_menu_setting_icon = driver.find_elements_by_xpath(FacebookPageLocators.SHOW_MENU_SETTING_ICON_XPATH)
+
+            start_time = datetime.now()
+            while len(show_menu_setting_icon) == 0:
+                time.sleep(2)
+                show_menu_setting_icon = driver.find_elements_by_xpath(
+                    FacebookPageLocators.SHOW_MENU_SETTING_ICON_XPATH)
+                time_delta = datetime.now() - start_time
+                if time_delta.total_seconds() >= 15:
+                    break
+
+    def on_off_moji_extension(self, driver, action='ON'):
+        driver.get(Urls.COCCOC_EXTENSIONS)
+        from models.pageelements.basepage_elements import BasePageElement
+        from models.pagelocators.extensions import ExtensionsPageLocators, MojiChatLocators
+        on_off_btn = BasePageElement().find_shadow_element(driver, ExtensionsPageLocators.EXTENSIONS_MANAGER_TEXT,
+                                                           ExtensionsPageLocators.ITEMS_LIST,
+                                                           MojiChatLocators.MOJICHAT_ID,
+                                                           MojiChatLocators.MOJICHAT_ON_OFF_ID)
+        if action in 'ON':
+            if on_off_btn.get_attribute('checked') is None:
+                on_off_btn.click()
+        elif action in 'OFF':
+            if on_off_btn.get_attribute('checked'):
+                on_off_btn.click()
+        time.sleep(2)
+
+    def verify_moji_icon_in_message_dot_com(self, driver, moji_is_on=True):
+        driver.get(Urls.MESSENDER_URL)
+        continue_as_user_btn = driver.find_elements_by_xpath(FacebookMessagePageLocators.CONTINUE_WITH_USER_BTN_XPATH)
+        if len(continue_as_user_btn) == 1:
+            driver.find_element_by_xpath(FacebookMessagePageLocators.CONTINUE_WITH_USER_BTN_XPATH).click()
+        moji_icon = driver.find_elements_by_xpath(MojichatLocators.MOJI_ICON)
+        if moji_is_on:
+            assert len(moji_icon) == 1
+        else:
+            assert len(moji_icon) == 0
+
+    def verify_moji_icon_in_facebook_message_dot_com(self, driver, moji_is_on=True):
+        driver.get(Urls.FACEBOOK_MESSENDER_URL)
+        moji_icon = driver.find_elements_by_xpath(MojichatLocators.MOJI_ICON)
+        if moji_is_on:
+            assert len(moji_icon) == 1
+        else:
+            assert len(moji_icon) == 0
+
+    def verify_moji_icon_in_small_chat(self, driver, moji_is_on=True):
+        driver.get(Urls.FACEBOOK_URL)
+        coccoc_at_user_lbl = driver.find_elements_by_xpath(FacebookPageLocators.COCCOC_AT_NAME_XPATH)
+        if len(coccoc_at_user_lbl) == 0:
+            self.login_facebook(driver)
+        driver.find_element_by_xpath(FacebookPageLocators.FACEBOOK_MESSAGE_SMALL_ICON_XPATH).click()
+        time.sleep(2)
+        driver.find_element_by_xpath(FacebookPageLocators.USER_NAME_ON_CHAT_TOOL_TIP_XPATH).click()
+        moji_icon = driver.find_elements_by_xpath(MojichatLocators.MOJI_ICON)
+        if moji_is_on:
+            assert len(moji_icon) == 1
+        else:
+            assert len(moji_icon) == 0
+
+    def on_off_moji_in_detail_extension_page(self, driver):
+        self.settings_page_object.enable_extension_toggle_dev_mode(driver)
+        self.extensions_page_object.click_extension_detail_button(driver, MojiChatLocators.MOJICHAT_ID)
+        self.extensions_details_page_object.on_off_extension_in_detail_page(driver, is_on_extension=False)
+
 
 
 
