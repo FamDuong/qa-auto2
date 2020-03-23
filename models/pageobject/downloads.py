@@ -80,7 +80,8 @@ class DownloadsPageObject(BasePageObject):
         assert len(elements) == 0
 
     def do_not_seed_action(self, driver):
-        do_not_seed_btn = self.downloads_elem.find_do_not_seed_button(driver)
+        from selenium.webdriver.remote.webelement import WebElement
+        do_not_seed_btn: WebElement = self.downloads_elem.find_do_not_seed_button(driver)
         do_not_seed_btn.click()
 
     def cancel_all_current_torrent(self, driver):

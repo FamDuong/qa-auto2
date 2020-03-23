@@ -116,7 +116,10 @@ class AnySitePageObject(BasePageObject):
 
     def click_video_element_messenger_chat(self, driver):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
-        self.any_site_element.find_play_button_in_messenger_chat(driver).click()
+        try:
+            self.any_site_element.find_play_button_in_messenger_chat(driver).click()
+        except:
+            pass
 
     def mouse_over_video_element_instagram(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_in_instagram(driver))
@@ -340,7 +343,10 @@ class AnySitePageObject(BasePageObject):
         try:
             elem = self.any_site_element.find_video_play_btn_fr_porn_hub(driver)
             if elem is not None:
-                elem.click()
+                try:
+                    elem.click()
+                except:
+                    pass
         except NoSuchElementException as e:
             print(e.stacktrace)
 

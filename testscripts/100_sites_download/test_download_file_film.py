@@ -5,9 +5,13 @@ from models.pageelements.sites import AnySiteElements
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
+
+from models.pageobject.top_savior_sites.top_savior_sites_film import TopSaviorSitesFilmActions
+from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
 from testscripts.common_setup import implement_download_file, \
     clear_data_download_in_browser_and_download_folder, pause_any_video_site, \
-    handle_windows_watch_option, check_if_the_file_fully_downloaded, assert_file_download_exist
+    handle_windows_watch_option, check_if_the_file_fully_downloaded, assert_file_download_exist, \
+    delete_all_mp4_file_download
 from utils_automation.const import OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
 
@@ -41,7 +45,7 @@ class TestPhimmoi:
     @pytestrail.defect('BR-1187')
     @pytest.mark.skip(reason="Cannot convert video to mp4")
     def test_download_file_phim_moi(self, browser, get_current_download_folder
-                                    , clear_download_page_and_download_folder
+                                    , clear_download_page
                                     , enable_ublock_plus_extension):
         self.prepare_displayed_savior_popup(browser)
         implement_download_file(browser, get_current_download_folder, )
@@ -60,7 +64,7 @@ class TestVuViPhim:
 
     @pytestrail.case('C98751')
     def test_download_file_vuviphim(self, browser, get_current_download_folder
-                                    , clear_download_page_and_download_folder):
+                                    , clear_download_page):
         self.prepare_savior_option_displayed(browser)
         implement_download_file(browser, get_current_download_folder, ),
         clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
@@ -68,19 +72,30 @@ class TestVuViPhim:
 
 class TestTvZing:
 
+    top_savior_sites_film_actions = TopSaviorSitesFilmActions()
+    top_sites_savior_title_actions = TopSitesSaviorTitleAction()
+
     @pytestrail.case('C96763')
     @pytest.mark.ten_popular_sites
     def test_download_file_tv_zing(self, browser, get_current_download_folder
-                                   , clear_download_page_and_download_folder):
-        pause_any_video_site(browser, OtherSiteUrls.TV_ZING_VIDEO_URL)
-        implement_download_file(browser, get_current_download_folder, )
+                                   , clear_download_page):
+        browser.get(OtherSiteUrls.TV_ZING_VIDEO_URL)
+        self.top_savior_sites_film_actions.close_login_popup_tv_zing(browser)
+        browser.switch_to.default_content()
+        video_title = self.top_sites_savior_title_actions.get_tv_zing_video_title(browser)
+        try:
+            any_site_page_object.click_first_video_element(browser)
+            any_site_page_object.mouse_over_first_video_element(browser)
+            implement_download_file(browser, get_current_download_folder, startwith=video_title)
+        finally:
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title)
 
 
 class TestTVHay:
 
     @pytestrail.case('C98762')
     def test_download_file_video_tv_hay(self, browser, get_current_download_folder
-                                        , clear_download_page_and_download_folder):
+                                        , clear_download_page):
         browser.get(OtherSiteUrls.TV_HAY_VIDEO_URL)
         any_site_page_object.switch_to_tv_hay_iframe(browser)
         any_site_page_object.click_play_btn_tv_hay(browser)
@@ -101,7 +116,7 @@ class TestAnimeSub:
     @pytestrail.case('C98781')
     @pytestrail.defect('PF-559')
     def test_download_file_video_anime_sub(self, browser, get_current_download_folder
-                                           , clear_download_page_and_download_folder):
+                                           , clear_download_page):
         browser.get(OtherSiteUrls.ANIME_VSUB_TV_URL)
         try:
             browser.switch_to.alert.dismiss()
@@ -120,7 +135,7 @@ class TestAnimeTVN:
     @pytestrail.defect('US-43')
     @pytest.mark.skip(reason='Cannot video file on link')
     def test_download_file_video_anime_tvn(self, browser, get_current_download_folder
-                                           , clear_download_page_and_download_folder):
+                                           , clear_download_page):
         browser.get(OtherSiteUrls.ANIME_TVN_VIDEO_URL)
         any_site_page_object.mouse_over_tvn_video_element(browser)
         implement_download_file(browser, get_current_download_folder)
@@ -131,7 +146,7 @@ class TestPhimBatHu:
     @pytestrail.case('C98804')
     @pytest.mark.usefixtures('clear_download_page_and_download_folder')
     def test_download_file_video_phim_bat_hu(self, browser, get_current_download_folder
-                                             , clear_download_page_and_download_folder):
+                                             , clear_download_page):
         browser.get(OtherSiteUrls.PHIM_BAT_HU_VIDEO_URL)
         # any_site_page_object.click_video_phim_bat_hu_video_element(browser)
         any_site_page_object.mouse_over_phim_bat_hu_video_element(browser)
@@ -142,7 +157,7 @@ class TestAnimeHayTV:
 
     @pytestrail.case('C98723')
     def test_download_file_video_anime_hay_tv(self, browser, get_current_download_folder
-                                              , clear_download_page_and_download_folder):
+                                              , clear_download_page):
         browser.get(OtherSiteUrls.ANIME_HAY_TV_VIDEO_URL)
         any_site_page_object.mouse_over_video_wrapper_element_anime_hay_tv(browser)
         any_site_page_object.switch_to_iframe_anime_hay_tv(browser)
@@ -153,7 +168,7 @@ class TestVietSubTV:
 
     @pytestrail.case('C98786')
     def test_download_file_video_vietsub_tv(self, browser, get_current_download_folder
-                                            , clear_download_page_and_download_folder
+                                            , clear_download_page
                                             , enable_ublock_plus_extension):
         browser.get(OtherSiteUrls.VIET_SUB_TV_VIDEO_URL)
         any_site_page_object.play_video_viet_sub_tv(browser)
@@ -171,7 +186,7 @@ class TestVtv16Info:
 
     @pytestrail.case('C98732')
     def test_download_file_video_vtv16_info(self, browser, get_current_download_folder
-                                            , clear_download_page_and_download_folder):
+                                            , clear_download_page):
         browser.get(OtherSiteUrls.VTV16_INFO_VIDEO_URL)
         any_site_page_object.mouse_over_video_vtv16_info_net(browser)
         implement_download_file(browser, get_current_download_folder, ),
@@ -181,7 +196,7 @@ class TestClipAnime:
 
     @pytestrail.case('C98742')
     def test_download_file_video_clip_anime(self, browser, get_current_download_folder
-                                            , clear_download_page_and_download_folder):
+                                            , clear_download_page):
         browser.get(OtherSiteUrls.CLIP_ANIME_VN_VIDEO_URL)
         any_site_page_object.mouse_over_clip_anime_com(browser)
         implement_download_file(browser, get_current_download_folder, ),
@@ -193,7 +208,7 @@ class TestMotPhimNet:
     @pytestrail.defect('PF-541')
     @pytest.mark.skip(reason='Cannot download file video motphim')
     def test_download_file_film_mot_phim_net(self, browser, get_current_download_folder
-                                             , clear_download_page_and_download_folder):
+                                             , clear_download_page):
         browser.get(OtherSiteUrls.MOT_PHIM_VIDEO_URL)
 
 
@@ -202,7 +217,7 @@ class TestXemVtvNet:
     @pytestrail.case('C98800')
     @pytestrail.defect('PF-512')
     def test_download_video_xem_vtv_net(self, browser, get_current_download_folder
-                                        , clear_download_page_and_download_folder):
+                                        , clear_download_page):
         browser.get(OtherSiteUrls.XEM_VTV_NET)
         any_site_page_object.click_play_btn_xem_vtv_net(browser)
         any_site_page_object.mouse_over_video_xem_vtv_net(browser)
