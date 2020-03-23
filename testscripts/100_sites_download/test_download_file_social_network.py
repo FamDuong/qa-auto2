@@ -2,12 +2,15 @@ import pytest
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
+
+from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
 from testscripts.common_setup import implement_download_file, delete_all_mp4_file_download
 from utils_automation.const import OtherSiteUrls
 
 
 any_site_page_object = AnySitePageObject()
 savior_page_object = SaviorPageObject()
+top_sites_savior_title_actions = TopSitesSaviorTitleAction()
 
 
 class TestFacebook:
@@ -36,7 +39,7 @@ class TestMessenger:
     def test_download_file_messenger(self, browser, get_current_download_folder
                                      , clear_download_page):
         self.setup_savior_option_appear(browser)
-        video_title_start_with = 'Messenger'
+        video_title_start_with = top_sites_savior_title_actions.get_messenger_video_title(browser)
         try:
             implement_download_file(browser, get_current_download_folder, startwith=video_title_start_with),
         finally:
@@ -51,10 +54,15 @@ class TestInstagram:
         any_site_page_object.mouse_over_video_element_instagram(browser)
 
     @pytestrail.case('C96751')
+    @pytest.mark.ten_popular_sites
     def test_download_file_instagram(self, browser, get_current_download_folder
                                      , clear_download_page):
         self.prepare_appear_savior_option(browser)
-        implement_download_file(browser, get_current_download_folder),
+        video_title_start_with = top_sites_savior_title_actions.get_instagram_video_title(browser)
+        try:
+            implement_download_file(browser, get_current_download_folder, startwith=video_title_start_with),
+        finally:
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title_start_with)
 
 
 class TestTwitter:

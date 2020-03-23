@@ -6,6 +6,8 @@ class TopSaviorSitesTitleLocators(object):
     XNXX_VIDEO_TITLE = (By.XPATH, '//*[@id="video-content-metadata"]/div[1]/strong')
     TV_ZING_VIDEO_TITLE = (By.XPATH, '//div[@class="box-description"]//strong[@alt]')
     YOUTUBE_VIDEO_TITLE = (By.XPATH, '//*[@id="container"]/h1/yt-formatted-string')
+    INSTAGRAM_VIDEO_TITLE = (By.XPATH, '//meta[@property="og:title"]')
+    MESSENGER_VIDEO_TITLE = (By.XPATH, '//*[@id="pageTitle"]')
 
 
 
