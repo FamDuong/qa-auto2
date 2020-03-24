@@ -52,6 +52,8 @@ class TestSuggestionPanelBigBoxChat:
         driver.get(Urls.COCCOC_EXTENSIONS)
         self.mojichat_object.on_off_moji_extension(driver, action="ON")
         self.mojichat_object.login_facebook(driver)
+        self.mojichat_object.verify_send_first_sticker(driver, chat_type='SMALL_CHAT')
+        self.mojichat_object.verify_send_first_sticker(driver, chat_type='BIG_CHAT')
 
 #     @pytestrail.case('C54462')
 #     def test_check_if_suggestion_is_shown_when_entering_the_supported_keyword(self, browser):

@@ -156,10 +156,11 @@ class MojichatObjects(BasePageObject):
         self.extensions_page_object.click_extension_detail_button(driver, MojiChatLocators.MOJICHAT_ID)
         self.extensions_details_page_object.on_off_extension_in_detail_page(driver, is_on_extension=False)
 
-    def verify_send_first_sticker_small_chat(self, driver):
-        self.input_keyword_then_verify_sticker_suggestion_and_tooltip(driver)
-        self.send_sticker_then_verify_thankyou_popup(driver)
-        self.close_thank_you_popup_then_verify_it_closed(driver)
+    def verify_send_first_sticker(self, driver, chat_type):
+        self.open_chat_browser(driver, chat_type)
+        self.input_keyword_then_verify_sticker_suggestion_and_tooltip(driver, chat_type)
+        self.send_sticker_then_verify_thankyou_popup(driver, chat_type)
+        self.close_thank_you_popup_then_verify_it_closed(driver, chat_type)
 
     # def send_text_into_chat(self, driver, chat_text):
     #     self.input_text_into_chat(driver, chat_text)
