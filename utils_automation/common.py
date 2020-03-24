@@ -230,6 +230,10 @@ class WebElements:
         element.send_keys(Keys.DELETE)
         element.send_keys(string)
 
+    @staticmethod
+    def click_element_by_javascript(driver, element):
+        driver.execute_script('arguments[0].click()', element)
+
 class WindowsCMD:
     @staticmethod
     def execute_cmd(cmd_text, is_split=False):
