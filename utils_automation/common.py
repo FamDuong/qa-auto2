@@ -225,14 +225,9 @@ class WebElements:
         hov.perform()
 
     @staticmethod
-    def enter_string_into_element(element, string):
-        element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.DELETE)
-        element.send_keys(string)
-
-    @staticmethod
     def click_element_by_javascript(driver, element):
         driver.execute_script('arguments[0].click()', element)
+
 
 class WindowsCMD:
     @staticmethod

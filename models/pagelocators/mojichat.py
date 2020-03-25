@@ -24,22 +24,13 @@ class MojichatLocators:
     CLICK_VAO_HINH_DE_GUI_NHE_LBL = 'div.onboarding-tooltip'
     # Sticker suggestion by index
     STICKER_SUGGESTION_PARENT = 'div.chat-suggestion-container'
-    STICKER_SUGGESTION_INDEX0 = 'div.show-suggestions:nth-child(0)>#sticker-suggestion'
-    STICKER_SUGGESTION_INDEX1 = 'div.show-suggestions:nth-child(1)>#sticker-suggestion'
-    STICKER_SUGGESTION_INDEX2 = 'div.show-suggestions:nth-child(2)>#sticker-suggestion'
-    STICKER_SUGGESTION_INDEX3 = 'div.show-suggestions:nth-child(3)>#sticker-suggestion'
-    STICKER_SUGGESTION_INDEX4 = 'div.show-suggestions:nth-child(4)>#sticker-suggestion'
-    STICKER_SUGGESTION_INDEX5 = 'div.show-suggestions:nth-child(5)>#sticker-suggestion'
-    STICKER_SUGGESTION_INDEX6 = 'div.show-suggestions:nth-child(6)>#sticker-suggestion'
+    STICKER_SUGGESTION_INDEX = 'div.show-suggestions:nth-child({param1})>#sticker-suggestion'
     THANK_YOU_LBL = 'div.onboarding-header-text'
     DA_HIEU_BTN = 'div.onboarding-footer #close'
 
     # First time open moji on big chat (messenger.com)
-    MOJI_SHADOW_PARENT_BIG_CHAT = '#cch_fc08ea6a9ab05 div.moji-icon > div'
-    CLICK_VAO_HINH_DE_GUI_NHE_SHADOW_PARENT_BIG_CHAT = "#cch_fc08ea6a9ab05 div[aria-label='Tin nhắn mới'] div:nth-child(1)"
-    STICKER_SUGGESTION_PARENT_BIG_CHAT = "#cch_fc08ea6a9ab05 div[aria-label='Tin nhắn mới'] div.chat-suggestion-container"
-    STICKER_SUGGESTION_INDEX7 = 'div.show-suggestions:nth-child(7)>#sticker-suggestion'
-    STICKER_SUGGESTION_INDEX8 = 'div.show-suggestions:nth-child(8)>#sticker-suggestion'
-    STICKER_SUGGESTION_INDEX9 = 'div.show-suggestions:nth-child(9)>#sticker-suggestion'
-    STICKER_SUGGESTION_INDEX10 = 'div.show-suggestions:nth-child(10)>#sticker-suggestion'
-    STICKER_SUGGESTION_INDEX11 = 'div.show-suggestions:nth-child(11)>#sticker-suggestion'
+    CLICK_VAO_HINH_DE_GUI_NHE_SHADOW_PARENT_BIG_CHAT = "div[aria-label='Tin nhắn mới'] div:nth-child(1)"
+    MOJI_SHADOW_PARENT_BIG_CHAT = 'div.moji-icon > div'
+
+    GAN_DAY_ICON = '#recent-stickers"'
+

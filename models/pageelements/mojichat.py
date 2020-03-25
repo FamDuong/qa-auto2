@@ -8,7 +8,7 @@ from utils_automation.setup import WaitAfterEach
 
 
 class MojichatElement(BasePageElement):
-    global chat_type
+    # global chat_type
 
     # def __init__(self, type=MojichatLocators.BIG_CHAT):
     #     self.chat_type = type
@@ -64,62 +64,9 @@ class MojichatElement(BasePageElement):
                                                                           MojichatLocators.CLICK_VAO_HINH_DE_GUI_NHE_LBL)
         return click_vao_hinh_de_gui_nhe_tool_tip
 
-    def find_sticker_by_index(self, driver, chat_type, index):
-        sticker_suggestion_index = 'MojichatLocators.STICKER_SUGGESTION_INDEX' + index
-        if chat_type in 'SMALL_CHAT':
-            return self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT,
-                                            sticker_suggestion_index)
-        elif chat_type in 'BIG_CHAT':
-            return self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT_BIG_CHAT,
-                                            sticker_suggestion_index)
-
-    # def find_sticker_index0(self, driver):
-    #     return self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT,
-    #                                     MojichatLocators.STICKER_SUGGESTION_INDEX0)
-    #
-    # def find_sticker_index1(self, driver):
-    #     return self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT,
-    #                                     MojichatLocators.STICKER_SUGGESTION_INDEX1)
-    #
-    # def find_sticker_index2(self, driver):
-    #     return self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT,
-    #                                     MojichatLocators.STICKER_SUGGESTION_INDEX2)
-    #
-    # def find_sticker_index3(self, driver):
-    #     return self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT,
-    #                                     MojichatLocators.STICKER_SUGGESTION_INDEX3)
-    #
-    # def find_sticker_index4(self, driver):
-    #     return self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT,
-    #                                     MojichatLocators.STICKER_SUGGESTION_INDEX4)
-    #
-    # def find_sticker_index5(self, driver):
-    #     return self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT,
-    #                                     MojichatLocators.STICKER_SUGGESTION_INDEX5)
-    #
-    # def find_sticker_index6(self, driver):
-    #     return self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT,
-    #                                     MojichatLocators.STICKER_SUGGESTION_INDEX6)
-    #
-    # def find_sticker_index7(self, driver):
-    #     return self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT,
-    #                                     MojichatLocators.STICKER_SUGGESTION_INDEX7)
-    #
-    # def find_sticker_index8(self, driver):
-    #     return self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT,
-    #                                     MojichatLocators.STICKER_SUGGESTION_INDEX8)
-    #
-    # def find_sticker_index9(self, driver):
-    #     return self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT,
-    #                                     MojichatLocators.STICKER_SUGGESTION_INDEX9)
-    #
-    # def find_sticker_index10(self, driver):
-    #     return self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT,
-    #                                     MojichatLocators.STICKER_SUGGESTION_INDEX10)
-    #
-    # def find_sticker_index11(self, driver):
-    #     return self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT,
-    #                                     MojichatLocators.STICKER_SUGGESTION_INDEX11)
+    def find_sticker_by_index(self, driver, index):
+        sticker_suggestion_index = MojichatLocators.STICKER_SUGGESTION_INDEX.replace('{param1}', str(index))
+        return self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT, sticker_suggestion_index)
 
     def find_thank_you_popup(self, driver, chat_type):
         if chat_type in 'SMALL_CHAT':
@@ -133,14 +80,16 @@ class MojichatElement(BasePageElement):
         if chat_type in 'SMALL_CHAT':
             return self.find_shadow_element(driver, MojichatLocators.MOJI_SHADOW_PARENT, MojichatLocators.DA_HIEU_BTN)
         elif chat_type in 'BIG_CHAT':
-            return self.find_shadow_element(driver, MojichatLocators.MOJI_SHADOW_PARENT_BIG_CHAT, MojichatLocators.DA_HIEU_BTN)
+            return self.find_shadow_element(driver, MojichatLocators.MOJI_SHADOW_PARENT_BIG_CHAT,
+                                            MojichatLocators.DA_HIEU_BTN)
+
 
 class ChatElement(BasePageElement):
     def find_chat_input(self, driver, chat_type):
         wait = WebDriverWait(driver, 20)
         chat_box = None
-        if self.chat_type in 'BIG_CHAT':
+        if chat_type in 'BIG_CHAT':
             chat_box = MojichatLocators.BIG_CHAT_INPUT
-        elif self.chat_type in 'SMALL_CHAT':
+        elif chat_type in 'SMALL_CHAT':
             chat_box = MojichatLocators.SMALL_CHAT_INPUT
         return wait.until(ec.presence_of_element_located(chat_box))
