@@ -21,31 +21,23 @@ savior_page_object = SaviorPageObject()
 
 class TestPhimmoi:
 
-    @staticmethod
-    def prepare_displayed_savior_popup(browser):
+    top_sites_savior_actions = TopSaviorSitesFilmActions()
+
+    def prepare_displayed_savior_popup(self, browser):
         browser.get(OtherSiteUrls.PHIMMOI_VIDEO_URL)
-        windows_list = browser.window_handles
-        print(windows_list)
-        if len(windows_list) >= 2:
-            browser.switch_to.window(windows_list[0])
-            any_site_page_object.close_popup_continue_watching(browser)
-            if len(browser.find_elements_by_xpath('//a[@class="close"]')) > 0:
-                browser.find_element_by_xpath('//a[@class="close"]').click()
-            # browser.switch_to.active_element()
-            if any_site_page_object.verify_exist_ads_pop_up_phim_moi(browser) > 0:
-                any_site_page_object.close_image_popup_phim_moi(browser)
-            browser.switch_to.default_content()
-        else:
-            any_site_page_object.close_popup_continue_watching(browser)
+        self.top_sites_savior_actions.close_popup_ad_if_appear(browser)
         browser.switch_to.default_content()
+        any_site_page_object.mouse_over_video_iframe_phimmoi(browser)
+        any_site_page_object.switch_to_video_iframe_phimmoi(browser)
         any_site_page_object.mouse_over_video_element_phimmoi(browser)
+        browser.switch_to.default_content()
 
     @pytestrail.case('C96721')
     @pytest.mark.ten_popular_sites
     @pytestrail.defect('BR-1187')
     def test_download_file_phim_moi(self, browser, get_current_download_folder
                                     , clear_download_page
-                                    , enable_ublock_plus_extension):
+                                    ,):
         self.prepare_displayed_savior_popup(browser)
         implement_download_file(browser, get_current_download_folder, )
 

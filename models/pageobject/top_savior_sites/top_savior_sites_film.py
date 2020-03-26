@@ -14,5 +14,12 @@ class TopSaviorSitesFilmActions(BasePageObject):
         element = self.top_savior_sites_film_element.find_close_login_popup_element_button(driver)
         element.click()
 
+    def close_popup_ad_if_appear(self, driver: WebDriver):
+        elements = self.top_savior_sites_film_element.find_close_button_phimmoi_ad(driver)
+        if len(elements) == 1:
+            elements[0].click()
+        else:
+            raise Exception
+
 
 
