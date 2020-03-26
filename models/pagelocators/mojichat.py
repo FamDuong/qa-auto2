@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 
 class MojichatLocators:
+
     BIG_CHAT = "big_chat"
     SMALL_CHAT = "small chat"
 
@@ -14,5 +15,3 @@ class MojichatLocators:
     # MOJI_SUGGESTION_PANEL = '[class="chat-suggestion-container"]'
     MOJI_SUGGESTION_PANEL = (By.XPATH, '//div[@class="chat-suggestion-container"]')
     MESSAGE_FACEBOOK = (By.XPATH, '//*[@name="mercurymessages"]')
-
-    MOJI_ICON = '//div[@class="moji-icon"]'
