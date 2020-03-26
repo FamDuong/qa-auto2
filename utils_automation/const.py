@@ -1,4 +1,3 @@
-
 class Urls:
 
     COCCOC_SETTINGS_URL = 'coccoc://settings'
@@ -136,6 +135,3 @@ class CocCocComponents:
 
 class ChromeStoreUrls:
     RUNG_RINH_EXTENSION_URL = 'https://chrome.google.com/webstore/detail/r%E1%BB%A7ng-r%E1%BB%89nh-d%E1%BB%8Bch-v%E1%BB%A5-ho%C3%A0n-ti/paenbjlckelooppiepeiechkeehogoha'
-
-
-

@@ -11,11 +11,12 @@ class TestFirstTimeRun:
         from pywinauto import Desktop
         coccoc_instance = Desktop(backend='uia').Welcome_to_Cốc_Cốc_Cốc_Cốc
         common.wait_for_panel_is_exist(coccoc_instance)
-        welcome_coccoc_tab_is_opened = coccoc_instance.child_window(title='Welcome to Cốc Cốc',
-                                                                    control_type=50019).exists()
-        new_tab_is_opened = coccoc_instance.child_window(title_re='New Tab', control_type=50019).exists()
-        assert welcome_coccoc_tab_is_opened is True
-        assert new_tab_is_opened is True
+        welcome_coccoc_tab = coccoc_instance.child_window(title='Welcome to Cốc Cốc', control_type=50019)
+        new_tab = coccoc_instance.child_window(title_re='New Tab', control_type=50019)
+        common.wait_for_panel_is_exist(welcome_coccoc_tab)
+        common.wait_for_panel_is_exist(new_tab)
+        assert welcome_coccoc_tab.exists() is True
+        assert new_tab.exists() is True
 
     def pre_condition_before_run_first_time(self):
         from utils_automation.common import WindowsHandler

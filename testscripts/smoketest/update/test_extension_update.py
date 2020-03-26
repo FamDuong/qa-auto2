@@ -25,7 +25,6 @@ class TestExtensionUpdate:
     # Precondition: Machine is installed Coc Coc
     @pytestrail.case('C44861')
     @pytestrail.defect('BR-1426', 'BR-1438')
-    #@pytest.mark.skip(reason='Skip due to bug BR-1438')
     def test_if_coccoc_forced_install_extensions_can_be_updated_or_not(self, get_rung_rinh_extension_version_from_google_store):
         # Deactivate host because currently extension release directly to production
         common.interact_dev_hosts("deactivate")
