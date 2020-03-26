@@ -12,6 +12,7 @@ class Urls:
     COCCOC_TERMS = 'coccoc://terms'
     COCCOC_ABOUT = 'coccoc://settings/help'
     COCCOC_HISTORY_URL = 'coccoc://history/'
+    COCCOC_FLAGS = 'coccoc://flags/'
     COCCOC_DEV_URL = 'https://dev.coccoc.com'
     COCCOC_THANK_YOU_URL_EN = 'https://dev.coccoc.com/en/win/thanks.html'
     COCCOC_THANK_YOU_URL_VI = 'https://dev.coccoc.com/vi/win/thanks.html'
@@ -21,6 +22,8 @@ class Urls:
 
     GOOGLE_URL = 'https://www.google.com/'
     FACEBOOK_URL = 'https://www.facebook.com/'
+    MESSENDER_URL = 'https://www.messenger.com/t/100010842734556'
+    FACEBOOK_MESSENDER_URL = 'https://www.facebook.com/messages/t/100010842734556'
 
     NEW_TAB_URL = 'http://coccoc.com/webhp'
     PIRATE_BAY_URL = 'https://www.thepiratebay.asia/search'
@@ -57,7 +60,7 @@ class OtherSiteUrls:
     MESSENGER_CHAT_URL = 'https://www.messenger.com/t/nganhanguyen0306'
     INSTAGRAM_VIDEO_URL = 'https://www.instagram.com/p/B1nlf9AhX4M/'
     KIENTHUC_VIDEO_URL = 'https://kienthuc.net.vn/truyen-hinh-video/video-duong-pho-ha-noi-ngap-sau-sau-mua-bao-1259721.html'
-    MOJI_BIG_CHATBOX = 'https://www.messenger.com/t/100013968193318'
+    MOJI_BIG_CHATBOX = 'https://www.messenger.com/t/100010842734556'
     VIETNAMNET_VIDEO_URL = 'https://video.vietnamnet.vn/thuoc-la-dien-tu-khong-nicotine-van-gay-hai-den-co-the-a-81979.html'
     TWITTER_VIDEO_URL = 'https://twitter.com/pje0n/status/1170961701455286272'
     SOHA_VIDEO_URL = 'https://soha.vn/video.htm'

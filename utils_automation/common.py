@@ -11,6 +11,7 @@ import re
 from os import path
 from selenium import webdriver
 from selenium.webdriver import ActionChains
+from selenium.webdriver.common.keys import Keys
 
 
 def if_height_frame_so_width_frame(height_frame):
@@ -233,6 +234,11 @@ class WebElements:
         hov = ActionChains(driver).move_to_element(element)
         hov.perform()
 
+    @staticmethod
+    def enter_string_into_element(element, string):
+        element.send_keys(Keys.CONTROL + "a")
+        element.send_keys(Keys.DELETE)
+        element.send_keys(string)
 
 class WindowsCMD:
     @staticmethod

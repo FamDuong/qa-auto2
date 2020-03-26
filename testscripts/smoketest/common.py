@@ -5,6 +5,8 @@ from pywinauto import Desktop
 from selenium import webdriver
 from os import path
 
+from selenium.webdriver.remote.webelement import WebElement
+
 from utils_automation.common import WindowsHandler, WindowsCMD, find_text_in_file, modify_file_as_text, get_current_dir, \
     wait_for_stable
 
@@ -270,7 +272,7 @@ def cleanup(coccoc_update=True, firefox=True):
     WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
     WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
     WindowsCMD.execute_cmd('taskkill /im iexplore.exe /f')
-    WindowsCMD.execute_cmd('taskkill /im chrome.exe /f')
+    #WindowsCMD.execute_cmd('taskkill /im chrome.exe /f')
     if firefox:
         WindowsCMD.execute_cmd('taskkill /im firefox.exe /f')
 
