@@ -104,7 +104,6 @@ def browser():
         driver.get(Urls.COCCOC_SETTINGS_URL)
         WaitAfterEach.sleep_timer_after_each_step()
         download_folder = setting_page_object.get_download_folder(driver)
-        files_handle.clear_downloaded_folder(download_folder)
     yield driver
     driver.quit()
 

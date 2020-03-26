@@ -26,6 +26,7 @@ class DownloadsPageLocators:
     PLAY_BTN = '//button[@class="js-play play-btn"]'
     ELEMENTS_NOT_DELETED = '//h6[@class=""]//a[@title] | //span[@title]'
     BADGE_BTN_INTERRUPTED = '//span[@class="badge badge-btn"][text()="Interrupted"]'
+    STATUS_TEXT_IS_DANGEROUS = '//span[@class="statusText-isDangerous"]'
 
 
 

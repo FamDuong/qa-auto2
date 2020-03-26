@@ -40,7 +40,6 @@ class TestCcDefaultBrowser:
 
     @pytestrail.case('C44845')
     @pytestrail.defect('BR-1133')
-    #@pytest.mark.skip(reason="Due to bug BR-1133")
     def test_set_default_browser_coccoc_then_change_default_browser_to_chrome(self):
         from testscripts.smoketest.conftest import uninstall_then_install_coccoc_with_default
         uninstall_then_install_coccoc_with_default()
