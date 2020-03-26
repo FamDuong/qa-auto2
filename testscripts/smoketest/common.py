@@ -5,11 +5,10 @@ from pywinauto import Desktop
 from selenium import webdriver
 from os import path
 
-from selenium.webdriver.remote.webelement import WebElement
-
 from utils_automation.common import WindowsHandler, WindowsCMD, find_text_in_file, modify_file_as_text, get_current_dir, \
-    wait_for_stable
+    wait_for_stable, FilesHandle
 
+files_handle_obj = FilesHandle()
 windows_handler = WindowsHandler()
 current_user = windows_handler.get_current_login_user()
 download_folder = None
@@ -272,7 +271,7 @@ def cleanup(coccoc_update=True, firefox=True):
     WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
     WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
     WindowsCMD.execute_cmd('taskkill /im iexplore.exe /f')
-    #WindowsCMD.execute_cmd('taskkill /im chrome.exe /f')
+    # WindowsCMD.execute_cmd('taskkill /im chrome.exe /f')
     if firefox:
         WindowsCMD.execute_cmd('taskkill /im firefox.exe /f')
 
@@ -717,3 +716,8 @@ def get_default_download_folder(browser):
     setting_page_object = SettingsPageObject()
     download_folder = setting_page_object.get_download_folder(browser)
     return download_folder
+
+
+def delete_installer_download(download_folder, language):
+    if files_handle_obj.is_file_exist(download_folder + 'coccoc_' + language + '.exe'):
+        files_handle_obj.delete_files_in_folder(download_folder, 'coccoc_' + language + '.exe')

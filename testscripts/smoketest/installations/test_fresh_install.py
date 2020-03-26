@@ -29,7 +29,7 @@ class TestFreshInstall:
         download_folder = common.get_default_download_folder(browser)
         languages = ['en', 'vi']
         for language in languages:
-            self.delete_installer_download(download_folder, language)
+            common.delete_installer_download(download_folder, language)
         try:
             for language in languages:
                 if language == 'en':
@@ -39,7 +39,7 @@ class TestFreshInstall:
         finally:
             # Delete downloaded installer
             for language in languages:
-                self.delete_installer_download(download_folder, language)
+                common.delete_installer_download(download_folder, language)
 
     @pytestrail.case('C44779')
     @pytest.mark.coccocdev
@@ -60,7 +60,7 @@ class TestFreshInstall:
             common.cleanup()
             common.install_coccoc_set_as_default()
             # Delete downloaded installer
-            self.delete_installer_download(download_folder, 'en')
+            common.delete_installer_download(download_folder, 'en')
 
     @pytestrail.case('C44780')
     @pytest.mark.coccocdev
@@ -77,7 +77,7 @@ class TestFreshInstall:
             verify_installation_complete_popup_appears()
         finally:
             # Delete downloaded installer
-            self.delete_installer_download(download_folder, 'en')
+            common.delete_installer_download(download_folder, 'en')
 
     def open_coccoc_installer(self, browser, download_folder, coccoc_installer="Cốc Cốc Installer"):
         # download Cốc Cốc installer from dev
@@ -114,7 +114,3 @@ class TestFreshInstall:
         self.settings_page_obj.verify_menu_base_on_language(browser, "en")
         self.version_page_obj.verify_installed_coccoc_and_flash_versions(browser)
         return browser
-
-    def delete_installer_download(self, download_folder, language):
-        if self.files_handle_obj.is_file_exist(download_folder + 'coccoc_' + language + '.exe'):
-            self.files_handle_obj.delete_files_in_folder(download_folder, 'coccoc_' + language + '.exe')
