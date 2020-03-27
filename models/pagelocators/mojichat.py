@@ -33,4 +33,13 @@ class MojichatLocators:
     CLICK_VAO_HINH_DE_GUI_NHE_SHADOW_PARENT_BIG_CHAT = "div[aria-label='Tin nhắn mới'] div:nth-child(1)"
     MOJI_SHADOW_PARENT_BIG_CHAT = 'div.moji-icon > div'
 
+    PANEL_SHADOW_PARENT = '#ChatTabsPagelet div.fbNubFlyoutFooter > div:nth-child(1)'
     GAN_DAY_ICON = '#recent-stickers'
+    THINH_HANH_ICON = '#trending-stickers'
+    ALBUM_ICON_INDEX = '#album:nth-child({param1})'
+    GO_RIGHT_ICON = '#go-right'
+    SEARCH_TXT = '#search-hashtags'
+    TAT_TINH_NANG_GOI_Y_ICON = '#disable-suggestions'
+    TRO_GIUP_ICON = '#open-guide-page'
+
+    STICKER_SENT_GANDAY_INDEX = "div[class*='sticker-group recent']:nth-child({param1}) #sticker"

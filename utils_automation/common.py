@@ -233,13 +233,10 @@ class WebElements:
         hov = ActionChains(driver).move_to_element(element)
         hov.perform()
 
-<<<<<<< HEAD
-=======
     @staticmethod
     def click_element_by_javascript(driver, element):
         driver.execute_script('arguments[0].click()', element)
 
->>>>>>> 8e1bb3963f453aec97768472b68754fd49447e58
 
 class WindowsCMD:
     @staticmethod

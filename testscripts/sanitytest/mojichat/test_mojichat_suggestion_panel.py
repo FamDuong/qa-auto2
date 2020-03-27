@@ -60,6 +60,24 @@ class TestSuggestionPanelBigBoxChat:
         #self.mojichat_object.verify_send_first_sticker(driver, chat_type='SMALL_CHAT')
         self.mojichat_object.verify_send_first_sticker(driver, chat_type='BIG_CHAT')
 
+    @pytestrail.case('C54450')
+    def test_check_the_mojichat_panel(self):
+        driver = coccoc_instance()
+        driver.maximize_window()
+        driver.get(Urls.COCCOC_EXTENSIONS)
+        self.mojichat_object.on_off_moji_extension(driver, action="ON")
+        self.mojichat_object.login_facebook(driver)
+        self.mojichat_object.verify_mojichat_panel(driver, chat_type='SMALL_CHAT')
+
+    @pytestrail.case('C54451')
+    def test_check_if_an_emoji_is_added_into_recent_stickers(self):
+        driver = coccoc_instance()
+        driver.maximize_window()
+        driver.get(Urls.COCCOC_EXTENSIONS)
+        self.mojichat_object.on_off_moji_extension(driver, action="ON")
+        self.mojichat_object.login_facebook(driver)
+        self.mojichat_object.verify_emoji_is_added_into_recent_stickers(driver, chat_type='SMALL_CHAT')
+
 #     @pytestrail.case('C54462')
 #     def test_check_if_suggestion_is_shown_when_entering_the_supported_keyword(self, browser):
 #         self.mojichat_object.open_chat_browser(browser)

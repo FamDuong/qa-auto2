@@ -83,6 +83,16 @@ class MojichatElement(BasePageElement):
             return self.find_shadow_element(driver, MojichatLocators.MOJI_SHADOW_PARENT_BIG_CHAT,
                                             MojichatLocators.DA_HIEU_BTN)
 
+    def find_album_by_index(self, driver, index):
+        album_suggestion_index = MojichatLocators.ALBUM_ICON_INDEX.replace('{param1}', str(index))
+        return self.find_shadow_element(driver, MojichatLocators.PANEL_SHADOW_PARENT, album_suggestion_index)
+
+    def find_pannel_element(self, driver, element):
+        return self.find_shadow_element(driver, MojichatLocators.PANEL_SHADOW_PARENT, element)
+
+    def find_sticker_sent_gan_day_by_index(self, driver, index):
+        album_suggestion_index = MojichatLocators.STICKER_SENT_GANDAY_INDEX.replace('{param1}', str(index))
+        return self.find_shadow_element(driver, MojichatLocators.PANEL_SHADOW_PARENT, album_suggestion_index)
 
 class ChatElement(BasePageElement):
     def find_chat_input(self, driver, chat_type):
