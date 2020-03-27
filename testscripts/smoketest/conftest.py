@@ -41,8 +41,8 @@ def install_default_coccoc_unsilently():
 
 @pytest.fixture(scope='function')
 def coccoc_install_instance_set_not_default_browser():
-    if check_if_coccoc_is_installed():
-        uninstall_coccoc_silently()
+    from testscripts.smoketest.common import uninstall_old_version_remove_local_app
+    uninstall_old_version_remove_local_app()
     install_coccoc_not_set_as_default()
     driver = webdriver.Chrome(options=chrome_options_preset())
     yield driver

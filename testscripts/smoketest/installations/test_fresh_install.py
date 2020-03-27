@@ -43,8 +43,6 @@ class TestFreshInstall:
 
     @pytestrail.case('C44779')
     @pytest.mark.coccocdev
-    @pytest.mark.skipif(platform.release() in ["8", "8.1"], reason="BR-810: Windows 8, Windows 8.1 are not show"
-                                                                   "'Make Cốc Cốc the default browser'")
     def test_popup_of_installer_confirm_during_the_installation(self):
         # Get download folder
         browser = common.coccoc_instance()
