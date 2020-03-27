@@ -8,10 +8,10 @@ from utils_automation.setup import WaitAfterEach
 
 
 class MojichatElement(BasePageElement):
-    global chat_type
+    # global chat_type
 
-    def __init__(self, type = MojichatLocators.BIG_CHAT):
-        self.chat_type = type
+    # def __init__(self, type=MojichatLocators.BIG_CHAT):
+    #     self.chat_type = type
 
     def click_on_tooltip_button(self, driver, button):
         element = self.find_tooltip_button(driver, button)
@@ -31,15 +31,6 @@ class MojichatElement(BasePageElement):
         element = driver.execute_script('return arguments[0].shadowRoot', shadow_root)
         return element.find_elements_by_css_selector('#sticker-suggestion')[position]
 
-    def find_chat_input(self, driver):
-        wait = WebDriverWait(driver, 20)
-        if (self.chat_type == MojichatLocators.BIG_CHAT):
-            locator = MojichatLocators.BIG_CHAT_INPUT
-        elif (self.chat_type == MojichatLocators.SMALL_CHAT):
-            locator = MojichatLocators.SMALL_CHAT_INPUT
-            # locator = (By.XPATH, '//div[@class="fbNubFlyoutOuter" and descendant::span[text()="Coc Coc"]]//*[@data-text="true"]')
-        return wait.until(ec.presence_of_element_located(locator))
-
     def find_small_chat_icon(self, driver):
         wait = WebDriverWait(driver, 20)
         return wait.until(ec.presence_of_element_located(MojichatLocators.MESSAGE_FACEBOOK))
@@ -48,10 +39,57 @@ class MojichatElement(BasePageElement):
         wait = WebDriverWait(driver, 20)
         return wait.until(ec.presence_of_element_located((By.XPATH, '//span[contains(text(),"' + user_chat + '")]')))
 
+    def find_de_xem_nao_btn(self, driver):
+        return self.find_shadow_element(driver, MojichatLocators.MOJI_SHADOW_PARENT, MojichatLocators.DE_XEM_NAO_BTN)
+
+    def find_de_go_thu_btn(self, driver, chat_type):
+        de_go_thu_btn = None
+        if chat_type in 'SMALL_CHAT':
+            de_go_thu_btn = self.find_shadow_element(driver, MojichatLocators.MOJI_SHADOW_PARENT,
+                                                     MojichatLocators.DE_GO_THU_BTN)
+        elif chat_type in 'BIG_CHAT':
+            de_go_thu_btn = self.find_shadow_element(driver, MojichatLocators.MOJI_SHADOW_PARENT_BIG_CHAT,
+                                                     MojichatLocators.DE_GO_THU_BTN)
+        return de_go_thu_btn
+
+    def find_click_vao_hinh_de_gui_nhe_tool_tip(self, driver, chat_type):
+        click_vao_hinh_de_gui_nhe_tool_tip = None
+        if chat_type in 'SMALL_CHAT':
+            click_vao_hinh_de_gui_nhe_tool_tip = self.find_shadow_element(driver,
+                                                                          MojichatLocators.CLICK_VAO_HINH_DE_GUI_NHE_SHADOW_PARENT,
+                                                                          MojichatLocators.CLICK_VAO_HINH_DE_GUI_NHE_LBL)
+        elif chat_type in 'BIG_CHAT':
+            click_vao_hinh_de_gui_nhe_tool_tip = self.find_shadow_element(driver,
+                                                                          MojichatLocators.CLICK_VAO_HINH_DE_GUI_NHE_SHADOW_PARENT_BIG_CHAT,
+                                                                          MojichatLocators.CLICK_VAO_HINH_DE_GUI_NHE_LBL)
+        return click_vao_hinh_de_gui_nhe_tool_tip
+
+    def find_sticker_by_index(self, driver, index):
+        sticker_suggestion_index = MojichatLocators.STICKER_SUGGESTION_INDEX.replace('{param1}', str(index))
+        return self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT, sticker_suggestion_index)
+
+    def find_thank_you_popup(self, driver, chat_type):
+        if chat_type in 'SMALL_CHAT':
+            return self.find_shadow_element(driver, MojichatLocators.MOJI_SHADOW_PARENT,
+                                            MojichatLocators.THANK_YOU_LBL)
+        elif chat_type in 'BIG_CHAT':
+            return self.find_shadow_element(driver, MojichatLocators.MOJI_SHADOW_PARENT_BIG_CHAT,
+                                            MojichatLocators.THANK_YOU_LBL)
+
+    def find_da_hieu_btn(self, driver, chat_type):
+        if chat_type in 'SMALL_CHAT':
+            return self.find_shadow_element(driver, MojichatLocators.MOJI_SHADOW_PARENT, MojichatLocators.DA_HIEU_BTN)
+        elif chat_type in 'BIG_CHAT':
+            return self.find_shadow_element(driver, MojichatLocators.MOJI_SHADOW_PARENT_BIG_CHAT,
+                                            MojichatLocators.DA_HIEU_BTN)
 
 
-
-
-
-
-
+class ChatElement(BasePageElement):
+    def find_chat_input(self, driver, chat_type):
+        wait = WebDriverWait(driver, 20)
+        chat_box = None
+        if chat_type in 'BIG_CHAT':
+            chat_box = MojichatLocators.BIG_CHAT_INPUT
+        elif chat_type in 'SMALL_CHAT':
+            chat_box = MojichatLocators.SMALL_CHAT_INPUT
+        return wait.until(ec.presence_of_element_located(chat_box))

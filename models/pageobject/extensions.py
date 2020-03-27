@@ -1,8 +1,5 @@
-import time
-
 from models.pageelements.extensions import ExtensionsElement, CocCocSaviorExtensionDetailElement, \
     SaviorExtensionsOptionsElement, GoogleExtensionsStorePageElements
-from models.pagelocators.extensions import ExtensionsPageLocators
 from models.pageobject.basepage_object import BasePageObject
 from utils_automation.setup import WaitAfterEach
 
@@ -52,20 +49,31 @@ class ExtensionsPageObject(BasePageObject):
 
 
 class ExtensionsDetailsPageObject(BasePageObject):
-    extensions_details = CocCocSaviorExtensionDetailElement()
+    savior_extensions_details = CocCocSaviorExtensionDetailElement()
+    extensions_element = ExtensionsElement()
 
     def savior_button_is_enabled(self, driver):
-        savior_button_enabled_element = self.extensions_details.find_coccoc_savior_enable_button(driver)
+        savior_button_enabled_element = self.savior_extensions_details.find_coccoc_savior_enable_button(driver)
         assert savior_button_enabled_element.get_attribute('aria-disabled') == 'true'
         assert savior_button_enabled_element.get_attribute('aria-pressed') == 'true'
 
     def savior_incognito_is_disabled(self, driver):
-        savior_incognito_element = self.extensions_details.find_coccoc_savior_incognitor_checkbox_button(driver)
+        savior_incognito_element = self.savior_extensions_details.find_coccoc_savior_incognitor_checkbox_button(driver)
         assert savior_incognito_element.get_attribute('aria-disabled') == 'false'
         assert savior_incognito_element.get_attribute('aria-pressed') == 'false'
 
     def open_extension_options_view(self, driver):
-        self.extensions_details.find_extension_options_button(driver).click()
+        self.savior_extensions_details.find_extension_options_button(driver).click()
+
+    def on_off_extension_in_detail_page(self, driver, is_on_extension=True):
+        on_off_btn = self.extensions_element.find_extension_toggle_button(driver)
+        on_off_btn_status = on_off_btn.get_attribute("aria-pressed")
+        if is_on_extension:
+            if on_off_btn_status in "false":
+                on_off_btn.click()
+        elif is_on_extension is False:
+            if on_off_btn_status in "true":
+                on_off_btn.click()
 
 
 class SaviorExtensionOptionsPageObject(BasePageObject):

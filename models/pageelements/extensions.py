@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.extensions import ExtensionsPageLocators, SaviorDetailsPageLocators, \
-    SaviorExtensionOptionsPageLocators, GoogleExtensionsStorePageLocators
+    SaviorExtensionOptionsPageLocators, GoogleExtensionsStorePageLocators, UblockPlusPageLocators
 from utils_automation.setup import WaitAfterEach
 
 

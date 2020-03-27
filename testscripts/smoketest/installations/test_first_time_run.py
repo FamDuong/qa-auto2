@@ -7,7 +7,7 @@ import testscripts.smoketest.common as common
 
 class TestFirstTimeRun:
 
-    def verify_new_tab_coccoc_exist(self):
+    def  verify_new_tab_coccoc_exist(self):
         from pywinauto import Desktop
         coccoc_instance = Desktop(backend='uia').Welcome_to_Cốc_Cốc_Cốc_Cốc
         common.wait_for_panel_is_exist(coccoc_instance)
