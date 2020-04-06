@@ -650,9 +650,7 @@ def uninstall_then_install_coccoc_with_default(coccoc_is_default='yes', is_neede
         if is_needed_clear_user_data is False:
             uninstall_coccoc_silently()
         else:
-            uninstall_coccoc_and_delete_user_data()
-            remove_coccoc_update_silently()
-            remove_local_app_data()
+            uninstall_old_version_remove_local_app()
     if coccoc_is_default in "yes":
         install_coccoc_set_as_default(is_needed_clean_up=is_needed_clean_up)
     else:
