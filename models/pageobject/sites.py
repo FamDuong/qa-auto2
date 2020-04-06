@@ -583,11 +583,8 @@ class AnySitePageObject(BasePageObject):
         element = self.any_site_element.find_xem_vtv_net_play_btn(driver)
         self.click_on_element_if_exist(element)
 
-
-
-
-
-
+    def mouse_over_video_mot_phim(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_mot_phim(driver), timeout=20)
 
 
 

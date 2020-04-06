@@ -17,6 +17,7 @@ from utils_automation.setup import WaitAfterEach
 
 any_site_page_object = AnySitePageObject()
 savior_page_object = SaviorPageObject()
+top_sites_savior_title_action = TopSitesSaviorTitleAction()
 
 
 class TestPhimmoi:
@@ -205,10 +206,19 @@ class TestMotPhimNet:
 
     @pytestrail.case('C98756')
     @pytestrail.defect('PF-541')
-    @pytest.mark.skip(reason='Cannot download file video motphim')
+    #@pytest.mark.skip(reason='Cannot download file video motphim')
     def test_download_file_film_mot_phim_net(self, browser, get_current_download_folder
                                              , clear_download_page):
         browser.get(OtherSiteUrls.MOT_PHIM_VIDEO_URL)
+        title = top_sites_savior_title_action.get_mot_phim_video_title(browser)
+        delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=title)
+        try:
+            any_site_page_object.click_video_item_mot_phim(browser)
+            any_site_page_object.mouse_over_video_mot_phim(browser)
+            implement_download_file(browser, get_current_download_folder, startwith=title)
+        finally:
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=title)
+
 
 
 class TestXemVtvNet:
