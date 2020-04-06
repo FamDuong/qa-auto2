@@ -1,7 +1,10 @@
+import time
+
 import pytest
 from selenium.common.exceptions import NoAlertPresentException
 
 from models.pageelements.sites import AnySiteElements
+from models.pageelements.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleElements
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
@@ -10,8 +13,9 @@ from models.pageobject.top_savior_sites.top_savior_sites_film import TopSaviorSi
 from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
 from testscripts.common_setup import implement_download_file, \
     clear_data_download_in_browser_and_download_folder, pause_any_video_site, \
-    handle_windows_watch_option, check_if_the_file_fully_downloaded, assert_file_download_exist, \
+    handle_windows_watch_option, check_if_the_file_fully_downloaded, assert_file_downloaded, \
     delete_all_mp4_file_download
+from utils_automation.common import WebElements
 from utils_automation.const import OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
 
@@ -22,24 +26,30 @@ savior_page_object = SaviorPageObject()
 class TestPhimmoi:
 
     top_sites_savior_actions = TopSaviorSitesFilmActions()
+    top_sites_savior_title_actions = TopSitesSaviorTitleAction()
+    top_sites_savior_title_elements = TopSitesSaviorTitleElements()
 
     def prepare_displayed_savior_popup(self, browser):
         browser.get(OtherSiteUrls.PHIMMOI_VIDEO_URL)
         self.top_sites_savior_actions.close_popup_ad_if_appear(browser)
-        browser.switch_to.default_content()
-        any_site_page_object.mouse_over_video_iframe_phimmoi(browser)
-        any_site_page_object.switch_to_video_iframe_phimmoi(browser)
+        time.sleep(4)
+        WebElements.scroll_into_view_element(browser, self.top_sites_savior_title_elements
+                                             .find_video_phimmoi_title_element(browser))
         any_site_page_object.mouse_over_video_element_phimmoi(browser)
-        browser.switch_to.default_content()
+        time.sleep(2)
 
     @pytestrail.case('C96721')
     @pytest.mark.ten_popular_sites
-    @pytestrail.defect('BR-1187')
+    # @pytestrail.defect('PF-777')
     def test_download_file_phim_moi(self, browser, get_current_download_folder
                                     , clear_download_page
                                     ,):
         self.prepare_displayed_savior_popup(browser)
-        implement_download_file(browser, get_current_download_folder, )
+        video_title_start_with = self.top_sites_savior_title_actions.get_phimmoi_video_title(browser).split("Xem phim ")[1]
+        try:
+            implement_download_file(browser, get_current_download_folder, startwith=video_title_start_with)
+        finally:
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title_start_with)
 
 
 class TestVuViPhim:
@@ -99,7 +109,7 @@ class TestTVHay:
         savior_page_object.download_file_title_via_savior_download_btn(browser, 'Xem Phim')
         WaitAfterEach.sleep_timer_after_each_step()
         check_if_the_file_fully_downloaded(browser)
-        assert_file_download_exist(get_current_download_folder)
+        assert_file_downloaded(get_current_download_folder)
 
 
 class TestAnimeSub:
@@ -170,7 +180,7 @@ class TestVietSubTV:
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         # Check the file is fully downloaded
         check_if_the_file_fully_downloaded(browser, )
-        assert_file_download_exist(get_current_download_folder)
+        assert_file_downloaded(get_current_download_folder)
 
 
 class TestVtv16Info:

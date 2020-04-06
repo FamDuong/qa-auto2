@@ -97,7 +97,15 @@ class AnySitePageObject(BasePageObject):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_element_24h(driver))
 
     def mouse_over_video_element_phimmoi(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_element_mouse_over_phimmoi(driver)
+        driver.execute_script('element = document.querySelector("#media-player > div.jw-media.jw-reset > video");'
+                              'element.dispatchEvent(new Event("mouseenter"));')
+
+    def mouse_leave_video_element_phimmoi(self, driver):
+        driver.execute_script('element = document.querySelector("#media-player > div.jw-media.jw-reset > video");'
+                              'element.dispatchEvent(new Event("mouseleave"));')
+
+    def mouse_over_video_element_player_embed_phimmoi(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_embed_player_phimmoi(driver)
                                            , timeout_verify_savior_popup=10)
 
     def mouse_over_video_iframe_phimmoi(self, driver):

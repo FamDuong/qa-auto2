@@ -61,8 +61,10 @@ class AnySiteElements(BasePageElement):
             ec.element_to_be_clickable(AnySite.TWENTY_FOUR_H_VIDEO_ITEM))
 
     def find_video_element_mouse_over_phimmoi(self, driver):
-        return self.wait_for_element(driver).until(
-            ec.element_to_be_clickable(AnySite.PHIMMOI_VIDEO_MOUSE_OVER))
+        return driver.execute_script('return document.querySelector("#media-player > div.jw-media.jw-reset > video")')
+
+    def find_video_embed_player_phimmoi(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIMMOI_VIDEO_EMBED_PLAYER))
 
     def find_video_element_mouse_over_iframe_phimmoi(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIMMOI_VIDEO_IFRAME))
