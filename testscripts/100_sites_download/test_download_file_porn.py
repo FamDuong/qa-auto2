@@ -15,7 +15,7 @@ top_sites_savior_title_action = TopSitesSaviorTitleAction()
 
 class TestXVideos:
 
-    @pytestrail.case('C96723')
+    @pytestrail.case('C162034')
     @pytestrail.defect('PF-859')
     @pytest.mark.ten_popular_sites
     def test_download_file_x_videos(self, browser, get_current_download_folder, clear_download_page):
@@ -31,7 +31,7 @@ class TestXVideos:
 
 class TestXNXX:
 
-    @pytestrail.case('C96754')
+    @pytestrail.case('C162037')
     @pytestrail.defect('PF-833')
     @pytest.mark.ten_popular_sites
     def test_download_file_xnxx_videos(self, browser, get_current_download_folder
