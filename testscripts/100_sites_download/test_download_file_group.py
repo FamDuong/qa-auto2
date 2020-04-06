@@ -12,6 +12,7 @@ from utils_automation.setup import WaitAfterEach
 any_site_page_object = AnySitePageObject()
 top_site_titles_action = TopSitesSaviorTitleAction()
 
+
 class TestDownloadGroup:
 
     savior_page_object = SaviorPageObject()

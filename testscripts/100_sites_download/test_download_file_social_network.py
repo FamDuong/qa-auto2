@@ -27,9 +27,18 @@ class TestFacebook:
 
 class TestMessenger:
 
-    @staticmethod
-    def setup_savior_option_appear(driver):
+    def login_to_messenger_if_neccessary(self, driver):
+        from models.pageobject.top_savior_sites.top_savior_sites_social import MessengerActions
+        messenger_action = MessengerActions()
+        len_login_elements = messenger_action.get_number_of_login_elements(driver=driver)
+        if len_login_elements == 0:
+            pass
+        elif len_login_elements > 0:
+            messenger_action.login_messenger_task(driver, email_or_phone_info='0838069260', password_info='Cuong1990#')
+
+    def setup_savior_option_appear(self, driver):
         driver.get(OtherSiteUrls.MESSENGER_CHAT_URL)
+        self.login_to_messenger_if_neccessary(driver)
         any_site_page_object.click_video_element_messenger_chat(driver)
         any_site_page_object.mouse_over_video_element_messenger_chat(driver)
 

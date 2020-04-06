@@ -11,6 +11,8 @@ import re
 from os import path
 from selenium import webdriver
 from selenium.webdriver import ActionChains
+from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
 
 
 def if_height_frame_so_width_frame(height_frame):
@@ -232,6 +234,10 @@ class WebElements:
     def mouse_over_element(driver, element):
         hov = ActionChains(driver).move_to_element(element)
         hov.perform()
+
+    @staticmethod
+    def scroll_into_view_element(driver: WebDriver, element: WebElement):
+        driver.execute_script("arguments[0].scrollIntoView(true);", element)
 
 
 class WindowsCMD:

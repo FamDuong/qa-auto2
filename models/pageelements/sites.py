@@ -61,23 +61,16 @@ class AnySiteElements(BasePageElement):
             ec.element_to_be_clickable(AnySite.TWENTY_FOUR_H_VIDEO_ITEM))
 
     def find_video_element_mouse_over_phimmoi(self, driver):
-        return self.wait_for_element(driver).until(
-            ec.element_to_be_clickable(AnySite.PHIMMOI_VIDEO_MOUSE_OVER))
+        return driver.execute_script('return document.querySelector("#media-player > div.jw-media.jw-reset > video")')
 
-    def find_close_popup_continue_watching(self, driver):
-        return self.wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.PHIMMOI_CONTINUE_WATCHING_CLOSE_ELEMENT))
+    def find_video_embed_player_phimmoi(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIMMOI_VIDEO_EMBED_PLAYER))
 
-    def find_close_image_popup_phim_moi(self, driver):
-        return self.wait_for_element(driver).until(
-            ec.element_to_be_clickable(AnySite.PHIMMOI_CLOSE_IMAGE_AD))
+    def find_video_element_mouse_over_iframe_phimmoi(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIMMOI_VIDEO_IFRAME))
 
     def find_elements_close_pop_up_ads_phim_moi(self, driver):
         return driver.find_elements_by_xpath('//a[@class="close"]')
-
-    def find_video_ad_length_phim_moi(self, driver):
-        return self.wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.PHIMMOI_VIDEO_AD_LENGTH_LOCATOR))
 
     def find_video_item_in_facebook_page(self, driver):
         return self.wait_for_element(driver).until(
