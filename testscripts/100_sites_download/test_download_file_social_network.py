@@ -43,7 +43,6 @@ class TestMessenger:
         any_site_page_object.mouse_over_video_element_messenger_chat(driver)
 
     @pytestrail.case('C96722')
-    @pytest.mark.ten_popular_sites
     def test_download_file_messenger(self, browser, get_current_download_folder
                                      , clear_download_page):
         self.setup_savior_option_appear(browser)
