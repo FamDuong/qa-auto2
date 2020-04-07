@@ -19,7 +19,7 @@ class TopSaviorSitesFilmActions(BasePageObject):
         if len(elements) == 1:
             elements[0].click()
         else:
-            raise Exception
+            pass
 
 
 
