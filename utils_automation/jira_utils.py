@@ -35,3 +35,17 @@ class JiraUtils:
         issue = self.jira.issue(issue_id)
         self.jira.transition_issue(issue, transition=status)
 
+    def get_issue_info(self, issue_id):
+        return self.jira.issue(id=issue_id).raw
+
+    def get_issue_status(self, issue_id):
+        raw_issue_dict = self.get_issue_info(issue_id=issue_id)
+        return str(raw_issue_dict['fields']['status']['name']).upper()
+
+    def get_all_projects(self):
+        return self.jira.projects()
+
+    def get_project_info(self, project_id):
+        return self.jira.project(id=project_id)
+
+

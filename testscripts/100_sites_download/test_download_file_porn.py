@@ -48,7 +48,7 @@ class TestXNXX:
 
 class TestPornHub:
 
-    @pytestrail.case('C98771')
+    @pytestrail.case('C204205')
     @pytestrail.defect('PF-620')
     @pytest.mark.ten_popular_sites
     def test_download_file_porn_hub(self, browser, get_current_download_folder
