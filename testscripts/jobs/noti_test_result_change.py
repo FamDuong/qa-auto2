@@ -14,8 +14,8 @@ def get_test_run_name(run_id):
 
 
 def define_message_content(run_id):
-    run_name = get_test_run_name(run_id)
-    message_intro = f"The test result for {run_name} has been changed as following: \n"
+    # run_name = get_test_run_name(run_id)
+    # message_intro = f"The test result for {run_name} has been changed as following: \n"
     test_id_result_change_list = test_rail_utils.get_test_id_has_result_change(run_id=run_id)
     message_content_to_send = ""
     for each_test_id in test_id_result_change_list:
@@ -31,7 +31,7 @@ def define_message_content(run_id):
             if new_status == each.value:
                 new_status_name = each.name
         message_content_to_send += f"Test case {test_id_title} has been changed from {old_status_name} to {new_status_name} \n"
-    return message_intro + message_content_to_send
+    return message_content_to_send
 
 
 def send_message_skype(message_skype_content):
