@@ -1,7 +1,7 @@
 import time
 from datetime import datetime
 
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver import ActionChains
@@ -215,14 +215,27 @@ class AnySitePageObject(BasePageObject):
         ActionChains(driver).move_to_element(
             self.any_site_element.find_play_button_video_mot_phim(driver)).click().perform()
 
+    def mouse_over_video_mot_phim(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_tuoi_tre(driver))
+
     def click_video_episode_mot_phim(self, driver):
         self.any_site_element.find_video_episode_mot_phim(driver).click()
 
     def click_video_box_player_mot_phim(self, driver):
         self.any_site_element.find_video_box_player_mot_phim(driver).click()
 
-    def mouse_over_video_item_mot_phim(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_mot_phim(driver))
+    def mouse_over_video_item_mot_phim(self, driver, timeout=12, timeout_verify_savior_popup=3):
+        start_time = datetime.now()
+        element = None
+        while self.verify_savior_popup_appear(driver, timeout=timeout_verify_savior_popup) is None:
+            try:
+                element = self.any_site_element.find_play_button_video_mot_phim(driver)
+                WebElements.mouse_over_element(driver, element)
+                time_delta = datetime.now() - start_time
+                if time_delta.total_seconds() >= timeout:
+                    break
+            except StaleElementReferenceException as e:
+                element = self.any_site_element.find_play_button_video_mot_phim(driver)
 
     def skip_ads_tv_hay(self, driver):
         self.any_site_element.find_skip_ads_btn_tv_hay(driver).click()

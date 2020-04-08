@@ -207,10 +207,14 @@ class TestMotPhimNet:
 
     @pytestrail.case('C98756')
     @pytestrail.defect('PF-541')
-    @pytest.mark.skip(reason='Cannot download file video motphim')
+    # @pytest.mark.skip(reason='Cannot download file video motphim')
     def test_download_file_film_mot_phim_net(self, browser, get_current_download_folder
                                              , clear_download_page):
         browser.get(OtherSiteUrls.MOT_PHIM_VIDEO_URL)
+        time.sleep(2)
+        any_site_page_object.click_video_item_mot_phim(browser)
+        time.sleep(2)
+        any_site_page_object.mouse_over_video_item_mot_phim(browser)
 
 
 class TestXemVtvNet:
