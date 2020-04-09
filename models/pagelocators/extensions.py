@@ -51,4 +51,3 @@ class SaviorExtensionOptionsPageLocators:
 
 class GoogleExtensionsStorePageLocators:
     RUNG_RINH_EXTENSION_VERSION = (By.XPATH, "//span[@class='C-b-p-D-Xe h-C-b-p-D-md']")
-

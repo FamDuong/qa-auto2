@@ -40,7 +40,8 @@ class TestImportDataWhileInstalling:
 
     @pytestrail.case('C44826')
     @pytest.mark.skip(reason='Bug BR-947')
-    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7"], reason="Takes time set default browser so later")
+    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7", "10"], reason=
+    "Takes time set default browser so later and cannot detect windows from pywinauto when open monitor")
     def test_import_data_from_firefox(self):
         from testscripts.smoketest.common import change_default_browser
         change_default_browser('Firefox')
@@ -94,7 +95,8 @@ class TestImportDataWhileInstalling:
             cleanup(coccoc_update=False, firefox=False)
 
     @pytestrail.case('C44828')
-    @pytest.mark.skip(reason='Bug BR-930')
+    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7", "10"], reason=
+    "Takes time set default browser so later and cannot detect windows from pywinauto when open monitor and Bug BR-930")
     def test_import_data_from_microsoft_edge(self):
         from testscripts.smoketest.common import change_default_browser
         change_default_browser('Microsoft Edge')

@@ -49,4 +49,4 @@ urllib3==1.25.7
 wcwidth==0.1.7
 zipp==0.6.0
 mysql-connector-python==8.0.18
-
+pytest-rerunfailures==9.0

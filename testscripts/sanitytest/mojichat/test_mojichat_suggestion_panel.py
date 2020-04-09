@@ -50,5 +50,3 @@ class TestSuggestionPanelSmallChat:
         for i in list_mojichat:
             self.mojichat_object.select_moji_on_suggestion_panel(browser, i, 0)
             self.mojichat_object.verify_chat_is_empty(browser)
-
-

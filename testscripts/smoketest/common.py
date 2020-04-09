@@ -6,8 +6,9 @@ from selenium import webdriver
 from os import path
 
 from utils_automation.common import WindowsHandler, WindowsCMD, find_text_in_file, modify_file_as_text, get_current_dir, \
-    wait_for_stable
+    wait_for_stable, FilesHandle
 
+files_handle_obj = FilesHandle()
 windows_handler = WindowsHandler()
 current_user = windows_handler.get_current_login_user()
 download_folder = None
@@ -38,10 +39,8 @@ def check_if_coccoc_is_installed():
 def check_if_coccoc_installer_is_closed(coccoc_installer):
     installing_lbl_is_exist = coccoc_installer.child_window(title='coccoc.com', class_name='Static').exists()
     if installing_lbl_is_exist is False:
-        print(str(installing_lbl_is_exist) + " Đã cài đặt xong.")
         return True
     else:
-        print(str(installing_lbl_is_exist) + " Đang cài đặt...")
         return False
 
 
@@ -272,7 +271,7 @@ def cleanup(coccoc_update=True, firefox=True):
     WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
     WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
     WindowsCMD.execute_cmd('taskkill /im iexplore.exe /f')
-    WindowsCMD.execute_cmd('taskkill /im chrome.exe /f')
+    # WindowsCMD.execute_cmd('taskkill /im chrome.exe /f')
     if firefox:
         WindowsCMD.execute_cmd('taskkill /im firefox.exe /f')
 
@@ -286,6 +285,16 @@ def wait_for_coccoc_install_finish(coccoc_installer=Desktop(backend='uia').Cốc
             time_delta = datetime.now() - start_time
             if time_delta.total_seconds() >= 120:
                 break
+
+
+def wait_for_panel_is_exist(panel):
+    from datetime import datetime
+    start_time = datetime.now()
+    while panel.exists() is False:
+        time.sleep(2)
+        time_delta = datetime.now() - start_time
+        if time_delta.total_seconds() >= 12:
+            break
 
 
 def install_coccoc_not_set_as_default(is_needed_clean_up=True, coccoc_installer_name='standalone_coccoc_en.exe'):
@@ -444,6 +453,7 @@ def default_is_firefox():
 
 def get_browser_name():
     browser_name = None
+    time.sleep(5)
     if Desktop(backend='uia').Import_Google_Chrome_Settings.exists():
         browser_name = 'Chrome'
     elif Desktop(backend='uia').Import_Mozilla_Firefox_Settings.exists():
@@ -465,6 +475,7 @@ def choose_import_browser_settings(action='Continue', browser_name='Chrome'):
         default_apps = Desktop(backend='uia').Import_Microsoft_Internet_Explorer_Settings
     elif browser_name in 'Microsoft Edge':
         default_apps = Desktop(backend='uia').Import_Microsoft_Edge_Settings
+
     if action == 'Continue':
         default_apps.Continue.click()
     elif action == 'Cancel':
@@ -531,15 +542,8 @@ def get_application_process(application_name='browser'):
 
 
 def get_list_start_up_apps():
-    import subprocess
-    try:
-        p = subprocess.Popen(["powershell.exe",
-                              "cd C:\\Script; .\\ShowStartUpApps.ps1"],
-                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        response = p.communicate()
-        return str(response[0])
-    except:
-        print("Ignore error code")
+    list_start_up_apps = WindowsCMD.execute_cmd("wmic startup get caption,command | findstr CocCoc")
+    return str(list_start_up_apps)
 
 
 def kill_browser_process(browser_name='browser.exe'):
@@ -644,9 +648,7 @@ def uninstall_then_install_coccoc_with_default(coccoc_is_default='yes', is_neede
         if is_needed_clear_user_data is False:
             uninstall_coccoc_silently()
         else:
-            uninstall_coccoc_and_delete_user_data()
-            remove_coccoc_update_silently()
-            remove_local_app_data()
+            uninstall_old_version_remove_local_app()
     if coccoc_is_default in "yes":
         install_coccoc_set_as_default(is_needed_clean_up=is_needed_clean_up)
     else:
@@ -712,3 +714,8 @@ def get_default_download_folder(browser):
     setting_page_object = SettingsPageObject()
     download_folder = setting_page_object.get_download_folder(browser)
     return download_folder
+
+
+def delete_installer_download(download_folder, language):
+    if files_handle_obj.is_file_exist(download_folder + 'coccoc_' + language + '.exe'):
+        files_handle_obj.delete_files_in_folder(download_folder, 'coccoc_' + language + '.exe')

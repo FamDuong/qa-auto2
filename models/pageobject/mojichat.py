@@ -5,10 +5,11 @@ from models.pageobject.basepage_object import BasePageObject
 from models.pagelocators.mojichat import MojichatLocators
 from models.pageelements.mojichat import MojichatElement
 
+
 class MojichatObjects(BasePageObject):
     # mojichat_element = MojichatElement(self.chat_type)
 
-    def __init__(self, type = MojichatLocators.BIG_CHAT):
+    def __init__(self, type=MojichatLocators.BIG_CHAT):
         self.chat_type = type
         self.mojichat_element = MojichatElement(self.chat_type)
 
@@ -30,12 +31,12 @@ class MojichatObjects(BasePageObject):
             element = self.mojichat_element.find_tooltip_button(driver, locator)
             element.click()
             WaitAfterEach.sleep_timer_after_each_step()
-        except Exception as e: print("Not found button Send")
+        except Exception as e:
+            print("Not found button Send")
 
     def click_moji_on_suggestion_panel(self, driver, position):
         element = self.mojichat_element.find_moji_on_suggestion_panel(driver, position)
         element.click()
-
 
     def clear_text_into_chat_box(self, driver):
         element = self.mojichat_element.find_big_chat_input(driver)
@@ -71,11 +72,3 @@ class MojichatObjects(BasePageObject):
         element = self.mojichat_element.find_chat_input(driver)
         chat = self.get_text_element(element)
         assert chat == ""
-
-
-
-
-
-
-
-

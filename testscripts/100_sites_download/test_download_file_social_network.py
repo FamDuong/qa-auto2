@@ -65,7 +65,8 @@ class TestInstagram:
     def test_download_file_instagram(self, browser, get_current_download_folder
                                      , clear_download_page):
         self.prepare_appear_savior_option(browser)
-        video_title_start_with = top_sites_savior_title_actions.get_instagram_video_title(browser)
+        from textwrap import wrap
+        video_title_start_with = wrap(top_sites_savior_title_actions.get_instagram_video_title(browser), 6)[0]
         try:
             implement_download_file(browser, get_current_download_folder, startwith=video_title_start_with),
         finally:
