@@ -1,8 +1,10 @@
+import time
+
 import pytest
 from selenium.common.exceptions import NoAlertPresentException
-from selenium.webdriver.remote.webelement import WebElement
 
 from models.pageelements.sites import AnySiteElements
+from models.pageelements.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleElements
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
@@ -13,6 +15,7 @@ from testscripts.common_setup import implement_download_file, \
     clear_data_download_in_browser_and_download_folder, pause_any_video_site, \
     handle_windows_watch_option, check_if_the_file_fully_downloaded, assert_file_download_exist, \
     delete_all_mp4_file_download
+from utils_automation.common import WebElements
 from utils_automation.const import OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
 
@@ -23,36 +26,35 @@ top_sites_savior_title_action = TopSitesSaviorTitleAction()
 
 class TestPhimmoi:
 
-    @staticmethod
-    def prepare_displayed_savior_popup(browser):
+    top_sites_savior_actions = TopSaviorSitesFilmActions()
+    top_sites_savior_title_actions = TopSitesSaviorTitleAction()
+    top_sites_savior_title_elements = TopSitesSaviorTitleElements()
+
+    def prepare_displayed_savior_popup(self, browser):
         browser.get(OtherSiteUrls.PHIMMOI_VIDEO_URL)
-        windows_list = browser.window_handles
-        print(windows_list)
-        if len(windows_list) >= 2:
-            browser.switch_to.window(windows_list[0])
-            any_site_page_object.close_popup_continue_watching(browser)
-            if len(browser.find_elements_by_xpath('//a[@class="close"]')) > 0:
-                browser.find_element_by_xpath('//a[@class="close"]').click()
-            # browser.switch_to.active_element()
-            if any_site_page_object.verify_exist_ads_pop_up_phim_moi(browser) > 0:
-                any_site_page_object.close_image_popup_phim_moi(browser)
-            browser.switch_to.default_content()
-        else:
-            any_site_page_object.close_popup_continue_watching(browser)
-        browser.switch_to.default_content()
+        self.top_sites_savior_actions.close_popup_ad_if_appear(browser)
+        time.sleep(4)
+        WebElements.scroll_into_view_element(browser, self.top_sites_savior_title_elements
+                                             .find_video_phimmoi_title_element(browser))
         any_site_page_object.mouse_over_video_element_phimmoi(browser)
+        time.sleep(2)
 
     @pytestrail.case('C96721')
     @pytest.mark.ten_popular_sites
-    @pytestrail.defect('BR-1187')
+    # @pytestrail.defect('PF-777')
     def test_download_file_phim_moi(self, browser, get_current_download_folder
                                     , clear_download_page
-                                    , enable_ublock_plus_extension):
+                                    ,):
         self.prepare_displayed_savior_popup(browser)
-        implement_download_file(browser, get_current_download_folder, )
+        video_title_start_with = self.top_sites_savior_title_actions.get_phimmoi_video_title(browser).split("Xem phim ")[1]
+        try:
+            implement_download_file(browser, get_current_download_folder, startwith=video_title_start_with)
+        finally:
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title_start_with)
 
 
 class TestVuViPhim:
+
     any_site_element = AnySiteElements()
 
     def prepare_savior_option_displayed(self, browser):
@@ -71,6 +73,7 @@ class TestVuViPhim:
 
 
 class TestTvZing:
+
     top_savior_sites_film_actions = TopSaviorSitesFilmActions()
     top_sites_savior_title_actions = TopSitesSaviorTitleAction()
 
@@ -211,26 +214,19 @@ class TestMotPhimNet:
 
     @pytestrail.case('C98756')
     @pytestrail.defect('PF-541')
-    # @pytest.mark.skip(reason='Cannot download file video motphim')
+    @pytest.mark.skip(reason='Cannot download file video motphim')
     def test_download_file_film_mot_phim_net(self, browser, get_current_download_folder):
         browser.get(OtherSiteUrls.MOT_PHIM_VIDEO_URL)
         title = top_sites_savior_title_action.get_mot_phim_video_title(browser)
-        print("titlte" + title)
         try:
             import time
             time.sleep(10)
             any_site_page_object.click_video_item_mot_phim(browser)
-
-
             any_site_page_object.mouse_over_video_mot_phim(browser)
             time.sleep(15)
-
-            # import time
-            # time.sleep(500)
             implement_download_file(browser, get_current_download_folder, startwith=title)
         finally:
-            pass
-            # delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=title)
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=title)
 
 
 class TestXemVtvNet:
@@ -242,4 +238,4 @@ class TestXemVtvNet:
         browser.get(OtherSiteUrls.XEM_VTV_NET)
         any_site_page_object.click_play_btn_xem_vtv_net(browser)
         any_site_page_object.mouse_over_video_xem_vtv_net(browser)
-        implement_download_file(browser, get_current_download_folder, )
+        implement_download_file(browser, get_current_download_folder,)

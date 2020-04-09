@@ -236,17 +236,13 @@ class WebElements:
         hov.perform()
 
     @staticmethod
-    def click_element_by_javascript(driver, element):
-        driver.execute_script('arguments[0].click()', element)
-
-    @staticmethod
     def scroll_into_view_element(driver: WebDriver, element: WebElement):
         driver.execute_script("arguments[0].scrollIntoView(true);", element)
 
 
 class WindowsCMD:
     @staticmethod
-    def execute_cmd(cmd_text, is_split=False):
+    def execute_cmd(cmd_text, is_split=True):
         wait_for_stable()
         if is_split:
             process = subprocess.Popen(cmd_text.split(), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
