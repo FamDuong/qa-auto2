@@ -19,17 +19,17 @@ class TestFreshInstall:
     browser_handler_obj = BrowserHandler()
     files_handle_obj = FilesHandle()
 
-    # Precondition: Machine is installed Coc Coc
     @pytestrail.case('C44777')
     @pytestrail.defect('BR-1071')
-    @pytest.mark.skip(reason="Bug BR-1071 with installer Vietnamese")
+    @pytest.mark.coccocdev
+    #@pytest.mark.skip(reason="Bug BR-1071 with installer Vietnamese")
     def test_installing_fresh_package_successfully_on_windows(self):
         # Get default download forlder
         browser = common.coccoc_instance()
         download_folder = common.get_default_download_folder(browser)
         languages = ['en', 'vi']
         for language in languages:
-            self.delete_installer_download(download_folder, language)
+            common.delete_installer_download(download_folder, language)
         try:
             for language in languages:
                 if language == 'en':
@@ -39,11 +39,10 @@ class TestFreshInstall:
         finally:
             # Delete downloaded installer
             for language in languages:
-                self.delete_installer_download(download_folder, language)
+                common.delete_installer_download(download_folder, language)
 
     @pytestrail.case('C44779')
-    @pytestrail.defect('BR-810')
-    @pytest.mark.skipif(platform.release() in ["8", "8.1"], reason="Cannot execute in Windows 8, Windows 8.1")
+    @pytest.mark.coccocdev
     def test_popup_of_installer_confirm_during_the_installation(self):
         # Get download folder
         browser = common.coccoc_instance()
@@ -59,10 +58,10 @@ class TestFreshInstall:
             common.cleanup()
             common.install_coccoc_set_as_default()
             # Delete downloaded installer
-            self.delete_installer_download(download_folder, 'en')
+            common.delete_installer_download(download_folder, 'en')
 
     @pytestrail.case('C44780')
-    @pytest.mark.skip(reason='Flaky test, will check it later')
+    @pytest.mark.coccocdev
     def test_installation_dialog_after_installing_successfully(self):
         # Get default download forlder
         browser = common.coccoc_instance()
@@ -76,7 +75,7 @@ class TestFreshInstall:
             verify_installation_complete_popup_appears()
         finally:
             # Delete downloaded installer
-            self.delete_installer_download(download_folder, 'en')
+            common.delete_installer_download(download_folder, 'en')
 
     def open_coccoc_installer(self, browser, download_folder, coccoc_installer="Cốc Cốc Installer"):
         # download Cốc Cốc installer from dev
@@ -113,7 +112,3 @@ class TestFreshInstall:
         self.settings_page_obj.verify_menu_base_on_language(browser, "en")
         self.version_page_obj.verify_installed_coccoc_and_flash_versions(browser)
         return browser
-
-    def delete_installer_download(self, download_folder, language):
-        if self.files_handle_obj.is_file_exist(download_folder + 'coccoc_' + language + '.exe'):
-            self.files_handle_obj.delete_files_in_folder(download_folder, 'coccoc_' + language + '.exe')

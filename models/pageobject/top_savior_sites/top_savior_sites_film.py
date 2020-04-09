@@ -21,5 +21,3 @@ class TopSaviorSitesFilmActions(BasePageObject):
         else:
             pass
 
-
-

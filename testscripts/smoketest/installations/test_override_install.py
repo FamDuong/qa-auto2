@@ -1,6 +1,5 @@
+import pytest
 from pytest_testrail.plugin import pytestrail
-from pywinauto import Desktop
-from selenium.webdriver.common.keys import Keys
 
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.history import HistoryPageLocators
@@ -11,6 +10,7 @@ from testscripts.smoketest.common import coccoc_instance
 class TestOverrideInstall(BasePageElement):
 
     @pytestrail.case('C44773')
+    @pytest.mark.skip(reason='Take times to handle click/sendkeys on pannel in Remote Desktop')
     def test_check_install_new_version_above_old_version(self):
         old_version = self.install_old_coccoc_version()
         new_version = self.install_new_coccoc_version_without_remove_old_version()
@@ -21,6 +21,7 @@ class TestOverrideInstall(BasePageElement):
         self.verify_user_data_is_kept()
 
     @pytestrail.case('C178210')
+    @pytest.mark.skip(reason='Take times to handle click/sendkeys on pannel in Remote Desktop')
     def test_check_install_new_version_after_remove_old_version_without_clear_user_data(self):
         from testscripts.smoketest.common import install_old_coccoc_version
         install_old_coccoc_version(is_needed_clear_user_data=True)

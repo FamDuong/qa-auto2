@@ -47,11 +47,3 @@ class MojichatElement(BasePageElement):
     def find_user_chat(self, driver, user_chat):
         wait = WebDriverWait(driver, 20)
         return wait.until(ec.presence_of_element_located((By.XPATH, '//span[contains(text(),"' + user_chat + '")]')))
-
-
-
-
-
-
-
-

@@ -25,6 +25,7 @@ mysql-connector-python = "*"
 marshmallow = "*"
 pywinauto = "*"
 pytest-testrail = "*"
+testrail-api = "*"
 
 [requires]
 python_version = "3.7"

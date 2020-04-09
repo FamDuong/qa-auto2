@@ -242,9 +242,12 @@ class WebElements:
 
 class WindowsCMD:
     @staticmethod
-    def execute_cmd(cmd_text):
+    def execute_cmd(cmd_text, is_split=True):
         wait_for_stable()
-        process = subprocess.Popen(cmd_text.split(), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if is_split:
+            process = subprocess.Popen(cmd_text.split(), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        else:
+            process = subprocess.Popen(cmd_text, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output, error = process.communicate()
         print(output)
         return output
@@ -262,16 +265,36 @@ class WindowsCMD:
 
 
 class WindowsHandler:
+    def get_all_coccoc_firewall_rules(self):
+        command = "netsh advfirewall firewall show rule name=all | find \"Rule Name:\" | find \"C?c C?c\""
+        prog = WindowsCMD.execute_cmd(command, is_split=False)
+        string = prog.decode("utf-8", "strict")
+        temp_string = string.replace("?", "ố")
+        rule_name_list = temp_string.split("Rule Name:                            ")
+        return rule_name_list
+
+    def delete_coccoc_firewall_rules(self):
+        powershell_script_path = "\\resources\\powershell_scripts"
+        import subprocess
+        current_dir = get_current_dir()[0] + powershell_script_path
+
+        rule_name_list = self.get_all_coccoc_firewall_rules()
+        if len(rule_name_list) > 0:
+            for i in range(len(rule_name_list)):
+                rule_name = "\"" + rule_name_list[i].rstrip() + "\""
+                subprocess.Popen(["powershell.exe",
+                                  f"cd {current_dir}; .\\delCoccocFirewallRules.ps1 -action {rule_name}"],
+                                 stdin=subprocess.PIPE, stderr=subprocess.PIPE)
 
     def get_netfirewall_rule(self, display_name):
-        rule = WindowsCMD.execute_cmd("powershell get-netfirewallrule -DisplayName '" + display_name + "'")
+        rule = WindowsCMD.execute_cmd("netsh advfirewall firewall show rule name='" + display_name + "'")
         string = remove_special_characters(rule)
         return string
 
     def verify_netfirewall_rule(self, display_name, direction, action):
         rule = self.get_netfirewall_rule(display_name)
-        assert "Direction : " + direction in rule
-        assert "Action : " + action in rule
+        assert "Direction:                            " + direction in rule
+        assert "Action:                               " + action in rule
 
     def get_current_login_user(self):
         import subprocess, re
