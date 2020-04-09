@@ -235,7 +235,7 @@ class AnySitePageObject(BasePageObject):
             if driver.execute_script('return document.querySelector(arguments[0])',
                                      'div[class="html5-vpl_time_t"]') is not None:
                 time_value = driver.execute_script('return document.querySelector(arguments[0]).textContent',
-                                      'div[class="html5-vpl_time_t"]')
+                                                   'div[class="html5-vpl_time_t"]')
                 i += 1
                 return time_value
 
@@ -542,7 +542,8 @@ class AnySitePageObject(BasePageObject):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         elements = driver.find_elements_by_xpath(AnySite.DONG_PHIM_WATCH_OPTION_XPATH)
         if len(elements) > 0:
-            self.any_site_element.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_WATCH_OPTION)).click()
+            self.any_site_element.wait_for_element(driver).until(
+                ec.presence_of_element_located(AnySite.DONG_PHIM_WATCH_OPTION)).click()
         else:
             print("Cannot find button for watch options")
         return elements
@@ -584,13 +585,18 @@ class AnySitePageObject(BasePageObject):
         self.click_on_element_if_exist(element)
 
     def mouse_over_video_mot_phim(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_mot_phim(driver), timeout=20)
+        import time
+        time.sleep(10)
+        iFrame1 = driver.find_element_by_xpath('//iframe[@src="//i.cherrystream.xyz/?slug=ctDSU3ZGG"]')
+        driver.switch_to.frame(iFrame1)
+        iFrame2 = driver.find_element_by_xpath('//iframe[@src="https://playhydrax.com/?v=ctDSU3ZGG"]')
+        driver.switch_to.frame(iFrame2)
+        import time
+        time.sleep(100)
+        driver.execute_script('document.querySelector("#lklq").dispatchEvent(new Event("mouseenter"));')
+        driver.switch_to.default_content()
 
-
-
-
-
-
-
-
-
+    def mouse_over_video_ok_ru(self, driver):
+        import time
+        time.sleep(5)
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_ok_ru(driver))

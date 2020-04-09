@@ -1,5 +1,6 @@
 import pytest
 from selenium.common.exceptions import NoAlertPresentException
+from selenium.webdriver.remote.webelement import WebElement
 
 from models.pageelements.sites import AnySiteElements
 from models.pageobject.savior import SaviorPageObject
@@ -52,7 +53,6 @@ class TestPhimmoi:
 
 
 class TestVuViPhim:
-
     any_site_element = AnySiteElements()
 
     def prepare_savior_option_displayed(self, browser):
@@ -71,7 +71,6 @@ class TestVuViPhim:
 
 
 class TestTvZing:
-
     top_savior_sites_film_actions = TopSaviorSitesFilmActions()
     top_sites_savior_title_actions = TopSitesSaviorTitleAction()
 
@@ -97,18 +96,24 @@ class TestTVHay:
     def test_download_file_video_tv_hay(self, browser, get_current_download_folder
                                         , clear_download_page):
         browser.get(OtherSiteUrls.TV_HAY_VIDEO_URL)
-        any_site_page_object.switch_to_tv_hay_iframe(browser)
-        any_site_page_object.click_play_btn_tv_hay(browser)
-        # any_site_page_object.click_play_btn_in_frame_tv_hay(browser)
-        # while "0:00" in any_site_page_object.get_video_time_tv_hay(browser):
-        #     WaitAfterEach.sleep_timer_after_each_step()
-        browser.switch_to.default_content()
-        any_site_page_object.mouse_over_video_item_tv_hay(browser)
-        savior_page_object.download_file_via_savior_download_btn(browser)
-        savior_page_object.download_file_title_via_savior_download_btn(browser, 'Xem Phim')
-        WaitAfterEach.sleep_timer_after_each_step()
-        check_if_the_file_fully_downloaded(browser)
-        assert_file_download_exist(get_current_download_folder)
+        video_title = self.top_sites_savior_title_actions.get_tv_zing_video_title(browser)
+        try:
+            any_site_page_object.switch_to_tv_hay_iframe(browser)
+            any_site_page_object.click_play_btn_tv_hay(browser)
+            any_site_page_object.skip_ads_tv_hay(browser)
+            any_site_page_object.click_video_item_tv_hay(browser)
+            # while "0:00" in any_site_page_object.get_video_time_tv_hay(browser):
+            #     WaitAfterEach.sleep_timer_after_each_step()
+            browser.switch_to.default_content()
+            any_site_page_object.mouse_over_video_item_tv_hay(browser)
+            savior_page_object.download_file_via_savior_download_btn(browser)
+            savior_page_object.download_file_title_via_savior_download_btn(browser, 'Xem Phim')
+            # WaitAfterEach.sleep_timer_after_each_step()
+            # check_if_the_file_fully_downloaded(browser)
+            # assert_file_download_exist(get_current_download_folder)
+            implement_download_file(browser, get_current_download_folder, startwith=video_title)
+        finally:
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title)
 
 
 class TestAnimeSub:
@@ -206,19 +211,26 @@ class TestMotPhimNet:
 
     @pytestrail.case('C98756')
     @pytestrail.defect('PF-541')
-    #@pytest.mark.skip(reason='Cannot download file video motphim')
-    def test_download_file_film_mot_phim_net(self, browser, get_current_download_folder
-                                             , clear_download_page):
+    # @pytest.mark.skip(reason='Cannot download file video motphim')
+    def test_download_file_film_mot_phim_net(self, browser, get_current_download_folder):
         browser.get(OtherSiteUrls.MOT_PHIM_VIDEO_URL)
         title = top_sites_savior_title_action.get_mot_phim_video_title(browser)
-        delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=title)
+        print("titlte" + title)
         try:
+            import time
+            time.sleep(10)
             any_site_page_object.click_video_item_mot_phim(browser)
+
+
             any_site_page_object.mouse_over_video_mot_phim(browser)
+            time.sleep(15)
+
+            # import time
+            # time.sleep(500)
             implement_download_file(browser, get_current_download_folder, startwith=title)
         finally:
-            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=title)
-
+            pass
+            # delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=title)
 
 
 class TestXemVtvNet:
@@ -230,10 +242,4 @@ class TestXemVtvNet:
         browser.get(OtherSiteUrls.XEM_VTV_NET)
         any_site_page_object.click_play_btn_xem_vtv_net(browser)
         any_site_page_object.mouse_over_video_xem_vtv_net(browser)
-        implement_download_file(browser, get_current_download_folder,)
-
-
-
-
-
-
+        implement_download_file(browser, get_current_download_folder, )

@@ -12,7 +12,6 @@ any_site_page_object = AnySitePageObject()
 savior_page_object = SaviorPageObject()
 top_sites_savior_title_actions = TopSitesSaviorTitleAction()
 
-
 class TestFacebook:
 
     @pytestrail.case('C96691')
@@ -97,5 +96,15 @@ class TestWeibo:
         implement_download_file(browser, get_current_download_folder),
 
 
+class TestOkRu:
 
+    def test_download_ok_ru(self, browser, get_current_download_folder, clear_download_page):
+        browser.get(OtherSiteUrls.OK_RU)
+        video_title = top_sites_savior_title_actions.get_ok_ru_video_title(browser)
+        delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title)
+        try:
+            any_site_page_object.mouse_over_video_ok_ru(browser)
+            implement_download_file(browser, get_current_download_folder, time_sleep=10, file_size=0.42, startwith=video_title)
+        finally:
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title)
 

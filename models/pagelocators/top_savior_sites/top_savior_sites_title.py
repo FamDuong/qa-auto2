@@ -8,12 +8,9 @@ class TopSaviorSitesTitleLocators(object):
     YOUTUBE_VIDEO_TITLE = (By.XPATH, '//*[@id="container"]/h1/yt-formatted-string')
     INSTAGRAM_VIDEO_TITLE = (By.XPATH, '//meta[@property="og:title"]')
     MESSENGER_VIDEO_TITLE = (By.XPATH, '//*[@id="pageTitle"]')
-<<<<<<< HEAD
     MOT_PHIM_VIDEO_TITLE = (By.XPATH, '//meta[@name="title"]')
-=======
     PHIMMOI_VIDEO_TITLE = (By.XPATH, '//meta[@property="og:title"]')
->>>>>>> 1ad2e7653dcb777842031744c77337a51a549cf7
-
+    OK_RU_VIDEO_TITLE = (By.XPATH,'//title')
 
 
 
