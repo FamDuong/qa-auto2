@@ -32,6 +32,8 @@ class TopSitesSaviorTitleElements(BasePageElement):
     def find_video_phimmoi_title_element(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(TopSaviorSitesTitleLocators.PHIMMOI_VIDEO_TITLE))
 
+    def find_ok_ru_video_title_element(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(TopSaviorSitesTitleLocators.OK_RU_VIDEO_TITLE))
 
 
 
