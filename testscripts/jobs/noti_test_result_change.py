@@ -68,7 +68,7 @@ def test_run_noti_test_result_change(run_id_testrail):
     if is_result_changed is True:
         message_content_to_send = define_message_content(run_id)
         send_message_skype(message_content_to_send)
-        modify_jira_issue(run_id=run_id_testrail)
+        # modify_jira_issue(run_id=run_id_testrail)
     else:
         pass
 
