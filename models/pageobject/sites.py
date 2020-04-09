@@ -224,18 +224,10 @@ class AnySitePageObject(BasePageObject):
     def click_video_box_player_mot_phim(self, driver):
         self.any_site_element.find_video_box_player_mot_phim(driver).click()
 
-    def mouse_over_video_item_mot_phim(self, driver, timeout=12, timeout_verify_savior_popup=3):
-        start_time = datetime.now()
-        element = None
-        while self.verify_savior_popup_appear(driver, timeout=timeout_verify_savior_popup) is None:
-            try:
-                element = self.any_site_element.find_play_button_video_mot_phim(driver)
-                WebElements.mouse_over_element(driver, element)
-                time_delta = datetime.now() - start_time
-                if time_delta.total_seconds() >= timeout:
-                    break
-            except StaleElementReferenceException as e:
-                element = self.any_site_element.find_play_button_video_mot_phim(driver)
+    def mouse_over_video_item_mot_phim(self, driver, url):
+        driver.execute_script(f'document.querySelector("#player > iframe").src="{url}"')
+        time.sleep(8)
+        driver.execute_script('document.querySelector("#player > iframe").dispatchEvent(new Event("mouseenter"));')
 
     def skip_ads_tv_hay(self, driver):
         self.any_site_element.find_skip_ads_btn_tv_hay(driver).click()
