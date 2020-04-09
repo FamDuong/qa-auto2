@@ -99,6 +99,8 @@ class TestWeibo:
 
 class TestOkRu:
 
+    @pytestrail.case('C204280')
+    @pytest.mark.one_hundred_popular_sites
     def test_download_ok_ru(self, browser, get_current_download_folder, clear_download_page):
         browser.get(OtherSiteUrls.OK_RU)
         video_title = top_sites_savior_title_actions.get_ok_ru_video_title(browser)
