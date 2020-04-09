@@ -228,6 +228,7 @@ class AnySitePageObject(BasePageObject):
         driver.execute_script(f'document.querySelector("#player > iframe").src="{url}"')
         time.sleep(8)
         driver.execute_script('document.querySelector("#player > iframe").dispatchEvent(new Event("mouseenter"));')
+        time.sleep(3)
 
     def skip_ads_tv_hay(self, driver):
         self.any_site_element.find_skip_ads_btn_tv_hay(driver).click()
