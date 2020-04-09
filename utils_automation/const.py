@@ -117,6 +117,7 @@ class OtherSiteUrls:
     CLIP_ANIME_VN_VIDEO_URL = 'https://clipanime.com/video/177008'
     VTV_GO_VN_VIDEO_URL = 'https://vtvgo.vn/kho-video/am-thuc-duong-pho-xoi-cade-751588.html'
     XEM_VTV_NET = 'http://ww.xemvtv.net/xem-phim/nhan-sinh-cua-bach-ho-ly-tap-1/UUWOI65.html'
+    OK_RU = 'https://ok.ru/video/2394372770490'
 
 
 class ExtensionIds:

@@ -61,16 +61,23 @@ class AnySiteElements(BasePageElement):
             ec.element_to_be_clickable(AnySite.TWENTY_FOUR_H_VIDEO_ITEM))
 
     def find_video_element_mouse_over_phimmoi(self, driver):
-        return driver.execute_script('return document.querySelector("#media-player > div.jw-media.jw-reset > video")')
+        return self.wait_for_element(driver).until(
+            ec.element_to_be_clickable(AnySite.PHIMMOI_VIDEO_MOUSE_OVER))
 
-    def find_video_embed_player_phimmoi(self, driver):
-        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIMMOI_VIDEO_EMBED_PLAYER))
+    def find_close_popup_continue_watching(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.PHIMMOI_CONTINUE_WATCHING_CLOSE_ELEMENT))
 
-    def find_video_element_mouse_over_iframe_phimmoi(self, driver):
-        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.PHIMMOI_VIDEO_IFRAME))
+    def find_close_image_popup_phim_moi(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.element_to_be_clickable(AnySite.PHIMMOI_CLOSE_IMAGE_AD))
 
     def find_elements_close_pop_up_ads_phim_moi(self, driver):
         return driver.find_elements_by_xpath('//a[@class="close"]')
+
+    def find_video_ad_length_phim_moi(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.PHIMMOI_VIDEO_AD_LENGTH_LOCATOR))
 
     def find_video_item_in_facebook_page(self, driver):
         return self.wait_for_element(driver).until(
@@ -162,7 +169,7 @@ class AnySiteElements(BasePageElement):
 
     def find_video_item_mot_phim(self, driver):
         return self.wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.MOT_PHIM_VIDEO_ITEM))
+            ec.element_to_be_clickable(AnySite.MOT_PHIM_VIDEO_ITEM))
 
     def find_play_button_video_mot_phim(self, driver):
         return self.wait_for_element(driver).until(
@@ -544,7 +551,9 @@ class AnySiteElements(BasePageElement):
     def find_xem_vtv_net_play_btn(self, driver):
         return self.find_element_if_exist(driver, AnySite.XEM_VTV_NET_PLAY_BTN)
 
-
+    def find_video_item_ok_ru(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.OK_RU_VIDEO_ITEM))
 
 
 

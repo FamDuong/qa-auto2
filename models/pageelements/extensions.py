@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.extensions import ExtensionsPageLocators, SaviorDetailsPageLocators, \
-    SaviorExtensionOptionsPageLocators, GoogleExtensionsStorePageLocators
+    SaviorExtensionOptionsPageLocators, GoogleExtensionsStorePageLocators, UblockPlusPageLocators
 from utils_automation.setup import WaitAfterEach
 
 
@@ -47,15 +47,15 @@ class ExtensionsElement(BasePageElement):
         def find_ublock_toggle_knob_btn(self, driver):
             return self.find_shadow_element(driver, ExtensionsPageLocators.EXTENSIONS_MANAGER_TEXT
                                             , ExtensionsPageLocators.EXTENSIONS_ITEM_LIST
-                                            , ExtensionsPageLocators.UblockPlusPageLocators.UBLOCK_PLUS_ID_CSS_LOCATOR
-                                            , ExtensionsPageLocators.UblockPlusPageLocators.ENABLE_TOGGER_BTN
-                                            , ExtensionsPageLocators.UblockPlusPageLocators.KNOB_BTN)
+                                            , UblockPlusPageLocators.UBLOCK_PLUS_ID_CSS_LOCATOR
+                                            , UblockPlusPageLocators.ENABLE_TOGGER_BTN
+                                            , UblockPlusPageLocators.KNOB_BTN)
 
         def find_ublock_toggle_btn(self, driver):
             return self.find_shadow_element(driver, ExtensionsPageLocators.EXTENSIONS_MANAGER_TEXT
                                             , ExtensionsPageLocators.EXTENSIONS_ITEM_LIST
-                                            , ExtensionsPageLocators.UblockPlusPageLocators.UBLOCK_PLUS_ID_CSS_LOCATOR
-                                            , ExtensionsPageLocators.UblockPlusPageLocators.ENABLE_TOGGER_BTN)
+                                            , UblockPlusPageLocators.UBLOCK_PLUS_ID_CSS_LOCATOR
+                                            , UblockPlusPageLocators.ENABLE_TOGGER_BTN)
 
 
 class CocCocSaviorExtensionDetailElement(BasePageElement):
