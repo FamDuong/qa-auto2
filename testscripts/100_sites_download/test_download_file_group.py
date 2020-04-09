@@ -29,7 +29,7 @@ class TestDownloadGroup:
         assert_file_download_value(get_current_download_folder, resolution_info, **kwargs)
 
     @pytestrail.case('C96719')
-    @pytestrail.defect('PF-776')
+    @pytestrail.defect('PF-776', 'PF-1095')
     @pytest.mark.ten_popular_sites
     def test_download_youtube(self, browser, get_current_download_folder, clear_download_page):
         youtube_page_object = YoutubePageObject()

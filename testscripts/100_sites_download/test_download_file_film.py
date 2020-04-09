@@ -214,19 +214,15 @@ class TestMotPhimNet:
 
     @pytestrail.case('C98756')
     @pytestrail.defect('PF-541')
-    @pytest.mark.skip(reason='Cannot download file video motphim')
-    def test_download_file_film_mot_phim_net(self, browser, get_current_download_folder):
+    # @pytest.mark.skip(reason='Cannot download file video motphim')
+    def test_download_file_film_mot_phim_net(self, browser, get_current_download_folder
+                                             , clear_download_page):
         browser.get(OtherSiteUrls.MOT_PHIM_VIDEO_URL)
-        title = top_sites_savior_title_action.get_mot_phim_video_title(browser)
-        try:
-            import time
-            time.sleep(10)
-            any_site_page_object.click_video_item_mot_phim(browser)
-            any_site_page_object.mouse_over_video_mot_phim(browser)
-            time.sleep(15)
-            implement_download_file(browser, get_current_download_folder, startwith=title)
-        finally:
-            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=title)
+        time.sleep(2)
+        any_site_page_object.click_video_item_mot_phim(browser)
+        time.sleep(5)
+        any_site_page_object.mouse_over_video_item_mot_phim(browser, url=OtherSiteUrls.MOT_PHIM_VIDEO_URL)
+        implement_download_file(browser, get_current_download_folder, )
 
 
 class TestXemVtvNet:
