@@ -54,7 +54,7 @@ class TestDownloadGroup:
     @pytestrail.case('C96758')
     @pytest.mark.ten_popular_sites
     def test_download_nhaccuatui(self, browser, get_current_download_folder, clear_download_page):
-        video_title_start_with = "Haim"
+        video_title_start_with = "NIOEH,"
         try:
             self.implement_test_site(browser, VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM, get_current_download_folder,
                                      startwith=video_title_start_with)
