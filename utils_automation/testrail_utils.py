@@ -25,6 +25,9 @@ class TestrailUtils:
             list_of_test_ids.append(each_test.get('id'))
         return list_of_test_ids
 
+    def get_test_plan_info(self, plan_id):
+        return self.testrail.plans.get_plan(plan_id=plan_id)
+
     def get_test_run_info(self, run_id):
         return self.testrail.runs.get_run(run_id=run_id)
 
@@ -56,7 +59,6 @@ class TestrailUtils:
                 if results_status_last_2_times[0] != results_status_last_2_times[1]:
                     test_id_result_change.append(each_test_id)
         return test_id_result_change
-
 
 
 
