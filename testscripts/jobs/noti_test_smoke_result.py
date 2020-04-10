@@ -1,4 +1,5 @@
 from utils_automation.testrail_utils import TestrailUtils
+
 test_rail_utils = TestrailUtils()
 
 
