@@ -29,10 +29,11 @@ def get_test_run_failed_count(run_id):
 
 def define_messsage_content(plan_id, plan_name, run_id, test_run_config, failed_count, passed_count,
                             untested_count, total_cases):
+    from config.testrail import TESTRAIL_DOMAIN_URL_TEST_PLAN, TESTRAIL_DOMAIN_URL_TEST_RUN
     message_content_to_send = f"(hearteyesrobot)(hearteyesrobot)(hearteyesrobot) SMOKE TEST RESULT (hearteyesrobot)(" \
                               f"hearteyesrobot)(hearteyesrobot)" \
-                              f"\nhttp://testrail.coccoc.com/index.php?/plans/view/{plan_id} - {plan_name}" \
-                              f"\n\thttp://testrail.coccoc.com/index.php?/runs/view/{run_id} - {test_run_config}:" \
+                              f"\n{TESTRAIL_DOMAIN_URL_TEST_PLAN}{plan_id} - {plan_name}" \
+                              f"\n\t{TESTRAIL_DOMAIN_URL_TEST_RUN}{run_id} - {test_run_config}:" \
                               f"\n\t\t(crossmark) {failed_count} failed/ {total_cases} cases" \
                               f"\n\t\t(checkmark) {passed_count} passed/ {total_cases} cases" \
                               f"\n\t\t(heartblack) {untested_count} untested/ {total_cases} cases \n"
