@@ -12,7 +12,7 @@ from pytest_testrail.plugin import pytestrail
 from models.pageobject.top_savior_sites.top_savior_sites_film import TopSaviorSitesFilmActions
 from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
 from testscripts.common_setup import implement_download_file, \
-    clear_data_download_in_browser_and_download_folder, pause_any_video_site, \
+    clear_data_download_in_browser_and_download_folder, \
     handle_windows_watch_option, check_if_the_file_fully_downloaded, assert_file_download_exist, \
     delete_all_mp4_file_download
 from utils_automation.common import WebElements
@@ -46,7 +46,7 @@ class TestPhimmoi:
                                     , clear_download_page
                                     ,):
         self.prepare_displayed_savior_popup(browser)
-        video_title_start_with = self.top_sites_savior_title_actions.get_phimmoi_video_title(browser).split("Xem phim ")[1]
+        video_title_start_with = self.top_sites_savior_title_actions.get_phimmoi_video_title(browser)
         try:
             implement_download_file(browser, get_current_download_folder, startwith=video_title_start_with)
         finally:
