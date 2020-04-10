@@ -72,5 +72,3 @@ def test_run_noti_test_result_change(run_id_testrail):
             # modify_jira_issue(run_id=run_id_testrail)
         else:
             pass
-
-
