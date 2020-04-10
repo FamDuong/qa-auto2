@@ -228,6 +228,7 @@ class AnySitePageObject(BasePageObject):
         driver.execute_script(f'document.querySelector("#player > iframe").src="{url}"')
         time.sleep(8)
         driver.execute_script('document.querySelector("#player > iframe").dispatchEvent(new Event("mouseenter"));')
+        time.sleep(3)
 
     def skip_ads_tv_hay(self, driver):
         self.any_site_element.find_skip_ads_btn_tv_hay(driver).click()
@@ -598,17 +599,19 @@ class AnySitePageObject(BasePageObject):
         element = self.any_site_element.find_xem_vtv_net_play_btn(driver)
         self.click_on_element_if_exist(element)
 
+    def mouse_over_video_mot_phim(self, driver):
+        import time
+        time.sleep(10)
+        iFrame1 = driver.find_element_by_xpath('//iframe[@src="//i.cherrystream.xyz/?slug=ctDSU3ZGG"]')
+        driver.switch_to.frame(iFrame1)
+        iFrame2 = driver.find_element_by_xpath('//iframe[@src="https://playhydrax.com/?v=ctDSU3ZGG"]')
+        driver.switch_to.frame(iFrame2)
+        import time
+        time.sleep(100)
+        driver.execute_script('document.querySelector("#lklq").dispatchEvent(new Event("mouseenter"));')
+        driver.switch_to.default_content()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def mouse_over_video_ok_ru(self, driver):
+        import time
+        time.sleep(5)
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_ok_ru(driver))

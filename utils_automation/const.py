@@ -30,7 +30,7 @@ class VideoUrls:
     YOUTUBE_VIDEO_URL = 'https://www.youtube.com/watch?v=6WzJIp_U-oo'
     NEWS_ZING_VIDEO_URL = 'https://news.zing.vn/video'
     ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/Attention-J-Fla/ZW7F76D6.html'
-    NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summer-girl-haim.Q1gHbL4BuuEXJ.html'
+    NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/ghen-co-vy-nioeh-ft-khac-hung-ft-min-ft-erik.BGYgjd5PTU819.html'
     DONG_PHIM_VIDEO_URL = 'https://www.dongphim.net/movie/tap-1-thien-duong-giet-choc-phan-1-the-valhalla-murders-season-1-2020_KUzKIABB.html'
 
     @classmethod
@@ -51,7 +51,7 @@ class DiffFormatFileUrls:
 class OtherSiteUrls:
 
     TWENTY_FOUR_H_VIDEO_URL = 'https://www.24h.com.vn/bong-da/2-clb-viet-nam-thong-tri-afc-cup-bao-chau-a-noi-gi-c48a1061647.html'
-    PHIMMOI_VIDEO_URL = 'http://www.phimmoi.net/phim/linh-kiem-ton-8199/xem-phim.html'
+    PHIMMOI_VIDEO_URL = 'http://www.phimmoi.net/phim/yeu-than-ky-7796/tap-48-170030.html'
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/thutinhtv/videos/770300356741609/'
     MESSENGER_CHAT_URL = 'https://www.messenger.com/t/nganhanguyen0306'
     INSTAGRAM_VIDEO_URL = 'https://www.instagram.com/p/B1nlf9AhX4M/'
@@ -117,6 +117,7 @@ class OtherSiteUrls:
     CLIP_ANIME_VN_VIDEO_URL = 'https://clipanime.com/video/177008'
     VTV_GO_VN_VIDEO_URL = 'https://vtvgo.vn/kho-video/am-thuc-duong-pho-xoi-cade-751588.html'
     XEM_VTV_NET = 'http://ww.xemvtv.net/xem-phim/nhan-sinh-cua-bach-ho-ly-tap-1/UUWOI65.html'
+    OK_RU = 'https://ok.ru/video/2394372770490'
 
 
 class ExtensionIds:

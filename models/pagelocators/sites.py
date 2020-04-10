@@ -163,8 +163,4 @@ class AnySite(object):
     VTV_GO_VN_VIDEO_ITEM = (By.ID, 'flowplayer')
     XEM_VTV_NET_VIDEO_PLAYER = (By.ID, 'media')
     XEM_VTV_NET_PLAY_BTN = (By.XPATH, '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]')
-
-
-
-
-
+    OK_RU_VIDEO_ITEM = (By.XPATH, '//*[@id="VideoAutoplayPlayerE"]//video')

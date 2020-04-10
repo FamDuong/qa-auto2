@@ -66,7 +66,7 @@ def assert_file_download_value(download_folder_path, height_value, startwith=Non
         assert height is not None
 
 
-def assert_file_downloaded(download_folder_path, file_size=2.00, startwith=None):
+def assert_file_download_exist(download_folder_path, file_size=2.00, startwith=None):
     import os
     mp4_files = find_mp4_file_download(download_folder_path, '.mp4', startwith=startwith)
     file_path = download_folder_path + '\\' + mp4_files[0]
@@ -135,7 +135,7 @@ def pause_any_video_site(browser, url):
 def implement_download_file(browser, get_current_download_folder, time_sleep=5, **kwargs):
     download_file_via_main_download_button(browser, time_sleep=time_sleep)
     # assert file download exist and can be opened
-    assert_file_downloaded(get_current_download_folder, **kwargs)
+    assert_file_download_exist(get_current_download_folder, **kwargs)
 
 
 def clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder):
