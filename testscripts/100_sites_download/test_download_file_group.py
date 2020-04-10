@@ -12,8 +12,8 @@ from utils_automation.setup import WaitAfterEach
 any_site_page_object = AnySitePageObject()
 top_site_titles_action = TopSitesSaviorTitleAction()
 
-class TestDownloadGroup:
 
+class TestDownloadGroup:
     savior_page_object = SaviorPageObject()
 
     @staticmethod
@@ -29,7 +29,7 @@ class TestDownloadGroup:
         assert_file_download_value(get_current_download_folder, resolution_info, **kwargs)
 
     @pytestrail.case('C96719')
-    @pytestrail.defect('PF-776')
+    @pytestrail.defect('PF-776', 'PF-1095')
     @pytest.mark.ten_popular_sites
     def test_download_youtube(self, browser, get_current_download_folder, clear_download_page):
         youtube_page_object = YoutubePageObject()
@@ -56,7 +56,8 @@ class TestDownloadGroup:
     def test_download_nhaccuatui(self, browser, get_current_download_folder, clear_download_page):
         video_title_start_with = "Haim"
         try:
-            self.implement_test_site(browser, VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM, get_current_download_folder, startwith=video_title_start_with)
+            self.implement_test_site(browser, VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM, get_current_download_folder,
+                                     startwith=video_title_start_with)
         finally:
             delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title_start_with)
 
@@ -71,11 +72,7 @@ class TestDownloadGroup:
             any_site_page_object.click_video_item_dong_phim(browser)
         any_site_page_object.mouse_over_video_item_dong_phim(browser)
         try:
-            implement_download_file(browser, get_current_download_folder, file_size=50.00, startwith=video_title_start_with)
+            implement_download_file(browser, get_current_download_folder, file_size=50.00,
+                                    startwith=video_title_start_with)
         finally:
             delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title_start_with)
-
-
-
-
-

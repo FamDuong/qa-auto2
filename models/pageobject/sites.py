@@ -1,7 +1,8 @@
 import time
 from datetime import datetime
 
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
+from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
@@ -96,17 +97,26 @@ class AnySitePageObject(BasePageObject):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_element_24h(driver))
 
     def mouse_over_video_element_phimmoi(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_element_mouse_over_phimmoi(driver))
+        driver.execute_script('element = document.querySelector("#media-player > div.jw-media.jw-reset > video");'
+                              'element.dispatchEvent(new Event("mouseenter"));')
+
+    def mouse_leave_video_element_phimmoi(self, driver):
+        driver.execute_script('element = document.querySelector("#media-player > div.jw-media.jw-reset > video");'
+                              'element.dispatchEvent(new Event("mouseleave"));')
+
+    def mouse_over_video_element_player_embed_phimmoi(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_embed_player_phimmoi(driver)
+                                           , timeout_verify_savior_popup=10)
+
+    def mouse_over_video_iframe_phimmoi(self, driver):
+        self.mouse_over_video_element_site(driver,
+                                           self.any_site_element.find_video_element_mouse_over_iframe_phimmoi(driver))
+
+    def switch_to_video_iframe_phimmoi(self, driver: WebDriver):
+        driver.switch_to.frame(self.any_site_element.find_video_element_mouse_over_iframe_phimmoi(driver))
 
     def verify_exist_ads_pop_up_phim_moi(self, driver):
         return len(self.any_site_element.find_elements_close_pop_up_ads_phim_moi(driver))
-
-    def close_popup_continue_watching(self, driver):
-        WaitAfterEach.sleep_timer_after_each_step()
-        self.any_site_element.find_close_popup_continue_watching(driver).click()
-
-    def close_image_popup_phim_moi(self, driver):
-        self.any_site_element.find_close_image_popup_phim_moi(driver).click()
 
     def mouse_over_video_element_facebook(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_in_facebook_page(driver))
@@ -205,14 +215,20 @@ class AnySitePageObject(BasePageObject):
         ActionChains(driver).move_to_element(
             self.any_site_element.find_play_button_video_mot_phim(driver)).click().perform()
 
+    def mouse_over_video_mot_phim(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_tuoi_tre(driver))
+
     def click_video_episode_mot_phim(self, driver):
         self.any_site_element.find_video_episode_mot_phim(driver).click()
 
     def click_video_box_player_mot_phim(self, driver):
         self.any_site_element.find_video_box_player_mot_phim(driver).click()
 
-    def mouse_over_video_item_mot_phim(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_mot_phim(driver))
+    def mouse_over_video_item_mot_phim(self, driver, url):
+        driver.execute_script(f'document.querySelector("#player > iframe").src="{url}"')
+        time.sleep(8)
+        driver.execute_script('document.querySelector("#player > iframe").dispatchEvent(new Event("mouseenter"));')
+        time.sleep(3)
 
     def skip_ads_tv_hay(self, driver):
         self.any_site_element.find_skip_ads_btn_tv_hay(driver).click()
@@ -583,17 +599,19 @@ class AnySitePageObject(BasePageObject):
         element = self.any_site_element.find_xem_vtv_net_play_btn(driver)
         self.click_on_element_if_exist(element)
 
+    def mouse_over_video_mot_phim(self, driver):
+        import time
+        time.sleep(10)
+        iFrame1 = driver.find_element_by_xpath('//iframe[@src="//i.cherrystream.xyz/?slug=ctDSU3ZGG"]')
+        driver.switch_to.frame(iFrame1)
+        iFrame2 = driver.find_element_by_xpath('//iframe[@src="https://playhydrax.com/?v=ctDSU3ZGG"]')
+        driver.switch_to.frame(iFrame2)
+        import time
+        time.sleep(100)
+        driver.execute_script('document.querySelector("#lklq").dispatchEvent(new Event("mouseenter"));')
+        driver.switch_to.default_content()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def mouse_over_video_ok_ru(self, driver):
+        import time
+        time.sleep(5)
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_ok_ru(driver))

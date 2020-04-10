@@ -18,10 +18,19 @@ class TopSitesSaviorTitleAction(BasePageObject):
         return self.top_sites_savior_title_elements.find_youtube_video_title_element(driver).text
 
     def get_instagram_video_title(self, driver):
-        return self.top_sites_savior_title_elements.find_video_instagram_title_element(driver).text
+        return self.top_sites_savior_title_elements.find_video_instagram_title_element(driver).get_attribute('content')
 
     def get_messenger_video_title(self, driver):
         return self.top_sites_savior_title_elements.find_video_messenger_title_element(driver).text
+
+    def get_mot_phim_video_title(self, driver):
+        return self.top_sites_savior_title_elements.find_mot_phim_video_title_element(driver).get_attribute('content')
+
+    def get_phimmoi_video_title(self, driver):
+        return self.top_sites_savior_title_elements.find_video_phimmoi_title_element(driver).get_attribute('content')
+
+    def get_ok_ru_video_title(self, driver):
+        return self.top_sites_savior_title_elements.find_ok_ru_video_title_element(driver).text
 
 
 

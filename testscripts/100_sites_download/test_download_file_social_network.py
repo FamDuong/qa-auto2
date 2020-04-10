@@ -7,7 +7,6 @@ from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSa
 from testscripts.common_setup import implement_download_file, delete_all_mp4_file_download
 from utils_automation.const import OtherSiteUrls
 
-
 any_site_page_object = AnySitePageObject()
 savior_page_object = SaviorPageObject()
 top_sites_savior_title_actions = TopSitesSaviorTitleAction()
@@ -27,14 +26,22 @@ class TestFacebook:
 
 class TestMessenger:
 
-    @staticmethod
-    def setup_savior_option_appear(driver):
+    def login_to_messenger_if_neccessary(self, driver):
+        from models.pageobject.top_savior_sites.top_savior_sites_social import MessengerActions
+        messenger_action = MessengerActions()
+        len_login_elements = messenger_action.get_number_of_login_elements(driver=driver)
+        if len_login_elements == 0:
+            pass
+        elif len_login_elements > 0:
+            messenger_action.login_messenger_task(driver, email_or_phone_info='0838069260', password_info='Cuong1990#')
+
+    def setup_savior_option_appear(self, driver):
         driver.get(OtherSiteUrls.MESSENGER_CHAT_URL)
+        self.login_to_messenger_if_neccessary(driver)
         any_site_page_object.click_video_element_messenger_chat(driver)
         any_site_page_object.mouse_over_video_element_messenger_chat(driver)
 
     @pytestrail.case('C96722')
-    @pytest.mark.ten_popular_sites
     def test_download_file_messenger(self, browser, get_current_download_folder
                                      , clear_download_page):
         self.setup_savior_option_appear(browser)
@@ -57,7 +64,8 @@ class TestInstagram:
     def test_download_file_instagram(self, browser, get_current_download_folder
                                      , clear_download_page):
         self.prepare_appear_savior_option(browser)
-        video_title_start_with = top_sites_savior_title_actions.get_instagram_video_title(browser)
+        from textwrap import wrap
+        video_title_start_with = wrap(top_sites_savior_title_actions.get_instagram_video_title(browser), 6)[0]
         try:
             implement_download_file(browser, get_current_download_folder, startwith=video_title_start_with),
         finally:
@@ -88,5 +96,17 @@ class TestWeibo:
         implement_download_file(browser, get_current_download_folder),
 
 
+class TestOkRu:
 
-
+    @pytestrail.case('C204280')
+    @pytest.mark.one_hundred_popular_sites
+    def test_download_ok_ru(self, browser, get_current_download_folder, clear_download_page):
+        browser.get(OtherSiteUrls.OK_RU)
+        video_title = top_sites_savior_title_actions.get_ok_ru_video_title(browser)
+        delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title)
+        try:
+            any_site_page_object.mouse_over_video_ok_ru(browser)
+            implement_download_file(browser, get_current_download_folder, time_sleep=10, file_size=0.42,
+                                    startwith=video_title)
+        finally:
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title)

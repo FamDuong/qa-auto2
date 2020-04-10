@@ -128,4 +128,3 @@ class GoogleExtensionsStorePageObject(BasePageObject):
 
     def get_rung_rinh_extension_version(self, driver):
         return self.google_extensions_store_elem.find_rung_rinh_extension_version(driver).text
-
