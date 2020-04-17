@@ -33,7 +33,7 @@ class TestCPURAM:
 
     def benchmark(self, pid_list):
         cpus = mp.cpu_count()  # check available memory of cpu
-        start = time.clock()  # point of time for starting running
+        start = time.perf_counter()  # point of time for starting running
 
         try:
             with concurrent.futures.ThreadPoolExecutor(cpus) as executor:
@@ -45,7 +45,7 @@ class TestCPURAM:
                 for pid, memory in zip(pid_list, executor.map(self.get_memory_per_single_process, pid_list)):
                     print('%d has memory usage: %s' % (pid, memory))
                     total_mem = total_mem + memory
-            end = time.clock()
+            end = time.perf_counter()
             print("All jobs finished in {}s".format(round(end - start, 2)))
             print("Total CPU used = %s" % total_cpu)
             print("Total Mem used = %s" % total_mem)
