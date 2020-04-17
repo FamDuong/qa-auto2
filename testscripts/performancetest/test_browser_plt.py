@@ -2,7 +2,6 @@ import os
 import settings_master as settings
 import time
 from utils_automation.common import CSVHandle
-from utils_automation.setup import Browser
 from pytest_testrail.plugin import pytestrail
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -69,13 +68,13 @@ class TestPageLoadTime:
                                                          result_type='Page load time')
 
     @pytestrail.case('C82299')
-    def test_browser_plt(self):
+    def test_browser_plt(self, binary_path):
         # Define test filename
         dirname, runname = os.path.split(os.path.abspath(__file__))
         filename = dirname + r"\testbenchmark.csv"
         filename_result = dirname + r"\results_plt.csv"
 
-        self.get_page_load_time(filename, filename_result, settings.COCCOC_PATH, None)
+        self.get_page_load_time(filename, filename_result, binary_path, None)
 
 
 

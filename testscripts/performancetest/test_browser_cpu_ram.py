@@ -1,3 +1,4 @@
+import subprocess
 import time
 import settings_master as settings
 import psutil
@@ -11,13 +12,14 @@ from selenium import webdriver
 from pytest_testrail.plugin import pytestrail
 from utils_automation.cleanup import Browsers
 
+
 class TestCPURAM:
+
     def get_cpu_per_single_process(self, pid):
         try:
             return psutil.Process(pid).cpu_percent(interval=2) / psutil.cpu_count()
         except Exception as e:
             print('EXCEPTION:', e)
-
 
     def get_memory_per_single_process(self, pid):
         try:
@@ -25,11 +27,9 @@ class TestCPURAM:
         except Exception as e:
             print('EXCEPTION:', e)
 
-
     def PID(self, process_name):
         pid_list = [p.info['pid'] for p in psutil.process_iter(attrs=['pid', 'name']) if process_name in p.info['name']]
         return pid_list
-
 
     def benchmark(self, pid_list):
         cpus = mp.cpu_count()  # check available memory of cpu
@@ -39,12 +39,15 @@ class TestCPURAM:
             with concurrent.futures.ThreadPoolExecutor(cpus) as executor:
                 total_cpu = 0
                 total_mem = 0
-                for pid, cpu in zip(pid_list, executor.map(self.get_cpu_per_single_process, pid_list)):
-                    print('%d has cpu usage: %s' % (pid, cpu))
-                    total_cpu = total_cpu + cpu
-                for pid, memory in zip(pid_list, executor.map(self.get_memory_per_single_process, pid_list)):
-                    print('%d has memory usage: %s' % (pid, memory))
-                    total_mem = total_mem + memory
+                try:
+                    for pid, cpu in zip(pid_list, executor.map(self.get_cpu_per_single_process, pid_list)):
+                        print('%d has cpu usage: %s' % (pid, cpu))
+                        total_cpu = total_cpu + cpu
+                    for pid, memory in zip(pid_list, executor.map(self.get_memory_per_single_process, pid_list)):
+                        print('%d has memory usage: %s' % (pid, memory))
+                        total_mem = total_mem + memory
+                except Exception as e:
+                    print(e)
             end = time.perf_counter()
             print("All jobs finished in {}s".format(round(end - start, 2)))
             print("Total CPU used = %s" % total_cpu)
@@ -53,8 +56,7 @@ class TestCPURAM:
         except Exception:
             print("Some pid is unavailable")
 
-
-    def open_webpage_withtabs(self, filename, binary_file, options_list=None):
+    def open_webpage_withtabs(self, filename, binary_file, default_dir, options_list=None):
         browser = Browsers()
         browser.kill_all_browsers()
 
@@ -62,7 +64,7 @@ class TestCPURAM:
         opts = Options()
         opts.binary_location = binary_file
         opts.add_argument("start-maximized")
-        opts.add_argument('user-data-dir=' + settings.USER_DATA_DIR)
+        opts.add_argument('user-data-dir=' + default_dir)
         if options_list is not None:
             for i in options_list:
                 opts.add_argument(i)
@@ -71,7 +73,7 @@ class TestCPURAM:
         driver = webdriver.Chrome(chrome_options=opts)
 
         # first tab
-        driver.get(listweb[0]);
+        driver.get(listweb[0])
 
         # next tab
         for i in range(len(listweb)):
@@ -84,10 +86,10 @@ class TestCPURAM:
                 driver.get(listweb[i + 1])
         return driver
 
-    def get_ram_cpu(self, filename, file_name_result, binary_file, options_list=None):
+    def get_ram_cpu(self, filename, file_name_result, binary_file, default_dir, options_list=None):
         res = []
         for _ in range(2):
-            browser = self.open_webpage_withtabs(filename, binary_file, options_list)
+            browser = self.open_webpage_withtabs(filename, binary_file, default_dir, options_list)
             pid_list = self.PID('browser')
             cpu, mem = self.benchmark(pid_list)
             res.append({"cpu": cpu, "mem": mem})
@@ -95,11 +97,11 @@ class TestCPURAM:
         CSVHandle().write_result_data_for_cpu_ram(file_name_result, res, result_type='CPU RAM')
 
     @pytestrail.case('C82490')
-    def test_ram_cpu(self):
+    def test_ram_cpu(self, binary_path, default_directory):
         # Define test filename
         dirname, runname = os.path.split(os.path.abspath(__file__))
         filename = dirname + r"\testbenchmark.csv"
         file_name_result = dirname + r"\results_cpu_ram.csv"
-        self.get_ram_cpu(filename, file_name_result, settings.COCCOC_PATH, None)
+        self.get_ram_cpu(filename, file_name_result, binary_path, default_directory, None)
 
 
