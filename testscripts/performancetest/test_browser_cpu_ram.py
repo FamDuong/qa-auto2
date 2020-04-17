@@ -84,29 +84,22 @@ class TestCPURAM:
                 driver.get(listweb[i + 1])
         return driver
 
-    def get_ram_cpu(self, filename, binary_file, options_list=None):
+    def get_ram_cpu(self, filename, file_name_result, binary_file, options_list=None):
         res = []
-        for _ in range(10):
+        for _ in range(2):
             browser = self.open_webpage_withtabs(filename, binary_file, options_list)
             pid_list = self.PID('browser')
             cpu, mem = self.benchmark(pid_list)
             res.append({"cpu": cpu, "mem": mem})
-
             browser.quit()
-        for i in range(len(res)):
-            print("i is %d" % i)
-            print("CPU is %s, Mem is %s" % (res[i].get("cpu"), res[i].get("mem")))
+        CSVHandle().write_result_data_for_cpu_ram(file_name_result, res, result_type='CPU RAM')
 
     @pytestrail.case('C82490')
     def test_ram_cpu(self):
         # Define test filename
         dirname, runname = os.path.split(os.path.abspath(__file__))
         filename = dirname + r"\testbenchmark.csv"
-        # filename = os.path.abspath(r".\testbenchmark.csv")
-
-        # options_list = {"--enable-features=NetworkService"}
-        self.get_ram_cpu(filename, settings.COCCOC_PATH, None)
-        # self.get_ram_cpu(filename, settings.COCCOC_PATH, options_list)
-        # self.get_ram_cpu(filename, settings.CHROME_PATH, None)
+        file_name_result = dirname + r"\results_cpu_ram.csv"
+        self.get_ram_cpu(filename, file_name_result, settings.COCCOC_PATH, None)
 
 

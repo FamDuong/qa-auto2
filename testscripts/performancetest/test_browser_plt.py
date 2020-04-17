@@ -7,11 +7,13 @@ from pytest_testrail.plugin import pytestrail
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from utils_automation.cleanup import Browsers
-# start = 0
+
+startBrowser = 0
+
 
 class TestPageLoadTime:
     def open_webpage(self, source, binary_file, options_list=None):
-        browser = Browsers();
+        browser = Browsers()
         browser.kill_all_browsers()
 
         global startBrowser
@@ -50,41 +52,30 @@ class TestPageLoadTime:
         print("Total PageLoad Time: %s" % pageloadtime)
 
         time.sleep(2)
-
-        # driver.close()
         driver.quit()
         return pageloadtime
 
-    def get_page_load_time(self, filename, binary_file, options_list=None):
+    def get_page_load_time(self, filename, file_name_result, binary_file, options_list=None):
         listweb = CSVHandle().get_from_csv(filename)
-        loadtimes = {}
-        startuptimes = {}
+        loadtimes = []
         for i in listweb:
             loadtime = 0
-            startuptime = 0
             looptime = 2   # 10
             for j in range(looptime):
-                print("Run time: %s" % j)
                 browser = self.open_webpage(i, binary_file, options_list)
                 loadtime = loadtime + self.measureTime(browser)
-                startuptime = startuptime + browserStartup
-            loadtimes[i] = loadtime / looptime
-            startuptimes[i] = startuptime / looptime
-        for i in listweb:
-            print("Average load time of %s is %s" % (i, loadtimes.get(i)))
-            print("Average browser startup time of %s is %s" % (i, startuptimes.get(i)))
+            loadtimes.append(loadtime / looptime)
+        CSVHandle().write_result_data_for_page_load_time(file_name=file_name_result, keyname_list=listweb, value_list=loadtimes,
+                                                         result_type='Page load time')
 
     @pytestrail.case('C82299')
     def test_browser_plt(self):
         # Define test filename
         dirname, runname = os.path.split(os.path.abspath(__file__))
         filename = dirname + r"\testbenchmark.csv"
+        filename_result = dirname + r"\results_plt.csv"
 
-        # Test for NetworkService
-        # options_list = {"--enable-features=NetworkService"}
-        # Test for ads block
-        self.get_page_load_time(filename, settings.COCCOC_PATH, None)
-        # self.get_page_load_time(filename, settings.COCCOC_PATH, options_list)
-        # self.get_page_load_time(filename, settings.CHROME_PATH, None)
+        self.get_page_load_time(filename, filename_result, settings.COCCOC_PATH, None)
+
 
 
