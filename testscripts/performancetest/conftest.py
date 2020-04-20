@@ -18,3 +18,16 @@ def binary_path():
 @pytest.fixture(scope='session')
 def default_directory():
     return f'C:\\Users\\{username}\\AppData\\Local\\CocCoc\\Browser\\User Data'
+
+
+@pytest.fixture(scope='session')
+def application_path():
+    return f"C:\\Users\\{username}\\AppData\\Local\\CocCoc\\Browser\\Application"
+
+
+@pytest.fixture(scope='session')
+def get_enabled_adblock_extension(request):
+    return request.config.getoption("--enabled-adblock-extension")
+
+
+
