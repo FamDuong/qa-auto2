@@ -1,13 +1,12 @@
-import subprocess
 import time
-import settings_master as settings
 import psutil
 import os
 import multiprocessing as mp
 import concurrent.futures
-from utils_automation.common import CSVHandle
-from utils_automation.setup import Browser
+
+from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
+from utils_automation.common import CSVHandle
 from selenium import webdriver
 from pytest_testrail.plugin import pytestrail
 from utils_automation.cleanup import Browsers
@@ -17,15 +16,23 @@ class TestCPURAM:
 
     def get_cpu_per_single_process(self, pid):
         try:
-            return psutil.Process(pid).cpu_percent(interval=2) / psutil.cpu_count()
+            current_cpu_utilization = psutil.Process(pid).cpu_percent(interval=2)
+            if current_cpu_utilization is None:
+                current_cpu_utilization = 0.0
+            return current_cpu_utilization / psutil.cpu_count()
         except Exception as e:
             print('EXCEPTION:', e)
+            return 0.0
 
     def get_memory_per_single_process(self, pid):
         try:
-            return psutil.Process(pid).memory_info()[1] / float(2 ** 20)
+            memory_infor_pid = psutil.Process(pid).memory_info()[1]
+            if memory_infor_pid is None:
+                memory_infor_pid = 0.0
+            return memory_infor_pid / float(2 ** 20)
         except Exception as e:
             print('EXCEPTION:', e)
+            return 0.0
 
     def PID(self, process_name):
         pid_list = [p.info['pid'] for p in psutil.process_iter(attrs=['pid', 'name']) if process_name in p.info['name']]
@@ -65,12 +72,16 @@ class TestCPURAM:
         opts.binary_location = binary_file
         opts.add_argument("start-maximized")
         opts.add_argument('user-data-dir=' + default_dir)
+        caps = DesiredCapabilities().CHROME
+        # caps["pageLoadStrategy"] = "normal"  # complete
+        caps["pageLoadStrategy"] = "eager"
+
         if options_list is not None:
             for i in options_list:
                 opts.add_argument(i)
         # driver = webdriver.Chrome(executable_path=cc_driver, chrome_options=opts)
         # driver = webdriver.Chrome('/Users/itim/Downloads/python/chromedriver') #Environment: MAC OS
-        driver = webdriver.Chrome(chrome_options=opts)
+        driver = webdriver.Chrome(chrome_options=opts, desired_capabilities=caps)
 
         # first tab
         driver.get(listweb[0])
