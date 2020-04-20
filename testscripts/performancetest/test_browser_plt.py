@@ -14,7 +14,7 @@ startBrowser = 0
 
 
 class TestPageLoadTime:
-    def open_webpage(self, source, binary_file, options_list=None):
+    def open_webpage(self, source, binary_file, default_dir, options_list=None):
         browser = Browsers()
         browser.kill_all_browsers()
 
@@ -23,11 +23,11 @@ class TestPageLoadTime:
         opts = Options()
         opts.binary_location = binary_file
         opts.add_argument("start-maximized")
-        opts.add_argument('user-data-dir=' + settings.USER_DATA_DIR)
+        opts.add_argument('user-data-dir=' + default_dir)
         # opts.add_argument("--headless --disable-gpu")
         caps = DesiredCapabilities().CHROME
-        # caps["pageLoadStrategy"] = "normal"  # complete
-        caps["pageLoadStrategy"] = "eager"
+        caps["pageLoadStrategy"] = "normal"  # complete
+        # caps["pageLoadStrategy"] = "eager"
         if options_list is not None:
             for i in options_list:
                 opts.add_argument(i)
@@ -60,27 +60,27 @@ class TestPageLoadTime:
         driver.quit()
         return pageloadtime
 
-    def get_page_load_time(self, filename, file_name_result, binary_file, options_list=None):
+    def get_page_load_time(self, filename, file_name_result, binary_file, default_dir, options_list=None):
         listweb = CSVHandle().get_from_csv(filename)
         loadtimes = []
         for i in listweb:
             loadtime = 0
             looptime = 2   # 10
             for j in range(looptime):
-                browser = self.open_webpage(i, binary_file, options_list)
+                browser = self.open_webpage(i, binary_file, default_dir, options_list)
                 loadtime = loadtime + self.measureTime(browser)
             loadtimes.append(loadtime / looptime)
         CSVHandle().write_result_data_for_page_load_time(file_name=file_name_result, keyname_list=listweb, value_list=loadtimes,
                                                          result_type='Page load time')
 
     @pytestrail.case('C82299')
-    def test_browser_plt(self, binary_path):
+    def test_browser_plt(self, binary_path, default_directory):
         # Define test filename
         dirname, runname = os.path.split(os.path.abspath(__file__))
         filename = dirname + r"\testbenchmark.csv"
         filename_result = dirname + r"\results_plt.csv"
 
-        self.get_page_load_time(filename, filename_result, binary_path, None)
+        self.get_page_load_time(filename, filename_result, binary_path, default_directory, None)
 
 
 
