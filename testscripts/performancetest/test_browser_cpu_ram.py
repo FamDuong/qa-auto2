@@ -111,7 +111,7 @@ class TestCPURAM:
 
     def get_ram_cpu(self, filename, file_name_result, binary_file, default_dir, options_list=None, enabled_ads_block=False):
         res = []
-        for _ in range(2):
+        for _ in range(10):
             browser = self.open_webpage_withtabs(filename, binary_file, default_dir, options_list, enabled_ads_block=enabled_ads_block)
             pid_list = self.PID('browser')
             cpu, mem = self.benchmark(pid_list)
