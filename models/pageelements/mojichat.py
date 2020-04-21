@@ -64,9 +64,10 @@ class MojichatElement(BasePageElement):
                                                                           MojichatLocators.CLICK_VAO_HINH_DE_GUI_NHE_LBL)
         return click_vao_hinh_de_gui_nhe_tool_tip
 
-    def find_sticker_by_index(self, driver, index):
+    def find_sticker_by_index(self, driver, index, parent_shadow=MojichatLocators.STICKER_SUGGESTION_PARENT):
         sticker_suggestion_index = MojichatLocators.STICKER_SUGGESTION_INDEX.replace('{param1}', str(index))
-        return self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT, sticker_suggestion_index)
+        return self.find_shadow_element(driver, parent_shadow, sticker_suggestion_index)
+
 
     def find_thank_you_popup(self, driver, chat_type):
         if chat_type in 'SMALL_CHAT':
@@ -91,8 +92,22 @@ class MojichatElement(BasePageElement):
         return self.find_shadow_element(driver, MojichatLocators.PANEL_SHADOW_PARENT, element)
 
     def find_sticker_sent_gan_day_by_index(self, driver, index):
-        album_suggestion_index = MojichatLocators.STICKER_SENT_GANDAY_INDEX.replace('{param1}', str(index))
-        return self.find_shadow_element(driver, MojichatLocators.PANEL_SHADOW_PARENT, album_suggestion_index)
+        sticker_sent_gan_day_index = MojichatLocators.STICKER_SENT_GANDAY_INDEX.replace('{param1}', str(index))
+        return self.find_shadow_element(driver, MojichatLocators.PANEL_SHADOW_PARENT, sticker_sent_gan_day_index)
+
+    def find_album_tooltip_keyword_by_index(self, driver, index):
+        album_tooltip_keyword_index = MojichatLocators.ALBUM_TOOLTIP_KEYWORD_INDEX.replace('{param1}', str(index))
+        return self.find_shadow_element(driver, MojichatLocators.PANEL_SHADOW_PARENT, album_tooltip_keyword_index)
+
+    def find_sticker_keyword_by_index(self, driver, index):
+        sticker_keyword_index = MojichatLocators.STICKER_KEYWORD_INDEX.replace('{param1}', str(index))
+        return self.find_shadow_element(driver, MojichatLocators.PANEL_SHADOW_PARENT, sticker_keyword_index)
+
+    def find_show_more_sticker_button(self, driver):
+        return self.find_shadow_element(driver, MojichatLocators.STICKER_IN_SHOW_MORE_SHADOW_PARENT, MojichatLocators.SHOW_MORE_STICKER)
+
+    def find_sticker_in_show_more_popup(self, driver):
+        return self.find_shadow_element(driver, MojichatLocators.STICKER_IN_SHOW_MORE_SHADOW_PARENT, MojichatLocators.STICKER_IN_SHOW_MORE_INDEX1)
 
 class ChatElement(BasePageElement):
     def find_chat_input(self, driver, chat_type):

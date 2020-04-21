@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
-class MojichatLocators:
 
+class MojichatLocators:
     BIG_CHAT = "big_chat"
     SMALL_CHAT = "small chat"
 
@@ -9,7 +9,8 @@ class MojichatLocators:
     BIG_CHAT_BTN_SEND = (By.XPATH, '//*[text()="Send"]')
     BIG_CHAT_BTN_SEND_A_LIKE = (By.XPATH, '//*[@title="Send a Like"]')
 
-    SMALL_CHAT_INPUT = (By.XPATH, '//div[@data-contents="true"]//*[@data-text="true"]')
+    SMALL_CHAT_INPUT = (By.CSS_SELECTOR, 'div[role="presentation"] div[contenteditable="true"] span')
+    # SMALL_CHAT_INPUT = (By.XPATH, '//div[@data-contents="true"]//*[@data-text="true"]/parent::span')
     SMALL_CHAT_BTN_SEND = (By.XPATH, '//*[@data-tooltip-content="Press Enter to send"]')
 
     # MOJI_SUGGESTION_PANEL = '[class="chat-suggestion-container"]'
@@ -38,8 +39,15 @@ class MojichatLocators:
     THINH_HANH_ICON = '#trending-stickers'
     ALBUM_ICON_INDEX = '#album:nth-child({param1})'
     GO_RIGHT_ICON = '#go-right'
+    GO_LEFT_ICON = '#go-left'
     SEARCH_TXT = '#search-hashtags'
     TAT_TINH_NANG_GOI_Y_ICON = '#disable-suggestions'
     TRO_GIUP_ICON = '#open-guide-page'
 
     STICKER_SENT_GANDAY_INDEX = "div[class*='sticker-group recent']:nth-child({param1}) #sticker"
+    ALBUM_TOOLTIP_KEYWORD_INDEX = "#album:nth-child({param1}) div[class='tooltip']"
+    STICKER_KEYWORD_INDEX = "div[class='sticker-group trending']:nth-child({param1}) #keyword"
+    PANEL_SHADOW_PARENT_SMALL_CHAT_BY_FACEBOOK_URL = "#ChatTabsPagelet div.fbNubFlyoutFooter > div:nth-child(3)"
+    SHOW_MORE_STICKER = '#show-more'
+    STICKER_IN_SHOW_MORE_SHADOW_PARENT = 'div.fbNubFlyoutFooter > div.chat-suggestion-container'
+    STICKER_IN_SHOW_MORE_INDEX1 = 'div.stickers-group #sticker-suggestion:nth-child(1)'

@@ -53,10 +53,8 @@ def check_if_preferences_is_created(user_data_path):
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     result = p.communicate()[0]
     if file_name in str(result):
-        print("check_if_preferences_is_created: True")
         return True
     else:
-        print("check_if_preferences_is_created: False")
         return False
 
 

@@ -21,6 +21,8 @@ import time
 import pytest
 from models.pagelocators.mojichat import MojichatLocators
 from utils_automation.common import CSVHandle, WebElements
+from models.pagelocators.mojichat import MojichatLocators
+
 from testscripts.smoketest.common import cleanup
 from models.pagelocators.flags import FlagsPageLocators
 
@@ -51,10 +53,12 @@ class MojichatObjects(BasePageObject):
             if len(coccoc_at_user_lbl) == 0:
                 self.login_facebook(browser)
             browser.find_element_by_xpath(FacebookPageLocators.FACEBOOK_MESSAGE_SMALL_ICON_XPATH).click()
-            time.sleep(2)
-            browser.find_element_by_xpath(FacebookPageLocators.USER_NAME_ON_CHAT_TOOL_TIP_XPATH).click()
+            browser.find_element_by_xpath(FacebookMessagePageLocators.XEM_TAT_CA_TRONG_MESSAGE_BTN_XPATH).click()
+            self.delete_message_then_open_small_chat(browser)
+
         elif chat_type in 'BIG_CHAT_FACEBOOK_MESSENDER':
             browser.get(Urls.FACEBOOK_MESSENDER_URL)
+        browser.maximize_window()
 
     def logout_facebook(self, driver):
         driver.find_element_by_id(FacebookPageLocators.COCCOC_AT_NAME_XPATH).click()
@@ -130,9 +134,9 @@ class MojichatObjects(BasePageObject):
         self.close_thank_you_popup_then_verify_it_closed(driver, chat_type)
 
     def input_text_into_chat(self, driver, chat_type, chat_text):
-        element = self.chat_element.find_chat_input(driver, chat_type)
-        self.clear_text_to_element(element)
-        self.send_keys_to_element(driver, element, chat_text)
+        chat_box = self.chat_element.find_chat_input(driver, chat_type)
+        self.clear_text_to_element(driver, chat_box)
+        self.send_keys_to_element(driver, chat_box, chat_text)
 
     def verify_sticker_suggestion(self, driver, chat_type):
         if chat_type in 'SMALL_CHAT':
@@ -155,7 +159,7 @@ class MojichatObjects(BasePageObject):
         self.verify_sticker_suggestion(driver, chat_type)
 
     def send_sticker_then_verify_thankyou_popup(self, driver, chat_type):
-        WebElements.click_element_by_javascript(driver, self.mojichat_element.find_sticker_by_index(driver, 2))
+        WebElements.click_element_by_javascript(driver, self.mojichat_element.find_sticker_by_index(driver, index=2))
         assert 'Chúc mừng bạn đã gửi sticker thành công' in self.mojichat_element.find_thank_you_popup(driver,
                                                                                                        chat_type).text
 
@@ -174,11 +178,14 @@ class MojichatObjects(BasePageObject):
                                                          MojichatLocators.THINH_HANH_ICON).is_displayed() is True
         assert self.mojichat_element.find_pannel_element(driver, MojichatLocators.GO_RIGHT_ICON).is_displayed() is True
         assert self.mojichat_element.find_pannel_element(driver, MojichatLocators.SEARCH_TXT).is_displayed() is True
-        assert self.mojichat_element.find_album_by_index(driver, index=1).is_displayed() is True
-        assert self.mojichat_element.find_album_by_index(driver, index=2).is_displayed() is True
-        assert self.mojichat_element.find_album_by_index(driver, index=3).is_displayed() is True
-        assert self.mojichat_element.find_album_by_index(driver, index=4).is_displayed() is True
-        assert self.mojichat_element.find_album_by_index(driver, index=5).is_displayed() is True
+        self.verify_first_pack_album(driver)
+        # for i in range(1, 6):
+        #     assert self.mojichat_element.find_album_by_index(driver, index=i).is_displayed() is True
+        # # assert self.mojichat_element.find_album_by_index(driver, index=1).is_displayed() is True
+        # # assert self.mojichat_element.find_album_by_index(driver, index=2).is_displayed() is True
+        # # assert self.mojichat_element.find_album_by_index(driver, index=3).is_displayed() is True
+        # # assert self.mojichat_element.find_album_by_index(driver, index=4).is_displayed() is True
+        # # assert self.mojichat_element.find_album_by_index(driver, index=5).is_displayed() is True
         assert 'Trợ giúp' in self.mojichat_element.find_pannel_element(driver, MojichatLocators.TRO_GIUP_ICON).text
         assert 'Tắt tính năng gợi ý' in self.mojichat_element.find_pannel_element(driver,
                                                                                   MojichatLocators.TAT_TINH_NANG_GOI_Y_ICON).text
@@ -188,31 +195,123 @@ class MojichatObjects(BasePageObject):
         ### Verify stickers was sent that displayed in Recent
         # Send 3 stickers
         self.input_text_into_chat(driver, chat_type, chat_text='hihi')
-        src_sticker_hihi = self.mojichat_element.find_sticker_by_index(driver, 1).get_attribute('src')
-        WebElements.click_element_by_javascript(driver, self.mojichat_element.find_sticker_by_index(driver, 1))
+        src_sticker_hihi = self.mojichat_element.find_sticker_by_index(driver, index=1).get_attribute('src')
+        WebElements.click_element_by_javascript(driver, self.mojichat_element.find_sticker_by_index(driver, index=1))
         self.input_text_into_chat(driver, chat_type, chat_text='haha')
-        src_sticker_haha = self.mojichat_element.find_sticker_by_index(driver, 1).get_attribute('src')
-        WebElements.click_element_by_javascript(driver, self.mojichat_element.find_sticker_by_index(driver, 1))
+        src_sticker_haha = self.mojichat_element.find_sticker_by_index(driver, index=1).get_attribute('src')
+        WebElements.click_element_by_javascript(driver, self.mojichat_element.find_sticker_by_index(driver, index=1))
         self.input_text_into_chat(driver, chat_type, chat_text='hehe')
-        src_sticker_hehe = self.mojichat_element.find_sticker_by_index(driver, 1).get_attribute('src')
-        WebElements.click_element_by_javascript(driver, self.mojichat_element.find_sticker_by_index(driver, 1))
+        src_sticker_hehe = self.mojichat_element.find_sticker_by_index(driver, index=1).get_attribute('src')
+        WebElements.click_element_by_javascript(driver, self.mojichat_element.find_sticker_by_index(driver, index=1))
 
         # Verify stickers is displayed in Recent
         driver.find_element_by_xpath(MojichatLocators.MOJI_ICON).click()
         self.mojichat_element.find_pannel_element(driver, MojichatLocators.GAN_DAY_ICON).click()
-        src_sticker_hihi_recent = self.mojichat_element.find_sticker_sent_gan_day_by_index(driver, 3).get_attribute(
+        src_sticker_hihi_recent = self.mojichat_element.find_sticker_sent_gan_day_by_index(driver,
+                                                                                           index=3).get_attribute(
             'src')
-        src_sticker_haha_recent = self.mojichat_element.find_sticker_sent_gan_day_by_index(driver, 2).get_attribute(
+        src_sticker_haha_recent = self.mojichat_element.find_sticker_sent_gan_day_by_index(driver,
+                                                                                           index=2).get_attribute(
             'src')
-        src_sticker_hehe_recent = self.mojichat_element.find_sticker_sent_gan_day_by_index(driver, 1).get_attribute(
+        src_sticker_hehe_recent = self.mojichat_element.find_sticker_sent_gan_day_by_index(driver,
+                                                                                           index=1).get_attribute(
             'src')
         assert src_sticker_hihi in src_sticker_hihi_recent
         assert src_sticker_haha in src_sticker_haha_recent
         assert src_sticker_hehe in src_sticker_hehe_recent
 
-    # def click_moji_on_suggestion_panel(self, driver, position):
-    #     element = self.mojichat_element.find_moji_on_suggestion_panel(driver, position)
-    #     element.click()
+    def verify_second_pack_album(self, driver):
+        assert 'visible' not in self.mojichat_element.find_album_by_index(driver, index=1).get_attribute('class')
+        assert 'visible' not in self.mojichat_element.find_album_by_index(driver, index=7).get_attribute('class')
+        for i in range(2, 7):
+            assert 'sticker-type visible' in self.mojichat_element.find_album_by_index(driver, index=i).get_attribute(
+                'class')
+        # assert 'sticker-type visible' in self.mojichat_element.find_album_by_index(driver, 3).get_attribute('class')
+        # assert 'sticker-type visible' in self.mojichat_element.find_album_by_index(driver, 4).get_attribute('class')
+        # assert 'sticker-type visible' in self.mojichat_element.find_album_by_index(driver, 5).get_attribute('class')
+        # assert 'sticker-type visible' in self.mojichat_element.find_album_by_index(driver, 6).get_attribute('class')
+
+    def verify_first_pack_album(self, driver):
+        for i in range(1, 6):
+            assert 'sticker-type visible' in self.mojichat_element.find_album_by_index(driver, index=i).get_attribute(
+                'class')
+        # assert 'sticker-type visible' in self.mojichat_element.find_album_by_index(driver, 1).get_attribute('class')
+        # assert 'sticker-type visible' in self.mojichat_element.find_album_by_index(driver, 2).get_attribute('class')
+        # assert 'sticker-type visible' in self.mojichat_element.find_album_by_index(driver, 3).get_attribute('class')
+        # assert 'sticker-type visible' in self.mojichat_element.find_album_by_index(driver, 4).get_attribute('class')
+        # assert 'sticker-type visible' in self.mojichat_element.find_album_by_index(driver, 5).get_attribute('class')
+        assert 'visible' not in self.mojichat_element.find_album_by_index(driver, index=6).get_attribute('class')
+
+    def verify_most_popular_stickers_by_package_album_collection(self, driver, chat_type):
+        self.open_chat_browser(driver, chat_type)
+        driver.find_element_by_xpath(MojichatLocators.MOJI_ICON).click()
+        self.mojichat_element.find_pannel_element(driver, MojichatLocators.GO_RIGHT_ICON).click()
+        self.verify_second_pack_album(driver)
+        self.mojichat_element.find_pannel_element(driver, MojichatLocators.GO_LEFT_ICON).click()
+        self.verify_first_pack_album(driver)
+
+    def verify_most_popular_stickers_when_user_type_related_keywords_again(self, driver, chat_type):
+        self.open_chat_browser(driver, chat_type=chat_type)
+        for i in range(1, 13):
+            driver.find_element_by_xpath(MojichatLocators.MOJI_ICON).click()
+            self.mojichat_element.find_pannel_element(driver, MojichatLocators.THINH_HANH_ICON).click()
+            sticker_keyword = self.mojichat_element.find_sticker_keyword_by_index(driver, index=i).text
+            self.input_text_into_chat(driver, chat_type=chat_type, chat_text=sticker_keyword)
+            for j in range(1, 6):
+                assert sticker_keyword in self.mojichat_element.find_sticker_by_index(driver, index=j).get_attribute(
+                    'keyword')
+
+    def verify_suggestion_is_shown_when_entering_the_supported_keyword(self, driver, chat_type, mojichat_file):
+        self.open_chat_browser(driver, chat_type=chat_type)
+        self.send_text_into_chat(driver, chat_type, "clear cache")
+        list_mojichat = CSVHandle().get_from_csv(mojichat_file)
+        for i in list_mojichat:
+            self.select_moji_on_suggestion_panel(driver, chat_type, i, 0)
+            self.verify_chat_is_empty(driver, chat_type)
+
+    def click_moji_on_suggestion_panel(self, driver, position):
+        element = self.mojichat_element.find_moji_on_suggestion_panel(driver, position)
+        element.click()
+
+    def delete_message_then_open_small_chat(self, driver):
+        time.sleep(5)
+        coccoc_account_test = driver.find_elements_by_xpath(FacebookMessagePageLocators.OPEN_MENU_XPATH)
+        if len(coccoc_account_test) > 0:
+            driver.find_element_by_xpath(FacebookMessagePageLocators.OPEN_MENU_XPATH).click()
+            driver.find_element_by_xpath(FacebookMessagePageLocators.XOA_CUOC_TRO_TRUYEN_XPATH).click()
+            driver.find_element_by_xpath(FacebookMessagePageLocators.XOA_CUOC_TRO_TRUYEN_CONFIRM_XPATH).click()
+        driver.get(Urls.FACEBOOK_COC_COC_BAY_PROFILE_URL)
+        driver.find_element_by_xpath(FacebookPageLocators.NHAN_TIN_BTN_XPATH).click()
+
+    def get_sticker_is_sent(self, driver):
+        is_sent_sticker = False
+        try:
+            sticker = driver.find_elements_by_xpath(FacebookMessagePageLocators.SENT_STICKER_IMAGE)
+            if len(sticker) == 1:
+                is_sent_sticker = True
+        except:
+            sticker = driver.find_elements_by_xpath(FacebookMessagePageLocators.SENT_STICKER_MOJI)
+            if len(sticker) == 1:
+                is_sent_sticker = True
+        return is_sent_sticker
+
+    def select_sticker_in_show_more(self, driver, sticker_in_show_more):
+        if sticker_in_show_more:
+            self.mojichat_element.find_show_more_sticker_button(driver).click()
+            self.mojichat_element.find_sticker_in_show_more_popup(driver).click()
+        else:
+            self.mojichat_element.find_sticker_by_index(driver, index=1,
+                                                    parent_shadow=MojichatLocators.PANEL_SHADOW_PARENT_SMALL_CHAT_BY_FACEBOOK_URL).click()
+
+
+
+    def verify_keyword_is_auto_deleted_after_user_sends_the_sticker(self, driver, chat_type, sticker_in_show_more=False):
+        self.open_chat_browser(driver, chat_type)
+        self.input_text_into_chat(driver, chat_type, chat_text='hihi')
+        self.select_sticker_in_show_more(driver, sticker_in_show_more)
+        time.sleep(3)
+        assert self.get_sticker_is_sent(driver) is True
+
     #
     # def clear_text_into_chat_box(self, driver):
     #     element = self.mojichat_element.find_big_chat_input(driver)
@@ -227,38 +326,39 @@ class MojichatObjects(BasePageObject):
     #     WaitAfterEach.sleep_timer_after_each_step()
     #
 
-    #
-    # def select_moji_on_suggestion_panel(self, driver, chat_text, position):
-    #     # self.clear_text_into_chat_box(driver)
-    #     self.input_text_into_chat(driver, chat_text)
-    #     self.click_moji_on_suggestion_panel(driver, position)
-    #     # self.click_on_send_button(driver)
+    def select_moji_on_suggestion_panel(self, driver, chat_type, chat_text, position):
+        # self.clear_text_into_chat_box(driver)
+        self.input_text_into_chat(driver, chat_type, chat_text)
+        time.sleep(3)
+        self.click_moji_on_suggestion_panel(driver, position)
+        # self.click_on_send_button(driver)
+
     #
     # def select_moji_on_suggestion_panel_by_arrow_key(self, driver, chat_text, position):
     #     self.input_text_into_chat(driver, chat_text)
     #     self.press_arrow_up(driver)
     #
-    # def verify_chat_is_empty(self, driver):
-    #     # Keyword is auto-deleted after user sends the sticker
-    #     element = self.mojichat_element.find_chat_input(driver)
-    #     chat = self.get_text_element(element)
-    #     assert chat == ""
+    def verify_chat_is_empty(self, driver, chat_type):
+        # Keyword is auto-deleted after user sends the sticker
+        element = self.chat_element.find_chat_input(driver, chat_type)
+        chat = self.get_text_element(element)
+        assert chat == ""
 
-    # def click_on_send_button(self, driver):
-    #     try:
-    #         if (self.chat_type == MojichatLocators.BIG_CHAT):
-    #             locator = MojichatLocators.BIG_CHAT_BTN_SEND
-    #         elif (self.chat_type == MojichatLocators.SMALL_CHAT):
-    #             locator = MojichatLocators.SMALL_CHAT_BTN_SEND
-    #         element = self.mojichat_element.find_tooltip_button(driver, locator)
-    #         element.click()
-    #         WaitAfterEach.sleep_timer_after_each_step()
-    #     except Exception as e:
-    #         print("Not found button Send")
+    def click_on_send_button(self, driver):
+        try:
+            if (self.chat_type == MojichatLocators.BIG_CHAT):
+                locator = MojichatLocators.BIG_CHAT_BTN_SEND
+            elif (self.chat_type == MojichatLocators.SMALL_CHAT):
+                locator = MojichatLocators.SMALL_CHAT_BTN_SEND
+            element = self.mojichat_element.find_tooltip_button(driver, locator)
+            element.click()
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            print("Not found button Send")
 
-    # def send_text_into_chat(self, driver, chat_text):
-    #     self.input_text_into_chat(driver, chat_text)
-    #     self.click_on_send_button(driver)
+    def send_text_into_chat(self, driver, chat_type, chat_text):
+        self.input_text_into_chat(driver, chat_type, chat_text)
+        self.click_on_send_button(driver)
 
     # def change_moji_flag_status(self, status='Enabled'):
     #     from testscripts.smoketest.common import cleanup

@@ -26,12 +26,21 @@ class BasePageObject(object):
         actions.send_keys(keys)
         actions.perform()
 
-    def clear_text_to_element(self, element):
-        element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.DELETE)
+    def clear_text_to_element(self, driver, element):
+        actions = ActionChains(driver)
+        actions.move_to_element(element)
+        actions.click()
+        # actions.send_keys(Keys.CONTROL + "a")
+        actions.key_down(Keys.CONTROL)
+
+        actions.send_keys("a")
+
+        actions.key_up(Keys.CONTROL)
+        actions.send_keys(Keys.DELETE)
+        actions.perform()
 
     def get_text_element(self, element):
-        return element.get_attribute('innerHTML')
+        return element.get_attribute('textContent')
 
     def get_text_element_by_id(self, driver, locator):
         element = self.version_element.find_element(driver, locator)

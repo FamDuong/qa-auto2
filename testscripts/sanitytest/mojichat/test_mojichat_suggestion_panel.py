@@ -3,6 +3,7 @@ from selenium import webdriver
 
 from models.pageelements.mojichat import ChatElement
 from models.pageobject.mojichat import MojichatObjects
+from utils_automation.common import CSVHandle
 
 from utils_automation.setup import Browser
 
@@ -15,7 +16,7 @@ user_chat = "Coc Coc"
 mojichat_file = "mojichat_list.csv"
 
 
-#@pytest.mark.skip(reason='Skip mojchat')
+# @pytest.mark.skip(reason='Skip mojchat')
 class TestSuggestionPanelBigBoxChat:
     mojichat_object = MojichatObjects()
     version_page_element = VersionPageElements()
@@ -57,7 +58,7 @@ class TestSuggestionPanelBigBoxChat:
         driver.get(Urls.COCCOC_EXTENSIONS)
         self.mojichat_object.on_off_moji_extension(driver, action="ON")
         self.mojichat_object.login_facebook(driver)
-        #self.mojichat_object.verify_send_first_sticker(driver, chat_type='SMALL_CHAT')
+        # self.mojichat_object.verify_send_first_sticker(driver, chat_type='SMALL_CHAT')
         self.mojichat_object.verify_send_first_sticker(driver, chat_type='BIG_CHAT')
 
     @pytestrail.case('C54450')
@@ -72,11 +73,61 @@ class TestSuggestionPanelBigBoxChat:
     @pytestrail.case('C54451')
     def test_check_if_an_emoji_is_added_into_recent_stickers(self):
         driver = coccoc_instance()
-        driver.maximize_window()
-        driver.get(Urls.COCCOC_EXTENSIONS)
-        self.mojichat_object.on_off_moji_extension(driver, action="ON")
-        self.mojichat_object.login_facebook(driver)
+        # driver.maximize_window()
+        # driver.get(Urls.COCCOC_EXTENSIONS)
+        # self.mojichat_object.on_off_moji_extension(driver, action="ON")
+        # self.mojichat_object.login_facebook(driver)
         self.mojichat_object.verify_emoji_is_added_into_recent_stickers(driver, chat_type='SMALL_CHAT')
+
+    @pytestrail.case('C81579')
+    def test_check_most_popular_stickers_by_package_album_collection(self):
+        driver = coccoc_instance()
+        # driver.maximize_window()
+        # driver.get(Urls.COCCOC_EXTENSIONS)
+        # self.mojichat_object.on_off_moji_extension(driver, action="ON")
+        self.mojichat_object.login_facebook(driver)
+        self.mojichat_object.verify_most_popular_stickers_by_package_album_collection(driver, chat_type='SMALL_CHAT')
+
+    @pytestrail.case('C86105')
+    def test_check_most_popular_stickers_when_user_type_related_keywords_again(self):
+        driver = coccoc_instance()
+        # driver.maximize_window()
+        # driver.get(Urls.COCCOC_EXTENSIONS)
+        # self.mojichat_object.on_off_moji_extension(driver, action="ON")
+        # self.mojichat_object.login_facebook(driver)
+        self.mojichat_object.verify_most_popular_stickers_when_user_type_related_keywords_again(driver,
+                                                                                                chat_type='SMALL_CHAT')
+
+    @pytestrail.case('C54462')
+    def test_check_if_suggestion_is_shown_when_entering_the_supported_keyword(self):
+        driver = coccoc_instance()
+        # driver.maximize_window()
+        # driver.get(Urls.COCCOC_EXTENSIONS)
+        # self.mojichat_object.on_off_moji_extension(driver, action="ON")
+        # self.mojichat_object.login_facebook(driver)
+        self.mojichat_object.verify_suggestion_is_shown_when_entering_the_supported_keyword(driver,
+                                                                                            chat_type='SMALL_CHAT',
+                                                                                            mojichat_file=mojichat_file)
+
+    @pytestrail.case('C54464')
+    def test_check_that_keyword_is_auto_deleted_after_user_sends_the_sticker(self):
+        driver = coccoc_instance()
+        # driver.maximize_window()
+        # driver.get(Urls.COCCOC_EXTENSIONS)
+        # self.mojichat_object.on_off_moji_extension(driver, action="ON")
+        # self.mojichat_object.login_facebook(driver)
+        self.mojichat_object.verify_keyword_is_auto_deleted_after_user_sends_the_sticker(driver,
+                                                                                            chat_type='SMALL_CHAT')
+
+    @pytestrail.case('C86098')
+    def test_check_that_keyword_is_auto_deleted_after_user_sends_the_sticker_in_show_more(self):
+        driver = coccoc_instance()
+        # driver.maximize_window()
+        # driver.get(Urls.COCCOC_EXTENSIONS)
+        # self.mojichat_object.on_off_moji_extension(driver, action="ON")
+        # self.mojichat_object.login_facebook(driver)
+        self.mojichat_object.verify_keyword_is_auto_deleted_after_user_sends_the_sticker(driver,
+                                                                                         chat_type='SMALL_CHAT', sticker_in_show_more=True)
 
 #     @pytestrail.case('C54462')
 #     def test_check_if_suggestion_is_shown_when_entering_the_supported_keyword(self, browser):
@@ -101,13 +152,13 @@ class TestSuggestionPanelBigBoxChat:
 # class TestSuggestionPanelSmallChat:
 #     mojichat_object = MojichatObjects(MojichatLocators.SMALL_CHAT)
 #
-#     @pytestrail.case('C54462')
-#     def test_check_if_suggestion_is_shown_when_entering_the_supported_keyword(self, browser):
-#         self.mojichat_object.open_chat_browser(browser)
-#         self.mojichat_object.select_user_chat(browser, user_chat)
-#         self.mojichat_object.send_text_into_chat(browser, "clear cache")
+# @pytestrail.case('C54462')
+# def test_check_if_suggestion_is_shown_when_entering_the_supported_keyword(self, browser):
+#     self.mojichat_object.open_chat_browser(browser)
+#     self.mojichat_object.select_user_chat(browser, user_chat)
+#     self.mojichat_object.send_text_into_chat(browser, "clear cache")
 #
-#         list_mojichat = CSVHandle().get_from_csv(mojichat_file)
-#         for i in list_mojichat:
-#             self.mojichat_object.select_moji_on_suggestion_panel(browser, i, 0)
-#             self.mojichat_object.verify_chat_is_empty(browser)
+#     list_mojichat = CSVHandle().get_from_csv(mojichat_file)
+#     for i in list_mojichat:
+#         self.mojichat_object.select_moji_on_suggestion_panel(browser, i, 0)
+#         self.mojichat_object.verify_chat_is_empty(browser)

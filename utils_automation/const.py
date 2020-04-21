@@ -20,7 +20,9 @@ class Urls:
 
     GOOGLE_URL = 'https://www.google.com/'
     FACEBOOK_URL = 'https://www.facebook.com/'
-
+    FACEBOOK_COC_COC_BAY_PROFILE_URL = 'https://www.facebook.com/profile.php?id=100010842734556'
+    MESSENDER_URL = "https://www.messenger.com/"
+    FACEBOOK_MESSENDER_URL = "https://www.facebook.com/messages/t/100010842734556"
     NEW_TAB_URL = 'http://coccoc.com/webhp'
     PIRATE_BAY_URL = 'https://www.thepiratebay.asia/search'
 
