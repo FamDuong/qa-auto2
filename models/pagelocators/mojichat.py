@@ -9,9 +9,8 @@ class MojichatLocators:
     BIG_CHAT_BTN_SEND = (By.XPATH, '//*[text()="Send"]')
     BIG_CHAT_BTN_SEND_A_LIKE = (By.XPATH, '//*[@title="Send a Like"]')
 
-    SMALL_CHAT_INPUT = (By.CSS_SELECTOR, 'div[role="presentation"] div[contenteditable="true"] span')
-    # SMALL_CHAT_INPUT = (By.XPATH, '//div[@data-contents="true"]//*[@data-text="true"]/parent::span')
-    SMALL_CHAT_BTN_SEND = (By.XPATH, '//*[@data-tooltip-content="Press Enter to send"]')
+    SMALL_CHAT_INPUT = (By.XPATH, '//div[@data-contents="true"]//*[@data-text="true"]/parent::span')
+    SMALL_CHAT_BTN_SEND = (By.XPATH, '//a[@label="send"]')
 
     # MOJI_SUGGESTION_PANEL = '[class="chat-suggestion-container"]'
     MOJI_SUGGESTION_PANEL = (By.XPATH, '//div[@class="chat-suggestion-container"]')
@@ -49,5 +48,5 @@ class MojichatLocators:
     STICKER_KEYWORD_INDEX = "div[class='sticker-group trending']:nth-child({param1}) #keyword"
     PANEL_SHADOW_PARENT_SMALL_CHAT_BY_FACEBOOK_URL = "#ChatTabsPagelet div.fbNubFlyoutFooter > div:nth-child(3)"
     SHOW_MORE_STICKER = '#show-more'
-    STICKER_IN_SHOW_MORE_SHADOW_PARENT = 'div.fbNubFlyoutFooter > div.chat-suggestion-container'
     STICKER_IN_SHOW_MORE_INDEX1 = 'div.stickers-group #sticker-suggestion:nth-child(1)'
+    STICKER_GROUP = '#show-more > div.more-stickers'

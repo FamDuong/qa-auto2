@@ -29,10 +29,8 @@ def check_if_coccoc_is_installed():
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     result = p.communicate()[0]
     if file_name in str(result):
-        print("check_if_coccoc_is_installed: True")
         return True
     else:
-        print("check_if_coccoc_is_installed: False")
         return False
 
 

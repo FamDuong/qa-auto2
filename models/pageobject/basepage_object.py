@@ -30,11 +30,8 @@ class BasePageObject(object):
         actions = ActionChains(driver)
         actions.move_to_element(element)
         actions.click()
-        # actions.send_keys(Keys.CONTROL + "a")
         actions.key_down(Keys.CONTROL)
-
         actions.send_keys("a")
-
         actions.key_up(Keys.CONTROL)
         actions.send_keys(Keys.DELETE)
         actions.perform()

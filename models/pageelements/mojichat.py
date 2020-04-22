@@ -35,10 +35,6 @@ class MojichatElement(BasePageElement):
         wait = WebDriverWait(driver, 20)
         return wait.until(ec.presence_of_element_located(MojichatLocators.MESSAGE_FACEBOOK))
 
-    def find_user_chat(self, driver, user_chat):
-        wait = WebDriverWait(driver, 20)
-        return wait.until(ec.presence_of_element_located((By.XPATH, '//span[contains(text(),"' + user_chat + '")]')))
-
     def find_de_xem_nao_btn(self, driver):
         return self.find_shadow_element(driver, MojichatLocators.MOJI_SHADOW_PARENT, MojichatLocators.DE_XEM_NAO_BTN)
 
@@ -64,10 +60,16 @@ class MojichatElement(BasePageElement):
                                                                           MojichatLocators.CLICK_VAO_HINH_DE_GUI_NHE_LBL)
         return click_vao_hinh_de_gui_nhe_tool_tip
 
-    def find_sticker_by_index(self, driver, index, parent_shadow=MojichatLocators.STICKER_SUGGESTION_PARENT):
+    def find_sticker_by_index(self, driver, index):
         sticker_suggestion_index = MojichatLocators.STICKER_SUGGESTION_INDEX.replace('{param1}', str(index))
-        return self.find_shadow_element(driver, parent_shadow, sticker_suggestion_index)
-
+        try:
+            sticker_by_index = self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT,
+                                                        sticker_suggestion_index)
+        except:
+            sticker_by_index = self.find_shadow_element(driver,
+                                                        MojichatLocators.PANEL_SHADOW_PARENT_SMALL_CHAT_BY_FACEBOOK_URL,
+                                                        sticker_suggestion_index)
+        return sticker_by_index
 
     def find_thank_you_popup(self, driver, chat_type):
         if chat_type in 'SMALL_CHAT':
@@ -104,10 +106,37 @@ class MojichatElement(BasePageElement):
         return self.find_shadow_element(driver, MojichatLocators.PANEL_SHADOW_PARENT, sticker_keyword_index)
 
     def find_show_more_sticker_button(self, driver):
-        return self.find_shadow_element(driver, MojichatLocators.STICKER_IN_SHOW_MORE_SHADOW_PARENT, MojichatLocators.SHOW_MORE_STICKER)
+        try:
+            show_more_button = self.find_shadow_element(driver,
+                                                        MojichatLocators.PANEL_SHADOW_PARENT_SMALL_CHAT_BY_FACEBOOK_URL,
+                                                        MojichatLocators.SHOW_MORE_STICKER)
+        except:
+            show_more_button = self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT,
+                                                        MojichatLocators.SHOW_MORE_STICKER)
+        return show_more_button
 
     def find_sticker_in_show_more_popup(self, driver):
-        return self.find_shadow_element(driver, MojichatLocators.STICKER_IN_SHOW_MORE_SHADOW_PARENT, MojichatLocators.STICKER_IN_SHOW_MORE_INDEX1)
+        try:
+            sticker_in_show_more = self.find_shadow_element(driver,
+                                                            MojichatLocators.PANEL_SHADOW_PARENT_SMALL_CHAT_BY_FACEBOOK_URL,
+                                                            MojichatLocators.STICKER_IN_SHOW_MORE_INDEX1)
+
+        except:
+            sticker_in_show_more = self.find_shadow_element(driver, MojichatLocators.STICKER_SUGGESTION_PARENT,
+                                                            MojichatLocators.STICKER_IN_SHOW_MORE_INDEX1)
+        return sticker_in_show_more
+
+    def find_sticker_group(self, driver):
+        try:
+            sticker_group = self.find_shadow_element(driver,
+                                                     MojichatLocators.PANEL_SHADOW_PARENT_SMALL_CHAT_BY_FACEBOOK_URL,
+                                                     MojichatLocators.STICKER_GROUP)
+        except:
+            sticker_group = self.find_shadow_element(driver,
+                                                     MojichatLocators.STICKER_SUGGESTION_PARENT,
+                                                     MojichatLocators.STICKER_GROUP)
+        return sticker_group
+
 
 class ChatElement(BasePageElement):
     def find_chat_input(self, driver, chat_type):
