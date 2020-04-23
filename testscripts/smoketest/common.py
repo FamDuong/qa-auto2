@@ -628,10 +628,8 @@ def chrome_options_preset():
     chrome_options.add_argument('--disable-application-cache')
     chrome_options.add_argument("--disable-session-crashed-bubble")
     chrome_options.add_argument("--disable-features=RendererCodeIntegrity")
-    chrome_options.add_experimental_option("prefs", {'safebrowsing.enabled': 'false', "profile"
-                                                                                      ".default_content_setting_values.notifications": 1})
+    chrome_options.add_experimental_option("prefs", {'safebrowsing.enabled': 'false'})
     chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
-    chrome_options.add_argument("enable-features=CocCocMojichat")
     split_after = binary_path.split('\\Local')
     user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
     chrome_options.add_argument('--user-data-dir=' + user_data_path)

@@ -1,9 +1,8 @@
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
-
-from testscripts.common_setup import download_file_via_main_download_button, \
-    assert_file_download_value, get_resolution_info
+from testscripts.common_setup import download_file_via_main_download_button, assert_file_download_value, \
+    get_resolution_info
 from utils_automation.const import OtherSiteUrls
 
 savior_page_object = SaviorPageObject()
@@ -40,7 +39,3 @@ class TestVliveTV:
         media_info = download_file_via_main_download_button(browser)
         resolution_info = get_resolution_info(media_info)
         assert_file_download_value(get_current_download_folder, resolution_info)
-
-
-
-

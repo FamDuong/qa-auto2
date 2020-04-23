@@ -5,7 +5,7 @@ class MojichatLocators:
     BIG_CHAT = "big_chat"
     SMALL_CHAT = "small chat"
 
-    BIG_CHAT_INPUT = (By.XPATH, '//*[@data-text="true"]')
+    BIG_CHAT_INPUT = (By.XPATH, '//div[@aria-label="New message"]//*[@data-text="true"]')
     BIG_CHAT_BTN_SEND = (By.XPATH, '//*[text()="Send"]')
     BIG_CHAT_BTN_SEND_A_LIKE = (By.XPATH, '//*[@title="Send a Like"]')
 

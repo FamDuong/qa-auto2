@@ -11,6 +11,8 @@ import re
 from os import path
 from selenium import webdriver
 from selenium.webdriver import ActionChains
+from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
 
 
 def if_height_frame_so_width_frame(height_frame):
@@ -63,6 +65,37 @@ class CSVHandle:
                 print("Can not read file CSV:", filename)
                 print("System error:", e)
                 return None
+
+    def write_result_data_for_page_load_time(self, file_name, keyname_list: list, value_list: list, result_type=''):
+        with open(file_name, 'a', encoding='utf-8') as file:
+            file.truncate(0)
+            total_value = 0
+            file.write(f"Results for {result_type} is as below :\n")
+            for (keyname, value) in zip(keyname_list, value_list):
+                file.write(f"{keyname} is: {value}")
+                file.write('\n')
+                total_value += value
+            average_value = total_value/len(value_list)
+            file.write(f"Average is : {average_value}")
+        file.close()
+
+    def write_result_data_for_cpu_ram(self, file_name, res, result_type=''):
+        with open(file_name, 'a', encoding='utf-8') as file:
+            file.truncate(0)
+            file.write(f"Results for {result_type} is as below :\n")
+            cpu_total = 0
+            mem_total = 0
+            for i in range(len(res)):
+                cpu_total += int(res[i].get("cpu"))
+                mem_total += int(res[i].get("mem"))
+                file.write("i is %d\n" % i)
+                file.write("CPU is %s, Mem is %s\n" % (res[i].get("cpu"), res[i].get("mem")))
+            cpu_average = cpu_total/len(res)
+            mem_average = mem_total/len(res)
+            file.write("Average value is :\n")
+            file.write(f"CPU : {cpu_average}\n")
+            file.write(f"MEM : {mem_average}")
+        file.close()
 
 
 class FilesHandle:
@@ -234,13 +267,13 @@ class WebElements:
         hov.perform()
 
     @staticmethod
-    def click_element_by_javascript(driver, element):
-        driver.execute_script('arguments[0].click()', element)
+    def scroll_into_view_element(driver: WebDriver, element: WebElement):
+        driver.execute_script("arguments[0].scrollIntoView(true);", element)
 
 
 class WindowsCMD:
     @staticmethod
-    def execute_cmd(cmd_text, is_split=False):
+    def execute_cmd(cmd_text, is_split=True):
         wait_for_stable()
         if is_split:
             process = subprocess.Popen(cmd_text.split(), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
