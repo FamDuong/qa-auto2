@@ -85,7 +85,7 @@ class TestSuggestionPanelBigBoxChat():
     #                                                                                         mojichat_file=mojichat_file)
 
     @pytestrail.case('C54464')
-    def test_check_that_keyword_is_auto_deleted_after_user_sends_the_sticker(self, browser_moji):
+    def test_check_that_keyword_is_auto_deleted_after_user_sends_the_sticker(self):#, browser_moji):
         driver = coccoc_instance()
         self.change_moji_extension_status_and_login_facebook(driver, action='ON')
         self.mojichat_object.verify_keyword_is_auto_deleted_after_user_sends_the_sticker(driver,

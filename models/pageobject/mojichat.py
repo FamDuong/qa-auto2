@@ -267,14 +267,10 @@ class MojichatObjects(BasePageObject):
     def get_sticker_is_sent(self, driver):
         time.sleep(3)
         try:
-            sticker = driver.find_elements_by_xpath(FacebookMessagePageLocators.SENT_STICKER_IMAGE)
-            print("haha" + FacebookMessagePageLocators.SENT_STICKER_IMAGE)
-            print("haha1" + str(len(sticker)))
+            sticker_is_sent = driver.find_element_by_xpath(FacebookMessagePageLocators.SENT_STICKER_IMAGE).is_displayed()
         except:
-            sticker = driver.find_elements_by_xpath(FacebookMessagePageLocators.SENT_STICKER_MOJI)
-            print("huhu1" + FacebookMessagePageLocators.SENT_STICKER_MOJI)
-            print("huhu" + str(len(sticker)))
-        return sticker
+            sticker_is_sent = driver.find_element_by_xpath(FacebookMessagePageLocators.SENT_STICKER_MOJI).is_displayed()
+        return sticker_is_sent
 
     def select_sticker_in_show_more(self, driver, sticker_in_show_more):
         time.sleep(5)
@@ -291,7 +287,7 @@ class MojichatObjects(BasePageObject):
         self.input_text_into_chat(driver, chat_type, chat_text='hihi')
         self.select_sticker_in_show_more(driver, sticker_in_show_more)
         self.verify_chat_is_empty(driver, chat_type)
-        assert len(self.get_sticker_is_sent(driver)) == 1
+        assert self.get_sticker_is_sent(driver) is True
 
     def select_moji_on_suggestion_panel(self, driver, chat_type, chat_text, position):
         self.input_text_into_chat(driver, chat_type, chat_text)
