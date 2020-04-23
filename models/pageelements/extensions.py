@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.extensions import ExtensionsPageLocators, SaviorDetailsPageLocators, \
-    SaviorExtensionOptionsPageLocators
+    SaviorExtensionOptionsPageLocators, GoogleExtensionsStorePageLocators, UblockPlusPageLocators
 from utils_automation.setup import WaitAfterEach
 
 
@@ -31,6 +31,16 @@ class ExtensionsElement(BasePageElement):
     def find_savior_details(self, driver):
         return self.find_savior_extension_wrapper(driver).find_element_by_id(
             ExtensionsPageLocators.EXTENSION_DETAIL_BUTTON)
+
+    def find_extension_detail_button(self, driver, extension_id):
+        return self.find_shadow_element(driver, ExtensionsPageLocators.EXTENSIONS_MANAGER_TEXT,
+                                        ExtensionsPageLocators.ITEMS_LIST, extension_id,
+                                        ExtensionsPageLocators.EXTENSION_DETAIL_BUTTON_ID)
+
+    def find_extension_toggle_button(self, driver):
+        return self.find_shadow_element(driver, ExtensionsPageLocators.EXTENSIONS_MANAGER_TEXT,
+                                        ExtensionsPageLocators.EXTENSION_DETAIL_VIEW,
+                                        ExtensionsPageLocators.EXTENSION_TOGGLE_BUTTON)
 
     class UblockPlusAdblockerElement(BasePageElement):
 
@@ -109,5 +119,16 @@ class SaviorExtensionsOptionsElement(BasePageElement):
         wait = WebDriverWait(driver, 20)
         return wait.until(
             ec.element_to_be_clickable(SaviorExtensionOptionsPageLocators.REMEMBER_LAST_CHOSEN_OPTION))
+
+
+class GoogleExtensionsStorePageElements(BasePageElement):
+
+    def find_rung_rinh_extension_version(self, driver):
+        wait = WebDriverWait(driver, 20)
+        return wait.until(
+            ec.element_to_be_clickable(GoogleExtensionsStorePageLocators.RUNG_RINH_EXTENSION_VERSION))
+
+
+
 
 

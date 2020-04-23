@@ -1,4 +1,3 @@
-
 import subprocess
 import time
 from models.pagelocators.settings import SettingsPageLocators
@@ -16,13 +15,14 @@ from utils_automation.common import wait_for_stable
 from models.pageobject.version import VersionPageObject
 from utils_automation.const import Urls
 from utils_automation.common import WindowsCMD
-
+base_url = Urls.COCCOC_DEV_URL
 
 class TestInstall:
     version_page_object = VersionPageObject()
     coccoc_page_object = CocCocPageObjects()
     download_page_object = DownloadsPageObject()
     setting_page_object = SettingsPageObject()
+
 
     def get_dir_data(self, browser):
         browser.get(Urls.COCCOC_VERSION_URL)
@@ -76,7 +76,7 @@ class TestInstall:
         except:
             print("Install unsuccessfully!!!")
 
-    def test_silent_install_from_cmd(self, install_file, option = None):
+    def test_silent_install_from_cmd(self, install_file, option=None):
         try:
             wait_for_stable
             subprocess.Popen(install_file + ' /silent /forcedcmdline "' + option + '" /install')
@@ -90,20 +90,21 @@ class TestInstall:
         # Please make sure to add hosts to C:\Windows\System32\drivers\etc\hosts
         # Restriction: Cannot add hosts by script because of administration permission
         # Download latest version
-        download_file = self.coccoc_page_object.download_coccoc_from_dev(browser, get_current_download_folder)
+        download_file = self.coccoc_page_object.get_path_installer(browser, base_url, get_current_download_folder)
         # Uninstall old version
         self.test_uninstall_from_cmd(browser, rm_user_data)
         # Install downloaded version
         self.test_install_from_cmd(download_file)
         self.version_page_object.verify_version_is_correct(cc_version)
 
+
 class TestOverrideInstall(TestInstall):
     @pytestrail.case('C44773')
     def test_check_install_new_version_above_old_version(self, browser, get_current_download_folder, cc_version,
-                                                         rm_user_data = "Yes"):
+                                                         rm_user_data="Yes"):
         # Precondition: Download latest file
         # Download latest version
-        download_file = self.coccoc_page_object.download_coccoc_from_dev(browser, get_current_download_folder)
+        download_file = self.coccoc_page_object.get_path_installer(browser, base_url, get_current_download_folder)
         # Uninstall old version
         self.test_uninstall_from_cmd(browser, rm_user_data)
         # Install old version version
@@ -114,24 +115,26 @@ class TestOverrideInstall(TestInstall):
         self.version_page_object.verify_version_is_correct(cc_version)
 
     @pytestrail.case('C44777')
-    def test_check_installing_fresh_package_successfully_on_windows(self, browser, get_current_download_folder, cc_version, rm_user_data = "Yes"):
+    def test_check_installing_fresh_package_successfully_on_windows(self, browser, get_current_download_folder,
+                                                                    cc_version, rm_user_data="Yes"):
         # Please make sure to add hosts to C:\Windows\System32\drivers\etc\hosts
         # Restriction: Cannot add hosts by script because of administration permission
         # Download latest version
-        download_file = self.coccoc_page_object.download_coccoc_from_dev(browser, get_current_download_folder)
+        download_file = self.coccoc_page_object.get_path_installer(browser, base_url, get_current_download_folder)
         # Uninstall old version
         self.test_uninstall_from_cmd(browser, rm_user_data)
         # Install downloaded version
         self.test_install_from_cmd(download_file)
         self.version_page_object.verify_version_is_correct(cc_version)
 
+
 class TestSilentInstall(TestInstall):
     new_browser = BrowserHandler()
 
     @pytestrail.case('C44785')
     def test_check_with_make_coccoc_default(self, browser, get_current_download_folder, cc_version, rm_user_data):
-        download_file = self.coccoc_page_object.download_coccoc_from_dev(browser, get_current_download_folder)  # Download latest version
-        self.test_uninstall_from_cmd(browser, rm_user_data)   # Uninstall old version
+        download_file = self.coccoc_page_object.get_path_installer(browser, base_url, get_current_download_folder) # Download latest version
+        self.test_uninstall_from_cmd(browser, rm_user_data)  # Uninstall old version
         self.test_silent_install_from_cmd(download_file, 'make-coccoc-default')  # Install downloaded version
         self.version_page_object.verify_version_is_correct(cc_version)
         browser = self.new_browser.browser_init()
@@ -139,14 +142,13 @@ class TestSilentInstall(TestInstall):
 
     @pytestrail.case('C44786')
     def test_check_with_auto_launch_coccoc(self, browser, get_current_download_folder, cc_version, rm_user_data):
-        download_file = self.coccoc_page_object.download_coccoc_from_dev(browser, get_current_download_folder)  # Download latest version
+        download_file = self.coccoc_page_object.get_path_installer(browser, base_url, get_current_download_folder) # Download latest version
         self.test_uninstall_from_cmd(browser, rm_user_data)  # Uninstall old version
         self.test_silent_install_from_cmd(download_file, 'auto-launch-coccoc')  # Install downloaded version
         self.version_page_object.verify_version_is_correct(cc_version)
         browser = self.new_browser.browser_init()
-        self.setting_page_object.verify_setting_default_browser(browser, SettingsPageLocators.DEFAULT_BROWSER_RUN_AUTO_ONSTARTUP_CHECKBOX)
-
-
+        self.setting_page_object.verify_setting_default_browser(browser,
+                                                                SettingsPageLocators.DEFAULT_BROWSER_RUN_AUTO_ONSTARTUP_CHECKBOX)
 
 
 def test_uninstall():

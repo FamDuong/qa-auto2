@@ -25,6 +25,10 @@ COCCOC_MUSIC_CMS_DOMAIN_URL = get_environment_info()['coccoc_music_cms']['domain
 COCCOC_MUSIC_CMS_ADMIN_EMAIL = get_environment_info()['coccoc_music_cms']['admin_email']
 COCCOC_MUSIC_CMS_ADMIN_PASSWORD = get_environment_info()['coccoc_music_cms']['admin_password']
 
+COCCOC_MUSIC_API_DOMAIN_URL = get_environment_info()['coccoc_music_api']['domain_url']
+COCCOC_MUSIC_API_USERNAME = get_environment_info()['coccoc_music_api']['username']
+COCCOC_MUSIC_API_PASSWORD = get_environment_info()['coccoc_music_api']['password']
+
 
 
 

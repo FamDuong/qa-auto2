@@ -44,7 +44,7 @@ class AnySite(object):
     PHIMMOI_VIDEO_AD_LENGTH_LOCATOR = (By.XPATH, '//div[@class="jw-icon jw-icon-inline jw-text jw-reset jw-text-duration"]')
     FACEBOOK_VIDEO_ITEM = (By.XPATH, '//video[@preload]')
     MESSENGER_CHAT_VIDEO_ITEM = (By.XPATH, '//video')
-    MESSENGER_CHAT_VIDEO_PLAY_BTN = (By.XPATH, '//*[@class="_1jto _bsl _4ubd _3htz"]')
+    MESSENGER_CHAT_VIDEO_PLAY_BTN = (By.XPATH, '//*[@id="u_n_0"]')
     MESSENGER_CHAT_VIDEO_ITEM_SELECTOR = 'button[data-testid="play_pause_control"]'
     INSTAGRAM_VIDEO_ITEM = (By.XPATH, '//div[@role="button"][@aria-label]')
     KIENTHUC_VIDEO_ITEM = (By.XPATH, '//div[@style="text-align:center; width:480px;"]')
@@ -100,7 +100,7 @@ class AnySite(object):
     ANIME_VSUB_TV_PLAY_BUTTON = (By.XPATH, '//div[@class="jw-icon jw-icon-inline jw-button-color jw-reset jw-icon-playback"]')
     NHAC_VN_VIDEO_URL = (By.ID, 'myvideo')
     XVIDEO_VIDEO_ITEM = (By.XPATH, '//div[@id="html5video"]')
-    XVIDEO_PLAY_BTN = (By.XPATH, '//img[@title="Play"]')
+    XVIDEO_PLAY_BTN = (By.XPATH, '//*[@id="hlsplayer"]/div[2]/div[2]/img')
     XNXX_VIDEO_ITEM = (By.XPATH, '//video[@preload="auto"]')
     XNXX_PLAY_BTN = (By.XPATH, '//div[@class="big-button play"]')
     FR_PORN_HUB_VIDEO_PLAY_BTN = (By.XPATH, '//div[@class="mhp1138_play"]')
@@ -176,6 +176,8 @@ class AnySite(object):
     VTV_GO_VN_VIDEO_ITEM = (By.ID, 'flowplayer')
     XEM_VTV_NET_VIDEO_PLAYER = (By.ID, 'media')
     XEM_VTV_NET_PLAY_BTN = (By.XPATH, '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]')
+
+
 
 
 

@@ -3,6 +3,10 @@ from selenium.webdriver.common.by import By
 
 class SettingsPageLocators(object):
     SETTINGS_UI_TEXT = 'settings-ui'
+    SETTINGS_MENU_TEXT = 'settings-menu'
+    SETTINGS_MENU_PEOPLE_LBL = '#people'
+    SETTINGS_MENU_AUTO_FILL_LBL = '#autofill'
+    SETTINGS_MENU_DEFAULT_BROWSER_LBL = '#defaultBrowser'
     SETTINGS_MAIN_TEXT = 'settings-main'
     SETTINGS_BASIC_PAGE_TEXT = 'settings-basic-page'
     SETTINGS_ABOUT_TEXT = 'settings-about-page'
@@ -17,6 +21,7 @@ class SettingsPageLocators(object):
     SETTINGS_TOGGLE_BUTTON_TEXT = 'settings-toggle-button'
     SETTINGS_SYSTEM_START_UP_CONTROL_TEXT = '#control'
     SETTINGS_ABOUT_RELAUNCH_BROWSER_TEXT = '#relaunch'
+    SETTINGS_DEFAULT_BROWSER_IS_DEFAULT_TEXT = '#isDefault'
 
     SETTINGS_DOWNLOAD_PAGE_TEXT = 'settings-downloads-page'
 
@@ -42,13 +47,16 @@ class SettingsPageLocators(object):
     EXTENSION_VERSION = '#version'
     EXTENSION_BTN_UPDATE = '#updateNow'
     EXTENSION_NOTIFY_PARENT = 'cr-toast-manager'
-    EXTENSION_NOTIFY = 'cr-toast > div'
+    EXTENSION_NOTIFY = '#toast[open]'
     EXTENSION_TOGGLE = '#enable-toggle'
     EXTENSION_TOGGLE_DEV_MODE = '#devMode'
     EXTENSION_DICTIONARY_ID = '#gfgbmghkdjckppeomloefmbphdfmokgd'
     EXTENSION_SAVIOR_ID = '#jdfkmiabjpfjacifcmihfdjhpnjpiick'
     EXTENSION_RUNGRINH_ID = '#paenbjlckelooppiepeiechkeehogoha'
     EXTENSION_MOJICHAT_ID = '#paenbjlckelooppiepeiechkeehogoha'
+    EXTENSIONS_ITEM_LIST = '#items-list'
+    EXTENSIONS_CONTENT_WRAPPER = '#content-wrapper > div:nth-child(5)'
+    EXTENSIONS_DETAIL_BUTTON = '#detailsButton'
 
     ABOUT_MESSAGE = '#updateStatusMessage > div'
 
@@ -62,4 +70,9 @@ class SettingsPageLocators(object):
 class SettingsDownloadPageLocators(object):
 
     AUTOMATIC_STOP_SEEDING_TORRENTS_CHECK_BOX = '[id="checkbox"]'
+
+
+class SettingsComponentsPageLocators(object):
+    CHECK_FOR_UPDATE_BUTTON = '//button[@class="button-check-update"]'
+    COMPONENT_VERSION_ELEMENT = '//span[@jscontent="version"]'
 

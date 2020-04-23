@@ -85,5 +85,13 @@ class CocCocMusicCrawler:
         rows = cursor.fetchall()
         return rows
 
+    def get_all_rows_from_table(self, connection, table_name):
+        sql_query = f'select * from {table_name};'
+        cursor = connection.cursor()
+        cursor.execute(sql_query)
+        rows = cursor.fetchall()
+        return rows
+
+
 
 
