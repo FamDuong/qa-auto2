@@ -508,6 +508,12 @@ class AnySiteElements(BasePageElement):
     def find_dong_phim_video_item(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_VIDEO_ITEM))
 
+    def find_nhac_cua_tui_ad_item(self, driver):
+        return driver.find_elements_by_xpath('//div[@class="iframe_video vpaid_iframe"]')
+
+    def find_nhac_cua_tui_ad_item_skip_button(self, driver):
+        return self.wait_for_element(driver=driver, timeout=7).until(ec.presence_of_element_located(AnySite.NHAC_CUA_TUI_AD_ITEM_SKIP_BUTTON))
+
     def find_dong_phim_video_iframe(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_VIDEO_IFRAME))
 
