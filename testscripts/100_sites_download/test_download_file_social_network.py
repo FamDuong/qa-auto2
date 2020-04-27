@@ -20,7 +20,7 @@ class TestFacebook:
     def test_download_file_facebook(self, browser_top_sites, get_current_download_folder_top_sites
                                     , clear_download_page):
         browser_top_sites.get(OtherSiteUrls.FACEBOOK_VIDEO_URL)
-        video_title_start_with = top_sites_savior_title_actions.get_facebook_video_title(browser_top_sites)
+        video_title_start_with = top_sites_savior_title_actions.get_facebook_video_title(browser_top_sites)[0:7]
         any_site_page_object.mouse_over_video_element_facebook(browser_top_sites)
         try:
             implement_download_file(browser_top_sites, get_current_download_folder_top_sites)
