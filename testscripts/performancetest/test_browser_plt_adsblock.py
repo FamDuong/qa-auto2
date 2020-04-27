@@ -9,9 +9,10 @@ from selenium.webdriver.chrome.options import Options
 from utils_automation.cleanup import Browsers
 # start = 0
 
+
 class TestPageLoadTime:
     def open_webpage(self, source, binary_file, options_list=None):
-        browser = Browsers();
+        browser = Browsers()
         browser.kill_all_browsers()
 
         global startBrowser
@@ -28,7 +29,7 @@ class TestPageLoadTime:
         driver = webdriver.Chrome(chrome_options=opts)
         # driver = webdriver.Chrome('/Users/itim/Downloads/python/chromedriver') #Environment: MAC OS
 
-        driver.get(source);
+        driver.get(source)
         return driver
 
     def measureTime(self, driver):

@@ -11,6 +11,7 @@ class Urls:
     COCCOC_TERMS = 'coccoc://terms'
     COCCOC_ABOUT = 'coccoc://settings/help'
     COCCOC_HISTORY_URL = 'coccoc://history/'
+    COCCOC_FLAGS = 'coccoc://flags'
     COCCOC_DEV_URL = 'https://dev.coccoc.com'
     COCCOC_THANK_YOU_URL_EN = 'https://dev.coccoc.com/en/win/thanks.html'
     COCCOC_THANK_YOU_URL_VI = 'https://dev.coccoc.com/vi/win/thanks.html'
@@ -20,7 +21,9 @@ class Urls:
 
     GOOGLE_URL = 'https://www.google.com/'
     FACEBOOK_URL = 'https://www.facebook.com/'
-
+    FACEBOOK_COC_COC_BAY_PROFILE_URL = 'https://www.facebook.com/profile.php?id=100010842734556'
+    MESSENDER_URL = "https://www.messenger.com/"
+    FACEBOOK_MESSENDER_URL = "https://www.facebook.com/messages/t/100010842734556"
     NEW_TAB_URL = 'http://coccoc.com/webhp'
     PIRATE_BAY_URL = 'https://www.thepiratebay.asia/search'
 

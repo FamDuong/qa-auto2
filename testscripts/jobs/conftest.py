@@ -11,7 +11,11 @@ def run_id_testrail(request):
     run_id = request.config.getoption("--testrail-run-id")
     if run_id is None:
         raise Exception
-    return int(run_id)
+    run_id_list = run_id.split(',')
+    run_id_list_int = []
+    for each_id in run_id_list:
+        run_id_list_int.append(int(each_id))
+    return run_id_list_int
 
 
 @pytest.fixture

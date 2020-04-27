@@ -63,13 +63,12 @@ def modify_jira_issue(run_id):
 
 
 def test_run_noti_test_result_change(run_id_testrail):
-    run_id = run_id_testrail
-    is_result_changed = test_rail_utils.check_if_any_result_change(run_id)
-    if is_result_changed is True:
-        message_content_to_send = define_message_content(run_id)
-        send_message_skype(message_content_to_send)
-        modify_jira_issue(run_id=run_id_testrail)
-    else:
-        pass
-
-
+    run_id_list = run_id_testrail
+    for run_id in run_id_list:
+        is_result_changed = test_rail_utils.check_if_any_result_change(run_id)
+        if is_result_changed is True:
+            message_content_to_send = define_message_content(run_id)
+            send_message_skype(message_content_to_send)
+            # modify_jira_issue(run_id=run_id_testrail)
+        else:
+            pass
