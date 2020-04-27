@@ -554,6 +554,12 @@ class AnySitePageObject(BasePageObject):
     def mouse_over_video_item_dong_phim(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_dong_phim_video_item(driver))
 
+    def check_if_nhac_cua_tui_ads_appeared(self, driver):
+        return len(self.any_site_element.find_nhac_cua_tui_ad_item(driver))
+
+    def close_nhac_cua_tui_ad_item(self, driver):
+        return self.any_site_element.find_nhac_cua_tui_ad_item_skip_button(driver=driver).click()
+
     def choose_watch_option_if_any(self, driver):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         elements = driver.find_elements_by_xpath(AnySite.DONG_PHIM_WATCH_OPTION_XPATH)

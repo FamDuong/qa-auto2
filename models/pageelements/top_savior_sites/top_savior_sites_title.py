@@ -35,6 +35,12 @@ class TopSitesSaviorTitleElements(BasePageElement):
     def find_ok_ru_video_title_element(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(TopSaviorSitesTitleLocators.OK_RU_VIDEO_TITLE))
 
+    def find_facebook_video_title_element(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(TopSaviorSitesTitleLocators.FACEBOOK_VIDEO_TITLE))
+
+    def find_fr_pornhub_video_title_element(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(TopSaviorSitesTitleLocators.FR_PORNHUB_VIDEO_TITLE))
+
 
 
 
