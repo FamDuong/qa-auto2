@@ -56,7 +56,7 @@ class TestDownloadGroup:
     @pytestrail.case('C96758')
     @pytest.mark.ten_popular_sites
     def test_download_nhaccuatui(self, browser_top_sites, get_current_download_folder_top_sites, clear_download_page):
-        video_title_start_with = "NIOEH,"
+        video_title_start_with = "Cinnamo"
         browser_top_sites.get(VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM)
         time.sleep(3)
         try:
