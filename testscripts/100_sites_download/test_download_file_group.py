@@ -59,6 +59,10 @@ class TestDownloadGroup:
         video_title_start_with = "NIOEH,"
         browser_top_sites.get(VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM)
         time.sleep(3)
+        try:
+            browser_top_sites.execute_script('document.querySelector("div.vjs-control-bar > button.vjs-play-control.vjs-control.vjs-button").click();')
+        except Exception as e:
+            print(e)
         if any_site_page_object.check_if_nhac_cua_tui_ads_appeared(driver=browser_top_sites) > 0:
             try:
                 browser_top_sites.execute_script('document.querySelector("#video_vpaid1587957395244 > div.vjs-control-bar > button.vjs-play-control.vjs-control.vjs-button").click();')
