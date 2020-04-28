@@ -64,6 +64,11 @@ class TestDownloadGroup:
         except Exception as e:
             print(e)
         if any_site_page_object.check_if_nhac_cua_tui_ads_appeared(driver=browser_top_sites) > 0:
+            time.sleep(2)
+            try:
+                browser_top_sites.execute_script('document.querySelector("div.vjs-control-bar > button.vjs-play-control.vjs-control.vjs-button.vjs-paused").click();')
+            except Exception as e:
+                print(e)
             try:
                 browser_top_sites.execute_script('document.querySelector("#video_vpaid1587957395244 > div.vjs-control-bar > button.vjs-play-control.vjs-control.vjs-button").click();')
             except Exception as e:
