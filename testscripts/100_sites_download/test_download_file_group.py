@@ -65,6 +65,7 @@ class TestDownloadGroup:
             except Exception as e:
                 print(e)
             any_site_page_object.close_nhac_cua_tui_ad_item(driver=browser_top_sites)
+            browser_top_sites.execute_script('document.querySelector("div.vast-skip-button.enabled").click();')
             time.sleep(1)
         any_site_page_object.click_first_video_element(browser_top_sites)
         any_site_page_object.mouse_over_first_video_element(browser_top_sites)
