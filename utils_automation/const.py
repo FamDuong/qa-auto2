@@ -33,7 +33,7 @@ class VideoUrls:
     YOUTUBE_VIDEO_URL = 'https://www.youtube.com/watch?v=6WzJIp_U-oo'
     NEWS_ZING_VIDEO_URL = 'https://news.zing.vn/video'
     ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/Attention-J-Fla/ZW7F76D6.html'
-    NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/ghen-co-vy-nioeh-ft-khac-hung-ft-min-ft-erik.BGYgjd5PTU819.html'
+    NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summertime-cinnamons-ft-evening-cinema.w3rGuakkZzvg9.html'
     DONG_PHIM_VIDEO_URL = 'https://www.dongphim.net/movie/tap-1-thien-duong-giet-choc-phan-1-the-valhalla-murders-season-1-2020_KUzKIABB.html'
 
     @classmethod
