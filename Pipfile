@@ -26,6 +26,9 @@ marshmallow = "*"
 pywinauto = "*"
 pytest-testrail = "*"
 testrail-api = "*"
+google-oauth = "*"
+pygsheets = "*"
+google-api-python-client = "*"
 
 [requires]
 python_version = "3.7"

@@ -1,4 +1,3 @@
-from __future__ import print_function
 from datetime import datetime
 import json
 import time
@@ -53,19 +52,23 @@ class TestDeadLinks:
 
     def get_dead_links(self, address):
         import requests
-        r = requests.head(address)
-        if r.status_code > 400:
+        try:
+            r = requests.get(address, timeout=15)
+            if r.status_code > 400:
+                return True
+            else:
+                return False
+        except requests.exceptions.RequestException:
             return True
-        else:
-            return False
 
-    def verify_text_in_body_text(self, driver, address, string):
-        driver.get(address)
-        html_page_source = driver.page_source
-        if string in html_page_source:
-            return True
-        else:
-            return False
+    def verify_text_in_body_text(self, driver, address, string, dead_links):
+        if address not in dead_links:
+            driver.get(address)
+            html_page_source = driver.page_source
+            if string in html_page_source:
+                return True
+            else:
+                return False
 
     def split_index_from_sheet_range(self, sheet_range):
         index_list = sheet_range.split(":")
@@ -85,7 +88,19 @@ class TestDeadLinks:
             col_without_duplicate = list(dict.fromkeys(col[0:1]))
         return col_without_duplicate
 
-    def write_result_into_spreadsheet(self, sheet_range, worksheet, keyword, result_col, content):
+    def create_content_to_update_into_spreadsheet(self, links_list, title):  # dead_links, invalid_links):
+        if len(links_list) == 0:
+            links_results = ""
+        else:
+            links_results = "* " + title + ": \n"
+            for link in links_list:
+                links_results += link + "\n"
+        return links_results
+
+    def write_result_into_spreadsheet(self, sheet_range, worksheet, keyword, result_col, dead_links, invalid_links):
+        dead_links_result = self.create_content_to_update_into_spreadsheet(dead_links, "Dead links")
+        invalid_links_result = self.create_content_to_update_into_spreadsheet(invalid_links, "Others Invalid Links")
+        content = dead_links_result + invalid_links_result
         list_index = self.split_index_from_sheet_range(sheet_range)
         col = self.split_col_from_sheet_range(sheet_range)
         for i in list_index:
@@ -96,6 +111,18 @@ class TestDeadLinks:
                     result_cell = result_col + str(i)
                     worksheet.update_value(result_cell, content)
 
+    def get_all_invalids_links(self, addresses, string_verify):
+        dead_links = []
+        invalid_links = []
+        for address in addresses:
+            if self.get_dead_links(address):
+                dead_links.append(address)
+            driver = coccoc_instance()
+            for string in string_verify:
+                if self.verify_text_in_body_text(driver, address, string, dead_links):
+                    invalid_links.append(address)
+        return dead_links, invalid_links
+
     def test_search_by_keyword(self, spreed_sheet_id, sheet_name, sheet_range, string_verify, result_col):
         # Get all keywords in "Queries" column => Store to list
         worksheet = self.get_worksheet(spreed_sheet_id, sheet_name)
@@ -105,31 +132,7 @@ class TestDeadLinks:
             # Get all addresses that returned by coccoc.com/search
             addresses = self.search_by_keyword_and_get_link_list_in_first_page(keyword)
             print("Search by Keyword: " + str(keyword))
-
             # Check dead link and others invalid links
-            dead_links = []
-            invalid_links = []
-            for address in addresses:
-                if self.get_dead_links(address):
-                    dead_links.append(address)
-                driver = coccoc_instance()
-                for string in string_verify:
-                    if self.verify_text_in_body_text(driver, address, string):
-                        invalid_links.append(address)
-
-            # Write dead link and others invalid links to google spreadsheet
-            if dead_links is None:
-                dead_links_results = ""
-            else:
-                dead_links_results = "* Dead link: \n "
-                for link in dead_links:
-                    link = " -"+link+"\n"
-            if invalid_links is None:
-                invalid_links_results = ""
-            else:
-                invalid_links_results = "\n\n* Others Invalid Links: \n"
-                for link in invalid_links:
-                    link = " -"+link+"\n"
-
-            content = dead_links_results + invalid_links_results
-            self.write_result_into_spreadsheet(sheet_range, worksheet, keyword, result_col, content)
+            dead_links, invalid_links = self.get_all_invalids_links(addresses, string_verify)
+            # Write result to google spread sheet
+            self.write_result_into_spreadsheet(sheet_range, worksheet, keyword, result_col, dead_links, invalid_links)
