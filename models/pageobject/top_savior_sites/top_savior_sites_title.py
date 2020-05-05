@@ -32,6 +32,12 @@ class TopSitesSaviorTitleAction(BasePageObject):
     def get_ok_ru_video_title(self, driver):
         return self.top_sites_savior_title_elements.find_ok_ru_video_title_element(driver).text
 
+    def get_facebook_video_title(self, driver):
+        return self.top_sites_savior_title_elements.find_facebook_video_title_element(driver).text
+
+    def get_fr_pornhub_video_title(self, driver):
+        return self.top_sites_savior_title_elements.find_fr_pornhub_video_title_element(driver).get_attribute('data-video-title')
+
 
 
 

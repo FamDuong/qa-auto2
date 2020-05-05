@@ -8,12 +8,6 @@ from utils_automation.const import Urls, ExtensionIds
 from utils_automation.setup import WaitAfterEach
 
 
-@pytest.fixture()
-def clear_download_page(browser, get_current_download_folder):
-    yield
-    clear_data_download(browser)
-
-
 settings_page_object = SettingsPageObject()
 settings_cococ_ads_block_page_element = SettingsElements.SettingsAdsBlock()
 settings_coccoc_ads_block_page_object = SettingsPageObject.SettingsAdsBlockPageObject()

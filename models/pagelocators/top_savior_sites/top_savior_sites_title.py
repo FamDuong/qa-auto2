@@ -10,7 +10,9 @@ class TopSaviorSitesTitleLocators(object):
     MESSENGER_VIDEO_TITLE = (By.XPATH, '//*[@id="pageTitle"]')
     MOT_PHIM_VIDEO_TITLE = (By.XPATH, '//meta[@name="title"]')
     PHIMMOI_VIDEO_TITLE = (By.XPATH, '//meta[@property="og:title"]')
-    OK_RU_VIDEO_TITLE = (By.XPATH,'//title')
+    OK_RU_VIDEO_TITLE = (By.XPATH, '//title')
+    FACEBOOK_VIDEO_TITLE = (By.ID, 'pageTitle')
+    FR_PORNHUB_VIDEO_TITLE = (By.ID, 'main-container')
 
 
 

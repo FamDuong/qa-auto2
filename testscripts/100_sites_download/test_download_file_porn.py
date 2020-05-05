@@ -18,15 +18,15 @@ class TestXVideos:
     @pytestrail.case('C162034')
     @pytestrail.defect('PF-859')
     @pytest.mark.ten_popular_sites
-    def test_download_file_x_videos(self, browser, get_current_download_folder, clear_download_page):
-        browser.get(OtherSiteUrls.XVIDEOS_DOT_COM_VIDEO_URL)
-        title = top_sites_savior_title_action.get_x_videos_title_video(browser)
+    def test_download_file_x_videos(self, browser_top_sites, get_current_download_folder_top_sites, clear_download_page):
+        browser_top_sites.get(OtherSiteUrls.XVIDEOS_DOT_COM_VIDEO_URL)
+        title = top_sites_savior_title_action.get_x_videos_title_video(browser_top_sites)[0:4]
         try:
-            any_site_page_object.click_video_x_videos(browser)
-            any_site_page_object.mouse_over_video_x_videos(browser)
-            implement_download_file(browser, get_current_download_folder, startwith=title)
+            any_site_page_object.click_video_x_videos(browser_top_sites)
+            any_site_page_object.mouse_over_video_x_videos(browser_top_sites)
+            implement_download_file(browser_top_sites, get_current_download_folder_top_sites, startwith=title)
         finally:
-            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=title)
+            delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=title)
 
 
 class TestXNXX:
@@ -34,16 +34,16 @@ class TestXNXX:
     @pytestrail.case('C162037')
     @pytestrail.defect('PF-833')
     @pytest.mark.ten_popular_sites
-    def test_download_file_xnxx_videos(self, browser, get_current_download_folder
+    def test_download_file_xnxx_videos(self, browser_top_sites, get_current_download_folder_top_sites
                                     , clear_download_page):
-        browser.get(OtherSiteUrls.XNXX_VIDEO_URL)
-        title = top_sites_savior_title_action.get_xnxx_video_title(browser)
+        browser_top_sites.get(OtherSiteUrls.XNXX_VIDEO_URL)
+        title = top_sites_savior_title_action.get_xnxx_video_title(browser_top_sites)
         try:
-            any_site_page_object.click_play_video_item_xnxx(browser)
-            any_site_page_object.mouse_over_video_xnxx(browser)
-            implement_download_file(browser, get_current_download_folder, startwith=title),
+            any_site_page_object.click_play_video_item_xnxx(browser_top_sites)
+            any_site_page_object.mouse_over_video_xnxx(browser_top_sites)
+            implement_download_file(browser_top_sites, get_current_download_folder_top_sites, startwith=title),
         finally:
-            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=title)
+            delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=title)
 
 
 class TestPornHub:
@@ -51,12 +51,16 @@ class TestPornHub:
     @pytestrail.case('C204205')
     @pytestrail.defect('PF-620')
     @pytest.mark.ten_popular_sites
-    def test_download_file_porn_hub(self, browser, get_current_download_folder
+    def test_download_file_porn_hub(self, browser_top_sites, get_current_download_folder_top_sites
                                     , clear_download_page, ):
-        browser.get(OtherSiteUrls.FR_PORN_HUB_VIDEO_URL)
-        any_site_page_object.click_video_fr_porn_hub(browser)
-        any_site_page_object.mouse_over_video_fr_porn_hub(browser)
-        implement_download_file(browser, get_current_download_folder, )
+        browser_top_sites.get(OtherSiteUrls.FR_PORN_HUB_VIDEO_URL)
+        title = top_sites_savior_title_action.get_fr_pornhub_video_title(browser_top_sites)
+        any_site_page_object.click_video_fr_porn_hub(browser_top_sites)
+        any_site_page_object.mouse_over_video_fr_porn_hub(browser_top_sites)
+        try:
+            implement_download_file(browser_top_sites, get_current_download_folder_top_sites, time_sleep=10)
+        finally:
+            delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=title)
 
 
 class TestVLXX:
