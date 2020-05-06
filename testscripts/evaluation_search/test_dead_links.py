@@ -45,7 +45,7 @@ class TestDeadLinks:
         search_results = []
         for link_xpath in links_xpath:
             address = link_xpath.get_attribute("href")
-            if address.startswith('http'):
+            if address.startswith('http') and not address.endswith('.jpg'):
                 search_results.append(address)
                 search_results_without_duplicate = list(dict.fromkeys(search_results))
         return search_results_without_duplicate
@@ -127,12 +127,20 @@ class TestDeadLinks:
         # Get all keywords in "Queries" column => Store to list
         worksheet = self.get_worksheet(spreed_sheet_id, sheet_name)
         list_keywords = worksheet.range(sheet_range, 'matrix')
-
         for keyword in list_keywords:
+
             # Get all addresses that returned by coccoc.com/search
             addresses = self.search_by_keyword_and_get_link_list_in_first_page(keyword)
             print("Search by Keyword: " + str(keyword))
+
             # Check dead link and others invalid links
             dead_links, invalid_links = self.get_all_invalids_links(addresses, string_verify)
+
             # Write result to google spread sheet
             self.write_result_into_spreadsheet(sheet_range, worksheet, keyword, result_col, dead_links, invalid_links)
+
+        # Send skype notify
+        from testscripts.jobs.noti_test_result_change import send_message_skype
+        send_message_skype("(porg)(porg)(porg) Evaluation Search - Finished get broken links (porg)(porg)(porg)"
+                           "\nPlease check result in col ["+result_col+"] of sheet ["+sheet_name+"]:\n"
+                           "https://docs.google.com/spreadsheets/d/"+spreed_sheet_id)
