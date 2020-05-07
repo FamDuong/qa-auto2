@@ -141,6 +141,6 @@ class TestDeadLinks:
 
         # Send skype notify
         from testscripts.jobs.noti_test_result_change import send_message_skype
-        send_message_skype("(porg)(porg)(porg) Evaluation Search - Finished get broken links (porg)(porg)(porg)"
-                           "\nPlease check result in col ["+result_col+"] of sheet ["+sheet_name+"]:\n"
-                           "https://docs.google.com/spreadsheets/d/"+spreed_sheet_id)
+        send_message_skype("(porg)(porg)(porg) *Evaluation Search - Finished get broken links* (porg)(porg)(porg)"
+                           "\nPlease check result in col *"+result_col+"* of sheet *"+sheet_name+"* in bellow link:\n"
+                           "_https://docs.google.com/spreadsheets/d/"+spreed_sheet_id+"_")
