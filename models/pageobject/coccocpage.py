@@ -5,14 +5,21 @@ from models.pageelements.coccocpage import CocCocPageElement
 from models.pageobject.downloads import DownloadsPageObject
 
 
-def sleep_with_timeout(default_download_folder, language):
+def get_timeout_by_extension(extension):
+    if extension in '.exe':
+        return 10
+    elif extension in '.dmg':
+        return 120
+
+
+def sleep_with_timeout(default_download_folder, language, installer_name='coccoc_', extension='.exe'):
     download_folder_powershell = default_download_folder.replace("\\", "\\\\") + "\\\\"
     from testscripts.smoketest.common import check_if_installer_is_downloaded
     start_time = datetime.now()
-    while check_if_installer_is_downloaded(download_folder_powershell, language) is False:
+    while check_if_installer_is_downloaded(download_folder_powershell, language, installer_name, extension) is False:
         time.sleep(2)
         time_delta = datetime.now() - start_time
-        if time_delta.total_seconds() >= 10:
+        if time_delta.total_seconds() >= get_timeout_by_extension(extension):
             break
 
 

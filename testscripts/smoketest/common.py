@@ -56,8 +56,8 @@ def check_if_preferences_is_created(user_data_path):
         return False
 
 
-def check_if_installer_is_downloaded(download_path, language):
-    file_name = 'coccoc_' + language + '.exe'
+def check_if_installer_is_downloaded(download_path, language, installer_name='coccoc_', extension='.exe'):
+    file_name = installer_name + language + extension
     path = "\"" + download_path + "\""
     import subprocess
     p = subprocess.Popen(["powershell.exe",
@@ -712,6 +712,6 @@ def get_default_download_folder(browser):
     return download_folder
 
 
-def delete_installer_download(download_folder, language):
-    if files_handle_obj.is_file_exist(download_folder + 'coccoc_' + language + '.exe'):
-        files_handle_obj.delete_files_in_folder(download_folder, 'coccoc_' + language + '.exe')
+def delete_installer_download(download_folder, language, installer_name='coccoc_', extension='.exe'):
+    if files_handle_obj.is_file_exist(download_folder + installer_name + language + extension):
+        files_handle_obj.delete_files_in_folder(download_folder, installer_name + language + extension)
