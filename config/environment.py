@@ -29,6 +29,11 @@ COCCOC_MUSIC_API_DOMAIN_URL = get_environment_info()['coccoc_music_api']['domain
 COCCOC_MUSIC_API_USERNAME = get_environment_info()['coccoc_music_api']['username']
 COCCOC_MUSIC_API_PASSWORD = get_environment_info()['coccoc_music_api']['password']
 
+COCCOC_GAME_CRAWLER_DB_SERVER = get_environment_info()['coccoc_game_crawler']['db_info']['server']
+COCCOC_GAME_CRAWLER_DB_NAME = get_environment_info()['coccoc_game_crawler']['db_info']['database_name']
+COCCOC_GAME_CRAWLER_DB_USER_NAME = get_environment_info()['coccoc_game_crawler']['db_info']['username']
+COCCOC_GAME_CRAWLER_DB_PASSWORD = get_environment_info()['coccoc_game_crawler']['db_info']['password']
+
 
 
 

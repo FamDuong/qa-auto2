@@ -1,6 +1,6 @@
 from pytest_testrail.plugin import pytestrail
-from utils_automation.database import CocCocMusicCrawler
 
+from databases.sql.coccoc_music_crawler_db import CocCocMusicCrawler
 
 cococ_music_crawler = CocCocMusicCrawler()
 
