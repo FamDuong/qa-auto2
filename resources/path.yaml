@@ -21,3 +21,7 @@ coccoc_music_api:
 coccoc_atlassian_server:
   domain: https://coccoc.atlassian.net
 
+coccoc_game_api:
+  home: /home
+  ntp-games: /ntp-games
+
