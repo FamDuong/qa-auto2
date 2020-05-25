@@ -1,6 +1,9 @@
+from selenium.webdriver.remote.webdriver import WebDriver
+
 from models.pageelements.basepage_elements import BasePageElement
 from selenium.webdriver.support import expected_conditions as ec
-from models.pagelocators.newtab import NewTabSearchLocators, NewTabIconSitesLocators, NewTabZenLocators
+from models.pagelocators.newtab import NewTabSearchLocators, NewTabIconSitesLocators, NewTabZenLocators, \
+    NewTabWidgetLocators
 
 
 class NewTabSearchElement(BasePageElement):
@@ -35,6 +38,22 @@ class NewTabZenElements(BasePageElement):
                                                                            .ZEN_NEWS_NOT_CONTAINS_ADS_ITEM))
         return driver.find_elements_by_css_selector(NewTabZenLocators.ZEN_NEWS_NOT_CONTAINS_ADS_ITEM_CSS_SELECTOR)
 
+
+class NewTabWidgetElements(BasePageElement):
+    def find_edit_widget_button(self, driver: WebDriver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(NewTabWidgetLocators.EDIT_WIDGET_BUTTON))
+
+    def find_selected_widget_element(self, driver: WebDriver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(NewTabWidgetLocators.SELECTED_WIDGET))
+
+    def find_selected_background_image(self, driver: WebDriver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(NewTabWidgetLocators.SELECTED_BACKGROUND_IMAGE))
+
+    def find_done_widget_button(self, driver: WebDriver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(NewTabWidgetLocators.DONE_BUTTON))
+
+    def find_reset_button_element(self, driver: WebDriver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(NewTabWidgetLocators.RESET_DEFAULT_BUTTON))
 
 
 

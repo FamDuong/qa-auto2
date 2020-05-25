@@ -1,6 +1,9 @@
 from selenium.webdriver import ActionChains
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
 
-from models.pageelements.newtab import NewTabSearchElement, NewTabIconSitesElement, NewTabZenElements
+from models.pageelements.newtab import NewTabSearchElement, NewTabIconSitesElement, NewTabZenElements, \
+    NewTabWidgetElements
 from models.pageobject.basepage_object import BasePageObject
 
 
@@ -71,6 +74,33 @@ class NewTabZenPageObject(BasePageObject):
         for element in self.new_tab_zen_elem.find_all_current_zen_except_ads_elements(driver):
             attribute_value.append(element.get_attribute(attribute_name))
         return attribute_value
+
+
+class NewTabWidgetActions(BasePageObject):
+    new_tab_widget_elem = NewTabWidgetElements()
+
+    def click_on_widget_button(self, driver: WebDriver):
+        element: WebElement = self.new_tab_widget_elem.find_edit_widget_button(driver=driver)
+        element.click()
+
+    def click_on_selected_widget(self, driver: WebDriver):
+        element: WebElement = self.new_tab_widget_elem.find_selected_widget_element(driver=driver)
+        element.click()
+
+    def click_on_done_button(self, driver: WebDriver):
+        element: WebElement = self.new_tab_widget_elem.find_done_widget_button(driver=driver)
+        element.click()
+
+    def get_attribute_selected_widget(self, driver: WebDriver):
+        element: WebElement = self.new_tab_widget_elem.find_selected_background_image(driver=driver)
+        return element.get_attribute('style')
+
+    def click_on_reset_button(self, driver: WebDriver):
+        element: WebElement = self.new_tab_widget_elem.find_reset_button_element(driver=driver)
+        element.click()
+
+
+
 
 
 
