@@ -1,30 +1,32 @@
-import os
 import time
-from utils_automation.const import Urls
+from datetime import datetime
 from models.pageobject.basepage_object import BasePageObject
 from models.pageelements.coccocpage import CocCocPageElement
 from models.pageobject.downloads import DownloadsPageObject
+
+
+def sleep_with_timeout(default_download_folder, language):
+    download_folder_powershell = default_download_folder.replace("\\", "\\\\") + "\\\\"
+    from testscripts.smoketest.common import check_if_installer_is_downloaded
+    start_time = datetime.now()
+    while check_if_installer_is_downloaded(download_folder_powershell, language) is False:
+        time.sleep(2)
+        time_delta = datetime.now() - start_time
+        if time_delta.total_seconds() >= 10:
+            break
+
 
 class CocCocPageObjects(BasePageObject):
     coccocpage_elem = CocCocPageElement()
     download_elem = DownloadsPageObject()
 
-    def download_coccoc_from_dev(self, browser, download_folder, os = "win", language = "en"):
-        browser.get(Urls.COCCOC_DEV_URL)
-        return self.download_latest_version(browser, download_folder, os, language)
+    def download_coccoc(self, browser, base_url, default_download_folder, os, language):
+        browser.get(base_url)
+        self.coccocpage_elem.find_download_element(browser, os, language).click()
+        self.coccocpage_elem.find_privacy_button(browser).click()
+        sleep_with_timeout(default_download_folder, language)
 
-    def download_coccoc_from_production(self, browser, download_folder, os = "win", language = "vi"):
-        browser.get(Urls.COCCOC_URL)
-        return self.download_latest_version(browser, download_folder, os, language)
-
-    def download_latest_version(self, driver, download_folder, os = "win", language = "en"):
-        self.coccocpage_elem.find_download_element(driver, os, language).click()
-        self.coccocpage_elem.find_privacy_button(driver).click()
-        time.sleep(20)
-        return self.verify_download_successfully(driver, download_folder, language)
-
-    def verify_download_successfully(self, driver, download_folder, language = "en"):
-        download_file = download_folder + '/coccoc_' + language + '.exe'
-        os.path.isfile(download_file)
-        return download_file
-
+    def get_path_installer(self, browser, base_url, default_download_folder, os="win", language="en"):
+        self.download_coccoc(browser, base_url, default_download_folder, os, language)
+        path_downloaded = default_download_folder + '/coccoc_' + language + '.exe'
+        return path_downloaded

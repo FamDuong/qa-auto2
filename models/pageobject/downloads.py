@@ -80,7 +80,8 @@ class DownloadsPageObject(BasePageObject):
         assert len(elements) == 0
 
     def do_not_seed_action(self, driver):
-        do_not_seed_btn = self.downloads_elem.find_do_not_seed_button(driver)
+        from selenium.webdriver.remote.webelement import WebElement
+        do_not_seed_btn: WebElement = self.downloads_elem.find_do_not_seed_button(driver)
         do_not_seed_btn.click()
 
     def cancel_all_current_torrent(self, driver):
@@ -111,6 +112,8 @@ class DownloadsPageObject(BasePageObject):
                     index += 1
                     break
                 elif len(self.downloads_elem.find_interrupted_elements(driver)) > 0:
+                    break
+                elif len(self.downloads_elem.find_status_text_dangerous(driver)) > 0:
                     break
             WaitAfterEach.sleep_timer_after_each_step()
         WaitAfterEach.sleep_timer_after_each_step()

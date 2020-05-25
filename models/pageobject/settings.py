@@ -1,7 +1,7 @@
-from models.pageelements.settings import SettingsElements
+from models.pageelements.settings import SettingsElements, SettingsComponentsPageElement
 from models.pagelocators.settings import SettingsPageLocators
 from models.pageobject.basepage_object import BasePageObject
-from utils_automation.const import Urls
+from utils_automation.const import Urls, CocCocComponents
 from utils_automation.common import wait_for_stable
 
 
@@ -54,7 +54,7 @@ class SettingsPageObject(BasePageObject):
     def update_extension(self, driver):
         self.enable_extension_toggle_dev_mode(driver)
         self.settings_elem.find_extension_update_button(driver).click()
-        self.settings_elem.wait_until_extension_update(driver)
+        self.settings_elem.find_extension_update_popup(driver)
 
     def update_cc_version(self, driver):
         self.settings_elem.wait_until_cc_version_update(driver)
@@ -76,9 +76,12 @@ class SettingsPageObject(BasePageObject):
             checked = self.settings_elem.find_run_automatically_on_system_startup(driver).get_attribute("checked")
         assert checked is not None
 
-    def verify_extension_version(self, driver, extension_id, expect_version, expect_on = None):
+    def get_extension_version(self, driver, extension_id):
         self.enable_extension_toggle_dev_mode(driver)
-        actual_version = self.settings_elem.find_extension_version_by_id(driver, extension_id).text
+        return self.settings_elem.find_extension_version_by_id(driver, extension_id).text
+
+    def verify_extension_version(self, driver, extension_id, expect_version, expect_on=None):
+        actual_version = self.get_extension_version(driver, extension_id)
         assert actual_version == expect_version
         if expect_on is not None:
             actual_on = self.settings_elem.find_extension_on_off_by_id(driver, extension_id).get_attribute("checked")
@@ -87,6 +90,20 @@ class SettingsPageObject(BasePageObject):
     def verify_extension_status(self, driver, extension_id, expect_status):
         actual_status = self.settings_elem.find_extension_on_off_by_id(driver, extension_id).get_attribute("checked")
         assert actual_status is expect_status
+
+    def verify_menu_base_on_language(self, driver, language):
+        driver.get(Urls.COCCOC_SETTINGS_URL)
+        actual_people_lbl = self.settings_elem.find_left_menu_people(driver).text
+        actual_auto_fill_lbl = self.settings_elem.find_left_menu_auto_fill(driver).text
+        actual_default_browser_lbl = self.settings_elem.find_left_menu_default_browser(driver).text
+        if language == 'en':
+            assert actual_people_lbl in 'You and Google'
+            assert actual_auto_fill_lbl in 'Auto-fill'
+            assert actual_default_browser_lbl in 'Default browser'
+        else:
+            assert actual_people_lbl in 'Bạn và Google'
+            assert actual_auto_fill_lbl in 'Tự động điền'
+            assert actual_default_browser_lbl in 'Trình duyệt mặc định'
 
     def interact_ads_block(self, driver, action, script_get_attribute_aria_pressed, script_click_ads_block):
         def disable_enabled_ads_block():
@@ -122,6 +139,11 @@ class SettingsPageObject(BasePageObject):
         WaitAfterEach.sleep_timer_after_each_step()
         return self.settings_elem.find_make_default_browser_element(driver).text
 
+    def get_text_cococ_is_default_browser_element(self, driver):
+        from utils_automation.setup import WaitAfterEach
+        WaitAfterEach.sleep_timer_after_each_step()
+        return self.settings_elem.find_coccoc_is_default_browser_element(driver).text
+
     def click_make_default_browser_button(self, driver):
         from utils_automation.setup import WaitAfterEach
         WaitAfterEach.sleep_timer_after_each_step()
@@ -149,6 +171,43 @@ class SettingsPageObject(BasePageObject):
                     self.choose_drop_down_value_js(driver, drop_down_elem, 0)
                 else:
                     raise Exception
+
+    def find_all_extensions(self, driver):
+        element = self.settings_elem.find_item_container_list_extensions(driver)
+        return driver.execute_script('return arguments[0].querySelectorAll(arguments[1])', element, "extensions-item")
+
+    def get_all_extensions_id(self, driver):
+        extensions = self.find_all_extensions(driver)
+        list_extensions_ids = []
+        for extension in extensions:
+            list_extensions_ids.append(driver.execute_script("return arguments[0].getAttribute('id')", extension))
+        return list_extensions_ids
+
+
+class SettingsComponentsPageObject(BasePageObject):
+    settings_component_page_element = SettingsComponentsPageElement()
+
+    def click_on_each_check_for_update_button(self, driver):
+        elements = self.settings_component_page_element.find_all_check_for_update_button(driver)
+        for each_element in elements:
+            try:
+                each_element.click()
+            except Exception as e:
+                print(e)
+            import time
+            time.sleep(1)
+
+    def verify_all_components_version_is_updated(self, driver):
+        elements = self.settings_component_page_element.find_all_components_version(driver)
+        for each_element in elements:
+            version = each_element.text
+            each_element_id = each_element.get_attribute('id')
+            if CocCocComponents.THIRD_PARTY_MODULE_LIST_ID in each_element_id:
+                assert version == '2018.7.19.1'
+            elif CocCocComponents.ORIGIN_TRIALS_ID in each_element_id:
+                pass
+            else:
+                assert '0.0.0.0' not in version
 
 
 

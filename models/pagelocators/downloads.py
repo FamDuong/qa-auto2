@@ -23,9 +23,10 @@ class DownloadsPageLocators:
     TORRENT_CONTROL_BOTTOM_ITEM = (By.XPATH, '//div[@class="controls control-bottom"]')
     TORRENT_STOP_SEEDING_BTN = (By.XPATH, '//button[@class="js-stopSeeding stopSeeding-btn"]')
     CLEAR_ALL_BTN = (By.XPATH, '//button[@class="js-clearAll clearButton headerButton"]')
-    PLAY_BTN = '//button[@class="js-play play-btn"]'
+    PLAY_BTN = '//span[@class="download-item-info-icon"]'
     ELEMENTS_NOT_DELETED = '//h6[@class=""]//a[@title] | //span[@title]'
     BADGE_BTN_INTERRUPTED = '//span[@class="badge badge-btn"][text()="Interrupted"]'
+    STATUS_TEXT_IS_DANGEROUS = '//span[@class="statusText-isDangerous"]'
 
 
 

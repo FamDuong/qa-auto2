@@ -12,3 +12,12 @@ coccoc_music_data:
 
 coccoc_music_cms:
   login: /login
+
+coccoc_music_api:
+  version: /v2
+  home: /home
+  categories: /categories
+
+coccoc_atlassian_server:
+  domain: https://coccoc.atlassian.net
+

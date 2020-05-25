@@ -8,14 +8,23 @@ class ExtensionsPageLocators:
     EXTENSIONS_ITEM = 'extensions-item'
     EXTENSION_ITEM_ID = 'jdfkmiabjpfjacifcmihfdjhpnjpiick'
     EXTENSION_DETAIL_BUTTON = 'detailsButton'
+    EXTENSION_DETAIL_BUTTON_ID = '#detailsButton'
 
     SAVIOR_EXTENSIONS_WRAPPER_ID = 'jdfkmiabjpfjacifcmihfdjhpnjpiick'
     SAVIOR_EXTENSION_NAME_TEXT = 'Cốc Cốc Savior'
+    EXTENSION_TOGGLE_BUTTON = '#enable-toggle'
+    EXTENSION_VIEW_MANAGER = '#viewManager'
+    EXTENSION_DETAIL_VIEW = '#viewManager > extensions-detail-view'
+    ITEMS_LIST = '#items-list'
 
-    class UblockPlusPageLocators:
-        UBLOCK_PLUS_ID_CSS_LOCATOR = '#oofnbdifeelbaidfgpikinijekkjcicg'
-        ENABLE_TOGGER_BTN = '#enable-toggle'
-        KNOB_BTN = '#knob'
+    GOOGLE_TRANSLATE_ID = '#aapbdbdomjkkjkaonfhkkikfgjllcleb'
+    GOOGLE_TRANSLATE_NAME_ID = '#name'
+
+
+class UblockPlusPageLocators:
+    UBLOCK_PLUS_ID_CSS_LOCATOR = '#oofnbdifeelbaidfgpikinijekkjcicg'
+    ENABLE_TOGGER_BTN = '#enable-toggle'
+    KNOB_BTN = '#knob'
 
 
 class SaviorDetailsPageLocators:
@@ -40,3 +49,11 @@ class SaviorExtensionOptionsPageLocators:
     VIDEO_QUALITY_LOW_BTN = (By.XPATH, '//input[@name="optionsRadios" and @value="Low"]')
     REMEMBER_LAST_CHOSEN_OPTION = (By.ID, 'prefer-last-quality')
 
+
+class GoogleExtensionsStorePageLocators:
+    RUNG_RINH_EXTENSION_VERSION = (By.XPATH, "//span[@class='C-b-p-D-Xe h-C-b-p-D-md']")
+
+
+class MojiChatLocators:
+    MOJICHAT_ID = '#khjkbfmldkfaplpcfmfdlceclcjekcpa'
+    MOJICHAT_ON_OFF_ID = '#enable-toggle'

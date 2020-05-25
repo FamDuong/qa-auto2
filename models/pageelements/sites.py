@@ -169,7 +169,7 @@ class AnySiteElements(BasePageElement):
 
     def find_video_item_mot_phim(self, driver):
         return self.wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.MOT_PHIM_VIDEO_ITEM))
+            ec.element_to_be_clickable(AnySite.MOT_PHIM_VIDEO_ITEM))
 
     def find_play_button_video_mot_phim(self, driver):
         return self.wait_for_element(driver).until(
@@ -551,7 +551,9 @@ class AnySiteElements(BasePageElement):
     def find_xem_vtv_net_play_btn(self, driver):
         return self.find_element_if_exist(driver, AnySite.XEM_VTV_NET_PLAY_BTN)
 
-
+    def find_video_item_ok_ru(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.OK_RU_VIDEO_ITEM))
 
 
 

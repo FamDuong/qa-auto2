@@ -1,5 +1,5 @@
 from models.pageelements.basepage_elements import BasePageElement
-from models.pagelocators.settings import SettingsPageLocators
+from models.pagelocators.settings import SettingsPageLocators, SettingsComponentsPageLocators
 
 
 class SettingsElements(BasePageElement):
@@ -80,7 +80,7 @@ class SettingsElements(BasePageElement):
                                         SettingsPageLocators.EXTENSION_TOOLBAR,
                                         SettingsPageLocators.EXTENSION_BTN_UPDATE)
 
-    def wait_until_extension_update(self, driver):
+    def find_extension_update_popup(self, driver):
         return self.find_shadow_element(driver, SettingsPageLocators.EXTENSION_MAIN,
                                         SettingsPageLocators.EXTENSION_NOTIFY_PARENT,
                                         SettingsPageLocators.EXTENSION_NOTIFY)
@@ -106,6 +106,13 @@ class SettingsElements(BasePageElement):
                                         SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_PAGE_TEXT,
                                         SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_SECONDARY_TEXT)
 
+    def find_coccoc_is_default_browser_element(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsPageLocators.SETTINGS_MAIN_TEXT,
+                                        SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                        SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_PAGE_TEXT,
+                                        SettingsPageLocators.SETTINGS_DEFAULT_BROWSER_IS_DEFAULT_TEXT)
+
     def find_make_default_browser_button(self, driver):
         return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
                                         SettingsPageLocators.SETTINGS_MAIN_TEXT,
@@ -121,6 +128,21 @@ class SettingsElements(BasePageElement):
                                         SettingsPageLocators.SETTINGS_TOGGLE_BUTTON_TEXT,
                                         SettingsPageLocators.SETTINGS_SYSTEM_START_UP_CONTROL_TEXT
                                         )
+
+    def find_left_menu_people(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsPageLocators.SETTINGS_MENU_TEXT,
+                                        SettingsPageLocators.SETTINGS_MENU_PEOPLE_LBL)
+
+    def find_left_menu_auto_fill(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsPageLocators.SETTINGS_MENU_TEXT,
+                                        SettingsPageLocators.SETTINGS_MENU_AUTO_FILL_LBL)
+
+    def find_left_menu_default_browser(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsPageLocators.SETTINGS_MENU_TEXT,
+                                        SettingsPageLocators.SETTINGS_MENU_DEFAULT_BROWSER_LBL)
 
     def find_relaunch_browser_btn(self, driver):
         index = 0
@@ -143,6 +165,11 @@ class SettingsElements(BasePageElement):
                 import time
                 time.sleep(2)
 
+    def find_item_container_list_extensions(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.EXTENSION_MAIN,
+                                        SettingsPageLocators.EXTENSIONS_ITEM_LIST,
+                                        SettingsPageLocators.EXTENSIONS_CONTENT_WRAPPER)
+
     class SettingsAdsBlock(BasePageElement):
 
         def find_current_block_mod(self, driver):
@@ -161,3 +188,16 @@ class SettingsElements(BasePageElement):
                                             SettingsPageLocators.SettingsAdsBlockPageLocators.SUB_RESOURCE_FILTER_PAGE,
                                             SettingsPageLocators.SettingsAdsBlockPageLocators.SETTINGS_DROP_DOWN_MENU,
                                             SettingsPageLocators.SettingsAdsBlockPageLocators.DROP_DOWN_MENU)
+
+
+class SettingsComponentsPageElement(BasePageElement):
+
+    def find_all_check_for_update_button(self, driver):
+        return driver.find_elements_by_xpath(SettingsComponentsPageLocators.CHECK_FOR_UPDATE_BUTTON)
+
+    def find_all_components_version(self, driver):
+        return driver.find_elements_by_xpath(SettingsComponentsPageLocators.COMPONENT_VERSION_ELEMENT)
+
+
+
+

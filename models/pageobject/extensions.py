@@ -1,14 +1,13 @@
 import time
 
 from models.pageelements.extensions import ExtensionsElement, CocCocSaviorExtensionDetailElement, \
-    SaviorExtensionsOptionsElement
+    SaviorExtensionsOptionsElement, GoogleExtensionsStorePageElements
 from models.pagelocators.extensions import ExtensionsPageLocators
 from models.pageobject.basepage_object import BasePageObject
 from utils_automation.setup import WaitAfterEach
 
 
 class ExtensionsPageObject(BasePageObject):
-
     extension_elem = ExtensionsElement()
 
     def savior_extension_is_displayed(self, driver):
@@ -18,6 +17,15 @@ class ExtensionsPageObject(BasePageObject):
         driver.execute_script('arguments[0].scrollIntoView()', self.extension_elem.find_savior_details(driver))
         WaitAfterEach.sleep_timer_after_each_step()
         self.extension_elem.find_savior_details(driver).click()
+
+    def click_extension_detail_button(self, driver, extension_id):
+        driver.execute_script('arguments[0].click()',
+                              self.extension_elem.find_extension_detail_button(driver, extension_id))
+
+    def get_attribute_toggle_button_in_detail_extension(self, driver, attribute_name):
+        return driver.execute_script('return arguments[0].getAttribute(arguments[1])',
+                                     self.extension_elem.find_extension_toggle_button(driver),
+                                     attribute_name)
 
     class UblockPlusPageObject(BasePageObject):
         ublock_elem = ExtensionsElement.UblockPlusAdblockerElement()
@@ -41,8 +49,6 @@ class ExtensionsPageObject(BasePageObject):
                     raise Exception
             else:
                 raise Exception
-
-
 
 
 class ExtensionsDetailsPageObject(BasePageObject):
@@ -116,6 +122,9 @@ class SaviorExtensionOptionsPageObject(BasePageObject):
         self.checked_value_condition(checked_value, remember_option_element)
 
 
+class GoogleExtensionsStorePageObject(BasePageObject):
 
+    google_extensions_store_elem = GoogleExtensionsStorePageElements()
 
-
+    def get_rung_rinh_extension_version(self, driver):
+        return self.google_extensions_store_elem.find_rung_rinh_extension_version(driver).text

@@ -1,4 +1,3 @@
-
 class Urls:
 
     COCCOC_SETTINGS_URL = 'coccoc://settings'
@@ -11,25 +10,31 @@ class Urls:
     COCCOC_COMPONENTS = 'coccoc://components'
     COCCOC_TERMS = 'coccoc://terms'
     COCCOC_ABOUT = 'coccoc://settings/help'
+    COCCOC_HISTORY_URL = 'coccoc://history/'
+    COCCOC_FLAGS = 'coccoc://flags'
     COCCOC_DEV_URL = 'https://dev.coccoc.com'
+    COCCOC_THANK_YOU_URL_EN = 'https://dev.coccoc.com/en/win/thanks.html'
+    COCCOC_THANK_YOU_URL_VI = 'https://dev.coccoc.com/vi/win/thanks.html'
     COCCOC_URL = 'https://coccoc.com'
     COCCOC_ADS_BLOCK_URL = 'coccoc://settings/adsBlock'
     YOUTUBE_URL = 'https://www.youtube.com/'
 
     GOOGLE_URL = 'https://www.google.com/'
     FACEBOOK_URL = 'https://www.facebook.com/'
-
+    FACEBOOK_COC_COC_BAY_PROFILE_URL = 'https://www.facebook.com/profile.php?id=100010842734556'
+    MESSENDER_URL = "https://www.messenger.com/"
+    FACEBOOK_MESSENDER_URL = "https://www.facebook.com/messages/t/100010842734556"
     NEW_TAB_URL = 'http://coccoc.com/webhp'
     PIRATE_BAY_URL = 'https://www.thepiratebay.asia/search'
 
 
 class VideoUrls:
 
-    YOUTUBE_VIDEO_URL = 'https://www.youtube.com/watch?v=IHNzOHi8sJs'
+    YOUTUBE_VIDEO_URL = 'https://www.youtube.com/watch?v=6WzJIp_U-oo'
     NEWS_ZING_VIDEO_URL = 'https://news.zing.vn/video'
     ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/Attention-J-Fla/ZW7F76D6.html'
-    NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summer-girl-haim.Q1gHbL4BuuEXJ.html'
-    DONG_PHIM_VIDEO_URL = 'https://www.dongphim.net/movie/tap-10-phim-bl-ngay-hom-ay-history3-make-our-days-count-2019_bJzjgwQL.html'
+    NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/ghen-co-vy-nioeh-ft-khac-hung-ft-min-ft-erik.BGYgjd5PTU819.html'
+    DONG_PHIM_VIDEO_URL = 'https://www.dongphim.net/movie/tap-1-thien-duong-giet-choc-phan-1-the-valhalla-murders-season-1-2020_KUzKIABB.html'
 
     @classmethod
     def all(cls):
@@ -49,9 +54,9 @@ class DiffFormatFileUrls:
 class OtherSiteUrls:
 
     TWENTY_FOUR_H_VIDEO_URL = 'https://www.24h.com.vn/bong-da/2-clb-viet-nam-thong-tri-afc-cup-bao-chau-a-noi-gi-c48a1061647.html'
-    PHIMMOI_VIDEO_URL = 'http://www.phimmoi.net/phim/linh-kiem-ton-8199/xem-phim.html'
+    PHIMMOI_VIDEO_URL = 'http://www.phimmoi.net/phim/yeu-than-ky-7796/tap-48-170030.html'
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/thutinhtv/videos/770300356741609/'
-    MESSENGER_CHAT_URL = 'https://www.messenger.com/t/kovakop.donald.3'
+    MESSENGER_CHAT_URL = 'https://www.messenger.com/t/nganhanguyen0306'
     INSTAGRAM_VIDEO_URL = 'https://www.instagram.com/p/B1nlf9AhX4M/'
     KIENTHUC_VIDEO_URL = 'https://kienthuc.net.vn/truyen-hinh-video/video-duong-pho-ha-noi-ngap-sau-sau-mua-bao-1259721.html'
     MOJI_BIG_CHATBOX = 'https://www.messenger.com/t/100013968193318'
@@ -84,8 +89,8 @@ class OtherSiteUrls:
     NGUOI_LAO_DONG_TV_URL = 'https://tv.nld.com.vn/thoi-su-trong-nuoc/co-to-quoc-den-tay-ngu-dan-huyen-can-gio-14531.htm'
     ANIME_VSUB_TV_URL = 'http://animevsub.tv/phim/tay-du-3194/tap-01-61130.html'
     NHAC_VN_VIDEO_URL = 'https://nhac.vn/video/doi-that-la-phoi-phoi-hoang-yen-chibi-uni5-mvG38e'
-    XVIDEOS_DOT_COM_VIDEO_URL = 'https://www.xvideos.com/video50625357/_'
-    XNXX_VIDEO_URL = 'https://www.xnxx.com/video-rjo7d8b/step_son_caught_masturbating_shoots_load_into_stepmom_s_panties'
+    XVIDEOS_DOT_COM_VIDEO_URL = 'https://www.xvideos.es/video50625357/_'
+    XNXX_VIDEO_URL = 'http://www.xnxx.es/video-rjo7d8b/step_son_caught_masturbating_shoots_load_into_stepmom_s_panties'
     FR_PORN_HUB_VIDEO_URL = 'https://fr.pornhub.com/view_video.php?viewkey=ph5bd4e9b96091f'
     VLXX_VIDEO_URL = 'http://vlxx.tv/video/bo-oi-con-khong-ngu-duoc/1410/'
     SEX_TOP1_VIDEO_URL = 'http://sextop1.net/tinh-mot-dem-voi-nu-dong-nghiep/'
@@ -115,6 +120,7 @@ class OtherSiteUrls:
     CLIP_ANIME_VN_VIDEO_URL = 'https://clipanime.com/video/177008'
     VTV_GO_VN_VIDEO_URL = 'https://vtvgo.vn/kho-video/am-thuc-duong-pho-xoi-cade-751588.html'
     XEM_VTV_NET = 'http://ww.xemvtv.net/xem-phim/nhan-sinh-cua-bach-ho-ly-tap-1/UUWOI65.html'
+    OK_RU = 'https://ok.ru/video/2394372770490'
 
 
 class ExtensionIds:
@@ -126,5 +132,10 @@ class SkypeGroupIds:
     TEST_GROUP_ID = '19:c4cf2ed7ac634b7f8efbd7afcaabdebd@thread.skype'
 
 
+class CocCocComponents:
+    THIRD_PARTY_MODULE_LIST_ID = 'ehgidpndbllacpjalkiimkbadgjfnnmc'
+    ORIGIN_TRIALS_ID = 'llkgjffcdpffmhiakmfcdcblohccpfmo'
 
 
+class ChromeStoreUrls:
+    RUNG_RINH_EXTENSION_URL = 'https://chrome.google.com/webstore/detail/r%E1%BB%A7ng-r%E1%BB%89nh-d%E1%BB%8Bch-v%E1%BB%A5-ho%C3%A0n-ti/paenbjlckelooppiepeiechkeehogoha'

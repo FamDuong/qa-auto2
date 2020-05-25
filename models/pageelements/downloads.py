@@ -110,6 +110,9 @@ class DownloadsElement(BasePageElement):
     def find_interrupted_elements(self, driver):
         return driver.find_elements_by_xpath(DownloadsPageLocators.BADGE_BTN_INTERRUPTED)
 
+    def find_status_text_dangerous(self, driver):
+        return driver.find_elements_by_xpath(DownloadsPageLocators.STATUS_TEXT_IS_DANGEROUS)
+
 
 class ThePirateBayElements(BasePageElement):
 

@@ -11,6 +11,8 @@ import re
 from os import path
 from selenium import webdriver
 from selenium.webdriver import ActionChains
+from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
 
 
 def if_height_frame_so_width_frame(height_frame):
@@ -64,6 +66,37 @@ class CSVHandle:
                 print("System error:", e)
                 return None
 
+    def write_result_data_for_page_load_time(self, file_name, keyname_list: list, value_list: list, result_type=''):
+        with open(file_name, 'a', encoding='utf-8') as file:
+            file.truncate(0)
+            total_value = 0
+            file.write(f"Results for {result_type} is as below :\n")
+            for (keyname, value) in zip(keyname_list, value_list):
+                file.write(f"{keyname} is: {value}")
+                file.write('\n')
+                total_value += value
+            average_value = total_value/len(value_list)
+            file.write(f"Average is : {average_value}")
+        file.close()
+
+    def write_result_data_for_cpu_ram(self, file_name, res, result_type=''):
+        with open(file_name, 'a', encoding='utf-8') as file:
+            file.truncate(0)
+            file.write(f"Results for {result_type} is as below :\n")
+            cpu_total = 0
+            mem_total = 0
+            for i in range(len(res)):
+                cpu_total += int(res[i].get("cpu"))
+                mem_total += int(res[i].get("mem"))
+                file.write("i is %d\n" % i)
+                file.write("CPU is %s, Mem is %s\n" % (res[i].get("cpu"), res[i].get("mem")))
+            cpu_average = cpu_total/len(res)
+            mem_average = mem_total/len(res)
+            file.write("Average value is :\n")
+            file.write(f"CPU : {cpu_average}\n")
+            file.write(f"MEM : {mem_average}")
+        file.close()
+
 
 class FilesHandle:
 
@@ -83,16 +116,26 @@ class FilesHandle:
         filename = dirname + filename
         return filename
 
-    def find_files_in_folder_by_modified_date(self, mydir, endwith):
-        filelist = [f for f in os.listdir(mydir) if f.endswith(endwith)]
-        return filelist
+    def find_files_in_folder_by_modified_date(self, mydir, endwith, startwith=None):
+        if startwith:
+            filelist = [f for f in os.listdir(mydir) if (f.endswith(endwith) and f.startswith(startwith))]
+            return filelist
+        else:
+            filelist = [f for f in os.listdir(mydir) if f.endswith(endwith)]
+            return filelist
 
-    def delete_files_in_folder(self, mydir, endwith):
+    def delete_files_in_folder(self, mydir, endwith, startwith=None):
         import os
-        filelist = [f for f in os.listdir(mydir) if f.endswith(endwith)]
-        for f in filelist:
-            os.chmod(os.path.join(mydir, f), 0o777)
-            os.remove(os.path.join(mydir, f))
+        if startwith:
+            filelist = [f for f in os.listdir(mydir) if (f.endswith(endwith) and f.startswith(startwith))]
+            for f in filelist:
+                os.chmod(os.path.join(mydir, f), 0o777)
+                os.remove(os.path.join(mydir, f))
+        else:
+            filelist = [f for f in os.listdir(mydir) if f.endswith(endwith)]
+            for f in filelist:
+                os.chmod(os.path.join(mydir, f), 0o777)
+                os.remove(os.path.join(mydir, f))
 
     def delete_all_files_in_folder(self, mydir):
         shutil.rmtree(mydir, ignore_errors=True, onerror=None)
@@ -169,21 +212,23 @@ class FilesHandle:
 
     def get_signature_of_file(self, filepath):
         dirname, runname = os.path.split(os.path.abspath(__file__))
+        print(f"File path is : {filepath}")
         argu = WindowsCMD.execute_cmd(dirname + r"\sigcheck.exe " + filepath)
-        signature = remove_special_characters(argu)
-        print(signature)
-        return signature
+        # signature = remove_special_characters(argu)
+        return str(argu)
 
     def get_signature_of_files_in_folder(self, filetype, filepath):
         signature_list = []
         # dirname, runname = os.path.split(os.path.abspath(__file__))
         list_files = self.get_all_files_in_folder(filepath, filetype)
-        for i in range(len(list_files)):
-            filepath = list_files[i]
+        for file in list_files:
             # argu = WindowsCMD.execute_cmd(dirname + r"\sigcheck.exe " + filepath)
             # string = remove_special_characters(argu)
-            signature = self.get_signature_of_file(filepath)
-            signature_list.append(signature)
+            if 'pepflashplayer' in file:
+                pass
+            else:
+                signature = self.get_signature_of_file(file)
+                signature_list.append(signature)
         return signature_list
 
     def verify_product_version(self, filename, expect_version):
@@ -221,18 +266,22 @@ class WebElements:
         hov = ActionChains(driver).move_to_element(element)
         hov.perform()
 
+    @staticmethod
+    def scroll_into_view_element(driver: WebDriver, element: WebElement):
+        driver.execute_script("arguments[0].scrollIntoView(true);", element)
+
 
 class WindowsCMD:
     @staticmethod
-    def execute_cmd(cmd_text):
-        try:
-            wait_for_stable()
+    def execute_cmd(cmd_text, is_split=True):
+        wait_for_stable()
+        if is_split:
             process = subprocess.Popen(cmd_text.split(), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            output, error = process.communicate()
-            print(output)
-            return output
-        except:
-            print("Cannot execute command!")
+        else:
+            process = subprocess.Popen(cmd_text, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        output, error = process.communicate()
+        print(output)
+        return output
 
     def is_process_exists(process_name):
         wait_for_stable()
@@ -247,16 +296,36 @@ class WindowsCMD:
 
 
 class WindowsHandler:
+    def get_all_coccoc_firewall_rules(self):
+        command = "netsh advfirewall firewall show rule name=all | find \"Rule Name:\" | find \"C?c C?c\""
+        prog = WindowsCMD.execute_cmd(command, is_split=False)
+        string = prog.decode("utf-8", "strict")
+        temp_string = string.replace("?", "ố")
+        rule_name_list = temp_string.split("Rule Name:                            ")
+        return rule_name_list
+
+    def delete_coccoc_firewall_rules(self):
+        powershell_script_path = "\\resources\\powershell_scripts"
+        import subprocess
+        current_dir = get_current_dir()[0] + powershell_script_path
+
+        rule_name_list = self.get_all_coccoc_firewall_rules()
+        if len(rule_name_list) > 0:
+            for i in range(len(rule_name_list)):
+                rule_name = "\"" + rule_name_list[i].rstrip() + "\""
+                subprocess.Popen(["powershell.exe",
+                                  f"cd {current_dir}; .\\delCoccocFirewallRules.ps1 -action {rule_name}"],
+                                 stdin=subprocess.PIPE, stderr=subprocess.PIPE)
 
     def get_netfirewall_rule(self, display_name):
-        rule = WindowsCMD.execute_cmd("powershell get-netfirewallrule -DisplayName '" + display_name + "'")
+        rule = WindowsCMD.execute_cmd("netsh advfirewall firewall show rule name='" + display_name + "'")
         string = remove_special_characters(rule)
         return string
 
     def verify_netfirewall_rule(self, display_name, direction, action):
         rule = self.get_netfirewall_rule(display_name)
-        assert "Direction : " + direction in rule
-        assert "Action : " + action in rule
+        assert "Direction:                            " + direction in rule
+        assert "Action:                               " + action in rule
 
     def get_current_login_user(self):
         import subprocess, re
@@ -293,12 +362,17 @@ class BrowserHandler:
         WindowsCMD.execute_cmd('taskkill /im CocCocUpdate.exe /f')
         WindowsCMD.execute_cmd('taskkill /im CocCocCrashHandler.exe /f')
         WindowsCMD.execute_cmd('taskkill /im browser.exe /f')
+        WindowsCMD.execute_cmd('taskkill /im CocCocTorrentUpdate.exe /f')
+        WindowsCMD.execute_cmd('taskkill /im MicrosoftEdge.exe /f')
 
 
 def modify_file_as_text(text_file_path, text_to_search, replacement_text):
-    with fileinput.FileInput(text_file_path, inplace=True, backup='.bak') as file:
-        for line in file:
-            print(line.replace(text_to_search, replacement_text), end='')
+    try:
+        with fileinput.FileInput(text_file_path, inplace=True, backup='.bak') as file:
+            for line in file:
+                print(line.replace(text_to_search, replacement_text), end='')
+    except:
+        print("Preferences file is not existed")
 
 
 def find_text_in_file(text_file_path, text_to_search):
@@ -325,4 +399,3 @@ def check_if_duplicates_list(list_of_elems):
 def get_current_dir():
     before_split = os.getcwd()
     return before_split.split('\\testscripts\\')
-

@@ -5,6 +5,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from models.pagelocators.savior import SaviorPageLocators
+from models.pageelements.version import VersionPageElements
 from utils_automation.common import WebElements
 from selenium.webdriver.support.wait import WebDriverWait
 from utils_automation.setup import WaitAfterEach
@@ -12,6 +13,7 @@ import re
 
 
 class BasePageObject(object):
+    version_element = VersionPageElements()
 
     def wait_until_document_ready(self, driver):
         wait_document_ready = WebDriverWait(driver, 60)
@@ -28,12 +30,18 @@ class BasePageObject(object):
         actions = ActionChains(driver)
         actions.move_to_element(element)
         actions.click()
-        actions.send_keys(Keys.CONTROL + "a")
+        actions.key_down(Keys.CONTROL)
+        actions.send_keys("a")
+        actions.key_up(Keys.CONTROL)
         actions.send_keys(Keys.DELETE)
         actions.perform()
 
     def get_text_element(self, element):
-        return element.get_attribute('innerHTML')
+        return element.get_attribute('textContent')
+
+    def get_text_element_by_id(self, driver, locator):
+        element = self.version_element.find_element(driver, locator)
+        return element.text
 
     def press_arrow_up(self, driver, loop=1):
         for i in range(loop):
@@ -96,5 +104,3 @@ class BasePageObject(object):
 
     def scroll_to_with_scroll_height(self, driver):
         driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-
-
