@@ -26,3 +26,5 @@ COCCOC_MUSIC_API_HOME = get_path_info()['coccoc_music_api']['home']
 COCCOC_MUSIC_API_CATEGORIES = get_path_info()['coccoc_music_api']['categories']
 
 COCCOC_ATLASSIAN_DOMAIN = get_path_info()['coccoc_atlassian_server']['domain']
+
+COCCOC_GAME_API_HOME = get_path_info()['coccoc_game_api']['home']
