@@ -28,3 +28,6 @@ COCCOC_MUSIC_API_CATEGORIES = get_path_info()['coccoc_music_api']['categories']
 COCCOC_ATLASSIAN_DOMAIN = get_path_info()['coccoc_atlassian_server']['domain']
 
 COCCOC_GAME_API_HOME = get_path_info()['coccoc_game_api']['home']
+COCCOC_GAME_NTP_GAMES = get_path_info()['coccoc_game_api']['ntp-games']
+COCCOC_GAME_PUBLIC_EVENTS_ALL_GAMES = get_path_info()['coccoc_game_api']['public-events-all-games']
+COCCOC_GAME_GAMES = get_path_info()['coccoc_game_api']['games']
