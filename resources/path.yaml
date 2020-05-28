@@ -24,4 +24,6 @@ coccoc_atlassian_server:
 coccoc_game_api:
   home: /home
   ntp-games: /ntp-games
+  public-events-all-games: /public-events-all-games
+  games: /games
 
