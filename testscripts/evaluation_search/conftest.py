@@ -50,4 +50,7 @@ def result_col(request):
     result_col = request.config.getoption("--result-col")
     if result_col is None:
         raise Exception
-    return result_col
+    result_col_values = result_col.split(",")
+    result_col_cc = result_col_values[0]
+    result_col_gg = result_col_values[1]
+    return result_col_cc, result_col_gg
