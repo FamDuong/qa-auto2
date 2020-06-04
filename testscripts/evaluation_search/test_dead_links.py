@@ -7,8 +7,12 @@ import requests
 
 file_handle = FilesHandle()
 headers = {
+<<<<<<< HEAD
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36'}
 
+=======
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36'}
+>>>>>>> 1f07c44bd3ee761b51ca8c1b56ea8709a93d6691
 
 def google_authorize():
     credentials_path_file = file_handle.get_absolute_filename("\\qa-auto_service_credentials.json")
@@ -88,7 +92,10 @@ def prepare_query(url, keyword):
     query = url + keyword_encode_uri
     return query
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1f07c44bd3ee761b51ca8c1b56ea8709a93d6691
 def get_search_results_for_google(query_url):
     request = request_url(query_url)
     from lxml import html
@@ -138,7 +145,10 @@ def request_url(query_url):
     request = requests.get(url=query_url, headers=headers)
     return request
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1f07c44bd3ee761b51ca8c1b56ea8709a93d6691
 def get_dead_links(address):
     try:
         r = requests.get(address, timeout=45, headers=headers)
@@ -209,7 +219,7 @@ class TestDeadLinks:
                                           invalid_links_gg,
                                           prefix="Google")
 
-        # Send skype notify
+        #Send skype notify
         from testscripts.jobs.noti_test_result_change import send_message_skype
         send_message_skype("(porg)(porg)(porg) Evaluation Search - Finished get broken links (porg)(porg)(porg)"
                            "\nPlease check result for Coc Coc in col [" + result_col_cc + "]/ Google in col ["
