@@ -6,7 +6,8 @@ def pytest_addoption(parser):
     parser.addoption('--sheet-name', action='store', )
     parser.addoption('--sheet-range', action='store', )
     parser.addoption('--string-verify', action='store', )
-    parser.addoption('--result-col', action='store', )
+    parser.addoption('--result-col-coccoc', action='store', )
+    parser.addoption('--result-col-google', action='store', )
 
 
 @pytest.fixture
@@ -46,11 +47,16 @@ def string_verify(request):
 
 
 @pytest.fixture
-def result_col(request):
-    result_col = request.config.getoption("--result-col")
-    if result_col is None:
+def result_col_coccoc(request):
+    result_col_coccoc = request.config.getoption("--result-col-coccoc")
+    if result_col_coccoc is None:
         raise Exception
-    result_col_values = result_col.split(",")
-    result_col_cc = result_col_values[0]
-    result_col_gg = result_col_values[1]
-    return result_col_cc, result_col_gg
+    return result_col_coccoc
+
+
+@pytest.fixture
+def result_col_google(request):
+    result_col_google = request.config.getoption("--result-col-google")
+    if result_col_google is None:
+        raise Exception
+    return result_col_google
