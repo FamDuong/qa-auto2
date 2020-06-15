@@ -92,8 +92,8 @@ def prepare_query(url, keyword):
     return query
 
 
-def get_search_results_for_google(query_url):
-    request = request_url(query_url)
+def get_search_results_for_google(query_url, timeout):
+    request = request_url(query_url, timeout)
     from lxml import html
     web_page = html.fromstring(request.content)
     search_results = web_page.xpath(CCSearchPageLocators.GOOGLE_SEARCH_RESULTS_XPATH)
@@ -101,9 +101,9 @@ def get_search_results_for_google(query_url):
     return search_results
 
 
-def get_search_results_for_coccoc(query_url):
+def get_search_results_for_coccoc(query_url, timeout):
     # request to query_url
-    request = request_url(query_url)
+    request = request_url(query_url, timeout)
 
     # get data in <Script> tag contain search results
     from bs4 import BeautifulSoup
@@ -137,7 +137,7 @@ def get_search_results_for_coccoc(query_url):
     return search_results_without_duplicate
 
 
-def request_url(address):
+def request_url(address, timeout):
     r = requests.Session()
     retry_strategy = Retry(
         total=3,
@@ -149,13 +149,13 @@ def request_url(address):
     r.mount("https://", HTTPAdapter(max_retries=retry_strategy))
     r.mount("http://", HTTPAdapter(max_retries=retry_strategy))
 
-    request = r.get(address, timeout=30, headers=headers)
+    request = r.get(address, timeout=timeout, headers=headers)
     return request
 
 
-def get_dead_links(address):
+def get_dead_links(address, timeout):
     try:
-        r = request_url(address)
+        r = request_url(address, timeout)
         if r.status_code > 400:
             return True, r.status_code
         else:
@@ -166,25 +166,25 @@ def get_dead_links(address):
         return True, e
 
 
-def get_page_source(address):
-    request = request_url(address)
+def get_page_source(address, timeout):
+    request = request_url(address, timeout)
     html_page_source = request.text
     return html_page_source
 
 
-def get_invalid_links(addresses, string_verify):
+def get_invalid_links(addresses, string_verify, timeout):
     # Check dead links/ invalid links
     dead_links = []
     invalid_links = []
     for address in addresses:
         if address.startswith('http'):
             # Check dead links
-            status, code = get_dead_links(address)
+            status, code = get_dead_links(address, timeout)
             if status:
                 dead_links.append(address + "\n[Error]:" + str(code) + "\n" + address)
             # Check html of link contains some strings
             else:
-                html_page_source = get_page_source(address)
+                html_page_source = get_page_source(address, timeout)
                 for string in string_verify:
                     if string in html_page_source:
                         invalid_links.append(address + "\n[Reason]:" + string + "\n")
@@ -192,23 +192,24 @@ def get_invalid_links(addresses, string_verify):
     return dead_links, invalid_links
 
 
-def evaluation_search(url, keyword, string_verify):
+def evaluation_search(url, keyword, string_verify, timeout):
     # Create query url
     query_url = prepare_query(url=url, keyword=keyword)
     print("\n- Query:\n" + query_url)
 
     # Get all search results and store into list
     if 'coccoc.com/search' in url:
-        addresses = get_search_results_for_coccoc(query_url=query_url)
+        addresses = get_search_results_for_coccoc(query_url=query_url, timeout=timeout)
     else:
-        addresses = get_search_results_for_google(query_url=query_url)
-    dead_links, invalid_links = get_invalid_links(addresses, string_verify)
+        addresses = get_search_results_for_google(query_url=query_url, timeout=timeout)
+    dead_links, invalid_links = get_invalid_links(addresses=addresses, string_verify=string_verify, timeout=timeout)
     return dead_links, invalid_links
 
 
 class TestDeadLinks:
 
-    def test_coccoc_search_by_keyword(self, spreed_sheet_id, sheet_name, sheet_range, string_verify, result_col_coccoc):
+    def test_coccoc_search_by_keyword(self, spreed_sheet_id, sheet_name, sheet_range, string_verify, request_timeout,
+                                      result_col_coccoc):
         # Get all keywords in "Queries" column => Store to list
         worksheet = get_worksheet(spreed_sheet_id, sheet_name)
         list_keywords = worksheet.range(sheet_range, returnas='matrix')
@@ -216,7 +217,8 @@ class TestDeadLinks:
             print("\n- Keyword:\n" + str(keyword))
             keyword = get_keyword_without_bracket(str(keyword))
             dead_links_cc, invalid_links_cc = evaluation_search(url='https://coccoc.com/search?query=', keyword=keyword,
-                                                                string_verify=string_verify)
+                                                                string_verify=string_verify,
+                                                                timeout=int(request_timeout))
             write_result_into_spreadsheet(sheet_range, worksheet, keyword, result_col_coccoc, dead_links_cc,
                                           invalid_links_cc,
                                           prefix="Coc Coc")
@@ -228,14 +230,16 @@ class TestDeadLinks:
             + result_col_coccoc + "] of sheet [" + sheet_name
             + "] in bellow link:\nhttps://docs.google.com/spreadsheets/d/" + spreed_sheet_id)
 
-    def test_google_search_by_keyword(self, spreed_sheet_id, sheet_name, sheet_range, string_verify, result_col_google):
+    def test_google_search_by_keyword(self, spreed_sheet_id, sheet_name, sheet_range, string_verify, request_timeout,
+                                      result_col_google):
         # Get all keywords in "Queries" column => Store to list
         worksheet = get_worksheet(spreed_sheet_id, sheet_name)
         list_keywords = worksheet.range(sheet_range, returnas='matrix')
         for keyword in list_keywords:
             keyword = get_keyword_without_bracket(str(keyword))
             dead_links_gg, invalid_links_gg = evaluation_search(url='https://www.google.com.vn/search?q=',
-                                                                keyword=keyword, string_verify=string_verify)
+                                                                keyword=keyword, string_verify=string_verify,
+                                                                timeout=int(request_timeout))
             write_result_into_spreadsheet(sheet_range, worksheet, keyword, result_col_google, dead_links_gg,
                                           invalid_links_gg,
                                           prefix="Google")

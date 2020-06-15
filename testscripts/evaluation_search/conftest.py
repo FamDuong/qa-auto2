@@ -6,6 +6,7 @@ def pytest_addoption(parser):
     parser.addoption('--sheet-name', action='store', )
     parser.addoption('--sheet-range', action='store', )
     parser.addoption('--string-verify', action='store', )
+    parser.addoption('--request-timeout', action='store', )
     parser.addoption('--result-col-coccoc', action='store', )
     parser.addoption('--result-col-google', action='store', )
 
@@ -45,6 +46,12 @@ def string_verify(request):
         string_verify_list.append(each_string)
     return string_verify_list
 
+@pytest.fixture
+def request_timeout(request):
+    request_timeout = request.config.getoption("--request-timeout")
+    if request_timeout is None:
+        raise Exception
+    return request_timeout
 
 @pytest.fixture
 def result_col_coccoc(request):
