@@ -27,3 +27,5 @@ coccoc_game_api:
   public-events-all-games: /public-events-all-games
   games: /games
 
+coccoc_new_feeds_api:
+  data: http://planner7v.dev.itim.vn:13091/sample/
