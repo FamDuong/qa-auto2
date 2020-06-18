@@ -1,4 +1,6 @@
 import json
+import random
+
 import pygsheets
 from google.oauth2 import service_account
 from models.pagelocators.evaluation_search.cc_search import CCSearchPageLocators
@@ -6,11 +8,12 @@ from utils_automation.common import FilesHandle
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
+from testscripts.evaluation_search.user_agent_list import user_agent_list
 
 file_handle = FilesHandle()
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-                  'Chrome/83.0.4103.61 Safari/537.36'}
+
+user_agent = random.choice(user_agent_list)
+headers = {'User-Agent': user_agent}
 
 
 def google_authorize():
