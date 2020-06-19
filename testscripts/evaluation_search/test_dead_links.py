@@ -55,11 +55,11 @@ def split_col_from_sheet_range(sheet_range):
 
 def create_content_to_update_into_spreadsheet(links_list, title):
     if len(links_list) == 0:
-        links_results = ""
+        links_results = "*** " + title+"\n"
     else:
         links_results = "*** " + title + ": \n"
         for link in links_list:
-            links_results += link + "\n"
+            links_results += link + "\n\n"
     return links_results
 
 
@@ -72,9 +72,9 @@ def write_result_into_spreadsheet(sheet_range, worksheet, keyword, result_col, d
     content = dead_links_result + invalid_links_result
     list_index = split_index_from_sheet_range(sheet_range)
     col = split_col_from_sheet_range(sheet_range)
-    for i in list_index:
+    for i in range(list_index[0], list_index[1]+1):
         for j in col:
-            cell = j + str(i)
+            cell = str(j) + str(i)
             cell_actual_keyword = worksheet.get_value(cell)
             if str(cell_actual_keyword) in str(keyword):
                 result_cell = result_col + str(i)
@@ -157,16 +157,26 @@ def request_url(address, timeout):
 
 
 def get_dead_links(address, timeout):
+    error = ""
     try:
         r = request_url(address, timeout)
         if r.status_code > 400:
-            return True, r.status_code
+            error = str(r.status_code)
+            return True, error
         else:
-            return False, r.status_code
+            error = str(r.status_code)
+            return False, error
     except requests.exceptions.HTTPError as e:
-        return True, e
+        print("HTTPError" + str(e))
+        error = "=>>> HTTPError <<<=" + str(e)
+        return True, error
     except requests.exceptions.RequestException as e:
-        return True, e
+        print("RequestException" + str(e))
+        error = "=>>> RequestException <<<=" + str(e)
+        return True, error
+    except requests.Exception as e:
+        error = "=>>> Other exception <<<=" + str(e)
+        return True, error
 
 
 def get_page_source(address, timeout):
@@ -182,9 +192,9 @@ def get_invalid_links(addresses, string_verify, timeout):
     for address in addresses:
         if address.startswith('http'):
             # Check dead links
-            status, code = get_dead_links(address, timeout)
+            status, error = get_dead_links(address, timeout)
             if status:
-                dead_links.append(address + "\n[Error]:" + str(code) + "\n" + address)
+                dead_links.append(address + "\n[Error]:" + str(error) + "\n" + address)
             # Check html of link contains some strings
             else:
                 html_page_source = get_page_source(address, timeout)
@@ -206,6 +216,7 @@ def evaluation_search(url, keyword, string_verify, timeout):
     else:
         addresses = get_search_results_for_google(query_url=query_url, timeout=timeout)
     dead_links, invalid_links = get_invalid_links(addresses=addresses, string_verify=string_verify, timeout=timeout)
+    print("DEADLINK"+str(dead_links)+str(invalid_links))
     return dead_links, invalid_links
 
 
@@ -219,6 +230,7 @@ class TestDeadLinks:
         for keyword in list_keywords:
             print("\n- Keyword:\n" + str(keyword))
             keyword = get_keyword_without_bracket(str(keyword))
+
             dead_links_cc, invalid_links_cc = evaluation_search(url='https://coccoc.com/search?query=', keyword=keyword,
                                                                 string_verify=string_verify,
                                                                 timeout=int(request_timeout))
@@ -226,12 +238,12 @@ class TestDeadLinks:
                                           invalid_links_cc,
                                           prefix="Coc Coc")
         # Send skype notify
-        from testscripts.jobs.noti_test_result_change import send_message_skype
-        send_message_skype(
-            "(porg)(porg)(porg) Evaluation Search - Finished get broken links for [Coc Coc] (porg)(porg)(porg)"
-            "\nPlease check result in col ["
-            + result_col_coccoc + "] of sheet [" + sheet_name
-            + "] in bellow link:\nhttps://docs.google.com/spreadsheets/d/" + spreed_sheet_id)
+        # from testscripts.jobs.noti_test_result_change import send_message_skype
+        # send_message_skype(
+        #     "(porg)(porg)(porg) Evaluation Search - Finished get broken links for [Coc Coc] (porg)(porg)(porg)"
+        #     "\nPlease check result in col ["
+        #     + result_col_coccoc + "] of sheet [" + sheet_name
+        #     + "] in bellow link:\nhttps://docs.google.com/spreadsheets/d/" + spreed_sheet_id)
 
     def test_google_search_by_keyword(self, spreed_sheet_id, sheet_name, sheet_range, string_verify, request_timeout,
                                       result_col_google):
@@ -248,9 +260,9 @@ class TestDeadLinks:
                                           prefix="Google")
 
         # Send skype notify
-        from testscripts.jobs.noti_test_result_change import send_message_skype
-        send_message_skype(
-            "(porg)(porg)(porg) Evaluation Search - Finished get broken links for [Google] (porg)(porg)(porg)"
-            "\nPlease check result in col ["
-            + result_col_google + "] of sheet [" + sheet_name
-            + "] in bellow link:\nhttps://docs.google.com/spreadsheets/d/" + spreed_sheet_id)
+        # from testscripts.jobs.noti_test_result_change import send_message_skype
+        # send_message_skype(
+        #     "(porg)(porg)(porg) Evaluation Search - Finished get broken links for [Google] (porg)(porg)(porg)"
+        #     "\nPlease check result in col ["
+        #     + result_col_google + "] of sheet [" + sheet_name
+        #     + "] in bellow link:\nhttps://docs.google.com/spreadsheets/d/" + spreed_sheet_id)
