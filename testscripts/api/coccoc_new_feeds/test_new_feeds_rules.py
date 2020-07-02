@@ -1,17 +1,19 @@
 import  json
 import string
 import re
-from api.coccoc_new_feeds.coccoc_new_feeds_crawler.coccoc_new_feeds_api import DatafeedAPI;
-from databases.sql.coccoc_new_feeds_db import NewFeedsDB;
+from api.coccoc_new_feeds.coccoc_new_feeds_crawler.coccoc_new_feeds_api import NewFeedAPI;
+from databases.sql.coccoc_new_feeds_db import NewFeedDB;
+from testscripts.api.coccoc_new_feeds.common import NewFeedCommon;
 
 class TestDataRules:
-    new_feed_data_api = DatafeedAPI()
-    new_feed_data_db = NewFeedsDB()
+    new_feed_api = NewFeedAPI()
+    new_feed_db = NewFeedDB()
+    common = NewFeedCommon()
 
     # Test rule is not null
     def test_check_if_rules_is_null(self):
         result = True
-        api_rules = self.new_feed_data_api.get_rules_crawler()
+        api_rules = self.new_feed_api.get_rules_crawler()
         api_number_of_rules = len(api_rules)
         print(api_number_of_rules)
 
@@ -26,7 +28,7 @@ class TestDataRules:
     # Check if action is remove or keep
     def test_check_if_action_is_correct(self):
         result = True
-        api_rules = self.new_feed_data_api.get_rules_crawler()
+        api_rules = self.new_feed_api.get_rules_crawler()
         api_number_of_rules = len(api_rules)
         print(api_number_of_rules)
 
@@ -43,7 +45,7 @@ class TestDataRules:
     # Get rules is regrex
     def test_check_if_rules_is_correct(self):
         result = True
-        api_rules = self.new_feed_data_api.get_rules_crawler()
+        api_rules = self.new_feed_api.get_rules_crawler()
         api_number_of_rules = len(api_rules)
         print(api_number_of_rules)
 
@@ -65,7 +67,7 @@ class TestDataRules:
     # Test rule is not null
     def test_check_if_last_default_rules(self):
         result = True
-        api_rules = self.new_feed_data_api.get_rules_crawler()
+        api_rules = self.new_feed_api.get_rules_crawler()
         api_number_of_rules = len(api_rules)
         print(api_number_of_rules)
 
@@ -81,7 +83,7 @@ class TestDataRules:
     # Check assessment in DB
     def test_check_assessment_in_db(self, coccoc_new_feeds_db_interact):
         result = True
-        api_rules = self.new_feed_data_api.get_rules_crawler()
+        api_rules = self.new_feed_api.get_rules_crawler()
         api_number_of_rules = len(api_rules)
         print(api_number_of_rules)
 
@@ -91,7 +93,7 @@ class TestDataRules:
             api_hostname_rules = str(api_hostname_rules)
             api_hostname_rules = api_hostname_rules.replace(' ', '').replace('\'','"')
 
-            db_hostname_rule = self.new_feed_data_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select rules from assessments where host_id in (select id from hosts where hostname = "{api_hostname}");')
+            db_hostname_rule = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select rules from assessments where host_id in (select id from hosts where hostname = "{api_hostname}");')
             db_hostname_rule = str(db_hostname_rule)
             db_hostname_rule = db_hostname_rule.replace('\\\\', '\\')
             if api_hostname_rules not in db_hostname_rule:

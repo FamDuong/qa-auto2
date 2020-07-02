@@ -1,21 +1,21 @@
 import time
 import random
-from api.coccoc_new_feeds.coccoc_new_feeds_crawler.coccoc_new_feeds_api import DatafeedAPI;
-from databases.sql.coccoc_new_feeds_db import NewFeedsDB;
+from api.coccoc_new_feeds.coccoc_new_feeds_crawler.coccoc_new_feeds_api import NewFeedAPI;
+from databases.sql.coccoc_new_feeds_db import NewFeedDB;
+from testscripts.api.coccoc_new_feeds.common import NewFeedCommon;
 
-from config.environment import COCCOC_NEW_FEED_API_CMS_USER_ACTION
-from config.environment import COCCOC_NEW_FEED_API_CMS_WHITELIST_DOMAIN
 from config.environment import COCCOC_NEW_FEED_API_CMS_INIT_USER
 
 class TestCmsApi:
-    new_feed_api = DatafeedAPI()
-    new_feed_db = NewFeedsDB()
+    new_feed_api = NewFeedAPI()
+    new_feed_db = NewFeedDB()
+    common = NewFeedCommon()
 
     # NF-82: [CMS API] Create API to allow user to init user setting
     def test_init_user_if_not_existed(self, coccoc_new_feeds_db_interact):
         result = True
         data = self.new_feed_api.set_vid_data()
-        vid = self.new_feed_api.get_data(data, "vid")
+        vid = self.common.get_data(data, "vid")
         print("vid : ", vid)
 
         response = self.new_feed_api.request_post_new_feeds(COCCOC_NEW_FEED_API_CMS_INIT_USER, data)
@@ -38,7 +38,7 @@ class TestCmsApi:
     def test_init_user_if_existed(self, coccoc_new_feeds_db_interact):
         result = True
         data = self.new_feed_api.set_vid_data()
-        vid = self.new_feed_api.get_data(data, "vid")
+        vid = self.common.get_data(data, "vid")
         print("vid : ", vid)
 
         # Insert new user many times

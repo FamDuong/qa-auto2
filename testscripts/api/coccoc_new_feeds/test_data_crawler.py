@@ -1,7 +1,7 @@
 import  json
-from api.coccoc_new_feeds.coccoc_new_feeds_crawler.coccoc_new_feeds_api import DatafeedAPI;
+from api.coccoc_new_feeds.coccoc_new_feeds_crawler.coccoc_new_feeds_api import NewFeedAPI;
 
-new_feed_data = DatafeedAPI()
+new_feed_data = NewFeedAPI()
 
 class TestDataCrawler:
 

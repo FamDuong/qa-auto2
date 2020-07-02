@@ -1,5 +1,5 @@
 import time
-class NewFeedsDB:
+class NewFeedDB:
 
     def get_newfeeds_db(self, connection, sql_query):
         import logging

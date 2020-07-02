@@ -35,6 +35,7 @@ class TestRecommendedGamesHome:
         api_game_recommended_len = len(game_home_screen_api.get_home_screen_content().json()['results']['recommended'])
         assert recommended_game_from_db_len == api_game_recommended_len, "Verify number of recommended games matched to db"
 
+import requests
 
 class TestFormatResponseHome:
 
@@ -44,6 +45,14 @@ class TestFormatResponseHome:
         home_game_schema.load(response_json)
 
 
+    def test_api(self):
+        dev_api_url = 'https://dev-browser-game-api.coccoc.com/api/v3/public-events-all-games'
+        prd_api_url = 'https://browser-game-api.coccoc.com/api/v3/public-events-all-games'
+        with requests.Session() as session:
+            initial_response = session.get(dev_api_url)
+            response = session.get(dev_api_url)
+
+        print(response.text)
 
 
 

@@ -1,15 +1,13 @@
 import time
 import random
-from api.coccoc_new_feeds.coccoc_new_feeds_crawler.coccoc_new_feeds_api import DatafeedAPI;
-from databases.sql.coccoc_new_feeds_db import NewFeedsDB;
+from api.coccoc_new_feeds.coccoc_new_feeds_crawler.coccoc_new_feeds_api import NewFeedAPI;
+from databases.sql.coccoc_new_feeds_db import NewFeedDB;
 
-from config.environment import COCCOC_NEW_FEED_API_CMS_USER_ACTION
 from config.environment import COCCOC_NEW_FEED_API_CMS_WHITELIST_DOMAIN
-from config.environment import COCCOC_NEW_FEED_API_CMS_INIT_USER
 
 class TestCmsApi:
-    new_feed_api = DatafeedAPI()
-    new_feed_db = NewFeedsDB()
+    new_feed_api = NewFeedAPI()
+    new_feed_db = NewFeedDB()
 
     # NF-117: [CMS API] Get list domains
     def test_get_whitelist_domain(self, coccoc_new_feeds_db_interact):

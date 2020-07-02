@@ -1,36 +1,38 @@
 import  json
 import string
-from api.coccoc_new_feeds.coccoc_new_feeds_crawler.coccoc_new_feeds_api import DatafeedAPI;
-from databases.sql.coccoc_new_feeds_db import NewFeedsDB;
+from api.coccoc_new_feeds.coccoc_new_feeds_crawler.coccoc_new_feeds_api import NewFeedAPI;
+from databases.sql.coccoc_new_feeds_db import NewFeedDB;
+from testscripts.api.coccoc_new_feeds.common import NewFeedCommon;
 
 from config.environment import COCCOC_NEW_FEED_DATA_URL
 
 class TestDataCrawler:
-    new_feed_api = DatafeedAPI()
-    new_feed_db = NewFeedsDB()
+    new_feed_api = NewFeedAPI()
+    new_feed_db = NewFeedDB()
+    common = NewFeedCommon()
 
     # Test data crawler
     def test_data_crawler(self, coccoc_new_feeds_db_interact):
         result = True
         api_data = self.new_feed_api.request_get_new_feeds(COCCOC_NEW_FEED_DATA_URL)
         api_data = api_data['sample']
-        list_api_hostname = self.new_feed_api.get_list_json_level_1(api_data, 'host')
+        list_api_hostname = self.common.get_list_json_level_1(api_data, 'host')
         db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select distinct(hostname) from hosts;')
         list_db_hostname = self.new_feed_db.get_list_db(db_data, 0)
 
         # Check if duplicated hostname
-        result = self.new_feed_api.check_if_element_duplicated(list_api_hostname)
+        result = self.common.check_if_element_duplicated(list_api_hostname)
         if result is False:
             print("ERROR: Duplicated hostname")
 
         # Check if api host name is not same db hostname
-        result = self.new_feed_api.check_if_element_different_in_lists(list_db_hostname, list_db_hostname)
+        result = self.common.check_if_element_different_in_lists(list_db_hostname, list_db_hostname)
         if result is False:
             print("ERROR: hostname in hosts table")
 
         for hostname in list_api_hostname:
             print("hostname: ", hostname)
-            list_api_urls = self.new_feed_api.get_list_json_level_2(api_data, 'host', hostname, 'urls')
+            list_api_urls = self.common.get_list_json_level_2(api_data, 'host', hostname, 'urls')
             # db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select url from urls where host_id in (select id from hosts where hostname ="{hostname}");')
             db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select distinct(url) from urls where id not in (select distinct(url_id) from assessed_data) and date(create_time) = curdate() and host_id in (select distinct(id) from hosts where hostname="{hostname}");')
             list_db_urls = self.new_feed_db.get_list_db(db_data, 0)
@@ -41,13 +43,13 @@ class TestDataCrawler:
                 result = False
 
             # Check if duplicated url for each hostname
-            result_tmp = self.new_feed_api.check_if_element_duplicated(list_api_urls)
+            result_tmp = self.common.check_if_element_duplicated(list_api_urls)
             if result_tmp is False:
                 print("    ERROR: Duplicated url")
                 result = False
 
             # Check if url belong the hostname
-            result_tmp = self.new_feed_api.check_if_elements_in_lists_contains_string(list_api_urls, hostname)
+            result_tmp = self.common.check_if_elements_in_lists_contains_string(list_api_urls, hostname)
             if result_tmp is False:
                 print("    ERROR: url NOT belong the hostname")
                 result = False
