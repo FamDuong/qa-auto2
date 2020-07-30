@@ -17,10 +17,10 @@ class TestCmsApi:
     def test_post_user_actions_like_article(self, coccoc_new_feeds_db_interact):
         result = True
         # Get list vid
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select distinct(vid) from user_categories order by rand() limit 10;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select distinct(vid) from user_categories order by rand() limit 10;')
         list_vid = self.new_feed_db.get_list_db(db_data, 0)
         # Get list article ID
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select article_id from articles order by rand() limit 10;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select article_id from articles order by rand() limit 10;')
         list_article_id = self.new_feed_db.get_list_db(db_data)
 
         # Check like_article
@@ -34,7 +34,7 @@ class TestCmsApi:
             user_actions = self.new_feed_api.set_user_actions_data('like_article', article_id)
             response = self.new_feed_api.request_post_new_feeds(COCCOC_NEW_FEED_API_CMS_USER_ACTION + vid, user_actions)
         # Validate: Not correct but don't know how to check
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select vid from user_like_articles where article_id = "{article_id}";')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select vid from user_like_articles where article_id = "{article_id}";')
         db_data = self.new_feed_db.get_list_db(db_data)
         list_user_like_articles = self.common.remove_duplicated_items(list_user_like_articles)
         print("    API : ", list_user_like_articles)
@@ -50,7 +50,7 @@ class TestCmsApi:
     def test_post_user_actions_cancel_like_article(self, coccoc_new_feeds_db_interact):
         result = True
         # Get list vid
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select vid, article_id from user_like_articles limit 10;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select vid, article_id from user_like_articles limit 10;')
         list_vid = self.new_feed_db.get_list_db(db_data, 0)
         list_article_id = self.new_feed_db.get_list_db(db_data, 1)
 
@@ -69,7 +69,7 @@ class TestCmsApi:
             response = self.new_feed_api.request_post_new_feeds(COCCOC_NEW_FEED_API_CMS_USER_ACTION + vid, user_actions)
             list_user_cancel_like_articles.append(vid)
             # Validate: Not correct but don't know how to check
-            db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select vid from user_like_articles where article_id = "{article_id}";')
+            db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select vid from user_like_articles where article_id = "{article_id}";')
             db_data = self.new_feed_db.get_list_db(db_data)
 
             result_tmp = self.common.check_if_lists_are_different(db_data, list_user_cancel_like_articles)
@@ -86,10 +86,10 @@ class TestCmsApi:
         result = True
         action_type = 'block_article'
         # Get list vid
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select distinct(vid) from user_categories limit 10;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select distinct(vid) from user_categories limit 10;')
         list_vid = self.new_feed_db.get_list_db(db_data, 0)
         # Get list article ID
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select article_id from articles limit 10;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select article_id from articles limit 10;')
         list_article_id = self.new_feed_db.get_list_db(db_data)
 
         # Check like_article
@@ -106,7 +106,7 @@ class TestCmsApi:
             response = self.new_feed_api.request_post_new_feeds(COCCOC_NEW_FEED_API_CMS_USER_ACTION + vid, user_actions)
 
             # Validate: Not correct but don't know how to check
-            db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select vid from user_block_articles where article_id = "{article_id}";')
+            db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select vid from user_block_articles where article_id = "{article_id}";')
             db_data = self.new_feed_db.get_list_db(db_data)
             list_user_block_article = self.common.remove_duplicated_items(list_user_block_article)
             result_tmp = self.common.check_is_sublist(db_data, list_user_block_article)
@@ -128,7 +128,7 @@ class TestCmsApi:
         result = True
         action_type = 'cancel_block_article'
         # Get list vid
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select vid, article_id from user_block_articles limit 10;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select vid, article_id from user_block_articles limit 10;')
         list_vid = self.new_feed_db.get_list_db(db_data, 0)
         list_article_id = self.new_feed_db.get_list_db(db_data, 1)
 
@@ -147,7 +147,7 @@ class TestCmsApi:
             list_user_cancel_block_articles.append(vid)
             list_kafka_message.append(self.common.get_kafka_message(action_type, vid, article_id))
             # Validate
-            db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select vid from user_block_articles where article_id = "{article_id}";')
+            db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select vid from user_block_articles where article_id = "{article_id}";')
             db_data = self.new_feed_db.get_list_db(db_data)
 
             print("    API : ", list_user_cancel_block_articles)
@@ -168,10 +168,10 @@ class TestCmsApi:
         result = True
         action_type = 'complaint_article'
         # Get list vid
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select distinct(vid) from user_categories order by rand() limit 10;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select distinct(vid) from user_categories order by rand() limit 10;')
         list_vid = self.new_feed_db.get_list_db(db_data, 0)
         # Get list article ID
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select article_id from articles order by rand() limit 10;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select article_id from articles order by rand() limit 10;')
         list_article_id = self.new_feed_db.get_list_db(db_data)
         # Complaint type
         list_complaint_type = ['old_news', 'wrong_info', 'bad_content', 'others']
@@ -191,7 +191,7 @@ class TestCmsApi:
             list_user_complaint_article.append(vid)
             list_kafka_message.append(self.common.get_kafka_message(action_type, vid, article_id))
             # Validate
-            db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select vid from user_complaint_articles where article_id = "{article_id}" and status = "new" and complaint_type = "{complaint_type}";')
+            db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select vid from user_complaint_articles where article_id = "{article_id}" and status = "new" and complaint_type = "{complaint_type}";')
             db_data = self.new_feed_db.get_list_db(db_data, 0)
 
             print("    API : ", vid, " : ", article_id, " : ", complaint_type)
@@ -211,10 +211,10 @@ class TestCmsApi:
         result = True
         action_type = 'subscribe_category'
         # Get list vid
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select distinct(vid) from user_categories limit 10;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select distinct(vid) from user_categories limit 10;')
         list_vid = self.new_feed_db.get_list_db(db_data, 0)
         # Get list category ID
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select category_id from coccoc_news_feed.categories order by rand() limit 10;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select category_id from coccoc_news_feed.categories order by rand() limit 10;')
         list_category_id = self.new_feed_db.get_list_db(db_data, 0)
 
         # Check subscribe_category
@@ -228,7 +228,7 @@ class TestCmsApi:
             response = self.new_feed_api.request_post_new_feeds(COCCOC_NEW_FEED_API_CMS_USER_ACTION + vid, user_actions)
 
             # Validate: the category is updated
-            db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select category_id from coccoc_news_feed.user_categories where vid = "{vid}";')
+            db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select category_id from coccoc_news_feed.user_categories where vid = "{vid}";')
             db_data = self.new_feed_db.get_list_db(db_data)
 
             print("    API : ", vid, " : ", list_category_id)
@@ -249,10 +249,10 @@ class TestCmsApi:
         result = True
         action_type = 'block_source'
         # Get list vid
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select distinct(vid) from user_categories limit 5;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select distinct(vid) from user_categories limit 5;')
         list_vid = self.new_feed_db.get_list_db(db_data, 0)
         # Get list category ID
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select domain from coccoc_news_feed.sources order by rand() limit 5;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select domain from coccoc_news_feed.sources order by rand() limit 5;')
         list_domain = self.new_feed_db.get_list_db(db_data, 0)
 
         # Check block_source
@@ -263,7 +263,7 @@ class TestCmsApi:
             domain = list_domain[i]
 
             # Check total block_source before api
-            db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select domain from user_block_sources where vid = "{vid}";')
+            db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select domain from user_block_sources where vid = "{vid}";')
             list_domain_db = self.new_feed_db.get_list_db(db_data, 0)
             list_domain_db.append(domain)
             list_domain_db = self.common.remove_duplicated_items(list_domain_db)
@@ -272,7 +272,7 @@ class TestCmsApi:
             user_actions = self.new_feed_api.set_user_actions_data('block_source', domain=domain)
             response = self.new_feed_api.request_post_new_feeds(COCCOC_NEW_FEED_API_CMS_USER_ACTION + vid, user_actions)
             # Validate: the category is updated
-            db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select domain from user_block_sources where vid = "{vid}";')
+            db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select domain from user_block_sources where vid = "{vid}";')
             db_data = self.new_feed_db.get_list_db(db_data)
 
             list_kafka_message.append(self.common.get_kafka_message(action_type, vid, db_data))
@@ -292,7 +292,7 @@ class TestCmsApi:
         result = True
         action_type = 'cancel_block_source'
         # Get list vid & domain
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select vid, domain from coccoc_news_feed.user_block_sources order by rand() limit 5;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select vid, domain from coccoc_news_feed.user_block_sources order by rand() limit 5;')
         list_vid = self.new_feed_db.get_list_db(db_data, 0)
         list_domain = self.new_feed_db.get_list_db(db_data, 1)
 
@@ -304,8 +304,8 @@ class TestCmsApi:
             domain = list_domain[i]
 
             # Check total block_source before api
-            db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact,
-                                                       f'select domain from user_block_sources where vid = "{vid}";')
+            db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact,
+                                                                  f'select domain from user_block_sources where vid = "{vid}";')
             list_domain_db = self.new_feed_db.get_list_db(db_data, 0)
             list_domain_db.remove(domain)
 
@@ -313,7 +313,7 @@ class TestCmsApi:
             user_actions = self.new_feed_api.set_user_actions_data(action_type, domain=domain)
             response = self.new_feed_api.request_post_new_feeds(COCCOC_NEW_FEED_API_CMS_USER_ACTION + vid, user_actions)
             # Validate: the domain is updated
-            db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select domain from user_block_sources where vid = "{vid}";')
+            db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select domain from user_block_sources where vid = "{vid}";')
             db_data = self.new_feed_db.get_list_db(db_data)
             list_kafka_message.append(self.common.get_kafka_message(action_type, vid, db_data))
 
@@ -332,7 +332,7 @@ class TestCmsApi:
     def test_post_user_actions_invalid(self, coccoc_new_feeds_db_interact):
         result = True
         # Get list vid & domain
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select vid, domain from coccoc_news_feed.user_block_sources order by rand() limit 5;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select vid, domain from coccoc_news_feed.user_block_sources order by rand() limit 5;')
         list_vid = self.new_feed_db.get_list_db(db_data, 0)
         list_domain = self.new_feed_db.get_list_db(db_data, 1)
 

@@ -17,8 +17,8 @@ class TestFrontendApi:
         api_categories = self.new_feed_api.request_get_new_feeds(COCCOC_NEW_FEED_API_FE_CATEGORY)
 
         # Check group display correctly
-        db_category = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact,
-                                                       f'select distinct(`group`) from categories where status = "active" order by `order`')
+        db_category = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact,
+                                                                  f'select distinct(`group`) from categories where status = "active" order by `order`')
         list_api_groups = self.common.get_list_json_level_1(api_categories, 'group')
         list_db_groups = self.new_feed_db.get_list_db(db_category, 0)
         print("Number of active groups: ", len(list_api_groups))

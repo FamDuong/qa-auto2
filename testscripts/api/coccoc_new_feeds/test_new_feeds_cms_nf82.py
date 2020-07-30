@@ -21,9 +21,9 @@ class TestCmsApi:
         response = self.new_feed_api.request_post_new_feeds(COCCOC_NEW_FEED_API_CMS_INIT_USER, data)
         print(response)
         # Get active category
-        db_category_active = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select category_id from categories where status = "active";')
+        db_category_active = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select category_id from categories where status = "active";')
         # Check user_categories inserted for new user
-        db_user_category = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select category_id from user_categories where vid = "{vid}";')
+        db_user_category = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select category_id from user_categories where vid = "{vid}";')
         print("    active category : ", db_category_active)
         print("    user category   : ", db_user_category)
         if db_category_active != db_user_category:
@@ -50,9 +50,9 @@ class TestCmsApi:
             time.sleep(3)
 
         # Check number of active categories
-        db_category_active = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select category_id from categories where status = "active";')
+        db_category_active = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select category_id from categories where status = "active";')
         # Check final vid insert
-        db_user_category = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select category_id from user_categories where vid = "{vid}";')
+        db_user_category = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select category_id from user_categories where vid = "{vid}";')
         if len(db_user_category) != len(db_category_active):
             print("ERROR: vid is inserted")
             print("    active category : ", db_category_active)

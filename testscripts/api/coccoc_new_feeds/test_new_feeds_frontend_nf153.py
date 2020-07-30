@@ -17,13 +17,13 @@ class TestFrontendApi:
         result = True
         action_type = 'subscribe_category'
         # Get list vid
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select distinct(vid) from user_categories limit 3;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select distinct(vid) from user_categories limit 3;')
         list_vid = self.new_feed_db.get_list_db(db_data, 0)
         # Get list category ID which contains 2 categories
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select category_id from coccoc_news_feed.categories order by rand() limit 2;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select category_id from coccoc_news_feed.categories order by rand() limit 2;')
         list_category_id_2 = self.new_feed_db.get_list_db(db_data, 0)
         # Get list category ID which contains 3 categories
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select category_id from coccoc_news_feed.categories order by rand() limit 3;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select category_id from coccoc_news_feed.categories order by rand() limit 3;')
         list_category_id_3 = self.new_feed_db.get_list_db(db_data, 0)
 
         # Check response error if < 3 categories
@@ -35,7 +35,7 @@ class TestFrontendApi:
             response = self.new_feed_api.request_post_new_feeds(COCCOC_NEW_FEED_API_FE_USER_ACTION + vid, user_actions)
 
             # Validate: the category is updated
-            db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select category_id from coccoc_news_feed.user_categories where vid = "{vid}";')
+            db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select category_id from coccoc_news_feed.user_categories where vid = "{vid}";')
             db_data = self.new_feed_db.get_list_db(db_data)
 
             print("    API : ", vid, " : ", list_category_id_2)
@@ -59,8 +59,8 @@ class TestFrontendApi:
                                                                         user_actions)
 
             # Validate: the category is updated
-            db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact,
-                                                               f'select category_id from coccoc_news_feed.user_categories where vid = "{vid}";')
+            db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact,
+                                                                  f'select category_id from coccoc_news_feed.user_categories where vid = "{vid}";')
             db_data = self.new_feed_db.get_list_db(db_data)
 
             print("    API : ", vid, " : ", list_category_id_3)

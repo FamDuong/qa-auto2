@@ -16,7 +16,7 @@ class TestFrontendApi:
     # NF-78	[Frontend API] Get user feed setting
     def test_get_user_feed_setting(self, coccoc_new_feeds_db_interact):
         result = True
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select distinct(vid) from user_categories order by rand();')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select distinct(vid) from user_categories order by rand();')
         list_db_vid = self.new_feed_db.get_list_db(db_data, 0)
         for vid in list_db_vid:
             print(vid)
@@ -32,11 +32,11 @@ class TestFrontendApi:
             # list_api_block_sources = self.new_feed_api.get_list_json_level_1(api_data, "block_sources")
 
             # Get from DB
-            db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select category_id, name from categories where category_id in (select category_id from user_categories where vid = "{vid}");')
+            db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select category_id, name from categories where category_id in (select category_id from user_categories where vid = "{vid}");')
             list_db_sub_category_id = self.new_feed_db.get_list_db(db_data, 0)
             list_db_sub_category_name = self.new_feed_db.get_list_db(db_data, 1)
-            db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact,
-                                                       f'SELECT	b.domain, b.name, b.logo_url FROM user_block_sources a INNER JOIN sources b ON b.domain = a.domain '
+            db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact,
+                                                                  f'SELECT	b.domain, b.name, b.logo_url FROM user_block_sources a INNER JOIN sources b ON b.domain = a.domain '
                                                        f'AND b.status = "active" WHERE a.vid = "{vid}";')
             list_db_block_sources_domain = self.new_feed_db.get_list_db(db_data, 0)
             list_db_block_sources_title = self.new_feed_db.get_list_db(db_data, 1)
@@ -86,9 +86,9 @@ class TestFrontendApi:
         time.sleep(5)
         # Check again
         # Get number of active category
-        db_category_active = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select category_id from categories where status = "active";')
+        db_category_active = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select category_id from categories where status = "active";')
         # Check number of rows inserted for new user
-        db_user_category = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select category_id from user_categories where vid = "{vid}";')
+        db_user_category = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select category_id from user_categories where vid = "{vid}";')
         print(db_category_active)
         print(db_user_category)
         if db_user_category != db_category_active:

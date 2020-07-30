@@ -14,7 +14,7 @@ class TestCmsApi:
     def test_get_whitelist_domain(self, coccoc_new_feeds_db_interact):
         result = True
         api_data = self.new_feed_api.request_get_new_feeds(COCCOC_NEW_FEED_API_CMS_BLACKLIST, "text")
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select keyword from blacklist_keywords where status = "active";')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select keyword from blacklist_keywords where status = "active";')
         list_db_keyword = self.new_feed_db.get_list_db(db_data)
 
         # print(COCCOC_NEW_FEED_API_CMS_BLACKLIST)

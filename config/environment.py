@@ -65,6 +65,7 @@ COCCOC_NEW_FEED_API_FE_USER_ACTION = COCCOC_NEW_FEED_API_FE + get_environment_in
 COCCOC_NEW_FEED_REDIS_HOST = get_environment_info()['coccoc_new_feeds_redis']['host']
 COCCOC_NEW_FEED_REDIS_PORT = get_environment_info()['coccoc_new_feeds_redis']['port']
 COCCOC_NEW_FEED_REDIS_PASSWORD = get_environment_info()['coccoc_new_feeds_redis']['password']
+COCCOC_NEW_FEED_REDIS_NODES = get_environment_info()['coccoc_new_feeds_redis']['nodes']
 
 # Lucky
 COCCOC_LUCKY_API_URL = get_environment_info()['coccoc_lucky']['domain']

@@ -6,6 +6,14 @@ class NewFeedCommon:
         data = json.loads(data)
         return data[key]
 
+    def get_list_json(self, data):
+        list_groups = []
+        for i in range(len(data)):
+            item = data[i]
+            list_groups.append(item)
+        print(list_groups)
+        return list_groups
+
     def get_list_json_level_1(self, data, key):
         list_groups = []
         for i in range(len(data)):

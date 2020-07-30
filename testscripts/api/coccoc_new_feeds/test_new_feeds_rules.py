@@ -93,7 +93,7 @@ class TestDataRules:
             api_hostname_rules = str(api_hostname_rules)
             api_hostname_rules = api_hostname_rules.replace(' ', '').replace('\'','"')
 
-            db_hostname_rule = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select rules from assessments where host_id in (select id from hosts where hostname = "{api_hostname}");')
+            db_hostname_rule = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select rules from assessments where host_id in (select id from hosts where hostname = "{api_hostname}");')
             db_hostname_rule = str(db_hostname_rule)
             db_hostname_rule = db_hostname_rule.replace('\\\\', '\\')
             if api_hostname_rules not in db_hostname_rule:

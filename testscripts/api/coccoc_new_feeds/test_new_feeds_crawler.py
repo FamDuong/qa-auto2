@@ -17,7 +17,7 @@ class TestDataCrawler:
         api_data = self.new_feed_api.request_get_new_feeds(COCCOC_NEW_FEED_DATA_URL)
         api_data = api_data['sample']
         list_api_hostname = self.common.get_list_json_level_1(api_data, 'host')
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select distinct(hostname) from hosts;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select distinct(hostname) from hosts;')
         list_db_hostname = self.new_feed_db.get_list_db(db_data, 0)
 
         # Check if duplicated hostname
@@ -33,8 +33,8 @@ class TestDataCrawler:
         for hostname in list_api_hostname:
             print("hostname: ", hostname)
             list_api_urls = self.common.get_list_json_level_2(api_data, 'host', hostname, 'urls')
-            # db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select url from urls where host_id in (select id from hosts where hostname ="{hostname}");')
-            db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select distinct(url) from urls where id not in (select distinct(url_id) from assessed_data) and date(create_time) = curdate() and host_id in (select distinct(id) from hosts where hostname="{hostname}");')
+            # db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select url from urls where host_id in (select id from hosts where hostname ="{hostname}");')
+            db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select distinct(url) from urls where id not in (select distinct(url_id) from assessed_data) and date(create_time) = curdate() and host_id in (select distinct(id) from hosts where hostname="{hostname}");')
             list_db_urls = self.new_feed_db.get_list_db(db_data, 0)
 
             # For each host we will have 50 new urls everyday
@@ -77,25 +77,25 @@ class TestDataCrawler:
         for i in range(number_of_hosts):
             api_hostname = api_get_data['sample'][i]['host']
             # Maximum 50 urls are added
-            db_get_url = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact,
-                                                          f'select distinct(url) from urls where id not in (select distinct(url_id) from assessed_data) and date(create_time) = curdate() and host_id in (select distinct(id) from hosts where hostname="{api_hostname}");')
+            db_get_url = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact,
+                                                                     f'select distinct(url) from urls where id not in (select distinct(url_id) from assessed_data) and date(create_time) = curdate() and host_id in (select distinct(id) from hosts where hostname="{api_hostname}");')
             print(api_hostname, ": ", len(db_get_url))
             if len(db_get_url) > 50:
                 print("ERROR: There are more than 50 urls are saved for ", api_hostname)
                 result = False
             api_number_urls = len(api_get_data['sample'][i]['urls'])
-            db_get_url_assess_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact,
-                                                                      f'select url from urls where id in (select distinct(url_id) from assessed_data) and host_id in (select id from hosts where hostname ="{api_hostname}") and date(create_time) != curdate();')
+            db_get_url_assess_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact,
+                                                                                 f'select url from urls where id in (select distinct(url_id) from assessed_data) and host_id in (select id from hosts where hostname ="{api_hostname}") and date(create_time) != curdate();')
             total_url = len(db_get_url_assess_data) + api_number_urls
             # Check total url
-            db_get_url = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact,
-                                                          f'select url from urls where host_id in (select id from hosts where hostname ="{api_hostname}");')
+            db_get_url = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact,
+                                                                     f'select url from urls where host_id in (select id from hosts where hostname ="{api_hostname}");')
             if len(db_get_url) != total_url:
                 print("ERROR: Total URL are not correct: ", api_hostname, ": ", total_url, " - ", len(db_get_url))
                 result = False
 
         # Check there is no url which is not in assess_data, and create date is not today
-        db_get_url = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select * from urls where id not in (select distinct(url_id) from assessed_data) and date(create_time) != curdate();')
+        db_get_url = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select * from urls where id not in (select distinct(url_id) from assessed_data) and date(create_time) != curdate();')
         if len(db_get_url) != 0:
             print("ERROR: There are some urls which is not in assess_date and create date is not today")
             result = False

@@ -62,7 +62,7 @@ class TestFrontendApi:
         # vid = 'Gy6TVT6r1yuG31oy9u1uCJT1QJ9uJSTrC6oSW2nBb9rofPtd8jQneKDZZdOWW'
         # sid = 'kbq4hb86eof18vasz'
         # vid = 'Q95CoUyM1CMMd1oCQd1d75M13QQyJQbd7Q9JWNxHKa2yhS2HQ9ks24tiMkYWW'
-        db_data = self.new_feed_db.get_newfeeds_db(coccoc_new_feeds_db_interact, f'select vid, count(*) from user_categories group by vid having count(*) = 3 limit 5;;')
+        db_data = self.new_feed_db.get_newfeeds_db_connection(coccoc_new_feeds_db_interact, f'select vid, count(*) from user_categories group by vid having count(*) = 3 limit 5;;')
         list_db_vid = self.new_feed_db.get_list_db(db_data, 0)
         sid = 'kbqcwomv1ikvdz0o8'
         page = 5
