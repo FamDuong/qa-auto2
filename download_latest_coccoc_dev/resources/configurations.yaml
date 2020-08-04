@@ -1,0 +1,6 @@
+---
+coccoc_dev_version: 83.0.4103.120
+jenkins:
+  admin_password: '123456'
+  admin_username: admin
+  domain: http://10.0.12.96:8080
