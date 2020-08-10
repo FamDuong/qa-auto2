@@ -132,3 +132,6 @@ assets
 #Ignore html file
 .html
 Test_Runner.py
+
+# My intenal code 
+testscripts/api/coccoc_new_feeds_v2/Data/*
