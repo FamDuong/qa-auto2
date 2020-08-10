@@ -9,12 +9,18 @@ import feedparser
 from PIL import Image
 from io import BytesIO
 import os
-from databases.sql.coccoc_new_feeds_db import NewFeedDB;
-from urllib import request
+from newspaper import Article
+import metadata_parser
 from bs4 import BeautifulSoup
+from newsfetch.news import newspaper
+from newsplease import NewsPlease
+from databases.sql.coccoc_new_feeds_db import NewFeedDB;
+from testscripts.api.coccoc_new_feeds.common import NewFeedCommon;
+from datetime import datetime
 
-class NewFeedCommon:
+class NewFeedCommon(NewFeedCommon):
     newfeed_db = NewFeedDB()
+
     # Check url is live
     def check_link_is_alive(self, url):
         live = True
@@ -41,8 +47,8 @@ class NewFeedCommon:
 
     # Get all sub links in an url which data-linktype="newsdetail"
     def get_sub_links_are_article(self, url):
-        user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
-        # user_agent = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) coc_coc_browser/87.0.148 Chrome/81.0.4044.148 Safari/537.36'
+        # user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
+        user_agent = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) coc_coc_browser/87.0.148 Chrome/81.0.4044.148 Safari/537.36'
         headers = {'User-Agent': user_agent, }
         sublinks = []
         request = urllib.request.Request(url, None, headers)
@@ -61,37 +67,145 @@ class NewFeedCommon:
                     sublinks.append(link)
         return sublinks
 
+    # Get all sub links in an url which data-linktype="newsdetail"
+    def get_newest_link_in_newsfeed(self, list_newsfeed):
+        headers = self.set_user_agent()
+        sublinks = []
+        for url in list_newsfeed:
+            try:
+                found = False
+                request = urllib.request.Request(url, None, headers)
+                connection = urllib.request.urlopen(request)
+                dom = lxml.html.fromstring(connection.read())
+                # Get first article only
+                for link in dom.xpath('//a/@href'):
+                    if (bool(re.search('[0-9]{5}', link))) and ":" not in link and "www" not in link:
+                        if not link.startswith('http'):
+                            link = url + link
+                        sublinks.append(link)
+                        found = True
+                    if found:
+                        break
+            except:
+                continue
+        return sublinks
+
+    def set_user_agent(self):
+        user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
+        headers = {'User-Agent': user_agent, }
+        return headers
+
     # Extract title
     def get_attribute_from_url(self, url, attribute):
-        description_selectors = [
-            {"name": "description"},
-             {"name": "og:description"},
-            {"property": "description"}
-        ]
-        # html = request.urlopen(url).read()
-        # html[:60]
-        # soup = BeautifulSoup(html, 'html.parser')
         title = ''
         try:
-            user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
-            headers = {'User-Agent': user_agent, }
+            headers = self.set_user_agent()
             request = urllib.request.Request(url, None, headers)
             connection = urllib.request.urlopen(request)
             soup = BeautifulSoup(connection.read(), 'html.parser')
-            # title = soup.find('title').content
             title = soup.title.string
-            # metas = soup.find_all('meta')
-            # title = [ meta.attrs['content'] for meta in metas if 'name' in meta.attrs and meta.attrs['name'] == attribute ]
-            # return content
-            #for selector in description_selectors:
-            #    description_tag = soup.find(attrs=selector)
-            #    if description_tag and description_tag.get('content'):
-            #        title = description_tag['content']
-            #        break
+            # Get the correct title
+            # title = title.split(" - ")[0]
+            title = title.split(" | ")[0]
+            title = title.replace("\r", "")
+            title = title.replace("\n", "")
+            title = title.strip()
         except:
             title = ''
         finally:
             return title
+
+    # Use metadata parse
+    def get_parse_metadata(self, url, attribute, list_parser, list_strip):
+        content = ""
+        try:
+            page = metadata_parser.MetadataParser(url=url)
+            for parser in list_parser:
+                content = page.get_metadata(parser)
+                if content is not None or content != "":
+                    break
+            for string in list_strip:
+                content = content.split(string)[0]
+            content = content.replace("  ", " ")
+            # return page.get_metadata('og:title')
+        finally:
+            print(content)
+            return content
+
+    # Use newspaper parser
+    def get_parse_newspaper(self, url, attribute, list_strip):
+        content = ""
+        try:
+            article = Article(url)
+            article.download()
+            article.parse()
+            if attribute == "title":
+                content = article.title
+            elif attribute == "description":
+                content = article.meta_description
+            elif attribute == "content":
+                content = article.text[:50000]
+                content = self.remove_newlines_string(content)
+            elif attribute == "image_url":
+                content = article.top_image
+            elif attribute == "tags":
+                content = article.meta_keywords
+                content = ", ".join(map(str, content))
+                if content is None:
+                    content = "None"
+        finally:
+            content = self.strip_string(content, list_strip)
+            return str(content)
+
+    # Use newspaper parser
+    def get_parse_news_fetch(self, url, attribute, list_strip = []):
+        content = ""
+        try:
+            article = newspaper(url)
+            if attribute == "published_time":
+                content = article.date_publish
+                content = content.strftime("%Y-%m-%d %H:%M:%S")
+            elif attribute == "breadcumb_name":
+                content = article.category
+            elif attribute == "title":
+                content = article.title
+            elif attribute == "content":
+                content = article.description
+            elif attribute == "domain":
+                content = article.source_domain
+        finally:
+            content = self.strip_string(content, list_strip)
+            return str(content)
+
+    # Use news release
+    def get_parse_news_release(self, url, attribute, list_strip):
+        content = ""
+        try:
+            article = NewsPlease.from_url(url)
+            if attribute == "content":
+                content = article.maintext
+                content = self.remove_newlines_string(content)
+                content = self.replace_string(content, article.description + ".", "")
+        finally:
+            content = self.strip_string(content, list_strip)
+            return str(content)
+
+    # Strip some unexpected keyword
+    def strip_string(self, string, list_strip):
+        try:
+            for keyword in list_strip:
+                string = string.split(keyword)[0]
+        except:
+            print("ERROR: Cannot strip string")
+        return string
+
+    # Remove new lines
+    def remove_newlines_string(self, string):
+        try:
+            r_unwanted = re.compile("[\n\t\r]")
+            return r_unwanted.sub("", string)
+        except:
+            return string
 
     # Get all sub links in a rss feed
     def get_sub_links_in_rss_feed(self, url):
@@ -121,9 +235,16 @@ class NewFeedCommon:
     def replace_string_in_list(self, list, original, replacement):
         replace_list = []
         for i in list:
-            replace_list = [ sub.replace(original, replacement) for sub in list ]
+            replace_list = [ str(sub).replace(original, replacement) for sub in list ]
         return replace_list
 
+    # Replace string in string
+    def replace_string(self, string, original, replacement):
+        try:
+            string = str(string).replace(original, replacement)
+        except:
+            print("ERROR: Cannot replace")
+        return string
 
     # Print list
     def print_list(self, my_list):
@@ -158,6 +279,10 @@ class NewFeedCommon:
         for i in input_lists:
             file.write("%s\n" % (i))
         file.close()
+
+    # Check if file is exist
+    def check_file_is_existed(self, filename):
+        return os.path.exists(filename)
 
     # Remove a file
     def remove_file(self, filename):
@@ -251,18 +376,35 @@ class NewFeedCommon:
 
     # Get different elements in 2 lists
     def get_different_elements_between_lists(self, list_1, list_2):
-        return [item for item in list_1 if str(item) not in list_2]
+        list_1 = [ str(i) for i in list_1]
+        list_2 = [ str(i) for i in list_2]
+        diff_1 = [item for item in list_1 if str(item) not in list_2]
+        diff_2 = [item for item in list_2 if str(item) not in list_1]
+        return diff_1 + diff_2
 
+    # Check if no common elements in two lists
+    def check_if_lists_are_different(self, list_1, list_2):
+        result = True
+        diff = self.get_different_elements_between_lists(list_1, list_2)
+        if len(diff):
+            self.print_list(diff)
+            result = False
+        return result
 
     # Check list of keywords which are not in string
     def get_keywords_not_in_strings(self, string, list_keyword):
-        return [item for item in list_keyword if item in string]
+        return [item for item in list_keyword if item.lower() in string.lower()]
 
     # Compare two images
     def compare_images_from_url(self, first_image_url, second_image_url):
+        compare_results = []
+        mode = ""
+        size = ""
+        threshold = ""
         """
         - Compare two images and return the threshold
         - Input: First image dir, Second image dir
+        - Output: Second image mode, second image size, threshold
         """
         # print(first_image_url)
         # print(second_image_url)
@@ -279,6 +421,8 @@ class NewFeedCommon:
                 print(first_image_url)
                 print(second_image_url)
                 print("ERROR: Different sizes: ", i1.size, " != ", i2.size)
+            mode = str(i1.mode) + ", " + str(i2.mode)
+            size = str(i1.size) + ", " + str(i2.size)
 
             pairs = zip(i1.getdata(), i2.getdata())
 
@@ -290,14 +434,18 @@ class NewFeedCommon:
             ncomponents = i1.size[0] * i1.size[1] * 3
             threshold = (dif / 255.0 * 100) / ncomponents
         except:
-            print("ERROR: Cannot calculate")
+            print("ERROR: Cannot calculate threshold")
             threshold = 100
-        print("Difference (percentage):", threshold)
-        return threshold
+        # print("Difference (percentage):", threshold)
+        compare_results.append(mode)
+        compare_results.append(size)
+        compare_results.append(threshold)
+        self.print_list(compare_results)
+        return compare_results
 
     # Get color text in DB
-    def get_list_article_db(self, query, index = 0):
-        db_article = self.newfeed_db.get_newfeeds_db(query)
+    def get_list_newsfeed_db(self, sql_query, index = 0, data_query = None):
+        db_article = self.newfeed_db.select_newfeeds_db(sql_query, data_query)
         list_article = self.newfeed_db.get_list_db(db_article, index)
         return list_article;
 
@@ -313,3 +461,17 @@ class NewFeedCommon:
             return (x / y) * 100
         except ZeroDivisionError:
             return 0
+
+    # Need to fix the converter
+    def subtraction_datetime(self, time_1, time_2, dateformat = "%Y-%m-%d %H:%M:%S", unit = "minutes"):
+        sub = ""
+        try:
+            # time_1 = datetime.strptime(time_1, dateformat)
+            time_2 = datetime.strptime(time_2, dateformat)
+            threshold = time_1 - time_2
+            if unit == "minutes":
+                minutes = divmod(threshold.seconds, 60)
+                sub = minutes[0]
+        except:
+            sub = ""
+        return sub

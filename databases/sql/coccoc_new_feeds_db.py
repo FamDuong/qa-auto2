@@ -27,18 +27,34 @@ class NewFeedDB:
         # print("  DB: ", rows)
         return rows
 
-    def get_newfeeds_db(self, sql_query):
+    def select_newfeeds_db(self, sql_query, data_query = None):
         import logging
         # sql_query = f'select * from urls;'
         connection = self.coccoc_new_feeds_db_interact()
         cursor = connection.cursor()
-        cursor.execute(sql_query)
+        if data_query is None:
+            cursor.execute(sql_query)
+        else:
+            cursor.execute(sql_query, data_query)
         rows = cursor.fetchall()
         logging.debug(f"Duplicate rows are : {rows}")
         connection.commit()
         self.coccoc_new_feeds_db_close(connection)
         # print("  DB: ", rows)
         return rows
+
+    def update_newfeeds_db(self, sql_query, data_query = None):
+        import logging
+        connection = self.coccoc_new_feeds_db_interact()
+        cursor = connection.cursor()
+        if data_query is None:
+            cursor.execute(sql_query)
+        else:
+            cursor.execute(sql_query, data_query)
+        connection.commit()
+        self.coccoc_new_feeds_db_close(connection)
+        print(cursor.rowcount, "Record(s) affected")
+
 
     def check_urls_of_hostname(self, connection, hostname):
         import logging

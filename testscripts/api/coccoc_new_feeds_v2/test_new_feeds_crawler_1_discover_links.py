@@ -1,5 +1,6 @@
 from testscripts.api.coccoc_new_feeds_v2.common import NewFeedCommon;
 from databases.sql.coccoc_new_feeds_db import NewFeedDB;
+from datetime import datetime
 
 class TestNewFeedCralwer:
     common = NewFeedCommon()
@@ -10,7 +11,36 @@ class TestNewFeedCralwer:
     diff_file = "diff.txt"
     common_file = "common.txt"
 
+    # Set filename
+    def set_filename(self, domain):
+        self.expect_file = "Data/" + domain + "_expected.txt"
+        self.actual_file = "Data/" + domain + "_actual.txt"
+        self.diff_file = "Data/diff.txt"
+        self.common_file = "Data/common.txt"
+        self.common.remove_file(self.expect_file)
+        self.common.remove_file(self.actual_file)
+        self.common.remove_file(self.diff_file)
+        self.common.remove_file(self.common_file)
+
+
+    # Get filename
+    def get_expected_filename(self, domain):
+        return "Data/" + domain + "_expected.txt"
+
+    # Get filename
+    def get_actual_filename(self, domain):
+        return "Data/" + domain + "_actual.txt"
+
+    # Set filename
+    def set_filename(self, domain):
+        self.expect_file = "Data/" + domain + "_expected.txt"
+        self.actual_file = "Data/" + domain + "_actual.txt"
+        self.diff_file = "Data/" + domain + "_diff.txt"
+        self.common_file = "Data/" + domain + "_comm.txt"
+
     # SKip check cityhash64 because cannot install
+
+
 
     # BRBE-779: Get all discover urls in links
     def test_get_discover_urls(self):
@@ -50,6 +80,43 @@ class TestNewFeedCralwer:
             list_article_url = self.get_article_url_db(domain)
             self.common.write_to_file(self.actual_file, list_article_url)
 
+    # BRBE-957: [NF][Crawler] Update crawl frequency by minutes and post processing logic
+    # PLEASE RUN test_get_discover_urls FIRSTLY
+    def test_discover_urls_each_5_minutes(self):
+        # Check newest article in domains
+        # PLEASE RUN test_get_discover_urls FIRSTLY
+        list_newest_articles = []
+        query = f'select domain, max(update_time) from coccoc_news_feed.articles where domain in (select domain from coccoc_news_feed.sources where status = "active") group by domain order by domain;'
+        list_newfeed_db = self.newfeed_db.select_newfeeds_db(query)
+        list_domain = self.newfeed_db.get_list_db(list_newfeed_db, 0)
+        # list_create_time = self.newfeed_db.get_list_db(list_newfeed_db, 1)
+        for domain in list_domain:
+            filename = self.get_expected_filename(domain)
+            with open(filename, "r", encoding="utf-8") as file:
+                first_line = file.readline()
+                list_newest_articles.append(first_line)
+
+        # Get create time again
+        list_newfeed_db = self.newfeed_db.select_newfeeds_db(query)
+        list_update_time = self.newfeed_db.get_list_db(list_newfeed_db, 1)
+
+        for i in range(len(list_newest_articles)):
+            url = list_newest_articles[i]
+            print(url)
+            print(list_domain[i])
+            actual_time = list_update_time[i]
+            expect_time = self.common.get_parse_news_fetch(url, "published_time")
+            # expect_time = datetime.strptime(expect_time, "%Y-%m-%d %H:%M:%S")
+            # threshold = datetime.strptime(actual_time, "%Y-%m-%d %H:%M:%S") - expect_time
+            # threshold = actual_time - datetime.strptime(expect_time, "%Y-%m-%d %H:%M:%S")
+            threshold = self.common.subtraction_datetime(actual_time, expect_time)
+            # if int(threshold) < 0:
+            print("Actual update time: %s" % (actual_time))
+            print("Expect update time: %s" % (expect_time))
+            print("Threshold time    : %s" % (threshold))
+
+            print("\n")
+
     # Make sure all domains have discover links
     def test_verfiy_domain_has_discover_link(self):
         list_domain = self.get_list_sources_db()
@@ -71,6 +138,7 @@ class TestNewFeedCralwer:
         assert self.result == True
 
     # Make sure all domains have discover rss
+    # BRBE-947: [Crawler] Discover links: Some domains lack of active link or rss in source_datafeeds
     def test_verfiy_domain_has_discover_rss(self):
         list_domain = self.get_list_sources_db()
         list_domain_error = []
@@ -101,6 +169,7 @@ class TestNewFeedCralwer:
         assert self.result == True
 
     # Make sure all urls / rss in source_datafeeds belong to correct domains
+    # BRBE-947: [Crawler] Discover links: Some domains lack of active link or rss in source_datafeeds
     def test_verify_discover_url_belong_correct_domain(self):
         list_domain = self.get_list_sources_db()
         list_domain_rss_error = []
@@ -215,7 +284,7 @@ class TestNewFeedCralwer:
 
 
     def get_list_sources_db(self):
-        db_source = self.newfeed_db.get_newfeeds_db(f'select distinct(domain) from coccoc_news_feed.source_datafeeds;')
+        db_source = self.newfeed_db.select_newfeeds_db(f'select distinct(domain) from coccoc_news_feed.source_datafeeds;')
         list_source = self.newfeed_db.get_list_db(db_source)
         return list_source
 
@@ -225,34 +294,19 @@ class TestNewFeedCralwer:
             query = f'SELECT url FROM coccoc_news_feed.source_datafeeds where domain = "{domain}" and status = "{status}" and type = "{type}";'
         else:
             query = f'SELECT url FROM coccoc_news_feed.source_datafeeds where domain = "{domain}" and status != "{status}" and type = "{type}";'
-        db_datafeed = self.newfeed_db.get_newfeeds_db(query)
+        db_datafeed = self.newfeed_db.select_newfeeds_db(query)
         list_datafeed = self.newfeed_db.get_list_db(db_datafeed)
         return list_datafeed
 
     # Get all article_url by domain in DB
     def get_article_url_db(self, domain):
-        db_article_url = self.newfeed_db.get_newfeeds_db(f'SELECT url FROM coccoc_news_feed.article_urls where domain = "{domain}";')
+        db_article_url = self.newfeed_db.select_newfeeds_db(f'SELECT url FROM coccoc_news_feed.article_urls where domain = "{domain}";')
         list_article_url = self.newfeed_db.get_list_db(db_article_url)
         return list_article_url
 
     # Get all active url
     def get_active_link_db(self):
-        db_active_link = self.newfeed_db.get_newfeeds_db(
+        db_active_link = self.newfeed_db.select_newfeeds_db(
             f'SELECT url FROM coccoc_news_feed.source_datafeeds where type = "link" and status = "active";')
         list_active_link = self.newfeed_db.get_list_db(db_active_link)
         return list_active_link
-
-    # Get filename
-    def get_expected_filename(self, domain):
-        return "Data/" + domain + "_expected.txt"
-
-    # Get filename
-    def get_actual_filename(self, domain):
-        return "Data/" + domain + "_actual.txt"
-
-    # Set filename
-    def set_filename(self, domain):
-        self.expect_file = "Data/" + domain + "_expected.txt"
-        self.actual_file = "Data/" + domain + "_actual.txt"
-        self.diff_file = "Data/" + domain + "_diff.txt"
-        self.common_file = "Data/" + domain + "_comm.txt"

@@ -3,17 +3,20 @@ import json
 import uuid
 import time
 import random
+import base64
+import os
 
 from config.environment import COCCOC_NEW_FEED_DATA_URL
 from config.environment import COCCOC_NEW_FEED_API_CMS_RULE
 from config.environment import COCCOC_NEW_FEED_API_CMS_INIT_USER
 from config.environment import COCCOC_NEW_FEED_API_CMS_USER_ACTION
 
-class NewFeedAPI:
-    def request_get_new_feeds(self, api_url, format='json'):
+class NewsFeedAPI:
+    def request_get_new_feeds(self, api_url, format='json', params=None, headers = {'Content-type': 'application/json'}):
         with requests.Session() as session:
             initial_response = session.get(api_url)
-            response = session.get(api_url)
+            # response = session.get(api_url)
+            response = session.get(api_url, params=params, headers=headers)
             # print(response.status_code)
         if format == "json":
             api_data = json.loads(response.content)
@@ -34,7 +37,7 @@ class NewFeedAPI:
 
 
     # Commond methods
-    def request_post_new_feeds(self, api_url, data, headers = {'Content-type': 'application/json'}):
+    def request_post_new_feeds(self, api_url, data = None, headers = {'Content-type': 'application/json'}):
         with requests.Session() as session:
             initial_response = session.get(api_url)
             response = session.post(api_url, headers=headers, data=data)
@@ -50,11 +53,28 @@ class NewFeedAPI:
                                  headers=headers)
         return response.status_code
 
-    def set_vid_data(self):
-        vid = uuid.uuid4().hex.upper()[0:20]
+    # If vid is empty, set random vid
+    def set_vid_data(self, vid = None, format = "json"):
+        if vid is None:
+            vid = uuid.uuid4().hex.upper()[0:20]
         # print("\n vid: ", vid)
         data = {'vid': vid}
-        data = json.dumps(data)
+        if format == "json":
+            data = json.dumps(data)
+        # data = json.loads(data)
+        return data
+
+    # If sid is empty, set random vid
+    def set_user_feed_data(self, vid, sid = None, page = 1, size = 39, format = "json"):
+        if sid is None:
+            sid = base64.b64encode(os.urandom(16))
+        data = {'vid': vid,
+                'sid': sid,
+                'page': page,
+                'size': size}
+        # if format == "json":
+        #    data = json.dumps(data)
+        # data = json.loads(data)
         return data
 
     def set_user_actions_data(self, action_type, article_id = None, complaint_type = None, categories = None, domain = None):
@@ -84,3 +104,10 @@ class NewFeedAPI:
         print(data)
         return data
 
+    # Set data for publish article
+    def set_publish_article_data(self, list):
+        # Convert int to string
+        list = [str(i) for i in list]
+        data = {'list_article_id': list}
+        data = json.dumps(data)
+        return data
