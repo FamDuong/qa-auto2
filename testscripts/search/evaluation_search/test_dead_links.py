@@ -3,12 +3,12 @@ import random
 
 import pygsheets
 from google.oauth2 import service_account
-from models.pagelocators.evaluation_search.cc_search import CCSearchPageLocators
+from models.pagelocators.coccoc_search.cc_search import CCSearchPageLocators
 from utils_automation.common import FilesHandle
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
-from testscripts.evaluation_search.user_agent_list import user_agent_list
+from testscripts.search.evaluation_search.user_agent_list import user_agent_list
 
 file_handle = FilesHandle()
 
