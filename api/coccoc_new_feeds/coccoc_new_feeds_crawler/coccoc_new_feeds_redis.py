@@ -1,5 +1,6 @@
 import redis
 import json
+import inspect
 from rediscluster import RedisCluster
 
 from config.environment import COCCOC_NEW_FEED_REDIS_HOST
@@ -70,7 +71,7 @@ class NewsFeedRedis:
         return data
 
     # Get a key in all nodes and return
-    def redis_lrange(self, name, start, end, format_data="json"):
+    def redis_lrange(self, name, start=0, end=-1, format_data="json"):
         data = []
         try:
             redis_cli = self.redis_cli_init_cluster()
@@ -95,5 +96,11 @@ class NewsFeedRedis:
         try:
             data = json.loads(data)
         except:
-            print("ERROR: Cannot convert data")
+            # print("ERROR: Cannot convert data")
+            self.print_debug("ERROR: Cannot convert data")
         return data
+
+
+    def print_debug(self, string):
+        function_name = inspect.stack()[1].function
+        print(function_name, ": ", string)

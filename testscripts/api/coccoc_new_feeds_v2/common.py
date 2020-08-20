@@ -17,6 +17,7 @@ from newsplease import NewsPlease
 from databases.sql.coccoc_new_feeds_db import NewFeedDB;
 from testscripts.api.coccoc_new_feeds.common import NewFeedCommon;
 from datetime import datetime
+import inspect
 
 class NewFeedCommon(NewFeedCommon):
     newfeed_db = NewFeedDB()
@@ -238,6 +239,11 @@ class NewFeedCommon(NewFeedCommon):
             replace_list = [ str(sub).replace(original, replacement) for sub in list ]
         return replace_list
 
+    # Split string in list
+    def split_string_in_list(self, list, string, index=0):
+        list = [ str(sub).split(string)[index] for sub in list ]
+        return list
+
     # Replace string in string
     def replace_string(self, string, original, replacement):
         try:
@@ -270,8 +276,17 @@ class NewFeedCommon(NewFeedCommon):
             file.write("%s\n" % (i))
         file.close()
 
+    # Read from file
+    def read_to_file(self, filename):
+        file = open(filename, 'r+', encoding="utf-8")
+        list_content = file.readlines()
+        file.close()
+        return list_content
+
     # Append list to a file
-    def append_to_file(self, filename, input_lists):
+    def append_to_file(self, filename, input_lists, type="list"):
+        if type == "string":
+            input_lists = [ input_lists ]
         if os.path.exists(filename):
             file = open(filename, 'a', encoding="utf-8")
         else:
@@ -384,6 +399,8 @@ class NewFeedCommon(NewFeedCommon):
 
     # Check if no common elements in two lists
     def check_if_lists_are_different(self, list_1, list_2):
+        self.print_debug("List 1 length: %s" % len(list_1))
+        self.print_debug("List 2 length: %s" % len(list_2))
         result = True
         diff = self.get_different_elements_between_lists(list_1, list_2)
         if len(diff):
@@ -456,6 +473,11 @@ class NewFeedCommon(NewFeedCommon):
         convert_list = [i.decode(encoding) for i in list]
         return convert_list
 
+    def convert_list_to_string(self, list, concentrate = ", "):
+        convert_string = concentrate.join((map(str, list)))
+        self.print_debug(convert_string)
+        return convert_string
+
     def division_percentage(self, x, y):
         try:
             return (x / y) * 100
@@ -475,3 +497,38 @@ class NewFeedCommon(NewFeedCommon):
         except:
             sub = ""
         return sub
+
+    # Calculate different date
+    def subtraction_days(self, date1, date2):
+        format = "%Y-%m-%d %H:%M:%S"
+        try:
+            date1 = datetime.strptime(date1, format)
+            date2 = datetime.strptime(date2, format)
+            return abs((date2 - date1).days)
+        except:
+            self.print_debug("ERROR: Cannot calculate days")
+            return 8888
+
+    # Get data with reference index is
+    def get_reference_data_in_list(self, list_1, list_2, reference):
+        list_data = []
+        temp = set(list_1)
+        index = [i for i, val in enumerate(list_1) if (val in temp and val == reference)]
+        for i in index:
+            list_data.append(list_2[i])
+        return list_data
+
+
+    # Get data in dict
+    def get_dict(self, dict, key):
+        try:
+            data = dict[key]
+        except:
+            data = None
+        return data
+
+
+    def print_debug(self, string):
+        function_name = inspect.stack()[1].function
+        print(function_name, ": ", string)
+

@@ -1,6 +1,7 @@
 from testscripts.api.coccoc_new_feeds_v2.common import NewFeedCommon;
 from databases.sql.coccoc_new_feeds_db import NewFeedDB;
 from api.coccoc_new_feeds.coccoc_new_feeds_crawler.coccoc_new_feeds_redis import NewsFeedRedis;
+from api.coccoc_new_feeds.coccoc_new_feeds_crawler.coccoc_new_feeds_api import NewsFeedAPI;
 from datetime import datetime
 
 from config.environment import COCCOC_NEW_FEED_BUCKET_URL
@@ -9,6 +10,7 @@ class TestNewFeedCralwer:
     common = NewFeedCommon()
     newfeed_db = NewFeedDB()
     newfeed_redis = NewsFeedRedis()
+    newfeed_api = NewsFeedAPI()
     result = True
     BUCKET_URL = 'https://coccoc-image-service.itim.vn/dev_coccoc_news_feed'
 
@@ -77,7 +79,7 @@ class TestNewFeedCralwer:
     # Get blacklist article
     def get_not_blacklist_articles_db(self, keyword):
         regex = "[[:<:]]" + keyword + "[[:>:]]"
-        db_articles = self.newfeed_db.select_newfeeds_db(f'select title from articles where title RLIKE "{regex}" and status != "blacklist";')
+        db_articles = self.newfeed_db.select_newfeeds_db(f'select title from articles where title RLIKE "{regex}" and status = "crawled";')
         list_articles = self.newfeed_db.get_list_db(db_articles, 0)
         return list_articles
 
@@ -272,10 +274,8 @@ class TestNewFeedCralwer:
         list_expire_image = self.common.replace_string_in_list(list_expire_image, "{BUCKET_URL}", COCCOC_NEW_FEED_BUCKET_URL)
         print("ERROR: Images are not removed on CDN")
         for image in list_expire_image:
-            live_result = self.common.check_link_is_alive(image)
-            if live_result:
-                print(image)
-                self.result = False
+            api_data = self.newfeed_api.request_get_new_feeds(image)
+            assert api_data["error"] == "not-found"
         assert self.result == True
 
     # BRBE-969: Add condition if content is null or blank then mark this article_urls as error

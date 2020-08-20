@@ -32,6 +32,16 @@ class NewFeedCommon:
                     # print(value_2)
         return list_groups
 
+    def get_list_json_level_2(self, data, key_1, value_1, key_2):
+        list_groups = []
+        for i in range(len(data)):
+            value = data[i][key_1]
+            if value == value_1:
+                for j in range(len(data[i][key_2])):
+                    value_2 = data[i][key_2][j]
+                    list_groups.append(value_2)
+                    # print(value_2)
+        return list_groups
 
     # Check if element in a list
     def check_if_element_in_list(self, my_list, element):

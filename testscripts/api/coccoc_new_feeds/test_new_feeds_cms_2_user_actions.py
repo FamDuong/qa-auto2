@@ -1,6 +1,6 @@
 import time
 import random
-from api.coccoc_new_feeds.coccoc_new_feeds_crawler.coccoc_new_feeds_api import NewFeedAPI;
+from api.coccoc_new_feeds.coccoc_new_feeds_crawler.coccoc_new_feeds_api import NewsFeedAPI;
 from databases.sql.coccoc_new_feeds_db import NewFeedDB;
 from testscripts.api.coccoc_new_feeds.common import NewFeedCommon;
 
@@ -8,7 +8,7 @@ from config.environment import COCCOC_NEW_FEED_API_CMS_USER_ACTION
 
 # NF-83: [CMS API] Create API to save user's actions
 class TestCmsApi:
-    new_feed_api = NewFeedAPI()
+    new_feed_api = NewsFeedAPI()
     new_feed_db = NewFeedDB()
     common = NewFeedCommon()
 

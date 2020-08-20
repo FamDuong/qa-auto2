@@ -9,19 +9,28 @@ import os
 from config.environment import COCCOC_NEW_FEED_DATA_URL
 from config.environment import COCCOC_NEW_FEED_API_CMS_RULE
 from config.environment import COCCOC_NEW_FEED_API_CMS_INIT_USER
-from config.environment import COCCOC_NEW_FEED_API_CMS_USER_ACTION
+
 
 class NewsFeedAPI:
-    def request_get_new_feeds(self, api_url, format='json', params=None, headers = {'Content-type': 'application/json'}):
+    full_api_url = ""
+
+    def get_api_url(self):
+        return self.full_api_url
+
+    def request_get_new_feeds(self, api_url, format='json', params=None, headers = {'Content-type': 'application/json'}, wait=3):
         with requests.Session() as session:
             initial_response = session.get(api_url)
             # response = session.get(api_url)
             response = session.get(api_url, params=params, headers=headers)
+            if params != None:
+                self.full_api_url = api_url + "?" + '&'.join(f'{k}={v}' for k, v in params.items())
+                print(self.full_api_url)
             # print(response.status_code)
         if format == "json":
             api_data = json.loads(response.content)
         elif format == "text":
             api_data = response.text
+        time.sleep(wait)
         return api_data
 
     def get_data_crawler(self):
@@ -37,11 +46,11 @@ class NewsFeedAPI:
 
 
     # Commond methods
-    def request_post_new_feeds(self, api_url, data = None, headers = {'Content-type': 'application/json'}):
+    def request_post_new_feeds(self, api_url, data = None, headers = {'Content-type': 'application/json'}, wait = 3):
         with requests.Session() as session:
             initial_response = session.get(api_url)
             response = session.post(api_url, headers=headers, data=data)
-            time.sleep(3)
+            time.sleep(wait)
             print("Resonse status : ", response.status_code)
         # assert response.status_code != 422
         return response.status_code
@@ -59,15 +68,18 @@ class NewsFeedAPI:
             vid = uuid.uuid4().hex.upper()[0:20]
         # print("\n vid: ", vid)
         data = {'vid': vid}
-        if format == "json":
-            data = json.dumps(data)
+        #if format == "json":
+        #    data = json.dumps(data)
         # data = json.loads(data)
         return data
 
     # If sid is empty, set random vid
-    def set_user_feed_data(self, vid, sid = None, page = 1, size = 39, format = "json"):
+    def set_user_feed_data(self, vid = None, sid = None, page=0, size=39, format = "json"):
+        if vid is None:
+            vid = uuid.uuid4().hex.upper()[0:20]
         if sid is None:
-            sid = base64.b64encode(os.urandom(16))
+            # sid = base64.b64encode(os.urandom(16))
+            sid = uuid.uuid4().hex.upper()[0:8]
         data = {'vid': vid,
                 'sid': sid,
                 'page': page,

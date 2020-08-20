@@ -68,6 +68,9 @@ COCCOC_NEW_FEED_API_FE_USER_SETTING = COCCOC_NEW_FEED_API_FE + get_environment_i
 COCCOC_NEW_FEED_API_FE_USER_FEED = COCCOC_NEW_FEED_API_FE + get_environment_info()['coccoc_new_feeds']['users_feed']
 COCCOC_NEW_FEED_API_FE_USER_ACTION = COCCOC_NEW_FEED_API_FE + get_environment_info()['coccoc_new_feeds']['users_action']
 
+COCCOC_NEW_FEED_API_NRE_DEFAULT = get_environment_info()['coccoc_new_feeds']['nre_article_default']
+COCCOC_NEW_FEED_API_NRE_ARTICLE_INFOMATION = get_environment_info()['coccoc_new_feeds']['nre_article_information']
+
 COCCOC_NEW_FEED_REDIS_HOST = get_environment_info()['coccoc_new_feeds_redis']['host']
 COCCOC_NEW_FEED_REDIS_PORT = get_environment_info()['coccoc_new_feeds_redis']['port']
 COCCOC_NEW_FEED_REDIS_PASSWORD = get_environment_info()['coccoc_new_feeds_redis']['password']
