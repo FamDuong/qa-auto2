@@ -1,14 +1,14 @@
-import json
 import random
 
-import pygsheets
-from google.oauth2 import service_account
-from models.pagelocators.coccoc_search.cc_search import CCSearchPageLocators
-from utils_automation.common import FilesHandle
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
+
+from models.pagelocators.coccoc_search.cc_search import CCSearchPageLocators
+from testscripts.search.common import get_keyword_without_bracket, split_index_from_sheet_range, \
+    split_col_from_sheet_range, get_worksheet
 from testscripts.search.evaluation_search.user_agent_list import user_agent_list
+from utils_automation.common import FilesHandle
 
 file_handle = FilesHandle()
 
@@ -16,41 +16,41 @@ user_agent = random.choice(user_agent_list)
 headers = {'User-Agent': user_agent}
 
 
-def google_authorize():
-    credentials_path_file = file_handle.get_absolute_filename("\\qa-auto_service_credentials.json")
-    credentials_path_file = credentials_path_file.replace('\\utils_automation', '\\resources')
-    SCOPES = ('https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive.file')
-    with open(credentials_path_file, 'r') as j:
-        service_account_info = json.loads(j.read())
-    my_credentials = service_account.Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
-    authorize = pygsheets.authorize(custom_credentials=my_credentials)
-    return authorize
+# def google_authorize():
+#     credentials_path_file = file_handle.get_absolute_filename("\\qa-auto_service_credentials.json")
+#     credentials_path_file = credentials_path_file.replace('\\utils_automation', '\\resources')
+#     SCOPES = ('https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive.file')
+#     with open(credentials_path_file, 'r') as j:
+#         service_account_info = json.loads(j.read())
+#     my_credentials = service_account.Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
+#     authorize = pygsheets.authorize(custom_credentials=my_credentials)
+#     return authorize
 
 
-def get_worksheet(spreed_sheet_id, sheet_name):
-    sheet = google_authorize().open_by_key(spreed_sheet_id)
-    worksheet = sheet.worksheet('title', sheet_name)
-    return worksheet
+# def get_worksheet(spreed_sheet_id, sheet_name):
+#     sheet = google_authorize().open_by_key(spreed_sheet_id)
+#     worksheet = sheet.worksheet('title', sheet_name)
+#     return worksheet
 
 
-def split_index_from_sheet_range(sheet_range):
-    index_list = sheet_range.split(":")
-    if index_list is None:
-        raise Exception
-    index_list_int = []
-    for index in index_list:
-        index_list_int.append(int(index[1:5]))
-        index_list_int_without_duplicate = list(dict.fromkeys(index_list_int))
-    return index_list_int_without_duplicate
+# def split_index_from_sheet_range(sheet_range):
+#     index_list = sheet_range.split(":")
+#     if index_list is None:
+#         raise Exception
+#     index_list_int = []
+#     for index in index_list:
+#         index_list_int.append(int(index[1:5]))
+#         index_list_int_without_duplicate = list(dict.fromkeys(index_list_int))
+#     return index_list_int_without_duplicate
 
 
-def split_col_from_sheet_range(sheet_range):
-    col_list = sheet_range.split(":")
-    if col_list is None:
-        raise Exception
-    for col in col_list:
-        col_without_duplicate = list(dict.fromkeys(col[0:1]))
-    return col_without_duplicate
+# def split_col_from_sheet_range(sheet_range):
+#     col_list = sheet_range.split(":")
+#     if col_list is None:
+#         raise Exception
+#     for col in col_list:
+#         col_without_duplicate = list(dict.fromkeys(col[0:1]))
+#     return col_without_duplicate
 
 
 def create_content_to_update_into_spreadsheet(links_list, title):
@@ -81,11 +81,11 @@ def write_result_into_spreadsheet(sheet_range, worksheet, keyword, result_col, d
                 worksheet.update_value(result_cell, content)
 
 
-def get_keyword_without_bracket(keyword):
-    start = keyword.find("['") + len("['")
-    end = keyword.find("']")
-    keyword_without_bracket = keyword[start:end]
-    return keyword_without_bracket
+# def get_keyword_without_bracket(keyword):
+#     start = keyword.find("['") + len("['")
+#     end = keyword.find("']")
+#     keyword_without_bracket = keyword[start:end]
+#     return keyword_without_bracket
 
 
 def prepare_query(url, keyword):
