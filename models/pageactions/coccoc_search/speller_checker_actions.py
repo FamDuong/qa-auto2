@@ -39,4 +39,4 @@ class SpellerCheckerActions:
                 "return document.querySelector(\"" + self.cc_speller_checker_locator.SPELLER_BOX_CSS + "\").textContent")
             return corrected_speller_string
         else:
-            return self.cc_speller_checker_locator.STRING_CORRECT_NOTIFY
+            return ""

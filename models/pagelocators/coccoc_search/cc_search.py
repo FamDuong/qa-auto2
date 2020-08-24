@@ -11,4 +11,3 @@ class CCSpellerCheckerLocators:
     LOI_LBL = (By.XPATH, "//div[@class='_26vd5']/span[1]")
     SUA_TAT_CA_LOI_BTN = (By.XPATH, "//div[text()='Sửa tất cả lỗi']")
     SPELLER_CHECKER_DEV_URL = "http://dev4.coccoc.com/search?query=chinh%20ta"
-    STRING_CORRECT_NOTIFY = "Ui, bạn làm đúng hết rồi nhé!"

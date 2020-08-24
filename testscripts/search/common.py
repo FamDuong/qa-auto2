@@ -51,21 +51,7 @@ def split_col_from_sheet_range(sheet_range):
     return col_without_duplicate
 
 
-def write_test_result_into_spreadsheet(sheet_range, worksheet, keyword, result_col, content):
-    list_index = split_index_from_sheet_range(sheet_range)
-    col = split_col_from_sheet_range(sheet_range)
-    for i in range(list_index[0], list_index[1] + 1):
-        for j in col:
-            cell = str(j) + str(i)
-            cell_actual_keyword = worksheet.get_value(cell)
-            if str(cell_actual_keyword) in str(keyword):
-                result_cell = result_col + str(i)
-                worksheet.update_value(result_cell, content)
-
-
 def get_diff_worlds(string1, string2):
-    print("String 1"+string1)
-    print("String 2"+string2)
     import difflib
     # initiate the Differ object
     dif_lib = difflib.Differ()
@@ -80,5 +66,4 @@ def get_diff_worlds(string1, string2):
         elif world.startswith('+ '):
             world = world.replace('+ ', '')
             diff_words_string2.append(world)
-    print(str(diff_words_string1) + "\n" + str(diff_words_string2))
     return diff_words_string1, diff_words_string2
