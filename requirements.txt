@@ -1,5 +1,5 @@
-google
-lxml
+google~=3.0.0
+lxml~=4.5.2
 google
 lxml
 Appium-Python-Client==0.48
