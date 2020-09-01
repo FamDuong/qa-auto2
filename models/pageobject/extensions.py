@@ -1,9 +1,13 @@
+import logging
 import time
-
+from datetime import datetime
 from models.pageelements.extensions import ExtensionsElement, CocCocSaviorExtensionDetailElement, \
-    SaviorExtensionsOptionsElement, GoogleExtensionsStorePageElements
+    SaviorExtensionsOptionsElement, GoogleExtensionsStorePageElements, ABPExtensionsDetailPageElements
 from models.pagelocators.extensions import ExtensionsPageLocators
+from models.pagelocators.settings import SettingsPageLocators
 from models.pageobject.basepage_object import BasePageObject
+import settings_master as settings
+from models.pageobject.settings import SettingsPageObject
 from utils_automation.setup import WaitAfterEach
 
 
@@ -53,6 +57,7 @@ class ExtensionsPageObject(BasePageObject):
 
 class ExtensionsDetailsPageObject(BasePageObject):
     extensions_details = CocCocSaviorExtensionDetailElement()
+    extensions_page_object = ExtensionsPageObject()
 
     def savior_button_is_enabled(self, driver):
         savior_button_enabled_element = self.extensions_details.find_coccoc_savior_enable_button(driver)
@@ -66,6 +71,9 @@ class ExtensionsDetailsPageObject(BasePageObject):
 
     def open_extension_options_view(self, driver):
         self.extensions_details.find_extension_options_button(driver).click()
+
+    def click_coc_coc_ad_block_extension_details_button(self, driver):
+        self.extensions_page_object.click_extension_detail_button(driver, ExtensionsPageLocators.COCCOC_ADBLOCK_ID)
 
 
 class SaviorExtensionOptionsPageObject(BasePageObject):
@@ -123,8 +131,39 @@ class SaviorExtensionOptionsPageObject(BasePageObject):
 
 
 class GoogleExtensionsStorePageObject(BasePageObject):
-
     google_extensions_store_elem = GoogleExtensionsStorePageElements()
 
     def get_rung_rinh_extension_version(self, driver):
         return self.google_extensions_store_elem.find_rung_rinh_extension_version(driver).text
+
+
+class ABPExtensionsDetailPageObject(BasePageObject):
+    abp_extension_elem = ABPExtensionsDetailPageElements()
+    setting_page_obj = SettingsPageObject()
+    LOGGER = logging.getLogger(__name__)
+
+    def click_extension_options(self, driver):
+        extension_options_icon = self.abp_extension_elem.find_extension_options(driver)
+        driver.execute_script('arguments[0].click()', extension_options_icon)
+
+    def select_abp_mode(self, driver, visible_text):
+        self.abp_extension_elem.switch_to_change_mode_iframe(driver)
+        self.abp_extension_elem.select_mode_dropdownlist(driver, visible_text)
+
+    def wait_until_finish_update_abp_to_latest(self, driver):
+        driver.maximize_window()
+        self.setting_page_obj.open_coc_coc_extension_page(driver)
+        self.LOGGER.info("Update extension")
+        actual_abp_version = self.setting_page_obj.get_extension_version(driver, SettingsPageLocators.EXTENSION_AD_BLOCK_PLUS)
+        expect_adp_version = settings.EXTENSION_VERSION_AD_BLOCK_PLUS
+        self.LOGGER.info("Actual Extension: "+actual_abp_version)
+        self.LOGGER.info("Expect Extension: "+expect_adp_version)
+        start_time = datetime.now()
+        if actual_abp_version not in expect_adp_version:
+            while actual_abp_version not in expect_adp_version:
+                self.setting_page_obj.update_extension(driver)
+                time.sleep(2)
+                time_delta = datetime.now() - start_time
+                if time_delta.total_seconds() >= 30:
+                    break
+

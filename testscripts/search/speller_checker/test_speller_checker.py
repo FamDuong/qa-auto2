@@ -1,11 +1,13 @@
 import time
+import logging
 
 import pandas as pd
-from models.pageactions.coccoc_search.speller_checker_actions import SpellerCheckerActions
+from models.pageobject.coccoc_search.speller_checker_objects import SpellerCheckerActions
 from models.pagelocators.coccoc_search.cc_search import CCSpellerCheckerLocators
 from testscripts.common_init_driver import init_chrome_driver
 from testscripts.search.common import get_worksheet, get_diff_worlds
 
+LOGGER = logging.getLogger(__name__)
 
 class TestSpellerChecker:
     speller_checker_action = SpellerCheckerActions()
@@ -15,7 +17,7 @@ class TestSpellerChecker:
 
         self.speller_checker_action.enter_string_to_speller_box(driver, input_string)
         self.speller_checker_action.click_kiem_tra_button(driver)
-        time.sleep(3)
+        time.sleep(5)
         error = self.speller_checker_action.get_speller_errors(driver)
         self.speller_checker_action.click_sua_tat_ca_loi_button(driver)
         corrected_string = self.speller_checker_action.get_corrected_speller_string(driver)

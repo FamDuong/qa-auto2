@@ -1,3 +1,4 @@
+import logging
 import os
 from datetime import datetime
 from appium import webdriver
@@ -16,6 +17,8 @@ block_origin_extension_path = None
 user_data_default = None
 username = None
 files_handle = FilesHandle()
+
+LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.hookwrapper
@@ -38,7 +41,7 @@ def pytest_runtest_makereport(item):
             try:
                 _capture_screenshot(filename)
             except:
-                print("Cannot capture screenshot!!!")
+                LOGGER.info("Cannot capture screenshot!!!")
 
         # if file_name:
         html = '<div><img src="screenshots/%s" style="width:600px;height:228px;" ' \
@@ -75,7 +78,7 @@ def browser():
     if driver is None:
         chrome_options = sele_webdriver.ChromeOptions()
         chrome_options.binary_location = binary_path
-        chrome_options.add_argument("--window-size=1920,1080")
+        # chrome_options.add_argument("--window-size=1920,1080")
         chrome_options.add_argument("--proxy-server='direct://'")
         chrome_options.add_argument("--proxy-bypass-list=*")
         chrome_options.add_argument("--start-maximized")

@@ -1,4 +1,5 @@
 import fileinput
+import logging
 import os
 import csv
 import shutil
@@ -14,6 +15,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 
+LOGGER = logging.getLogger(__name__)
 
 def if_height_frame_so_width_frame(height_frame):
     if int(height_frame) == 4320:
@@ -37,7 +39,7 @@ def remove_special_characters(string):
     rm_n = re.sub(r'\\n', ' ', str(rm_r))
     rm_t = re.sub(r'\\t', ' ', str(rm_n))
     rm_s = re.sub(' +', ' ', str(rm_t))
-    print(rm_s)
+    LOGGER.info(rm_s)
     return rm_s
 
 
@@ -48,7 +50,7 @@ class CSVHandle:
         # filename = dirname + filename
         with open(filename, 'r', newline='', encoding="utf-8") as f:
             reader = csv.reader(f)
-            print("CSV Reader: READING CSV FILE >>", filename)
+            # print("CSV Reader: READING CSV FILE >>", filename)
             try:
                 for row in reader:
                     for q in row:
@@ -56,14 +58,14 @@ class CSVHandle:
                             pass
                         else:
                             list_temp.append(q)
-                print("CSV Reader: FINISHED READING CSV FILE =>", filename)
+                # LOGGER.info("CSV Reader: FINISHED READING CSV FILE =>", filename)
                 return list_temp
             except csv.Error as i:
                 sys.exit('file {}, line {}: {}'.format(filename, reader.line_num, i))
                 return None
             except EOFError as e:
-                print("Can not read file CSV:", filename)
-                print("System error:", e)
+                LOGGER.info("Can not read file CSV:", filename)
+                # LOGGER.info("System error:", e)
                 return None
 
     def write_result_data_for_page_load_time(self, file_name, keyname_list: list, value_list: list, result_type=''):
@@ -212,7 +214,7 @@ class FilesHandle:
 
     def get_signature_of_file(self, filepath):
         dirname, runname = os.path.split(os.path.abspath(__file__))
-        print(f"File path is : {filepath}")
+        LOGGER.info(f"File path is : {filepath}")
         argu = WindowsCMD.execute_cmd(dirname + r"\sigcheck.exe " + filepath)
         # signature = remove_special_characters(argu)
         return str(argu)
@@ -240,23 +242,23 @@ class FilesHandle:
         import shutil
         try:
             shutil.copyfile(source, destination)
-            print("File copied successfully.")
+            LOGGER.info("File copied successfully.")
 
             # If source and destination are same
         except shutil.SameFileError:
-            print("Source and destination represents the same file.")
+            LOGGER.info("Source and destination represents the same file.")
 
             # If destination is a directory.
         except IsADirectoryError:
-            print("Destination is a directory.")
+            LOGGER.info("Destination is a directory.")
 
             # If there is any permission issue
         except PermissionError:
-            print("Permission denied.")
+            LOGGER.info("Permission denied.")
 
             # For other errors
         except:
-            print("Error occurred while copying file.")
+            LOGGER.info("Error occurred while copying file.")
 
 
 class WebElements:
@@ -280,7 +282,7 @@ class WindowsCMD:
         else:
             process = subprocess.Popen(cmd_text, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output, error = process.communicate()
-        print(output)
+        # LOGGER.info(output)
         return output
 
     def is_process_exists(process_name):
@@ -370,9 +372,9 @@ def modify_file_as_text(text_file_path, text_to_search, replacement_text):
     try:
         with fileinput.FileInput(text_file_path, inplace=True, backup='.bak') as file:
             for line in file:
-                print(line.replace(text_to_search, replacement_text), end='')
+                LOGGER.info(line.replace(text_to_search, replacement_text), end='')
     except:
-        print("Preferences file is not existed")
+        LOGGER.info("Preferences file is not existed")
 
 
 def find_text_in_file(text_file_path, text_to_search):
