@@ -24,6 +24,9 @@ class SettingsPageObject(BasePageObject):
         element_add_a_new_page = self.settings_elem.find_add_a_new_page(driver)
         element_add_a_new_page.click()
 
+    def open_coc_coc_extension_page(self, driver):
+        driver.get(Urls.COCCOC_EXTENSIONS)
+
     def disable_extension(self, driver, extension_id):
         self.enable_extension_toggle_dev_mode(driver)
         element = self.settings_elem.find_extension_on_off_by_id(driver, extension_id)

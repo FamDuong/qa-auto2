@@ -54,6 +54,7 @@ class SettingsPageLocators(object):
     EXTENSION_SAVIOR_ID = '#jdfkmiabjpfjacifcmihfdjhpnjpiick'
     EXTENSION_RUNGRINH_ID = '#paenbjlckelooppiepeiechkeehogoha'
     EXTENSION_MOJICHAT_ID = '#paenbjlckelooppiepeiechkeehogoha'
+    EXTENSION_AD_BLOCK_PLUS = '#jeoooddfnfogpngdoijplcijdcoeckgm'
     EXTENSIONS_ITEM_LIST = '#items-list'
     EXTENSIONS_CONTENT_WRAPPER = '#content-wrapper > div:nth-child(5)'
     EXTENSIONS_DETAIL_BUTTON = '#detailsButton'

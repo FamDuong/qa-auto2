@@ -1,5 +1,4 @@
 class Urls:
-
     COCCOC_SETTINGS_URL = 'coccoc://settings'
     COCCOC_SETTINGS_DOWNLOAD_URL = 'coccoc://settings/downloads'
     COCCOC_SETTINGS_ONSTARTUP = 'coccoc://settings/onStartup'
@@ -14,6 +13,7 @@ class Urls:
     COCCOC_FLAGS = 'coccoc://flags'
     COCCOC_DEV_URL = 'https://dev.coccoc.com'
     COCCOC_THANK_YOU_URL_EN = 'https://dev.coccoc.com/en/win/thanks.html'
+    COCCOC_THANK_YOU_URL_EN_PRO = 'https://coccoc.com/en/win/thanks.html'
     COCCOC_THANK_YOU_URL_VI = 'https://dev.coccoc.com/vi/win/thanks.html'
     COCCOC_URL = 'https://coccoc.com'
     COCCOC_ADS_BLOCK_URL = 'coccoc://settings/adsBlock'
@@ -27,10 +27,10 @@ class Urls:
     NEW_TAB_URL = 'http://coccoc.com/webhp'
     PIRATE_BAY_URL = 'https://www.thepiratebay.asia/search'
     CC_SEARCH_URL = "https://coccoc.com/search"
+    CC_SEARCH_QUERY = "https://coccoc.com/search?query="
 
 
 class VideoUrls:
-
     YOUTUBE_VIDEO_URL = 'https://www.youtube.com/watch?v=6WzJIp_U-oo'
     NEWS_ZING_VIDEO_URL = 'https://news.zing.vn/video'
     ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/Attention-J-Fla/ZW7F76D6.html'
@@ -43,7 +43,6 @@ class VideoUrls:
 
 
 class DiffFormatFileUrls:
-
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/watch/?v=682897505204114'
     WEBM_URL = 'http://techslides.com/demos/sample-videos/small.webm'
 
@@ -53,7 +52,6 @@ class DiffFormatFileUrls:
 
 
 class OtherSiteUrls:
-
     TWENTY_FOUR_H_VIDEO_URL = 'https://www.24h.com.vn/bong-da/2-clb-viet-nam-thong-tri-afc-cup-bao-chau-a-noi-gi-c48a1061647.html'
     PHIMMOI_VIDEO_URL = 'http://www.phimmoi.net/phim/yeu-than-ky-7796/tap-48-170030.html'
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/thutinhtv/videos/770300356741609/'
@@ -140,3 +138,8 @@ class CocCocComponents:
 
 class ChromeStoreUrls:
     RUNG_RINH_EXTENSION_URL = 'https://chrome.google.com/webstore/detail/r%E1%BB%A7ng-r%E1%BB%89nh-d%E1%BB%8Bch-v%E1%BB%A5-ho%C3%A0n-ti/paenbjlckelooppiepeiechkeehogoha'
+
+
+class CocCocExtensions:
+    AD_BLOCK_STANDARD_MODE = 'Standard'
+    AD_BLOCK_STRICT_MODE = 'Strict'

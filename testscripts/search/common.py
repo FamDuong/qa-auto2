@@ -67,3 +67,10 @@ def get_diff_worlds(string1, string2):
             world = world.replace('+ ', '')
             diff_words_string2.append(world)
     return diff_words_string1, diff_words_string2
+
+
+def prepare_query(url, keyword):
+    import urllib.parse
+    keyword_encode_uri = urllib.parse.quote(keyword)
+    query = url + keyword_encode_uri
+    return query

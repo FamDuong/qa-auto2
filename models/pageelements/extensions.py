@@ -1,11 +1,7 @@
-import time
-
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.extensions import ExtensionsPageLocators, SaviorDetailsPageLocators, \
-    SaviorExtensionOptionsPageLocators, GoogleExtensionsStorePageLocators, UblockPlusPageLocators
+    SaviorExtensionOptionsPageLocators, GoogleExtensionsStorePageLocators, UblockPlusPageLocators, \
+    AdBlockPlusDetailsPageLocators
 from utils_automation.setup import WaitAfterEach
 
 
@@ -86,49 +82,56 @@ class SaviorExtensionsOptionsElement(BasePageElement):
                                         SaviorDetailsPageLocators.EXTENSION_OPTIONS)
 
     def find_instant_download_youtube_option(self, driver):
-        wait = WebDriverWait(driver, 20)
-        return wait.until(
-            ec.presence_of_element_located(SaviorExtensionOptionsPageLocators.SHOW_INSTANT_DOWNLOAD_YOUTUBE))
+        instant_download_youtube_option = self.find_element_if_exist(driver, SaviorExtensionOptionsPageLocators.SHOW_INSTANT_DOWNLOAD_YOUTUBE)
+        return instant_download_youtube_option
 
     def find_save_and_close_button(self, driver):
-        wait = WebDriverWait(driver, 20)
-        return wait.until(
-            ec.element_to_be_clickable(SaviorExtensionOptionsPageLocators.SAVE_AND_CLOSE_BTN))
+        save_and_close_button = self.find_element_if_exist(driver, SaviorExtensionOptionsPageLocators.SAVE_AND_CLOSE_BTN)
+        return save_and_close_button
 
     def find_show_download_button_near_downloadable_media(self, driver):
-        wait = WebDriverWait(driver, 20)
-        return wait.until(
-            ec.element_to_be_clickable(SaviorExtensionOptionsPageLocators.SHOW_DOWNLOAD_BTN_NEAR_DOWNLOAD_MEDIA))
+        show_download_button_near_downloadable_media = self.find_element_if_exist(driver, SaviorExtensionOptionsPageLocators.SHOW_DOWNLOAD_BTN_NEAR_DOWNLOAD_MEDIA)
+        return show_download_button_near_downloadable_media
 
     def find_video_quality_high_option(self, driver):
-        wait = WebDriverWait(driver, 20)
-        return wait.until(
-            ec.element_to_be_clickable(SaviorExtensionOptionsPageLocators.VIDEO_QUALITY_HIGH_BTN))
+        video_quality_high_option = self.find_element_if_exist(driver, SaviorExtensionOptionsPageLocators.VIDEO_QUALITY_HIGH_BTN)
+        return video_quality_high_option
 
     def find_video_quality_low_option(self, driver):
-        wait = WebDriverWait(driver, 20)
-        return wait.until(
-            ec.element_to_be_clickable(SaviorExtensionOptionsPageLocators.VIDEO_QUALITY_LOW_BTN))
+        video_quality_low_option = self.find_element_if_exist(driver, SaviorExtensionOptionsPageLocators.VIDEO_QUALITY_LOW_BTN)
+        return video_quality_low_option
 
     def find_video_quality_medium_option(self, driver):
-        wait = WebDriverWait(driver, 20)
-        return wait.until(
-            ec.element_to_be_clickable(SaviorExtensionOptionsPageLocators.VIDEO_QUALITY_MEDIUM_BTN))
+        video_quality_medium_option = self.find_element_if_exist(driver, SaviorExtensionOptionsPageLocators.VIDEO_QUALITY_MEDIUM_BTN)
+        return video_quality_medium_option
 
     def find_remember_last_chosen_option(self, driver):
-        wait = WebDriverWait(driver, 20)
-        return wait.until(
-            ec.element_to_be_clickable(SaviorExtensionOptionsPageLocators.REMEMBER_LAST_CHOSEN_OPTION))
+        remember_last_chosen_option = self.find_element_if_exist(driver, SaviorExtensionOptionsPageLocators.REMEMBER_LAST_CHOSEN_OPTION)
+        return remember_last_chosen_option
 
 
 class GoogleExtensionsStorePageElements(BasePageElement):
 
     def find_rung_rinh_extension_version(self, driver):
-        wait = WebDriverWait(driver, 20)
-        return wait.until(
-            ec.element_to_be_clickable(GoogleExtensionsStorePageLocators.RUNG_RINH_EXTENSION_VERSION))
+        rung_rinh_extension_version = self.find_element_if_exist(driver, GoogleExtensionsStorePageLocators.RUNG_RINH_EXTENSION_VERSION)
+        return rung_rinh_extension_version
 
 
+class ABPExtensionsDetailPageElements(BasePageElement):
 
+    def find_extension_options(self, driver):
+        return self.find_shadow_element(driver, ExtensionsPageLocators.EXTENSIONS_MANAGER_TEXT,
+                                        ExtensionsPageLocators.EXTENSION_DETAIL_VIEW,
+                                        AdBlockPlusDetailsPageLocators.EXTENSION_OPTIONS,
+                                        AdBlockPlusDetailsPageLocators.EXTENSION_OPTIONS_ICON_PARENT,
+                                        AdBlockPlusDetailsPageLocators.EXTENSION_OPTIONS_ICON)
 
+    def switch_to_change_mode_iframe(self, driver):
+        change_mode_iframe = self.find_element_if_exist(driver, AdBlockPlusDetailsPageLocators.CHANGE_MODE_IFRAME)
+        driver.switch_to.frame(change_mode_iframe)
+
+    def select_mode_dropdownlist(self, driver, visible_text):
+        from selenium.webdriver.support.ui import Select
+        element_ddl = Select(self.find_element_if_exist(driver, AdBlockPlusDetailsPageLocators.SELECT_MODE_DDL))
+        element_ddl.select_by_visible_text(visible_text)
 
