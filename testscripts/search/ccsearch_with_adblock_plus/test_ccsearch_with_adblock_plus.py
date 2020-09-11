@@ -1,6 +1,7 @@
 import logging
 import time
 
+from models.pagelocators.coccoc_search.cc_search import CCSearchPageLocators
 from models.pageobject.extensions import ABPExtensionsDetailPageObject
 from models.pageobject.settings import SettingsPageObject
 from testscripts.search.ccsearch_with_adblock_plus.common import change_adblock_plus_mode, get_query, \
@@ -8,6 +9,7 @@ from testscripts.search.ccsearch_with_adblock_plus.common import change_adblock_
 from testscripts.search.common import prepare_query
 from testscripts.smoketest.common import coccoc_instance
 from utils_automation.const import CocCocExtensions, Urls
+from models.pageobject.coccoc_search.coccoc_search_page_objects import CocCocSearchPageObjects
 
 LOGGER = logging.getLogger(__name__)
 
@@ -15,6 +17,7 @@ LOGGER = logging.getLogger(__name__)
 class TestCCsearchWithAdblockPlus:
     abp_extension_detail_page_object = ABPExtensionsDetailPageObject()
     settings_page_object = SettingsPageObject()
+    coccoc_search_page_object = CocCocSearchPageObjects()
 
     def test_ccsearch_with_adblock_plus(self):
         driver = coccoc_instance()
@@ -30,5 +33,5 @@ class TestCCsearchWithAdblockPlus:
             for query in queries:
                 url = prepare_query(Urls.CC_SEARCH_QUERY, query)
                 driver.get(url)
-                time.sleep(3)
-                verify_ads_is_oppened_in_newtab(driver)
+                total_ads = self.coccoc_search_page_object.count_total_ads_on_ccsearch_page(driver)
+                verify_ads_is_oppened_in_newtab(driver, total_ads, CCSearchPageLocators.AD_LINK_BY_INDEX_XPATH)

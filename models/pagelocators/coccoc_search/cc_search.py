@@ -3,8 +3,9 @@ from selenium.webdriver.common.by import By
 
 class CCSearchPageLocators:
     GOOGLE_SEARCH_RESULTS_XPATH = "//*[@id='search']//div[@class='r']/a//@href"
-    AD_LINK = '//div[@class="adsv"]//h3//a'
-    AD_LINK_INDEX = '(//div[@class="adsv"]//h3//a)[{param1}]'
+    AD_LINK_XPATH = '//div[@class="adsv"]//h3//a'
+    AD_LINK = (By.XPATH, '//div[@class="adsv"]//h3//a')
+    AD_LINK_BY_INDEX_XPATH = '(//div[@class="adsv"]//h3//a)[{param1}]'
 
 
 class CCSpellerCheckerLocators:

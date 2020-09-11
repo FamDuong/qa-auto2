@@ -30,7 +30,13 @@ class NewTabWidgetLocators:
     DONE_BUTTON = (By.XPATH, '//button[text()="Done"]')
     RESET_DEFAULT_BUTTON = (By.XPATH, '//button[@class="btn btn-600 reset"]')
 
-
+class NewTabMostVisitedLocators:
+    TOTAL_MOST_VISITED_QC = (By.XPATH, "//li[contains(@class,'most-visited-tile mv-qc')]")
+    TOTAL_MOST_VISITED_QC_XPATH = "//li[contains(@class,'most-visited-tile mv-qc')]"
+    MOST_VISITED_QC_BY_INDEX_XPATH = "(//li[contains(@class,'most-visited-tile mv-qc')]//a)[{param1}]"
+    TOTAL_NEWS_XPATH = "//div[contains(@class,'feedRow')]//div[contains(@class,'nf-card')]"
+    TOTAL_NEWS_ADS_XPATH = "//div[contains(@class,'feedRow')]//div[contains(@class,'-ad nf-card')]"
+    NEWS_ADS_BY_INDEX_XPATH = "(//div[contains(@class,'feedRow')]//div[contains(@class,'-ad nf-card')])[{param1}]"
 
 
 

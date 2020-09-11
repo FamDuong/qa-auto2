@@ -31,6 +31,7 @@ def update_extension(driver):
     settings_page_object.update_extension(driver)
     abp_extension_detail_page_object.wait_until_finish_update_abp_to_latest(driver)
 
+
 def change_host_file(test_environment):
     LOGGER.info("Test environment" + test_environment)
     if test_environment in 'dev':
@@ -40,6 +41,7 @@ def change_host_file(test_environment):
 
         LOGGER.info("Deactivate host")
         common.interact_dev_hosts("deactivate")
+
 
 def change_adblock_plus_mode(driver, ads_block_mode):
     settings_page_object.open_coc_coc_extension_page(driver)
@@ -60,25 +62,29 @@ def get_query():
     return query
 
 
-def verify_ads_is_oppened_in_newtab(driver):
-    total_ads = coccoc_search_page_object.count_total_ads_on_ccsearch_page(driver)
+
+def verify_ads_is_oppened_in_newtab(driver, total_ads, ads_locator_xpath_by_index):
     root_url = driver.current_url
     LOGGER.info("===============================================")
     LOGGER.info("Root url " + root_url)
     LOGGER.info("Total ads: " + str(total_ads))
     if total_ads > 0:
         for i in range(total_ads):
-            coccoc_search_page_object.click_on_ad(driver, i + 1)
+            coccoc_search_page_object.click_on_ad(driver, i + 1, ads_locator_xpath_by_index)
             windows_handles = driver.window_handles
             assert len(windows_handles) == 2
 
             driver.switch_to.window(windows_handles[1])
             ad_url = driver.current_url
-            LOGGER.info("Ad url: " + ad_url)
-            time.sleep(10)
-            # assert 'utm_campaign' in ad_url
-            assert 'coccoc.com/search' not in ad_url
+            LOGGER.info("Ad "+str(i)+": " + ad_url)
+            from datetime import datetime
+            start_time = datetime.now()
+            while root_url in ad_url:
+                time.sleep(1)
+                time_delta = datetime.now() - start_time
+                if time_delta.total_seconds() >= 10:
+                    break
+            assert root_url not in ad_url
 
             driver.close()
             driver.switch_to.window(windows_handles[0])
-
