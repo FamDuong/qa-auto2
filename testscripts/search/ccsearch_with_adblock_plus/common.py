@@ -62,8 +62,8 @@ def get_query():
     return query
 
 
-
 def verify_ads_is_oppened_in_newtab(driver, total_ads, ads_locator_xpath_by_index):
+    time.sleep(2)
     root_url = driver.current_url
     LOGGER.info("===============================================")
     LOGGER.info("Root url " + root_url)
@@ -76,7 +76,7 @@ def verify_ads_is_oppened_in_newtab(driver, total_ads, ads_locator_xpath_by_inde
 
             driver.switch_to.window(windows_handles[1])
             ad_url = driver.current_url
-            LOGGER.info("Ad "+str(i)+": " + ad_url)
+            LOGGER.info("Ad " + str(i) + ": " + ad_url)
             from datetime import datetime
             start_time = datetime.now()
             while root_url in ad_url:
@@ -88,3 +88,4 @@ def verify_ads_is_oppened_in_newtab(driver, total_ads, ads_locator_xpath_by_inde
 
             driver.close()
             driver.switch_to.window(windows_handles[0])
+        driver.execute_script("window.history.go(-1)")
