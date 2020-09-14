@@ -32,13 +32,13 @@ def verify_most_visited_ads_in_newtab_page(driver, total_ads, ads_locator_xpath_
         for i in range(total_ads):
             coccoc_search_page_object.click_on_ad(driver, i + 1, ads_locator_xpath_by_index)
             ad_url = driver.current_url
-            LOGGER.info("Ad "+str(i)+": " + ad_url)
+            LOGGER.info("Ad " + str(i) + ": " + ad_url)
             from datetime import datetime
             start_time = datetime.now()
             while root_url in ad_url:
                 time.sleep(1)
                 time_delta = datetime.now() - start_time
-                if time_delta.total_seconds() >= 10:
+                if time_delta.total_seconds() >= 15:
                     break
             assert root_url not in ad_url
             driver.execute_script("window.history.go(-1)")
