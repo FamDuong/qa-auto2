@@ -36,7 +36,7 @@ def test_check_allow_scroll_down(browser):
 
 @pytestrail.case('C127500')
 def test_check_no_duplicate_news_on_zen(browser):
-    from utils_automation.common import check_if_duplicates_list
+    from utils_automation.common_browser import check_if_duplicates_list
     browser.get(Urls.NEW_TAB_URL)
     for x in range(0, 20):
         new_tab_zen_page_object.scroll_to_with_scroll_height(browser)

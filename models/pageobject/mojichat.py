@@ -10,7 +10,7 @@ from utils_automation.const import Urls
 from models.pageobject.basepage_object import BasePageObject
 from models.pageelements.mojichat import MojichatElement, ChatElement
 from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetailsPageObject
-from utils_automation.common import CSVHandle, WebElements
+from utils_automation.common import WebElements, get_from_csv
 from models.pagelocators.mojichat import MojichatLocators
 
 
@@ -233,7 +233,7 @@ class MojichatObjects(BasePageObject):
     def verify_suggestion_is_shown_when_entering_the_supported_keyword(self, driver, chat_type, mojichat_file):
         self.open_chat_browser(driver, chat_type=chat_type)
         self.send_text_into_chat(driver, chat_type, "clear cache")
-        list_mojichat = CSVHandle().get_from_csv(mojichat_file)
+        list_mojichat = get_from_csv(mojichat_file)
         for i in list_mojichat:
             self.select_moji_on_suggestion_panel(driver, chat_type, i, 0)
             self.verify_chat_is_empty(driver, chat_type)

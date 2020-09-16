@@ -11,7 +11,7 @@ class TopSaviorSitesFilmActions(BasePageObject):
 
     def close_login_popup_tv_zing(self, driver: WebDriver):
         element: WebElement
-        element = self.top_savior_sites_film_element.find_close_login_popup_element_button(driver)
+        element = self.top_savior_sites_film_element.find_close_login_popup_button_element(driver)
         element.click()
 
     def close_popup_ad_if_appear(self, driver: WebDriver):
@@ -20,4 +20,8 @@ class TopSaviorSitesFilmActions(BasePageObject):
             elements[0].click()
         else:
             pass
+
+    def open_film_in_phim_moi(self, driver: WebDriver):
+        element = self.top_savior_sites_film_element.find_xem_phim_button_in_phimmoi(driver)
+        element.click()
 

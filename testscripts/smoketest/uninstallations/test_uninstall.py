@@ -15,7 +15,7 @@ class TestUnInstallations:
         if check_if_coccoc_is_installed() is False:
             install_coccoc_set_as_default()
         uninstall_coccoc_without_delete_user_data()
-        from testscripts.smoketest.common import cleanup
+        from utils_automation.common_browser import cleanup
         cleanup(firefox=False)
         from testscripts.smoketest.installations.common import check_task_scheduler
         import time

@@ -30,27 +30,28 @@ class TestPhimmoi:
     top_sites_savior_title_actions = TopSitesSaviorTitleAction()
     top_sites_savior_title_elements = TopSitesSaviorTitleElements()
 
-    def prepare_displayed_savior_popup(self, browser):
+    def test_prepare_displayed_savior_popup(self, browser):
         browser.get(OtherSiteUrls.PHIMMOI_VIDEO_URL)
+
+        # self.top_sites_savior_actions.open_film_in_phim_moi(browser)
         self.top_sites_savior_actions.close_popup_ad_if_appear(browser)
-        time.sleep(4)
-        WebElements.scroll_into_view_element(browser, self.top_sites_savior_title_elements
-                                             .find_video_phimmoi_title_element(browser))
-        any_site_page_object.mouse_over_video_element_phimmoi(browser)
-        time.sleep(2)
+        time.sleep(40)
+        # WebElements.scroll_into_view_element(browser, self.top_sites_savior_title_elements
+        #                                      .find_video_phimmoi_title_element(browser))
+        # any_site_page_object.mouse_over_video_element_phimmoi(browser)
+        # time.sleep(40)
 
     @pytestrail.case('C96721')
     @pytest.mark.ten_popular_sites
     @pytestrail.defect('PF-1219')
-    def test_download_file_phim_moi(self, browser_top_sites, get_current_download_folder_top_sites
-                                    , clear_download_page
-                                    ,):
-        self.prepare_displayed_savior_popup(browser_top_sites)
-        video_title_start_with = self.top_sites_savior_title_actions.get_phimmoi_video_title(browser_top_sites)
+    def test_download_file_phim_moi(self, browser, get_current_download_folder):
+                                    #, clear_download_page ,):
+        self.prepare_displayed_savior_popup(browser)
+        video_title_start_with = self.top_sites_savior_title_actions.get_phimmoi_video_title(browser)
         try:
-            implement_download_file(browser_top_sites, get_current_download_folder_top_sites, startwith=video_title_start_with)
+            implement_download_file(browser, get_current_download_folder, startwith=video_title_start_with)
         finally:
-            delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title_start_with)
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title_start_with)
 
 
 class TestVuViPhim:
@@ -96,7 +97,7 @@ class TestTvZing:
 class TestTVHay:
 
     @pytestrail.case('C98762')
-    def test_download_file_video_tv_hay(self, browser, get_current_download_folder_top_sites
+    def test_download_file_video_tv_hay(self, browser, get_current_download_folder
                                         , clear_download_page):
         browser.get(OtherSiteUrls.TV_HAY_VIDEO_URL)
         video_title = self.top_sites_savior_title_actions.get_tv_zing_video_title(browser)

@@ -53,7 +53,8 @@ class DiffFormatFileUrls:
 
 class OtherSiteUrls:
     TWENTY_FOUR_H_VIDEO_URL = 'https://www.24h.com.vn/bong-da/2-clb-viet-nam-thong-tri-afc-cup-bao-chau-a-noi-gi-c48a1061647.html'
-    PHIMMOI_VIDEO_URL = 'http://www.phimmoi.net/phim/yeu-than-ky-7796/tap-48-170030.html'
+    PHIMMOI_VIDEO_URL = 'http://www.phimmoizz.net/phim/hoa-no-ngay-nang-11455/xem-phim.html'
+    PHIMMOI_URL = 'http://www.phimmoizz.net/phim/ky-su-thanh-xuan-11454/'
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/thutinhtv/videos/770300356741609/'
     MESSENGER_CHAT_URL = 'https://www.messenger.com/t/nganhanguyen0306'
     INSTAGRAM_VIDEO_URL = 'https://www.instagram.com/p/B1nlf9AhX4M/'

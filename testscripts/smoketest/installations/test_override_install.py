@@ -4,7 +4,7 @@ from pytest_testrail.plugin import pytestrail
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.history import HistoryPageLocators
 from utils_automation.const import Urls
-from testscripts.smoketest.common import coccoc_instance
+from utils_automation.common_browser import coccoc_instance
 
 
 class TestOverrideInstall(BasePageElement):

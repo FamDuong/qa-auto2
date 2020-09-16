@@ -3,9 +3,8 @@ import subprocess
 
 from selenium.webdriver import DesiredCapabilities
 
-import settings_master as settings
 import time
-from utils_automation.common import CSVHandle
+from utils_automation.common import get_from_csv, write_result_data_for_page_load_time
 from pytest_testrail.plugin import pytestrail
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -74,7 +73,7 @@ class TestPageLoadTime:
 
     def get_page_load_time(self, filename, file_name_result, binary_file, default_dir, options_list=None,
                            enabled_ads_block=None):
-        listweb = CSVHandle().get_from_csv(filename)
+        listweb = get_from_csv(filename)
         loadtimes = []
         for i in listweb:
             loadtime = 0
@@ -84,7 +83,7 @@ class TestPageLoadTime:
                                             enabled_ads_block=enabled_ads_block)
                 loadtime = loadtime + self.measureTime(browser)
             loadtimes.append(loadtime / looptime)
-        CSVHandle().write_result_data_for_page_load_time(file_name=file_name_result, keyname_list=listweb,
+        write_result_data_for_page_load_time(file_name=file_name_result, keyname_list=listweb,
                                                          value_list=loadtimes,
                                                          result_type='Page load time')
 

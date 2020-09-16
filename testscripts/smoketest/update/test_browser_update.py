@@ -35,7 +35,7 @@ class TestBrowserUpdate:
         element.click()
         # Wait for relaunching coccoc and delete old coccoc version
         time.sleep(5)
-        from testscripts.smoketest.common import cleanup
+        from utils_automation.common_browser import cleanup
         cleanup()
         # Wait for browser_cleanup
         time.sleep(5)
