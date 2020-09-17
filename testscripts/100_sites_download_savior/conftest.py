@@ -1,3 +1,32 @@
+import pytest
+import logging
+
+from models.pageobject.settings import SettingsPageObject
+from utils_automation.common_browser import coccoc_instance
+from utils_automation.const import Urls
+from utils_automation.setup import WaitAfterEach
+
+LOGGER = logging.getLogger(__name__)
+
+download_folder = None
+
+
+@pytest.fixture(scope='session')
+def browser_top_sites():
+    LOGGER.info("Init coc coc browser...")
+    global driver
+    global download_folder
+    driver = coccoc_instance()
+    driver.get(Urls.COCCOC_SETTINGS_URL)
+    WaitAfterEach.sleep_timer_after_each_step()
+    setting_page_object = SettingsPageObject()
+    download_folder = setting_page_object.get_download_folder(driver)
+    yield driver
+    driver.quit()
+
+@pytest.fixture(scope='session')
+def get_current_download_folder_top_sites():
+    return download_folder
 # import pytest
 # from selenium import webdriver as sele_webdriver
 # from selenium.webdriver import DesiredCapabilities
@@ -78,4 +107,3 @@
 #     global username
 #     username = request.config.getoption("--user")
 #     return username
-

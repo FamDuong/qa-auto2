@@ -119,8 +119,8 @@ class AnySite(object):
     SEX_NGON_VIDEO_ITEM = (By.ID, 'video')
     WEIBO_VIDEO_ITEM = (By.XPATH, '//video[@id]')
     VU_VI_PHIM_VIDEO_ELEMENT = (By.ID, 'media')
-    VU_VI_PHIM_PLAY_BTN = (By.XPATH, '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]')
-    VU_VI_PHIM_IFRAME = (By.XPATH, '//iframe[@data-was-processed][not(@title)]')
+    VU_VI_PHIM_PLAY_BTN = (By.XPATH, '//div[contains(@class,"panel_left")]//div[@al-click="togglePlay()"]')
+    VU_VI_PHIM_IFRAME = (By.XPATH, '//iframe[@allow="autoplay" and contains(@src,"vuviphim")]')
 
     @staticmethod
     def anime_tvn_server(server_number):

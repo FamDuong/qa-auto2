@@ -1,3 +1,5 @@
+import logging
+
 import cv2
 from models.pageobject.downloads import DownloadsPageObject
 from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetailsPageObject, \
@@ -21,6 +23,7 @@ google_page_object = GooglePageObject()
 download_page_object = DownloadsPageObject()
 any_site_page_object = AnySitePageObject()
 
+LOGGER = logging.getLogger(__name__)
 
 def delete_all_mp4_file_download(mydir, endwith, startwith=None):
     files_handle = FilesHandle()
@@ -52,7 +55,7 @@ def clear_data_download(driver):
 
 def assert_file_download_value(download_folder_path, height_value, startwith=None):
     mp4_files = find_mp4_file_download(download_folder_path, '.mp4', startwith=startwith)
-    print(mp4_files)
+    LOGGER.info("hello"+str(mp4_files))
     vid = cv2.VideoCapture(download_folder_path + '\\' + mp4_files[0])
     height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
     width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)

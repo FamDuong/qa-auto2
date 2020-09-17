@@ -1,3 +1,4 @@
+import logging
 import time
 
 import pytest
@@ -13,6 +14,7 @@ from utils_automation.setup import WaitAfterEach
 
 any_site_page_object = AnySitePageObject()
 top_site_titles_action = TopSitesSaviorTitleAction()
+LOGGER = logging.getLogger(__name__)
 
 
 class TestDownloadGroup:
@@ -31,15 +33,15 @@ class TestDownloadGroup:
         assert_file_download_value(get_current_download_folder, resolution_info, **kwargs)
 
     @pytestrail.case('C96719')
-    @pytestrail.defect('PF-776', 'PF-1095')
     @pytest.mark.ten_popular_sites
-    def test_download_youtube(self, browser_top_sites, get_current_download_folder_top_sites, clear_download_page):
+    def test_download_youtube(self, browser_top_sites, get_current_download_folder_top_sites):
         youtube_page_object = YoutubePageObject()
         browser_top_sites.get(VideoUrls.YOUTUBE_VIDEO_URL)
         video_title = top_site_titles_action.get_youtube_video_title(browser_top_sites)
         youtube_page_object.mouse_over_video_item(browser_top_sites)
         media_info = download_file_via_main_download_button(browser_top_sites, )
         resolution_info = get_resolution_info(media_info)
+        delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title)
         try:
             assert_file_download_value(get_current_download_folder_top_sites, resolution_info, startwith=video_title)
         finally:

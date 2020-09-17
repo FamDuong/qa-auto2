@@ -65,43 +65,35 @@ def _capture_screenshot_win_app(filename):
 
 @pytest.fixture(scope='session')
 def browser():
+    LOGGER.info("Init coc coc browser...")
     global driver
     driver = coccoc_instance()
     yield driver
     driver.quit()
-
-
-@pytest.fixture(scope='session')
-def get_user_data_default_and_flash_path():
-    global driver
-    driver = coccoc_instance()
-    driver.get(Urls.COCCOC_VERSION_URL)
-    version_page_object = VersionPageObject()
-    user_data_default = version_page_object.get_profile_path(driver)
-    flash_path = version_page_object.get_flash_path(driver)
-    return user_data_default, flash_path
-
-@pytest.fixture(scope='session')
-def get_current_download_folder():
-    global driver
-    driver = coccoc_instance()
-    from models.pageobject.settings import SettingsPageObject
-    setting_page_object = SettingsPageObject()
-    driver.get(Urls.COCCOC_SETTINGS_URL)
-    WaitAfterEach.sleep_timer_after_each_step()
-    download_folder = setting_page_object.get_download_folder(driver)
-    return download_folder
-
-@pytest.fixture(scope='session')
-def get_current_download_folder():
-    global driver
-    driver = coccoc_instance()
-    from models.pageobject.settings import SettingsPageObject
-    setting_page_object = SettingsPageObject()
-    driver.get(Urls.COCCOC_SETTINGS_URL)
-    WaitAfterEach.sleep_timer_after_each_step()
-    download_folder = setting_page_object.get_download_folder(driver)
-    return download_folder
+#
+#
+# @pytest.fixture(scope='session')
+# def get_user_data_default_and_flash_path():
+#     global driver
+#     driver = coccoc_instance()
+#     driver.get(Urls.COCCOC_VERSION_URL)
+#     version_page_object = VersionPageObject()
+#     user_data_default = version_page_object.get_profile_path(driver)
+#     flash_path = version_page_object.get_flash_path(driver)
+#     LOGGER.info("Get user data and flash path: " + str(user_data_default) + ", " + str(flash_path))
+#     return user_data_default, flash_path
+#
+# @pytest.fixture(scope='session')
+# def get_current_download_folder():
+#     global driver
+#     driver = coccoc_instance()
+#     from models.pageobject.settings import SettingsPageObject
+#     setting_page_object = SettingsPageObject()
+#     driver.get(Urls.COCCOC_SETTINGS_URL)
+#     WaitAfterEach.sleep_timer_after_each_step()
+#     download_folder = setting_page_object.get_download_folder(driver)
+#     LOGGER.info("Get current download folder" + str(download_folder))
+#     return download_folder
 
 
 

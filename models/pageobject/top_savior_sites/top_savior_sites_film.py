@@ -22,6 +22,6 @@ class TopSaviorSitesFilmActions(BasePageObject):
             pass
 
     def open_film_in_phim_moi(self, driver: WebDriver):
-        element = self.top_savior_sites_film_element.find_xem_phim_button_in_phimmoi(driver)
+        element = self.top_savior_sites_film_element.find_film_index1_in_phimmoi(driver)
         element.click()
 

@@ -53,7 +53,7 @@ class DiffFormatFileUrls:
 
 class OtherSiteUrls:
     TWENTY_FOUR_H_VIDEO_URL = 'https://www.24h.com.vn/bong-da/2-clb-viet-nam-thong-tri-afc-cup-bao-chau-a-noi-gi-c48a1061647.html'
-    PHIMMOI_VIDEO_URL = 'http://www.phimmoizz.net/phim/hoa-no-ngay-nang-11455/xem-phim.html'
+    PHIMMOI_VIDEO_URL = 'http://www.phimmoizz.net/phim/soi-100-11066/xem-phim.html'
     PHIMMOI_URL = 'http://www.phimmoizz.net/phim/ky-su-thanh-xuan-11454/'
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/thutinhtv/videos/770300356741609/'
     MESSENGER_CHAT_URL = 'https://www.messenger.com/t/nganhanguyen0306'
@@ -71,10 +71,10 @@ class OtherSiteUrls:
     GIA_DINH_DOT_NET_VIDEO_URL = 'http://giadinh.net.vn/video-6805/meo-lam-tuong-ot-chua-ngot-dam-da-sanh-sot.htm'
     A_FAMILY_VIDEO_URL = 'http://video.afamily.vn/'
     GAMEK_VN_VIDEO_URL = 'http://gamek.vn/joker-tung-trailer-thu-2-he-lo-qua-khu-dau-thuong-cua-chang-hoang-tu-he-20190829101517375.chn'
-    VU_VI_PHIM_VIDEO_URL = 'https://vuviphimmoi.com/xem-phim-rifle-is-beautiful-242681'
+    VU_VI_PHIM_VIDEO_URL = 'https://vuviphimzz.com/xem-phim-ta-ga-tame-no-alchemist-314105'
     AN_NINH_THU_DO_VIDEO_URL = 'https://anninhthudo.vn/truyen-hinh-atv/146.antd'
     TUOI_TRE_VIDEO_URL = 'https://tuoitre.vn/video.htm'
-    TV_ZING_VIDEO_URL = 'https://tv.zing.vn/video/Goblin-Yeu-Tinh-Tap-1/IWZEIC7F.html'
+    TV_ZING_VIDEO_URL = 'https://tv.zing.vn/video/id/IWZEAUO9.html'
     MOT_PHIM_VIDEO_URL = 'https://motphim.net/xem-phim/cuoc-doi-thu-2-tap-4-7099_90578.html'
     TV_HAY_VIDEO_URL = 'http://tvhay.org/xem-phim-dao-kiem-than-vuc-phan-4-421702'
     NGOI_SAO_VN_URL = 'https://ngoisao.vn/video/lieu-linh-bang-qua-dong-nuoc-lu-nguoi-dan-ong-suyt-phai-tra-gia-bang-ca-tinh-mang-273892.htm'

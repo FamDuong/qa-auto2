@@ -1,4 +1,5 @@
 import time
+import logging
 from datetime import datetime
 
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
@@ -12,6 +13,7 @@ from models.pageobject.basepage_object import BasePageObject
 from utils_automation.common import WebElements
 from utils_automation.setup import WaitAfterEach
 
+LOGGER = logging.getLogger(__name__)
 
 class YoutubePageObject(BasePageObject):
     youtube_element = YoutubePageElements()
@@ -474,7 +476,9 @@ class AnySitePageObject(BasePageObject):
         self.click_on_element_if_exist(self.any_site_element.find_play_btn_vu_vi_phim(driver))
 
     def switch_to_iframe_vu_vi_phim(self, driver):
+        LOGGER.info("Switch to iframe")
         driver.switch_to.frame(self.any_site_element.find_frame_vu_vi_phim(driver))
+        time.sleep(3)
 
     def mouse_over_video_vu_vi_phim(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_frame_vu_vi_phim(driver))
@@ -621,3 +625,7 @@ class AnySitePageObject(BasePageObject):
         import time
         time.sleep(5)
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_ok_ru(driver))
+
+    def play_video_by_javascript(self, driver):
+        driver.execute_script(
+            "let elements = document.querySelectorAll('video');if (elements.length > 0) {for (let element of elements) {element.play(); }}")
