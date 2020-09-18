@@ -1,4 +1,7 @@
 import yaml
+import logging
+
+LOGGER = logging.getLogger(__name__)
 
 
 class YamlUtils:
@@ -15,7 +18,7 @@ class YamlUtils:
             try:
                 return yaml.safe_load(stream)
             except yaml.YAMLError as exc:
-                print(exc)
+                LOGGER.info(exc)
 
     def write_data_to_file(self, loaded, file):
         with open(file, 'wb') as stream:
@@ -23,7 +26,7 @@ class YamlUtils:
                 return yaml.safe_dump(loaded, stream, default_flow_style=False
                                       , explicit_start=True, allow_unicode=True, encoding='utf-8')
             except yaml.YAMLError as exc:
-                print(exc)
+                LOGGER.info(exc)
 
 
 class TxtUtils:

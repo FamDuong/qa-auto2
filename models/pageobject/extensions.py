@@ -10,6 +10,8 @@ import settings_master as settings
 from models.pageobject.settings import SettingsPageObject
 from utils_automation.setup import WaitAfterEach
 
+LOGGER = logging.getLogger(__name__)
+
 
 class ExtensionsPageObject(BasePageObject):
     extension_elem = ExtensionsElement()
@@ -41,14 +43,14 @@ class ExtensionsPageObject(BasePageObject):
                 if ublock_toggle_elem.get_attribute('aria-pressed') == 'false':
                     ublock_knob_elem.click()
                 elif ublock_toggle_elem.get_attribute('aria-pressed') == 'true':
-                    print("Already enable ublock")
+                    LOGGER.info("Already enable ublock")
                 else:
                     raise Exception
             elif action == 'disable':
                 if ublock_toggle_elem.get_attribute('aria-pressed') == 'true':
                     ublock_knob_elem.click()
                 elif ublock_toggle_elem.get_attribute('aria-pressed') == 'false':
-                    print("Already disable ublock")
+                    LOGGER.info("Already disable ublock")
                 else:
                     raise Exception
             else:

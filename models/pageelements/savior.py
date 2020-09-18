@@ -1,10 +1,12 @@
-import time
+import logging
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.savior import SaviorPageLocators
+
+LOGGER = logging.getLogger(__name__)
 
 
 class SaviorElements(BasePageElement):
@@ -44,7 +46,7 @@ class SaviorElements(BasePageElement):
         return self.select_shadow_element_download_button(driver)
 
     def not_found_download_button(self, driver):
-        print('Value for assertions isssss:', self.select_shadow_element_download_button(driver))
+        LOGGER.info('Value for assertions isssss:', self.select_shadow_element_download_button(driver))
         assert self.select_shadow_element_download_button(driver) in (1, None)
 
     def find_preferred_option(self, driver):

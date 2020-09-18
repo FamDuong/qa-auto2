@@ -8,7 +8,7 @@ from models.pageobject.sites import AnySitePageObject, YoutubePageObject
 from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
 from testscripts.common_setup import pause_any_video_site, download_file_via_main_download_button, \
     assert_file_download_value, delete_all_mp4_file_download, \
-    implement_download_file, get_resolution_info
+    implement_download_file, get_resolution_info, pause_or_play_video_by_javascript
 from utils_automation.const import VideoUrls
 from utils_automation.setup import WaitAfterEach
 
@@ -25,12 +25,15 @@ class TestDownloadGroup:
         delete_all_mp4_file_download(download_folder, '.mp4')
         WaitAfterEach.sleep_timer_after_each_step()
 
-    def implement_test_site(self, browser, url_site, get_current_download_folder, **kwargs):
-        pause_any_video_site(browser, url_site)
-        self.prepare_check_download(get_current_download_folder)
-        media_info = download_file_via_main_download_button(browser, )
-        resolution_info = get_resolution_info(media_info)
-        assert_file_download_value(get_current_download_folder, resolution_info, **kwargs)
+    def implement_test_site(self, browser, url_site, get_current_download_folder):
+        try:
+            pause_any_video_site(browser, url_site)
+            video_title = top_site_titles_action.get_website_title_by_javascript(browser)
+            media_info = download_file_via_main_download_button(browser, time_sleep=10)
+            resolution_info = get_resolution_info(media_info)
+            assert_file_download_value(get_current_download_folder, resolution_info, video_title)
+        finally:
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title)
 
     @pytestrail.case('C96719')
     @pytest.mark.ten_popular_sites
@@ -39,56 +42,40 @@ class TestDownloadGroup:
         browser_top_sites.get(VideoUrls.YOUTUBE_VIDEO_URL)
         video_title = top_site_titles_action.get_youtube_video_title(browser_top_sites)
         youtube_page_object.mouse_over_video_item(browser_top_sites)
-        media_info = download_file_via_main_download_button(browser_top_sites, )
+        media_info = download_file_via_main_download_button(browser_top_sites, time_sleep=15)
         resolution_info = get_resolution_info(media_info)
-        delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title)
         try:
-            assert_file_download_value(get_current_download_folder_top_sites, resolution_info, startwith=video_title)
+            assert_file_download_value(get_current_download_folder_top_sites, resolution_info, start_with=video_title)
         finally:
             delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title)
 
     @pytestrail.case('C96752')
-    def test_download_news_zing(self, browser_top_sites, get_current_download_folder_top_sites, clear_download_page):
-        self.implement_test_site(browser_top_sites, VideoUrls.NEWS_ZING_VIDEO_URL, get_current_download_folder_top_sites)
+    def test_download_news_zing(self, browser_top_sites, get_current_download_folder_top_sites):
+        self.implement_test_site(browser_top_sites, VideoUrls.NEWS_ZING_VIDEO_URL,
+                                 get_current_download_folder_top_sites)
 
     @pytestrail.case('C96756')
-    def test_download_zing_mp3_vn(self, browser_top_sites, get_current_download_folder_top_sites, clear_download_page):
-        self.implement_test_site(browser_top_sites, VideoUrls.ZING_MP3_VN_VIDEO_URL, get_current_download_folder_top_sites)
+    def test_download_zing_mp3_vn(self, browser_top_sites, get_current_download_folder_top_sites):
+        self.implement_test_site(browser_top_sites, VideoUrls.ZING_MP3_VN_VIDEO_URL,
+                                 get_current_download_folder_top_sites)
 
     @pytestrail.case('C96758')
     @pytest.mark.ten_popular_sites
-    def test_download_nhaccuatui(self, browser_top_sites, get_current_download_folder_top_sites, clear_download_page):
-        video_title_start_with = "Cinnamo"
-        browser_top_sites.get(VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM)
-        time.sleep(3)
+    def test_download_nhaccuatui(self, browser_top_sites, get_current_download_folder_top_sites):
         try:
-            browser_top_sites.execute_script('document.querySelector("div.vjs-control-bar > button.vjs-play-control.vjs-control.vjs-button").click();')
-        except Exception as e:
-            print(e)
-        if any_site_page_object.check_if_nhac_cua_tui_ads_appeared(driver=browser_top_sites) > 0:
-            time.sleep(2)
-            try:
-                browser_top_sites.execute_script('document.querySelector("div.vjs-control-bar > button.vjs-play-control.vjs-control.vjs-button.vjs-paused").click();')
-            except Exception as e:
-                print(e)
-            try:
-                browser_top_sites.execute_script('document.querySelector("#video_vpaid1587957395244 > div.vjs-control-bar > button.vjs-play-control.vjs-control.vjs-button").click();')
-            except Exception as e:
-                print(e)
-            any_site_page_object.close_nhac_cua_tui_ad_item(driver=browser_top_sites)
-            browser_top_sites.execute_script('document.querySelector("div.vast-skip-button.enabled").click();')
-            time.sleep(1)
-        any_site_page_object.click_first_video_element(browser_top_sites)
-        any_site_page_object.mouse_over_first_video_element(browser_top_sites)
-        try:
+            browser_top_sites.get(VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM)
+            pause_or_play_video_by_javascript(browser_top_sites, action='play')
+            any_site_page_object.click_first_video_element(browser_top_sites)
+            any_site_page_object.mouse_over_first_video_element(browser_top_sites)
+            video_title = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
             implement_download_file(browser_top_sites, get_current_download_folder_top_sites, time_sleep=10)
         finally:
-            delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title_start_with)
+            delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title)
 
     @pytestrail.case('C98735')
     @pytest.mark.ten_popular_sites
     @pytestrail.defect('PF-517')
-    def test_download_dongphim(self, browser_top_sites, get_current_download_folder_top_sites, clear_download_page):
+    def test_download_dongphim(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(VideoUrls.DONG_PHIM_VIDEO_URL)
         elements = any_site_page_object.choose_watch_option_if_any(browser_top_sites)
         video_title_start_with = 'Thi'

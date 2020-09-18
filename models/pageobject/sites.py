@@ -625,7 +625,3 @@ class AnySitePageObject(BasePageObject):
         import time
         time.sleep(5)
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_ok_ru(driver))
-
-    def play_video_by_javascript(self, driver):
-        driver.execute_script(
-            "let elements = document.querySelectorAll('video');if (elements.length > 0) {for (let element of elements) {element.play(); }}")

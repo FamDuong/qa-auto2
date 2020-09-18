@@ -1,9 +1,17 @@
+import logging
 from models.pageelements.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleElements
 from models.pageobject.basepage_object import BasePageObject
+
+LOGGER = logging.getLogger(__name__)
 
 
 class TopSitesSaviorTitleAction(BasePageObject):
     top_sites_savior_title_elements = TopSitesSaviorTitleElements()
+
+    def get_website_title_by_javascript(self, driver):
+        video_title = driver.execute_script("return document.title")
+        LOGGER.info("Get video title " + video_title)
+        return video_title
 
     def get_x_videos_title_video(self, driver):
         return self.top_sites_savior_title_elements.find_x_videos_title_video_element(driver).text

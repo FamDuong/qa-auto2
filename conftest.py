@@ -157,11 +157,11 @@ def win_app_driver():
     winappdriver.quit()
     return
 
-
-@pytest.fixture(scope='session', autouse=True)
-def clear_screen_shot_folder():
-    current_dir = get_current_dir()[0]
-    files_handle.delete_files_in_folder(current_dir + "/screenshots", "png")
+#
+# @pytest.fixture(scope='session', autouse=True)
+# def clear_screen_shot_folder():
+#     current_dir = get_current_dir()[0]
+#     files_handle.delete_files_in_folder(current_dir + "/screenshots", "png")
 
 
 def pytest_addoption(parser):

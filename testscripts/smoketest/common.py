@@ -1,11 +1,14 @@
 import datetime
 import time
+import logging
 from datetime import datetime
 from pywinauto import Desktop
 from os import path
 
 from utils_automation.common import WindowsCMD, wait_for_stable, FilesHandle, get_current_dir
 from utils_automation.common_browser import find_text_in_file, cleanup, current_user
+
+LOGGER = logging.getLogger(__name__)
 
 files_handle_obj = FilesHandle()
 download_folder = None
@@ -148,7 +151,7 @@ def get_list_coccoc_version_folder_name():
 
 def get_list_files_dirs_in_a_folder(application_path=None):
     import subprocess
-    print(current_user)
+    LOGGER.info("Current user: " + current_user)
     p = subprocess.Popen(["powershell.exe",
                           f"cd C:\\Users\\{current_user}\\{application_path}; ls"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)

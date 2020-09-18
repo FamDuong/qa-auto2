@@ -9,6 +9,7 @@ from testscripts.search.common import get_worksheet, get_diff_worlds
 
 LOGGER = logging.getLogger(__name__)
 
+
 class TestSpellerChecker:
     speller_checker_action = SpellerCheckerActions()
     cc_speller_checker_locator = CCSpellerCheckerLocators()
@@ -59,13 +60,14 @@ class TestSpellerChecker:
                 temp_list.clear()
         return test_result_list
 
+
     def write_test_result_to_google_spreadsheet(self, worksheet, test_result_list):
         df = pd.DataFrame(test_result_list,
                           columns=['Input', 'Expect', 'Number of expect error', 'Number of defect error', 'Actual',
                                    'NOK', 'Diff words expect', 'Diff words actual'])
 
-        # print("\n")
-        # print(df)
+        # LOGGER.info("\n")
+        # LOGGER.info(df)
         worksheet.set_dataframe(df, (1, 1))
 
     def test_speller_checker(self, get_spreed_sheet_id, get_sheet_name, get_sheet_range_input):
