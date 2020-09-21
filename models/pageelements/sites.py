@@ -561,8 +561,13 @@ class AnySiteElements(BasePageElement):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.OK_RU_VIDEO_ITEM))
 
+    def find_nhaccuatui_video_title(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.NHACCUATUI_VIDEO_TITLE))
 
-
+    def find_zingmp3_chon_giao_dien_button(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.CHON_GIAO_DIEN_SUBMIT_BTN))
 
 
 

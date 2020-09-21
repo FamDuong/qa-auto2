@@ -35,7 +35,7 @@ class VideoUrls:
     NEWS_ZING_VIDEO_URL = 'https://news.zing.vn/video'
     ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/A-Better-Day-JTL/ZWZ9CF86.html'
     NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summertime-cinnamons-ft-evening-cinema.w3rGuakkZzvg9.html'
-    DONG_PHIM_VIDEO_URL = 'https://www.dongphim.net/movie/tap-1-thien-duong-giet-choc-phan-1-the-valhalla-murders-season-1-2020_KUzKIABB.html'
+    DONG_PHIM_VIDEO_URL = 'https://dongphym.net/video/one-piece-movie-12-z-ky-phung-dich-thu_CtT37Qt8.html'
 
     @classmethod
     def all(cls):

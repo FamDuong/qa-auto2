@@ -37,10 +37,9 @@ class TestSpellerChecker:
         else:
             return 'NOK'
 
-    def get_test_result_list(self, input_list):
+    def get_test_result_list(self, get_test_url, input_list):
         driver = init_chrome_driver()
-        self.speller_checker_action.open_speller_checker(driver,
-                                                         self.cc_speller_checker_locator.SPELLER_CHECKER_DEV_URL)
+        self.speller_checker_action.open_speller_checker(driver, get_test_url)
         test_result_list = []
         for data in input_list:
             input_string = data[0]
@@ -60,7 +59,6 @@ class TestSpellerChecker:
                 temp_list.clear()
         return test_result_list
 
-
     def write_test_result_to_google_spreadsheet(self, worksheet, test_result_list):
         df = pd.DataFrame(test_result_list,
                           columns=['Input', 'Expect', 'Number of expect error', 'Number of defect error', 'Actual',
@@ -70,8 +68,8 @@ class TestSpellerChecker:
         # LOGGER.info(df)
         worksheet.set_dataframe(df, (1, 1))
 
-    def test_speller_checker(self, get_spreed_sheet_id, get_sheet_name, get_sheet_range_input):
+    def test_speller_checker(self, get_test_url, get_spreed_sheet_id, get_sheet_name, get_sheet_range_input):
         worksheet = get_worksheet(get_spreed_sheet_id, get_sheet_name)
         input_list = worksheet.range(get_sheet_range_input, returnas='matrix')
-        test_result_list = self.get_test_result_list(input_list)
+        test_result_list = self.get_test_result_list(get_test_url, input_list)
         self.write_test_result_to_google_spreadsheet(worksheet, test_result_list)

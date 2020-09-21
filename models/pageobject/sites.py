@@ -625,3 +625,6 @@ class AnySitePageObject(BasePageObject):
         import time
         time.sleep(5)
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_ok_ru(driver))
+
+    def click_zingmp3_chon_giao_dien_btn(self, driver):
+        self.any_site_element.find_zingmp3_chon_giao_dien_button(driver).click()

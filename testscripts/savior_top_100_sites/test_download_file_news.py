@@ -26,9 +26,9 @@ class Test24H:
         WaitAfterEach.sleep_timer_after_each_step()
 
     @pytestrail.case('C96720')
-    def test_download_file_24h(self, browser, get_current_download_folder, clear_download_page):
-        self.prepare_check_download(browser, get_current_download_folder)
-        verify_download_quality_high_frame(browser, get_current_download_folder,
+    def test_download_file_24h(self, browser_top_sites, get_current_download_folder):
+        self.prepare_check_download(browser_top_sites, get_current_download_folder)
+        verify_download_quality_high_frame(browser_top_sites, get_current_download_folder,
                                            self.mouse_over_video_element_24h)
 
 

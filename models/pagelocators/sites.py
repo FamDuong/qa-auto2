@@ -165,3 +165,5 @@ class AnySite(object):
     XEM_VTV_NET_VIDEO_PLAYER = (By.ID, 'media')
     XEM_VTV_NET_PLAY_BTN = (By.XPATH, '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]')
     OK_RU_VIDEO_ITEM = (By.XPATH, '//*[@id="VideoAutoplayPlayerE"]//video')
+    NHACCUATUI_VIDEO_TITLE = (By.XPATH, '//h2[@class="name-singer"]//a[1]')
+    CHON_GIAO_DIEN_SUBMIT_BTN = (By.XPATH, '//button[@type="submit"]')

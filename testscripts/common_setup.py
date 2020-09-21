@@ -57,12 +57,13 @@ def clear_data_download(driver):
 
 
 def assert_file_download_value(download_folder_path, height_value, start_with):
-    LOGGER.info("Assert video")
+    LOGGER.info("Verify video title same as: "+str(start_with))
     mp4_files = find_mp4_file_download(download_folder_path, endwith='.mp4', startwith=start_with)
     vid = cv2.VideoCapture(download_folder_path + '\\' + mp4_files[0])
     height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
     width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
     assert vid.isOpened()
+    assert len(mp4_files) > 0
     if int(height) > 720:
         assert width == if_height_frame_so_width_frame(height)
     vid.release()
@@ -73,6 +74,7 @@ def assert_file_download_value(download_folder_path, height_value, start_with):
 
 
 def assert_file_download_exist(download_folder_path, file_size=2.00, startwith=None):
+    LOGGER.info("Verify video title same as: "+str(startwith))
     import os
     mp4_files = find_mp4_file_download(download_folder_path, '.mp4', startwith=startwith)
     file_path = download_folder_path + '\\' + mp4_files[0]
