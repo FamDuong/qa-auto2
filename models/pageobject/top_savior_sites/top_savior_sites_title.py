@@ -2,6 +2,7 @@ import logging
 
 from models.pageelements.sites import AnySiteElements
 from models.pageelements.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleElements
+from models.pagelocators.sites import AnySite
 from models.pageobject.basepage_object import BasePageObject
 
 LOGGER = logging.getLogger(__name__)
@@ -27,14 +28,13 @@ class TopSitesSaviorTitleAction(BasePageObject):
 
     def get_youtube_video_title(self, driver):
         youtube_video_title = self.top_sites_savior_title_elements.find_youtube_video_title_element(driver).text
-        LOGGER.info("Video title: "+youtube_video_title)
+        LOGGER.info("Video title: " + youtube_video_title)
         return youtube_video_title
 
     def get_nhaccuatui_video_title(self, driver):
         nhaccuatui_video_title = self.any_sites_elements.find_nhaccuatui_video_title(driver).text
-        LOGGER.info("Get video title: "+nhaccuatui_video_title)
+        LOGGER.info("Get video title: " + nhaccuatui_video_title)
         return nhaccuatui_video_title
-
 
     def get_instagram_video_title(self, driver):
         return self.top_sites_savior_title_elements.find_video_instagram_title_element(driver).get_attribute('content')
@@ -55,8 +55,12 @@ class TopSitesSaviorTitleAction(BasePageObject):
         return self.top_sites_savior_title_elements.find_facebook_video_title_element(driver).text
 
     def get_fr_pornhub_video_title(self, driver):
-        return self.top_sites_savior_title_elements.find_fr_pornhub_video_title_element(driver).get_attribute('data-video-title')
+        return self.top_sites_savior_title_elements.find_fr_pornhub_video_title_element(driver).get_attribute(
+            'data-video-title')
 
-
-
-
+    def get_video_title_from_link(self, driver, title_css_selector):
+        video_title_root = driver.execute_script("return document.querySelector('" + title_css_selector + "').getAttribute('src')")
+        temp_list = video_title_root.rsplit('/', 1)
+        video_title_list = temp_list[1].rsplit('.', 1)
+        LOGGER.info("Get video title: " + video_title_list[0])
+        return video_title_list[0]

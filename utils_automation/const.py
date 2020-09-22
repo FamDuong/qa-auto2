@@ -52,13 +52,14 @@ class DiffFormatFileUrls:
 
 
 class OtherSiteUrls:
-    TWENTY_FOUR_H_VIDEO_URL = 'https://www.24h.com.vn/bong-da/2-clb-viet-nam-thong-tri-afc-cup-bao-chau-a-noi-gi-c48a1061647.html'
+    NEWS_24H_URL = 'https://www.24h.com.vn/tong-hop-video.html'
+    NEWS_24H_BONGDA_URL = 'https://www.24h.com.vn/bong-da/2-clb-viet-nam-thong-tri-afc-cup-bao-chau-a-noi-gi-c48a1061647.html'
     PHIMMOI_VIDEO_URL = 'http://www.phimmoizz.net/phim/soi-100-11066/xem-phim.html'
     PHIMMOI_URL = 'http://www.phimmoizz.net/phim/ky-su-thanh-xuan-11454/'
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/thutinhtv/videos/770300356741609/'
     MESSENGER_CHAT_URL = 'https://www.messenger.com/t/nganhanguyen0306'
     INSTAGRAM_VIDEO_URL = 'https://www.instagram.com/p/B1nlf9AhX4M/'
-    KIENTHUC_VIDEO_URL = 'https://kienthuc.net.vn/truyen-hinh-video/video-duong-pho-ha-noi-ngap-sau-sau-mua-bao-1259721.html'
+    NEWS_KIENTHUC_VIDEO_URL = 'https://kienthuc.net.vn/truyen-hinh-video/video-duong-pho-ha-noi-ngap-sau-sau-mua-bao-1259721.html'
     MOJI_BIG_CHATBOX = 'https://www.messenger.com/t/100013968193318'
     VIETNAMNET_VIDEO_URL = 'https://video.vietnamnet.vn/thuoc-la-dien-tu-khong-nicotine-van-gay-hai-den-co-the-a-81979.html'
     TWITTER_VIDEO_URL = 'https://twitter.com/pje0n/status/1170961701455286272'

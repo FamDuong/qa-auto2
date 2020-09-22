@@ -167,3 +167,8 @@ class AnySite(object):
     OK_RU_VIDEO_ITEM = (By.XPATH, '//*[@id="VideoAutoplayPlayerE"]//video')
     NHACCUATUI_VIDEO_TITLE = (By.XPATH, '//h2[@class="name-singer"]//a[1]')
     CHON_GIAO_DIEN_SUBMIT_BTN = (By.XPATH, '//button[@type="submit"]')
+    CHON_GIAO_DIEN_SUBMIT_BTN_XPATH = '//button[@type="submit"]'
+    NEWS_24H_VIDEO_TO_GET_TITLE_CSS = 'div[class="viewVideoPlay"] video'
+    NEWS_KIENTHUC_VIDEO_TO_GET_TITLE_CSS = 'div[class="contentvideo"] video'
+    VIETNAMENET_VIDEO_IFRAME = (By.XPATH, '//iframe[@allow="autoplay; fullscreen"]')
+

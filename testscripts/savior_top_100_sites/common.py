@@ -1,3 +1,5 @@
+import time
+
 from models.pageobject.sites import AnySitePageObject
 from testscripts.common_setup import assert_file_download_value, delete_all_mp4_file_download, \
     download_file_via_main_download_button, get_resolution_info

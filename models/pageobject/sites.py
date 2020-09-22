@@ -15,6 +15,7 @@ from utils_automation.setup import WaitAfterEach
 
 LOGGER = logging.getLogger(__name__)
 
+
 class YoutubePageObject(BasePageObject):
     youtube_element = YoutubePageElements()
 
@@ -253,7 +254,7 @@ class AnySitePageObject(BasePageObject):
             if driver.execute_script('return document.querySelector(arguments[0])',
                                      'div[class="html5-vpl_time_t"]') is not None:
                 time_value = driver.execute_script('return document.querySelector(arguments[0]).textContent',
-                                      'div[class="html5-vpl_time_t"]')
+                                                   'div[class="html5-vpl_time_t"]')
                 i += 1
                 return time_value
 
@@ -568,7 +569,8 @@ class AnySitePageObject(BasePageObject):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         elements = driver.find_elements_by_xpath(AnySite.DONG_PHIM_WATCH_OPTION_XPATH)
         if len(elements) > 0:
-            self.any_site_element.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_WATCH_OPTION)).click()
+            self.any_site_element.wait_for_element(driver).until(
+                ec.presence_of_element_located(AnySite.DONG_PHIM_WATCH_OPTION)).click()
         else:
             print("Cannot find button for watch options")
         return elements
@@ -627,4 +629,8 @@ class AnySitePageObject(BasePageObject):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_ok_ru(driver))
 
     def click_zingmp3_chon_giao_dien_btn(self, driver):
-        self.any_site_element.find_zingmp3_chon_giao_dien_button(driver).click()
+        if self.any_site_element.count_zingmp3_chon_giao_dien_button(driver) > 0:
+            self.any_site_element.find_zingmp3_chon_giao_dien_button(driver).click()
+
+    def swith_to_vietnamnet_video_iframe(self, driver):
+        driver.switch_to.frame(self.any_site_element.find_vietnamnet_video_iframe(driver))

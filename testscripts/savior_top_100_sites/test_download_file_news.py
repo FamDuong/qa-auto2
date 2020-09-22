@@ -1,51 +1,50 @@
+import time
+
 import pytest
 
+from models.pagelocators.sites import AnySite
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
+
+from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
 from testscripts.common_setup import delete_all_mp4_file_download, \
     implement_download_file, verify_download_quality_high_frame, \
-    choose_video_quality_medium_option
+    choose_video_quality_medium_option, pause_or_play_video_by_javascript
+from testscripts.savior_top_100_sites.common import download_and_verify_video
 from utils_automation.const import OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
 
 any_site_page_object = AnySitePageObject()
 savior_page_object = SaviorPageObject()
+top_site_titles_action = TopSitesSaviorTitleAction()
 
 
 class Test24H:
 
-    @staticmethod
-    def mouse_over_video_element_24h(browser):
-        browser.get(OtherSiteUrls.TWENTY_FOUR_H_VIDEO_URL)
-        any_site_page_object.mouse_over_video_element_24h(browser)
-
-    def prepare_check_download(self, browser, download_folder):
-        self.mouse_over_video_element_24h(browser)
-        delete_all_mp4_file_download(download_folder, '.mp4')
-        WaitAfterEach.sleep_timer_after_each_step()
+    # @staticmethod
+    # def mouse_over_video_element_24h(browser):
+    #     browser.get(OtherSiteUrls.NEWS_24H_URL)
+    #     any_site_page_object.mouse_over_video_element_24h(browser)
+    #
+    # def prepare_check_download(self, browser, download_folder):
+    #     self.mouse_over_video_element_24h(browser)
+    #     delete_all_mp4_file_download(download_folder, '.mp4')
+    #     WaitAfterEach.sleep_timer_after_each_step()
 
     @pytestrail.case('C96720')
-    def test_download_file_24h(self, browser_top_sites, get_current_download_folder):
-        self.prepare_check_download(browser_top_sites, get_current_download_folder)
-        verify_download_quality_high_frame(browser_top_sites, get_current_download_folder,
-                                           self.mouse_over_video_element_24h)
+    def test_download_file_24h(self, browser_top_sites, get_current_download_folder_top_sites):
+        browser_top_sites.get(OtherSiteUrls.NEWS_24H_BONGDA_URL)
+        video_title_bong_da = top_site_titles_action.get_video_title_from_link(browser_top_sites,
+                                                                               AnySite.NEWS_24H_VIDEO_TO_GET_TITLE_CSS)
+        any_site_page_object.mouse_over_first_video_element(browser_top_sites)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title_bong_da)
 
+        browser_top_sites.get(OtherSiteUrls.NEWS_24H_URL)
+        video_title = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
+        any_site_page_object.mouse_over_first_video_element(browser_top_sites)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
-class TestKienThucDotNet:
-
-    @staticmethod
-    def prepare_appear_savior_option(browser):
-        browser.get(OtherSiteUrls.KIENTHUC_VIDEO_URL)
-        WaitAfterEach.sleep_timer_after_each_step()
-        any_site_page_object.click_video_item_kienthuc(browser)
-        any_site_page_object.mouse_over_video_item_kienthuc(browser)
-
-    @pytestrail.case('C96755')
-    def test_download_file_kiethuc_dotnet(self, browser, get_current_download_folder
-                                          , clear_download_page):
-        self.prepare_appear_savior_option(browser)
-        implement_download_file(browser, get_current_download_folder)
 
 
 class TestVietnamNet:
@@ -56,11 +55,17 @@ class TestVietnamNet:
         any_site_page_object.mouse_over_video_item_vietnamnet(browser)
 
     @pytestrail.case('C96759')
-    def test_download_file_vietnamnet(self, browser, get_current_download_folder
-                                      , clear_download_page):
-        self.prepare_savior_option_displayed(browser)
-        verify_download_quality_high_frame(browser, get_current_download_folder,
-                                           self.prepare_savior_option_displayed),
+    def test_download_file_vietnamnet(self, browser_top_sites, get_current_download_folder_top_sites):
+        browser_top_sites.get(OtherSiteUrls.VIETNAMNET_VIDEO_URL)
+
+        any_site_page_object.swith_to_vietnamnet_video_iframe(browser_top_sites)
+        any_site_page_object.mouse_over_video_item_vietnamnet(browser_top_sites)
+        video_title = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
+
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
+        # self.prepare_savior_option_displayed(browser_top_sites)
+        # verify_download_quality_high_frame(browser_top_sites, get_current_download_folder_top_sites,
+        #                                    self.prepare_savior_option_displayed),
 
 
 class TestEvaVn:
