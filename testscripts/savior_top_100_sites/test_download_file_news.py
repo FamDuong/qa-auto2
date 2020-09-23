@@ -1,3 +1,4 @@
+import logging
 import time
 
 import pytest
@@ -14,10 +15,12 @@ from testscripts.common_setup import delete_all_mp4_file_download, \
 from testscripts.savior_top_100_sites.common import download_and_verify_video
 from utils_automation.const import OtherSiteUrls
 from utils_automation.setup import WaitAfterEach
-
+from models.pageobject.basepage_object import BasePageObject
 any_site_page_object = AnySitePageObject()
 savior_page_object = SaviorPageObject()
 top_site_titles_action = TopSitesSaviorTitleAction()
+
+LOGGER = logging.getLogger(__name__)
 
 
 class Test24H:
@@ -46,7 +49,7 @@ class Test24H:
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
 
-
+# Still error
 class TestVietnamNet:
 
     @staticmethod
@@ -62,273 +65,61 @@ class TestVietnamNet:
         any_site_page_object.mouse_over_video_item_vietnamnet(browser_top_sites)
         video_title = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
 
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title,
+                                  mouse_over_first_video=False)
         # self.prepare_savior_option_displayed(browser_top_sites)
         # verify_download_quality_high_frame(browser_top_sites, get_current_download_folder_top_sites,
         #                                    self.prepare_savior_option_displayed),
 
 
-class TestEvaVn:
-
-    @staticmethod
-    def prepare_savior_displayed(browser):
-        browser.get(OtherSiteUrls.EVA_VN_VIDEO_URL)
-        any_site_page_object.mouse_over_video_item_eva_vn(browser)
-
-    @pytestrail.case('C96761')
-    def test_download_file_eva_vn(self, browser, get_current_download_folder, clear_download_page):
-        self.prepare_savior_displayed(browser)
-        verify_download_quality_high_frame(browser, get_current_download_folder,
-                                           self.prepare_savior_displayed),
-
-
-class TestSoha:
-
-    @staticmethod
-    def prepare_savior_displayed(browser):
-        browser.get(OtherSiteUrls.SOHA_VIDEO_URL)
-        any_site_page_object.mouse_over_video_item_soha(browser)
-
-    @pytestrail.case('C98722')
-    def test_download_file_soha(self, browser, get_current_download_folder, clear_download_page):
-        self.prepare_savior_displayed(browser)
-        verify_download_quality_high_frame(browser, get_current_download_folder,
-                                           self.prepare_savior_displayed)
-
-
-class Test2SaoVn:
-
-    @staticmethod
-    def prepare_savior_displayed(browser):
-        browser.get(OtherSiteUrls.SAO_2_VN_VIDEO_URL)
-        any_site_page_object.click_video_item_sao_2_vn(browser)
-        any_site_page_object.mouse_over_video_item_sao_2_vn(browser)
-
-    @pytestrail.case('C98725')
-    def test_download_file_test2sao(self, browser, get_current_download_folder,
-                                    clear_download_page):
-        self.prepare_savior_displayed(browser)
-        verify_download_quality_high_frame(browser, get_current_download_folder,
-                                           self.prepare_savior_displayed),
-
-
-class TestPhuNuVaGiaDinh:
-
-    @staticmethod
-    def prepare_savior_option_appear(browser):
-        browser.get(OtherSiteUrls.PHUNU_GIADINH_VIDEO_URL)
-        any_site_page_object.click_video_item_phunu_giadinh(browser)
-        any_site_page_object.mouse_over_video_item_phunu_giadinh(browser)
-
-    @pytestrail.case('C98734')
-    def test_download_file_phunu_giadinh(self, browser, get_current_download_folder,
-                                         clear_download_page):
-        self.prepare_savior_option_appear(browser)
-        implement_download_file(browser, get_current_download_folder)
-
-
-class TestTienPhong:
-
-    @staticmethod
-    def prepare_savior_option_appear(browser):
-        browser.get(OtherSiteUrls.TIEN_PHONG_VIDEO_URL)
-        any_site_page_object.click_video_item_tien_phong(browser)
-        any_site_page_object.mouse_over_video_item_tien_phong(browser)
-
-    @pytestrail.case('C98743')
-    def test_download_file_tienphong(self, browser, get_current_download_folder,
-                                     clear_download_page):
-        self.prepare_savior_option_appear(browser)
-        implement_download_file(browser, get_current_download_folder)
-
-
-class TestBongDaDotCom:
-
-    @staticmethod
-    def prepare_savior_option_appear(browser):
-        browser.get(OtherSiteUrls.BONG_DA_DOT_COM_VIDEO_URL)
-        any_site_page_object.click_video_item_bong_da_dot_com(browser)
-        any_site_page_object.mouse_over_video_item_bong_da_dot_com(browser)
-
-    @pytestrail.case('C98746')
-    def test_download_file_bongda_dotcom(self, browser, get_current_download_folder,
-                                         clear_download_page):
-        self.prepare_savior_option_appear(browser)
-        verify_download_quality_high_frame(browser, get_current_download_folder,
-                                           self.prepare_savior_option_appear)
-
-
-class TestGiaDinhDotNet:
-
-    @staticmethod
-    def prepare_savior_option_appear(browser):
-        browser.get(OtherSiteUrls.GIA_DINH_DOT_NET_VIDEO_URL)
-        any_site_page_object.mouse_over_video_item_gia_dinh_dot_net(browser)
-
-    @pytestrail.case('C98748')
-    def test_download_file_gia_dinh_dotnet(self, browser, get_current_download_folder
-                                           , clear_download_page):
-        self.prepare_savior_option_appear(browser)
-        verify_download_quality_high_frame(browser, get_current_download_folder,
-                                           self.prepare_savior_option_appear)
-
-
-class TestAFamily:
-
-    @staticmethod
-    def prepare_savior_option_appear(browser):
-        browser.get(OtherSiteUrls.A_FAMILY_VIDEO_URL)
-        any_site_page_object.mouse_over_video_item_a_family(browser)
-
-    @pytestrail.case('C98749')
-    def test_download_file_video_a_family(self, browser, get_current_download_folder
-                                          , clear_download_page):
-        self.prepare_savior_option_appear(browser)
-        verify_download_quality_high_frame(browser, get_current_download_folder,
-                                           self.prepare_savior_option_appear),
-
-
-class TestGamek:
-
-    @staticmethod
-    def prepare_savior_option_appear(browser):
-        browser.get(OtherSiteUrls.GAMEK_VN_VIDEO_URL)
-        any_site_page_object.mouse_over_video_item_gamek_vn(browser)
-
-    @pytestrail.case('C98750')
-    def test_download_file_video_gamek(self, browser, get_current_download_folder
-                                       , clear_download_page):
-        self.prepare_savior_option_appear(browser)
-        verify_download_quality_high_frame(browser, get_current_download_folder,
-                                           self.prepare_savior_option_appear),
-
-
-class TestAnNinhThuDo:
-
-    @staticmethod
-    def prepare_savior_option_appear(browser):
-        browser.get(OtherSiteUrls.AN_NINH_THU_DO_VIDEO_URL)
-        any_site_page_object.click_video_item_an_ninh_thu_do(browser)
-        any_site_page_object.mouse_over_video_item_an_ninh_thu_do(browser)
-
-    @pytestrail.case('C98752')
-    def test_download_file_video_an_ninh_thu_do(self, browser, get_current_download_folder
-                                                , clear_download_page):
-        self.prepare_savior_option_appear(browser)
-        implement_download_file(browser, get_current_download_folder)
-
-
 class TestTuoiTre:
 
-    @staticmethod
-    def prepare_savior_option_appear(browser):
-        browser.get(OtherSiteUrls.TUOI_TRE_VIDEO_URL)
-        any_site_page_object.mouse_over_video_item_tuoi_tre(browser)
-
     @pytestrail.case('C98754')
-    def test_download_file_video_tuoi_tre(self, browser, get_current_download_folder
-                                          , clear_download_page):
-        self.prepare_savior_option_appear(browser)
-        verify_download_quality_high_frame(browser, get_current_download_folder,
-                                           self.prepare_savior_option_appear),
-
-
-class TestNgoiSaoVN:
-
-    @pytestrail.case('C98763')
-    def test_download_file_ngoi_sao_vn(self, browser, get_current_download_folder
-                                       , clear_download_page):
-        browser.get(OtherSiteUrls.NGOI_SAO_VN_URL)
-        any_site_page_object.mouse_over_video_item_ngoi_sao_vn(browser)
-        implement_download_file(browser, get_current_download_folder),
+    def test_download_file_video_tuoi_tre(self, browser_top_sites, get_current_download_folder_top_sites):
+        browser_top_sites.get(OtherSiteUrls.TUOI_TRE_VIDEO_URL)
+        video_title = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
 
 class TestVTCVN:
 
     @pytestrail.case('C98764')
-    def test_download_file_vtc_vn(self, browser, get_current_download_folder
-                                  , clear_download_page):
-        browser.get(OtherSiteUrls.VTC_VN_VIDEO_URL)
-        any_site_page_object.click_video_element_vtc_v(browser)
-        any_site_page_object.mouse_over_video_element_vtc_vn(browser)
-        implement_download_file(browser, get_current_download_folder),
+    def test_download_file_vtc_vn(self, browser_top_sites, get_current_download_folder_top_sites):
+        browser_top_sites.get(OtherSiteUrls.VTC_VN_VIDEO_URL)
+        any_site_page_object.click_video_element_vtc_v(browser_top_sites)
+        video_title = top_site_titles_action.get_vtc_video_title(browser_top_sites)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
 
 class TestKenh14VN:
 
-    @staticmethod
-    def prepare_savior_option_appear(browser):
-        browser.get(OtherSiteUrls.KENH14_VN_VIDEO_URL)
-        any_site_page_object.mouse_over_video_element_kenh14_vn(browser)
-
     @pytestrail.case('C98765')
-    def test_download_file_kenh14_vn(self, browser, get_current_download_folder
-                                     , clear_download_page):
-        self.prepare_savior_option_appear(browser)
-        verify_download_quality_high_frame(browser, get_current_download_folder,
-                                           self.prepare_savior_option_appear),
-
-
-class TestCafeVN:
-
-    @staticmethod
-    def prepare_savior_option_appear(browser):
-        browser.get(OtherSiteUrls.CAFE_VN_VIDEO_URL)
-        any_site_page_object.mouse_over_video_element_cafe_vn(browser)
-
-    @pytestrail.case('C98766')
-    def test_download_file_cafe_vn(self, browser, get_current_download_folder
-                                   , clear_download_page):
-        self.prepare_savior_option_appear(browser)
-        verify_download_quality_high_frame(browser, get_current_download_folder,
-                                           self.prepare_savior_option_appear),
-
-
-class TestTinTucOnlineVN:
-
-    @staticmethod
-    def prepare_savior_option_appear(browser):
-        browser.get(OtherSiteUrls.TIN_TUC_ONLINE_VIDEO_URL)
-        any_site_page_object.mouse_over_video_detail_tin_tuc_online_vn(browser)
-
-    @pytestrail.case('C98768')
-    def test_download_file_tin_tuc_online(self, browser, get_current_download_folder
-                                          , clear_download_page):
-        self.prepare_savior_option_appear(browser)
-        verify_download_quality_high_frame(browser, get_current_download_folder,
-                                           self.prepare_savior_option_appear),
-
-
-class TestGiaoDucThoiDai:
-
-    @staticmethod
-    def prepare_savior_option_appear(browser):
-        browser.get(OtherSiteUrls.GIAO_DUC_THOI_DAI_VIDEO_URL)
-        any_site_page_object.click_video_giao_duc_thoi_dai(browser)
-        any_site_page_object.mouse_over_video_giao_duc_thoi_dai(browser)
-
-    @pytestrail.case('C98770')
-    def test_download_file_tin_tuc_online(self, browser, get_current_download_folder
-                                          , clear_download_page):
-        self.prepare_savior_option_appear(browser)
-        implement_download_file(browser, get_current_download_folder),
+    def test_download_file_kenh14_vn(self, browser_top_sites, get_current_download_folder_top_sites
+                                     ):
+        browser_top_sites.get(OtherSiteUrls.KENH14_VN_VIDEO_URL)
+        video_title = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
 
 class TestVNExpressNet:
-
-    @staticmethod
-    def prepare_savior_option_appear(browser):
-        browser.get(OtherSiteUrls.VN_EXPRESS_VIDEO_URL)
-        any_site_page_object.mouse_over_video_vn_express(browser)
+    base_page_object = BasePageObject()
 
     @pytestrail.case('C98772')
-    @pytestrail.defect('US-27')
-    def test_download_file_vnexpress(self, browser, get_current_download_folder
-                                     , clear_download_page
-                                     , choose_low_quality_option
-                                     , revert_high_quality_default_option):
-        self.prepare_savior_option_appear(browser)
-        implement_download_file(browser, get_current_download_folder),
+    def test_download_file_vnexpress(self, browser_top_sites, get_current_download_folder_top_sites):
+        # browser_top_sites.get(OtherSiteUrls.VIDEO_VNEXPRESS_URL)
+        # LOGGER.info("Check download video on "+OtherSiteUrls.VIDEO_VNEXPRESS_URL)
+        # video_title = top_site_titles_action.get_video_vnexpress_video_title(browser_top_sites)
+        # download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
+
+        browser_top_sites.get(OtherSiteUrls.NEWS_VNEXPRESS_URL)
+        LOGGER.info("Check download video on " + OtherSiteUrls.NEWS_VNEXPRESS_URL)
+
+        # self.base_page_object.scroll_to_with_scroll_height(browser_top_sites)
+        # pause_or_play_video_by_javascript(browser_top_sites, action='play')
+        any_site_page_object.mouse_over_video_vn_express(browser_top_sites)
+        video_title = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
+        time.sleep(2)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title, mouse_over_first_video=False)
 
 
 class TestThanhNienVN:
@@ -433,7 +224,7 @@ class TestVoV:
         any_site_page_object.play_vov_vn_video(browser)
         browser.switch_to.default_content()
         any_site_page_object.mouse_over_video_item_vov_vn(browser)
-        implement_download_file(browser, get_current_download_folder, time_sleep=8,),
+        implement_download_file(browser, get_current_download_folder, time_sleep=8, ),
 
 
 class TestDoiSongPhapLuat:
@@ -479,5 +270,3 @@ class TestVtvGoVN:
         browser.get(OtherSiteUrls.VTV_GO_VN_VIDEO_URL)
         any_site_page_object.mouse_over_video_vtv_go_vn(browser)
         implement_download_file(browser, get_current_download_folder)
-
-

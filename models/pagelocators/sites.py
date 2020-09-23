@@ -65,7 +65,7 @@ class AnySite(object):
     TV_HAY_VN_VIDEO_ITEM = (By.ID, 'playerjw7')
     TV_HAY_VN_PAUSE_BTN = (By.XPATH, '//div[@class="html5-vpl_panel_btn html5-vpl_play"]')
     NGOI_SAO_VN_VIDEO_ITEM = (By.XPATH, '(//video[@class="jw-video jw-reset"])[1]')
-    VTC_VN_VIDEO_PLAY_ITEM = (By.ID, 'myElementV0')
+    VTC_VN_VIDEO_PLAY_ITEM = (By.XPATH, '//div[@aria-label="Play"]')
     VTC_VN_VIDEO_ITEM = (By.XPATH, '//video')
     KENH14_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
     CAFE_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')

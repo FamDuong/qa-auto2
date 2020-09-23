@@ -38,14 +38,12 @@ class TestDownloadGroup:
     def test_download_youtube(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(VideoUrls.YOUTUBE_VIDEO_URL)
         video_title = self.top_site_titles_action.get_youtube_video_title(browser_top_sites)
-        self.any_site_page_object.mouse_over_first_video_element(browser_top_sites)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
     @pytestrail.case('C96752')
     def test_download_news_zing(self, browser_top_sites, get_current_download_folder_top_sites):
         pause_any_video_site(browser_top_sites, VideoUrls.NEWS_ZING_VIDEO_URL)
         video_title = self.top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
-        self.any_site_page_object.mouse_over_first_video_element(browser_top_sites)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
     @pytestrail.case('C96756')
@@ -53,7 +51,6 @@ class TestDownloadGroup:
         pause_any_video_site(browser_top_sites, VideoUrls.ZING_MP3_VN_VIDEO_URL)
         self.any_site_page_object.click_zingmp3_chon_giao_dien_btn(browser_top_sites)
         video_title = self.top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
-        self.any_site_page_object.mouse_over_first_video_element(browser_top_sites)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
 
@@ -62,7 +59,6 @@ class TestDownloadGroup:
     def test_download_nhaccuatui(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM)
         video_title = self.top_site_titles_action.get_nhaccuatui_video_title(browser_top_sites)
-        self.any_site_page_object.mouse_over_first_video_element(browser_top_sites)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
     # @pytestrail.case('C98735')

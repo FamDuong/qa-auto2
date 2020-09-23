@@ -64,3 +64,13 @@ class TopSitesSaviorTitleAction(BasePageObject):
         video_title_list = temp_list[1].rsplit('.', 1)
         LOGGER.info("Get video title: " + video_title_list[0])
         return video_title_list[0]
+
+    def get_vtc_video_title(self, driver):
+        vtc_video_title_root = self.get_website_title_by_javascript(driver)
+        temp_list = vtc_video_title_root.split('-', 1)
+        vtc_video_title = temp_list[0]
+        LOGGER.info("Get video title: " + vtc_video_title)
+        return vtc_video_title
+
+    def get_video_vnexpress_video_title(self, driver):
+        return self.top_sites_savior_title_elements.find_video_vnexpress_video_title_element(driver).text

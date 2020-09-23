@@ -77,7 +77,15 @@ class AnySitePageObject(BasePageObject):
                                      driver.maximize_window())
 
     def mouse_over_first_video_element(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_first_video_element(driver))
+        first_video_element = self.any_site_element.find_first_video_element(driver)
+        start_time = datetime.now()
+        while first_video_element is None:
+            first_video_element = self.any_site_element.find_first_video_element(driver)
+            time.sleep(2)
+            time_delta = datetime.now() - start_time
+            if time_delta.total_seconds() >= 10:
+                break
+        self.mouse_over_video_element_site(driver, first_video_element)
 
     def get_mouse_enter_event_js_element(self, driver):
         return driver.execute_script('return new Event("mouseenter")')

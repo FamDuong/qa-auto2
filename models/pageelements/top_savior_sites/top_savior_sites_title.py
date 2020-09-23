@@ -41,6 +41,11 @@ class TopSitesSaviorTitleElements(BasePageElement):
     def find_fr_pornhub_video_title_element(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(TopSaviorSitesTitleLocators.FR_PORNHUB_VIDEO_TITLE))
 
+    def find_video_vnexpress_video_title_element(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(
+            TopSaviorSitesTitleLocators.VIDEO_VNEXPRESS_VIDEO_TITLE))
+
+
 
 
 

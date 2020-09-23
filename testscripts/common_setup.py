@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 
 import cv2
 from models.pageobject.downloads import DownloadsPageObject
@@ -38,9 +39,14 @@ def download_file_via_main_download_button(browser, time_sleep=8):
     savior_page_object.download_file_via_savior_download_btn(browser)
     time.sleep(time_sleep)
     media_info_element = savior_page_object.current_media_info(browser)
-
+    start_time = datetime.now()
+    while check_if_the_file_fully_downloaded(browser) is False:
+        time.sleep(2)
+        time_delta = datetime.now() - start_time
+        if time_delta.total_seconds() >= 15:
+            break
     # Check the file is fully downloaded
-    check_if_the_file_fully_downloaded(browser)
+    # check_if_the_file_fully_downloaded(browser)
     return media_info_element
 
 
@@ -57,7 +63,8 @@ def clear_data_download(driver):
 
 
 def assert_file_download_value(download_folder_path, height_value, start_with):
-    LOGGER.info("Verify video title same as: "+str(start_with))
+    LOGGER.info("Verify video title same as: " + str(start_with))
+    LOGGER.info("Verify video resolution same as: " + str(height_value))
     mp4_files = find_mp4_file_download(download_folder_path, endwith='.mp4', startwith=start_with)
     vid = cv2.VideoCapture(download_folder_path + '\\' + mp4_files[0])
     height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
@@ -65,16 +72,20 @@ def assert_file_download_value(download_folder_path, height_value, start_with):
     assert vid.isOpened()
     assert len(mp4_files) > 0
     if int(height) > 720:
+        LOGGER.info("Assert video with high resolution")
         assert width == if_height_frame_so_width_frame(height)
     vid.release()
+
     if (height_value is not None) and (height_value != ''):
+        LOGGER.info("Assert video with Standard/ Medium/ Low resolution")
         assert (str(int(height)) in height_value or abs(int(height) - int(height_value.split('p')[0])) < 10)
     else:
+        LOGGER.info("Assert video is not None")
         assert height is not None
-
+    # cv2.destroyAllWindows()
 
 def assert_file_download_exist(download_folder_path, file_size=2.00, startwith=None):
-    LOGGER.info("Verify video title same as: "+str(startwith))
+    LOGGER.info("Verify video title same as: " + str(startwith))
     import os
     mp4_files = find_mp4_file_download(download_folder_path, '.mp4', startwith=startwith)
     file_path = download_folder_path + '\\' + mp4_files[0]
@@ -136,7 +147,8 @@ def choose_video_quality_low_option(browser):
 
 def pause_or_play_video_by_javascript(browser, action='play'):
     browser.execute_script("let elements = document.querySelectorAll('video'); "
-                           "if (elements.length > 0) { for (let element of elements) { element."+action+"();}}")
+                           "if (elements.length > 0) { for (let element of elements) { element." + action + "();}}")
+
 
 def pause_any_video_site(browser, url):
     LOGGER.info("Open " + url)

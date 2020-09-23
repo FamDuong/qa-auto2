@@ -7,6 +7,7 @@ from utils_automation.common_browser import coccoc_instance
 from utils_automation.const import Urls
 from utils_automation.setup import WaitAfterEach
 from testscripts.common_setup import delete_all_mp4_file_download
+
 LOGGER = logging.getLogger(__name__)
 
 download_folder = None
@@ -15,11 +16,8 @@ download_folder = None
 @pytest.fixture(scope='session')
 def browser_top_sites():
     LOGGER.info("Init coc coc browser...")
-    global driver
     global download_folder
     driver = coccoc_instance()
-
-
 
     LOGGER.info("Get default download folder...")
     driver.get(Urls.COCCOC_SETTINGS_URL)
@@ -36,6 +34,7 @@ def browser_top_sites():
     downloads_page_object.clear_all_existed_downloads(driver)
     yield driver
     driver.quit()
+
 
 @pytest.fixture(scope='session')
 def get_current_download_folder_top_sites():

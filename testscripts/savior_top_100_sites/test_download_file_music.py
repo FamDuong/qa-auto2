@@ -13,6 +13,5 @@ class TestNhacVN:
     def test_download_nhac_vn(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(OtherSiteUrls.NHAC_VN_VIDEO_URL)
         video_title = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
-        self.any_site_page_object.mouse_over_first_video_element(browser_top_sites)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 

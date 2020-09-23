@@ -7,8 +7,9 @@ from testscripts.common_setup import assert_file_download_value, delete_all_mp4_
 any_site_page_object = AnySitePageObject()
 
 
-def download_and_verify_video(browser, download_folder, video_title):
-    any_site_page_object.mouse_over_first_video_element(browser)
+def download_and_verify_video(browser, download_folder, video_title, mouse_over_first_video=True):
+    if mouse_over_first_video:
+        any_site_page_object.mouse_over_first_video_element(browser)
     media_info = download_file_via_main_download_button(browser, time_sleep=15)
     resolution_info = get_resolution_info(media_info)
     try:
