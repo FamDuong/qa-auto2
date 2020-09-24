@@ -8,6 +8,7 @@ from utils_automation.common import wait_for_stable
 
 LOGGER = logging.getLogger(__name__)
 
+
 class BasePageElement(object):
 
     @staticmethod
@@ -46,7 +47,7 @@ class BasePageElement(object):
         try:
             element = self.wait_for_element(driver).until(ec.presence_of_element_located(locator))
         except TimeoutException as e:
-            print(e.stacktrace)
+            LOGGER.info(e.stacktrace)
         return element
 
 

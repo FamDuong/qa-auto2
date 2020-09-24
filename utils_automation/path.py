@@ -1,4 +1,7 @@
 import yaml
+import logging
+
+LOGGER = logging.getLogger(__name__)
 
 
 class YamlCustom:
@@ -15,7 +18,7 @@ class YamlCustom:
             try:
                 return yaml.safe_load(stream)
             except yaml.YAMLError as exc:
-                print(exc)
+                LOGGER.info(exc)
 
 
 

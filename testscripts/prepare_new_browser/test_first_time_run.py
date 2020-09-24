@@ -4,6 +4,8 @@ from utils_automation.const import Urls
 from models.pageobject.settings import SettingsPageObject
 from models.pageelements.settings import SettingsPageLocators
 from utils_automation.common import BrowserHandler, WindowsCMD, wait_for_stable, FilesHandle, WindowsHandler
+from utils_automation.common_browser import cleanup, coccoc_instance
+
 
 class TestFirstRun(TestInstall):
 
@@ -20,14 +22,13 @@ class TestFirstRun(TestInstall):
 
     @pytestrail.case('C44831')
     def test_task_manager_when_starting_browser(self):
-        self.new_browser.browser_cleanup()   # Close all existed browsers
-        self.new_browser.browser_init()
+        cleanup()   # Close all existed browsers
+        coccoc_instance()
         assert WindowsCMD.is_process_exists("browser") is True
         assert WindowsCMD.is_process_exists("CocCocCrashHandler") is True
 
     @pytestrail.case('C44832')
-    def test_extensions_version_after_the_installation(self, get_user_data_path):
-        browser = self.new_browser.browser_init(get_user_data_path)
+    def test_extensions_version_after_the_installation(self, browser):
         browser.get(Urls.COCCOC_EXTENSIONS)
         self.setting_page_object.verify_extension_version(browser, SettingsPageLocators.EXTENSION_DICTIONARY_ID, '1.3.6')
         self.setting_page_object.verify_extension_version(browser, SettingsPageLocators.EXTENSION_SAVIOR_ID, '0.27.3')

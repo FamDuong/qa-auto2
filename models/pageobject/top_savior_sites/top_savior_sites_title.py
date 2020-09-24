@@ -1,9 +1,28 @@
+import logging
+
+from models.pageelements.sites import AnySiteElements
 from models.pageelements.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleElements
+from models.pagelocators.sites import AnySite
 from models.pageobject.basepage_object import BasePageObject
+
+LOGGER = logging.getLogger(__name__)
 
 
 class TopSitesSaviorTitleAction(BasePageObject):
     top_sites_savior_title_elements = TopSitesSaviorTitleElements()
+    any_sites_elements = AnySiteElements()
+
+    def replace_vertical_bar_and_colon_by_dash_in_string(self, string):
+        if '|' in string or ':' in string:
+            new_string_temp = string.replace('|', '-')
+            new_string = new_string_temp.replace(':', '-')
+            LOGGER.info("Video title after replace | by -: " + new_string)
+            return new_string
+
+    def get_website_title_by_javascript(self, driver):
+        video_title = driver.execute_script("return document.title")
+        LOGGER.info("Get video title: " + video_title)
+        return video_title
 
     def get_x_videos_title_video(self, driver):
         return self.top_sites_savior_title_elements.find_x_videos_title_video_element(driver).text
@@ -15,7 +34,14 @@ class TopSitesSaviorTitleAction(BasePageObject):
         return self.top_sites_savior_title_elements.find_tv_zing_video_title_element(driver).text
 
     def get_youtube_video_title(self, driver):
-        return self.top_sites_savior_title_elements.find_youtube_video_title_element(driver).text
+        youtube_video_title = self.top_sites_savior_title_elements.find_youtube_video_title_element(driver).text
+        LOGGER.info("Video title: " + youtube_video_title)
+        return youtube_video_title
+
+    def get_nhaccuatui_video_title(self, driver):
+        nhaccuatui_video_title = self.any_sites_elements.find_nhaccuatui_video_title(driver).text
+        LOGGER.info("Get video title: " + nhaccuatui_video_title)
+        return nhaccuatui_video_title
 
     def get_instagram_video_title(self, driver):
         return self.top_sites_savior_title_elements.find_video_instagram_title_element(driver).get_attribute('content')
@@ -36,8 +62,22 @@ class TopSitesSaviorTitleAction(BasePageObject):
         return self.top_sites_savior_title_elements.find_facebook_video_title_element(driver).text
 
     def get_fr_pornhub_video_title(self, driver):
-        return self.top_sites_savior_title_elements.find_fr_pornhub_video_title_element(driver).get_attribute('data-video-title')
+        return self.top_sites_savior_title_elements.find_fr_pornhub_video_title_element(driver).get_attribute(
+            'data-video-title')
 
+    def get_video_title_from_link(self, driver, title_css_selector):
+        video_title_root = driver.execute_script("return document.querySelector('" + title_css_selector + "').getAttribute('src')")
+        temp_list = video_title_root.rsplit('/', 1)
+        video_title_list = temp_list[1].rsplit('.', 1)
+        LOGGER.info("Get video title: " + video_title_list[0])
+        return video_title_list[0]
 
+    def get_vtc_video_title(self, driver):
+        vtc_video_title_root = self.get_website_title_by_javascript(driver)
+        temp_list = vtc_video_title_root.split('-', 1)
+        vtc_video_title = temp_list[0]
+        LOGGER.info("Get video title: " + vtc_video_title)
+        return vtc_video_title
 
-
+    def get_video_vnexpress_video_title(self, driver):
+        return self.top_sites_savior_title_elements.find_video_vnexpress_video_title_element(driver).text

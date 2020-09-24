@@ -30,27 +30,28 @@ class TestPhimmoi:
     top_sites_savior_title_actions = TopSitesSaviorTitleAction()
     top_sites_savior_title_elements = TopSitesSaviorTitleElements()
 
-    def prepare_displayed_savior_popup(self, browser):
+    def test_prepare_displayed_savior_popup(self, browser):
         browser.get(OtherSiteUrls.PHIMMOI_VIDEO_URL)
+        browser.refresh()
+        # self.top_sites_savior_actions.open_film_in_phim_moi(browser)
         self.top_sites_savior_actions.close_popup_ad_if_appear(browser)
-        time.sleep(4)
+        # time.sleep(40)
         WebElements.scroll_into_view_element(browser, self.top_sites_savior_title_elements
                                              .find_video_phimmoi_title_element(browser))
         any_site_page_object.mouse_over_video_element_phimmoi(browser)
-        time.sleep(2)
+        time.sleep(400)
 
     @pytestrail.case('C96721')
     @pytest.mark.ten_popular_sites
     @pytestrail.defect('PF-1219')
-    def test_download_file_phim_moi(self, browser_top_sites, get_current_download_folder_top_sites
-                                    , clear_download_page
-                                    ,):
-        self.prepare_displayed_savior_popup(browser_top_sites)
-        video_title_start_with = self.top_sites_savior_title_actions.get_phimmoi_video_title(browser_top_sites)
+    def test_download_file_phim_moi(self, browser, get_current_download_folder):
+                                    #, clear_download_page ,):
+        self.prepare_displayed_savior_popup(browser)
+        video_title_start_with = self.top_sites_savior_title_actions.get_phimmoi_video_title(browser)
         try:
-            implement_download_file(browser_top_sites, get_current_download_folder_top_sites, startwith=video_title_start_with)
+            implement_download_file(browser, get_current_download_folder, startwith=video_title_start_with)
         finally:
-            delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title_start_with)
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title_start_with)
 
 
 class TestVuViPhim:
@@ -60,13 +61,13 @@ class TestVuViPhim:
     def prepare_savior_option_displayed(self, browser):
         browser.get(OtherSiteUrls.VU_VI_PHIM_VIDEO_URL)
         any_site_page_object.switch_to_iframe_vu_vi_phim(browser)
-        any_site_page_object.play_video_vu_vi_phim(browser)
-        # browser.switch_to.default_content()
+        any_site_page_object.play_video_by_javascript(browser)
+        # any_site_page_object.play_video_vu_vi_phim(browser)
+        browser.switch_to.default_content()
         any_site_page_object.mouse_over_video_vu_vi_phim(browser)
 
     @pytestrail.case('C98751')
-    def test_download_file_vuviphim(self, browser, get_current_download_folder
-                                    , clear_download_page):
+    def test_download_file_vuviphim(self, browser, get_current_download_folder):
         self.prepare_savior_option_displayed(browser)
         implement_download_file(browser, get_current_download_folder, ),
         clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
@@ -79,24 +80,23 @@ class TestTvZing:
 
     @pytestrail.case('C96763')
     @pytest.mark.ten_popular_sites
-    def test_download_file_tv_zing(self, browser_top_sites, get_current_download_folder_top_sites
-                                   , clear_download_page):
-        browser_top_sites.get(OtherSiteUrls.TV_ZING_VIDEO_URL)
-        self.top_savior_sites_film_actions.close_login_popup_tv_zing(browser_top_sites)
-        browser_top_sites.switch_to.default_content()
-        video_title = self.top_sites_savior_title_actions.get_tv_zing_video_title(browser_top_sites)
+    def test_download_file_tv_zing(self, browser, get_current_download_folder):
+        browser.get(OtherSiteUrls.TV_ZING_VIDEO_URL)
+        self.top_savior_sites_film_actions.close_login_popup_tv_zing(browser)
+        browser.switch_to.default_content()
+        video_title = self.top_sites_savior_title_actions.get_tv_zing_video_title(browser)
         try:
-            any_site_page_object.click_first_video_element(browser_top_sites)
-            any_site_page_object.mouse_over_first_video_element(browser_top_sites)
-            implement_download_file(browser_top_sites, get_current_download_folder_top_sites, startwith=video_title)
+            any_site_page_object.click_first_video_element(browser)
+            any_site_page_object.mouse_over_first_video_element(browser)
+            implement_download_file(browser, get_current_download_folder, startwith=video_title)
         finally:
-            delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title)
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title)
 
 
 class TestTVHay:
 
     @pytestrail.case('C98762')
-    def test_download_file_video_tv_hay(self, browser, get_current_download_folder_top_sites
+    def test_download_file_video_tv_hay(self, browser, get_current_download_folder
                                         , clear_download_page):
         browser.get(OtherSiteUrls.TV_HAY_VIDEO_URL)
         video_title = self.top_sites_savior_title_actions.get_tv_zing_video_title(browser)

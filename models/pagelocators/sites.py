@@ -65,7 +65,7 @@ class AnySite(object):
     TV_HAY_VN_VIDEO_ITEM = (By.ID, 'playerjw7')
     TV_HAY_VN_PAUSE_BTN = (By.XPATH, '//div[@class="html5-vpl_panel_btn html5-vpl_play"]')
     NGOI_SAO_VN_VIDEO_ITEM = (By.XPATH, '(//video[@class="jw-video jw-reset"])[1]')
-    VTC_VN_VIDEO_PLAY_ITEM = (By.ID, 'myElementV0')
+    VTC_VN_VIDEO_PLAY_ITEM = (By.XPATH, '//div[@aria-label="Play"]')
     VTC_VN_VIDEO_ITEM = (By.XPATH, '//video')
     KENH14_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
     CAFE_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
@@ -73,7 +73,8 @@ class AnySite(object):
     TIN_TUC_VN_VIDEO_ITEM = (By.XPATH, '//div[@id="vnnplayer"]')
     TIN_TUC_VN_VIDEO_DETAIL = (By.ID, 'videoDetail')
     GIAO_DUC_THOI_DAI_VIDEO_ITEM = (By.CSS_SELECTOR, 'div[id*="video"]')
-    VN_EXPRESS_VIDEO_ITEM = (By.ID, 'videoContainter')
+    VNEXPRESS_VIDEO_ITEM = (By.ID, 'videoContainter')
+    NEWS_VNEXPRESS_VIDEO_CSS = 'div[class ="icon_blockvideo"]'
     THANH_NIEN_VIDEO_ITEM = (By.XPATH, '//div[@video-title][@data-enablefloat]')
     DAN_TRI_PLAY_VIDEO_BTN = (By.XPATH, '//button[@class="vjs-big-play-button"]')
     DAN_TRI_VIDEO_ITEM = (By.ID, 'video-embeb')
@@ -119,8 +120,8 @@ class AnySite(object):
     SEX_NGON_VIDEO_ITEM = (By.ID, 'video')
     WEIBO_VIDEO_ITEM = (By.XPATH, '//video[@id]')
     VU_VI_PHIM_VIDEO_ELEMENT = (By.ID, 'media')
-    VU_VI_PHIM_PLAY_BTN = (By.XPATH, '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]')
-    VU_VI_PHIM_IFRAME = (By.XPATH, '//iframe[@data-was-processed][not(@title)]')
+    VU_VI_PHIM_PLAY_BTN = (By.XPATH, '//div[contains(@class,"panel_left")]//div[@al-click="togglePlay()"]')
+    VU_VI_PHIM_IFRAME = (By.XPATH, '//iframe[@allow="autoplay" and contains(@src,"vuviphim")]')
 
     @staticmethod
     def anime_tvn_server(server_number):
@@ -165,3 +166,10 @@ class AnySite(object):
     XEM_VTV_NET_VIDEO_PLAYER = (By.ID, 'media')
     XEM_VTV_NET_PLAY_BTN = (By.XPATH, '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]')
     OK_RU_VIDEO_ITEM = (By.XPATH, '//*[@id="VideoAutoplayPlayerE"]//video')
+    NHACCUATUI_VIDEO_TITLE = (By.XPATH, '//h2[@class="name-singer"]//a[1]')
+    CHON_GIAO_DIEN_SUBMIT_BTN = (By.XPATH, '//button[@type="submit"]')
+    CHON_GIAO_DIEN_SUBMIT_BTN_XPATH = '//button[@type="submit"]'
+    NEWS_24H_VIDEO_TO_GET_TITLE_CSS = 'div[class="viewVideoPlay"] video'
+    NEWS_KIENTHUC_VIDEO_TO_GET_TITLE_CSS = 'div[class="contentvideo"] video'
+    VIETNAMENET_VIDEO_IFRAME = (By.XPATH, '//iframe[@allow="autoplay; fullscreen"]')
+

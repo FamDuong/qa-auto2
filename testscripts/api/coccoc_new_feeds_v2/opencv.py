@@ -1,8 +1,11 @@
 import sys                      # System bindings
 import cv2                      # OpenCV bindings
 import numpy as np
+import logging
 from collections import Counter
 from base64 import b16encode
+LOGGER = logging.getLogger(__name__)
+
 
 class BackgroundColorDetector():
     def __init__(self, imageLoc):
@@ -33,24 +36,24 @@ class BackgroundColorDetector():
         average_red = red / sample
         average_green = green / sample
         average_blue = blue / sample
-        print("Average RGB for top ten is: (", average_red,
+        LOGGER.info("Average RGB for top ten is: (", average_red,
               ", ", average_green, ", ", average_blue, ")")
         triplet = (int(average_red), int(average_green), int(average_blue))
-        print(b'#' + b16encode(bytes(triplet)))
+        LOGGER.info(b'#' + b16encode(bytes(triplet)))
 
     def twenty_most_common(self):
         self.count()
         self.number_counter = Counter(self.manual_count).most_common(20)
         for rgb, value in self.number_counter:
-            print(rgb, value, ((float(value)/self.total_pixels)*100))
+            LOGGER.info(rgb, value, ((float(value)/self.total_pixels)*100))
 
     def detect(self):
         self.twenty_most_common()
         self.percentage_of_first = (
             float(self.number_counter[0][1])/self.total_pixels)
-        print(self.percentage_of_first)
+        LOGGER.info(self.percentage_of_first)
         if self.percentage_of_first > 0.5:
-            print("Background color is ", self.number_counter[0][0])
+            LOGGER.info("Background color is ", self.number_counter[0][0])
         else:
             self.average_colour()
 
@@ -94,13 +97,13 @@ class DominantColorDetector():
 
         # subset out most popular centroid
         dominant_color = clt.cluster_centers_[label_counts.most_common(1)[0][0]]
-        print(dominant_color)
+        LOGGER.info(dominant_color)
 
         return list(dominant_color)
 
 if __name__ == "__main__":
     if (len(sys.argv) != 2):                        # Checks if image was given as cli argument
-        print("error: syntax is 'python main.py /example/image/location.jpg'")
+        LOGGER.info("error: syntax is 'python main.py /example/image/location.jpg'")
     else:
         BackgroundColor = BackgroundColorDetector(sys.argv[1])
         BackgroundColor.detect()

@@ -1,4 +1,3 @@
-import fileinput
 import logging
 import os
 import csv
@@ -10,12 +9,12 @@ import psutil
 import win32api
 import re
 from os import path
-from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 
 LOGGER = logging.getLogger(__name__)
+
 
 def if_height_frame_so_width_frame(height_frame):
     if int(height_frame) == 4320:
@@ -43,61 +42,66 @@ def remove_special_characters(string):
     return rm_s
 
 
+def get_from_csv(filename):
+    list_temp = []
+    # dirname, runname = os.path.split(os.path.abspath(__file__))
+    # filename = dirname + filename
+    with open(filename, 'r', newline='', encoding="utf-8") as f:
+        reader = csv.reader(f)
+        # print("CSV Reader: READING CSV FILE >>", filename)
+        try:
+            for row in reader:
+                for q in row:
+                    if q == None or len(q) == 0:
+                        pass
+                    else:
+                        list_temp.append(q)
+            # LOGGER.info("CSV Reader: FINISHED READING CSV FILE =>", filename)
+            return list_temp
+        except csv.Error as i:
+            sys.exit('file {}, line {}: {}'.format(filename, reader.line_num, i))
+            return None
+        except EOFError as e:
+            LOGGER.info("Can not read file CSV:", filename)
+            # LOGGER.info("System error:", e)
+            return None
+
+
+def write_result_data_for_page_load_time(file_name, keyname_list: list, value_list: list, result_type=''):
+    with open(file_name, 'a', encoding='utf-8') as file:
+        file.truncate(0)
+        total_value = 0
+        file.write(f"Results for {result_type} is as below :\n")
+        for (keyname, value) in zip(keyname_list, value_list):
+            file.write(f"{keyname} is: {value}")
+            file.write('\n')
+            total_value += value
+        average_value = total_value / len(value_list)
+        file.write(f"Average is : {average_value}")
+    file.close()
+
+
+def write_result_data_for_cpu_ram(file_name, res, result_type=''):
+    with open(file_name, 'a', encoding='utf-8') as file:
+        file.truncate(0)
+        file.write(f"Results for {result_type} is as below :\n")
+        cpu_total = 0
+        mem_total = 0
+        for i in range(len(res)):
+            cpu_total += int(res[i].get("cpu"))
+            mem_total += int(res[i].get("mem"))
+            file.write("i is %d\n" % i)
+            file.write("CPU is %s, Mem is %s\n" % (res[i].get("cpu"), res[i].get("mem")))
+        cpu_average = cpu_total / len(res)
+        mem_average = mem_total / len(res)
+        file.write("Average value is :\n")
+        file.write(f"CPU : {cpu_average}\n")
+        file.write(f"MEM : {mem_average}")
+    file.close()
+
+
 class CSVHandle:
-    def get_from_csv(self, filename):
-        list_temp = []
-        # dirname, runname = os.path.split(os.path.abspath(__file__))
-        # filename = dirname + filename
-        with open(filename, 'r', newline='', encoding="utf-8") as f:
-            reader = csv.reader(f)
-            # print("CSV Reader: READING CSV FILE >>", filename)
-            try:
-                for row in reader:
-                    for q in row:
-                        if q == None or len(q) == 0:
-                            pass
-                        else:
-                            list_temp.append(q)
-                # LOGGER.info("CSV Reader: FINISHED READING CSV FILE =>", filename)
-                return list_temp
-            except csv.Error as i:
-                sys.exit('file {}, line {}: {}'.format(filename, reader.line_num, i))
-                return None
-            except EOFError as e:
-                LOGGER.info("Can not read file CSV:", filename)
-                # LOGGER.info("System error:", e)
-                return None
-
-    def write_result_data_for_page_load_time(self, file_name, keyname_list: list, value_list: list, result_type=''):
-        with open(file_name, 'a', encoding='utf-8') as file:
-            file.truncate(0)
-            total_value = 0
-            file.write(f"Results for {result_type} is as below :\n")
-            for (keyname, value) in zip(keyname_list, value_list):
-                file.write(f"{keyname} is: {value}")
-                file.write('\n')
-                total_value += value
-            average_value = total_value/len(value_list)
-            file.write(f"Average is : {average_value}")
-        file.close()
-
-    def write_result_data_for_cpu_ram(self, file_name, res, result_type=''):
-        with open(file_name, 'a', encoding='utf-8') as file:
-            file.truncate(0)
-            file.write(f"Results for {result_type} is as below :\n")
-            cpu_total = 0
-            mem_total = 0
-            for i in range(len(res)):
-                cpu_total += int(res[i].get("cpu"))
-                mem_total += int(res[i].get("mem"))
-                file.write("i is %d\n" % i)
-                file.write("CPU is %s, Mem is %s\n" % (res[i].get("cpu"), res[i].get("mem")))
-            cpu_average = cpu_total/len(res)
-            mem_average = mem_total/len(res)
-            file.write("Average value is :\n")
-            file.write(f"CPU : {cpu_average}\n")
-            file.write(f"MEM : {mem_average}")
-        file.close()
+    pass
 
 
 class FilesHandle:
@@ -285,7 +289,7 @@ class WindowsCMD:
         # LOGGER.info(output)
         return output
 
-    def is_process_exists(process_name):
+    def is_process_exists(self, process_name):
         wait_for_stable()
         for proc in psutil.process_iter():
             try:
@@ -337,67 +341,35 @@ class WindowsHandler:
         return user_name
 
 
-class BrowserHandler:
-    def browser_init(self, user_data_path):
-        # browser = webdriver.Chrome()
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument("--window-size=1920,1080")
-        # chrome_options.add_argument("--disable-extensions")
-        chrome_options.add_argument("--proxy-server='direct://'")
-        chrome_options.add_argument("--proxy-bypass-list=*")
-        chrome_options.add_argument("--start-maximized")
-        chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument('--disable-dev-shm-usage')
-        chrome_options.add_argument('--no-sandbox')
-        chrome_options.add_argument('--ignore-certificate-errors')
-        chrome_options.add_argument("--allow-insecure-localhost")
-        # chrome_options.add_argument("--disable-infobars")
-        chrome_options.add_argument('--user-data-dir=' + user_data_path)
-        chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
-        browser = webdriver.Chrome(options=chrome_options)
-        browser.create_options()
-        browser.maximize_window()
-        browser.set_page_load_timeout(40)
-        return browser
-
-    def browser_cleanup(self):
-        WindowsCMD.execute_cmd('taskkill /im CocCocUpdate.exe /f')
-        WindowsCMD.execute_cmd('taskkill /im CocCocCrashHandler.exe /f')
-        WindowsCMD.execute_cmd('taskkill /im browser.exe /f')
-        WindowsCMD.execute_cmd('taskkill /im CocCocTorrentUpdate.exe /f')
-        WindowsCMD.execute_cmd('taskkill /im MicrosoftEdge.exe /f')
-
-
-def modify_file_as_text(text_file_path, text_to_search, replacement_text):
-    try:
-        with fileinput.FileInput(text_file_path, inplace=True, backup='.bak') as file:
-            for line in file:
-                LOGGER.info(line.replace(text_to_search, replacement_text), end='')
-    except:
-        LOGGER.info("Preferences file is not existed")
-
-
-def find_text_in_file(text_file_path, text_to_search):
-    found = 0
-    with fileinput.FileInput(text_file_path, inplace=True) as file:
-        for line in file:
-            if text_to_search in line:
-                found += 1
-                break
-    return found
-
-
-def check_if_duplicates_list(list_of_elems):
-    """ Check if given list contains any duplicates """
-    set_of_elems = set()
-    for elem in list_of_elems:
-        if elem in set_of_elems:
-            return True
-        else:
-            set_of_elems.add(elem)
-    return False
-
-
+# class BrowserHandler:
+#     def browser_init(self, user_data_path):
+#         # browser = webdriver.Chrome()
+#         chrome_options = webdriver.ChromeOptions()
+#         chrome_options.add_argument("--window-size=1920,1080")
+#         # chrome_options.add_argument("--disable-extensions")
+#         chrome_options.add_argument("--proxy-server='direct://'")
+#         chrome_options.add_argument("--proxy-bypass-list=*")
+#         chrome_options.add_argument("--start-maximized")
+#         chrome_options.add_argument('--disable-gpu')
+#         chrome_options.add_argument('--disable-dev-shm-usage')
+#         chrome_options.add_argument('--no-sandbox')
+#         chrome_options.add_argument('--ignore-certificate-errors')
+#         chrome_options.add_argument("--allow-insecure-localhost")
+#         # chrome_options.add_argument("--disable-infobars")
+#         chrome_options.add_argument('--user-data-dir=' + user_data_path)
+#         chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
+#         browser = webdriver.Chrome(options=chrome_options)
+#         browser.create_options()
+#         browser.maximize_window()
+#         browser.set_page_load_timeout(40)
+#         return browser
+#
+#     def browser_cleanup(self):
+#         WindowsCMD.execute_cmd('taskkill /im CocCocUpdate.exe /f')
+#         WindowsCMD.execute_cmd('taskkill /im CocCocCrashHandler.exe /f')
+#         WindowsCMD.execute_cmd('taskkill /im browser.exe /f')
+#         WindowsCMD.execute_cmd('taskkill /im CocCocTorrentUpdate.exe /f')
+#         WindowsCMD.execute_cmd('taskkill /im MicrosoftEdge.exe /f')
 def get_current_dir():
     before_split = os.getcwd()
     return before_split.split('\\testscripts\\')

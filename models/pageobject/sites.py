@@ -1,4 +1,5 @@
 import time
+import logging
 from datetime import datetime
 
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
@@ -11,6 +12,8 @@ from models.pagelocators.sites import AnySite
 from models.pageobject.basepage_object import BasePageObject
 from utils_automation.common import WebElements
 from utils_automation.setup import WaitAfterEach
+
+LOGGER = logging.getLogger(__name__)
 
 
 class YoutubePageObject(BasePageObject):
@@ -74,7 +77,15 @@ class AnySitePageObject(BasePageObject):
                                      driver.maximize_window())
 
     def mouse_over_first_video_element(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_first_video_element(driver))
+        first_video_element = self.any_site_element.find_first_video_element(driver)
+        start_time = datetime.now()
+        while first_video_element is None:
+            first_video_element = self.any_site_element.find_first_video_element(driver)
+            time.sleep(2)
+            time_delta = datetime.now() - start_time
+            if time_delta.total_seconds() >= 10:
+                break
+        self.mouse_over_video_element_site(driver, first_video_element)
 
     def get_mouse_enter_event_js_element(self, driver):
         return driver.execute_script('return new Event("mouseenter")')
@@ -251,7 +262,7 @@ class AnySitePageObject(BasePageObject):
             if driver.execute_script('return document.querySelector(arguments[0])',
                                      'div[class="html5-vpl_time_t"]') is not None:
                 time_value = driver.execute_script('return document.querySelector(arguments[0]).textContent',
-                                      'div[class="html5-vpl_time_t"]')
+                                                   'div[class="html5-vpl_time_t"]')
                 i += 1
                 return time_value
 
@@ -293,8 +304,9 @@ class AnySitePageObject(BasePageObject):
     def mouse_over_video_giao_duc_thoi_dai(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_giao_duc_thoi_dai(driver))
 
-    def mouse_over_video_vn_express(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_vn_express(driver))
+    def scroll_to_news_video_vnexpress_video(self, driver):
+        driver.execute_script("document.querySelector('"+AnySite.NEWS_VNEXPRESS_VIDEO_CSS+"').scrollIntoView()")
+        # self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_vn_express(driver))
 
     def mouse_over_video_thanh_nien_vn(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_thanh_nien(driver))
@@ -474,7 +486,9 @@ class AnySitePageObject(BasePageObject):
         self.click_on_element_if_exist(self.any_site_element.find_play_btn_vu_vi_phim(driver))
 
     def switch_to_iframe_vu_vi_phim(self, driver):
+        LOGGER.info("Switch to iframe")
         driver.switch_to.frame(self.any_site_element.find_frame_vu_vi_phim(driver))
+        time.sleep(3)
 
     def mouse_over_video_vu_vi_phim(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_frame_vu_vi_phim(driver))
@@ -564,7 +578,8 @@ class AnySitePageObject(BasePageObject):
         WaitAfterEach.sleep_timer_after_each_step_longer_load()
         elements = driver.find_elements_by_xpath(AnySite.DONG_PHIM_WATCH_OPTION_XPATH)
         if len(elements) > 0:
-            self.any_site_element.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_WATCH_OPTION)).click()
+            self.any_site_element.wait_for_element(driver).until(
+                ec.presence_of_element_located(AnySite.DONG_PHIM_WATCH_OPTION)).click()
         else:
             print("Cannot find button for watch options")
         return elements
@@ -621,3 +636,10 @@ class AnySitePageObject(BasePageObject):
         import time
         time.sleep(5)
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_ok_ru(driver))
+
+    def click_zingmp3_chon_giao_dien_btn(self, driver):
+        if self.any_site_element.count_zingmp3_chon_giao_dien_button(driver) > 0:
+            self.any_site_element.find_zingmp3_chon_giao_dien_button(driver).click()
+
+    def swith_to_vietnamnet_video_iframe(self, driver):
+        driver.switch_to.frame(self.any_site_element.find_vietnamnet_video_iframe(driver))

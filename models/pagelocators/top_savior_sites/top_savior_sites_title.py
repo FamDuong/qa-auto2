@@ -13,6 +13,7 @@ class TopSaviorSitesTitleLocators(object):
     OK_RU_VIDEO_TITLE = (By.XPATH, '//title')
     FACEBOOK_VIDEO_TITLE = (By.ID, 'pageTitle')
     FR_PORNHUB_VIDEO_TITLE = (By.ID, 'main-container')
+    VIDEO_VNEXPRESS_VIDEO_TITLE = (By.XPATH, '//*[@id="info_inner"]//h1[@class="title"]')
 
 
 

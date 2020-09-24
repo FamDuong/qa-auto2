@@ -4,6 +4,8 @@ import pytest
 from pytest_testrail.plugin import pytestrail
 
 import testscripts.smoketest.common as common
+import utils_automation.common
+import utils_automation.common_browser
 from models.pageobject.coccocpage import CocCocPageObjects
 from models.pageobject.version import VersionPageObject
 from models.pageobject.settings import SettingsPageObject
@@ -25,7 +27,7 @@ class TestFreshInstall:
     #@pytest.mark.skip(reason="Bug BR-1071 with installer Vietnamese")
     def test_installing_fresh_package_successfully_on_windows(self):
         # Get default download forlder
-        browser = common.coccoc_instance()
+        browser = utils_automation.common_browser.coccoc_instance()
         download_folder = common.get_default_download_folder(browser)
         languages = ['en', 'vi']
         for language in languages:
@@ -45,7 +47,7 @@ class TestFreshInstall:
     @pytest.mark.coccocdev
     def test_popup_of_installer_confirm_during_the_installation(self):
         # Get download folder
-        browser = common.coccoc_instance()
+        browser = utils_automation.common_browser.coccoc_instance()
         download_folder = common.get_default_download_folder(browser)
         try:
             # Open Cốc Cốc installing panel for
@@ -55,7 +57,7 @@ class TestFreshInstall:
             verify_installer_popup_appears()
         finally:
             # Install Cốc Cốc again (for run other cases)
-            common.cleanup()
+            utils_automation.common_browser.cleanup()
             common.install_coccoc_set_as_default()
             # Delete downloaded installer
             common.delete_installer_download(download_folder, 'en')
@@ -64,7 +66,7 @@ class TestFreshInstall:
     @pytest.mark.coccocdev
     def test_installation_dialog_after_installing_successfully(self):
         # Get default download forlder
-        browser = common.coccoc_instance()
+        browser = utils_automation.common_browser.coccoc_instance()
         download_folder = common.get_default_download_folder(browser)
         coccoc_installer = self.coccoc_page_obj.get_path_installer(browser, Urls.COCCOC_DEV_URL, download_folder, "win"
                                                                    , "en")
@@ -88,7 +90,7 @@ class TestFreshInstall:
 
     def install_coc_coc(self, coc_coc_installer, language, is_needed_clean_up=True):
         if is_needed_clean_up is True:
-            common.cleanup()
+            utils_automation.common_browser.cleanup()
         else:
             pass
         common.uninstall_old_version_remove_local_app()
@@ -98,8 +100,8 @@ class TestFreshInstall:
         coc_coc_installer = self.coccoc_page_obj.get_path_installer(browser, Urls.COCCOC_DEV_URL, download_folder, "win"
                                                                     , "vi")
         self.install_coc_coc(coc_coc_installer, "vi")
-        common.cleanup()
-        browser = common.coccoc_instance()
+        utils_automation.common_browser.cleanup()
+        browser = utils_automation.common_browser.coccoc_instance()
         self.settings_page_obj.verify_menu_base_on_language(browser, "vi")
         return browser
 
@@ -107,8 +109,8 @@ class TestFreshInstall:
         coc_coc_installer = self.coccoc_page_obj.get_path_installer(browser, Urls.COCCOC_DEV_URL, download_folder, "win"
                                                                     , "en")
         self.install_coc_coc(coc_coc_installer, "en")
-        common.cleanup()
-        browser = common.coccoc_instance()
+        utils_automation.common_browser.cleanup()
+        browser = utils_automation.common_browser.coccoc_instance()
         self.settings_page_obj.verify_menu_base_on_language(browser, "en")
         self.version_page_obj.verify_installed_coccoc_and_flash_versions(browser)
         return browser

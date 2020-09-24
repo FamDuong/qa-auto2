@@ -1,3 +1,6 @@
+import logging
+from datetime import datetime
+
 import cv2
 from models.pageobject.downloads import DownloadsPageObject
 from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetailsPageObject, \
@@ -21,20 +24,29 @@ google_page_object = GooglePageObject()
 download_page_object = DownloadsPageObject()
 any_site_page_object = AnySitePageObject()
 
+LOGGER = logging.getLogger(__name__)
+
 
 def delete_all_mp4_file_download(mydir, endwith, startwith=None):
+    LOGGER.info("Delete video")
     files_handle = FilesHandle()
     files_handle.delete_files_in_folder(mydir, endwith, startwith=startwith)
 
 
-def download_file_via_main_download_button(browser, time_sleep=7):
+def download_file_via_main_download_button(browser, time_sleep=8):
+    LOGGER.info("Downloading video...")
     import time
     savior_page_object.download_file_via_savior_download_btn(browser)
     time.sleep(time_sleep)
     media_info_element = savior_page_object.current_media_info(browser)
-
+    start_time = datetime.now()
+    while check_if_the_file_fully_downloaded(browser) is False:
+        time.sleep(2)
+        time_delta = datetime.now() - start_time
+        if time_delta.total_seconds() >= 15:
+            break
     # Check the file is fully downloaded
-    check_if_the_file_fully_downloaded(browser)
+    # check_if_the_file_fully_downloaded(browser)
     return media_info_element
 
 
@@ -50,23 +62,30 @@ def clear_data_download(driver):
     WaitAfterEach.sleep_timer_after_each_step()
 
 
-def assert_file_download_value(download_folder_path, height_value, startwith=None):
-    mp4_files = find_mp4_file_download(download_folder_path, '.mp4', startwith=startwith)
-    print(mp4_files)
+def assert_file_download_value(download_folder_path, height_value, start_with):
+    LOGGER.info("Verify video title same as: " + str(start_with))
+    LOGGER.info("Verify video resolution same as: " + str(height_value))
+    mp4_files = find_mp4_file_download(download_folder_path, endwith='.mp4', startwith=start_with)
     vid = cv2.VideoCapture(download_folder_path + '\\' + mp4_files[0])
     height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
     width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
     assert vid.isOpened()
+    assert len(mp4_files) > 0
     if int(height) > 720:
+        LOGGER.info("Assert video with high resolution")
         assert width == if_height_frame_so_width_frame(height)
     vid.release()
+
     if (height_value is not None) and (height_value != ''):
+        LOGGER.info("Assert video with Standard/ Medium/ Low resolution")
         assert (str(int(height)) in height_value or abs(int(height) - int(height_value.split('p')[0])) < 10)
     else:
+        LOGGER.info("Assert video is not None")
         assert height is not None
-
+    # cv2.destroyAllWindows()
 
 def assert_file_download_exist(download_folder_path, file_size=2.00, startwith=None):
+    LOGGER.info("Verify video title same as: " + str(startwith))
     import os
     mp4_files = find_mp4_file_download(download_folder_path, '.mp4', startwith=startwith)
     file_path = download_folder_path + '\\' + mp4_files[0]
@@ -126,7 +145,13 @@ def choose_video_quality_low_option(browser):
     WaitAfterEach.sleep_timer_after_each_step()
 
 
+def pause_or_play_video_by_javascript(browser, action='play'):
+    browser.execute_script("let elements = document.querySelectorAll('video'); "
+                           "if (elements.length > 0) { for (let element of elements) { element." + action + "();}}")
+
+
 def pause_any_video_site(browser, url):
+    LOGGER.info("Open " + url)
     browser.get(url)
     any_site_page_object.click_first_video_element(browser)
     any_site_page_object.mouse_over_first_video_element(browser)
@@ -159,7 +184,7 @@ def handle_windows_watch_option(browser, close_popup_continue_watching):
         browser.switch_to.window(list_windows[0])
         close_popup_continue_watching(browser)
     else:
-        print("Does not have pop up continue watching")
+        LOGGER.info("Does not have pop up continue watching")
 
 
 def get_resolution_info(media_info):

@@ -13,7 +13,7 @@ class TestSilentInstall:
     def test_check_with_make_coccoc_default(self):
         from testscripts.smoketest.common import uninstall_then_install_coccoc_silentlty_with_option
         uninstall_then_install_coccoc_silentlty_with_option("/forcedcmdline 'make-coccoc-default'")
-        from testscripts.smoketest.common import coccoc_instance
+        from utils_automation.common_browser import coccoc_instance
         driver = coccoc_instance()
         try:
             from utils_automation.const import Urls
@@ -54,7 +54,7 @@ class TestSilentInstall:
         assert 'browser' not in get_application_process()
         from testscripts.smoketest.common import get_list_start_up_apps
         assert 'browser' in get_list_start_up_apps()
-        from testscripts.smoketest.common import coccoc_instance
+        from utils_automation.common_browser import coccoc_instance
         driver = coccoc_instance()
         try:
             from utils_automation.const import Urls

@@ -5,7 +5,7 @@ from models.pageobject.coccoc_home_page_objects import CocCocHomePageActions
 from models.pageobject.coccoc_search.coccoc_search_page_objects import CocCocSearchPageObjects
 from models.pageobject.extensions import ExtensionsDetailsPageObject, ABPExtensionsDetailPageObject
 from models.pageobject.settings import SettingsPageObject
-from utils_automation.common import WindowsHandler, FilesHandle, CSVHandle
+from utils_automation.common import WindowsHandler, FilesHandle, get_from_csv
 import testscripts.smoketest.common as common
 
 LOGGER = logging.getLogger(__name__)
@@ -58,7 +58,7 @@ def change_adblock_plus_mode(driver, ads_block_mode):
 
 def get_query():
     test_data = get_resource_path() + "test_data\\test_data_adblock_for_search.csv"
-    query = CSVHandle().get_from_csv(test_data)
+    query = get_from_csv(test_data)
     return query
 
 

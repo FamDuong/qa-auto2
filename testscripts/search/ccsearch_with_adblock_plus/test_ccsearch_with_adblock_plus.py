@@ -7,7 +7,7 @@ from models.pageobject.settings import SettingsPageObject
 from testscripts.search.ccsearch_with_adblock_plus.common import change_adblock_plus_mode, get_query, \
     verify_ads_is_oppened_in_newtab
 from testscripts.search.common import prepare_query
-from testscripts.smoketest.common import coccoc_instance
+from utils_automation.common_browser import coccoc_instance
 from utils_automation.const import CocCocExtensions, Urls
 from models.pageobject.coccoc_search.coccoc_search_page_objects import CocCocSearchPageObjects
 

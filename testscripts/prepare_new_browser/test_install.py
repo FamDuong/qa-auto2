@@ -3,6 +3,7 @@ import time
 from models.pagelocators.settings import SettingsPageLocators
 from pytest_testrail.plugin import pytestrail
 from utils_automation.common import BrowserHandler
+from utils_automation.common_browser import coccoc_instance
 
 from models.pageobject.coccocpage import CocCocPageObjects
 from models.pageobject.downloads import DownloadsPageObject
@@ -137,7 +138,7 @@ class TestSilentInstall(TestInstall):
         self.test_uninstall_from_cmd(browser, rm_user_data)  # Uninstall old version
         self.test_silent_install_from_cmd(download_file, 'make-coccoc-default')  # Install downloaded version
         self.version_page_object.verify_version_is_correct(cc_version)
-        browser = self.new_browser.browser_init()
+        browser = coccoc_instance()
         self.setting_page_object.verify_setting_on_startup(browser, SettingsPageLocators.OPEN_NEW_TAB_PAGE_TEXT)
 
     @pytestrail.case('C44786')
@@ -146,7 +147,7 @@ class TestSilentInstall(TestInstall):
         self.test_uninstall_from_cmd(browser, rm_user_data)  # Uninstall old version
         self.test_silent_install_from_cmd(download_file, 'auto-launch-coccoc')  # Install downloaded version
         self.version_page_object.verify_version_is_correct(cc_version)
-        browser = self.new_browser.browser_init()
+        browser = coccoc_instance()
         self.setting_page_object.verify_setting_default_browser(browser,
                                                                 SettingsPageLocators.DEFAULT_BROWSER_RUN_AUTO_ONSTARTUP_CHECKBOX)
 

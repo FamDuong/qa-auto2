@@ -1,8 +1,11 @@
+import logging
 from models.pageelements.settings import SettingsElements, SettingsComponentsPageElement
 from models.pagelocators.settings import SettingsPageLocators
 from models.pageobject.basepage_object import BasePageObject
 from utils_automation.const import Urls, CocCocComponents
 from utils_automation.common import wait_for_stable
+
+LOGGER = logging.getLogger(__name__)
 
 
 class SettingsPageObject(BasePageObject):
@@ -113,24 +116,24 @@ class SettingsPageObject(BasePageObject):
             if driver.execute_script(script_get_attribute_aria_pressed) == 'true':
                 driver.execute_script(script_click_ads_block)
             elif driver.execute_script(script_get_attribute_aria_pressed) == 'false':
-                print("Button is already disabled")
+                LOGGER.info("Button is already disabled")
             else:
-                print("Problem when get attribute aria-pressed of enabled ads blcok")
+                LOGGER.info("Problem when get attribute aria-pressed of enabled ads blcok")
 
         def enable_enabled_ads_block():
             if driver.execute_script(script_get_attribute_aria_pressed) == 'true':
-                print("Button is already enabled")
+                LOGGER.info("Button is already enabled")
             elif driver.execute_script(script_get_attribute_aria_pressed) == 'false':
                 driver.execute_script(script_click_ads_block)
             else:
-                print("Problem when get attribute aria-pressed of enabled ads blcok")
+                LOGGER.info("Problem when get attribute aria-pressed of enabled ads blcok")
 
         if action == 'disable':
             return disable_enabled_ads_block()
         elif action == 'enable':
             return enable_enabled_ads_block()
         else:
-            print("Please specify the action")
+            LOGGER.info("Please specify the action")
 
     def get_text_default_browser_element(self, driver):
         from utils_automation.setup import WaitAfterEach

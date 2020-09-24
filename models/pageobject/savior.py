@@ -1,8 +1,10 @@
 import re
+import logging
 from models.pageelements.savior import SaviorElements
 from models.pagelocators.savior import SaviorPageLocators
 from models.pageobject.basepage_object import BasePageObject
 from utils_automation.setup import WaitAfterEach
+LOGGER = logging.getLogger(__name__)
 
 
 class SaviorPageObject(BasePageObject):
@@ -25,17 +27,30 @@ class SaviorPageObject(BasePageObject):
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
         WaitAfterEach.sleep_timer_after_each_step()
 
+    def choose_full_hd_option(self, driver):
+        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.FULL_HD_SELECT_OPTION)
+        WaitAfterEach.sleep_timer_after_each_step()
+
+    def choose_hd_option(self, driver):
+        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.HD_SELECT_OPTION)
+        WaitAfterEach.sleep_timer_after_each_step()
+
+    def choose_standard_option(self, driver):
+        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.STANDARD_SELECT_OPTION)
+        WaitAfterEach.sleep_timer_after_each_step()
+
     def choose_medium_option(self, driver):
         driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MEDIUM_SELECT_OPTION)
         WaitAfterEach.sleep_timer_after_each_step()
 
-    def choose_low_option(self, driver):
-        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.LOW_SELECT_OPTION)
+    def choose_small_option(self, driver):
+        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.SMALL_SELECT_OPTION)
         WaitAfterEach.sleep_timer_after_each_step()
 
-    def choose_high_option(self, driver):
-        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.HIGH_SELECT_OPTION)
+    def choose_mobile_option(self, driver):
+        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MOBILE_SELECT_OPTION)
         WaitAfterEach.sleep_timer_after_each_step()
+
 
     def assert_value_preferred_quality(self, driver, assert_text):
         preferred_element = driver.execute_script(
@@ -51,7 +66,7 @@ class SaviorPageObject(BasePageObject):
 
     def current_media_info(self, driver):
         return driver.execute_script(self.script_find, SaviorPageLocators.FIRST_LAYER,
-                                        SaviorPageLocators.CURRENT_SELECTED_RESOLUTION)
+                                     SaviorPageLocators.CURRENT_SELECTED_RESOLUTION)
 
     def download_file_title_via_savior_download_btn(self, driver, title):
         i = 0
@@ -158,7 +173,7 @@ class SaviorPageObject(BasePageObject):
             if ('Standard' or 'Medium') in text_content_list:
                 assert ('Standard' or 'Medium') in current_video_quality
         elif len_options == 1:
-            print('Current video quality for len == 1 is:', self.savior_elements.
+            LOGGER.info('Current video quality for len == 1 is:', self.savior_elements.
                   get_current_video_quality_value(driver))
             assert current_video_quality is not None
         else:
@@ -182,8 +197,8 @@ class SaviorPageObject(BasePageObject):
             if ('Standard' and 'Medium') in text_content_list:
                 assert 'Standard' in current_video_quality
         elif len_options == 1:
-            print('Current video quality for len == 1 is:', self.savior_elements.
-                  get_current_video_quality_value(driver))
+            LOGGER.info('Current video quality for len == 1 is:',
+                        self.savior_elements.get_current_video_quality_value(driver))
             assert current_video_quality is not None
         else:
             raise Exception.__traceback__
@@ -204,8 +219,8 @@ class SaviorPageObject(BasePageObject):
             else:
                 pass
         elif len_options == 1:
-            print('Current video quality for len == 1 is:', self.savior_elements.
-                  get_current_video_quality_value(driver))
+            LOGGER.info('Current video quality for len == 1 is:',
+                        self.savior_elements.get_current_video_quality_value(driver))
             assert current_video_quality is not None
         else:
             raise Exception.__traceback__

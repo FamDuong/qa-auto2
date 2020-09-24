@@ -5,7 +5,10 @@ from appium import webdriver
 from selenium import webdriver as sele_webdriver
 import pytest
 import settings_master as settings
-from utils_automation.common import FilesHandle, modify_file_as_text, get_current_dir
+from models.pageobject.version import VersionPageObject
+from utils_automation.common import FilesHandle, get_current_dir
+from utils_automation.common_browser import modify_file_as_text, coccoc_instance
+from utils_automation.const import Urls
 from utils_automation.setup import WaitAfterEach
 
 driver = None
@@ -62,51 +65,84 @@ def _capture_screenshot_win_app(filename):
 
 @pytest.fixture(scope='session')
 def browser():
+    LOGGER.info("Init coc coc browser...")
     global driver
-    global user_data_path
-    global block_origin_extension_path
-    from models.pageobject.version import VersionPageObject
-    from utils_automation.const import Urls
-    version_page_object = VersionPageObject()
-    from models.pageobject.settings import SettingsPageObject
-    setting_page_object = SettingsPageObject()
-    global download_folder
-    global block_origin_extension_path
-    global flash_path
-    global user_data_default
-    binary_path = f"C:\\Users\\{username}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
-    if driver is None:
-        chrome_options = sele_webdriver.ChromeOptions()
-        chrome_options.binary_location = binary_path
-        # chrome_options.add_argument("--window-size=1920,1080")
-        chrome_options.add_argument("--proxy-server='direct://'")
-        chrome_options.add_argument("--proxy-bypass-list=*")
-        chrome_options.add_argument("--start-maximized")
-        chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument('--disable-dev-shm-usage')
-        chrome_options.add_argument('--no-sandbox')
-        chrome_options.add_argument('--ignore-certificate-errors')
-        chrome_options.add_argument("--allow-insecure-localhost")
-        chrome_options.add_argument("--enable-features=CocCocBlockAdByExtension")
-        chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
-        split_after = binary_path.split('\\Local')
-        user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
-        import subprocess
-        prog = subprocess.Popen("taskkill /im browser.exe /f", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        prog.communicate()  # Returns (stdoutdata, stderrdata): stdout and stderr are ignored, here
-        chrome_options.add_argument('--user-data-dir=' + user_data_path)
-        modify_file_as_text(user_data_path + '\\Default\\Preferences', 'Crashed', 'none')
-        driver = sele_webdriver.Chrome(options=chrome_options)
-        driver.maximize_window()
-        driver.set_page_load_timeout(120)
-        driver.get(Urls.COCCOC_VERSION_URL)
-        user_data_default = version_page_object.get_profile_path(driver)
-        flash_path = version_page_object.get_flash_path(driver)
-        driver.get(Urls.COCCOC_SETTINGS_URL)
-        WaitAfterEach.sleep_timer_after_each_step()
-        download_folder = setting_page_object.get_download_folder(driver)
+    driver = coccoc_instance()
     yield driver
     driver.quit()
+#
+#
+# @pytest.fixture(scope='session')
+# def get_user_data_default_and_flash_path():
+#     global driver
+#     driver = coccoc_instance()
+#     driver.get(Urls.COCCOC_VERSION_URL)
+#     version_page_object = VersionPageObject()
+#     user_data_default = version_page_object.get_profile_path(driver)
+#     flash_path = version_page_object.get_flash_path(driver)
+#     LOGGER.info("Get user data and flash path: " + str(user_data_default) + ", " + str(flash_path))
+#     return user_data_default, flash_path
+#
+# @pytest.fixture(scope='session')
+# def get_current_download_folder():
+#     global driver
+#     driver = coccoc_instance()
+#     from models.pageobject.settings import SettingsPageObject
+#     setting_page_object = SettingsPageObject()
+#     driver.get(Urls.COCCOC_SETTINGS_URL)
+#     WaitAfterEach.sleep_timer_after_each_step()
+#     download_folder = setting_page_object.get_download_folder(driver)
+#     LOGGER.info("Get current download folder" + str(download_folder))
+#     return download_folder
+
+
+
+# def browser():
+#     global driver
+#     global user_data_path
+#     global block_origin_extension_path
+#     from models.pageobject.version import VersionPageObject
+#     from utils_automation.const import Urls
+#     version_page_object = VersionPageObject()
+#     from models.pageobject.settings import SettingsPageObject
+#     setting_page_object = SettingsPageObject()
+#     global download_folder
+#     global block_origin_extension_path
+#     global flash_path
+#     global user_data_default
+#     binary_path = f"C:\\Users\\{username}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
+#     if driver is None:
+#         chrome_options = sele_webdriver.ChromeOptions()
+#         chrome_options.binary_location = binary_path
+#         # chrome_options.add_argument("--window-size=1920,1080")
+#         chrome_options.add_argument("--proxy-server='direct://'")
+#         chrome_options.add_argument("--proxy-bypass-list=*")
+#         chrome_options.add_argument("--start-maximized")
+#         chrome_options.add_argument('--disable-gpu')
+#         chrome_options.add_argument('--disable-dev-shm-usage')
+#         chrome_options.add_argument('--no-sandbox')
+#         chrome_options.add_argument('--ignore-certificate-errors')
+#         chrome_options.add_argument("--allow-insecure-localhost")
+#         chrome_options.add_argument("--enable-features=CocCocBlockAdByExtension")
+#         chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
+#         split_after = binary_path.split('\\Local')
+#         user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
+#         import subprocess
+#         prog = subprocess.Popen("taskkill /im browser.exe /f", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+#         prog.communicate()  # Returns (stdoutdata, stderrdata): stdout and stderr are ignored, here
+#         chrome_options.add_argument('--user-data-dir=' + user_data_path)
+#         modify_file_as_text(user_data_path + '\\Default\\Preferences', 'Crashed', 'none')
+#         driver = sele_webdriver.Chrome(options=chrome_options)
+#         driver.maximize_window()
+#         driver.set_page_load_timeout(120)
+#         driver.get(Urls.COCCOC_VERSION_URL)
+#         user_data_default = version_page_object.get_profile_path(driver)
+#         flash_path = version_page_object.get_flash_path(driver)
+#         driver.get(Urls.COCCOC_SETTINGS_URL)
+#         WaitAfterEach.sleep_timer_after_each_step()
+#         download_folder = setting_page_object.get_download_folder(driver)
+#     yield driver
+#     driver.quit()
 
 
 @pytest.fixture(scope='function')
@@ -121,29 +157,11 @@ def win_app_driver():
     winappdriver.quit()
     return
 
-
-@pytest.fixture(scope='function')
-def appium_android_driver():
-    global driver
-    desired_caps = {
-        'platformName': 'Android',
-        'platformVersion': '8.0.0',
-        'deviceName': 'ASUS_Z017D',
-        'browserName': 'Chrome',
-        'uiautomator2ServerInstallTimeout': 120000,
-        'adbExecTimeout': 120000,
-        'autoGrantPermissions': True,
-        # 'chromedriverExecutableDir': 'C:\\webdriver'
-    }
-    driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
-    yield driver
-    driver.quit()
-
-
-@pytest.fixture(scope='session', autouse=True)
-def clear_screen_shot_folder():
-    current_dir = get_current_dir()[0]
-    files_handle.delete_files_in_folder(current_dir + "/screenshots", "png")
+#
+# @pytest.fixture(scope='session', autouse=True)
+# def clear_screen_shot_folder():
+#     current_dir = get_current_dir()[0]
+#     files_handle.delete_files_in_folder(current_dir + "/screenshots", "png")
 
 
 def pytest_addoption(parser):
@@ -179,7 +197,6 @@ def ohama_version():
 
 @pytest.fixture
 def cc_version(request):
-    # return request.config.getoption("--cc_version")
     version = request.config.getoption("--cc_version")
     if version is None:
         version = settings.COCCOC_VERSION

@@ -7,7 +7,7 @@ from models.pageobject.settings import SettingsPageObject
 from testscripts.newtab_page.common import verify_most_visited_ads_in_newtab_page, scroll_down_to_show_ads
 from testscripts.search.ccsearch_with_adblock_plus.common import change_adblock_plus_mode, \
     verify_ads_is_oppened_in_newtab
-from testscripts.smoketest.common import coccoc_instance
+from utils_automation.common_browser import coccoc_instance
 from utils_automation.const import CocCocExtensions
 
 LOGGER = logging.getLogger(__name__)
