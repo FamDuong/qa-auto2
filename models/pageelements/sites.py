@@ -245,7 +245,7 @@ class AnySiteElements(BasePageElement):
 
     def find_video_item_vn_express(self, driver):
         return self.wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.VN_EXPRESS_VIDEO_ITEM))
+            ec.presence_of_element_located(AnySite.VNEXPRESS_VIDEO_ITEM))
 
     def find_video_item_thanh_nien(self, driver):
         return self.wait_for_element(driver).until(

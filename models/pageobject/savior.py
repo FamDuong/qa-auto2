@@ -27,17 +27,30 @@ class SaviorPageObject(BasePageObject):
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
         WaitAfterEach.sleep_timer_after_each_step()
 
+    def choose_full_hd_option(self, driver):
+        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.FULL_HD_SELECT_OPTION)
+        WaitAfterEach.sleep_timer_after_each_step()
+
+    def choose_hd_option(self, driver):
+        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.HD_SELECT_OPTION)
+        WaitAfterEach.sleep_timer_after_each_step()
+
+    def choose_standard_option(self, driver):
+        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.STANDARD_SELECT_OPTION)
+        WaitAfterEach.sleep_timer_after_each_step()
+
     def choose_medium_option(self, driver):
         driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MEDIUM_SELECT_OPTION)
         WaitAfterEach.sleep_timer_after_each_step()
 
-    def choose_low_option(self, driver):
+    def choose_small_option(self, driver):
         driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.SMALL_SELECT_OPTION)
         WaitAfterEach.sleep_timer_after_each_step()
 
-    def choose_high_option(self, driver):
-        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.HD_SELECT_OPTION)
+    def choose_mobile_option(self, driver):
+        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MOBILE_SELECT_OPTION)
         WaitAfterEach.sleep_timer_after_each_step()
+
 
     def assert_value_preferred_quality(self, driver, assert_text):
         preferred_element = driver.execute_script(

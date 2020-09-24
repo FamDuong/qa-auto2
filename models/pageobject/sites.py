@@ -304,8 +304,9 @@ class AnySitePageObject(BasePageObject):
     def mouse_over_video_giao_duc_thoi_dai(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_giao_duc_thoi_dai(driver))
 
-    def mouse_over_video_vn_express(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_vn_express(driver))
+    def scroll_to_news_video_vnexpress_video(self, driver):
+        driver.execute_script("document.querySelector('"+AnySite.NEWS_VNEXPRESS_VIDEO_CSS+"').scrollIntoView()")
+        # self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_vn_express(driver))
 
     def mouse_over_video_thanh_nien_vn(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_thanh_nien(driver))

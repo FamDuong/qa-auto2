@@ -106,35 +106,27 @@ class TestVNExpressNet:
 
     @pytestrail.case('C98772')
     def test_download_file_vnexpress(self, browser_top_sites, get_current_download_folder_top_sites):
-        # browser_top_sites.get(OtherSiteUrls.VIDEO_VNEXPRESS_URL)
-        # LOGGER.info("Check download video on "+OtherSiteUrls.VIDEO_VNEXPRESS_URL)
-        # video_title = top_site_titles_action.get_video_vnexpress_video_title(browser_top_sites)
-        # download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
+        browser_top_sites.get(OtherSiteUrls.VIDEO_VNEXPRESS_URL)
+        LOGGER.info("Check download video on "+OtherSiteUrls.VIDEO_VNEXPRESS_URL)
+        video_title = top_site_titles_action.get_video_vnexpress_video_title(browser_top_sites)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
         browser_top_sites.get(OtherSiteUrls.NEWS_VNEXPRESS_URL)
         LOGGER.info("Check download video on " + OtherSiteUrls.NEWS_VNEXPRESS_URL)
-
-        # self.base_page_object.scroll_to_with_scroll_height(browser_top_sites)
-        # pause_or_play_video_by_javascript(browser_top_sites, action='play')
-        any_site_page_object.mouse_over_video_vn_express(browser_top_sites)
+        any_site_page_object.scroll_to_news_video_vnexpress_video(browser_top_sites)
         video_title = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
-        time.sleep(2)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title, mouse_over_first_video=False)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
 
 class TestThanhNienVN:
 
-    @staticmethod
-    def prepare_savior_option_appear(browser):
-        browser.get(OtherSiteUrls.THANH_NIEN_VIDEO_URL)
-        any_site_page_object.click_video_thanh_nien_vn(browser)
-        any_site_page_object.mouse_over_video_thanh_nien_vn(browser)
-
     @pytestrail.case('C98773')
-    def test_download_file_thanh_nien_viet_nam(self, browser, get_current_download_folder
-                                               , clear_download_page):
-        self.prepare_savior_option_appear(browser)
-        implement_download_file(browser, get_current_download_folder),
+    def test_download_file_thanh_nien_viet_nam(self, browser_top_sites, get_current_download_folder_top_sites):
+        browser_top_sites.get(OtherSiteUrls.THANH_NIEN_VIDEO_URL)
+        LOGGER.info("Check download video on " + OtherSiteUrls.THANH_NIEN_VIDEO_URL)
+        video_title_temp = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
+        video_title = top_site_titles_action.replace_vertical_bar_and_colon_by_dash_in_string(video_title_temp)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
 
 class TestDanTriVN:
@@ -146,10 +138,18 @@ class TestDanTriVN:
         any_site_page_object.mouse_over_video_dan_tri_vn(browser)
 
     @pytestrail.case('C98775')
-    def test_download_file_dan_tri_vn(self, browser, get_current_download_folder
-                                      , clear_download_page):
-        self.prepare_savior_option_appear(browser)
-        implement_download_file(browser, get_current_download_folder)
+    def test_download_file_dan_tri_vn(self, browser_top_sites, get_current_download_folder_top_sites):
+        browser_top_sites.get(OtherSiteUrls.DAN_TRI_VIDEO_URL)
+        LOGGER.info("Check download video on " + OtherSiteUrls.DAN_TRI_VIDEO_URL)
+        video_title_temp = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
+        video_title = top_site_titles_action.replace_vertical_bar_and_colon_by_dash_in_string(video_title_temp)
+        pause_or_play_video_by_javascript(browser_top_sites, action='play')
+        time.sleep(3)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
+        #                               browser, get_current_download_folder
+        #                               , clear_download_page):
+        # self.prepare_savior_option_appear(browser)
+        # implement_download_file(browser, get_current_download_folder)
 
 
 class TestNguoiLaoDongTV:
@@ -216,15 +216,13 @@ class TestKeoNhaCai:
 class TestVoV:
 
     @pytestrail.case('C98798')
-    def test_download_file_vov(self, browser, get_current_download_folder
-                               , clear_download_page
-                               , enable_ublock_plus_extension):
-        browser.get(OtherSiteUrls.VOV_VIDEO_URL)
-        any_site_page_object.switch_to_frame_vov_vn(browser)
-        any_site_page_object.play_vov_vn_video(browser)
-        browser.switch_to.default_content()
-        any_site_page_object.mouse_over_video_item_vov_vn(browser)
-        implement_download_file(browser, get_current_download_folder, time_sleep=8, ),
+    def test_download_file_vov(self, browser_top_sites, get_current_download_folder_top_sites, enable_ublock_plus_extension):
+        browser_top_sites.get(OtherSiteUrls.VOV_VIDEO_URL)
+        any_site_page_object.switch_to_frame_vov_vn(browser_top_sites)
+        any_site_page_object.play_vov_vn_video(browser_top_sites)
+        browser_top_sites.switch_to.default_content()
+        any_site_page_object.mouse_over_video_item_vov_vn(browser_top_sites)
+        implement_download_file(browser_top_sites, get_current_download_folder_top_sites, time_sleep=8, ),
 
 
 class TestDoiSongPhapLuat:

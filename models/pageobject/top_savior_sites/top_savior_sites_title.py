@@ -12,6 +12,13 @@ class TopSitesSaviorTitleAction(BasePageObject):
     top_sites_savior_title_elements = TopSitesSaviorTitleElements()
     any_sites_elements = AnySiteElements()
 
+    def replace_vertical_bar_and_colon_by_dash_in_string(self, string):
+        if '|' in string or ':' in string:
+            new_string_temp = string.replace('|', '-')
+            new_string = new_string_temp.replace(':', '-')
+            LOGGER.info("Video title after replace | by -: " + new_string)
+            return new_string
+
     def get_website_title_by_javascript(self, driver):
         video_title = driver.execute_script("return document.title")
         LOGGER.info("Get video title: " + video_title)

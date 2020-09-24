@@ -87,7 +87,7 @@ class OtherSiteUrls:
     VIDEO_VNEXPRESS_URL = 'https://video.vnexpress.net/tin-tuc/nhip-song/cay-si-co-thu-moc-100-than-3980758.html'
     NEWS_VNEXPRESS_URL = 'https://vnexpress.net/thu-mon-nhan-the-do-vi-bat-bong-ngo-ngan-o-giay-13-4000749.html'
     THANH_NIEN_VIDEO_URL = 'https://video.thanhnien.vn/thoi-su/trom-ga-noi-hang-loat-bi-phat-tu-thi-bo-tron-bi-bat-lai-khi-dang-phuc-vu-trong-quan-karaoke-140814.html'
-    DAN_TRI_VIDEO_URL = 'https://dantri.com.vn/video/tan-mat-xem-quy-trinh-lam-com-o-lang-nghe-noi-tieng-nhat-ha-noi-106661.htm'
+    DAN_TRI_VIDEO_URL = 'https://dantri.com.vn/video-page.htm'
     NGUOI_LAO_DONG_TV_URL = 'https://tv.nld.com.vn/thoi-su-trong-nuoc/co-to-quoc-den-tay-ngu-dan-huyen-can-gio-14531.htm'
     ANIME_VSUB_TV_URL = 'http://animevsub.tv/phim/tay-du-3194/tap-01-61130.html'
     NHAC_VN_VIDEO_URL = 'https://nhac.vn/video/doi-that-la-phoi-phoi-hoang-yen-chibi-uni5-mvG38e'
@@ -141,7 +141,7 @@ class CocCocComponents:
 
 class ChromeStoreUrls:
     RUNG_RINH_EXTENSION_URL = 'https://chrome.google.com/webstore/detail/r%E1%BB%A7ng-r%E1%BB%89nh-d%E1%BB%8Bch-v%E1%BB%A5-ho%C3%A0n-ti/paenbjlckelooppiepeiechkeehogoha'
-
+    ADSBLOCKPLUS_EXTENSION_URL = 'https://chrome.google.com/webstore/detail/adblock-plus-free-ad-bloc/cfhdojbkjhnklbpkdaibdccddilifddb'
 
 class CocCocExtensions:
     AD_BLOCK_STANDARD_MODE = 'Standard'

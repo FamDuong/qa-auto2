@@ -73,7 +73,8 @@ class AnySite(object):
     TIN_TUC_VN_VIDEO_ITEM = (By.XPATH, '//div[@id="vnnplayer"]')
     TIN_TUC_VN_VIDEO_DETAIL = (By.ID, 'videoDetail')
     GIAO_DUC_THOI_DAI_VIDEO_ITEM = (By.CSS_SELECTOR, 'div[id*="video"]')
-    VN_EXPRESS_VIDEO_ITEM = (By.ID, 'videoContainter')
+    VNEXPRESS_VIDEO_ITEM = (By.ID, 'videoContainter')
+    NEWS_VNEXPRESS_VIDEO_CSS = 'div[class ="icon_blockvideo"]'
     THANH_NIEN_VIDEO_ITEM = (By.XPATH, '//div[@video-title][@data-enablefloat]')
     DAN_TRI_PLAY_VIDEO_BTN = (By.XPATH, '//button[@class="vjs-big-play-button"]')
     DAN_TRI_VIDEO_ITEM = (By.ID, 'video-embeb')
