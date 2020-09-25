@@ -152,9 +152,6 @@ class AnySitePageObject(BasePageObject):
         ActionChains(driver).move_to_element(self.any_site_element.find_video_item_in_kienthuc(driver)).perform()
         self.any_site_element.find_video_item_in_kienthuc(driver).click()
 
-    def mouse_over_video_item_vietnamnet(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_vietnamnet(driver))
-
     def mouse_over_video_item_eva_vn(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_eva_vn(driver))
 
@@ -643,3 +640,7 @@ class AnySitePageObject(BasePageObject):
 
     def swith_to_vietnamnet_video_iframe(self, driver):
         driver.switch_to.frame(self.any_site_element.find_vietnamnet_video_iframe(driver))
+
+    def mouse_over_video_item_vietnamnet(self, driver):
+        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_vietnamnet(driver))
+

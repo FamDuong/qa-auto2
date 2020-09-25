@@ -56,7 +56,7 @@ class OtherSiteUrls:
     NEWS_24H_BONGDA_URL = 'https://www.24h.com.vn/bong-da/2-clb-viet-nam-thong-tri-afc-cup-bao-chau-a-noi-gi-c48a1061647.html'
     PHIMMOI_VIDEO_URL = 'http://www.phimmoizz.net/phim/soi-100-11066/xem-phim.html'
     PHIMMOI_URL = 'http://www.phimmoizz.net/phim/ky-su-thanh-xuan-11454/'
-    FACEBOOK_VIDEO_URL = 'https://www.facebook.com/thutinhtv/videos/770300356741609/'
+    FACEBOOK_VIDEO_URL = 'https://www.facebook.com/watch/?v=770300356741609'
     MESSENGER_CHAT_URL = 'https://www.messenger.com/t/nganhanguyen0306'
     INSTAGRAM_VIDEO_URL = 'https://www.instagram.com/p/B1nlf9AhX4M/'
     NEWS_KIENTHUC_VIDEO_URL = 'https://kienthuc.net.vn/truyen-hinh-video/video-duong-pho-ha-noi-ngap-sau-sau-mua-bao-1259721.html'
@@ -120,7 +120,7 @@ class OtherSiteUrls:
     VTV16_INFO_VIDEO_URL = 'http://vtv16.info/phim/ve-nha-di-con-tron-bo-7116/xem-phim.html'
     BESTIE_VN_VIDEO_URL = 'https://bestie.vn/2019/06/giam-thieu-tinh-trang-rang-e-buot-tai-nha-video'
     CLIP_ANIME_VN_VIDEO_URL = 'https://clipanime.com/video/177008'
-    VTV_GO_VN_VIDEO_URL = 'https://vtvgo.vn/kho-video/am-thuc-duong-pho-xoi-cade-751588.html'
+    VTV_GO_VN_VIDEO_URL = 'https://vtvgo.vn'
     XEM_VTV_NET = 'http://ww.xemvtv.net/xem-phim/nhan-sinh-cua-bach-ho-ly-tap-1/UUWOI65.html'
     OK_RU = 'https://ok.ru/video/2394372770490'
 

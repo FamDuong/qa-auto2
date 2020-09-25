@@ -5,27 +5,33 @@ from pytest_testrail.plugin import pytestrail
 
 from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
 from testscripts.common_setup import implement_download_file, delete_all_mp4_file_download
+from testscripts.savior_top_100_sites.common import download_and_verify_video
 from utils_automation.const import OtherSiteUrls
 
 any_site_page_object = AnySitePageObject()
 savior_page_object = SaviorPageObject()
 top_sites_savior_title_actions = TopSitesSaviorTitleAction()
+top_site_titles_action = TopSitesSaviorTitleAction()
 
 
 class TestFacebook:
 
     @pytestrail.case('C96691')
     @pytest.mark.ten_popular_sites
-    @pytestrail.defect('PF-530')
-    def test_download_file_facebook(self, browser_top_sites, get_current_download_folder_top_sites
-                                    , clear_download_page):
+    def test_download_file_facebook(self, browser_top_sites, get_current_download_folder_top_sites):
+        # browser_top_sites.get(OtherSiteUrls.FACEBOOK_VIDEO_URL)
+        # video_title_temp = top_sites_savior_title_actions.get_facebook_video_title(browser_top_sites)
+        # video_title = top_site_titles_action.replace_vertical_bar_and_colon_by_dash_in_string(video_title_temp)
+        # any_site_page_object.mouse_over_video_element_facebook(browser_top_sites)
+        # try:
+        #     implement_download_file(browser_top_sites, get_current_download_folder_top_sites)
+        # finally:
+        #     delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title)
+
         browser_top_sites.get(OtherSiteUrls.FACEBOOK_VIDEO_URL)
-        video_title_start_with = top_sites_savior_title_actions.get_facebook_video_title(browser_top_sites)[0:7]
-        any_site_page_object.mouse_over_video_element_facebook(browser_top_sites)
-        try:
-            implement_download_file(browser_top_sites, get_current_download_folder_top_sites)
-        finally:
-            delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title_start_with)
+        video_title_temp = top_sites_savior_title_actions.get_facebook_video_title(browser_top_sites)
+        video_title = top_site_titles_action.replace_vertical_bar_and_colon_by_dash_in_string(video_title_temp)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title )
 
 
 class TestMessenger:

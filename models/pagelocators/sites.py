@@ -77,7 +77,7 @@ class AnySite(object):
     NEWS_VNEXPRESS_VIDEO_CSS = 'div[class ="icon_blockvideo"]'
     THANH_NIEN_VIDEO_ITEM = (By.XPATH, '//div[@video-title][@data-enablefloat]')
     DAN_TRI_PLAY_VIDEO_BTN = (By.XPATH, '//button[@class="vjs-big-play-button"]')
-    DAN_TRI_VIDEO_ITEM = (By.ID, 'video-embeb')
+    DAN_TRI_VIDEO_ITEM = (By.XPATH, '//div[@aria-label="Trình phát Video"]')
     NGUOI_LAO_DONG_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="streamid"]')
     NGUOI_LAO_DONG_PAUSE_BTN = (By.XPATH, '//button[@class="NLDPlayer-control  NLDPlayer-button play-control playing"]')
     ANIME_VSBUT_TV_CLOSE_POP_UP_WHERE_TO_START_VIDEO = (By.XPATH, '//button[@class="lobibox-btn lobibox-btn-no"]')
@@ -171,5 +171,6 @@ class AnySite(object):
     CHON_GIAO_DIEN_SUBMIT_BTN_XPATH = '//button[@type="submit"]'
     NEWS_24H_VIDEO_TO_GET_TITLE_CSS = 'div[class="viewVideoPlay"] video'
     NEWS_KIENTHUC_VIDEO_TO_GET_TITLE_CSS = 'div[class="contentvideo"] video'
-    VIETNAMENET_VIDEO_IFRAME = (By.XPATH, '//iframe[@allow="autoplay; fullscreen"]')
+    # VIETNAMENET_VIDEO_IFRAME = (By.XPATH, '//iframe[@allow="autoplay; fullscreen"]')
+    VIETNAMENET_VIDEO_IFRAME = (By.ID, 'setIframMobile')
 

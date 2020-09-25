@@ -11,7 +11,8 @@ class TopSaviorSitesTitleLocators(object):
     MOT_PHIM_VIDEO_TITLE = (By.XPATH, '//meta[@name="title"]')
     PHIMMOI_VIDEO_TITLE = (By.XPATH, '//meta[@property="og:title"]')
     OK_RU_VIDEO_TITLE = (By.XPATH, '//title')
-    FACEBOOK_VIDEO_TITLE = (By.ID, 'pageTitle')
+    FACEBOOK_VIDEO_ROOT_SHADOW_CSS = "#facebook div[style='position: absolute; top: 0px;']"
+    FACEBOOK_VIDEO_TITLE_CSS = "li[class='j-media-scope media-scope']"
     FR_PORNHUB_VIDEO_TITLE = (By.ID, 'main-container')
     VIDEO_VNEXPRESS_VIDEO_TITLE = (By.XPATH, '//*[@id="info_inner"]//h1[@class="title"]')
 

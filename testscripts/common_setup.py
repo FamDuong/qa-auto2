@@ -37,13 +37,13 @@ def download_file_via_main_download_button(browser, time_sleep=8):
     LOGGER.info("Downloading video...")
     import time
     savior_page_object.download_file_via_savior_download_btn(browser)
-    time.sleep(time_sleep)
+    # time.sleep(time_sleep)
     media_info_element = savior_page_object.current_media_info(browser)
     start_time = datetime.now()
     while check_if_the_file_fully_downloaded(browser) is False:
         time.sleep(2)
         time_delta = datetime.now() - start_time
-        if time_delta.total_seconds() >= 15:
+        if time_delta.total_seconds() >= 30:
             break
     # Check the file is fully downloaded
     # check_if_the_file_fully_downloaded(browser)

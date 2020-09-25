@@ -3,6 +3,7 @@ import logging
 from models.pageelements.sites import AnySiteElements
 from models.pageelements.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleElements
 from models.pagelocators.sites import AnySite
+from models.pagelocators.top_savior_sites.top_savior_sites_title import TopSaviorSitesTitleLocators
 from models.pageobject.basepage_object import BasePageObject
 
 LOGGER = logging.getLogger(__name__)
@@ -59,14 +60,17 @@ class TopSitesSaviorTitleAction(BasePageObject):
         return self.top_sites_savior_title_elements.find_ok_ru_video_title_element(driver).text
 
     def get_facebook_video_title(self, driver):
-        return self.top_sites_savior_title_elements.find_facebook_video_title_element(driver).text
+        facebook_video_title = driver.execute_script(
+            " return document.querySelector(\"" + TopSaviorSitesTitleLocators.FACEBOOK_VIDEO_ROOT_SHADOW_CSS + "\").shadowRoot.querySelector(\"" + TopSaviorSitesTitleLocators.FACEBOOK_VIDEO_TITLE_CSS + "\").title")
+        return facebook_video_title
 
     def get_fr_pornhub_video_title(self, driver):
         return self.top_sites_savior_title_elements.find_fr_pornhub_video_title_element(driver).get_attribute(
             'data-video-title')
 
     def get_video_title_from_link(self, driver, title_css_selector):
-        video_title_root = driver.execute_script("return document.querySelector('" + title_css_selector + "').getAttribute('src')")
+        video_title_root = driver.execute_script(
+            "return document.querySelector('" + title_css_selector + "').getAttribute('src')")
         temp_list = video_title_root.rsplit('/', 1)
         video_title_list = temp_list[1].rsplit('.', 1)
         LOGGER.info("Get video title: " + video_title_list[0])
