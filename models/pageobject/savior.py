@@ -1,5 +1,7 @@
+import time
 import re
 import logging
+from datetime import datetime
 from models.pageelements.savior import SaviorElements
 from models.pagelocators.savior import SaviorPageLocators
 from models.pageobject.basepage_object import BasePageObject
@@ -22,35 +24,58 @@ class SaviorPageObject(BasePageObject):
         self.savior_elements.not_found_download_button(driver)
 
     def choose_preferred_option(self, driver):
+        start_time = datetime.now()
+        if self.savior_elements.find_preferred_option(driver) is None:
+            while self.savior_elements.find_preferred_option(driver) is None:
+                time.sleep(1)
+                time_delta = datetime.now() - start_time
+                if time_delta.total_seconds() >= 8:
+                    break
         driver.execute_script(
             self.script,
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
-        WaitAfterEach.sleep_timer_after_each_step()
 
     def choose_full_hd_option(self, driver):
-        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.FULL_HD_SELECT_OPTION)
-        WaitAfterEach.sleep_timer_after_each_step()
+        try:
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.FULL_HD_SELECT_OPTION)
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            return e
 
     def choose_hd_option(self, driver):
-        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.HD_SELECT_OPTION)
-        WaitAfterEach.sleep_timer_after_each_step()
+        try:
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.HD_SELECT_OPTION)
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            return e
 
     def choose_standard_option(self, driver):
-        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.STANDARD_SELECT_OPTION)
-        WaitAfterEach.sleep_timer_after_each_step()
+        try:
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.STANDARD_SELECT_OPTION)
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            return e
 
     def choose_medium_option(self, driver):
-        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MEDIUM_SELECT_OPTION)
-        WaitAfterEach.sleep_timer_after_each_step()
+        try:
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MEDIUM_SELECT_OPTION)
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            return e
 
     def choose_small_option(self, driver):
-        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.SMALL_SELECT_OPTION)
-        WaitAfterEach.sleep_timer_after_each_step()
+        try:
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.SMALL_SELECT_OPTION)
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            return e
 
     def choose_mobile_option(self, driver):
-        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MOBILE_SELECT_OPTION)
-        WaitAfterEach.sleep_timer_after_each_step()
-
+        try:
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MOBILE_SELECT_OPTION)
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            return e
 
     def assert_value_preferred_quality(self, driver, assert_text):
         preferred_element = driver.execute_script(
@@ -60,6 +85,13 @@ class SaviorPageObject(BasePageObject):
         assert preferred_element == assert_text
 
     def download_file_via_savior_download_btn(self, driver):
+        start_time = datetime.now()
+        if self.savior_elements.find_download_button(driver) is None:
+            while self.savior_elements.find_download_button(driver) is None:
+                time.sleep(1)
+                time_delta = datetime.now() - start_time
+                if time_delta.total_seconds() >= 8:
+                    break
         driver.execute_script(
             self.script,
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.DOWNLOAD_BUTTON)

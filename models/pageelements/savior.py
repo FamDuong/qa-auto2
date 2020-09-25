@@ -74,7 +74,8 @@ class SaviorElements(BasePageElement):
     def get_current_video_file_size(self, driver):
         return driver.execute_script('document.querySelector(arguments[0]).shadowRoot.querySelector(arguments[1]).'
                                      'querySelector(arguments[2]).textContent',
-                                     SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.CURRENT_VIDEO_QUALITY_SELECTED_ITEM,
+                                     SaviorPageLocators.FIRST_LAYER,
+                                     SaviorPageLocators.CURRENT_VIDEO_QUALITY_SELECTED_ITEM,
                                      SaviorPageLocators.CURRENT_VIDEO_FILE_SIZE_ITEM)
 
     def get_each_quality_info_video_options(self, driver, i):

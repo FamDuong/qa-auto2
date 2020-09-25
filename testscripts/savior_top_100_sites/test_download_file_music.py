@@ -1,3 +1,4 @@
+import pytest
 from pytest_testrail.plugin import pytestrail
 
 from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
@@ -10,6 +11,7 @@ top_site_titles_action = TopSitesSaviorTitleAction()
 class TestNhacVN:
 
     @pytestrail.case('C98782')
+    @pytest.mark.one_hundred_popular_sites
     def test_download_nhac_vn(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(OtherSiteUrls.NHAC_VN_VIDEO_URL)
         video_title = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
