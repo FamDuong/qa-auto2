@@ -4,7 +4,8 @@ import time
 from models.pagelocators.newtab import NewTabMostVisitedLocators
 from models.pageobject.newtab import NewTabAdsActions
 from models.pageobject.settings import SettingsPageObject
-from testscripts.newtab_page.common import verify_most_visited_ads_in_newtab_page, scroll_down_to_show_ads
+from testscripts.newtab_page.common import verify_most_visited_ads_in_newtab_page, scroll_down_to_show_ads, \
+    check_most_visited_ads_with_url, check_news_ads_with_url
 from testscripts.search.ccsearch_with_adblock_plus.common import change_adblock_plus_mode, \
     verify_ads_is_oppened_in_newtab
 from utils_automation.common_browser import coccoc_instance
@@ -27,12 +28,7 @@ class TestAdsOnNewTabPage:
             LOGGER.info("*** Testing in mode: " + mode)
             change_adblock_plus_mode(driver, mode)
             driver = coccoc_instance()
-            for url in get_newtab_url:
-                driver.get(url)
-                driver.maximize_window()
-                total_ads = self.new_tab_ads_action.count_all_most_visited_ads(driver)
-                verify_most_visited_ads_in_newtab_page(driver, total_ads,
-                                                       NewTabMostVisitedLocators.MOST_VISITED_QC_BY_INDEX_XPATH)
+            check_most_visited_ads_with_url(driver, get_newtab_url)
 
     def test_news_ads(self, get_newtab_url):
         driver = coccoc_instance()
@@ -44,9 +40,4 @@ class TestAdsOnNewTabPage:
             LOGGER.info("*** Testing in mode: " + mode)
             change_adblock_plus_mode(driver, mode)
             driver = coccoc_instance()
-            for url in get_newtab_url:
-                driver.get(url)
-                driver.maximize_window()
-                scroll_down_to_show_ads(driver, 0)
-                total_news_ads = self.new_tab_ads_action.count_all_news_ads(driver)
-                verify_ads_is_oppened_in_newtab(driver, total_news_ads, NewTabMostVisitedLocators.NEWS_ADS_BY_INDEX_XPATH)
+            check_news_ads_with_url(driver, get_newtab_url)
