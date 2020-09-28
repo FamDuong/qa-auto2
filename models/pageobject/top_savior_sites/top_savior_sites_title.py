@@ -68,7 +68,8 @@ class TopSitesSaviorTitleAction(BasePageObject):
         return self.top_sites_savior_title_elements.find_fr_pornhub_video_title_element(driver).get_attribute(
             'data-video-title')
 
-    def get_video_title_from_link(self, driver, title_css_selector):
+    def get_video_title_from_link(self, driver, title_css_selector, element):
+        self.any_sites_elements.find_video_title(driver, element)
         video_title_root = driver.execute_script(
             "return document.querySelector('" + title_css_selector + "').getAttribute('src')")
         temp_list = video_title_root.rsplit('/', 1)

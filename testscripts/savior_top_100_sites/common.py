@@ -41,9 +41,8 @@ def choose_highest_resolution_of_video(driver):
 def download_and_verify_video(driver, download_folder, video_title, mouse_over_first_video=True):
     if mouse_over_first_video:
         any_site_page_object.mouse_over_first_video_element(driver)
-    # time.sleep(5)
     choose_highest_resolution_of_video(driver)
-    media_info = download_file_via_main_download_button(driver, time_sleep=15)
+    media_info = download_file_via_main_download_button(driver, video_title)
     resolution_info = get_resolution_info(media_info)
     try:
         assert_file_download_value(download_folder, resolution_info, start_with=video_title)

@@ -47,7 +47,7 @@ class BasePageElement(object):
         try:
             element = self.wait_for_element(driver).until(ec.presence_of_element_located(locator))
         except TimeoutException as e:
-            LOGGER.info(e.stacktrace)
+            LOGGER.info("Find element if exist timeout exception: "+str(e.stacktrace))
         return element
 
 
