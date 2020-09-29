@@ -24,13 +24,6 @@ class SaviorPageObject(BasePageObject):
         self.savior_elements.not_found_download_button(driver)
 
     def choose_preferred_option(self, driver):
-        start_time = datetime.now()
-        if self.savior_elements.find_preferred_option(driver) is None:
-            while self.savior_elements.find_preferred_option(driver) is None:
-                time.sleep(1)
-                time_delta = datetime.now() - start_time
-                if time_delta.total_seconds() >= 8:
-                    break
         driver.execute_script(
             self.script,
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
@@ -90,7 +83,7 @@ class SaviorPageObject(BasePageObject):
             while self.savior_elements.find_download_button(driver) is None:
                 time.sleep(1)
                 time_delta = datetime.now() - start_time
-                if time_delta.total_seconds() >= 8:
+                if time_delta.total_seconds() >= 10:
                     break
         driver.execute_script(
             self.script,

@@ -108,7 +108,7 @@ class DownloadsPageObject(BasePageObject):
         if (self.downloads_elem.find_more_icon(driver) is not None) \
                 and (len(self.downloads_elem.find_elements_not_deleted(driver)) > 0):
             start_time = datetime.now()
-            while (datetime.now() - start_time).total_seconds() < 2000:
+            while (datetime.now() - start_time).total_seconds() < 6000:
                 if len(self.downloads_elem.find_play_button(driver)) > 0:
                     index += 1
                     break

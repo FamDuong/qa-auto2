@@ -170,6 +170,9 @@ class AnySite(object):
     CHON_GIAO_DIEN_SUBMIT_BTN = (By.XPATH, '//button[@type="submit"]')
     CHON_GIAO_DIEN_SUBMIT_BTN_XPATH = '//button[@type="submit"]'
     NEWS_24H_VIDEO_TO_GET_TITLE_CSS = 'div[class="viewVideoPlay"] video'
+    NEWS_24H_VIDEO_TO_GET_TITLE = (By.CSS_SELECTOR, 'div[class="viewVideoPlay"] video')
+    VTC_VIDEO_TO_GET_TITLE_CSS = 'div.jw-media.jw-reset video'
+    VTC_VIDEO_TO_GET_TITLE = (By.CSS_SELECTOR, 'div.jw-media.jw-reset video')
     NEWS_KIENTHUC_VIDEO_TO_GET_TITLE_CSS = 'div[class="contentvideo"] video'
     # VIETNAMENET_VIDEO_IFRAME = (By.XPATH, '//iframe[@allow="autoplay; fullscreen"]')
     VIETNAMENET_VIDEO_IFRAME = (By.ID, 'setIframMobile')

@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
+from models.pagelocators.downloads import DownloadsPageLocators
 from models.pagelocators.savior import SaviorPageLocators
 
 LOGGER = logging.getLogger(__name__)
@@ -50,8 +51,9 @@ class SaviorElements(BasePageElement):
         assert self.select_shadow_element_download_button(driver) in (1, None)
 
     def find_preferred_option(self, driver):
-        return self.select_shadow_element_by_css_selector(driver, self.find_first_layer(driver)). \
-            find_element_by_css_selector(SaviorPageLocators.PREFERRED_SELECT_BTN)
+        return self.find_shadow_element(driver, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
+        # return self.select_shadow_element_by_css_selector(driver, self.find_first_layer(driver)). \
+        #     find_element_by_css_selector(SaviorPageLocators.PREFERRED_SELECT_BTN)
 
     def find_mobile_sharing_button(self, driver):
         return self.select_shadow_element_by_css_selector(driver, self.find_first_layer(driver)). \
@@ -85,3 +87,8 @@ class SaviorElements(BasePageElement):
                                      'getAttribute("data-quality-value")', SaviorPageLocators.FIRST_LAYER,
                                      SaviorPageLocators.CLASS_WRAPPER_VIDEO_OPTIONS,
                                      SaviorPageLocators.ALL_VIDEO_OPTIONS_AVAILABLE, i)
+
+    def find_play_button_by_video_title(self, driver, video_title):
+        play_button_xpath = DownloadsPageLocators.PLAY_BUTTON_BY_VIDEO_TITLE.replace('{param1}', video_title)
+        play_button_element = self.find_element_if_exist(driver, (By.XPATH, play_button_xpath))
+        return play_button_element

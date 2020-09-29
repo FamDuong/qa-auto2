@@ -1,7 +1,9 @@
 import logging
+import time
 from datetime import datetime
 
 import cv2
+from models.pageelements.savior import SaviorElements
 from models.pageobject.downloads import DownloadsPageObject
 from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetailsPageObject, \
     SaviorExtensionOptionsPageObject
@@ -23,30 +25,29 @@ google_page_object = GooglePageObject()
 
 download_page_object = DownloadsPageObject()
 any_site_page_object = AnySitePageObject()
+savior_element = SaviorElements()
 
 LOGGER = logging.getLogger(__name__)
 
 
-def delete_all_mp4_file_download(mydir, endwith, startwith=None):
+def delete_all_mp4_file_download(mydir, endwith, start_with=None):
     LOGGER.info("Delete video")
     files_handle = FilesHandle()
-    files_handle.delete_files_in_folder(mydir, endwith, startwith=startwith)
+    if isinstance(start_with, list):
+        for title in start_with:
+            files_handle.delete_files_in_folder(mydir, endwith, startwith=title)
+    else:
+        files_handle.delete_files_in_folder(mydir, endwith, startwith=start_with)
 
 
-def download_file_via_main_download_button(browser, time_sleep=8):
+def download_file_via_main_download_button(browser, video_title):
     LOGGER.info("Downloading video...")
-    import time
+
     savior_page_object.download_file_via_savior_download_btn(browser)
-    # time.sleep(time_sleep)
     media_info_element = savior_page_object.current_media_info(browser)
-    start_time = datetime.now()
-    while check_if_the_file_fully_downloaded(browser) is False:
-        time.sleep(2)
-        time_delta = datetime.now() - start_time
-        if time_delta.total_seconds() >= 30:
-            break
+
     # Check the file is fully downloaded
-    # check_if_the_file_fully_downloaded(browser)
+    open_coccoc_download_then_check_if_the_file_fully_downloaded(browser, video_title)
     return media_info_element
 
 
@@ -65,7 +66,11 @@ def clear_data_download(driver):
 def assert_file_download_value(download_folder_path, height_value, start_with):
     LOGGER.info("Verify video title same as: " + str(start_with))
     LOGGER.info("Verify video resolution same as: " + str(height_value))
-    mp4_files = find_mp4_file_download(download_folder_path, endwith='.mp4', startwith=start_with)
+    if isinstance(start_with, list):
+        for title in start_with:
+            mp4_files = find_mp4_file_download(download_folder_path, endwith='.mp4', startwith=title)
+    else:
+        mp4_files = find_mp4_file_download(download_folder_path, endwith='.mp4', startwith=start_with)
     vid = cv2.VideoCapture(download_folder_path + '\\' + mp4_files[0])
     height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
     width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -84,6 +89,7 @@ def assert_file_download_value(download_folder_path, height_value, start_with):
         assert height is not None
     # cv2.destroyAllWindows()
 
+
 def assert_file_download_exist(download_folder_path, file_size=2.00, startwith=None):
     LOGGER.info("Verify video title same as: " + str(startwith))
     import os
@@ -101,6 +107,29 @@ def assert_file_download_exist(download_folder_path, file_size=2.00, startwith=N
 def check_if_the_file_fully_downloaded(browser):
     browser.get(Urls.COCCOC_DOWNLOAD_URL)
     assert download_page_object.verify_play_button_existed(browser) == 1
+
+
+def check_if_file_with_title_fully_downloaded(browser, video_title):
+    play_button_by_video_title = savior_element.find_play_button_by_video_title(browser, video_title)
+    LOGGER.info("Play button: " + str(play_button_by_video_title))
+    start_time = datetime.now()
+    if play_button_by_video_title is None:
+        while play_button_by_video_title is None:
+            time.sleep(2)
+            play_button_by_video_title = savior_element.find_play_button_by_video_title(browser, video_title)
+            LOGGER.info("Play button after timeout: " + str(play_button_by_video_title))
+            time_delta = datetime.now() - start_time
+            if time_delta.total_seconds() >= 200:
+                break
+
+
+def open_coccoc_download_then_check_if_the_file_fully_downloaded(browser, video_title):
+    browser.get(Urls.COCCOC_DOWNLOAD_URL)
+    if isinstance(video_title, list):
+        for title in video_title:
+            check_if_file_with_title_fully_downloaded(browser, title)
+    else:
+        check_if_file_with_title_fully_downloaded(browser, video_title)
 
 
 def pause_any_video_youtube(browser):

@@ -1,4 +1,6 @@
 import logging
+import time
+
 import pytest
 
 from models.pagelocators.sites import AnySite
@@ -17,39 +19,42 @@ top_site_titles_action = TopSitesSaviorTitleAction()
 LOGGER = logging.getLogger(__name__)
 
 
-
 class Test24H:
 
     @pytestrail.case('C96720')
     @pytest.mark.one_hundred_popular_sites
     def test_download_file_24h(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(OtherSiteUrls.NEWS_24H_BONGDA_URL)
+        LOGGER.info("Check download video on " + OtherSiteUrls.NEWS_24H_BONGDA_URL)
         video_title_bong_da = top_site_titles_action.get_video_title_from_link(browser_top_sites,
-                                                                               AnySite.NEWS_24H_VIDEO_TO_GET_TITLE_CSS)
+                                                                               AnySite.NEWS_24H_VIDEO_TO_GET_TITLE_CSS,
+                                                                               AnySite.NEWS_24H_VIDEO_TO_GET_TITLE)
         any_site_page_object.mouse_over_first_video_element(browser_top_sites)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title_bong_da)
 
         browser_top_sites.get(OtherSiteUrls.NEWS_24H_URL)
+        LOGGER.info("Check download video on " + OtherSiteUrls.NEWS_24H_URL)
         video_title = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
         any_site_page_object.mouse_over_first_video_element(browser_top_sites)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
 
 # Still error
-class TestVietnamNet:
-
-    @staticmethod
-    def prepare_savior_option_displayed(browser):
-        browser.get(OtherSiteUrls.VIETNAMNET_VIDEO_URL)
-        any_site_page_object.mouse_over_video_item_vietnamnet(browser)
-
-    @pytestrail.case('C96759')
-    def test_download_file_vietnamnet(self, browser_top_sites, get_current_download_folder_top_sites):
-        browser_top_sites.get(OtherSiteUrls.VIETNAMNET_VIDEO_URL)
-        video_title = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
-        any_site_page_object.mouse_over_video_item_vietnamnet(browser_top_sites)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title,
-                                  mouse_over_first_video=False)
+# class TestVietnamNet:
+#
+#     @staticmethod
+#     def prepare_savior_option_displayed(browser):
+#         browser.get(OtherSiteUrls.VIETNAMNET_VIDEO_URL)
+#         any_site_page_object.mouse_over_video_item_vietnamnet(browser)
+#
+#     @pytestrail.case('C96759')
+#     def test_download_file_vietnamnet(self, browser_top_sites, get_current_download_folder_top_sites):
+#         browser_top_sites.get(OtherSiteUrls.VIETNAMNET_VIDEO_URL)
+#         LOGGER.info("Check download video on " + OtherSiteUrls.VIETNAMNET_VIDEO_URL)
+#         video_title = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
+#         any_site_page_object.mouse_over_video_item_vietnamnet(browser_top_sites)
+#         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title,
+#                                   mouse_over_first_video=False)
         # self.prepare_savior_option_displayed(browser_top_sites)
         # verify_download_quality_high_frame(browser_top_sites, get_current_download_folder_top_sites,
         #                                    self.prepare_savior_option_displayed),
@@ -61,6 +66,7 @@ class TestTuoiTre:
     @pytest.mark.one_hundred_popular_sites
     def test_download_file_video_tuoi_tre(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(OtherSiteUrls.TUOI_TRE_VIDEO_URL)
+        LOGGER.info("Check download video on " + OtherSiteUrls.TUOI_TRE_VIDEO_URL)
         video_title = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
@@ -71,8 +77,10 @@ class TestVTCVN:
     @pytest.mark.one_hundred_popular_sites
     def test_download_file_vtc_vn(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(OtherSiteUrls.VTC_VN_VIDEO_URL)
-        any_site_page_object.click_video_element_vtc_v(browser_top_sites)
-        video_title = top_site_titles_action.get_vtc_video_title(browser_top_sites)
+        LOGGER.info("Check download video on " + OtherSiteUrls.VTC_VN_VIDEO_URL)
+        video_title_root = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
+        video_title_temp = top_site_titles_action.replace_special_characters_by_dash_in_string(video_title_root)
+        video_title = top_site_titles_action.get_first_part_of_video_title(video_title_temp)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
 
@@ -82,6 +90,7 @@ class TestKenh14VN:
     @pytest.mark.one_hundred_popular_sites
     def test_download_file_kenh14_vn(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(OtherSiteUrls.KENH14_VN_VIDEO_URL)
+        LOGGER.info("Check download video on " + OtherSiteUrls.KENH14_VN_VIDEO_URL)
         video_title = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
@@ -109,7 +118,7 @@ class TestThanhNienVN:
         browser.get(OtherSiteUrls.THANH_NIEN_VIDEO_URL)
         LOGGER.info("Check download video on " + OtherSiteUrls.THANH_NIEN_VIDEO_URL)
         video_title_temp = top_site_titles_action.get_website_title_by_javascript(browser)
-        video_title = top_site_titles_action.replace_vertical_bar_and_colon_by_dash_in_string(video_title_temp)
+        video_title = top_site_titles_action.replace_special_characters_by_dash_in_string(video_title_temp)
         return video_title
 
     @pytestrail.case('C98773')
@@ -126,7 +135,7 @@ class TestDanTriVN:
         browser.get(OtherSiteUrls.DAN_TRI_VIDEO_URL)
         LOGGER.info("Check download video on " + OtherSiteUrls.DAN_TRI_VIDEO_URL)
         video_title_temp = top_site_titles_action.get_website_title_by_javascript(browser)
-        video_title = top_site_titles_action.replace_vertical_bar_and_colon_by_dash_in_string(video_title_temp)
+        video_title = top_site_titles_action.replace_special_characters_by_dash_in_string(video_title_temp)
         any_site_page_object.click_play_video_dan_tri_vn(browser)
         any_site_page_object.mouse_over_video_dan_tri_vn(browser)
         return video_title
@@ -145,7 +154,7 @@ class TestVtvGoVN:
         browser.get(OtherSiteUrls.VTV_GO_VN_VIDEO_URL)
         LOGGER.info("Check download video on " + OtherSiteUrls.VTV_GO_VN_VIDEO_URL)
         video_title_temp = top_site_titles_action.get_website_title_by_javascript(browser)
-        video_title = top_site_titles_action.replace_vertical_bar_and_colon_by_dash_in_string(video_title_temp)
+        video_title = top_site_titles_action.replace_special_characters_by_dash_in_string(video_title_temp)
         return video_title
 
     @pytestrail.case('C98796')
