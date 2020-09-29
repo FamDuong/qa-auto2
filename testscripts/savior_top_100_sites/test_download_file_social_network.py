@@ -30,7 +30,7 @@ class TestFacebook:
 
         browser_top_sites.get(OtherSiteUrls.FACEBOOK_VIDEO_URL)
         video_title_temp = top_sites_savior_title_actions.get_facebook_video_title(browser_top_sites)
-        video_title = top_site_titles_action.replace_vertical_bar_and_colon_by_dash_in_string(video_title_temp)
+        video_title = top_site_titles_action.replace_special_characters_by_dash_in_string(video_title_temp)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title )
 
 

@@ -67,10 +67,10 @@ class TestVuViPhim:
         any_site_page_object.mouse_over_video_vu_vi_phim(browser)
 
     @pytestrail.case('C98751')
-    def test_download_file_vuviphim(self, browser, get_current_download_folder):
-        self.prepare_savior_option_displayed(browser)
-        implement_download_file(browser, get_current_download_folder, ),
-        clear_data_download_in_browser_and_download_folder(browser, get_current_download_folder)
+    def test_download_file_vuviphim(self, browser_top_sites, get_current_download_folder_top_sites):
+        self.prepare_savior_option_displayed(browser_top_sites)
+        implement_download_file(browser_top_sites, get_current_download_folder_top_sites, ),
+        clear_data_download_in_browser_and_download_folder(browser_top_sites, get_current_download_folder_top_sites)
 
 
 class TestTvZing:

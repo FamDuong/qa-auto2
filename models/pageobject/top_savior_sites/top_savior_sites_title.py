@@ -13,12 +13,19 @@ class TopSitesSaviorTitleAction(BasePageObject):
     top_sites_savior_title_elements = TopSitesSaviorTitleElements()
     any_sites_elements = AnySiteElements()
 
-    def replace_vertical_bar_and_colon_by_dash_in_string(self, string):
-        if '|' in string or ':' in string:
-            new_string_temp = string.replace('|', '-')
-            new_string = new_string_temp.replace(':', '-')
-            LOGGER.info("Video title after replace | by -: " + new_string)
-            return new_string
+    def replace_special_characters_by_dash_in_string(self, string):
+        special_characters = ['|', ':', '/', '?']
+        new_string = string
+        for character in special_characters:
+            if character in new_string:
+                new_string = new_string.replace(character, '-')
+                LOGGER.info("Video title after replace "+character+" by -: " + new_string)
+        return new_string
+
+    def get_first_part_of_video_title(self, video_title):
+        title = video_title.split("-")[0]
+        LOGGER.info("First part of video title after split by - character: "+title)
+        return title
 
     def get_website_title_by_javascript(self, driver):
         video_title = driver.execute_script("return document.title")
@@ -76,13 +83,6 @@ class TopSitesSaviorTitleAction(BasePageObject):
         video_title_list = temp_list[1].rsplit('.', 1)
         LOGGER.info("Get video title: " + video_title_list[0])
         return video_title_list[0]
-
-    def get_vtc_video_title(self, driver):
-        vtc_video_title_root = self.get_website_title_by_javascript(driver)
-        temp_list = vtc_video_title_root.split('-', 1)
-        vtc_video_title = temp_list[0]
-        LOGGER.info("Get video title: " + vtc_video_title)
-        return vtc_video_title
 
     def get_video_vnexpress_video_title(self, driver):
         return self.top_sites_savior_title_elements.find_video_vnexpress_video_title_element(driver).text

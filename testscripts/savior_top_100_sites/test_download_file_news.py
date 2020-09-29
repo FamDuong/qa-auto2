@@ -1,4 +1,6 @@
 import logging
+import time
+
 import pytest
 
 from models.pagelocators.sites import AnySite
@@ -76,8 +78,9 @@ class TestVTCVN:
     def test_download_file_vtc_vn(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(OtherSiteUrls.VTC_VN_VIDEO_URL)
         LOGGER.info("Check download video on " + OtherSiteUrls.VTC_VN_VIDEO_URL)
-        any_site_page_object.click_video_element_vtc_v(browser_top_sites)
-        video_title = top_site_titles_action.get_vtc_video_title(browser_top_sites)
+        video_title_root = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
+        video_title_temp = top_site_titles_action.replace_special_characters_by_dash_in_string(video_title_root)
+        video_title = top_site_titles_action.get_first_part_of_video_title(video_title_temp)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
 
@@ -115,7 +118,7 @@ class TestThanhNienVN:
         browser.get(OtherSiteUrls.THANH_NIEN_VIDEO_URL)
         LOGGER.info("Check download video on " + OtherSiteUrls.THANH_NIEN_VIDEO_URL)
         video_title_temp = top_site_titles_action.get_website_title_by_javascript(browser)
-        video_title = top_site_titles_action.replace_vertical_bar_and_colon_by_dash_in_string(video_title_temp)
+        video_title = top_site_titles_action.replace_special_characters_by_dash_in_string(video_title_temp)
         return video_title
 
     @pytestrail.case('C98773')
@@ -132,7 +135,7 @@ class TestDanTriVN:
         browser.get(OtherSiteUrls.DAN_TRI_VIDEO_URL)
         LOGGER.info("Check download video on " + OtherSiteUrls.DAN_TRI_VIDEO_URL)
         video_title_temp = top_site_titles_action.get_website_title_by_javascript(browser)
-        video_title = top_site_titles_action.replace_vertical_bar_and_colon_by_dash_in_string(video_title_temp)
+        video_title = top_site_titles_action.replace_special_characters_by_dash_in_string(video_title_temp)
         any_site_page_object.click_play_video_dan_tri_vn(browser)
         any_site_page_object.mouse_over_video_dan_tri_vn(browser)
         return video_title
@@ -151,7 +154,7 @@ class TestVtvGoVN:
         browser.get(OtherSiteUrls.VTV_GO_VN_VIDEO_URL)
         LOGGER.info("Check download video on " + OtherSiteUrls.VTV_GO_VN_VIDEO_URL)
         video_title_temp = top_site_titles_action.get_website_title_by_javascript(browser)
-        video_title = top_site_titles_action.replace_vertical_bar_and_colon_by_dash_in_string(video_title_temp)
+        video_title = top_site_titles_action.replace_special_characters_by_dash_in_string(video_title_temp)
         return video_title
 
     @pytestrail.case('C98796')
