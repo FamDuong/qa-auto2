@@ -9,8 +9,9 @@ from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
 
 from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
+from testscripts.common_setup import pause_any_video_site
 from testscripts.savior_top_100_sites.common import download_and_verify_video
-from utils_automation.const import OtherSiteUrls
+from utils_automation.const import OtherSiteUrls, VideoUrls
 
 any_site_page_object = AnySitePageObject()
 savior_page_object = SaviorPageObject()
@@ -55,9 +56,9 @@ class Test24H:
 #         any_site_page_object.mouse_over_video_item_vietnamnet(browser_top_sites)
 #         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title,
 #                                   mouse_over_first_video=False)
-        # self.prepare_savior_option_displayed(browser_top_sites)
-        # verify_download_quality_high_frame(browser_top_sites, get_current_download_folder_top_sites,
-        #                                    self.prepare_savior_option_displayed),
+# self.prepare_savior_option_displayed(browser_top_sites)
+# verify_download_quality_high_frame(browser_top_sites, get_current_download_folder_top_sites,
+#                                    self.prepare_savior_option_displayed),
 
 
 class TestTuoiTre:
@@ -161,4 +162,12 @@ class TestVtvGoVN:
     @pytest.mark.one_hundred_popular_sites
     def test_download_vtv_go_vn(self, browser_top_sites, get_current_download_folder_top_sites):
         video_title = self.prepare_savior_option_appear(browser_top_sites)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
+
+
+class TestNewsZing:
+    @pytestrail.case('C96752')
+    def test_download_news_zing(self, browser_top_sites, get_current_download_folder_top_sites):
+        pause_any_video_site(browser_top_sites, VideoUrls.NEWS_ZING_VIDEO_URL)
+        video_title = self.top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)

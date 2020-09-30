@@ -49,9 +49,9 @@ class TestPhimmoi:
         self.prepare_displayed_savior_popup(browser)
         video_title_start_with = self.top_sites_savior_title_actions.get_phimmoi_video_title(browser)
         try:
-            implement_download_file(browser, get_current_download_folder, startwith=video_title_start_with)
+            implement_download_file(browser, get_current_download_folder, start_with=video_title_start_with)
         finally:
-            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title_start_with)
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', star_with=video_title_start_with)
 
 
 class TestVuViPhim:
@@ -88,9 +88,9 @@ class TestTvZing:
         try:
             any_site_page_object.click_first_video_element(browser)
             any_site_page_object.mouse_over_first_video_element(browser)
-            implement_download_file(browser, get_current_download_folder, startwith=video_title)
+            implement_download_file(browser, get_current_download_folder, start_with=video_title)
         finally:
-            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title)
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', start_with=video_title)
 
 
 class TestTVHay:
@@ -114,9 +114,9 @@ class TestTVHay:
             # WaitAfterEach.sleep_timer_after_each_step()
             # check_if_the_file_fully_downloaded(browser)
             # assert_file_download_exist(get_current_download_folder)
-            implement_download_file(browser, get_current_download_folder, startwith=video_title)
+            implement_download_file(browser, get_current_download_folder, start_with=video_title)
         finally:
-            delete_all_mp4_file_download(get_current_download_folder, '.mp4', startwith=video_title)
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', start_with=video_title)
 
 
 class TestAnimeSub:

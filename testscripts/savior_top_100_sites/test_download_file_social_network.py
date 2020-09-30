@@ -104,19 +104,3 @@ class TestWeibo:
         browser.get(OtherSiteUrls.WEIBO_VIDEO_URL)
         any_site_page_object.mouse_over_video_element_weibo(browser)
         implement_download_file(browser, get_current_download_folder),
-
-
-class TestOkRu:
-
-    @pytestrail.case('C204280')
-    @pytest.mark.one_hundred_popular_sites
-    def test_download_ok_ru(self, browser_top_sites, get_current_download_folder_top_sites, clear_download_page):
-        browser_top_sites.get(OtherSiteUrls.OK_RU)
-        video_title = top_sites_savior_title_actions.get_ok_ru_video_title(browser_top_sites)
-        delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title)
-        try:
-            any_site_page_object.mouse_over_video_ok_ru(browser_top_sites)
-            implement_download_file(browser_top_sites, get_current_download_folder_top_sites, time_sleep=10, file_size=0.42,
-                                    startwith=video_title)
-        finally:
-            delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title)

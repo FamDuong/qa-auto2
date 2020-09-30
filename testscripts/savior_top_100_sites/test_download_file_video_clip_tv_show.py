@@ -39,18 +39,17 @@ class TestDailyMotion:
                                   video_title, mouse_over_first_video=False)
 
 
-#Errror
-# class TestVliveTV:
-#
-#     @staticmethod
-#     def mouse_over_video_for_displaying_savior(browser):
-#         browser.get(OtherSiteUrls.VLIVE_TV_VIDEO_URL)
-#         any_site_page_object.mouse_over_video_element_vlive_tv(browser)
-#
-#     @pytestrail.case('C98809')
-#     def test_download_file_vlive_tv(self, browser_top_sites, get_current_download_folder
-#                                     , clear_download_page):
-#         self.mouse_over_video_for_displaying_savior(browser_top_sites)
-#         media_info = download_file_via_main_download_button(browser_top_sites)
-#         resolution_info = get_resolution_info(media_info)
-#         assert_file_download_value(get_current_download_folder, resolution_info)
+
+class TestVliveTV:
+
+    @staticmethod
+    def mouse_over_video_for_displaying_savior(browser):
+        browser.get(OtherSiteUrls.VLIVE_TV_VIDEO_URL)
+        any_site_page_object.mouse_over_video_element_vlive_tv(browser)
+
+    @pytestrail.case('C98809')
+    def test_download_file_vlive_tv(self, browser_top_sites, get_current_download_folder_top_sites):
+        self.mouse_over_video_for_displaying_savior(browser_top_sites)
+        media_info = download_file_via_main_download_button(browser_top_sites)
+        resolution_info = get_resolution_info(media_info)
+        assert_file_download_value(get_current_download_folder, resolution_info)

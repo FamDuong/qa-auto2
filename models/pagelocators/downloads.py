@@ -25,7 +25,7 @@ class DownloadsPageLocators:
     CLEAR_ALL_BTN = (By.XPATH, '//button[@title="Clear all"]')
     PLAY_BTN = '//span[@class="download-item-info-icon"]'
     ELEMENTS_NOT_DELETED = '//h6[@class=""]//a[@title] | //span[@title]'
-    PLAY_BUTTON_BY_VIDEO_TITLE = '//a[starts-with(@title,"{param1}")]//ancestor::div[@class="download-right-content"]//button[@class="js-play play-btn"]'
+    PLAY_BUTTON_BY_VIDEO_TITLE = '//a[starts-with(@title,"{param1}")]//ancestor::div[@class="download-right-content"]//button[@class="js-play play-btn"] | //a[starts-with(@title,"{param1}")]//ancestor::div[@class="download-right-content"]//button[@class="js-showInFolder showInFolder-btn"]'
     VIDEO = '//a[starts-with(@title,'')]'
     BADGE_BTN_INTERRUPTED = '//span[@class="badge badge-btn"][text()="Interrupted"]'
     STATUS_TEXT_IS_DANGEROUS = '//span[@class="statusText-isDangerous"]'

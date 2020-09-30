@@ -328,29 +328,3 @@
 #         any_site_page_object.switch_to_second_iframe_bestie_vn(browser)
 #         any_site_page_object.mouse_over_video_bestie_vn(browser)
 #         implement_download_file(browser, get_current_download_folder),
-
-
-# @pytestrail.case('C98735')
-# @pytest.mark.ten_popular_sites
-# @pytestrail.defect('PF-517')
-# def test_download_dongphim(self, browser_top_sites, get_current_download_folder_top_sites):
-#     try:
-#         browser_top_sites.get(VideoUrls.DONG_PHIM_VIDEO_URL)
-#         pause_or_play_video_by_javascript(browser_top_sites, action='play')
-#         any_site_page_object.click_first_video_element(browser_top_sites)
-#         any_site_page_object.mouse_over_first_video_element(browser_top_sites)
-#         video_title = top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
-#         implement_download_file(browser_top_sites, get_current_download_folder_top_sites, time_sleep=10)
-#     finally:
-#         delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title)
-# browser_top_sites.get(VideoUrls.DONG_PHIM_VIDEO_URL)
-# elements = any_site_page_object.choose_watch_option_if_any(browser_top_sites)
-# video_title_start_with = 'Thi'
-# if len(elements) == 0:
-#     any_site_page_object.click_video_item_dong_phim(browser_top_sites)
-# any_site_page_object.mouse_over_video_item_dong_phim(browser_top_sites)
-# try:
-#     implement_download_file(browser_top_sites, get_current_download_folder_top_sites, file_size=50.00,
-#                             startwith=video_title_start_with)
-# finally:
-#     delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title_start_with)

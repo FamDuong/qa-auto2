@@ -30,30 +30,30 @@ savior_element = SaviorElements()
 LOGGER = logging.getLogger(__name__)
 
 
-def delete_all_mp4_file_download(mydir, endwith, start_with=None):
+def delete_all_mp4_file_download(mydir, end_with, start_with=None):
     LOGGER.info("Delete video")
     files_handle = FilesHandle()
     if isinstance(start_with, list):
         for title in start_with:
-            files_handle.delete_files_in_folder(mydir, endwith, startwith=title)
+            files_handle.delete_files_in_folder(mydir, end_with, start_with=title)
     else:
-        files_handle.delete_files_in_folder(mydir, endwith, startwith=start_with)
+        files_handle.delete_files_in_folder(mydir, end_with, start_with=start_with)
 
 
-def download_file_via_main_download_button(browser, video_title):
+def download_file_via_main_download_button(browser, stard_with):
     LOGGER.info("Downloading video...")
 
     savior_page_object.download_file_via_savior_download_btn(browser)
     media_info_element = savior_page_object.current_media_info(browser)
 
     # Check the file is fully downloaded
-    open_coccoc_download_then_check_if_the_file_fully_downloaded(browser, video_title)
+    open_coccoc_download_then_check_if_the_file_fully_downloaded(browser, stard_with)
     return media_info_element
 
 
-def find_mp4_file_download(mydir, endwith, startwith=None):
+def find_mp4_file_download(mydir, end_with, start_with=None):
     files_handle = FilesHandle()
-    return files_handle.find_files_in_folder_by_modified_date(mydir, endwith, startwith=startwith)
+    return files_handle.find_files_in_folder_by_modified_date(mydir, end_with, start_with=start_with)
 
 
 def clear_data_download(driver):
@@ -63,14 +63,14 @@ def clear_data_download(driver):
     WaitAfterEach.sleep_timer_after_each_step()
 
 
-def assert_file_download_value(download_folder_path, height_value, start_with):
+def assert_file_download_value(download_folder_path, height_value, start_with, end_with):
     LOGGER.info("Verify video title same as: " + str(start_with))
     LOGGER.info("Verify video resolution same as: " + str(height_value))
     if isinstance(start_with, list):
         for title in start_with:
-            mp4_files = find_mp4_file_download(download_folder_path, endwith='.mp4', startwith=title)
+            mp4_files = find_mp4_file_download(download_folder_path, end_with, start_with=title)
     else:
-        mp4_files = find_mp4_file_download(download_folder_path, endwith='.mp4', startwith=start_with)
+        mp4_files = find_mp4_file_download(download_folder_path, end_with, start_with=start_with)
     vid = cv2.VideoCapture(download_folder_path + '\\' + mp4_files[0])
     height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
     width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -90,10 +90,10 @@ def assert_file_download_value(download_folder_path, height_value, start_with):
     # cv2.destroyAllWindows()
 
 
-def assert_file_download_exist(download_folder_path, file_size=2.00, startwith=None):
-    LOGGER.info("Verify video title same as: " + str(startwith))
+def assert_file_download_exist(download_folder_path, file_size=2.00, start_with=None):
+    LOGGER.info("Verify video title same as: " + str(start_with))
     import os
-    mp4_files = find_mp4_file_download(download_folder_path, '.mp4', startwith=startwith)
+    mp4_files = find_mp4_file_download(download_folder_path, '.mp4', start_with=start_with)
     file_path = download_folder_path + '\\' + mp4_files[0]
     vid = cv2.VideoCapture(file_path)
     size_file = round(os.stat(file_path).st_size / (1024 * 1024), 2)
@@ -119,7 +119,7 @@ def check_if_file_with_title_fully_downloaded(browser, video_title):
             play_button_by_video_title = savior_element.find_play_button_by_video_title(browser, video_title)
             LOGGER.info("Play button after timeout: " + str(play_button_by_video_title))
             time_delta = datetime.now() - start_time
-            if time_delta.total_seconds() >= 200:
+            if time_delta.total_seconds() >= 300:
                 break
 
 

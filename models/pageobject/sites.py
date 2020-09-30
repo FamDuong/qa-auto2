@@ -88,6 +88,9 @@ class AnySitePageObject(BasePageObject):
             if time_delta.total_seconds() >= 10:
                 break
 
+    def mouse_over_nhaccuatui_music_element(self, driver):
+        music_element = self.any_site_element.find_nhaccuatui_music_element(driver)
+        self.mouse_over_video_element_site(driver, music_element)
 
     def get_mouse_enter_event_js_element(self, driver):
         return driver.execute_script('return new Event("mouseenter")')

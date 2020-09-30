@@ -70,6 +70,14 @@ class SaviorPageObject(BasePageObject):
         except Exception as e:
             return e
 
+    def choose_mp3_standard_option(self, driver):
+        try:
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER,
+                                  SaviorPageLocators.MP3_STANDARD_SELECT_OPTION)
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            return e
+
     def assert_value_preferred_quality(self, driver, assert_text):
         preferred_element = driver.execute_script(
             'return document.querySelector(arguments[0]).shadowRoot.querySelector(arguments[1]).getAttribute('

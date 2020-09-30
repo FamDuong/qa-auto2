@@ -14,6 +14,7 @@ class SaviorPageLocators(object):
     MEDIUM_SELECT_OPTION = '[data-quality-value="mp4/Medium/360p"]'
     SMALL_SELECT_OPTION = '[data-quality-value="mp4/Small/240p"]'
     MOBILE_SELECT_OPTION = '[data-quality-value="mp4/Mobile/144p"]'
+    MP3_STANDARD_SELECT_OPTION = '[data-quality-value="mp3/Standard/480p"]'
 
     MOBILE_SHARING_VIDEO_RADIO_BUTTON = 'input[id="switch-video"]'
 
