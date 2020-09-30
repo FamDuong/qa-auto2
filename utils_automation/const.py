@@ -35,7 +35,8 @@ class VideoUrls:
     NEWS_ZING_VIDEO_URL = 'https://news.zing.vn/video'
     ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/A-Better-Day-JTL/ZWZ9CF86.html'
     NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summertime-cinnamons-ft-evening-cinema.w3rGuakkZzvg9.html'
-    DONG_PHIM_VIDEO_URL = 'https://dongphym.net/video/one-piece-movie-12-z-ky-phung-dich-thu_CtT37Qt8.html'
+    NHAC_CUA_TUI_MUSIC_ITEM = 'https://www.nhaccuatui.com/bai-hat/em-da-thuong-nguoi-ta-hon-anh-noo-phuoc-thinh.P5Z69HYydPRJ.html'
+    DONG_PHIM_VIDEO_URL = 'https://dongphym.net/movie/tap-21-truong-an-nac-the-promise-of-changan_TEqiwgPP.html'
 
     @classmethod
     def all(cls):
@@ -122,7 +123,7 @@ class OtherSiteUrls:
     CLIP_ANIME_VN_VIDEO_URL = 'https://clipanime.com/video/177008'
     VTV_GO_VN_VIDEO_URL = 'https://vtvgo.vn/tin-tuc/thoi-su-18h-vtv8-2892020-bat-dong-san-thoi-covid-19-dau-tu-hay-dau-co-805047.html'
     XEM_VTV_NET = 'http://ww.xemvtv.net/xem-phim/nhan-sinh-cua-bach-ho-ly-tap-1/UUWOI65.html'
-    OK_RU = 'https://ok.ru/video/2394372770490'
+    OK_RU = 'https://ok.ru/video/2408791542458'
 
 
 class ExtensionIds:

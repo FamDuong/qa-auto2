@@ -122,23 +122,23 @@ class FilesHandle:
         filename = dirname + filename
         return filename
 
-    def find_files_in_folder_by_modified_date(self, mydir, endwith, startwith=None):
-        if startwith:
-            filelist = [f for f in os.listdir(mydir) if (f.endswith(endwith) and f.startswith(startwith))]
+    def find_files_in_folder_by_modified_date(self, mydir, end_with, start_with=None):
+        if start_with:
+            filelist = [f for f in os.listdir(mydir) if (f.endswith(end_with) and f.startswith(start_with))]
             return filelist
         else:
-            filelist = [f for f in os.listdir(mydir) if f.endswith(endwith)]
+            filelist = [f for f in os.listdir(mydir) if f.endswith(end_with)]
             return filelist
 
-    def delete_files_in_folder(self, mydir, endwith, startwith=None):
+    def delete_files_in_folder(self, mydir, end_with, start_with=None):
         import os
-        if startwith:
-            filelist = [f for f in os.listdir(mydir) if (f.endswith(endwith) and f.startswith(startwith))]
+        if start_with:
+            filelist = [f for f in os.listdir(mydir) if (f.endswith(end_with) and f.startswith(start_with))]
             for f in filelist:
                 os.chmod(os.path.join(mydir, f), 0o777)
                 os.remove(os.path.join(mydir, f))
         else:
-            filelist = [f for f in os.listdir(mydir) if f.endswith(endwith)]
+            filelist = [f for f in os.listdir(mydir) if f.endswith(end_with)]
             for f in filelist:
                 os.chmod(os.path.join(mydir, f), 0o777)
                 os.remove(os.path.join(mydir, f))

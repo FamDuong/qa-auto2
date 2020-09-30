@@ -167,6 +167,7 @@ class AnySite(object):
     XEM_VTV_NET_PLAY_BTN = (By.XPATH, '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]')
     OK_RU_VIDEO_ITEM = (By.XPATH, '//*[@id="VideoAutoplayPlayerE"]//video')
     NHACCUATUI_VIDEO_TITLE = (By.XPATH, '//h2[@class="name-singer"]//a[1]')
+    NHACCUATUI_MUDIC_DIV = (By.CSS_SELECTOR, 'div#flashPlayer')
     CHON_GIAO_DIEN_SUBMIT_BTN = (By.XPATH, '//button[@type="submit"]')
     CHON_GIAO_DIEN_SUBMIT_BTN_XPATH = '//button[@type="submit"]'
     NEWS_24H_VIDEO_TO_GET_TITLE_CSS = 'div[class="viewVideoPlay"] video'

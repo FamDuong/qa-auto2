@@ -589,3 +589,6 @@ class AnySiteElements(BasePageElement):
 
     def find_video_title(self, driver, element):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(element))
+
+    def find_nhaccuatui_music_element(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.NHACCUATUI_MUDIC_DIV))
