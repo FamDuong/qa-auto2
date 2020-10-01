@@ -3,10 +3,10 @@ class FacebookPageLocators:
     PASS_TXT_ID = 'pass'
     SUBMIT_BTN_XPATH = '//input[@data-testid="royal_login_button"]'
     SHOW_MENU_SETTING_ICON_XPATH = 'userNavigationLabel'
-    COCCOC_AT_NAME_XPATH = "//div[text()='AT Cốc Cốc']"
+    COCCOC_AT_NAME_XPATH = "//span[text()='Ngân Hà']"
     LOGOUT_BTN_XPATH = "//a[contains(@data-gt,'menu_logout')]"
-    EMAIL = 'hangnguyenat123@gmail.com'
-    PASS = 'hangnguyenat123123@'
+    EMAIL = 'nganhanguyen0306@gmail.com'
+    PASS = 'P@ss123'
 
     FACEBOOK_MESSAGE_SMALL_ICON_XPATH = "//a[@name='mercurymessages']"
     USER_NAME_ON_CHAT_TOOL_TIP_XPATH = "//a[@class='messagesContent']//span[text()='Coc Cốc Bảy']"

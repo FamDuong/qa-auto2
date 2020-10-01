@@ -2,6 +2,8 @@ import time
 import re
 import logging
 from datetime import datetime
+
+from models.pageelements.basepage_elements import BasePageElement
 from models.pageelements.savior import SaviorElements
 from models.pagelocators.savior import SaviorPageLocators
 from models.pageobject.basepage_object import BasePageObject
@@ -11,6 +13,7 @@ LOGGER = logging.getLogger(__name__)
 
 class SaviorPageObject(BasePageObject):
     savior_elements = SaviorElements()
+    base_page_element = BasePageElement()
     script = 'document.querySelector(arguments[0]).shadowRoot.querySelector(arguments[1]).click();'
     script_find = 'return document.querySelector(arguments[0]).shadowRoot.querySelector(arguments[1])' \
                   '.getAttribute("data-quality")'
@@ -24,6 +27,7 @@ class SaviorPageObject(BasePageObject):
         self.savior_elements.not_found_download_button(driver)
 
     def choose_preferred_option(self, driver):
+        self.base_page_element.find_shadow_element(driver, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
         driver.execute_script(
             self.script,
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
@@ -70,10 +74,25 @@ class SaviorPageObject(BasePageObject):
         except Exception as e:
             return e
 
+    def choose_original_option(self, driver):
+        try:
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.ORIGINAL_SELECT_OPTION)
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            return e
+
     def choose_mp3_standard_option(self, driver):
         try:
             driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER,
                                   SaviorPageLocators.MP3_STANDARD_SELECT_OPTION)
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            return e
+
+    def choose_mp3_medium_option(self, driver):
+        try:
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER,
+                                  SaviorPageLocators.MP3_MEDIUM_SELECT_OPTION)
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             return e

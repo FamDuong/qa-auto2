@@ -54,7 +54,9 @@ class AnySiteElements(BasePageElement):
         return driver.execute_script('document.getElementsByTagName("video")[0].click()')
 
     def find_first_video_element(self, driver):
-        return driver.execute_script('return document.getElementsByTagName("video")[0]')
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.FIRST_VIDEO))
+        # return driver.execute_script('return document.getElementsByTagName("video")[0]')
 
     def find_video_element_24h(self, driver):
         return self.wait_for_element(driver).until(

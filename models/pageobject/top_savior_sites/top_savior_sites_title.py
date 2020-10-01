@@ -1,5 +1,6 @@
 import logging
 
+from models.pageelements.basepage_elements import BasePageElement
 from models.pageelements.sites import AnySiteElements
 from models.pageelements.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleElements
 from models.pagelocators.sites import AnySite
@@ -12,6 +13,7 @@ LOGGER = logging.getLogger(__name__)
 class TopSitesSaviorTitleAction(BasePageObject):
     top_sites_savior_title_elements = TopSitesSaviorTitleElements()
     any_sites_elements = AnySiteElements()
+    base_page_element = BasePageElement()
 
     def replace_special_characters_by_dash_in_string(self, string):
         special_characters = ['|', ':', '/', '?']
@@ -67,8 +69,10 @@ class TopSitesSaviorTitleAction(BasePageObject):
         return self.top_sites_savior_title_elements.find_ok_ru_video_title_element(driver).text
 
     def get_facebook_video_title(self, driver):
+        self.base_page_element.find_shadow_element(driver, TopSaviorSitesTitleLocators.FACEBOOK_VIDEO_ROOT_SHADOW_CSS,
+                                                   TopSaviorSitesTitleLocators.FACEBOOK_VIDEO_TITLE_CSS)
         facebook_video_title = driver.execute_script(
-            " return document.querySelector(\"" + TopSaviorSitesTitleLocators.FACEBOOK_VIDEO_ROOT_SHADOW_CSS + "\").shadowRoot.querySelector(\"" + TopSaviorSitesTitleLocators.FACEBOOK_VIDEO_TITLE_CSS + "\").title")
+            " return dofcument.querySelector(\"" + TopSaviorSitesTitleLocators.FACEBOOK_VIDEO_ROOT_SHADOW_CSS + "\").shadowRoot.querySelector(\"" + TopSaviorSitesTitleLocators.FACEBOOK_VIDEO_TITLE_CSS + "\").title")
         return facebook_video_title
 
     def get_fr_pornhub_video_title(self, driver):

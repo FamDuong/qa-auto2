@@ -25,6 +25,7 @@ class GooglePageLocators(object):
 
 
 class AnySite(object):
+    FIRST_VIDEO = (By.XPATH, '(//video)[1]')
     TWENTY_FOUR_H_VIDEO_ITEM = (By.CSS_SELECTOR, '[class="v-24h-media-player"]')
     PHIMMOI_VIDEO_EMBED_PLAYER = (By.ID, 'player-embed')
     PHIMMOI_VIDEO_MOUSE_OVER = (By.XPATH, '//video[@src="blob:null"]')
