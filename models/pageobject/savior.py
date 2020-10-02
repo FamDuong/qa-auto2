@@ -27,10 +27,20 @@ class SaviorPageObject(BasePageObject):
         self.savior_elements.not_found_download_button(driver)
 
     def choose_preferred_option(self, driver):
-        self.base_page_element.find_shadow_element(driver, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
-        driver.execute_script(
-            self.script,
-            SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
+        try:
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
+        except:
+            preferred_option = None
+            start_time = datetime.now()
+            if preferred_option is None:
+                while preferred_option is None:
+                    time.sleep(2)
+                    preferred_option = self.base_page_element.find_shadow_element(driver, SaviorPageLocators.FIRST_LAYER,
+                                                                                  SaviorPageLocators.PREFERRED_SELECT_BTN)
+                    driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
+                    time_delta = datetime.now() - start_time
+                    if time_delta.total_seconds() >= 15:
+                        break
 
     def choose_full_hd_option(self, driver):
         try:

@@ -44,26 +44,6 @@ class TestMessenger:
             delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title_start_with)
 
 
-class TestInstagram:
-
-    @staticmethod
-    def prepare_appear_savior_option(browser):
-        browser.get(OtherSiteUrls.INSTAGRAM_VIDEO_URL)
-        any_site_page_object.mouse_over_video_element_instagram(browser)
-
-    @pytestrail.case('C96751')
-    @pytest.mark.ten_popular_sites
-    def test_download_file_instagram(self, browser_top_sites, get_current_download_folder_top_sites
-                                     , clear_download_page):
-        self.prepare_appear_savior_option(browser_top_sites)
-        from textwrap import wrap
-        video_title_start_with = wrap(top_sites_savior_title_actions.get_instagram_video_title(browser_top_sites), 6)[0]
-        try:
-            implement_download_file(browser_top_sites, get_current_download_folder_top_sites, startwith=video_title_start_with),
-        finally:
-            delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title_start_with)
-
-
 class TestTwitter:
 
     @staticmethod

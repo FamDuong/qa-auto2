@@ -83,7 +83,7 @@ class OtherSiteUrls:
     AN_NINH_THU_DO_VIDEO_URL = 'https://anninhthudo.vn/truyen-hinh-atv/146.antd'
     TUOI_TRE_VIDEO_URL = 'https://tv.tuoitre.vn/'
     TV_ZING_VIDEO_URL = 'https://tv.zing.vn/video/id/IWZEAUO9.html'
-    MOT_PHIM_VIDEO_URL = 'https://motphim.net/xem-phim/cuoc-doi-thu-2-tap-4-7099_90578.html'
+    MOT_PHIM_VIDEO_URL = 'https://motphimzz.com/xem-phim/phineas-va-ferb-candace-chong-lai-ca-vu-tru-tap-full-8337_105259.html'
     TV_HAY_VIDEO_URL = 'http://tvhay.org/xem-phim-dao-kiem-than-vuc-phan-4-421702'
     NGOI_SAO_VN_URL = 'https://ngoisao.vn/video/lieu-linh-bang-qua-dong-nuoc-lu-nguoi-dan-ong-suyt-phai-tra-gia-bang-ca-tinh-mang-273892.htm'
     VTC_VN_VIDEO_URL = 'https://vtc.vn/truyen-hinh-27.html'

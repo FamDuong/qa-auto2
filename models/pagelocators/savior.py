@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 class SaviorPageLocators(object):
     DOWNLOAD_BUTTON = "a:not([hidden])[class='download-btn j-quality-download']" #'#download-main'
     FIRST_LAYER = '[style="position: absolute; top: 0px;"]'
-    PREFERRED_SELECT_BTN = '[id="preferred-select"]'
+    PREFERRED_SELECT_BTN = '#preferred-select'
     CURRENT_SELECTED_RESOLUTION = 'span:not([hidden])[class="j-quality-option quality-option"]'
     BASE_OVERLAY_CLASS = '[class="base overlay"]'
     HIGH_PREFERRED_SELECT_BTN = '//span[@data-selected-value="High"]'

@@ -17,16 +17,19 @@ LOGGER = logging.getLogger(__name__)
 
 
 def if_height_frame_so_width_frame(height_frame):
+    width_frame = 0
     if int(height_frame) == 4320:
-        return 7680
+        width_frame = 7680
     elif int(height_frame) == 2160:
-        return 3840
+        width_frame = 3840
     elif int(height_frame) == 1440:
-        return 2560
+        width_frame = 2560
     elif int(height_frame) == 1080:
-        return 1920
+        width_frame = 1920
     elif int(height_frame) == 720:
-        return 1280
+        width_frame = 1280
+    LOGGER.info("Expect height x Expect width: "+str(height_frame)+str(width_frame))
+    return width_frame
 
 
 def wait_for_stable(wait_time=3):

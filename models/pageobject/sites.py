@@ -237,9 +237,11 @@ class AnySitePageObject(BasePageObject):
     def click_video_box_player_mot_phim(self, driver):
         self.any_site_element.find_video_box_player_mot_phim(driver).click()
 
-    def mouse_over_video_item_mot_phim(self, driver, url):
-        driver.execute_script(f'document.querySelector("#player > iframe").src="{url}"')
-        time.sleep(8)
+    def mouse_over_video_item_mot_phim(self, driver):
+        iframe = driver.find_element_by_css_selector("iframe[src*='//motphimzz']")
+        driver.switch_to.frame(iframe)
+        # driver.execute_script(f'document.querySelector("#player > iframe").src="iframe[src*=\'//motphimzz\']"')
+        # time.sleep(8)
         driver.execute_script('document.querySelector("#player > iframe").dispatchEvent(new Event("mouseenter"));')
         time.sleep(3)
 
