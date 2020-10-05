@@ -51,7 +51,7 @@ def choose_highest_resolution_of_mp3(driver):
         savior_page_object.choose_mp3_medium_option(driver)
 
 
-def download_and_verify_video(driver, download_folder, start_with, end_with='.mp4', mouse_over_first_video=True):
+def download_and_verify_video(driver, download_folder, expect_length, start_with, end_with='.mp4', mouse_over_first_video=True):
     if mouse_over_first_video:
         any_site_page_object.mouse_over_first_video_element(driver)
     if '.mp4' in end_with:
@@ -59,9 +59,9 @@ def download_and_verify_video(driver, download_folder, start_with, end_with='.mp
     else:
         choose_highest_resolution_of_mp3(driver)
     media_info = download_file_via_main_download_button(driver, start_with)
-    resolution_info = get_resolution_info(media_info)
+    expect_height = get_resolution_info(media_info)
     try:
-        assert_file_download_value(download_folder, resolution_info, start_with=start_with, end_with=end_with)
+        assert_file_download_value(download_folder, expect_height, expect_length, start_with=start_with, end_with=end_with)
     finally:
         delete_all_mp4_file_download(download_folder, end_with, start_with=start_with)
 

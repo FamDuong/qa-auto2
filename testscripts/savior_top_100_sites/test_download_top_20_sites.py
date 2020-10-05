@@ -1,18 +1,23 @@
 import logging
 import time
 
+import cv2
 import pytest
+from SSIM_PIL import compare_ssim
 
 from pytest_testrail.plugin import pytestrail
+
+from models.pagelocators.top_savior_sites.top_savior_sites_video_length import TopSaviorSitesVideoLengthLocators
 from models.pageobject.sites import AnySitePageObject
 from models.pageobject.top_savior_sites.top_savior_sites_film import TopSaviorSitesFilmActions
 from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
+from models.pageobject.top_savior_sites.top_savior_sites_video_length import TopSitesSaviorVideoLengthActions
 from testscripts.savior_top_100_sites.test_download_file_social_network import top_sites_savior_title_actions
 from utils_automation.const import VideoUrls, OtherSiteUrls
 from testscripts.savior_top_100_sites.common import download_and_verify_video, choose_highest_resolution_of_video, \
     login_facebook
 from testscripts.common_setup import assert_file_download_value, delete_all_mp4_file_download, \
-    download_file_via_main_download_button, get_resolution_info, implement_download_file
+    download_file_via_main_download_button, get_resolution_info, implement_download_file, find_mp4_file_download
 
 LOGGER = logging.getLogger(__name__)
 
@@ -21,6 +26,7 @@ class TestDownloadTop20Sites:
     any_site_page_object = AnySitePageObject()
     top_sites_savior_title_action = TopSitesSaviorTitleAction()
     top_savior_sites_film_action = TopSaviorSitesFilmActions()
+    top_savior_sites_video_length_action = TopSitesSaviorVideoLengthActions()
 
     @pytestrail.case('C96719')
     @pytest.mark.twenty_popular_sites
@@ -28,7 +34,10 @@ class TestDownloadTop20Sites:
         browser_top_sites.get(VideoUrls.YOUTUBE_VIDEO_URL)
         LOGGER.info("Check download video on "+VideoUrls.YOUTUBE_VIDEO_URL)
         video_title = self.top_sites_savior_title_action.get_youtube_video_title(browser_top_sites)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
+        expect_length = self.top_savior_sites_video_length_action.\
+            get_video_length_by_javascript(browser_top_sites,
+                                           TopSaviorSitesVideoLengthLocators.YOUTUBE_VIDEO_LENGTH_CSS)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
     @pytestrail.case('C96758')
     @pytest.mark.twenty_popular_sites
@@ -36,14 +45,20 @@ class TestDownloadTop20Sites:
         browser_top_sites.get(VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM)
         LOGGER.info("Check download video on " + VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM)
         video_title = self.top_sites_savior_title_action.get_nhaccuatui_video_title(browser_top_sites)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
+        expect_length = self.top_savior_sites_video_length_action. \
+            get_video_length_by_javascript(browser_top_sites,
+                                           TopSaviorSitesVideoLengthLocators.NHACCUATUI_VIDEO_LENGTH_CSS)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
         browser_top_sites.get(VideoUrls.NHAC_CUA_TUI_MUSIC_ITEM)
         LOGGER.info("Check download video on " + VideoUrls.NHAC_CUA_TUI_MUSIC_ITEM)
         video_title = self.top_sites_savior_title_action.get_nhaccuatui_video_title(browser_top_sites)
+        expect_length = self.top_savior_sites_video_length_action. \
+            get_video_length_by_javascript(browser_top_sites,
+                                           TopSaviorSitesVideoLengthLocators.NHACCUATUI_MP3_LENGTH_CSS)
         self.any_site_page_object.mouse_over_nhaccuatui_music_element(browser_top_sites)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites,
-                                  video_title,  end_with='.mp3', mouse_over_first_video=False)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length,
+                                  video_title, end_with='.mp3', mouse_over_first_video=False)
 
     def verify_download_file_facebook_by_url(self, driver, download_folder, url):
         driver.get(url)
@@ -154,7 +169,6 @@ class TestDownloadTop20Sites:
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
 
 
-
     def prepare_appear_savior_option(self, browser):
         browser.get(OtherSiteUrls.INSTAGRAM_VIDEO_URL)
         self.any_site_page_object.mouse_over_video_element_instagram(browser)
@@ -169,3 +183,48 @@ class TestDownloadTop20Sites:
             implement_download_file(browser_top_sites, get_current_download_folder_top_sites, startwith=video_title_start_with),
         finally:
             delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title_start_with)
+
+
+    def test_video_by_md5_hash(self):
+        import cv2
+        from skimage.measure import compare_mse, compare_nrmse, compare_ssim, compare_psnr
+
+        img1 = cv2.imread("C:\\video\\image1\\frame13.jpg")
+        img2 = cv2.imread("C:\\video\\image2\\frame14.jpg")
+
+        # mean squared error
+        # mot = compare_mse(img1, img2)
+        # # normalized root-mean-square
+        # hai = compare_nrmse(img1, img2)
+        # # peak signal-to-noise ratio
+        # ba = compare_psnr(img1, img2)
+        # structural similarity index
+        # image1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+        # image2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
+        score = compare_ssim(img1, img2, multichannel=True)
+        # LOGGER.info("compare_mse: {}".format(mot))
+        # LOGGER.info("compare_nrmse: {}".format(hai))
+        # LOGGER.info("compare_psnr: {}".format(ba))
+        LOGGER.info("compare_ssim: {}".format(score))
+
+    def test123(self):
+        import cv2
+        count = 0
+        vidcap = cv2.VideoCapture('C:\\video\\Chuyện gì khó cứ Gia....mp4')
+        fps = vidcap.get(cv2.CAP_PROP_FPS)  # OpenCV2 version 2 used "CV_CAP_PROP_FPS"
+        frame_count = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
+        duration = frame_count / fps
+        print('duration (S) = ' + str(duration))
+        minutes = int(duration / 60)
+        seconds = duration % 60
+        mp4_files = find_mp4_file_download('C:\\video', '.mp4', start_with='Chuyện gì khó cứ Gia...')
+        print('duration (M:S) = ' + str(minutes) + ':' + str(seconds))
+        print("hello: "+str(len(mp4_files)))
+        # success, image = vidcap.read()
+        # while success:
+        #     vidcap.set(cv2.CAP_PROP_POS_MSEC, (count * 1000))  # added this line
+        #     success, image = vidcap.read()
+        #     print('Read a new frame: ', success)
+        #     cv2.imwrite('C:\\video\\image' + "\\frame%d.jpg" % count, image)  # save frame as JPEG file
+        #     count = count + 1
+
