@@ -55,6 +55,9 @@ class SaviorElements(BasePageElement):
         # return self.select_shadow_element_by_css_selector(driver, self.find_first_layer(driver)). \
         #     find_element_by_css_selector(SaviorPageLocators.PREFERRED_SELECT_BTN)
 
+    def find_resotion_option_by_css_selector(self, driver, css_selector):
+        return self.find_shadow_element(driver, SaviorPageLocators.FIRST_LAYER, css_selector)
+
     def find_mobile_sharing_button(self, driver):
         return self.select_shadow_element_by_css_selector(driver, self.find_first_layer(driver)). \
             find_element_by_css_selector(SaviorPageLocators.MOBILE_SHARING_BUTTON)

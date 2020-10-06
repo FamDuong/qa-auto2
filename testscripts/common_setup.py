@@ -92,14 +92,21 @@ def assert_video_length(frame_count, fps, expect_length):
     actual_length_seconds_round = str(minutes) + ':' + str(seconds_round)
     LOGGER.info("Actual video length: " + actual_length)
     LOGGER.info("Actual video length seconds round: " + actual_length_seconds_round)
+    actual_length_number = actual_length.replace(':', '.')
+    expect_length_number = expect_length.replace(':', '.')
+    actual_length_seconds_round_number = actual_length_seconds_round.replace(':', '.')
     try:
         assert expect_length in actual_length
     except Exception:
-        assert abs(int(actual_length) - int(expect_length)) < 0.05
+        diff_time = abs(float(actual_length_number) - float(expect_length_number))
+        LOGGER.info('Diff time: '+str(diff_time))
+        assert diff_time < 0.02
     except Exception:
         assert expect_length in actual_length_seconds_round
     except Exception:
-        assert abs(int(actual_length) - int(actual_length_seconds_round)) < 0.05
+        diff_time = abs(float(actual_length_seconds_round_number) - float(expect_length_number))
+        LOGGER.info('Diff time: '+str(diff_time))
+        assert diff_time < 0.02
 
 
 def assert_video_height_width(actual_height, expect_height, actual_width):
@@ -111,9 +118,10 @@ def assert_video_height_width(actual_height, expect_height, actual_width):
             LOGGER.info("Assert video with high resolution" + str(actual_height) + "x" + str(expect_width))
             assert actual_width == expect_width
     except Exception:
+        LOGGER.info("Assert video with Standard/ Medium/ Low resolution")
         if (expect_height is not None) and (expect_height != ''):
             diff_value = abs(int(actual_height) - int(expect_height.split('p')[0]))
-            LOGGER.info("Assert video with Standard/ Medium/ Low resolution with diff height" + str(diff_value))
+            LOGGER.info("Diff height" + str(diff_value))
             assert (str(int(actual_height)) in expect_height or diff_value < 10)
     except Exception:
         LOGGER.info("Assert video is not None")
@@ -253,4 +261,5 @@ def get_resolution_info(media_info):
         m = m.group()
     else:
         m = ''
+    LOGGER.info("Get expect height: "+str(m))
     return m

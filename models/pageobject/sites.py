@@ -237,13 +237,26 @@ class AnySitePageObject(BasePageObject):
     def click_video_box_player_mot_phim(self, driver):
         self.any_site_element.find_video_box_player_mot_phim(driver).click()
 
-    def mouse_over_video_item_mot_phim(self, driver):
-        iframe = driver.find_element_by_css_selector("iframe[src*='//motphimzz']")
-        driver.switch_to.frame(iframe)
-        # driver.execute_script(f'document.querySelector("#player > iframe").src="iframe[src*=\'//motphimzz\']"')
-        # time.sleep(8)
-        driver.execute_script('document.querySelector("#player > iframe").dispatchEvent(new Event("mouseenter"));')
-        time.sleep(3)
+    def switch_to_video_iframe_mot_phimzz(self, driver):
+        driver.switch_to.frame(self.any_site_element.find_video_iframe_mot_phimzz(driver))
+
+    def click_to_play_button_mot_phimzz(self, driver):
+        self.any_site_element.find_play_button_mot_phimzz(driver).click()
+
+    def mouse_over_then_click_play_video_mot_phimzz(self, driver):
+        # self.switch_to_video_iframe_mot_phimzz(driver)
+        # self.click_to_play_button_mot_phimzz(driver)
+        self.mouse_over_video_iframe(driver, self.switch_to_video_iframe_mot_phimzz,
+                                     self.any_site_element.find_video_item_mot_phimzz, 40)
+
+
+    # def mouse_over_video_item_mot_phim(self, driver):
+    #     # iframe = driver.find_element_by_css_selector("iframe[src*='//motphimzz']")
+    #     # driver.switch_to.frame(iframe)
+    #     driver.execute_script(f'document.querySelector("#player > iframe").src="iframe[src*=\'//motphimzz\']"')
+    #     # time.sleep(8)
+    #     driver.execute_script('document.querySelector("#player > iframe").dispatchEvent(new Event("mouseenter"));')
+    #     time.sleep(3)
 
     def skip_ads_tv_hay(self, driver):
         self.any_site_element.find_skip_ads_btn_tv_hay(driver).click()
@@ -579,13 +592,21 @@ class AnySitePageObject(BasePageObject):
         return self.any_site_element.find_nhac_cua_tui_ad_item_skip_button(driver=driver).click()
 
     def choose_watch_option_if_any(self, driver):
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        elements = driver.find_elements_by_xpath(AnySite.DONG_PHIM_WATCH_OPTION_XPATH)
+        start_time = datetime.now()
+        if len(elements) == 0:
+            while len(elements) == 0:
+                time.sleep(2)
+                elements = driver.find_elements_by_xpath(AnySite.DONG_PHIM_WATCH_OPTION_XPATH)
+                time_delta = datetime.now() - start_time
+                if time_delta.total_seconds() >= 15:
+                    break
         elements = driver.find_elements_by_xpath(AnySite.DONG_PHIM_WATCH_OPTION_XPATH)
         if len(elements) > 0:
             self.any_site_element.wait_for_element(driver).until(
                 ec.presence_of_element_located(AnySite.DONG_PHIM_WATCH_OPTION)).click()
         else:
-            print("Cannot find button for watch options")
+            LOGGER.info("Cannot find button for watch options")
         return elements
 
     def click_video_item_dong_phim(self, driver):

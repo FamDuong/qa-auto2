@@ -4,4 +4,5 @@ from models.pagelocators.top_savior_sites.top_savior_sites_video_length import T
 
 
 class TopSitesSaviorVideoLengthElements(BasePageElement):
-    pass
+    def find_video_lengh(self, driver, element):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(element))

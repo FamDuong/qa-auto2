@@ -237,6 +237,18 @@ class AnySiteElements(BasePageElement):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.TIN_TUC_VN_VIDEO_IFRAME))
 
+    def find_video_iframe_mot_phimzz(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.MOT_PHIMZZ_VIDEO_IFRAME))
+
+    def find_video_item_mot_phimzz(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.MOT_PHIMZZ_VIDEO_ITEM))
+
+    def find_play_button_mot_phimzz(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.MOT_PHIMZZ_PLAY_BUTTON))
+
     def find_video_detail_tin_tuc_online_vn(self, driver):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.TIN_TUC_VN_VIDEO_DETAIL))

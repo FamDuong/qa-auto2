@@ -69,23 +69,29 @@ class TopSitesSaviorTitleAction(BasePageObject):
     def get_ok_ru_video_title(self, driver):
         return self.top_sites_savior_title_elements.find_ok_ru_video_title_element(driver).text
 
-    def get_video_title_from_filename_span_tag(self, driver):
+    def get_video_title_by_javascript_from_span_tag(self, driver):
         try:
-            facebook_video_title = driver.execute_script(
-                " return document.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_ROOT_SHADOW_CSS
-                + "\").shadowRoot.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_TITLE_CSS + "\").textContent")
+            video_title = self.base_page_element.find_shadow_element(driver,
+                                                                     TopSaviorSitesTitleLocators.VIDEO_ROOT_SHADOW_CSS,
+                                                                     TopSaviorSitesTitleLocators.VIDEO_TITLE_CSS).text
+            # facebook_video_title = driver.execute_script(
+            #     " return document.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_ROOT_SHADOW_CSS
+            #     + "\").shadowRoot.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_TITLE_CSS + "\").textContent")
         except:
-            facebook_video_title = None
+            video_title = None
             start_time = datetime.now()
-            while facebook_video_title is None:
+            while video_title is None:
                 time.sleep(2)
-                facebook_video_title = driver.execute_script(
-                " return document.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_ROOT_SHADOW_CSS
-                + "\").shadowRoot.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_TITLE_CSS + "\").textContent")
+                # facebook_video_title = driver.execute_script(
+                #     " return document.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_ROOT_SHADOW_CSS
+                #     + "\").shadowRoot.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_TITLE_CSS + "\").textContent")
+                video_title = self.base_page_element.find_shadow_element(driver,
+                                                                         TopSaviorSitesTitleLocators.VIDEO_ROOT_SHADOW_CSS,
+                                                                         TopSaviorSitesTitleLocators.VIDEO_TITLE_CSS).text
                 time_delta = datetime.now() - start_time
                 if time_delta.total_seconds() >= 15:
                     break
-        return facebook_video_title
+        return video_title
 
     def get_fr_pornhub_video_title(self, driver):
         return self.top_sites_savior_title_elements.find_fr_pornhub_video_title_element(driver).get_attribute(
