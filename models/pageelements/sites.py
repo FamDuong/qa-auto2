@@ -54,7 +54,9 @@ class AnySiteElements(BasePageElement):
         return driver.execute_script('document.getElementsByTagName("video")[0].click()')
 
     def find_first_video_element(self, driver):
-        return driver.execute_script('return document.getElementsByTagName("video")[0]')
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.FIRST_VIDEO))
+        # return driver.execute_script('return document.getElementsByTagName("video")[0]')
 
     def find_video_element_24h(self, driver):
         return self.wait_for_element(driver).until(
@@ -234,6 +236,18 @@ class AnySiteElements(BasePageElement):
     def find_video_iframe_tin_tuc_online_vn(self, driver):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.TIN_TUC_VN_VIDEO_IFRAME))
+
+    def find_video_iframe_mot_phimzz(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.MOT_PHIMZZ_VIDEO_IFRAME))
+
+    def find_video_item_mot_phimzz(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.MOT_PHIMZZ_VIDEO_ITEM))
+
+    def find_play_button_mot_phimzz(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.MOT_PHIMZZ_PLAY_BUTTON))
 
     def find_video_detail_tin_tuc_online_vn(self, driver):
         return self.wait_for_element(driver).until(

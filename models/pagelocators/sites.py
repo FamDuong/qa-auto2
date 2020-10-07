@@ -25,6 +25,7 @@ class GooglePageLocators(object):
 
 
 class AnySite(object):
+    FIRST_VIDEO = (By.XPATH, '(//video)[1]')
     TWENTY_FOUR_H_VIDEO_ITEM = (By.CSS_SELECTOR, '[class="v-24h-media-player"]')
     PHIMMOI_VIDEO_EMBED_PLAYER = (By.ID, 'player-embed')
     PHIMMOI_VIDEO_MOUSE_OVER = (By.XPATH, '//video[@src="blob:null"]')
@@ -53,10 +54,13 @@ class AnySite(object):
     GAME_K_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
     AN_NINH_THU_DO_VIDEO_ITEM = (By.ID, 'main_detail')
     TUOI_TRE_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="stream"]')
-    MOT_PHIM_VIDEO_ITEM = (By.XPATH, '//div//div[@id="player"][@role="application"]')
-    MOT_PHIM_PLAY_VIDEO_BUTTON = (By.XPATH, '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]')
-    MOT_PHIM_VIDEO_PLAYER = (By.XPATH, '//video')
-    MOT_PHIM_EPISODE_ITEM = (By.XPATH, '//a[text()="Tập 1"]')
+    MOT_PHIMZZ_VIDEO_IFRAME = (By.XPATH, '//*[@id="player"]//iframe[contains(@src,"//motphimzz")]')
+    MOT_PHIMZZ_VIDEO_ITEM = (By.XPATH, '//video')
+    MOT_PHIMZZ_PLAY_BUTTON = (By.XPATH, '//div[@aria-label="Start Playback"]')
+    # MOT_PHIM_VIDEO_ITEM = (By.XPATH, '//div//div[@id="player"][@role="application"]')
+    # MOT_PHIM_PLAY_VIDEO_BUTTON = (By.XPATH, '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]')
+    # MOT_PHIM_VIDEO_PLAYER = (By.XPATH, '//video')
+    # MOT_PHIM_EPISODE_ITEM = (By.XPATH, '//a[text()="Tập 1"]')
     MOT_PHIM_BOX_PLAYER = (By.ID, 'box-player')
     TV_HAY_VN_PLAY_BTN = (By.XPATH, '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]')
     TV_HAY_VN_PLAY_BTN_IN_FRAME = (By.XPATH, '//div[@class="vid_play"]')

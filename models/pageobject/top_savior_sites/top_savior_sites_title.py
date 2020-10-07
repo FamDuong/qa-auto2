@@ -1,8 +1,10 @@
 import logging
+import time
+from datetime import datetime
 
+from models.pageelements.basepage_elements import BasePageElement
 from models.pageelements.sites import AnySiteElements
 from models.pageelements.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleElements
-from models.pagelocators.sites import AnySite
 from models.pagelocators.top_savior_sites.top_savior_sites_title import TopSaviorSitesTitleLocators
 from models.pageobject.basepage_object import BasePageObject
 
@@ -12,6 +14,7 @@ LOGGER = logging.getLogger(__name__)
 class TopSitesSaviorTitleAction(BasePageObject):
     top_sites_savior_title_elements = TopSitesSaviorTitleElements()
     any_sites_elements = AnySiteElements()
+    base_page_element = BasePageElement()
 
     def replace_special_characters_by_dash_in_string(self, string):
         special_characters = ['|', ':', '/', '?']
@@ -19,12 +22,12 @@ class TopSitesSaviorTitleAction(BasePageObject):
         for character in special_characters:
             if character in new_string:
                 new_string = new_string.replace(character, '-')
-                LOGGER.info("Video title after replace "+character+" by -: " + new_string)
+                LOGGER.info("Video title after replace " + character + " by -: " + new_string)
         return new_string
 
     def get_first_part_of_video_title(self, video_title):
         title = video_title.split("-")[0]
-        LOGGER.info("First part of video title after split by - character: "+title)
+        LOGGER.info("First part of video title after split by - character: " + title)
         return title
 
     def get_website_title_by_javascript(self, driver):
@@ -66,10 +69,29 @@ class TopSitesSaviorTitleAction(BasePageObject):
     def get_ok_ru_video_title(self, driver):
         return self.top_sites_savior_title_elements.find_ok_ru_video_title_element(driver).text
 
-    def get_facebook_video_title(self, driver):
-        facebook_video_title = driver.execute_script(
-            " return document.querySelector(\"" + TopSaviorSitesTitleLocators.FACEBOOK_VIDEO_ROOT_SHADOW_CSS + "\").shadowRoot.querySelector(\"" + TopSaviorSitesTitleLocators.FACEBOOK_VIDEO_TITLE_CSS + "\").title")
-        return facebook_video_title
+    def get_video_title_by_javascript_from_span_tag(self, driver):
+        try:
+            video_title = self.base_page_element.find_shadow_element(driver,
+                                                                     TopSaviorSitesTitleLocators.VIDEO_ROOT_SHADOW_CSS,
+                                                                     TopSaviorSitesTitleLocators.VIDEO_TITLE_CSS).text
+            # facebook_video_title = driver.execute_script(
+            #     " return document.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_ROOT_SHADOW_CSS
+            #     + "\").shadowRoot.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_TITLE_CSS + "\").textContent")
+        except:
+            video_title = None
+            start_time = datetime.now()
+            while video_title is None:
+                time.sleep(2)
+                # facebook_video_title = driver.execute_script(
+                #     " return document.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_ROOT_SHADOW_CSS
+                #     + "\").shadowRoot.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_TITLE_CSS + "\").textContent")
+                video_title = self.base_page_element.find_shadow_element(driver,
+                                                                         TopSaviorSitesTitleLocators.VIDEO_ROOT_SHADOW_CSS,
+                                                                         TopSaviorSitesTitleLocators.VIDEO_TITLE_CSS).text
+                time_delta = datetime.now() - start_time
+                if time_delta.total_seconds() >= 15:
+                    break
+        return video_title
 
     def get_fr_pornhub_video_title(self, driver):
         return self.top_sites_savior_title_elements.find_fr_pornhub_video_title_element(driver).get_attribute(

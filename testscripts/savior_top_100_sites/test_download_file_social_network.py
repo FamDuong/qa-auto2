@@ -14,24 +14,6 @@ top_sites_savior_title_actions = TopSitesSaviorTitleAction()
 top_site_titles_action = TopSitesSaviorTitleAction()
 
 
-class TestFacebook:
-
-    @pytestrail.case('C96691')
-    @pytest.mark.ten_popular_sites
-    def test_download_file_facebook(self, browser_top_sites, get_current_download_folder_top_sites):
-        # browser_top_sites.get(OtherSiteUrls.FACEBOOK_VIDEO_URL)
-        # video_title_temp = top_sites_savior_title_actions.get_facebook_video_title(browser_top_sites)
-        # video_title = top_site_titles_action.replace_vertical_bar_and_colon_by_dash_in_string(video_title_temp)
-        # any_site_page_object.mouse_over_video_element_facebook(browser_top_sites)
-        # try:
-        #     implement_download_file(browser_top_sites, get_current_download_folder_top_sites)
-        # finally:
-        #     delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title)
-
-        browser_top_sites.get(OtherSiteUrls.FACEBOOK_VIDEO_URL)
-        video_title_temp = top_sites_savior_title_actions.get_facebook_video_title(browser_top_sites)
-        video_title = top_site_titles_action.replace_special_characters_by_dash_in_string(video_title_temp)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title )
 
 
 class TestMessenger:
@@ -56,26 +38,6 @@ class TestMessenger:
                                      , clear_download_page):
         self.setup_savior_option_appear(browser_top_sites)
         video_title_start_with = top_sites_savior_title_actions.get_messenger_video_title(browser_top_sites)
-        try:
-            implement_download_file(browser_top_sites, get_current_download_folder_top_sites, startwith=video_title_start_with),
-        finally:
-            delete_all_mp4_file_download(get_current_download_folder_top_sites, '.mp4', startwith=video_title_start_with)
-
-
-class TestInstagram:
-
-    @staticmethod
-    def prepare_appear_savior_option(browser):
-        browser.get(OtherSiteUrls.INSTAGRAM_VIDEO_URL)
-        any_site_page_object.mouse_over_video_element_instagram(browser)
-
-    @pytestrail.case('C96751')
-    @pytest.mark.ten_popular_sites
-    def test_download_file_instagram(self, browser_top_sites, get_current_download_folder_top_sites
-                                     , clear_download_page):
-        self.prepare_appear_savior_option(browser_top_sites)
-        from textwrap import wrap
-        video_title_start_with = wrap(top_sites_savior_title_actions.get_instagram_video_title(browser_top_sites), 6)[0]
         try:
             implement_download_file(browser_top_sites, get_current_download_folder_top_sites, startwith=video_title_start_with),
         finally:

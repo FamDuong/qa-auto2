@@ -63,31 +63,69 @@ def clear_data_download(driver):
     WaitAfterEach.sleep_timer_after_each_step()
 
 
-def assert_file_download_value(download_folder_path, height_value, start_with, end_with):
+def assert_file_download_value(download_folder_path, expect_height, expect_length, start_with, end_with):
     LOGGER.info("Verify video title same as: " + str(start_with))
-    LOGGER.info("Verify video resolution same as: " + str(height_value))
     if isinstance(start_with, list):
         for title in start_with:
             mp4_files = find_mp4_file_download(download_folder_path, end_with, start_with=title)
     else:
         mp4_files = find_mp4_file_download(download_folder_path, end_with, start_with=start_with)
     vid = cv2.VideoCapture(download_folder_path + '\\' + mp4_files[0])
-    height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
-    width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
+
+    actual_height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
+    actual_width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
+    fps = vid.get(cv2.CAP_PROP_FPS)
+    frame_count = int(vid.get(cv2.CAP_PROP_FRAME_COUNT))
     assert vid.isOpened()
     assert len(mp4_files) > 0
-    if int(height) > 720:
-        LOGGER.info("Assert video with high resolution")
-        assert width == if_height_frame_so_width_frame(height)
     vid.release()
+    assert_video_height_width(actual_height, expect_height, actual_width)
+    assert_video_length(frame_count, fps, expect_length)
 
-    if (height_value is not None) and (height_value != ''):
+
+def assert_video_length(frame_count, fps, expect_length):
+    duration = frame_count / fps
+    minutes = int(duration / 60)
+    seconds = int(duration % 60)
+    seconds_round = round(duration % 60)
+    actual_length = str(minutes) + ':' + str(seconds)
+    actual_length_seconds_round = str(minutes) + ':' + str(seconds_round)
+    LOGGER.info("Actual video length: " + actual_length)
+    LOGGER.info("Actual video length seconds round: " + actual_length_seconds_round)
+    actual_length_number = str(actual_length).replace(':', '.')
+    expect_length_number = str(expect_length).replace(':', '.')
+    actual_length_seconds_round_number = str(actual_length_seconds_round).replace(':', '.')
+    try:
+        assert expect_length in actual_length
+    except Exception:
+        diff_time = abs(float(actual_length_number) - float(expect_length_number))
+        LOGGER.info('Diff time: '+str(diff_time))
+        assert diff_time < 0.02
+    except Exception:
+        assert expect_length in actual_length_seconds_round
+    except Exception:
+        diff_time = abs(float(actual_length_seconds_round_number) - float(expect_length_number))
+        LOGGER.info('Diff time: '+str(diff_time))
+        assert diff_time < 0.02
+
+
+def assert_video_height_width(actual_height, expect_height, actual_width):
+    LOGGER.info("Actual height x Actual width: " + str(actual_height) + "x" + str(actual_width))
+    LOGGER.info("Expect height: " + str(expect_height))
+    try:
+        if int(actual_height) > 720:
+            expect_width = if_height_frame_so_width_frame(expect_height)
+            LOGGER.info("Assert video with high resolution" + str(actual_height) + "x" + str(expect_width))
+            assert actual_width == expect_width
+    except Exception:
         LOGGER.info("Assert video with Standard/ Medium/ Low resolution")
-        assert (str(int(height)) in height_value or abs(int(height) - int(height_value.split('p')[0])) < 10)
-    else:
+        if (expect_height is not None) and (expect_height != ''):
+            diff_value = abs(int(actual_height) - int(expect_height.split('p')[0]))
+            LOGGER.info("Diff height" + str(diff_value))
+            assert (str(int(actual_height)) in expect_height or diff_value < 10)
+    except Exception:
         LOGGER.info("Assert video is not None")
-        assert height is not None
-    # cv2.destroyAllWindows()
+        assert actual_height is not None
 
 
 def assert_file_download_exist(download_folder_path, file_size=2.00, start_with=None):
@@ -111,7 +149,6 @@ def check_if_the_file_fully_downloaded(browser):
 
 def check_if_file_with_title_fully_downloaded(browser, video_title):
     play_button_by_video_title = savior_element.find_play_button_by_video_title(browser, video_title)
-    LOGGER.info("Play button: " + str(play_button_by_video_title))
     start_time = datetime.now()
     if play_button_by_video_title is None:
         while play_button_by_video_title is None:
@@ -119,7 +156,7 @@ def check_if_file_with_title_fully_downloaded(browser, video_title):
             play_button_by_video_title = savior_element.find_play_button_by_video_title(browser, video_title)
             LOGGER.info("Play button after timeout: " + str(play_button_by_video_title))
             time_delta = datetime.now() - start_time
-            if time_delta.total_seconds() >= 300:
+            if time_delta.total_seconds() >= 10000:
                 break
 
 
@@ -223,4 +260,5 @@ def get_resolution_info(media_info):
         m = m.group()
     else:
         m = ''
+    LOGGER.info("Get expect height: "+str(m))
     return m
