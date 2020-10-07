@@ -18,19 +18,19 @@ def browser_top_sites():
     global download_folder
     driver = coccoc_instance()
 
-    # LOGGER.info("Get default download folder")
-    # driver.get(Urls.COCCOC_SETTINGS_URL)
-    # WaitAfterEach.sleep_timer_after_each_step()
-    # setting_page_object = SettingsPageObject()
-    # download_folder = setting_page_object.get_download_folder(driver)
-    #
-    # LOGGER.info("Delete all mp4 file in "+download_folder)
-    # delete_all_mp4_file_download(download_folder, '.mp4')
-    #
-    # LOGGER.info("Delete all downloaded files in "+Urls.COCCOC_DOWNLOAD_URL)
-    # driver.get(Urls.COCCOC_DOWNLOAD_URL)
-    # downloads_page_object = DownloadsPageObject()
-    # downloads_page_object.clear_all_existed_downloads(driver)
+    LOGGER.info("Get default download folder")
+    driver.get(Urls.COCCOC_SETTINGS_URL)
+    WaitAfterEach.sleep_timer_after_each_step()
+    setting_page_object = SettingsPageObject()
+    download_folder = setting_page_object.get_download_folder(driver)
+
+    LOGGER.info("Delete all mp4 file in "+download_folder)
+    delete_all_mp4_file_download(download_folder, '.mp4')
+
+    LOGGER.info("Delete all downloaded files in "+Urls.COCCOC_DOWNLOAD_URL)
+    driver.get(Urls.COCCOC_DOWNLOAD_URL)
+    downloads_page_object = DownloadsPageObject()
+    downloads_page_object.clear_all_existed_downloads(driver)
     yield driver
     driver.quit()
 

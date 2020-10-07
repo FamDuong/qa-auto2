@@ -103,3 +103,4 @@ def login_facebook(driver):
             time_delta = datetime.now() - start_time
             if time_delta.total_seconds() >= 15:
                 break
+

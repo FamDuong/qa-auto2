@@ -92,9 +92,9 @@ def assert_video_length(frame_count, fps, expect_length):
     actual_length_seconds_round = str(minutes) + ':' + str(seconds_round)
     LOGGER.info("Actual video length: " + actual_length)
     LOGGER.info("Actual video length seconds round: " + actual_length_seconds_round)
-    actual_length_number = actual_length.replace(':', '.')
-    expect_length_number = expect_length.replace(':', '.')
-    actual_length_seconds_round_number = actual_length_seconds_round.replace(':', '.')
+    actual_length_number = str(actual_length).replace(':', '.')
+    expect_length_number = str(expect_length).replace(':', '.')
+    actual_length_seconds_round_number = str(actual_length_seconds_round).replace(':', '.')
     try:
         assert expect_length in actual_length
     except Exception:
@@ -149,7 +149,6 @@ def check_if_the_file_fully_downloaded(browser):
 
 def check_if_file_with_title_fully_downloaded(browser, video_title):
     play_button_by_video_title = savior_element.find_play_button_by_video_title(browser, video_title)
-    LOGGER.info("Play button: " + str(play_button_by_video_title))
     start_time = datetime.now()
     if play_button_by_video_title is None:
         while play_button_by_video_title is None:

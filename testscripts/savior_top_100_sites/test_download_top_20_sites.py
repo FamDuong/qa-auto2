@@ -35,7 +35,7 @@ class TestVideoClipTVShow:
         LOGGER.info("Check download video on " + VideoUrls.YOUTUBE_VIDEO_URL)
         video_title = top_sites_savior_title_action.get_youtube_video_title(browser_top_sites)
         expect_length = top_savior_sites_video_length_action.\
-            get_video_length(browser_top_sites, TopSaviorSitesVideoLengthLocators.YOUTUBE_VIDEO_LENGTH_CSS)
+            get_video_length_by_javasript(browser_top_sites, TopSaviorSitesVideoLengthLocators.YOUTUBE_VIDEO_LENGTH_CSS)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
     @pytestrail.case('C96763')
@@ -45,8 +45,8 @@ class TestVideoClipTVShow:
         top_savior_sites_film_action.close_login_popup_tv_zing(browser_top_sites)
         video_title = top_sites_savior_title_action.get_tv_zing_video_title(browser_top_sites)
         expect_length = top_savior_sites_video_length_action. \
-            get_video_length(browser_top_sites,
-                             TopSaviorSitesVideoLengthLocators.TV_ZING_VIDEO_LENGTH_CSS)
+            get_video_length_by_javasript(browser_top_sites,
+                                          TopSaviorSitesVideoLengthLocators.TV_ZING_VIDEO_LENGTH_CSS)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
 
@@ -58,16 +58,16 @@ class TestOnlineMusic:
         LOGGER.info("Check download video on " + VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM)
         video_title = top_sites_savior_title_action.get_nhaccuatui_video_title(browser_top_sites)
         expect_length = top_savior_sites_video_length_action. \
-            get_video_length(browser_top_sites,
-                             TopSaviorSitesVideoLengthLocators.NHACCUATUI_VIDEO_LENGTH_CSS)
+            get_video_length_by_javasript(browser_top_sites,
+                                          TopSaviorSitesVideoLengthLocators.NHACCUATUI_VIDEO_LENGTH_CSS)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
         browser_top_sites.get(VideoUrls.NHAC_CUA_TUI_MUSIC_ITEM)
         LOGGER.info("Check download video on " + VideoUrls.NHAC_CUA_TUI_MUSIC_ITEM)
         video_title = top_sites_savior_title_action.get_nhaccuatui_video_title(browser_top_sites)
         expect_length = top_savior_sites_video_length_action. \
-            get_video_length(browser_top_sites,
-                             TopSaviorSitesVideoLengthLocators.NHACCUATUI_MP3_LENGTH_CSS)
+            get_video_length_by_javasript(browser_top_sites,
+                                          TopSaviorSitesVideoLengthLocators.NHACCUATUI_MP3_LENGTH_CSS)
         any_site_page_object.mouse_over_nhaccuatui_music_element(browser_top_sites)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length,
                                   video_title, end_with='.mp3', mouse_over_first_video=False)
@@ -85,8 +85,8 @@ class TestFilm:
             any_site_page_object.click_video_item_dong_phim(browser_top_sites)
         video_title = top_sites_savior_title_action.get_website_title_by_javascript(browser_top_sites)
         expect_length = top_savior_sites_video_length_action. \
-            get_video_length(browser_top_sites,
-                             TopSaviorSitesVideoLengthLocators.DONG_PHYM_VIDEO_LENGTH_CSS)
+            get_video_length_by_javasript(browser_top_sites,
+                                          TopSaviorSitesVideoLengthLocators.DONG_PHYM_VIDEO_LENGTH_CSS)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
 
@@ -120,7 +120,7 @@ class TestFilm:
         video_title_temp = top_sites_savior_title_action.get_video_title_by_javascript_from_span_tag(browser_top_sites)
         video_title = top_sites_savior_title_action.replace_special_characters_by_dash_in_string(video_title_temp)
         expect_length = top_savior_sites_video_length_action. \
-            get_video_length(browser_top_sites, TopSaviorSitesVideoLengthLocators.MOT_PHIMZZ_VIDEO_LENGTH)
+            get_video_length_by_javasript(browser_top_sites, TopSaviorSitesVideoLengthLocators.MOT_PHIMZZ_VIDEO_LENGTH)
         media_info = download_file_via_main_download_button(browser_top_sites, video_title)
         resolution_info = get_resolution_info(media_info)
         try:
@@ -145,10 +145,9 @@ class TestSocialNetwork:
         browser_top_sites.get(OtherSiteUrls.OK_RU)
         LOGGER.info("Check download video on " + OtherSiteUrls.OK_RU)
         video_title = top_sites_savior_title_actions.get_ok_ru_video_title(browser_top_sites)
-        expect_length_root = top_savior_sites_video_length_action. \
-            get_video_length(browser_top_sites,
-                             TopSaviorSitesVideoLengthLocators.OK_RU_VIDEO_LENGTH_CSS)
-        expect_length = top_savior_sites_video_length_action.get_ok_ru_video_length(expect_length_root)
+        expect_length = top_savior_sites_video_length_action. \
+            get_video_length_by_javasript(browser_top_sites,
+                                          TopSaviorSitesVideoLengthLocators.OK_RU_VIDEO_LENGTH_CSS)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
     def verify_download_file_facebook_by_url(self, driver, download_folder, url):
