@@ -28,9 +28,9 @@ class SaviorPageObject(BasePageObject):
 
     def choose_preferred_option(self, driver):
         try:
-            preferred_option = self.savior_elements.find_preferred_option(driver)
-            preferred_option.click()
-            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
+            # preferred_option = self.savior_elements.find_preferred_option(driver)
+            # preferred_option.click()
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
         except:
             preferred_option = None
             start_time = datetime.now()
@@ -38,8 +38,9 @@ class SaviorPageObject(BasePageObject):
                 while preferred_option is None:
                     time.sleep(2)
                     preferred_option = self.savior_elements.find_preferred_option(driver)
-                    # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
-                    preferred_option.click()
+                    # preferred_option.click()
+                    driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
+
                     time_delta = datetime.now() - start_time
                     if time_delta.total_seconds() >= 15:
                         break

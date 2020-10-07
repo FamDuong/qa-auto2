@@ -121,7 +121,7 @@ def assert_video_height_width(actual_height, expect_height, actual_width):
         LOGGER.info("Assert video with Standard/ Medium/ Low resolution")
         if (expect_height is not None) and (expect_height != ''):
             diff_value = abs(int(actual_height) - int(expect_height.split('p')[0]))
-            LOGGER.info("Diff height" + str(diff_value))
+            LOGGER.info("Diff height: " + str(diff_value))
             assert (str(int(actual_height)) in expect_height or diff_value < 10)
     except Exception:
         LOGGER.info("Assert video is not None")
