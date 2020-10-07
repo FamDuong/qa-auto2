@@ -1,10 +1,5 @@
 import logging
-import time
-
-import cv2
 import pytest
-from SSIM_PIL import compare_ssim
-
 from pytest_testrail.plugin import pytestrail
 
 from models.pagelocators.top_savior_sites.top_savior_sites_video_length import TopSaviorSitesVideoLengthLocators
