@@ -61,6 +61,7 @@ class OtherSiteUrls:
     FACEBOOK_HOMEPAGE_URL = 'https://www.facebook.com/'
     FACEBOOK_PROFILE_ME_URL = 'https://www.facebook.com/profile.php?id=100048197235196'
     FACEBOOK_VTVGIAITRI_PAGE_URL = 'https://www.facebook.com/vtvgiaitri'
+    FACEBOOK_VTVGIAITRI_PAGE_VIDEOS = 'https://www.facebook.com/thachthucdanhhai/videos/2001160413351854'
     FACEBOOK_WATCH_URL = 'https://www.facebook.com/watch/'
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/video'
 

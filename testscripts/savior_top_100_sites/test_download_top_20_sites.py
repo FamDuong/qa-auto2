@@ -6,6 +6,7 @@ from models.pagelocators.top_savior_sites.top_savior_sites_video_length import T
 from models.pageobject.sites import AnySitePageObject
 from models.pageobject.top_savior_sites.top_savior_sites_film import TopSaviorSitesFilmActions
 from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
+from models.pageobject.top_savior_sites.top_savior_sites_video_clip_tv_show import TopSaviorSitesVideoClipTvShowActions
 from models.pageobject.top_savior_sites.top_savior_sites_video_length import TopSitesSaviorVideoLengthActions
 from testscripts.savior_top_100_sites.test_download_file_social_network import top_sites_savior_title_actions
 from utils_automation.const import VideoUrls, OtherSiteUrls
@@ -22,6 +23,7 @@ top_savior_sites_video_length_action = TopSitesSaviorVideoLengthActions()
 
 
 class TestVideoClipTVShow:
+    top_savior_sites_video_clip_tv_show_action = TopSaviorSitesVideoClipTvShowActions()
 
     @pytestrail.case('C96719')
     @pytest.mark.twenty_popular_sites
@@ -36,8 +38,8 @@ class TestVideoClipTVShow:
     @pytestrail.case('C96763')
     @pytest.mark.ten_popular_sites
     def test_download_file_tv_zing(self, browser_top_sites, get_current_download_folder_top_sites):
+        self.top_savior_sites_video_clip_tv_show_action.login_tv_zing(browser_top_sites)
         browser_top_sites.get(OtherSiteUrls.TV_ZING_VIDEO_URL)
-        top_savior_sites_film_action.close_login_popup_tv_zing(browser_top_sites)
         video_title = top_sites_savior_title_action.get_tv_zing_video_title(browser_top_sites)
         expect_length = top_savior_sites_video_length_action. \
             get_video_length_by_javasript(browser_top_sites,
@@ -104,8 +106,7 @@ class TestFilm:
 
     @pytestrail.case('C98756')
     @pytestrail.defect('PF-541')
-    def test_download_file_film_mot_phim_net(self, browser_top_sites): #, get_current_download_folder_top_sites):
-        get_current_download_folder_top_sites = "C:\\Hangnt2\\Downloads"
+    def test_download_file_film_mot_phim_net(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(OtherSiteUrls.MOT_PHIM_VIDEO_URL)
         LOGGER.info("Check download video on " + OtherSiteUrls.MOT_PHIM_VIDEO_URL)
         any_site_page_object.mouse_over_then_click_play_video_mot_phimzz(browser_top_sites)
@@ -114,8 +115,10 @@ class TestFilm:
         # time.sleep(10)
         video_title_temp = top_sites_savior_title_action.get_video_title_by_javascript_from_span_tag(browser_top_sites)
         video_title = top_sites_savior_title_action.replace_special_characters_by_dash_in_string(video_title_temp)
+        any_site_page_object.switch_to_video_iframe_mot_phimzz(browser_top_sites)
         expect_length = top_savior_sites_video_length_action. \
             get_video_length_by_javasript(browser_top_sites, TopSaviorSitesVideoLengthLocators.MOT_PHIMZZ_VIDEO_LENGTH)
+        browser_top_sites.switch_to.default_content()
         media_info = download_file_via_main_download_button(browser_top_sites, video_title)
         resolution_info = get_resolution_info(media_info)
         try:
@@ -146,16 +149,19 @@ class TestSocialNetwork:
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
     def verify_download_file_facebook_by_url(self, driver, download_folder, url):
+        login_facebook(driver)
         driver.get(url)
         LOGGER.info("Check download video on " + url)
         any_site_page_object.mouse_over_first_video_element(driver)
         choose_highest_resolution_of_video(driver)
         video_title_temp = top_sites_savior_title_action.get_video_title_by_javascript_from_span_tag(driver)
         video_title = top_sites_savior_title_action.replace_special_characters_by_dash_in_string(video_title_temp)
+        expect_length = top_savior_sites_video_length_action. \
+            get_video_length_by_javasript(driver, TopSaviorSitesVideoLengthLocators.MOT_PHIMZZ_VIDEO_LENGTH)
         media_info = download_file_via_main_download_button(driver, video_title)
         resolution_info = get_resolution_info(media_info)
         try:
-            assert_file_download_value(download_folder, resolution_info, start_with=video_title,
+            assert_file_download_value(download_folder, resolution_info, expect_length, start_with=video_title,
                                        end_with=".mp4")
         finally:
             pass
@@ -165,7 +171,7 @@ class TestSocialNetwork:
     @pytest.mark.twenty_popular_sitesmotphim
     def test_download_file_facebook(self, browser_top_sites, get_current_download_folder_top_sites):
         self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-                                                  OtherSiteUrls.FACEBOOK_VIDEO_URL)
+                                                  OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_VIDEOS)
         # login_facebook(browser_top_sites)
         # browser_top_sites.get(OtherSiteUrls.FACEBOOK_VIDEO_URL)
         # LOGGER.info("Check download video on " + OtherSiteUrls.FACEBOOK_VIDEO_URL)

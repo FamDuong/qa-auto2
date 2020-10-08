@@ -82,6 +82,7 @@ def chrome_options_preset():
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--ignore-certificate-errors')
     chrome_options.add_argument("--allow-insecure-localhost")
+    chrome_options.add_argument('--disable-notifications')
     chrome_options.add_argument('--disable-application-cache')
     chrome_options.add_argument("--disable-session-crashed-bubble")
     chrome_options.add_argument("--disable-features=RendererCodeIntegrity")
