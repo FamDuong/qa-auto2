@@ -12,6 +12,7 @@ class Urls:
     COCCOC_HISTORY_URL = 'coccoc://history/'
     COCCOC_FLAGS = 'coccoc://flags'
     COCCOC_DEV_URL = 'https://dev.coccoc.com'
+    COCCOC_SETTINGS_CLEAR_BROWSER_DATA = 'coccoc://settings/clearBrowserData'
     COCCOC_THANK_YOU_URL_EN = 'https://dev.coccoc.com/en/win/thanks.html'
     COCCOC_THANK_YOU_URL_EN_PRO = 'https://coccoc.com/en/win/thanks.html'
     COCCOC_THANK_YOU_URL_VI = 'https://dev.coccoc.com/vi/win/thanks.html'
@@ -59,7 +60,7 @@ class OtherSiteUrls:
     PHIMMOI_URL = 'http://www.phimmoizz.net/phim/ky-su-thanh-xuan-11454/'
 
     FACEBOOK_HOMEPAGE_URL = 'https://www.facebook.com/'
-    FACEBOOK_PROFILE_ME_URL = 'https://www.facebook.com/profile.php?id=100048197235196'
+    FACEBOOK_PROFILE_ME_URL = 'https://www.facebook.com/coccoc.at.1/'
     FACEBOOK_VTVGIAITRI_PAGE_URL = 'https://www.facebook.com/vtvgiaitri'
     FACEBOOK_VTVGIAITRI_PAGE_VIDEOS = 'https://www.facebook.com/thachthucdanhhai/videos/2001160413351854'
     FACEBOOK_WATCH_URL = 'https://www.facebook.com/watch/'

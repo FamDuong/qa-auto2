@@ -1,5 +1,6 @@
 from models.pageelements.basepage_elements import BasePageElement
-from models.pagelocators.settings import SettingsPageLocators, SettingsComponentsPageLocators
+from models.pagelocators.settings import SettingsPageLocators, SettingsComponentsPageLocators, \
+    SettingsClearBrowserDataLocators
 
 
 class SettingsElements(BasePageElement):
@@ -199,5 +200,50 @@ class SettingsComponentsPageElement(BasePageElement):
         return driver.find_elements_by_xpath(SettingsComponentsPageLocators.COMPONENT_VERSION_ELEMENT)
 
 
+class SettingsClearBrowserDataPageElement(BasePageElement):
+    def find_time_range_dropdown(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsClearBrowserDataLocators.SETTINGS_MAIN,
+                                        SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                        SettingsClearBrowserDataLocators.SETTINGS_PRIVACY_PAGE,
+                                        SettingsClearBrowserDataLocators.SETTINGS_CLEAR_BROWSING_DATA_DIALOG,
+                                        SettingsClearBrowserDataLocators.SETTINGS_CLEAR_FROM_BASIC,
+                                        SettingsClearBrowserDataLocators.SETTINGS_TIME_RANGE_DROPDOWN_MENU)
 
+    def find_browsing_history_checkbox(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsClearBrowserDataLocators.SETTINGS_MAIN,
+                                        SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                        SettingsClearBrowserDataLocators.SETTINGS_PRIVACY_PAGE,
+                                        SettingsClearBrowserDataLocators.SETTINGS_CLEAR_BROWSING_DATA_DIALOG,
+                                        SettingsClearBrowserDataLocators.SETTINGS_BROWSING_HISTORY_CHECKBOX_BASIC,
+                                        SettingsClearBrowserDataLocators.SETTINGS_BROWSING_CHECKBOX,
+                                        SettingsClearBrowserDataLocators.SETTINGS_BROWSING_CHILD_CHECKBOX)
 
+    def find_cookies_and_other_site_data_checkbox(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsClearBrowserDataLocators.SETTINGS_MAIN,
+                                        SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                        SettingsClearBrowserDataLocators.SETTINGS_PRIVACY_PAGE,
+                                        SettingsClearBrowserDataLocators.SETTINGS_CLEAR_BROWSING_DATA_DIALOG,
+                                        SettingsClearBrowserDataLocators.SETTINGS_BROWSING_COOKIES_CHECKBOX_BASIC,
+                                        SettingsClearBrowserDataLocators.SETTINGS_BROWSING_CHECKBOX,
+                                        SettingsClearBrowserDataLocators.SETTINGS_BROWSING_CHILD_CHECKBOX)
+
+    def find_cached_images_and_files_checkbox(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsClearBrowserDataLocators.SETTINGS_MAIN,
+                                        SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                        SettingsClearBrowserDataLocators.SETTINGS_PRIVACY_PAGE,
+                                        SettingsClearBrowserDataLocators.SETTINGS_CLEAR_BROWSING_DATA_DIALOG,
+                                        SettingsClearBrowserDataLocators.SETTINGS_BROWSING_CACHED_CHECKBOX_BASIC,
+                                        SettingsClearBrowserDataLocators.SETTINGS_BROWSING_CHECKBOX,
+                                        SettingsClearBrowserDataLocators.SETTINGS_BROWSING_CHILD_CHECKBOX)
+
+    def find_clear_data_button(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsClearBrowserDataLocators.SETTINGS_MAIN,
+                                        SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                        SettingsClearBrowserDataLocators.SETTINGS_PRIVACY_PAGE,
+                                        SettingsClearBrowserDataLocators.SETTINGS_CLEAR_BROWSING_DATA_DIALOG,
+                                        SettingsClearBrowserDataLocators.SETTINGS_CLEAR_DATA_BUTTON)

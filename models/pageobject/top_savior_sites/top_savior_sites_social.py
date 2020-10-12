@@ -35,7 +35,9 @@ class MessengerActions(BasePageObject):
         self.input_password_into_password_text_box(driver, password_info)
         self.click_login_button(driver)
 
-
+    def scroll_to_facebook_video(self, driver):
+        element =
+        self.scroll_to_element(driver, element)
 
 
 

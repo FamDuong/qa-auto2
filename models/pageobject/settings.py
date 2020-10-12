@@ -1,5 +1,9 @@
 import logging
-from models.pageelements.settings import SettingsElements, SettingsComponentsPageElement
+
+from selenium.webdriver.remote.webelement import WebElement
+
+from models.pageelements.settings import SettingsElements, SettingsComponentsPageElement, \
+    SettingsClearBrowserDataPageElement
 from models.pagelocators.settings import SettingsPageLocators
 from models.pageobject.basepage_object import BasePageObject
 from utils_automation.const import Urls, CocCocComponents
@@ -216,9 +220,32 @@ class SettingsComponentsPageObject(BasePageObject):
                 assert '0.0.0.0' not in version
 
 
+class SettingsClearBrowserDataPageObject(BasePageObject):
+    settings_clear_browser_data_page_element = SettingsClearBrowserDataPageElement()
 
+    def select_time_range(self, driver, option='All time'):
+        from selenium.webdriver.support.select import Select
+        select = Select(self.settings_clear_browser_data_page_element.find_time_range_dropdown(driver))
+        select.select_by_visible_text(option)
 
+    def tick_browsing_history_checkbox(self, driver):
+        element: WebElement = self.settings_clear_browser_data_page_element.\
+            find_browsing_history_checkbox(driver=driver)
+        if element.get_attribute('aria-checked') is False:
+            element.click()
 
+    def tick_cookies_and_other_site_data_checkbox(self, driver):
+        element: WebElement = self.settings_clear_browser_data_page_element.\
+            find_cookies_and_other_site_data_checkbox(driver=driver)
+        if element.get_attribute('aria-checked') is False:
+            element.click()
 
+    def tick_cached_images_and_files_checkbox(self, driver):
+        element: WebElement = self.settings_clear_browser_data_page_element.\
+            find_cached_images_and_files_checkbox(driver=driver)
+        if element.get_attribute('aria-checked') is False:
+            element.click()
 
-
+    def click_clear_data_button(self, driver):
+        element: WebElement = self.settings_clear_browser_data_page_element.find_clear_data_button(driver)
+        element.click()

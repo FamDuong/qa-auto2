@@ -1,8 +1,11 @@
 import logging
+import time
+
 import pytest
 from pytest_testrail.plugin import pytestrail
 
 from models.pagelocators.top_savior_sites.top_savior_sites_video_length import TopSaviorSitesVideoLengthLocators
+from models.pageobject.basepage_object import BasePageObject
 from models.pageobject.sites import AnySitePageObject
 from models.pageobject.top_savior_sites.top_savior_sites_film import TopSaviorSitesFilmActions
 from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
@@ -105,7 +108,6 @@ class TestFilm:
 
 
     @pytestrail.case('C98756')
-    @pytestrail.defect('PF-541')
     def test_download_file_film_mot_phim_net(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(OtherSiteUrls.MOT_PHIM_VIDEO_URL)
         LOGGER.info("Check download video on " + OtherSiteUrls.MOT_PHIM_VIDEO_URL)
@@ -122,20 +124,13 @@ class TestFilm:
         media_info = download_file_via_main_download_button(browser_top_sites, video_title)
         resolution_info = get_resolution_info(media_info)
         try:
-            assert_file_download_value(get_current_download_folder_top_sites, expect_length, resolution_info, start_with=video_title,
+            assert_file_download_value(get_current_download_folder_top_sites, resolution_info, expect_length, start_with=video_title,
                                        end_with=".mp4")
         finally:
             delete_all_mp4_file_download(get_current_download_folder_top_sites, end_with=".mp4", start_with=video_title)
 
-        # browser.get(OtherSiteUrls.MOT_PHIM_VIDEO_URL)
-        # time.sleep(2)
-        # any_site_page_object.click_video_item_mot_phim(browser)
-        # time.sleep(5)
-        # any_site_page_object.mouse_over_video_item_mot_phim(browser, url=OtherSiteUrls.MOT_PHIM_VIDEO_URL)
-        # implement_download_file(browser, get_current_download_folder, )
 
-
-class TestSocialNetwork:
+class TestSocialNetwork():
 
     @pytestrail.case('C204280')
     @pytest.mark.twenty_popular_sites
@@ -149,15 +144,18 @@ class TestSocialNetwork:
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
     def verify_download_file_facebook_by_url(self, driver, download_folder, url):
-        login_facebook(driver)
+
         driver.get(url)
         LOGGER.info("Check download video on " + url)
+
+        time.sleep(3)
         any_site_page_object.mouse_over_first_video_element(driver)
         choose_highest_resolution_of_video(driver)
+        time.sleep(3)
         video_title_temp = top_sites_savior_title_action.get_video_title_by_javascript_from_span_tag(driver)
         video_title = top_sites_savior_title_action.replace_special_characters_by_dash_in_string(video_title_temp)
         expect_length = top_savior_sites_video_length_action. \
-            get_video_length_by_javasript(driver, TopSaviorSitesVideoLengthLocators.MOT_PHIMZZ_VIDEO_LENGTH)
+            get_video_length_by_javasript(driver, css_locator="", element=TopSaviorSitesVideoLengthLocators.FACEBOOK_VIDEO_LENGTH)
         media_info = download_file_via_main_download_button(driver, video_title)
         resolution_info = get_resolution_info(media_info)
         try:
@@ -170,25 +168,19 @@ class TestSocialNetwork:
     @pytestrail.case('C96691')
     @pytest.mark.twenty_popular_sitesmotphim
     def test_download_file_facebook(self, browser_top_sites, get_current_download_folder_top_sites):
+        login_facebook(browser_top_sites)
+        # self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+        #                                           OtherSiteUrls.FACEBOOK_HOMEPAGE_URL)
         self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-                                                  OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_VIDEOS)
-        # login_facebook(browser_top_sites)
-        # browser_top_sites.get(OtherSiteUrls.FACEBOOK_VIDEO_URL)
-        # LOGGER.info("Check download video on " + OtherSiteUrls.FACEBOOK_VIDEO_URL)
-        # # time.sleep(3)
-        # any_site_page_object.mouse_over_first_video_element(browser_top_sites)
-        # choose_highest_resolution_of_video(browser_top_sites)
-        # # time.sleep(3)
-        # video_title_temp = self.top_site_savior_title_action.get_facebook_video_title(browser_top_sites)
-        # video_title = self.top_site_savior_title_action.replace_special_characters_by_dash_in_string(video_title_temp)
-        # media_info = download_file_via_main_download_button(browser_top_sites, video_title)
-        # resolution_info = get_resolution_info(media_info)
-        # try:
-        #     assert_file_download_value(get_current_download_folder_top_sites, resolution_info, start_with=video_title, end_with=".mp4")
-        # finally:
-        #     delete_all_mp4_file_download(get_current_download_folder_top_sites, end_with=".mp4", start_with=video_title)
-
-        # download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, video_title)
+                                                  OtherSiteUrls.FACEBOOK_PROFILE_ME_URL)
+        self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+                                                  OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL)
+        # self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+        #                                           OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_VIDEOS)
+        self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+                                                  OtherSiteUrls.FACEBOOK_WATCH_URL)
+        self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+                                                  OtherSiteUrls.FACEBOOK_VIDEO_URL)
 
     def prepare_appear_savior_option(self, browser):
         browser.get(OtherSiteUrls.INSTAGRAM_VIDEO_URL)

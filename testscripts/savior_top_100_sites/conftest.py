@@ -3,6 +3,7 @@ import logging
 
 from models.pageobject.settings import SettingsPageObject
 from models.pageobject.downloads import DownloadsPageObject
+from testscripts.savior_top_100_sites.common import delete_all_history
 from utils_automation.common_browser import coccoc_instance
 from utils_automation.const import Urls
 from utils_automation.setup import WaitAfterEach
@@ -12,8 +13,15 @@ LOGGER = logging.getLogger(__name__)
 
 download_folder = None
 
+
 @pytest.fixture(scope='session')
-def browser_top_sites():
+def clear_website_history():
+    driver = coccoc_instance()
+    delete_all_history(driver)
+
+
+@pytest.fixture(scope='session')
+def browser_top_sites(clear_website_history):
     LOGGER.info("Init coc coc browser")
     global download_folder
     driver = coccoc_instance()
@@ -24,10 +32,10 @@ def browser_top_sites():
     setting_page_object = SettingsPageObject()
     download_folder = setting_page_object.get_download_folder(driver)
 
-    LOGGER.info("Delete all mp4 file in "+download_folder)
+    LOGGER.info("Delete all mp4 file in " + download_folder)
     delete_all_mp4_file_download(download_folder, '.mp4')
 
-    LOGGER.info("Delete all downloaded files in "+Urls.COCCOC_DOWNLOAD_URL)
+    LOGGER.info("Delete all downloaded files in " + Urls.COCCOC_DOWNLOAD_URL)
     driver.get(Urls.COCCOC_DOWNLOAD_URL)
     downloads_page_object = DownloadsPageObject()
     downloads_page_object.clear_all_existed_downloads(driver)
