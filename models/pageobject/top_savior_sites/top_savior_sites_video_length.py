@@ -22,17 +22,19 @@ class TopSitesSaviorVideoLengthActions(BasePageObject):
     def get_video_length(self, driver, css_locator, element=""):
         video_length_root = self.get_video_length_from_html(driver, css_locator, element)
         video_length = self.get_video_length_if_contain_count_down(video_length_root)
+        video_length_seconds = get_sec(video_length)
         start_time = datetime.now()
-        if get_sec(video_length) < 60:
-            while get_sec(video_length) < 60:
+        if video_length_seconds < 60:
+            while video_length_seconds < 60:
                 time.sleep(2)
                 video_length_root = self.get_video_length_from_html(driver, css_locator, element)
                 video_length = self.get_video_length_if_contain_count_down(video_length_root)
+                video_length_seconds = get_sec(video_length)
+                LOGGER.info("Expect video length: " + video_length)
+                LOGGER.info("Expect video length seconds: " + str(video_length_seconds))
                 time_delta = datetime.now() - start_time
                 if time_delta.total_seconds() >= 15:
                     break
-        LOGGER.info("Expect video length: " + video_length)
-        LOGGER.info("Expect video length seconds: "+str(get_sec(video_length)))
         return video_length
 
     def get_video_length_if_contain_count_down(self, video_length_root):
