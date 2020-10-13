@@ -9,7 +9,7 @@ class MessengerLocators(object):
     KEEP_LOGIN_BUTTON_LOCATOR = (By.XPATH, '//*[@id="loginform"]/div/div/label[1]/span')
 
 class FacebookLocators(object):
-    TRUCTIEP
+    TRUCTIEP_LBL =''
 
 
 
