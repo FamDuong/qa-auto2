@@ -98,15 +98,28 @@ def assert_video_length(frame_count, fps, expect_length):
     try:
         assert expect_length in actual_length
     except Exception:
-        diff_time = abs(float(actual_length_number) - float(expect_length_number))
+        diff_time = abs(float(get_hours_and_minutes_in_video_length(actual_length_number)) -
+                        float(get_hours_and_minutes_in_video_length(expect_length_number)))
         LOGGER.info('Diff time: '+str(diff_time))
         assert diff_time < 0.02
     except Exception:
         assert expect_length in actual_length_seconds_round
     except Exception:
-        diff_time = abs(float(actual_length_seconds_round_number) - float(expect_length_number))
+        diff_time = abs(float(get_hours_and_minutes_in_video_length(actual_length_seconds_round_number)) -
+                        float(get_hours_and_minutes_in_video_length(expect_length_number)))
         LOGGER.info('Diff time: '+str(diff_time))
         assert diff_time < 0.02
+
+
+def get_hours_and_minutes_in_video_length(video_length):
+    if video_length.count('.') == 2:
+        video_length_hours = video_length.split(".")[1]
+        video_length_minutes = video_length.split(".")[2]
+        video_length_new = video_length_hours + '.' + video_length_minutes
+        LOGGER.info("Video length after get minutes and seconds " + video_length)
+        return video_length_new
+    else:
+        return video_length
 
 
 def assert_video_height_width(actual_height, expect_height, actual_width):
