@@ -83,32 +83,30 @@ def assert_file_download_value(download_folder_path, expect_height, expect_lengt
     assert_video_length(frame_count, fps, expect_length)
 
 
-def assert_video_length(frame_count, fps, expect_length):
-    duration = frame_count / fps
-    minutes = int(duration / 60)
-    seconds = int(duration % 60)
-    seconds_round = round(duration % 60)
-    actual_length = str(minutes) + ':' + str(seconds)
-    actual_length_seconds_round = str(minutes) + ':' + str(seconds_round)
-    LOGGER.info("Actual video length: " + actual_length)
-    LOGGER.info("Actual video length seconds round: " + actual_length_seconds_round)
-    actual_length_number = str(actual_length).replace(':', '.')
-    expect_length_number = str(expect_length).replace(':', '.')
-    actual_length_seconds_round_number = str(actual_length_seconds_round).replace(':', '.')
+def get_sec(time_str):
+    """Get Seconds from time."""
     try:
-        assert expect_length in actual_length
-    except Exception:
-        diff_time = abs(float(get_hours_and_minutes_in_video_length(actual_length_number)) -
-                        float(get_hours_and_minutes_in_video_length(expect_length_number)))
-        LOGGER.info('Diff time: '+str(diff_time))
-        assert diff_time < 0.02
-    except Exception:
-        assert expect_length in actual_length_seconds_round
-    except Exception:
-        diff_time = abs(float(get_hours_and_minutes_in_video_length(actual_length_seconds_round_number)) -
-                        float(get_hours_and_minutes_in_video_length(expect_length_number)))
-        LOGGER.info('Diff time: '+str(diff_time))
-        assert diff_time < 0.02
+        h, m, s = str(time_str).split(':')
+        return int(h) * 3600 + int(m) * 60 + int(s)
+    except:
+        m, s = str(time_str).split(':')
+        return int(m) * 60 + int(s)
+
+
+def assert_video_length(frame_count, fps, expect_length):
+    import datetime
+    duration = frame_count / fps
+    actual_length_str = time.strftime("%H:%M:%S", time.gmtime(duration))
+    actual_length_date_time = datetime.datetime.strptime(actual_length_str, '%H:%M:%S')
+    LOGGER.info("Actual video length: "+ actual_length_str)
+    try:
+        expect_length_date_time = datetime.datetime.strptime(expect_length.strip(), '%H:%M:%S')
+    except:
+        expect_length_date_time = datetime.datetime.strptime(expect_length.strip(), '%M:%S')
+    diff_length_date_time = abs(actual_length_date_time - expect_length_date_time)
+    diff_length_seconds = get_sec(diff_length_date_time)
+    LOGGER.info("Diff video length seconds: "+str(diff_length_seconds))
+    assert diff_length_seconds < 3
 
 
 def get_hours_and_minutes_in_video_length(video_length):
@@ -273,5 +271,5 @@ def get_resolution_info(media_info):
         m = m.group()
     else:
         m = ''
-    LOGGER.info("Get expect height: "+str(m))
+    LOGGER.info("Get expect height: " + str(m))
     return m
