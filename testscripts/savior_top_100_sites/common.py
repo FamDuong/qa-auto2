@@ -31,6 +31,8 @@ def choose_highest_resolution_of_video(driver):
     LOGGER.info("Choose resolution option")
     savior_page_object.choose_preferred_option(driver)
     try:
+        savior_page_object.choose_quad_hd_option(driver)
+    except Exception:
         savior_page_object.choose_full_hd_option(driver)
     except Exception:
         savior_page_object.choose_hd_option(driver)

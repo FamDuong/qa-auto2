@@ -73,22 +73,25 @@ def chrome_options_preset():
     binary_path = f"C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = binary_path
+    # chrome_options.add_extension(
+    #     "C:\\Users\\Hangnt2\\Downloads\\mpbjkejclgfgadiemmefgebjfooflfhl-0.7.3-Crx4Chrome.com.crx")
     chrome_options.add_argument("--start-maximized")
     chrome_options.add_argument("--proxy-server='direct://'")
     chrome_options.add_argument("--proxy-bypass-list=*")
     chrome_options.add_argument("--start-maximized")
-    chrome_options.add_argument('--disable-gpu')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--ignore-certificate-errors')
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--ignore-certificate-errors")
     chrome_options.add_argument("--allow-insecure-localhost")
-    chrome_options.add_argument('--disable-notifications')
-    chrome_options.add_argument('--disable-application-cache')
+    chrome_options.add_argument("--disable-notifications")
+    chrome_options.add_argument("--disable-application-cache")
     chrome_options.add_argument("--disable-session-crashed-bubble")
     chrome_options.add_argument("--disable-features=RendererCodeIntegrity")
     chrome_options.add_experimental_option("prefs", {'safebrowsing.enabled': 'false'})
-    chrome_options.add_experimental_option('useAutomationExtension', False)
+    chrome_options.add_experimental_option("useAutomationExtension", False)
     chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
+
 
     split_after = binary_path.split('\\Local')
     user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'

@@ -8,6 +8,7 @@ class SaviorPageLocators(object):
     CURRENT_SELECTED_RESOLUTION = 'span:not([hidden])[class="j-quality-option quality-option"]'
     BASE_OVERLAY_CLASS = '[class="base overlay"]'
     HIGH_PREFERRED_SELECT_BTN = '//span[@data-selected-value="High"]'
+    QUAD_HD_SELECT_OPTION = 'div[data-quality-value*="/Quad HD/"]'
     FULL_HD_SELECT_OPTION = 'div[data-quality-value*="/Full HD/"]'
     HD_SELECT_OPTION = 'div[data-quality-value*="/HD/"]'
     STANDARD_SELECT_OPTION = 'div[data-quality-value*="/Standard/"]'

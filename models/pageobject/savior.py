@@ -45,6 +45,16 @@ class SaviorPageObject(BasePageObject):
                     if time_delta.total_seconds() >= 15:
                         break
 
+    def choose_quad_hd_option(self, driver):
+        try:
+            LOGGER.info("Choose Quad HD option")
+            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+                                                                               SaviorPageLocators.QUAD_HD_SELECT_OPTION)
+            option.click()
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            return e
+
     def choose_full_hd_option(self, driver):
         try:
             LOGGER.info("Choose Full HD option")

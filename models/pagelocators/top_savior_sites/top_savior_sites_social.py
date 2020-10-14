@@ -9,8 +9,10 @@ class MessengerLocators(object):
     KEEP_LOGIN_BUTTON_LOCATOR = (By.XPATH, '//*[@id="loginform"]/div/div/label[1]/span')
 
 class FacebookLocators(object):
-    TRUCTIEP_LBL =''
-
+    HOME_PAGE_FIRST_VIDEO = (By.XPATH, '(//div[@aria-label="Change Position"])[1]//ancestor::div[contains(@data-instancekey,"id-vpuid")]//parent::div//video')
+    # VTV_GIAITRI_PAGE_FIRST_VIDEO = (By.XPATH, '(//div[@data-ad-comet-preview="message"]//ancestor::div[@dir="auto" and @class=""]//following-sibling::div//video)[1]')
+    VTV_GIAITRI_PAGE_FIRST_VIDEO = (By.XPATH, '(//div[@aria-label="Viết bình luận"]//ancestor::div[@data-testid="Keycommand_wrapper"]//video)[1]')
+    VTV_GIAITRI_DONG_DOAN_CHAT_BTN = (By.XPATH, '//div[@aria-label="Đóng đoạn chat"]')
 
 
 
