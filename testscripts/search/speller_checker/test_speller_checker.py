@@ -64,8 +64,8 @@ class TestSpellerChecker:
                           columns=['Input', 'Expect', 'Number of expect error', 'Number of defect error', 'Actual',
                                    'NOK', 'Diff words expect', 'Diff words actual'])
 
-        # LOGGER.info("\n")
-        # LOGGER.info(df)
+        LOGGER.info("\n")
+        LOGGER.info(df)
         worksheet.set_dataframe(df, (1, 1))
 
     def test_speller_checker(self, get_test_url, get_spreed_sheet_id, get_sheet_name, get_sheet_range_input):
