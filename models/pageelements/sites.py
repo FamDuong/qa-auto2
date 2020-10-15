@@ -51,7 +51,7 @@ class GooglePageElements(BasePageElement):
 class AnySiteElements(BasePageElement):
 
     def click_first_video_element(self, driver):
-        return driver.execute_script('document.getElementsByTagName("video")[0].click()')
+        return driver.execute_script('document.getElementsByTagName("video")[1].click()')
 
     def find_first_video_element(self, driver):
         return self.wait_for_element(driver).until(

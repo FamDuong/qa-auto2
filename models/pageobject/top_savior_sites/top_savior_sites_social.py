@@ -3,8 +3,9 @@ import time
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 
-from models.pageelements.top_savior_sites.top_savior_sites_social import MessengerElements
+from models.pageelements.top_savior_sites.top_savior_sites_social import MessengerElements, FacebookElements
 from models.pageobject.basepage_object import BasePageObject
+from utils_automation.const import OtherSiteUrls
 
 
 class MessengerActions(BasePageObject):
@@ -35,10 +36,20 @@ class MessengerActions(BasePageObject):
         self.input_password_into_password_text_box(driver, password_info)
         self.click_login_button(driver)
 
-    def scroll_to_facebook_video(self, driver):
-        element =
-        self.scroll_to_element(driver, element)
 
+class FacebookActions(BasePageObject):
+    facebook_element = FacebookElements()
 
-
-
+    def scroll_to_facebook_video(self, driver, url):
+        # if url in OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
+        #     self.facebook_element.find_dong_doan_chat_button_fanpage(driver).click()
+        driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+        element = self.facebook_element.find_facebook_first_video(driver, url)
+        if element is None:
+            while element is None:
+                driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+                element = self.facebook_element.find_facebook_first_video(driver, url)
+                if element is not None:
+                    coordinates = element.location_once_scrolled_into_view  # returns dict of X, Y coordinates
+                    driver.execute_script('window.scrollTo({}, {});'.format(coordinates['x'], coordinates['y']))
+                    break

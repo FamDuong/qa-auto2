@@ -22,7 +22,7 @@ class SpellerCheckerActions:
         kiem_tra_button.click()
 
     def count_ban_lam_dung_het_roi_nhe_label(self, driver):
-        ban_lam_dung_het_roi_nhe_lbl = driver.find_elements_by_xpath\
+        ban_lam_dung_het_roi_nhe_lbl = driver.find_elements_by_xpath \
             (self.cc_speller_checker_locator.BAN_LAM_DUNG_HET_ROI_NHE_LBL_XPATH)
         return len(ban_lam_dung_het_roi_nhe_lbl)
 
@@ -32,6 +32,8 @@ class SpellerCheckerActions:
                                                                                 self.cc_speller_checker_locator.LOI_LBL)
             speller_errors = re.sub('[^0-9]', '', speller_errors_label.text)
             return speller_errors
+        else:
+            return 0
 
     def click_sua_tat_ca_loi_button(self, driver):
         if self.count_ban_lam_dung_het_roi_nhe_label(driver) == 0:

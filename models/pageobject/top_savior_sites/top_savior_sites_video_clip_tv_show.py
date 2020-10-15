@@ -20,13 +20,25 @@ class TopSaviorSitesVideoClipTvShowActions(BasePageObject):
             user_name = self.top_savior_sites_video_clip_tv_show_element.find_username_label_element(driver)
             if user_name is None:
                 username_txt = self.top_savior_sites_video_clip_tv_show_element.find_username_textbox_element(driver)
+                self.clear_text_to_element(driver, username_txt)
                 self.send_keys_to_element(driver, username_txt, TopSaviorSitesVideoClipTvShowLocators.ZALO_USER_NAME)
             password_txt = self.top_savior_sites_video_clip_tv_show_element.find_password_textbox_element(driver)
+            self.clear_text_to_element(driver, password_txt)
             self.send_keys_to_element(driver, password_txt, TopSaviorSitesVideoClipTvShowLocators.ZALO_PASSWORD)
             dang_nhap_btn = self.top_savior_sites_video_clip_tv_show_element.find_dang_nhap_voi_mat_khau_button_element(driver)
             dang_nhap_btn.click()
 
     def login_tv_zing(self, driver):
         self.login_zalo(driver)
-        driver.get(OtherSiteUrls.TV_ZING_VIDEO_URL)
-        self.top_savior_sites_video_clip_tv_show_element.find_dang_nhap_bang_zalo_button_element(driver).click()
+        # driver.get(OtherSiteUrls.TV_ZING_VIDEO_URL)
+        #
+        # self.top_savior_sites_video_clip_tv_show_element.find_dang_nhap_bang_zalo_button_element(driver).click()
+        # windows_handles = driver.window_handles
+        # if len(windows_handles) == 2:
+        #     driver.switch_to.window(windows_handles[1])
+        #
+        # import time
+        # time.sleep(10)
+        # driver.close()
+        # driver.switch_to.window(windows_handles[0])
+
