@@ -51,9 +51,12 @@ class SaviorElements(BasePageElement):
         assert self.select_shadow_element_download_button(driver) in (1, None)
 
     def find_preferred_option(self, driver):
-        return self.find_shadow_element(driver, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
+        try:
+            return self.find_shadow_element(driver, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
         # return self.select_shadow_element_by_css_selector(driver, self.find_first_layer(driver)). \
         #     find_element_by_css_selector(SaviorPageLocators.PREFERRED_SELECT_BTN)
+        except:
+            return None
 
     def find_resotion_option_by_css_selector(self, driver, css_selector):
         return self.find_shadow_element(driver, SaviorPageLocators.FIRST_LAYER, css_selector)

@@ -76,15 +76,26 @@ def assert_file_download_value(download_folder_path, expect_height, expect_lengt
     actual_width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
     fps = vid.get(cv2.CAP_PROP_FPS)
     frame_count = int(vid.get(cv2.CAP_PROP_FRAME_COUNT))
-    assert vid.isOpened()
+    if '.mp4' in end_with:
+        assert vid.isOpened()
     assert len(mp4_files) > 0
     vid.release()
-    assert_video_height_width(actual_height, expect_height, actual_width)
+    assert_video_height_width(end_with, actual_height, expect_height, actual_width)
     assert_video_length(frame_count, fps, expect_length)
+
+
+def get_length_and_bit_rate(download_folder_path, mp4_file):
+    import mutagen
+    file = mutagen.File(download_folder_path + '\\' + mp4_file)
+    length = file.info.length
+    bit_rate = round(file.info.bitrate / 1000)
+    LOGGER.info("Length: {}s; Bitrate: {}".format(length, bit_rate))
+    return length, bit_rate
 
 
 def get_sec(time_str):
     """Get Seconds from time."""
+    LOGGER.info("Time string: " + str(time_str))
     try:
         h, m, s = str(time_str).split(':')
         return int(h) * 3600 + int(m) * 60 + int(s)
@@ -98,14 +109,14 @@ def assert_video_length(frame_count, fps, expect_length):
     duration = frame_count / fps
     actual_length_str = time.strftime("%H:%M:%S", time.gmtime(duration))
     actual_length_date_time = datetime.datetime.strptime(actual_length_str, '%H:%M:%S')
-    LOGGER.info("Actual video length: "+ actual_length_str)
+    LOGGER.info("Actual video length: " + actual_length_str)
     try:
         expect_length_date_time = datetime.datetime.strptime(expect_length.strip(), '%H:%M:%S')
     except:
         expect_length_date_time = datetime.datetime.strptime(expect_length.strip(), '%M:%S')
     diff_length_date_time = abs(actual_length_date_time - expect_length_date_time)
     diff_length_seconds = get_sec(diff_length_date_time)
-    LOGGER.info("Diff video length seconds: "+str(diff_length_seconds))
+    LOGGER.info("Diff video length seconds: " + str(diff_length_seconds))
     assert diff_length_seconds < 3
 
 
@@ -120,23 +131,24 @@ def get_hours_and_minutes_in_video_length(video_length):
         return video_length
 
 
-def assert_video_height_width(actual_height, expect_height, actual_width):
-    LOGGER.info("Actual height x Actual width: " + str(actual_height) + "x" + str(actual_width))
-    LOGGER.info("Expect height: " + str(expect_height))
-    try:
-        if int(actual_height) > 720:
-            expect_width = if_height_frame_so_width_frame(expect_height)
-            LOGGER.info("Assert video with high resolution" + str(actual_height) + "x" + str(expect_width))
-            assert actual_width == expect_width
-    except Exception:
-        LOGGER.info("Assert video with Standard/ Medium/ Low resolution")
-        if (expect_height is not None) and (expect_height != ''):
-            diff_value = abs(int(actual_height) - int(expect_height.split('p')[0]))
-            LOGGER.info("Diff height: " + str(diff_value))
-            assert (str(int(actual_height)) in expect_height or diff_value < 10)
-    except Exception:
-        LOGGER.info("Assert video is not None")
-        assert actual_height is not None
+def assert_video_height_width(end_with, actual_height, expect_height, actual_width):
+    if '.mp4' in end_with:
+        LOGGER.info("Actual height x Actual width: " + str(actual_height) + "x" + str(actual_width))
+        LOGGER.info("Expect height: " + str(expect_height))
+        try:
+            if int(actual_height) > 720:
+                expect_width = if_height_frame_so_width_frame(expect_height)
+                LOGGER.info("Assert video with high resolution" + str(actual_height) + "x" + str(expect_width))
+                assert actual_width == expect_width
+        except Exception:
+            LOGGER.info("Assert video with Standard/ Medium/ Low resolution")
+            if (expect_height is not None) and (expect_height != ''):
+                diff_value = abs(int(actual_height) - int(expect_height.split('p')[0]))
+                LOGGER.info("Diff height: " + str(diff_value))
+                assert (str(int(actual_height)) in expect_height or diff_value < 10)
+        except Exception:
+            LOGGER.info("Assert video is not None")
+            assert actual_height is not None
 
 
 def assert_file_download_exist(download_folder_path, file_size=2.00, start_with=None):

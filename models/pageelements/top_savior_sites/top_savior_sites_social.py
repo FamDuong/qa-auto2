@@ -28,16 +28,20 @@ class FacebookElements(BasePageElement):
     def find_facebook_first_video(self, driver, url):
         import time
         time.sleep(5)
-        if url in OtherSiteUrls.FACEBOOK_HOMEPAGE_URL or url in OtherSiteUrls.FACEBOOK_PROFILE_ME_URL \
-                or url in OtherSiteUrls.FACEBOOK_WATCH_URL or url in OtherSiteUrls.FACEBOOK_VIDEO_URL:
-            return self.wait_for_element(driver).until(ec.presence_of_element_located(FacebookLocators.HOME_PAGE_FIRST_VIDEO))
-        elif url in OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
-            return self.wait_for_element(driver).until(ec.presence_of_element_located(FacebookLocators.VTV_GIAITRI_PAGE_FIRST_VIDEO))
+        try:
+            if url in OtherSiteUrls.FACEBOOK_HOMEPAGE_URL or url in OtherSiteUrls.FACEBOOK_PROFILE_ME_URL \
+                    or url in OtherSiteUrls.FACEBOOK_WATCH_URL or url in OtherSiteUrls.FACEBOOK_VIDEO_URL:
+                return self.wait_for_element(driver).until(ec.presence_of_element_located(FacebookLocators.HOME_PAGE_FIRST_VIDEO))
+
+            elif url in OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
+                return self.wait_for_element(driver).until(ec.presence_of_element_located(FacebookLocators.VTV_GIAITRI_PAGE_FIRST_VIDEO))
+        except:
+            return None
 
     # def find_dong_doan_chat_button_fanpage(self, driver):
     #     return self.wait_for_element(driver).until(ec.presence_of_element_located(FacebookLocators.VTV_GIAITRI_DONG_DOAN_CHAT_BTN))
 
-    def find_thach_thuc_danh_hai_video(self, driver):
+    def find_first_video(self, driver):
         return self.wait_for_element(driver).until(
-            ec.presence_of_element_located(FacebookLocators.HOME_PAGE_FIRST_VIDEO))
+            ec.presence_of_element_located(FacebookLocators.WATCH_FIRST_VIDEO))
 

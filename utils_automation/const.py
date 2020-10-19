@@ -44,6 +44,10 @@ class VideoUrls:
         return [value for name, value in vars(cls).items() if name.isupper()]
 
 
+class OnlineMusicUrls:
+    SOUNDCLOUD_URL = 'https://soundcloud.com/mytam/mytam-chuyen-nhu-chua-bat-dau'
+
+
 class DiffFormatFileUrls:
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/watch/?v=682897505204114'
     WEBM_URL = 'http://techslides.com/demos/sample-videos/small.webm'
@@ -62,7 +66,7 @@ class OtherSiteUrls:
     FACEBOOK_HOMEPAGE_URL = 'https://www.facebook.com/'
     FACEBOOK_PROFILE_ME_URL = 'https://www.facebook.com/coccoc.at.1/'
     FACEBOOK_VTVGIAITRI_PAGE_URL = 'https://www.facebook.com/vtvgiaitri'
-    FACEBOOK_THACH_THUC_DANH_HAI_PAGE_VIDEOS = 'https://www.facebook.com/thachthucdanhhai/videos/2001160413351854'
+    # FACEBOOK_THACH_THUC_DANH_HAI_PAGE_VIDEOS = 'https://www.facebook.com/thachthucdanhhai/videos/2001160413351854'
     FACEBOOK_WATCH_URL = 'https://www.facebook.com/watch/'
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/video'
 
@@ -151,6 +155,7 @@ class CocCocComponents:
 class ChromeStoreUrls:
     RUNG_RINH_EXTENSION_URL = 'https://chrome.google.com/webstore/detail/r%E1%BB%A7ng-r%E1%BB%89nh-d%E1%BB%8Bch-v%E1%BB%A5-ho%C3%A0n-ti/paenbjlckelooppiepeiechkeehogoha'
     ADSBLOCKPLUS_EXTENSION_URL = 'https://chrome.google.com/webstore/detail/adblock-plus-free-ad-bloc/cfhdojbkjhnklbpkdaibdccddilifddb'
+
 
 class CocCocExtensions:
     AD_BLOCK_STANDARD_MODE = 'Standard'

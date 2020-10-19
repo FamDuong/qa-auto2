@@ -6,7 +6,8 @@ from pytest_testrail.plugin import pytestrail
 from selenium.webdriver.remote.webelement import WebElement
 
 from models.pagelocators.top_savior_sites.top_savior_sites_social import FacebookLocators
-from models.pagelocators.top_savior_sites.top_savior_sites_video_length import TopSaviorSitesVideoLengthLocators
+from models.pagelocators.top_savior_sites.top_savior_sites_video_length import TopSaviorSitesVideoLengthLocators, \
+    OnlineMusicVideoLengthLocators
 from models.pageobject.sites import AnySitePageObject
 from models.pageobject.top_savior_sites.top_savior_sites_film import TopSaviorSitesFilmActions
 from models.pageobject.top_savior_sites.top_savior_sites_social import FacebookActions
@@ -15,7 +16,7 @@ from models.pageobject.top_savior_sites.top_savior_sites_video_clip_tv_show impo
 from models.pageobject.top_savior_sites.top_savior_sites_video_length import TopSitesSaviorVideoLengthActions
 from testscripts.savior_top_100_sites.test_download_file_social_network import top_sites_savior_title_actions
 from utils_automation.common_browser import coccoc_instance
-from utils_automation.const import VideoUrls, OtherSiteUrls
+from utils_automation.const import VideoUrls, OtherSiteUrls, OnlineMusicUrls
 from testscripts.savior_top_100_sites.common import download_and_verify_video, choose_highest_resolution_of_video, \
     login_facebook
 from testscripts.common_setup import assert_file_download_value, delete_all_mp4_file_download, \
@@ -68,12 +69,25 @@ class TestOnlineMusic:
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
         browser_top_sites.get(VideoUrls.NHAC_CUA_TUI_MUSIC_ITEM)
-        LOGGER.info("Check download video on " + VideoUrls.NHAC_CUA_TUI_MUSIC_ITEM)
+        LOGGER.info("Check download music on " + VideoUrls.NHAC_CUA_TUI_MUSIC_ITEM)
         video_title = top_sites_savior_title_action.get_nhaccuatui_video_title(browser_top_sites)
         expect_length = top_savior_sites_video_length_action. \
             get_video_length(browser_top_sites,
                              TopSaviorSitesVideoLengthLocators.NHACCUATUI_MP3_LENGTH_CSS)
         any_site_page_object.mouse_over_nhaccuatui_music_element(browser_top_sites)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length,
+                                  video_title, end_with='.mp3', mouse_over_first_video=False)
+
+    @pytestrail.case('C98760')
+    @pytest.mark.twenty_popular_sites
+    def test_download_soundcloud(self, browser_top_sites, get_current_download_folder_top_sites):
+        browser_top_sites.get(OnlineMusicUrls.SOUNDCLOUD_URL)
+        LOGGER.info("Check download music on " + OnlineMusicUrls.SOUNDCLOUD_URL)
+
+        video_title = top_sites_savior_title_action.get_soundcloud_music_title(browser_top_sites)
+        expect_length = top_savior_sites_video_length_action. \
+            get_video_length(browser_top_sites, OnlineMusicVideoLengthLocators.SOUNDCLOUD_MP3_LENGTH_CSS)
+        any_site_page_object.mouse_over_soundcloud_music_element(browser_top_sites)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length,
                                   video_title, end_with='.mp3', mouse_over_first_video=False)
 
@@ -128,16 +142,15 @@ class TestSocialNetwork:
                              TopSaviorSitesVideoLengthLocators.OK_RU_VIDEO_LENGTH_CSS)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
-    def verify_download_file_facebook_by_url(self, driver, download_folder, url):
+    def verify_download_file_facebook_by_url(self, driver, download_folder, url, need_opened_video=False, need_mouse_over_video=True):
         login_facebook(driver)
         driver.get(url)
         LOGGER.info("Check download video on " + url)
         time.sleep(3)
         self.facebook_action.scroll_to_facebook_video(driver, url)
-        self.click_to_open_large_video(driver, url)
-        self.mouse_over_facebook_first_video_element(driver, url)
+        self.click_to_open_large_video(driver, need_opened_video)
+        self.mouse_over_facebook_first_video_element(driver, url, need_mouse_over_video)
         choose_highest_resolution_of_video(driver)
-        time.sleep(3)
         video_title_temp = top_sites_savior_title_action.get_video_title_by_javascript_from_span_tag(driver)
         video_title = top_sites_savior_title_action.replace_special_characters_by_dash_in_string(video_title_temp)
         expect_length = self.get_facebook_video_length_base_url(driver, url)
@@ -149,32 +162,33 @@ class TestSocialNetwork:
         finally:
             delete_all_mp4_file_download(download_folder, end_with=".mp4", start_with=video_title)
 
-    def click_to_open_large_video(self, driver, url):
-        if url in OtherSiteUrls.FACEBOOK_THACH_THUC_DANH_HAI_PAGE_VIDEOS:
-            self.facebook_action.click_on_thach_thuc_danh_hai_video(driver)
+    def click_to_open_large_video(self, driver, need_opened_video=False):
+        if need_opened_video:
+            self.facebook_action.click_on_first_video(driver)
+            time.sleep(3)
 
-    def mouse_over_facebook_first_video_element(self, driver, url):
-        if url in OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
-            any_site_page_object.mouse_over_first_video_element(driver,FacebookLocators.VTV_GIAITRI_PAGE_FIRST_VIDEO)
-        elif url in OtherSiteUrls.FACEBOOK_THACH_THUC_DANH_HAI_PAGE_VIDEOS:
-            any_site_page_object.mouse_over_first_video_element(driver, FacebookLocators.THACHTHUC_DANHHAI_VIDEO_OPENED_LARGE)
-        else:
-            any_site_page_object.mouse_over_first_video_element(driver)
+    def mouse_over_facebook_first_video_element(self, driver, url, need_mouse_over_video):
+        if need_mouse_over_video:
+            if url in OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
+                any_site_page_object.mouse_over_first_video_element(driver, FacebookLocators.VTV_GIAITRI_PAGE_FIRST_VIDEO)
+            # elif url in OtherSiteUrls.FACEBOOK_THACH_THUC_DANH_HAI_PAGE_VIDEOS:
+            #     any_site_page_object.mouse_over_first_video_element(driver, FacebookLocators.THACHTHUC_DANHHAI_VIDEO_OPENED_LARGE)
+            else:
+                any_site_page_object.mouse_over_first_video_element(driver)
 
     def get_facebook_video_length_base_url(self, driver, url):
         if url in OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
-            expect_length = top_savior_sites_video_length_action. \
+            return top_savior_sites_video_length_action. \
                 get_video_length(driver, css_locator="", element=TopSaviorSitesVideoLengthLocators.FACEBOOK_VIDEO_LENGTH_VTV_GIAITRI_PAGE)
         else:
-            expect_length = top_savior_sites_video_length_action. \
+            return top_savior_sites_video_length_action. \
                 get_video_length(driver, css_locator="", element=TopSaviorSitesVideoLengthLocators.FACEBOOK_VIDEO_LENGTH_HOME_PAGE)
 
-        return expect_length
 
     @pytestrail.case('C96691')
     def test_download_file_facebook(self, browser_top_sites, get_current_download_folder_top_sites):
 
-
+        #
         # self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
         #                                           OtherSiteUrls.FACEBOOK_HOMEPAGE_URL)
         # self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
@@ -183,8 +197,9 @@ class TestSocialNetwork:
         #                                           OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL)
 
         self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-                                                  OtherSiteUrls.FACEBOOK_THACH_THUC_DANH_HAI_PAGE_VIDEOS)
-        #
+                                                  OtherSiteUrls.FACEBOOK_WATCH_URL, need_opened_video=True,
+                                                  need_mouse_over_video=True)
+
         # self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
         #                                           OtherSiteUrls.FACEBOOK_WATCH_URL)
         # self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
@@ -230,3 +245,8 @@ class TestSocialNetwork:
 
         coordinates = element.location_once_scrolled_into_view  # returns dict of X, Y coordinates
         driver.execute_script('window.scrollTo({}, {});'.format(coordinates['x'], coordinates['y']))
+
+
+
+
+
