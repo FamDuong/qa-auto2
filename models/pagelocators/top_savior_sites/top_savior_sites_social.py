@@ -17,6 +17,18 @@ class FacebookLocators(object):
     THACHTHUC_DANHHAI_VIDEO_OPENED_LARGE = (By.XPATH, '//div[@role="dialog"]//video')
     WATCH_FIRST_VIDEO = (By.XPATH, '//a[@aria-label="Mở rộng"]')
 
+class InstagramLocators(object):
+    USER_NAME_LBL = '//a[text()="nganhanguyen0306"]'
+    USER_NAME_AVATAR_NAV = '//nav//img[@data-testid="user-avatar"]'
+    USER_NAME_TXT = '//input[@name="username"]'
+    PASSWORD_TXT = '//input[@name="password"]'
+    LOGIN_BTN = '//button[@type="submit"]'
+    SAVE_INFO_BTN = '//button[text()="Save Info"]'
+    LOGOUT_BTN = '//div[text()="Log Out"]'
+    EMAIL = 'nganhanguyen0306@gmail.com'
+    PASS = 'ha@123456'
+    TURN_ON_NOTIFICATIONS_NOT_NOW = '//button[text()="Not Now"]'
+
 
 
 
