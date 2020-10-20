@@ -3,11 +3,14 @@ import re
 import logging
 from datetime import datetime
 
+from selenium.common.exceptions import JavascriptException
+
 from models.pageelements.basepage_elements import BasePageElement
 from models.pageelements.savior import SaviorElements
 from models.pagelocators.savior import SaviorPageLocators
 from models.pageobject.basepage_object import BasePageObject
 from utils_automation.setup import WaitAfterEach
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -31,15 +34,16 @@ class SaviorPageObject(BasePageObject):
             # preferred_option = self.savior_elements.find_preferred_option(driver)
             # preferred_option.click()
             driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
-        except:
-            preferred_option = None
+        except JavascriptException:
+            preferred_option = self.savior_elements.find_preferred_option(driver)
             start_time = datetime.now()
             if preferred_option is None:
                 while preferred_option is None:
                     time.sleep(2)
                     preferred_option = self.savior_elements.find_preferred_option(driver)
                     # preferred_option.click()
-                    driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
+                    driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER,
+                                          SaviorPageLocators.PREFERRED_SELECT_BTN)
 
                     time_delta = datetime.now() - start_time
                     if time_delta.total_seconds() >= 15:
@@ -59,7 +63,8 @@ class SaviorPageObject(BasePageObject):
         try:
             LOGGER.info("Choose Full HD option")
             # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.FULL_HD_SELECT_OPTION)
-            option = self.savior_elements.find_resotion_option_by_css_selector(driver, SaviorPageLocators.FULL_HD_SELECT_OPTION)
+            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+                                                                               SaviorPageLocators.FULL_HD_SELECT_OPTION)
             option.click()
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
@@ -177,7 +182,7 @@ class SaviorPageObject(BasePageObject):
     def current_media_info(self, driver):
         media_info = driver.execute_script(self.script_find, SaviorPageLocators.FIRST_LAYER,
                                            SaviorPageLocators.CURRENT_SELECTED_RESOLUTION)
-        LOGGER.info("Media info: "+media_info)
+        LOGGER.info("Media info: " + media_info)
         return media_info
 
     def download_file_title_via_savior_download_btn(self, driver, title):
@@ -286,7 +291,7 @@ class SaviorPageObject(BasePageObject):
                 assert ('Standard' or 'Medium') in current_video_quality
         elif len_options == 1:
             LOGGER.info('Current video quality for len == 1 is:', self.savior_elements.
-                  get_current_video_quality_value(driver))
+                        get_current_video_quality_value(driver))
             assert current_video_quality is not None
         else:
             raise Exception.__traceback__

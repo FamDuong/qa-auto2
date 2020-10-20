@@ -38,10 +38,16 @@ class VideoUrls:
     NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summertime-cinnamons-ft-evening-cinema.w3rGuakkZzvg9.html'
     NHAC_CUA_TUI_MUSIC_ITEM = 'https://www.nhaccuatui.com/bai-hat/em-da-thuong-nguoi-ta-hon-anh-noo-phuoc-thinh.P5Z69HYydPRJ.html'
     DONG_PHIM_VIDEO_URL = 'https://dongphym.net/movie/tap-21-truong-an-nac-the-promise-of-changan_TEqiwgPP.html'
+    TIKTOK_FOR_YOU_URL = 'https://www.tiktok.com/foryou?lang=en'
+    TIKTOK_FOR_YOU_URL = 'https://www.tiktok.com/foryou?lang=en'
 
     @classmethod
     def all(cls):
         return [value for name, value in vars(cls).items() if name.isupper()]
+
+
+class OnlineMusicUrls:
+    SOUNDCLOUD_URL = 'https://soundcloud.com/mytam/mytam-chuyen-nhu-chua-bat-dau'
 
 
 class DiffFormatFileUrls:
@@ -62,11 +68,12 @@ class OtherSiteUrls:
     FACEBOOK_HOMEPAGE_URL = 'https://www.facebook.com/'
     FACEBOOK_PROFILE_ME_URL = 'https://www.facebook.com/coccoc.at.1/'
     FACEBOOK_VTVGIAITRI_PAGE_URL = 'https://www.facebook.com/vtvgiaitri'
-    FACEBOOK_VTVGIAITRI_PAGE_VIDEOS = 'https://www.facebook.com/thachthucdanhhai/videos/2001160413351854'
+    # FACEBOOK_THACH_THUC_DANH_HAI_PAGE_VIDEOS = 'https://www.facebook.com/thachthucdanhhai/videos/2001160413351854'
     FACEBOOK_WATCH_URL = 'https://www.facebook.com/watch/'
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/video'
 
     MESSENGER_CHAT_URL = 'https://www.messenger.com/t/nganhanguyen0306'
+    INSTAGRAM_LOGIN_URL = 'https://www.instagram.com/accounts/login/'
     INSTAGRAM_VIDEO_URL = 'https://www.instagram.com/p/B1nlf9AhX4M/'
     NEWS_KIENTHUC_VIDEO_URL = 'https://kienthuc.net.vn/truyen-hinh-video/video-duong-pho-ha-noi-ngap-sau-sau-mua-bao-1259721.html'
     MOJI_BIG_CHATBOX = 'https://www.messenger.com/t/100013968193318'
@@ -151,6 +158,7 @@ class CocCocComponents:
 class ChromeStoreUrls:
     RUNG_RINH_EXTENSION_URL = 'https://chrome.google.com/webstore/detail/r%E1%BB%A7ng-r%E1%BB%89nh-d%E1%BB%8Bch-v%E1%BB%A5-ho%C3%A0n-ti/paenbjlckelooppiepeiechkeehogoha'
     ADSBLOCKPLUS_EXTENSION_URL = 'https://chrome.google.com/webstore/detail/adblock-plus-free-ad-bloc/cfhdojbkjhnklbpkdaibdccddilifddb'
+
 
 class CocCocExtensions:
     AD_BLOCK_STANDARD_MODE = 'Standard'

@@ -5,6 +5,7 @@ from selenium.webdriver.remote.webelement import WebElement
 
 from models.pageelements.top_savior_sites.top_savior_sites_social import MessengerElements, FacebookElements
 from models.pageobject.basepage_object import BasePageObject
+from utils_automation.common_browser import coccoc_instance
 from utils_automation.const import OtherSiteUrls
 
 
@@ -41,15 +42,23 @@ class FacebookActions(BasePageObject):
     facebook_element = FacebookElements()
 
     def scroll_to_facebook_video(self, driver, url):
-        # if url in OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
+        # if url not in OtherSiteUrls.FACEBOOK_THACH_THUC_DANH_HAI_PAGE_VIDEOS:
         #     self.facebook_element.find_dong_doan_chat_button_fanpage(driver).click()
-        driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+        # driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
         element = self.facebook_element.find_facebook_first_video(driver, url)
+        driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+        from selenium.webdriver.common.action_chains import ActionChains
+        # ActionChains(driver).move_to_element(element).perform()
         if element is None:
             while element is None:
-                driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+                # driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+                # driver.execute_script("arguments[0].scrollIntoView(true);", element)
                 element = self.facebook_element.find_facebook_first_video(driver, url)
+                ActionChains(driver).move_to_element(element).perform()
                 if element is not None:
-                    coordinates = element.location_once_scrolled_into_view  # returns dict of X, Y coordinates
-                    driver.execute_script('window.scrollTo({}, {});'.format(coordinates['x'], coordinates['y']))
+                    # coordinates = element.location_once_scrolled_into_view  # returns dict of X, Y coordinates
+                    # driver.execute_script('window.scrollTo({}, {});'.format(coordinates['x'], coordinates['y']))
                     break
+
+    def click_on_first_video(self, driver):
+        driver.execute_script('arguments[0].click()', self.facebook_element.find_first_video(driver))

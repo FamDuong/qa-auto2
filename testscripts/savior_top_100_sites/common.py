@@ -2,6 +2,7 @@ import logging
 import time
 from datetime import datetime
 
+from models.pagelocators.top_savior_sites.top_savior_sites_social import InstagramLocators
 from models.pageobject.settings import SettingsClearBrowserDataPageObject
 from models.pagelocators.facebook import FacebookPageLocators
 from models.pageobject.basepage_object import BasePageObject
@@ -11,7 +12,7 @@ from testscripts.common_setup import assert_file_download_value, delete_all_mp4_
     download_file_via_main_download_button, get_resolution_info
 from models.pageobject.chome_store_page import ChromeStorePageObjects
 from utils_automation.common_browser import coccoc_instance
-from utils_automation.const import Urls
+from utils_automation.const import Urls, OtherSiteUrls
 
 LOGGER = logging.getLogger(__name__)
 
@@ -123,3 +124,40 @@ def delete_all_history(driver):
     settings_clear_browser_data_page_object.click_clear_data_button(driver)
 
 
+def logout_instagram(driver):
+    driver.find_element_by_xpath(InstagramLocators.USER_NAME_AVATAR_NAV).click()
+    logout_btn_count = driver.find_elements_by_xpath(InstagramLocators.LOGOUT_BTN)
+    start_time = datetime.now()
+    while len(logout_btn_count) == 0:
+        time.sleep(2)
+        logout_btn_count = driver.find_elements_by_xpath(InstagramLocators.LOGOUT_BTN)
+        time_delta = datetime.now() - start_time
+        if time_delta.total_seconds() >= 15:
+            break
+    driver.find_element_by_xpath(InstagramLocators.LOGOUT_BTN).click()
+
+
+def login_instagram(driver):
+    # driver = coccoc_instance()
+    driver.get(OtherSiteUrls.INSTAGRAM_LOGIN_URL)
+    user_label = driver.find_elements_by_xpath(InstagramLocators.USER_NAME_LBL)
+    if len(user_label) == 0:
+        show_menu_setting_icon = driver.find_elements_by_xpath(InstagramLocators.USER_NAME_AVATAR_NAV)
+        if len(show_menu_setting_icon) == 1:
+            logout_instagram(driver)
+        time.sleep(3)
+        email_txt = driver.find_element_by_xpath(InstagramLocators.USER_NAME_TXT)
+        pass_txt = driver.find_element_by_xpath(InstagramLocators.PASSWORD_TXT)
+        base_page_object.clear_text_to_element(driver, email_txt)
+        base_page_object.send_keys_to_element(driver, email_txt, InstagramLocators.EMAIL)
+        base_page_object.clear_text_to_element(driver, pass_txt)
+        base_page_object.send_keys_to_element(driver, pass_txt, InstagramLocators.PASS)
+        driver.find_element_by_xpath(InstagramLocators.LOGIN_BTN).click()
+        driver.find_element_by_xpath(InstagramLocators.SAVE_INFO_BTN).click()
+
+
+def get_video_duration_height_width_by_javascript(driver, video_css_locator):
+    video_duration = driver.execute_script('return document.querySelector(' + video_css_locator + ').duration')
+    video_height = driver.execute_script('return document.querySelector(' + video_css_locator + ').videoHeight')
+    video_width = driver.execute_script('return document.querySelector(' + video_css_locator + ').videoWidth')
+    return video_duration, video_height, video_width

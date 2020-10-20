@@ -76,12 +76,12 @@ class AnySitePageObject(BasePageObject):
                                      driver.minimize_window(),
                                      driver.maximize_window())
 
-    def mouse_over_first_video_element(self, driver):
-        first_video_element = self.any_site_element.find_first_video_element(driver)
+    def mouse_over_first_video_element(self, driver, element=AnySite.FIRST_VIDEO):
+        first_video_element = self.any_site_element.find_first_video_element(driver, element)
         self.mouse_over_video_element_site(driver, first_video_element)
         start_time = datetime.now()
         while first_video_element is None:
-            first_video_element = self.any_site_element.find_first_video_element(driver)
+            first_video_element = self.any_site_element.find_first_video_element(driver, element)
             self.mouse_over_video_element_site(driver, first_video_element)
             time.sleep(2)
             time_delta = datetime.now() - start_time
@@ -90,6 +90,10 @@ class AnySitePageObject(BasePageObject):
 
     def mouse_over_nhaccuatui_music_element(self, driver):
         music_element = self.any_site_element.find_nhaccuatui_music_element(driver)
+        self.mouse_over_video_element_site(driver, music_element)
+
+    def mouse_over_soundcloud_music_element(self, driver):
+        music_element = self.any_site_element.find_soundcloud_music_element(driver)
         self.mouse_over_video_element_site(driver, music_element)
 
     def get_mouse_enter_event_js_element(self, driver):

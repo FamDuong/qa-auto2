@@ -2,6 +2,8 @@ import logging
 import time
 from datetime import datetime
 
+from selenium.common.exceptions import JavascriptException
+
 from models.pageelements.basepage_elements import BasePageElement
 from models.pageelements.sites import AnySiteElements
 from models.pageelements.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleElements
@@ -54,6 +56,11 @@ class TopSitesSaviorTitleAction(BasePageObject):
         LOGGER.info("Get video title: " + nhaccuatui_video_title)
         return nhaccuatui_video_title
 
+    def get_soundcloud_music_title(self, driver):
+        soundcloud_music_title = self.any_sites_elements.find_sound_cloud_music_title(driver).text
+        LOGGER.info("Get video title: " + soundcloud_music_title)
+        return soundcloud_music_title
+
     def get_instagram_video_title(self, driver):
         return self.top_sites_savior_title_elements.find_video_instagram_title_element(driver).get_attribute('content')
 
@@ -74,7 +81,7 @@ class TopSitesSaviorTitleAction(BasePageObject):
             video_title = driver.execute_script(
                 " return document.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_ROOT_SHADOW_CSS
                 + "\").shadowRoot.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_TITLE_CSS + "\").textContent")
-        except:
+        except JavascriptException:
             video_title = None
             start_time = datetime.now()
             while video_title is None:

@@ -53,10 +53,11 @@ class AnySiteElements(BasePageElement):
     def click_first_video_element(self, driver):
         return driver.execute_script('document.getElementsByTagName("video")[1].click()')
 
-    def find_first_video_element(self, driver):
+    def find_first_video_element(self, driver, element):
         return self.wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.FIRST_VIDEO))
+            ec.presence_of_element_located(element))
         # return driver.execute_script('return document.getElementsByTagName("video")[0]')
+
 
     def find_video_element_24h(self, driver):
         return self.wait_for_element(driver).until(
@@ -585,6 +586,9 @@ class AnySiteElements(BasePageElement):
     def find_nhaccuatui_video_title(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.NHACCUATUI_VIDEO_TITLE))
 
+    def find_sound_cloud_music_title(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.SOUNDCLOUD_MUSIC_TITLE))
+
     def count_zingmp3_chon_giao_dien_button(self, driver):
         count_chon_giao_dien_button = driver.find_elements_by_xpath(AnySite.CHON_GIAO_DIEN_SUBMIT_BTN_XPATH)
         return len(count_chon_giao_dien_button)
@@ -606,3 +610,6 @@ class AnySiteElements(BasePageElement):
 
     def find_nhaccuatui_music_element(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.NHACCUATUI_MUDIC_DIV))
+
+    def find_soundcloud_music_element(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.SOUNDCLOUD_MUDIC_DIV))

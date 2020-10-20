@@ -172,6 +172,7 @@ class AnySite(object):
     OK_RU_VIDEO_ITEM = (By.XPATH, '//*[@id="VideoAutoplayPlayerE"]//video')
     NHACCUATUI_VIDEO_TITLE = (By.XPATH, '//h2[@class="name-singer"]//a[1]')
     NHACCUATUI_MUDIC_DIV = (By.CSS_SELECTOR, 'div#flashPlayer')
+    SOUNDCLOUD_MUDIC_DIV = (By.XPATH, '//div[contains(@class,"fullListenHero__foreground")]')
     CHON_GIAO_DIEN_SUBMIT_BTN = (By.XPATH, '//button[@type="submit"]')
     CHON_GIAO_DIEN_SUBMIT_BTN_XPATH = '//button[@type="submit"]'
     NEWS_24H_VIDEO_TO_GET_TITLE_CSS = 'div[class="viewVideoPlay"] video'
@@ -181,4 +182,5 @@ class AnySite(object):
     NEWS_KIENTHUC_VIDEO_TO_GET_TITLE_CSS = 'div[class="contentvideo"] video'
     # VIETNAMENET_VIDEO_IFRAME = (By.XPATH, '//iframe[@allow="autoplay; fullscreen"]')
     VIETNAMENET_VIDEO_IFRAME = (By.ID, 'setIframMobile')
+    SOUNDCLOUD_MUSIC_TITLE = (By.XPATH, '//div[@class="fullHero__title"]//span[contains(@class,"soundTitle")]//span')
 

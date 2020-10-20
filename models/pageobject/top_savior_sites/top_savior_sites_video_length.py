@@ -14,10 +14,10 @@ class TopSitesSaviorVideoLengthActions(BasePageObject):
     top_sites_savior_video_length_element = TopSitesSaviorVideoLengthElements()
 
     def get_video_length_from_html(self, driver, css_locator, element):
-        if css_locator == "":
-            return self.top_sites_savior_video_length_element.find_video_lengh(driver, element).text
+        if element == "":
+            return driver.execute_script("return document.querySelector('" + css_locator + "').textContent")
         else:
-            return driver.execute_script("return document.querySelector(\"" + css_locator + "\").textContent")
+            return self.top_sites_savior_video_length_element.find_video_lengh(driver, element).text
 
     def get_video_length(self, driver, css_locator, element=""):
         video_length_root = self.get_video_length_from_html(driver, css_locator, element)

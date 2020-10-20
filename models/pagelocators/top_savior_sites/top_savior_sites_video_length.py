@@ -13,3 +13,7 @@ class TopSaviorSitesVideoLengthLocators(object):
     FACEBOOK_VIDEO_LENGTH_HOME_PAGE = (By.XPATH, "(//div[@aria-label='Change Position'])[1]//ancestor::div[contains(@data-instancekey,'id-vpuid')]//span[contains(text(),':')][2]")
     FACEBOOK_VIDEO_LENGTH_VTV_GIAITRI_PAGE = \
         (By.XPATH, '(//div[@data-ad-comet-preview="message"]//ancestor::div[@dir="auto" and @class=""]//following-sibling::div//span[contains(text(),":")][2])[1]')
+
+class OnlineMusicVideoLengthLocators(object):
+    SOUNDCLOUD_MP3_LENGTH_CSS = 'div.playbackTimeline__duration span[aria-hidden="true"]'
+
