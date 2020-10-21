@@ -11,28 +11,35 @@ LOGGER = logging.getLogger(__name__)
 
 
 class TopSitesSaviorVideoLengthActions(BasePageObject):
-    top_sites_savior_video_length_element = TopSitesSaviorVideoLengthElements()
+    top_sites_savior_video_length_element = TopSitesSaviorVideoLengthElements
 
     def get_video_length_from_html(self, driver, css_locator, element):
-        if element == "":
+        # if element == "":
+        #     return driver.execute_script("return document.querySelector('" + css_locator + "').textContent")
+        # else:
+        #     return self.top_sites_savior_video_length_element.find_video_lengh(driver, element).text
+        try:
+            return driver.execute_script("return document.querySelector('" + css_locator + "').duration")
+        except Exception:
             return driver.execute_script("return document.querySelector('" + css_locator + "').textContent")
-        else:
+        except Exception:
             return self.top_sites_savior_video_length_element.find_video_lengh(driver, element).text
 
     def get_video_length(self, driver, css_locator, element=""):
         video_length_root = self.get_video_length_from_html(driver, css_locator, element)
         video_length = self.get_video_length_if_contain_count_down(video_length_root)
         video_length_seconds = get_sec(video_length)
-        LOGGER.info("Expect video length: " + video_length)
+
+        LOGGER.info("Expect video length: " + str(video_length))
         LOGGER.info("Expect video length seconds: " + str(video_length_seconds))
         start_time = datetime.now()
-        if video_length_seconds < 60:
-            while video_length_seconds < 60:
+        if video_length_seconds is None or video_length_seconds < 5:
+            while video_length_seconds is None or video_length_seconds < 5:
                 time.sleep(2)
                 video_length_root = self.get_video_length_from_html(driver, css_locator, element)
                 video_length = self.get_video_length_if_contain_count_down(video_length_root)
                 video_length_seconds = get_sec(video_length)
-                LOGGER.info("Retry get expect video length: " + video_length)
+                LOGGER.info("Retry get expect video length: " + str(video_length))
                 LOGGER.info("Retry get expect video length seconds: " + str(video_length_seconds))
                 time_delta = datetime.now() - start_time
                 if time_delta.total_seconds() >= 25:
@@ -40,7 +47,7 @@ class TopSitesSaviorVideoLengthActions(BasePageObject):
         return video_length
 
     def get_video_length_if_contain_count_down(self, video_length_root):
-        if "/" in video_length_root:
+        if "/" in str(video_length_root):
             video_length = video_length_root.split("/")[1]
             LOGGER.info("Video length after split /: "+video_length)
             return video_length
