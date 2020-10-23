@@ -108,13 +108,14 @@ def get_sec(time_str):
         return time_str
 
 
-def assert_video_length(expect_length, actual_length):
-    expect_length_seconds = get_sec(expect_length)
-    LOGGER.info("Expect video length: " + str(expect_length_seconds))
-    LOGGER.info("Actual video length2: " + str(actual_length))
-    diff_length_date_time = abs(actual_length - expect_length_seconds)
-    LOGGER.info("Diff video length seconds: " + str(diff_length_date_time))
-    assert diff_length_date_time < 2
+def assert_video_length(actual_length, expect_length):
+    if expect_length == 0:
+        expect_length_seconds = get_sec(expect_length)
+        LOGGER.info("Expect video length: " + str(expect_length_seconds))
+        LOGGER.info("Actual video length2: " + str(actual_length))
+        diff_length_date_time = abs(actual_length - expect_length_seconds)
+        LOGGER.info("Diff video length seconds: " + str(diff_length_date_time))
+        assert diff_length_date_time < 2
 
 
 def get_hours_and_minutes_in_video_length(video_length):
@@ -236,6 +237,7 @@ def pause_or_play_video_by_javascript(browser, css_locator, action='play'):
         browser.execute_script("document.querySelector('"+css_locator+"').play()")
     else:
         browser.execute_script("document.querySelector('" + css_locator + "').pause()")
+    time.sleep(3)
 
 
 def pause_any_video_site(browser, url):

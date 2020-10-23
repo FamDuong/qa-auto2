@@ -18,6 +18,6 @@ class OnlineMusicVideoLengthLocators(object):
     SOUNDCLOUD_MP3_LENGTH_CSS = 'div.playbackTimeline__duration span[aria-hidden="true"]'
 
 class SocialNetworkVideoLengthLocators(object):
-    INSTAGRAM_VIDEO_HOMEPAGE_CSS = 'article:nth-child(2) video'
+    INSTAGRAM_VIDEO_HOMEPAGE_CSS = 'article:nth-child(1) video'
     INSTAGRAM_VIDEO_OTHERS_PAGE_CSS = 'article:nth-child(1) video'
 

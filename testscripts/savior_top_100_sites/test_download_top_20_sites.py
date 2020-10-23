@@ -7,6 +7,7 @@ from models.pagelocators.top_savior_sites.top_savior_sites_video_length import T
     OnlineMusicVideoLengthLocators, SocialNetworkVideoLengthLocators
 from models.pageobject.sites import AnySitePageObject
 from models.pageobject.top_savior_sites.top_savior_sites_film import TopSaviorSitesFilmActions
+from models.pageobject.top_savior_sites.top_savior_sites_online_music import TopSaviorSitesOnlineMusicActions
 from models.pageobject.top_savior_sites.top_savior_sites_social import FacebookActions, InstagramActions
 from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
 from models.pageobject.top_savior_sites.top_savior_sites_video_clip_tv_show import TopSaviorSitesVideoClipTvShowActions
@@ -54,11 +55,14 @@ class TestVideoClipTVShow:
 
 
 class TestOnlineMusic:
+    top_savior_sites_online_music_action = TopSaviorSitesOnlineMusicActions()
     @pytestrail.case('C96758')
     @pytest.mark.twenty_popular_sites
     def test_download_nhaccuatui(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM)
         LOGGER.info("Check download video on " + VideoUrls.NHAC_CUA_TUI_VIDEO_ITEM)
+        self.top_savior_sites_online_music_action.click_on_nhac_cua_tui_marketing_popup(browser_top_sites)
+
         video_title = top_sites_savior_title_action.get_nhaccuatui_video_title(browser_top_sites)
         expect_length = top_savior_sites_video_length_action. \
             get_video_length(browser_top_sites,
@@ -196,7 +200,7 @@ class TestSocialNetwork:
         self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
                                                   OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL)
 
-        # self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+        # self.verify_download_file_zzfacebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
         #                                           OtherSiteUrls.FACEBOOK_WATCH_URL, need_opened_video=True,
         #                                           need_mouse_over_video=True)
 
@@ -215,6 +219,7 @@ class TestSocialNetwork:
     def test_download_file_instagram(self, browser_top_sites, get_current_download_folder_top_sites):
         login_instagram(browser_top_sites)
         browser_top_sites.get(OtherSiteUrls.INSTAGRAM_URL)
+        LOGGER.info("Check download video on " + OtherSiteUrls.INSTAGRAM_URL)
         self.instagram_action.scroll_to_instagram_video(browser_top_sites)
         pause_or_play_video_by_javascript(browser_top_sites, InstagramLocators.FIRST_VIDEO_HOME_PAGE_CSS)
         LOGGER.info("Check download video on homepage " + OtherSiteUrls.INSTAGRAM_URL)
@@ -227,6 +232,7 @@ class TestSocialNetwork:
 
         browser_top_sites.get(OtherSiteUrls.INSTAGRAM_VIDEO_URL)
         LOGGER.info("Check download video on " + OtherSiteUrls.INSTAGRAM_VIDEO_URL)
+        pause_or_play_video_by_javascript(browser_top_sites, InstagramLocators.FIRST_VIDEO_HOME_PAGE_CSS)
         video_title_root = top_sites_savior_title_action.get_website_title_by_javascript(browser_top_sites)
         video_title_temp = top_sites_savior_title_action.replace_special_characters_by_dash_in_string(video_title_root)
         video_title = top_sites_savior_title_action.get_first_part_of_video_title(video_title_temp)
