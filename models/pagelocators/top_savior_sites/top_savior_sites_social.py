@@ -32,5 +32,5 @@ class InstagramLocators(object):
     EMAIL = 'nganhanguyen0306@gmail.com'
     PASS = 'ha@123456'
     TURN_ON_NOTIFICATIONS_NOT_NOW = '//button[text()="Not Now"]'
-    FIRST_VIDEO_HOME_PAGE_CSS = 'article:nth-child(2) video'
-    FIRST_VIDEO_HOME_PAGE = (By.CSS_SELECTOR, 'article:nth-child(2) video')
+    FIRST_VIDEO_HOME_PAGE_CSS = 'article:nth-child(1) video'
+    FIRST_VIDEO_HOME_PAGE = (By.CSS_SELECTOR, 'article:nth-child(1) video')

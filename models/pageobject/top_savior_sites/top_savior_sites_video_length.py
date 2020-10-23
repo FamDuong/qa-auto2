@@ -18,12 +18,13 @@ class TopSitesSaviorVideoLengthActions(BasePageObject):
         #     return driver.execute_script("return document.querySelector('" + css_locator + "').textContent")
         # else:
         #     return self.top_sites_savior_video_length_element.find_video_lengh(driver, element).text
-        try:
-            return driver.execute_script("return document.querySelector('" + css_locator + "').duration")
-        except Exception:
-            return driver.execute_script("return document.querySelector('" + css_locator + "').textContent")
-        except Exception:
-            return self.top_sites_savior_video_length_element.find_video_lengh(driver, element).text
+        if element == "":
+            video_length = driver.execute_script("return document.querySelector('" + css_locator + "').duration")
+            if video_length is None:
+                video_length = driver.execute_script("return document.querySelector('" + css_locator + "').textContent")
+        else:
+            video_length = self.top_sites_savior_video_length_element.find_video_lengh(driver, element).text
+        return video_length
 
     def get_video_length(self, driver, css_locator, element=""):
         video_length_root = self.get_video_length_from_html(driver, css_locator, element)
@@ -33,8 +34,8 @@ class TopSitesSaviorVideoLengthActions(BasePageObject):
         LOGGER.info("Expect video length: " + str(video_length))
         LOGGER.info("Expect video length seconds: " + str(video_length_seconds))
         start_time = datetime.now()
-        if video_length_seconds is None or video_length_seconds < 5:
-            while video_length_seconds is None or video_length_seconds < 5:
+        if video_length_seconds is None or int(video_length_seconds) < 5:
+            while video_length_seconds is None or int(video_length_seconds) < 5:
                 time.sleep(2)
                 video_length_root = self.get_video_length_from_html(driver, css_locator, element)
                 video_length = self.get_video_length_if_contain_count_down(video_length_root)
