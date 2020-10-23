@@ -188,22 +188,22 @@ class TestSocialNetwork:
     @pytestrail.case('C96691')
     def test_download_file_facebook(self, browser_top_sites, get_current_download_folder_top_sites):
 
-        #
-        # self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-        #                                           OtherSiteUrls.FACEBOOK_HOMEPAGE_URL)
-        # self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-        #                                           OtherSiteUrls.FACEBOOK_PROFILE_ME_URL)
-        # self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-        #                                           OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL)
 
         self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-                                                  OtherSiteUrls.FACEBOOK_WATCH_URL, need_opened_video=True,
-                                                  need_mouse_over_video=True)
+                                                  OtherSiteUrls.FACEBOOK_HOMEPAGE_URL)
+        self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+                                                  OtherSiteUrls.FACEBOOK_PROFILE_ME_URL)
+        self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+                                                  OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL)
 
         # self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-        #                                           OtherSiteUrls.FACEBOOK_WATCH_URL)
-        # self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-        #                                           OtherSiteUrls.FACEBOOK_VIDEO_URL)
+        #                                           OtherSiteUrls.FACEBOOK_WATCH_URL, need_opened_video=True,
+        #                                           need_mouse_over_video=True)
+
+        self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+                                                  OtherSiteUrls.FACEBOOK_WATCH_URL)
+        self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+                                                  OtherSiteUrls.FACEBOOK_VIDEO_URL)
 
     def prepare_appear_savior_option(self, browser):
         browser.get(OtherSiteUrls.INSTAGRAM_VIDEO_URL)
