@@ -74,7 +74,8 @@ class OtherSiteUrls:
 
     MESSENGER_CHAT_URL = 'https://www.messenger.com/t/nganhanguyen0306'
     INSTAGRAM_LOGIN_URL = 'https://www.instagram.com/accounts/login/'
-    INSTAGRAM_VIDEO_URL = 'https://www.instagram.com/p/B1nlf9AhX4M/'
+    INSTAGRAM_VIDEO_URL = 'https://www.instagram.com/p/CGkq1qXlhMY/'
+    INSTAGRAM_URL = 'https://www.instagram.com/'
     NEWS_KIENTHUC_VIDEO_URL = 'https://kienthuc.net.vn/truyen-hinh-video/video-duong-pho-ha-noi-ngap-sau-sau-mua-bao-1259721.html'
     MOJI_BIG_CHATBOX = 'https://www.messenger.com/t/100013968193318'
     VIETNAMNET_VIDEO_URL = 'https://video.vietnamnet.vn/thuoc-la-dien-tu-khong-nicotine-van-gay-hai-den-co-the-a-81979.html'

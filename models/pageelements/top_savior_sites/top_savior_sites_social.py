@@ -2,7 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
-from models.pagelocators.top_savior_sites.top_savior_sites_social import MessengerLocators, FacebookLocators
+from models.pagelocators.top_savior_sites.top_savior_sites_social import MessengerLocators, FacebookLocators, \
+    InstagramLocators
 from utils_automation.const import OtherSiteUrls
 
 
@@ -44,4 +45,10 @@ class FacebookElements(BasePageElement):
     def find_first_video(self, driver):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(FacebookLocators.WATCH_FIRST_VIDEO))
+
+class InstagramElements(BasePageElement):
+
+    def find_instagram_first_video(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(InstagramLocators.FIRST_VIDEO_HOME_PAGE))
 

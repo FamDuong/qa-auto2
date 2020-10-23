@@ -142,8 +142,8 @@ def login_instagram(driver):
     driver.get(OtherSiteUrls.INSTAGRAM_LOGIN_URL)
     user_label = driver.find_elements_by_xpath(InstagramLocators.USER_NAME_LBL)
     if len(user_label) == 0:
-        show_menu_setting_icon = driver.find_elements_by_xpath(InstagramLocators.USER_NAME_AVATAR_NAV)
-        if len(show_menu_setting_icon) == 1:
+        user_avatar_nav = driver.find_elements_by_xpath(InstagramLocators.USER_AVATAR_NAV)
+        if len(user_avatar_nav) == 1:
             logout_instagram(driver)
         time.sleep(3)
         email_txt = driver.find_element_by_xpath(InstagramLocators.USER_NAME_TXT)
@@ -153,11 +153,12 @@ def login_instagram(driver):
         base_page_object.clear_text_to_element(driver, pass_txt)
         base_page_object.send_keys_to_element(driver, pass_txt, InstagramLocators.PASS)
         driver.find_element_by_xpath(InstagramLocators.LOGIN_BTN).click()
-        driver.find_element_by_xpath(InstagramLocators.SAVE_INFO_BTN).click()
-
-
-def get_video_duration_height_width_by_javascript(driver, video_css_locator):
-    video_duration = driver.execute_script('return document.querySelector(' + video_css_locator + ').duration')
-    video_height = driver.execute_script('return document.querySelector(' + video_css_locator + ').videoHeight')
-    video_width = driver.execute_script('return document.querySelector(' + video_css_locator + ').videoWidth')
-    return video_duration, video_height, video_width
+        time.sleep(3)
+        save_infor_btn = driver.find_elements_by_xpath(InstagramLocators.SAVE_INFO_BTN)
+        if len(save_infor_btn) > 0:
+            driver.find_element_by_xpath(InstagramLocators.SAVE_INFO_BTN).click()
+            time.sleep(3)
+        not_now_btn = driver.find_elements_by_xpath(InstagramLocators.TURN_ON_NOTIFICATIONS_NOT_NOW)
+        if len(not_now_btn) > 0:
+            driver.find_element_by_xpath(InstagramLocators.TURN_ON_NOTIFICATIONS_NOT_NOW).click()
+            time.sleep(3)

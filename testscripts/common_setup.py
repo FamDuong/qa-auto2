@@ -82,7 +82,7 @@ def assert_file_download_value(download_folder_path, expect_height, expect_lengt
 
     assert_video_height_width(end_with, actual_height, expect_height, actual_width)
     assert_video_length(expect_length, actual_length)
-    assert_bit_rate(bit_rate)
+    assert bit_rate == 320 or bit_rate == 128 or bit_rate == 126 or bit_rate > 0
 
 
 def get_length_and_bit_rate(download_folder_path, mp4_file):
@@ -97,23 +97,15 @@ def get_length_and_bit_rate(download_folder_path, mp4_file):
 def get_sec(time_str):
     """Get Seconds from time."""
     LOGGER.info("Time string: " + str(time_str))
-    try:
-        h, m, s = str(time_str).split(':')
-        return int(h) * 3600 + int(m) * 60 + int(s)
-    except:
-        m, s = str(time_str).split(':')
-        return int(m) * 60 + int(s)
-
-
-def assert_bit_rate(bit_rate):
-    try:
-        assert bit_rate == 320
-    except Exception:
-        assert bit_rate == 128
-    except Exception:
-        assert bit_rate == 126
-    except Exception:
-        assert bit_rate > 120
+    if ':' in str(time_str):
+        try:
+            h, m, s = str(time_str).split(':')
+            return int(h) * 3600 + int(m) * 60 + int(s)
+        except Exception:
+            m, s = str(time_str).split(':')
+            return int(m) * 60 + int(s)
+    else:
+        return time_str
 
 
 def assert_video_length(expect_length, actual_length):
@@ -239,9 +231,11 @@ def choose_video_quality_low_option(browser):
     WaitAfterEach.sleep_timer_after_each_step()
 
 
-def pause_or_play_video_by_javascript(browser, action='play'):
-    browser.execute_script("let elements = document.querySelectorAll('video'); "
-                           "if (elements.length > 0) { for (let element of elements) { element." + action + "();}}")
+def pause_or_play_video_by_javascript(browser, css_locator, action='play'):
+    if 'play' in action:
+        browser.execute_script("document.querySelector('"+css_locator+"').play()")
+    else:
+        browser.execute_script("document.querySelector('" + css_locator + "').pause()")
 
 
 def pause_any_video_site(browser, url):
