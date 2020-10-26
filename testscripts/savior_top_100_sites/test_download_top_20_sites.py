@@ -39,23 +39,20 @@ class TestVideoClipTVShow:
             get_video_length(browser_top_sites, TopSaviorSitesVideoLengthLocators.YOUTUBE_VIDEO_LENGTH_CSS)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
-    @pytestrail.case('C96763')
-    @pytest.mark.ten_popular_sites
-    def test_download_file_tv_zing(self, browser_top_sites, get_current_download_folder_top_sites):
-        self.top_savior_sites_video_clip_tv_show_action.login_tv_zing(browser_top_sites)
-        browser_top_sites.execute_script("window.open('" + OtherSiteUrls.TV_ZING_VIDEO_URL + "', 'new_window')")
-
-        # browser_top_sites.get(OtherSiteUrls.TV_ZING_VIDEO_URL)
-        video_title = top_sites_savior_title_action.get_tv_zing_video_title(browser_top_sites)
-        expect_length = top_savior_sites_video_length_action. \
-            get_video_length(browser_top_sites,
-                             TopSaviorSitesVideoLengthLocators.TV_ZING_VIDEO_LENGTH_CSS)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
-
+    # @pytestrail.case('C96763')
+    # @pytest.mark.ten_popular_sites
+    # def test_download_file_tv_zing(self, browser_top_sites, get_current_download_folder_top_sites):
+    #     self.top_savior_sites_video_clip_tv_show_action.login_tv_zing(browser_top_sites)
+    #     browser_top_sites.get(OtherSiteUrls.TV_ZING_VIDEO_URL)
+    #     video_title = top_sites_savior_title_action.get_tv_zing_video_title(browser_top_sites)
+    #     expect_length = top_savior_sites_video_length_action.get_video_length(browser_top_sites,
+    #                                                                           TopSaviorSitesVideoLengthLocators.TV_ZING_VIDEO_LENGTH_CSS)
+    #     download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
 
 class TestOnlineMusic:
     top_savior_sites_online_music_action = TopSaviorSitesOnlineMusicActions()
+
     @pytestrail.case('C96758')
     @pytest.mark.twenty_popular_sites
     def test_download_nhaccuatui(self, browser_top_sites, get_current_download_folder_top_sites):
@@ -192,7 +189,6 @@ class TestSocialNetwork:
     @pytestrail.case('C96691')
     def test_download_file_facebook(self, browser_top_sites, get_current_download_folder_top_sites):
 
-
         self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
                                                   OtherSiteUrls.FACEBOOK_HOMEPAGE_URL)
         self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
@@ -214,6 +210,7 @@ class TestSocialNetwork:
         any_site_page_object.mouse_over_video_element_instagram(browser)
 
     instagram_action = InstagramActions()
+
     @pytestrail.case('C96751')
     @pytest.mark.ten_popular_sites
     def test_download_file_instagram(self, browser_top_sites, get_current_download_folder_top_sites):
@@ -226,7 +223,7 @@ class TestSocialNetwork:
         video_title_root = top_sites_savior_title_action.get_website_title_by_javascript(browser_top_sites)
         video_title_temp = top_sites_savior_title_action.replace_special_characters_by_dash_in_string(video_title_root)
         video_title = top_sites_savior_title_action.get_first_part_of_video_title(video_title_temp)
-        expect_length = top_savior_sites_video_length_action.\
+        expect_length = top_savior_sites_video_length_action. \
             get_video_length(browser_top_sites, SocialNetworkVideoLengthLocators.INSTAGRAM_VIDEO_HOMEPAGE_CSS)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
