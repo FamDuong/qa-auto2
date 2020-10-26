@@ -16,8 +16,12 @@ class TopSaviorSitesVideoLengthLocators(object):
 
 class OnlineMusicVideoLengthLocators(object):
     SOUNDCLOUD_MP3_LENGTH_CSS = 'div.playbackTimeline__duration span[aria-hidden="true"]'
+    NHAC_VN_VIDEO_LENGTH_CSS = '#myvideo video'
 
 class SocialNetworkVideoLengthLocators(object):
     INSTAGRAM_VIDEO_HOMEPAGE_CSS = 'article:nth-child(1) video'
     INSTAGRAM_VIDEO_OTHERS_PAGE_CSS = 'article:nth-child(1) video'
 
+class NewsVideoLengthLocators(object):
+    NEWS_24H_BONGDA_VIDEO_CSS = 'video[id*="my-video"]'
+    NEWS_24H_BONGDA_VIDEO_LENGTH_CSS = 'div[class*="duration-display"]'
