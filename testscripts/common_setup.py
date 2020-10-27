@@ -74,22 +74,27 @@ def assert_file_download_value(download_folder_path, expect_height, expect_lengt
 
     actual_height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
     actual_width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
+    fps = vid.get(cv2.CAP_PROP_FPS)
+    frame_count = int(vid.get(cv2.CAP_PROP_FRAME_COUNT))
+
     if '.mp4' in end_with:
         assert vid.isOpened()
     assert len(mp4_files) > 0
     vid.release()
-    actual_length, bit_rate = get_length_and_bit_rate(download_folder_path, mp4_files[0])
-
+    actual_length, bit_rate = get_length_and_bit_rate(download_folder_path, mp4_files[0], fps, frame_count)
     assert_video_height_width(end_with, actual_height, expect_height, actual_width)
-    assert_video_length(expect_length, actual_length)
+    if '0' not in str(expect_length):
+        assert_video_length(expect_length, actual_length)
     assert bit_rate == 320 or bit_rate == 128 or bit_rate == 126 or bit_rate > 0
 
 
-def get_length_and_bit_rate(download_folder_path, mp4_file):
+def get_length_and_bit_rate(download_folder_path, mp4_file, fps, frame_count):
     import mutagen
     file = mutagen.File(download_folder_path + '\\' + mp4_file)
     length = file.info.length
     bit_rate = round(file.info.bitrate / 1000)
+    if length == 0:
+        length = frame_count / fps
     LOGGER.info("Length: {}s; Bitrate: {}".format(length, bit_rate))
     return length, bit_rate
 
@@ -108,14 +113,13 @@ def get_sec(time_str):
         return time_str
 
 
-def assert_video_length(actual_length, expect_length):
-    if expect_length == 0:
-        expect_length_seconds = get_sec(expect_length)
-        LOGGER.info("Expect video length: " + str(expect_length_seconds))
-        LOGGER.info("Actual video length2: " + str(actual_length))
-        diff_length_date_time = abs(actual_length - expect_length_seconds)
-        LOGGER.info("Diff video length seconds: " + str(diff_length_date_time))
-        assert diff_length_date_time < 2
+def assert_video_length(expect_length, actual_length):
+    expect_length_seconds = get_sec(expect_length)
+    LOGGER.info("Expect video length: " + str(expect_length_seconds))
+    LOGGER.info("Actual video length: " + str(actual_length))
+    diff_length_date_time = abs(actual_length - expect_length_seconds)
+    LOGGER.info("Diff video length seconds: " + str(diff_length_date_time))
+    assert diff_length_date_time < 2
 
 
 def get_hours_and_minutes_in_video_length(video_length):
@@ -235,7 +239,7 @@ def choose_video_quality_low_option(browser):
 
 def pause_or_play_video_by_javascript(browser, css_locator, action='play'):
     if 'play' in action:
-        browser.execute_script("document.querySelector('"+css_locator+"').play()")
+        browser.execute_script("document.querySelector('" + css_locator + "').play()")
     else:
         browser.execute_script("document.querySelector('" + css_locator + "').pause()")
     time.sleep(3)

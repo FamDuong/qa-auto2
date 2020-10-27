@@ -58,7 +58,6 @@ class SaviorPageObject(BasePageObject):
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select Quad HD option")
-            LOGGER.info(e)
             return e
 
     def choose_full_hd_option(self, driver):
@@ -71,7 +70,6 @@ class SaviorPageObject(BasePageObject):
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select Full HD option")
-            LOGGER.info(e)
             return e
 
     def choose_hd_option(self, driver):
@@ -83,7 +81,6 @@ class SaviorPageObject(BasePageObject):
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select HD option")
-            LOGGER.info(e)
             return e
 
     def choose_standard_option(self, driver):
@@ -96,7 +93,6 @@ class SaviorPageObject(BasePageObject):
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select Standard option")
-            LOGGER.info(e)
             return e
 
     def choose_medium_option(self, driver):
@@ -109,7 +105,6 @@ class SaviorPageObject(BasePageObject):
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select Medium option")
-            LOGGER.info(e)
             return e
 
     def choose_small_option(self, driver):
@@ -122,7 +117,6 @@ class SaviorPageObject(BasePageObject):
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select Small option")
-            LOGGER.info(e)
             return e
 
     def choose_mobile_option(self, driver):
@@ -135,7 +129,6 @@ class SaviorPageObject(BasePageObject):
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select Mobile option")
-            LOGGER.info(e)
             return e
 
     def choose_original_option(self, driver):
@@ -148,7 +141,6 @@ class SaviorPageObject(BasePageObject):
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select Original option")
-            LOGGER.info(e)
             return e
 
     def choose_mp3_standard_option(self, driver):
@@ -162,7 +154,6 @@ class SaviorPageObject(BasePageObject):
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select Mp3 Standard option")
-            LOGGER.info(e)
             return e
 
     def choose_mp3_medium_option(self, driver):
@@ -176,7 +167,6 @@ class SaviorPageObject(BasePageObject):
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select mp3 Medium option")
-            LOGGER.info(e)
             return e
 
     def assert_value_preferred_quality(self, driver, assert_text):

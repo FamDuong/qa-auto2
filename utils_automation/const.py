@@ -34,10 +34,6 @@ class Urls:
 class VideoUrls:
     YOUTUBE_VIDEO_URL = 'https://www.youtube.com/watch?v=RXIm1NLCSz0'
     NEWS_ZING_VIDEO_URL = 'https://news.zing.vn/video'
-    ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/A-Better-Day-JTL/ZWZ9CF86.html'
-    NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summertime-cinnamons-ft-evening-cinema.w3rGuakkZzvg9.html'
-    NHAC_CUA_TUI_MUSIC_ITEM = 'https://www.nhaccuatui.com/bai-hat/em-da-thuong-nguoi-ta-hon-anh-noo-phuoc-thinh.P5Z69HYydPRJ.html'
-    DONG_PHIM_VIDEO_URL = 'https://dongphym.net/movie/tap-21-truong-an-nac-the-promise-of-changan_TEqiwgPP.html'
     TIKTOK_FOR_YOU_URL = 'https://www.tiktok.com/foryou?lang=en'
     TIKTOK_FOR_YOU_URL = 'https://www.tiktok.com/foryou?lang=en'
 
@@ -48,7 +44,14 @@ class VideoUrls:
 
 class OnlineMusicUrls:
     SOUNDCLOUD_URL = 'https://soundcloud.com/mytam/mytam-chuyen-nhu-chua-bat-dau'
+    NHAC_VN_VIDEO_URL = 'https://nhac.vn/video/doi-that-la-phoi-phoi-hoang-yen-chibi-uni5-mvG38e'
+    NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summertime-cinnamons-ft-evening-cinema.w3rGuakkZzvg9.html'
+    NHAC_CUA_TUI_MUSIC_ITEM = 'https://www.nhaccuatui.com/bai-hat/em-da-thuong-nguoi-ta-hon-anh-noo-phuoc-thinh.P5Z69HYydPRJ.html'
+    ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/A-Better-Day-JTL/ZWZ9CF86.html'
 
+class FilmUrls:
+    DONG_PHIM_VIDEO_URL = 'https://dongphym.net/movie/tap-21-truong-an-nac-the-promise-of-changan_TEqiwgPP.html'
+    MOT_PHIM_VIDEO_URL = 'https://motphimzz.com/xem-phim/lien-minh-thu-cung-tap-full-8332_105254.html'
 
 class DiffFormatFileUrls:
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/watch/?v=682897505204114'
@@ -93,7 +96,6 @@ class OtherSiteUrls:
     AN_NINH_THU_DO_VIDEO_URL = 'https://anninhthudo.vn/truyen-hinh-atv/146.antd'
     TUOI_TRE_VIDEO_URL = 'https://tv.tuoitre.vn/'
     TV_ZING_VIDEO_URL = 'https://tv.zing.vn/video/id/IWZEAUO9.html'
-    MOT_PHIM_VIDEO_URL = 'https://motphimzz.com/xem-phim/lien-minh-thu-cung-tap-full-8332_105254.html'
     TV_HAY_VIDEO_URL = 'http://tvhay.org/xem-phim-dao-kiem-than-vuc-phan-4-421702'
     NGOI_SAO_VN_URL = 'https://ngoisao.vn/video/lieu-linh-bang-qua-dong-nuoc-lu-nguoi-dan-ong-suyt-phai-tra-gia-bang-ca-tinh-mang-273892.htm'
     VTC_VN_VIDEO_URL = 'https://vtc.vn/truyen-hinh-27.html'
@@ -107,7 +109,6 @@ class OtherSiteUrls:
     DAN_TRI_VIDEO_URL = 'https://dantri.com.vn/video-page.htm'
     NGUOI_LAO_DONG_TV_URL = 'https://tv.nld.com.vn/thoi-su-trong-nuoc/co-to-quoc-den-tay-ngu-dan-huyen-can-gio-14531.htm'
     ANIME_VSUB_TV_URL = 'http://animevsub.tv/phim/tay-du-3194/tap-01-61130.html'
-    NHAC_VN_VIDEO_URL = 'https://nhac.vn/video/doi-that-la-phoi-phoi-hoang-yen-chibi-uni5-mvG38e'
     XVIDEOS_DOT_COM_VIDEO_URL = 'https://www.xvideos.es/video50625357/_'
     XNXX_VIDEO_URL = 'http://www.xnxx.es/video-rjo7d8b/step_son_caught_masturbating_shoots_load_into_stepmom_s_panties'
     FR_PORN_HUB_VIDEO_URL = 'https://fr.pornhub.com/view_video.php?viewkey=ph5bd4e9b96091f'
