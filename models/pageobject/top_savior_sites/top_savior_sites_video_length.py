@@ -18,13 +18,20 @@ class TopSitesSaviorVideoLengthActions(BasePageObject):
         #     return driver.execute_script("return document.querySelector('" + css_locator + "').textContent")
         # else:
         #     return self.top_sites_savior_video_length_element.find_video_lengh(driver, element).text
+        time.sleep(3)
         if element == "":
-            video_length = driver.execute_script("return document.querySelector('" + css_locator + "').duration")
-            if video_length is None:
-                video_length = driver.execute_script("return document.querySelector('" + css_locator + "').textContent")
+            video_length_duration = driver.execute_script(
+                "return document.querySelector('" + css_locator + "').duration")
+            video_length_html = driver.execute_script(
+                "return document.querySelector('" + css_locator + "').textContent")
+            if video_length_duration is not None:
+                return video_length_duration
+            else:
+                return video_length_html
+            # if video_length is None or '0:00' in str(video_length):
+            #     video_length = driver.execute_script("return document.querySelector('" + css_locator + "').textContent")
         else:
-            video_length = self.top_sites_savior_video_length_element.find_video_lengh(driver, element).text
-        return video_length
+            return self.top_sites_savior_video_length_element.find_video_lengh(driver, element).text
 
     def get_video_length(self, driver, css_locator, element=""):
         video_length_root = self.get_video_length_from_html(driver, css_locator, element)
@@ -50,7 +57,7 @@ class TopSitesSaviorVideoLengthActions(BasePageObject):
     def get_video_length_if_contain_count_down(self, video_length_root):
         if "/" in str(video_length_root):
             video_length = video_length_root.split("/")[1]
-            LOGGER.info("Video length after split /: "+video_length)
+            LOGGER.info("Video length after split /: " + video_length)
             return video_length
         else:
             return video_length_root
