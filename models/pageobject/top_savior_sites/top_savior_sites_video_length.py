@@ -11,7 +11,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 class TopSitesSaviorVideoLengthActions(BasePageObject):
-    top_sites_savior_video_length_element = TopSitesSaviorVideoLengthElements
+    top_sites_savior_video_length_element = TopSitesSaviorVideoLengthElements()
 
     def get_video_length_from_html(self, driver, css_locator, element):
         # if element == "":
@@ -34,8 +34,8 @@ class TopSitesSaviorVideoLengthActions(BasePageObject):
         LOGGER.info("Expect video length: " + str(video_length))
         LOGGER.info("Expect video length seconds: " + str(video_length_seconds))
         start_time = datetime.now()
-        if video_length_seconds is None or int(video_length_seconds) < 5:
-            while video_length_seconds is None or int(video_length_seconds) < 5:
+        if video_length_seconds is None or int(video_length_seconds) < 20:
+            while video_length_seconds is None or int(video_length_seconds) < 20:
                 time.sleep(2)
                 video_length_root = self.get_video_length_from_html(driver, css_locator, element)
                 video_length = self.get_video_length_if_contain_count_down(video_length_root)
@@ -64,3 +64,8 @@ class TopSitesSaviorVideoLengthActions(BasePageObject):
             return video_length
         else:
             return video_length_root
+
+    def get_video_length_after_line_break(self, video_length_root):
+        video_length = video_length_root.splitlines()[1]
+        LOGGER.info("Video length after split line break: " + video_length)
+        return video_length

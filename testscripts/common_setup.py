@@ -169,13 +169,14 @@ def check_if_the_file_fully_downloaded(browser):
 
 
 def check_if_file_with_title_fully_downloaded(browser, video_title):
+    LOGGER.info("Video is downloading")
     play_button_by_video_title = savior_element.find_play_button_by_video_title(browser, video_title)
     start_time = datetime.now()
     if play_button_by_video_title is None:
         while play_button_by_video_title is None:
             time.sleep(2)
             play_button_by_video_title = savior_element.find_play_button_by_video_title(browser, video_title)
-            LOGGER.info("Play button after timeout: " + str(play_button_by_video_title))
+            # LOGGER.info("Play button after timeout: " + str(play_button_by_video_title))
             time_delta = datetime.now() - start_time
             if time_delta.total_seconds() >= 10000:
                 break
