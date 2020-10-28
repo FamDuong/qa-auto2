@@ -22,7 +22,7 @@ class TestOnlineMusic:
     top_savior_sites_online_music_action = TopSaviorSitesOnlineMusicActions()
 
     @pytestrail.case('C96758')
-    @pytest.mark.twenty_popular_sites
+    @pytest.mark.top_sites
     def test_download_nhaccuatui(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(OnlineMusicUrls.NHAC_CUA_TUI_VIDEO_ITEM)
         LOGGER.info("Check download video on " + OnlineMusicUrls.NHAC_CUA_TUI_VIDEO_ITEM)
@@ -45,7 +45,7 @@ class TestOnlineMusic:
                                   video_title, end_with='.mp3', mouse_over_first_video=False)
 
     @pytestrail.case('C98760')
-    @pytest.mark.twenty_popular_sites
+    @pytest.mark.top_sites
     def test_download_soundcloud(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(OnlineMusicUrls.SOUNDCLOUD_URL)
         LOGGER.info("Check download music on " + OnlineMusicUrls.SOUNDCLOUD_URL)
@@ -58,7 +58,7 @@ class TestOnlineMusic:
                                   video_title, end_with='.mp3', mouse_over_first_video=False)
 
     @pytestrail.case('C98782')
-    @pytest.mark.one_hundred_popular_sites
+    @pytest.mark.others
     def test_download_nhac_vn(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(OnlineMusicUrls.NHAC_VN_VIDEO_URL)
         LOGGER.info("Check download music on " + OnlineMusicUrls.NHAC_VN_VIDEO_URL)
@@ -68,7 +68,6 @@ class TestOnlineMusic:
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
     @pytestrail.case('C96756')
-    @pytest.mark.one_hundred_popular_sites
     def test_download_zing_mp3_vn(self, browser_top_sites, get_current_download_folder_top_sites):
         pause_any_video_site(browser_top_sites, OnlineMusicUrls.ZING_MP3_VN_VIDEO_URL)
         self.any_site_page_object.click_zingmp3_chon_giao_dien_btn(browser_top_sites)
