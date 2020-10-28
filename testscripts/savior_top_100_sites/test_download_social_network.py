@@ -63,9 +63,9 @@ class TestSocialNetwork:
         finally:
             delete_all_mp4_file_download(download_folder, end_with=".mp4", start_with=video_title)
 
-    def click_to_open_large_video(self, driver, need_opened_video=False):
+    def click_to_open_large_video(self, driver, need_opened_video):
         if need_opened_video:
-            self.facebook_action.click_on_first_video(driver)
+            self.facebook_action.click_onbu_first_video(driver)
             time.sleep(3)
 
     def mouse_over_facebook_first_video_element(self, driver, url, need_mouse_over_video):
@@ -88,6 +88,7 @@ class TestSocialNetwork:
                                  element=TopSaviorSitesVideoLengthLocators.FACEBOOK_VIDEO_LENGTH_HOME_PAGE)
 
     @pytestrail.case('C96691')
+    @pytestrail.defect('PF-530')
     @pytest.mark.top_sites
     def test_download_file_facebook(self, browser_top_sites, get_current_download_folder_top_sites):
 
@@ -98,9 +99,9 @@ class TestSocialNetwork:
         self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
                                                   OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL)
 
-        # self.verify_download_file_zzfacebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-        #                                           OtherSiteUrls.FACEBOOK_WATCH_URL, need_opened_video=True,
-        #                                           need_mouse_over_video=True)
+        self.verify_download_file_zzfacebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+                                                  OtherSiteUrls.FACEBOOK_WATCH_URL, need_opened_video=True,
+                                                  need_mouse_over_video=True)
 
         self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
                                                   OtherSiteUrls.FACEBOOK_WATCH_URL)
@@ -112,6 +113,7 @@ class TestSocialNetwork:
         self.any_site_page_object.mouse_over_video_element_instagram(browser)
 
     @pytestrail.case('C96751')
+    @pytestrail.defect('PF-2074')
     @pytest.mark.ten_popular_sites
     def test_download_file_instagram(self, browser_top_sites, get_current_download_folder_top_sites):
         login_instagram(browser_top_sites)
