@@ -114,7 +114,7 @@ class TestSocialNetwork:
 
     @pytestrail.case('C96751')
     @pytestrail.defect('PF-2074')
-    @pytest.mark.ten_popular_sites
+    @pytest.mark.top_sites
     def test_download_file_instagram(self, browser_top_sites, get_current_download_folder_top_sites):
         login_instagram(browser_top_sites)
         browser_top_sites.get(OtherSiteUrls.INSTAGRAM_URL)
