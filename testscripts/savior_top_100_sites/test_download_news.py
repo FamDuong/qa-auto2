@@ -79,7 +79,7 @@ class TestNews:
         browser_top_sites.get(OtherSiteUrls.TUOI_TRE_VIDEO_URL)
         LOGGER.info("Check download video on " + OtherSiteUrls.TUOI_TRE_VIDEO_URL)
         video_title = self.top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length=0, video_title=video_title)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length=0, start_with=video_title)
 
     @pytestrail.case('C98764')
     @pytest.mark.others
@@ -89,7 +89,7 @@ class TestNews:
         video_title_root = self.top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
         video_title_temp = self.top_site_titles_action.replace_special_characters_by_dash_in_string(video_title_root)
         video_title = self.top_site_titles_action.get_first_part_of_video_title(video_title_temp)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length=0, video_title=video_title)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length=0, start_with=video_title)
 
     @pytestrail.case('C98765')
     @pytest.mark.others
@@ -97,7 +97,7 @@ class TestNews:
         browser_top_sites.get(OtherSiteUrls.KENH14_VN_VIDEO_URL)
         LOGGER.info("Check download video on " + OtherSiteUrls.KENH14_VN_VIDEO_URL)
         video_title = self.top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length=0, video_title=video_title)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length=0, start_with=video_title)
 
     @pytestrail.case('C98772')
     @pytest.mark.others
@@ -105,13 +105,13 @@ class TestNews:
         browser_top_sites.get(OtherSiteUrls.VIDEO_VNEXPRESS_URL)
         LOGGER.info("Check download video on " + OtherSiteUrls.VIDEO_VNEXPRESS_URL)
         video_title = self.top_site_titles_action.get_video_vnexpress_video_title(browser_top_sites)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length=0, video_title=video_title)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length=0, start_with=video_title)
 
         browser_top_sites.get(OtherSiteUrls.NEWS_VNEXPRESS_URL)
         LOGGER.info("Check download video on " + OtherSiteUrls.NEWS_VNEXPRESS_URL)
         self.any_site_page_object.scroll_to_news_video_vnexpress_video(browser_top_sites)
         video_title = self.top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length=0, video_title=video_title)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length=0, start_with=video_title)
 
     def prepare_savior_option_appear_thanh_nien(self, browser):
         browser.get(OtherSiteUrls.THANH_NIEN_VIDEO_URL)
@@ -124,7 +124,7 @@ class TestNews:
     @pytest.mark.others
     def test_download_file_thanh_nien_viet_nam(self, browser_top_sites, get_current_download_folder_top_sites):
         video_title = self.prepare_savior_option_appear_thanh_nien(browser_top_sites)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length=0, video_title=video_title)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length=0, start_with=video_title)
 
     def prepare_savior_option_appear_dan_tri(self, browser):
         browser.get(OtherSiteUrls.DAN_TRI_VIDEO_URL)
@@ -140,7 +140,7 @@ class TestNews:
     def test_download_file_dan_tri_vn(self, browser_top_sites, get_current_download_folder_top_sites):
         video_title = self.prepare_savior_option_appear_dan_tri(browser_top_sites)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites,
-                                  expect_length=0, video_title=video_title, mouse_over_first_video=False)
+                                  expect_length=0, start_with=video_title, mouse_over_first_video=False)
 
     def prepare_savior_option_appear_vtv_go(self, browser):
         browser.get(OtherSiteUrls.VTV_GO_VN_VIDEO_URL)
@@ -153,11 +153,11 @@ class TestNews:
     @pytest.mark.others
     def test_download_vtv_go_vn(self, browser_top_sites, get_current_download_folder_top_sites):
         video_title = self.prepare_savior_option_appear_vtv_go(browser_top_sites)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length=0, video_title=video_title)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length=0, start_with=video_title)
 
     @pytestrail.case('C96752')
     @pytest.mark.others
     def test_download_news_zing(self, browser_top_sites, get_current_download_folder_top_sites):
         pause_any_video_site(browser_top_sites, VideoUrls.NEWS_ZING_VIDEO_URL)
         video_title = self.top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length=0, video_title=video_title)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length=0, start_with=video_title)
