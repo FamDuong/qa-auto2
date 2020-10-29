@@ -1,8 +1,6 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
-
 from models.pageelements.basepage_elements import BasePageElement
 from selenium.webdriver.support import expected_conditions as ec
-
 from models.pagelocators.top_savior_sites.top_savior_sites_film import TopSaviorSitesFilmLocators
 
 

@@ -598,13 +598,6 @@ class AnySiteElements(BasePageElement):
             return self.wait_for_element(driver).until(
                 ec.presence_of_element_located(AnySite.CHON_GIAO_DIEN_SUBMIT_BTN))
 
-    def find_vietnamnet_video_iframe(self, driver):
-        return self.find_element_if_exist(driver, AnySite.VIETNAMENET_VIDEO_IFRAME)
-
-    def find_video_item_vietnamnet(self, driver):
-        driver.switch_to.frame(self.find_element_if_exist(driver, AnySite.VIETNAMENET_VIDEO_IFRAME))
-        return self.find_element_if_exist(driver, AnySite.VIETNAMENET_VIDEO_IFRAME)
-
     def find_video_title(self, driver, element):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(element))
 

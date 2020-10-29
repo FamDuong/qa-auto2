@@ -25,3 +25,6 @@ class SocialNetworkVideoLengthLocators(object):
 class NewsVideoLengthLocators(object):
     NEWS_24H_BONGDA_VIDEO_CSS = 'video[id*="my-video"]'
     NEWS_24H_BONGDA_VIDEO_LENGTH_CSS = 'div[class*="duration-display"]'
+
+class VideoClipTVShowVideoLengthLocators(object):
+    DAILY_MOTION_VIDEO_CSS = '#dmp_Video'

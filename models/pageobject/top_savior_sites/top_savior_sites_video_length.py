@@ -71,8 +71,3 @@ class TopSitesSaviorVideoLengthActions(BasePageObject):
             return video_length
         else:
             return video_length_root
-
-    def get_video_length_after_line_break(self, video_length_root):
-        video_length = video_length_root.splitlines()[1]
-        LOGGER.info("Video length after split line break: " + video_length)
-        return video_length

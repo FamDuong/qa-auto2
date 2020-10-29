@@ -15,7 +15,6 @@ class YoutubePageLocators(object):
 
 
 class GooglePageLocators(object):
-
     SEARCH_FIELD = (By.XPATH, '//input[@class="gLFyf gsfi"]')
     SEARCH_BUTTON = (By.XPATH, '//div[@class="VlcLAe"]/input[@class="gNO89b"]')
     VIDEO_SEARCH_BTN = (By.XPATH, '//a[contains(text(),"Videos")]')
@@ -40,7 +39,8 @@ class AnySite(object):
     TWITTER_VIDEO_ITEM = (By.XPATH, '//video[@preload="auto"]')
     TWITTER_MEDIA_VIEW_OPTION = (By.XPATH, '(//span[contains(text(), "Media")])[2]')
     TWITTER_AUTHORIZE_RESTRICTED_USER_BTN = '//span[text()="Yes, view profile"]'
-    TWITTER_AUTHORIZE_RESTRICTER_USER_PARENT_BTN = (By.XPATH, '//span[text()="Yes, view profile"]/parent::span/parent::div')
+    TWITTER_AUTHORIZE_RESTRICTER_USER_PARENT_BTN = (
+    By.XPATH, '//span[text()="Yes, view profile"]/parent::span/parent::div')
     TWITTER_AUTHORIZE_RESTRICTED_USER_BTN_JAVASCRIPT = 'div:nth-of-type(3)[role="button"] > div > span'
     SOHA_VIDEO_ITEM = (By.ID, 'video-embeb')
     EVA_VN_VIDEO_ITEM = (By.CSS_SELECTOR, 'video[id*="zplayer"]')
@@ -89,7 +89,8 @@ class AnySite(object):
     ANIME_VSUB_WAIT_FOR_LOAD_PLAYER_ITEM_XPATH = '//div[@id="media-player"]/center'
     ANIME_VSUB_TV_VIDEO_ITEM = (By.ID, 'media-player-box')
     ANIME_VSUB_TV_CLOSE_AD_BUTTON = (By.ID, 'close-and-play')
-    ANIME_VSUB_TV_PLAY_BUTTON = (By.XPATH, '//div[@class="jw-icon jw-icon-inline jw-button-color jw-reset jw-icon-playback"]')
+    ANIME_VSUB_TV_PLAY_BUTTON = (
+    By.XPATH, '//div[@class="jw-icon jw-icon-inline jw-button-color jw-reset jw-icon-playback"]')
     NHAC_VN_VIDEO_URL = (By.ID, 'myvideo')
     XVIDEO_VIDEO_ITEM = (By.XPATH, '//div[@id="html5video"]')
     XVIDEO_PLAY_BTN = (By.XPATH, '//*[@id="hlsplayer"]/div[2]/div[2]/img')
@@ -106,7 +107,8 @@ class AnySite(object):
     JAV_HD_VIDEO_WRAPPER = (By.ID, 'javhd')
     JAV_HD_VIDEO_ITEM = (By.XPATH, '//video')
     PHIM_SEX_PORN_IFRAME = (By.XPATH, '//iframe[@allowfullscreen="true"]')
-    PHIM_SEX_PORN_PLAY_BTN = (By.XPATH, '//div[@class="jw-display-icon-container jw-display-icon-display jw-reset"]//div[@aria-label="Play"]')
+    PHIM_SEX_PORN_PLAY_BTN = (
+    By.XPATH, '//div[@class="jw-display-icon-container jw-display-icon-display jw-reset"]//div[@aria-label="Play"]')
     PHIM_SEX_PORN_VIDEO_ITEM = (By.XPATH, '//div[@class="video-player"]')
     JAV_PHIM_VIDEO_ITEM_WRAPPER = (By.ID, 'player')
     JAV_PHIM_VIDEO_ITEM = (By.XPATH, '//video')
@@ -143,7 +145,8 @@ class AnySite(object):
     PHIM_SEX_SUB_VIDEO_ITEM = (By.XPATH, '//video')
     VLIVE_TV_VIDEO_ITEM = (By.XPATH, '//div[@data-video-overlay]')
     ANIME_HAY_TV_WRAPPER_VIDEO_ITEM = (By.ID, 'ah-player')
-    ANIME_HAY_TV_IFRAME_VIDEO_ITEM = (By.XPATH, '//iframe[@style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;overflow:hidden;"]')
+    ANIME_HAY_TV_IFRAME_VIDEO_ITEM = (
+    By.XPATH, '//iframe[@style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;overflow:hidden;"]')
     DOI_SONG_PHAP_LUAT_IFRAME_VIDEO_ITEM = (By.XPATH, '//iframe[@scrolling][@style][contains(@src,"doi-ban-than")]')
     DOI_SONG_PHAP_LUAT_PLAYER_VIDEO = (By.ID, 'rmpPlayer')
     SAO_STAR_VN_VIDEO_ITEM = (By.XPATH, '//div[@class="wp-video"]')
@@ -156,7 +159,8 @@ class AnySite(object):
     DONG_PHIM_VIDEO_IFRAME = (By.CSS_SELECTOR, '[id*="video-wrap-video-player"] > div[style*="position"] > iframe')
     DONG_PHIM_WATCH_OPTION = (By.XPATH, '//button[@class="cplayer-discover-checkpoint-btn"]')
     DONG_PHIM_WATCH_OPTION_XPATH = '//button[@class="cplayer-discover-checkpoint-btn"]'
-    DONG_PHIM_PLAY_VIDEO_ITEM = (By.CSS_SELECTOR, 'button[class="cplayer-play-control cplayer-control cplayer-button cplayer-paused"]')
+    DONG_PHIM_PLAY_VIDEO_ITEM = (
+    By.CSS_SELECTOR, 'button[class="cplayer-play-control cplayer-control cplayer-button cplayer-paused"]')
     DONG_PHIM_PLAY_VIDEO_ITEM_CSS = 'button[class="cplayer-play-control cplayer-control cplayer-button cplayer-paused"]'
     HENTAIZ_NET_VIDEO_ITEM = (By.ID, 'media-player')
     HENTAIZ_NET_PLAY_BTN = (By.XPATH, '//div[@class="jw-icon jw-icon-display jw-button-color jw-reset"]')
@@ -180,7 +184,4 @@ class AnySite(object):
     VTC_VIDEO_TO_GET_TITLE_CSS = 'div.jw-media.jw-reset video'
     VTC_VIDEO_TO_GET_TITLE = (By.CSS_SELECTOR, 'div.jw-media.jw-reset video')
     NEWS_KIENTHUC_VIDEO_TO_GET_TITLE_CSS = 'div[class="contentvideo"] video'
-    # VIETNAMENET_VIDEO_IFRAME = (By.XPATH, '//iframe[@allow="autoplay; fullscreen"]')
-    VIETNAMENET_VIDEO_IFRAME = (By.ID, 'setIframMobile')
     SOUNDCLOUD_MUSIC_TITLE = (By.XPATH, '//div[@class="fullHero__title"]//span[contains(@class,"soundTitle")]//span')
-

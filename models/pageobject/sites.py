@@ -670,9 +670,3 @@ class AnySitePageObject(BasePageObject):
         if self.any_site_element.count_zingmp3_chon_giao_dien_button(driver) > 0:
             self.any_site_element.find_zingmp3_chon_giao_dien_button(driver).click()
 
-    def swith_to_vietnamnet_video_iframe(self, driver):
-        driver.switch_to.frame(self.any_site_element.find_vietnamnet_video_iframe(driver))
-
-    def mouse_over_video_item_vietnamnet(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_vietnamnet(driver))
-
