@@ -1,6 +1,4 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
-from selenium.webdriver.remote.webelement import WebElement
-
 from models.pageelements.top_savior_sites.top_savior_sites_film import TopSaviorSitesFilmElements
 from models.pageobject.basepage_object import BasePageObject
 
