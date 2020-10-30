@@ -12,7 +12,7 @@ from testscripts.common_setup import assert_file_download_value, delete_all_mp4_
     download_file_via_main_download_button, get_resolution_info
 from models.pageobject.chome_store_page import ChromeStorePageObjects
 from utils_automation.common_browser import coccoc_instance
-from utils_automation.const import Urls, OtherSiteUrls
+from utils_automation.const import Urls, OtherSiteUrls, VideoClipTVShowUrls
 
 LOGGER = logging.getLogger(__name__)
 
@@ -162,3 +162,4 @@ def login_instagram(driver):
         if len(not_now_btn) > 0:
             driver.find_element_by_xpath(InstagramLocators.TURN_ON_NOTIFICATIONS_NOT_NOW).click()
             time.sleep(3)
+

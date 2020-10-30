@@ -6,10 +6,6 @@ from models.pagelocators.top_savior_sites.top_savior_sites_news import TopSavior
 
 class TopSaviorSitesNewsElements(BasePageElement):
 
-    def find_vtc_play_video_button(self, driver: WebDriver):
-        # return self.wait_for_element(driver).until(ec.presence_of_element_located(TopSaviorSitesNewsLocators.VTC_PLAY_VIDEO_BTN))
-        return self.find_element_if_exist(driver, TopSaviorSitesNewsLocators.VTC_PLAY_VIDEO_BTN)
-
     def find_zing_news_play_video_button(self, driver: WebDriver):
         # return self.wait_for_element(driver).until(ec.presence_of_element_located(TopSaviorSitesNewsLocators.ZING_NEWS_PLAY_VIDEO_BTN))
         return self.find_element_if_exist(driver, TopSaviorSitesNewsLocators.ZING_NEWS_PLAY_VIDEO_BTN)

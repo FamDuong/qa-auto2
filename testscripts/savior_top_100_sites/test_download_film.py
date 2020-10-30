@@ -36,6 +36,7 @@ class TestFilm:
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
     @pytestrail.case('C98756')
+    @pytest.mark.skip('Prevented by internet provider')
     @pytest.mark.top_sites
     def test_download_file_film_mot_phim_net(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(FilmUrls.MOT_PHIM_VIDEO_URL)

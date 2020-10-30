@@ -68,9 +68,15 @@ class TestOnlineMusic:
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
     @pytestrail.case('C96756')
+    @pytest.mark.others
     def test_download_zing_mp3_vn(self, browser_top_sites, get_current_download_folder_top_sites):
-        pause_any_video_site(browser_top_sites, OnlineMusicUrls.ZING_MP3_VN_VIDEO_URL)
+        from unidecode import unidecode
+        browser_top_sites.get(OnlineMusicUrls.ZING_MP3_VN_VIDEO_URL)
+        LOGGER.info("Check download music on " + OnlineMusicUrls.ZING_MP3_VN_VIDEO_URL)
         self.any_site_page_object.click_zingmp3_chon_giao_dien_btn(browser_top_sites)
-        video_title = self.top_sites_savior_title_action.get_website_title_by_javascript(browser_top_sites)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length=0,
-                                  video_title=video_title)
+        video_title_root = self.top_sites_savior_title_action.get_website_title_by_javascript(browser_top_sites)
+        video_title = unidecode(self.top_sites_savior_title_action.get_first_part_of_video_title(video_title_root)).strip()
+        LOGGER.info("Video title: "+video_title)
+        expect_length = self.top_savior_sites_video_length_action. \
+            get_video_length(browser_top_sites, OnlineMusicVideoLengthLocators.ZING_MP3_VIDEO_LENGTH_CSS)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)

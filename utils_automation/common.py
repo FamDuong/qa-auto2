@@ -279,6 +279,10 @@ class WebElements:
     def scroll_into_view_element(driver: WebDriver, element: WebElement):
         driver.execute_script("arguments[0].scrollIntoView(true);", element)
 
+    @staticmethod
+    def click_element_by_javascript(driver: WebDriver, css_locator):
+        driver.execute_script("document.querySelector('"+css_locator+"').click()")
+
 
 class WindowsCMD:
     @staticmethod

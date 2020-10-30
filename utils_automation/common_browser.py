@@ -4,6 +4,7 @@ import logging
 from selenium import webdriver
 
 from utils_automation.common import WindowsCMD, WindowsHandler
+
 windows_handler = WindowsHandler()
 current_user = windows_handler.get_current_login_user()
 
@@ -92,7 +93,6 @@ def chrome_options_preset():
     chrome_options.add_experimental_option("useAutomationExtension", False)
     chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
 
-
     split_after = binary_path.split('\\Local')
     user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
     chrome_options.add_argument('--user-data-dir=' + user_data_path)
@@ -103,8 +103,8 @@ def chrome_options_preset():
 
 
 def coccoc_instance(is_needed_clean_up=True):
-        if is_needed_clean_up is True:
-            cleanup()
-        else:
-            pass
-        return webdriver.Chrome(options=chrome_options_preset())
+    if is_needed_clean_up is True:
+        cleanup()
+    else:
+        pass
+    return webdriver.Chrome(options=chrome_options_preset())
