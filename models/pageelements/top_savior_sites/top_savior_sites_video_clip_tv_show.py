@@ -18,8 +18,9 @@ class TopSaviorSitesVideoClipTvShowElements(BasePageElement):
 
     def find_username_label_element(self, driver: WebDriver):
         try:
-            return self.wait_for_element(driver).until(ec.presence_of_element_located(TopSaviorSitesVideoClipTvShowLocators
-                                                                                  .ZALO_USER_NAME_LBL))
+            return self.wait_for_element(driver).until(
+                ec.presence_of_element_located(TopSaviorSitesVideoClipTvShowLocators
+                                               .ZALO_USER_NAME_LBL))
         except:
             return None
 
@@ -38,3 +39,30 @@ class TopSaviorSitesVideoClipTvShowElements(BasePageElement):
                                                .ZALO_AVATAR))
         except:
             return None
+
+    def find_vtc_play_video_button(self, driver: WebDriver):
+        return self.find_element_if_exist(driver, TopSaviorSitesVideoClipTvShowLocators.VTC_PLAY_VIDEO_BTN)
+
+    def find_tiktok_avatar_element(self, driver: WebDriver):
+        return self.find_element_if_exist(driver, TopSaviorSitesVideoClipTvShowLocators.TIKTOK_AVATAR)
+
+    def find_tiktok_logout_button(self, driver: WebDriver):
+        return self.find_element_if_exist(driver, TopSaviorSitesVideoClipTvShowLocators.TIKTOK_LOGOUT_BTN)
+
+    def count_tiktok_avatar_element(self, driver: WebDriver):
+        return len(driver.find_elements_by_css_selector(TopSaviorSitesVideoClipTvShowLocators.TIKTOK_AVATAR_CSS))
+
+    def count_tiktok_profile_lbl(self, driver: WebDriver):
+        return len(driver.find_elements_by_xpath(TopSaviorSitesVideoClipTvShowLocators.TIKTOK_PROFILE_LBL_XPATH))
+
+    def find_tiktok_login_by_facebook_option(self, driver: WebDriver):
+        return self.find_element_if_exist(driver, TopSaviorSitesVideoClipTvShowLocators.TIKTOK_LOGIN_BY_FACEBOOK_OPTION)
+
+    def find_tiktok_facebook_email_textbox(self, driver: WebDriver):
+        return self.find_element_if_exist(driver, TopSaviorSitesVideoClipTvShowLocators.TIKTOK_EMAIL_TXT)
+
+    def find_tiktok_facebook_password_textbox(self, driver: WebDriver):
+        return self.find_element_if_exist(driver, TopSaviorSitesVideoClipTvShowLocators.TIKTOK_PASSWORD_TXT)
+
+    def find_tiktok_facebook_submit_button(self, driver: WebDriver):
+        return self.find_element_if_exist(driver, TopSaviorSitesVideoClipTvShowLocators.TIKTOK_LOGIN_SUBMIT_BTN)

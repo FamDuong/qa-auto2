@@ -31,11 +31,21 @@ class Urls:
     CC_SEARCH_QUERY = "https://coccoc.com/search?query="
 
 
-class VideoUrls:
+class FilmUrls:
+    DONG_PHIM_VIDEO_URL = 'https://dongphym.net/movie/tap-21-truong-an-nac-the-promise-of-changan_TEqiwgPP.html'
+    MOT_PHIM_VIDEO_URL = 'https://motphimzz.com/xem-phim/lien-minh-thu-cung-tap-full-8332_105254.html'
+
+
+class VideoClipTVShowUrls:
     YOUTUBE_VIDEO_URL = 'https://www.youtube.com/watch?v=RXIm1NLCSz0'
-    NEWS_ZING_VIDEO_URL = 'https://news.zing.vn/video'
+    TV_ZING_VIDEO_URL = 'https://tv.zing.vn/video/id/IWZEAUO9.html'
+    DAILY_MOTION_VIDEO_URL = 'https://www.dailymotion.com/video/x7lxiix'
+    VTC_VN_VIDEO_URL = 'https://vtc.vn/truyen-hinh-27.html'
     TIKTOK_FOR_YOU_URL = 'https://www.tiktok.com/foryou?lang=en'
-    TIKTOK_FOR_YOU_URL = 'https://www.tiktok.com/foryou?lang=en'
+    TIKTOK_OTHERS_ACCOUNT_URL = 'https://www.tiktok.com/@mocachodien?lang=en'
+    TIKTOK_FOLLOWING_URL = 'https://www.tiktok.com/following?lang=en'
+    TIKTOK_LOGIN_URL = 'https://www.tiktok.com/login'
+    TIKTOK_VIEW_PROFILE_URL = 'https://www.tiktok.com/@user8091825019561?lang=en'
 
     @classmethod
     def all(cls):
@@ -47,11 +57,8 @@ class OnlineMusicUrls:
     NHAC_VN_VIDEO_URL = 'https://nhac.vn/video/doi-that-la-phoi-phoi-hoang-yen-chibi-uni5-mvG38e'
     NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summertime-cinnamons-ft-evening-cinema.w3rGuakkZzvg9.html'
     NHAC_CUA_TUI_MUSIC_ITEM = 'https://www.nhaccuatui.com/bai-hat/em-da-thuong-nguoi-ta-hon-anh-noo-phuoc-thinh.P5Z69HYydPRJ.html'
-    ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/A-Better-Day-JTL/ZWZ9CF86.html'
+    ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/Am-Ap-Mua-Xuan-Minh-Tam-Bui/ZW6A76B9.html'
 
-class FilmUrls:
-    DONG_PHIM_VIDEO_URL = 'https://dongphym.net/movie/tap-21-truong-an-nac-the-promise-of-changan_TEqiwgPP.html'
-    MOT_PHIM_VIDEO_URL = 'https://motphimzz.com/xem-phim/lien-minh-thu-cung-tap-full-8332_105254.html'
 
 class DiffFormatFileUrls:
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/watch/?v=682897505204114'
@@ -62,9 +69,20 @@ class DiffFormatFileUrls:
         return [value for name, value in vars(cls).items() if name.isupper()]
 
 
-class OtherSiteUrls:
-    NEWS_24H_URL = 'https://www.24h.com.vn/tong-hop-video.html'
+class NewsUrls:
     NEWS_24H_BONGDA_URL = 'https://www.24h.com.vn/bong-da/2-clb-viet-nam-thong-tri-afc-cup-bao-chau-a-noi-gi-c48a1061647.html'
+    NEWS_24H_URL = 'https://www.24h.com.vn/tong-hop-video.html'
+    VIETNAMNET_VIDEO_URL = 'https://video.vietnamnet.vn/thuoc-la-dien-tu-khong-nicotine-van-gay-hai-den-co-the-a-81979.html'
+    TUOI_TRE_VIDEO_URL = 'https://tv.tuoitre.vn/'
+    KENH14_VN_VIDEO_URL = 'http://video.kenh14.vn/dang-sau-moi-buc-anh-dep-la-mot-anh-chong-the-nay-day-245984.chn'
+    VIDEO_VNEXPRESS_URL = 'https://video.vnexpress.net/tin-tuc/nhip-song/cay-si-co-thu-moc-100-than-3980758.html'
+    NEWS_VNEXPRESS_URL = 'https://vnexpress.net/thu-mon-nhan-the-do-vi-bat-bong-ngo-ngan-o-giay-13-4000749.html'
+    THANH_NIEN_VIDEO_URL = 'https://video.thanhnien.vn/thoi-su/trom-ga-noi-hang-loat-bi-phat-tu-thi-bo-tron-bi-bat-lai-khi-dang-phuc-vu-trong-quan-karaoke-140814.html'
+    DAN_TRI_VIDEO_URL = 'https://dantri.com.vn/video-page.htm'
+    NEWS_ZING_VIDEO_URL = 'https://zingnews.vn/video'
+
+
+class OtherSiteUrls:
     PHIMMOI_VIDEO_URL = 'http://www.phimmoizz.net/phim/soi-100-11066/xem-phim.html'
     PHIMMOI_URL = 'http://www.phimmoizz.net/phim/ky-su-thanh-xuan-11454/'
 
@@ -81,7 +99,6 @@ class OtherSiteUrls:
     INSTAGRAM_URL = 'https://www.instagram.com/'
     NEWS_KIENTHUC_VIDEO_URL = 'https://kienthuc.net.vn/truyen-hinh-video/video-duong-pho-ha-noi-ngap-sau-sau-mua-bao-1259721.html'
     MOJI_BIG_CHATBOX = 'https://www.messenger.com/t/100013968193318'
-    VIETNAMNET_VIDEO_URL = 'https://video.vietnamnet.vn/thuoc-la-dien-tu-khong-nicotine-van-gay-hai-den-co-the-a-81979.html'
     TWITTER_VIDEO_URL = 'https://twitter.com/pje0n/status/1170961701455286272'
     SOHA_VIDEO_URL = 'https://soha.vn/video.htm'
     EVA_VN_VIDEO_URL = 'https://eva.vn/clip-eva/5-con-giap-nam-vua-gioi-kiem-tien-vua-chieu-chuong-thuong-yeu-vo-het-long-c157a403553.html'
@@ -94,19 +111,11 @@ class OtherSiteUrls:
     GAMEK_VN_VIDEO_URL = 'http://gamek.vn/joker-tung-trailer-thu-2-he-lo-qua-khu-dau-thuong-cua-chang-hoang-tu-he-20190829101517375.chn'
     VU_VI_PHIM_VIDEO_URL = 'https://vuviphimzz.com/xem-phim-ta-ga-tame-no-alchemist-314105'
     AN_NINH_THU_DO_VIDEO_URL = 'https://anninhthudo.vn/truyen-hinh-atv/146.antd'
-    TUOI_TRE_VIDEO_URL = 'https://tv.tuoitre.vn/'
-    TV_ZING_VIDEO_URL = 'https://tv.zing.vn/video/id/IWZEAUO9.html'
     TV_HAY_VIDEO_URL = 'http://tvhay.org/xem-phim-dao-kiem-than-vuc-phan-4-421702'
     NGOI_SAO_VN_URL = 'https://ngoisao.vn/video/lieu-linh-bang-qua-dong-nuoc-lu-nguoi-dan-ong-suyt-phai-tra-gia-bang-ca-tinh-mang-273892.htm'
-    VTC_VN_VIDEO_URL = 'https://vtc.vn/truyen-hinh-27.html'
-    KENH14_VN_VIDEO_URL = 'http://video.kenh14.vn/dang-sau-moi-buc-anh-dep-la-mot-anh-chong-the-nay-day-245984.chn'
     CAFE_VN_VIDEO_URL = 'http://cafef.vn/videos/17236-btv-ngoc-trinh-len-tieng-truoc-tin-don-so-huu-loat-xe-sang-ca-chuc-ty-dong.chn'
     TIN_TUC_ONLINE_VIDEO_URL = 'https://tintuconline.com.vn/video/hoa-hong-tren-nguc-trai-tap-12-thai-doi-tieu-tam-phai-co-trach-nhiem-voi-minh-n-408464.html'
     GIAO_DUC_THOI_DAI_VIDEO_URL = 'https://giaoducthoidai.vn/chuyen-la/tai-xe-ngu-gat-khi-lai-xe-hanh-khach-van-than-nhien-nhu-khong-co-chuyen-gi-4032898-d.html'
-    VIDEO_VNEXPRESS_URL = 'https://video.vnexpress.net/tin-tuc/nhip-song/cay-si-co-thu-moc-100-than-3980758.html'
-    NEWS_VNEXPRESS_URL = 'https://vnexpress.net/thu-mon-nhan-the-do-vi-bat-bong-ngo-ngan-o-giay-13-4000749.html'
-    THANH_NIEN_VIDEO_URL = 'https://video.thanhnien.vn/thoi-su/trom-ga-noi-hang-loat-bi-phat-tu-thi-bo-tron-bi-bat-lai-khi-dang-phuc-vu-trong-quan-karaoke-140814.html'
-    DAN_TRI_VIDEO_URL = 'https://dantri.com.vn/video-page.htm'
     NGUOI_LAO_DONG_TV_URL = 'https://tv.nld.com.vn/thoi-su-trong-nuoc/co-to-quoc-den-tay-ngu-dan-huyen-can-gio-14531.htm'
     ANIME_VSUB_TV_URL = 'http://animevsub.tv/phim/tay-du-3194/tap-01-61130.html'
     XVIDEOS_DOT_COM_VIDEO_URL = 'https://www.xvideos.es/video50625357/_'
@@ -122,7 +131,6 @@ class OtherSiteUrls:
     INFO_NET_VIDEO_URL = 'https://infonet.vn/video-giay-phut-xe-bon-lao-vao-nha-dan-no-tung-va-lam-chet-6-nguoi-post282661.info'
     BONG_DA_24H_VIDEO_URL = 'https://bongda24h.vn/doi-tuyen-viet-nam/video-biet-doi-chan-thuong-tap-luyen-duoi-su-tro-giup-cua-bac-si-choi-292-231874.html'
     KEO_NHA_CAI_VIDEO_URL = 'http://keonhacai.net/video-real-madrid-vs-psg-5879.html'
-    DAILY_MOTION_VIDEO_URL = 'https://www.dailymotion.com/video/x7lxiix'
     VOV_VIDEO_URL = 'https://vov.vn/the-thao/bong-da/hlv-park-hang-seo-da-tim-thay-phan-van-duc-moi-cho-u22-viet-nam-960993.vov'
     SEX_NGON_VIDEO_URL = 'https://sexngon.net/phim-sex-my-hay-lop-hoc-tinh-duc-danh-cho-cac-quy-co/'
     WEIBO_VIDEO_URL = 'https://www.weibo.com/1640601392/I9rIXuIRC?from=page_1002061640601392_profile&wvr=6&mod=weibotime&type=comment'

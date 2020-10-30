@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 
 class TopSaviorSitesNewsLocators:
     VTC_VIDEO_CSS = 'div[aria-label="Video Player"] video'
-    VTC_PLAY_VIDEO_BTN = (By.CSS_SELECTOR, 'div[class*="display"] div[aria-label="Play"]')
+
     ZING_NEWS_PLAY_VIDEO_BTN = (By.CSS_SELECTOR, 'button[title="Phát"]')
     ZING_NEWS_PLAY_VIDEO_BTN_CSS = 'button[title="Phát"]'
     ZINGNEWS_VIDEO_CSS = 'video[preload="metadata"]'
@@ -12,7 +12,8 @@ class TopSaviorSitesNewsLocators:
     DANTRI_VIDEO_LENGTH_CSS = 'video[playsinline="playsinline"]'
     VIETNAMNET_VIDEO_PARENT_IFRAME1 = (By.CSS_SELECTOR, 'iframe[allow="autoplay; fullscreen"]')
     VIETNAMNET_VIDEO_PARENT_IFRAME2 = (By.CSS_SELECTOR, 'iframe[allow="autoplay"]')
-    VIETNAMNET_VIDEO = (By.CSS_SELECTOR, '#vnnplayer video')
+    VIETNAMNET_VIDEO = (By.CSS_SELECTOR, '#setIframMobile')
+    # VIETNAMNET_VIDEO = (By.CSS_SELECTOR, '#vnnplayer video')
     VIETNAMNET_VIDEO_LENGTH_CSS = 'div[class*="rmp-duration"]'
     TV_TUOITRE_VIDEO_LENGTH_CSS = 'div[aria-label="Video Player"] video'
     KENH14_VIDEO_LENGTH_CSS = 'video[playsinline="playsinline"]'

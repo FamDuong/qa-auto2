@@ -10,7 +10,7 @@ from models.pageobject.extensions import ExtensionsPageObject, ExtensionsDetails
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import YoutubePageObject, GooglePageObject, AnySitePageObject
 from utils_automation.common import FilesHandle, if_height_frame_so_width_frame
-from utils_automation.const import Urls, ExtensionIds, VideoUrls
+from utils_automation.const import Urls, ExtensionIds, VideoClipTVShowUrls
 from utils_automation.setup import Browser, WaitAfterEach
 
 extension_page_object = ExtensionsPageObject()
@@ -83,8 +83,7 @@ def assert_file_download_value(download_folder_path, expect_height, expect_lengt
     vid.release()
     actual_length, bit_rate = get_length_and_bit_rate(download_folder_path, mp4_files[0], fps, frame_count)
     assert_video_height_width(end_with, actual_height, expect_height, actual_width)
-    if '0' not in str(expect_length):
-        assert_video_length(expect_length, actual_length)
+    assert_video_length(expect_length, actual_length)
     assert bit_rate == 320 or bit_rate == 128 or bit_rate == 126 or bit_rate > 0
 
 
@@ -196,7 +195,7 @@ def open_coccoc_download_then_check_if_the_file_fully_downloaded(browser, video_
 
 
 def pause_any_video_youtube(browser):
-    browser.get(VideoUrls.YOUTUBE_VIDEO_URL)
+    browser.get(VideoClipTVShowUrls.YOUTUBE_VIDEO_URL)
     WaitAfterEach.sleep_timer_after_each_step()
     youtube_page_object.mouse_over_video_item(browser)
     youtube_page_object.click_video_item(browser)

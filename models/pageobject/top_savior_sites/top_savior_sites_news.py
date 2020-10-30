@@ -6,10 +6,6 @@ from models.pageobject.basepage_object import BasePageObject
 class TopSaviorSitesNewsActions(BasePageObject):
     top_savior_sites_news_element = TopSaviorSitesNewsElements()
 
-    def click_vtc_play_video_button(self, driver: WebDriver):
-        element = self.top_savior_sites_news_element.find_vtc_play_video_button(driver)
-        element.click()
-
     def click_zing_news_play_video_button(self, driver: WebDriver):
         if self.top_savior_sites_news_element.count_zing_news_play_video_button(driver) > 0:
             element = self.top_savior_sites_news_element.find_zing_news_play_video_button(driver)

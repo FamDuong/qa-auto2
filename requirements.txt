@@ -103,3 +103,5 @@ uritemplate==3.0.1
 urllib3==1.25.7
 wcwidth==0.1.7
 zipp==0.6.0
+
+Unidecode~=1.1.1
