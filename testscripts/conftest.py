@@ -7,7 +7,6 @@ from testscripts.common_setup import clear_data_download, delete_all_mp4_file_do
 from utils_automation.const import Urls, ExtensionIds
 from utils_automation.setup import WaitAfterEach
 
-
 settings_page_object = SettingsPageObject()
 settings_cococ_ads_block_page_element = SettingsElements.SettingsAdsBlock()
 settings_coccoc_ads_block_page_object = SettingsPageObject.SettingsAdsBlockPageObject()
@@ -38,7 +37,8 @@ def disable_coccoc_block_ads(browser):
                              '.shadowRoot.querySelector("settings-toggle-button")' \
                              '.shadowRoot.querySelector("#control").click()'
 
-    interact_ad(browser, Urls.COCCOC_ADS_BLOCK_URL, script_get_attribute_aria_pressed, script_click_ads_block, 'disable')
+    interact_ad(browser, Urls.COCCOC_ADS_BLOCK_URL, script_get_attribute_aria_pressed, script_click_ads_block,
+                'disable')
     yield
     interact_ad(browser, Urls.COCCOC_ADS_BLOCK_URL, script_get_attribute_aria_pressed, script_click_ads_block, 'enable')
 

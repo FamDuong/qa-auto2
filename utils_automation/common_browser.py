@@ -2,6 +2,7 @@ import fileinput
 import logging
 
 from selenium import webdriver
+from selenium.webdriver import DesiredCapabilities
 
 from utils_automation.common import WindowsCMD, WindowsHandler
 
@@ -71,6 +72,8 @@ def check_if_preferences_is_created(user_data_path):
 
 
 def chrome_options_preset():
+    desired_capabilities = DesiredCapabilities.CHROME
+    desired_capabilities['goog:loggingPrefs'] = {'browser': 'ALL'}
     binary_path = f"C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = binary_path
@@ -99,7 +102,7 @@ def chrome_options_preset():
     if check_if_preferences_is_created(user_data_path):
         modify_file_as_text(user_data_path + '\\Default\\Preferences', 'Crashed', 'none')
 
-    return chrome_options
+    return chrome_options, desired_capabilities
 
 
 def coccoc_instance(is_needed_clean_up=True):
@@ -107,4 +110,5 @@ def coccoc_instance(is_needed_clean_up=True):
         cleanup()
     else:
         pass
-    return webdriver.Chrome(options=chrome_options_preset())
+    chrome_options, desired_capabilities = chrome_options_preset()
+    return webdriver.Chrome(options=chrome_options, desired_capabilities=desired_capabilities)

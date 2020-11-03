@@ -173,3 +173,12 @@ class ChromeStoreUrls:
 class CocCocExtensions:
     AD_BLOCK_STANDARD_MODE = 'Standard'
     AD_BLOCK_STRICT_MODE = 'Strict'
+
+
+class NewTabAdsDemoUrls:
+    CENTER_BANNER_ADS_640x360_URL = 'https://coccoc.com/webhp?type=2&show=29042573'
+    MAGNETIC_MASTHREAD_ADS_URL = 'https://coccoc.com/webhp?type=2&show=28673748'
+    VIDEO_MASTHREAD_ADS_URL = 'https://coccoc.com/webhp?type=2&show=25600779'
+    SKIN_ADS_URL1 = 'https://coccoc.com/webhp?type=2&show=27544439'
+    SKIN_ADS_URL2 = 'https://coccoc.com/webhp?type=2&show=28673744'
+    VIDEO_ADS_URL = 'https://coccoc.com/webhp?type=2&show=17486613'
