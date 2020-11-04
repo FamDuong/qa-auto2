@@ -83,3 +83,15 @@ class NewTabLogAdsElements(BasePageElement):
 
     def find_skin_ads(self, driver):
         return self.find_element_if_exist(driver, NewTabLogAdsLocators.SKIN_ADS_LINK)
+
+    def find_video_ads_close_float_button(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.VIDEO_ADS_CLOSE_FLOAT_BUTTON)
+
+    def count_video_ads_close_float_button(self, driver: WebDriver):
+        return len(driver.find_elements_by_xpath(NewTabLogAdsLocators.VIDEO_ADS_CLOSE_FLOAT_BUTTON_XPATH))
+
+    def find_video_ads_video_iframe(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.VIDEO_ADS_IFRAME)
+
+    def find_video_ads_video(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.VIDEO_ADS_VIDEO)

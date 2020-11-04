@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver import ActionChains
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
@@ -127,3 +129,23 @@ class NewTabLogAdsActions(BasePageObject):
 
     def click_on_skin_ads(self, driver: WebDriver):
         self.new_tab_log_ads_element.find_skin_ads(driver).click()
+
+    def click_on_video_ads_close_float_button(self, driver: WebDriver):
+        time.sleep(1)
+        driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+        total_close_float_button = self.new_tab_log_ads_element.count_video_ads_close_float_button(driver)
+        from datetime import datetime
+        start_time = datetime.now()
+        if total_close_float_button == 0:
+            while total_close_float_button == 0:
+                time.sleep(1)
+                total_close_float_button = self.new_tab_log_ads_element.count_video_ads_close_float_button(driver)
+                time_delta = datetime.now() - start_time
+                if time_delta.total_seconds() >= 5:
+                    break
+        self.new_tab_log_ads_element.find_video_ads_close_float_button(driver).click()
+
+    def click_on_video_ads(self, driver: WebDriver):
+        time.sleep(10)
+        driver.switch_to.frame(self.new_tab_log_ads_element.find_video_ads_video_iframe(driver))
+        self.new_tab_log_ads_element.find_video_ads_video(driver).click()

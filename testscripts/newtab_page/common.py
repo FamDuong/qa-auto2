@@ -104,3 +104,21 @@ def get_last_info_log(log_entries):
     import json
     LOGGER.info("Last log: " + json.dumps(last_log, indent=4))
     return last_log
+
+
+def count_log_contain_string(log_entries, contains_strings):
+    total_contains = 0
+    for i in range(len(log_entries)):
+        for j in range(len(contains_strings)):
+            if contains_strings[j] in str(log_entries[i]):
+                LOGGER.info("Log entry is contain [" + contains_strings[j] + "]: " + str(log_entries[i]))
+                total_contains += 1
+    return total_contains
+
+
+def close_the_second_window(driver):
+    windows_handles = driver.window_handles
+    if len(windows_handles) == 2:
+        driver.switch_to.window(windows_handles[1])
+        driver.close()
+        driver.switch_to.window(windows_handles[0])

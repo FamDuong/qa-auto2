@@ -45,3 +45,7 @@ class NewTabLogAdsLocators:
     BANNER_ADS_IFRAME = (By.ID, 'ntrb-5')
     BANNER_ADS_LINK = (By.ID, 'link')
     SKIN_ADS_LINK = (By.ID, 'canvas')
+    VIDEO_ADS_CLOSE_FLOAT_BUTTON = (By.XPATH, '//button[@class="close"]')
+    VIDEO_ADS_CLOSE_FLOAT_BUTTON_XPATH = '//button[@class="close"]'
+    VIDEO_ADS_IFRAME = (By.ID, 'ntrb-vast')
+    VIDEO_ADS_VIDEO = (By.XPATH, '//video[@webkit-playsinline="true"]')
