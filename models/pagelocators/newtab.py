@@ -21,6 +21,7 @@ class NewTabZenLocators:
                                                   ':not([data-click-url*="click"])'
     ZEN_NEWS_NOT_CONTAINS_ADS_ITEM = (By.CSS_SELECTOR, ZEN_NEWS_NOT_CONTAINS_ADS_ITEM_CSS_SELECTOR)
 
+
 class NewTabWidgetLocators:
     EDIT_WIDGET_BUTTON = (By.XPATH, '//div[@class="widget-customize-button minimal"]')
     # EDIT_WIDGET_BUTTON = (By.XPATH, '// span[text() = "Customize page"]')
@@ -29,6 +30,7 @@ class NewTabWidgetLocators:
     SELECTED_BACKGROUND_IMAGE = (By.XPATH, "//div[@class='bg-item active']")
     DONE_BUTTON = (By.XPATH, '//button[text()="Done"]')
     RESET_DEFAULT_BUTTON = (By.XPATH, '//button[@class="btn btn-600 reset"]')
+
 
 class NewTabMostVisitedLocators:
     TOTAL_MOST_VISITED_QC = (By.XPATH, "//li[contains(@class,'most-visited-tile mv-qc')]")
@@ -39,5 +41,11 @@ class NewTabMostVisitedLocators:
     NEWS_ADS_BY_INDEX_XPATH = "(//div[contains(@class,'feedRow')]//div[contains(@class,'-ad nf-card')])[{param1}]"
 
 
-
-
+class NewTabLogAdsLocators:
+    BANNER_ADS_IFRAME = (By.ID, 'ntrb-5')
+    BANNER_ADS_LINK = (By.ID, 'link')
+    SKIN_ADS_LINK = (By.ID, 'canvas')
+    VIDEO_ADS_CLOSE_FLOAT_BUTTON = (By.XPATH, '//button[@class="close"]')
+    VIDEO_ADS_CLOSE_FLOAT_BUTTON_XPATH = '//button[@class="close"]'
+    VIDEO_ADS_IFRAME = (By.ID, 'ntrb-vast')
+    VIDEO_ADS_VIDEO = (By.XPATH, '//video[@webkit-playsinline="true"]')

@@ -4,7 +4,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from models.pageelements.basepage_elements import BasePageElement
 from selenium.webdriver.support import expected_conditions as ec
 from models.pagelocators.newtab import NewTabSearchLocators, NewTabIconSitesLocators, NewTabZenLocators, \
-    NewTabWidgetLocators, NewTabMostVisitedLocators
+    NewTabWidgetLocators, NewTabMostVisitedLocators, NewTabLogAdsLocators
 
 
 class NewTabSearchElement(BasePageElement):
@@ -72,3 +72,26 @@ class NewTabAdsElements(BasePageElement):
     def find_all_news_ads(self, driver: WebDriver):
         self.find_element_if_exist(driver, NewTabMostVisitedLocators.TOTAL_MOST_VISITED_QC)
         return driver.find_elements_by_xpath(NewTabMostVisitedLocators.TOTAL_NEWS_ADS_XPATH)
+
+
+class NewTabLogAdsElements(BasePageElement):
+    def find_banner_ads_640x360_iframe(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.BANNER_ADS_IFRAME)
+
+    def find_banner_ads_640x360_ads(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.BANNER_ADS_LINK)
+
+    def find_skin_ads(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.SKIN_ADS_LINK)
+
+    def find_video_ads_close_float_button(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.VIDEO_ADS_CLOSE_FLOAT_BUTTON)
+
+    def count_video_ads_close_float_button(self, driver: WebDriver):
+        return len(driver.find_elements_by_xpath(NewTabLogAdsLocators.VIDEO_ADS_CLOSE_FLOAT_BUTTON_XPATH))
+
+    def find_video_ads_video_iframe(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.VIDEO_ADS_IFRAME)
+
+    def find_video_ads_video(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.VIDEO_ADS_VIDEO)
