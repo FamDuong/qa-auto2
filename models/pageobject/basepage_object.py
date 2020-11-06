@@ -57,6 +57,7 @@ class BasePageObject(object):
             return driver.execute_script('return document.querySelector(arguments[0]).'
                                          'shadowRoot.querySelector(arguments[1])', SaviorPageLocators.FIRST_LAYER,
                                          SaviorPageLocators.DOWNLOAD_BUTTON)
+
         start_time = datetime.now()
         while self.get_element_first_layer_savior(driver) is None:
             time.sleep(1)
@@ -111,5 +112,6 @@ class BasePageObject(object):
     def scroll_to_element(self, driver, element):
         driver.execute_script('arguments[0].scrollIntoView()', element)
 
-
+    def right_click_then_open_link_in_newtab(self, driver, element):
+        ActionChains(driver).context_click(element).key_down(Keys.CONTROL).click(element).perform()
 

@@ -49,3 +49,11 @@ class NewTabLogAdsLocators:
     VIDEO_ADS_CLOSE_FLOAT_BUTTON_XPATH = '//button[@class="close"]'
     VIDEO_ADS_IFRAME = (By.ID, 'ntrb-vast')
     VIDEO_ADS_VIDEO = (By.XPATH, '//video[@webkit-playsinline="true"]')
+    NEWS_FIRST_NEWS_BY_PARAM_XPATH = '(//div[@data-ga-label="{param1}"]//a)[1]'
+    NEWS_FIRST_NEWS_BY_PARAM_LIKE_BUTTON_XPATH = '(//div[@data-ga-label="{param1}"]//div[@data-ga-label="likeButton"]//button)[1]'
+    NEWS_FIRST_NEWS_BY_PARAM_DISLIKE_BUTTON_XPATH = '(//div[@data-ga-label="{param1}"]//div[@data-ga-label="likeButton"]//button[contains(@class,"liked")])[1]'
+    NEWS_FIRST_NEWS_BY_PARAM_CUSTOMS_BUTTON_XPATH = '(//div[@data-ga-label="{param1}"]//div[@data-ga-label="likeButton"]//button[@data-ga-label="disLikeMenuButton"])[1]'
+    NEWS_FIRST_NEWS_BY_PARAM_CUSTOMS_HIDE_ARTICLE_XPATH = '(//div[@data-ga-label="{param1}"]//div[@data-ga-label="likeButton"]//div[@data-ga-label="dislikeMenu-hideArticle"])[1]'
+    NEWS_FIRST_NEWS_BY_PARAM_CUSTOMS_HIDE_SOURCE_XPATH = '(//div[@data-ga-label="{param1}"]//div[@data-ga-label="likeButton"]//div[@data-ga-label="dislikeMenu-hideSource"])[1]'
+    NEWS_FIRST_NEWS_BY_PARAM_CUSTOMS_REPORT_XPATH = '(//div[@data-ga-label="{param1}"]//div[@data-ga-label="likeButton"]//div[@data-ga-label="dislikeMenu-report"])[1]'
+    NEWS_FIRST_ADS_BY_PARAM_XPATH = '(//div[@data-ga-label="{param1}:ad"]//a[2])[1]'
