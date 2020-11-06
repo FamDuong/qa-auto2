@@ -49,3 +49,7 @@ class NewTabLogAdsLocators:
     VIDEO_ADS_CLOSE_FLOAT_BUTTON_XPATH = '//button[@class="close"]'
     VIDEO_ADS_IFRAME = (By.ID, 'ntrb-vast')
     VIDEO_ADS_VIDEO = (By.XPATH, '//video[@webkit-playsinline="true"]')
+    NEWS_FIRST_SMALL_NEWS = (By.XPATH, '(//div[@data-ga-label="small"]//a)[1]')
+    NEWS_FIRST_BIG_NEWS = (By.XPATH, '(//div[@data-ga-label="big"]//a)[1]')
+    NEWS_FIRST_SMALL_ADS = (By.XPATH, '(//div[@data-ga-label="small:ad"]//a[2])[1]')
+    NEWS_FIRST_BIG_ADS = (By.XPATH, '(//div[@data-ga-label="big:ad"]//a[2])[1]')

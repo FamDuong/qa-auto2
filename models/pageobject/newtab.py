@@ -145,7 +145,15 @@ class NewTabLogAdsActions(BasePageObject):
                     break
         self.new_tab_log_ads_element.find_video_ads_close_float_button(driver).click()
 
-    def click_on_video_ads(self, driver: WebDriver):
-        time.sleep(10)
-        driver.switch_to.frame(self.new_tab_log_ads_element.find_video_ads_video_iframe(driver))
-        self.new_tab_log_ads_element.find_video_ads_video(driver).click()
+    def click_on_news_small_news(self, driver: WebDriver):
+        self.new_tab_log_ads_element.find_news_small_news(driver).click()
+
+    def click_on_news_big_news(self, driver: WebDriver):
+        self.new_tab_log_ads_element.find_news_big_news(driver).click()
+
+    def click_on_news_small_ads(self, driver: WebDriver):
+        self.new_tab_log_ads_element.find_news_small_ads(driver).click()
+
+    def click_on_news_big_ads(self, driver: WebDriver):
+        self.new_tab_log_ads_element.find_news_big_ads(driver).click()
+

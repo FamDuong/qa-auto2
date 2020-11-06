@@ -95,3 +95,15 @@ class NewTabLogAdsElements(BasePageElement):
 
     def find_video_ads_video(self, driver):
         return self.find_element_if_exist(driver, NewTabLogAdsLocators.VIDEO_ADS_VIDEO)
+
+    def find_news_small_news(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.NEWS_FIRST_SMALL_NEWS)
+
+    def find_news_big_news(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.NEWS_FIRST_BIG_NEWS)
+
+    def find_news_small_ads(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.NEWS_FIRST_SMALL_ADS)
+
+    def find_news_big_ads(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.NEWS_FIRST_BIG_ADS)

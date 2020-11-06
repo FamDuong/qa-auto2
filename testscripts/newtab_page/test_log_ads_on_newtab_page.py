@@ -5,7 +5,8 @@ from pytest_testrail.plugin import pytestrail
 
 from models.pageobject.newtab import NewTabLogAdsActions
 from testscripts.newtab_page.common import get_browser_log_entries, get_last_info_log, count_log_contain_string, \
-    close_the_second_window
+    close_the_second_window, scroll_down_to_show_ads, get_news_logs, assert_newsfeed_logs_card_size, \
+    assert_newsfeed_logs_reqid
 from utils_automation.const import NewTabAdsDemoUrls
 from models.pageobject.basepage_object import BasePageObject
 
@@ -26,6 +27,7 @@ class TestLogAdsOnNewTabPage:
             close_the_second_window(browser)
             log_entries = get_browser_log_entries(browser)
             last_log = get_last_info_log(log_entries)
+            LOGGER.info("Assert after click banner_ads exist console log contains [ntrbClick]")
             assert 'ntrbClick' in last_log
         finally:
             close_the_second_window(browser)
@@ -38,6 +40,7 @@ class TestLogAdsOnNewTabPage:
             self.newtab_log_ads_action.click_on_skin_ads(browser)
             close_the_second_window(browser)
             log_entries = get_browser_log_entries(browser)
+            LOGGER.info("Assert after click magnetic_masthread_ads exist console log contains [skinClick]")
             assert count_log_contain_string(log_entries, ['skinClick']) == 1
         finally:
             close_the_second_window(browser)
@@ -50,6 +53,7 @@ class TestLogAdsOnNewTabPage:
             self.newtab_log_ads_action.click_on_skin_ads(browser)
             close_the_second_window(browser)
             log_entries = get_browser_log_entries(browser)
+            LOGGER.info("Assert after click video_masthead_ads exist console log contains [skinClick]")
             assert count_log_contain_string(log_entries, ['skinClick']) == 1
         finally:
             close_the_second_window(browser)
@@ -64,6 +68,7 @@ class TestLogAdsOnNewTabPage:
                 self.newtab_log_ads_action.click_on_skin_ads(browser)
                 close_the_second_window(browser)
                 log_entries = get_browser_log_entries(browser)
+                LOGGER.info("Assert after click skin_ads exist console log contains [skinClick]")
                 assert count_log_contain_string(log_entries, ['skinClick']) == 1
         finally:
             close_the_second_window(browser)
@@ -76,6 +81,8 @@ class TestLogAdsOnNewTabPage:
         LOGGER.info("Open demo link: " + NewTabAdsDemoUrls.VIDEO_ADS_URL)
         self.newtab_log_ads_action.click_on_video_ads_close_float_button(browser)
         log_entries = get_browser_log_entries(browser)
+        LOGGER.info("Assert after scroll down to show floating video shown and click to close floating video_ads "
+                    "exist console log contains [feedPinIn, Click]")
         assert count_log_contain_string(log_entries, ['feedPinIn', 'Click']) == 1
 
         LOGGER.info("===================================================")
@@ -84,6 +91,8 @@ class TestLogAdsOnNewTabPage:
         browser.execute_script('window.scrollTo(0, document.body.scrollHeight);')
         time.sleep(10)
         log_entries = get_browser_log_entries(browser)
+        LOGGER.info("Assert after wait for floating video completes and auto hides exist console log contains ["
+                    "feedPipDestroy]")
         assert count_log_contain_string(log_entries, ['feedPipDestroy']) == 1
 
         LOGGER.info("===================================================")
@@ -93,4 +102,29 @@ class TestLogAdsOnNewTabPage:
         close_the_second_window(browser)
         log_entries = get_browser_log_entries(browser)
         last_log = get_last_info_log(log_entries)
+        LOGGER.info("Assert after click video_ads exist console log contains [ntrbVASTEvent]")
         assert 'ntrbVASTEvent' in last_log
+
+    @pytestrail.case('C403341')
+    def test_check_card_size_is_shown_in_card_click_log(self, browser):
+        assert_newsfeed_logs_card_size(browser, newsfeed_card_type='Small News', card_size='cardSize=small')
+        LOGGER.info("===================================================")
+        assert_newsfeed_logs_card_size(browser, newsfeed_card_type='Big News', card_size='cardSize=big')
+        LOGGER.info("===================================================")
+        assert_newsfeed_logs_card_size(browser, newsfeed_card_type='Small Ad', card_size='cardSize=small:ad')
+        LOGGER.info("===================================================")
+        assert_newsfeed_logs_card_size(browser, newsfeed_card_type='Big Ad', card_size='cardSize=big:ad')
+
+    @pytestrail.case('C410373')
+    def test_check_log_when_left_click_a_card(self, browser):
+        assert_newsfeed_logs_reqid(browser, newsfeed_card_type='Small News')
+        LOGGER.info("===================================================")
+        assert_newsfeed_logs_reqid(browser, newsfeed_card_type='Big News')
+        LOGGER.info("===================================================")
+        assert_newsfeed_logs_reqid(browser, newsfeed_card_type='Small Ad')
+        LOGGER.info("===================================================")
+        assert_newsfeed_logs_reqid(browser, newsfeed_card_type='Big Ad')
+
+
+
+
