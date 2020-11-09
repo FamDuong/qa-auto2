@@ -111,7 +111,7 @@ def count_log_contain_string(log_entries, contains_strings):
     for i in range(len(log_entries)):
         for j in range(len(contains_strings)):
             if contains_strings[j] in str(log_entries[i]):
-                LOGGER.info("Log entry is contain [" + contains_strings[j] + "]: " + str(log_entries[i]))
+                LOGGER.info("Log is contain [" + contains_strings[j] + "]: " + str(log_entries[i]))
                 total_contains += 1
     return total_contains
 
@@ -145,21 +145,30 @@ def get_news_logs(driver, contains_string='coccoc.com/log?'):
 newtab_log_ads_action = NewTabLogAdsActions()
 
 
-def click_newsfeed_card(driver, newsfeed_card_type):
+# def click_newsfeed_card(driver, newsfeed_card_type, is_right_click=False):
+#     if 'Small News' in newsfeed_card_type:
+#         newtab_log_ads_action.click_on_news_small_news(driver, is_right_click)
+#     elif 'Big News' in newsfeed_card_type:
+#         newtab_log_ads_action.click_on_news_big_news(driver, is_right_click)
+#     elif 'Small Ad' in newsfeed_card_type:
+#         newtab_log_ads_action.click_on_news_small_ads(driver, is_right_click)
+#     else:
+#         newtab_log_ads_action.click_on_news_big_ads(driver, is_right_click)
+
+def click_newsfeed_card(driver, newsfeed_card_type, is_right_click=False):
     if 'Small News' in newsfeed_card_type:
-        newtab_log_ads_action.click_on_news_small_news(driver)
+        newtab_log_ads_action.click_on_news_card(driver, news_type='small', is_right_click=is_right_click)
     elif 'Big News' in newsfeed_card_type:
-        newtab_log_ads_action.click_on_news_big_news(driver)
+        newtab_log_ads_action.click_on_news_card(driver, news_type='big', is_right_click=is_right_click)
     elif 'Small Ad' in newsfeed_card_type:
-        newtab_log_ads_action.click_on_news_small_ads(driver)
+        newtab_log_ads_action.click_on_news_ads_card(driver, ads_type='small', is_right_click=is_right_click)
     else:
-        newtab_log_ads_action.click_on_news_big_ads(driver)
+        newtab_log_ads_action.click_on_news_ads_card(driver, ads_type='big', is_right_click=is_right_click)
 
 
 def decode_url(log):
     import urllib
     url_decode = urllib.parse.unquote(str(log))
-    LOGGER.info(url_decode)
     url_decodes = [url_decode]
     return url_decodes
 
@@ -171,10 +180,22 @@ def get_requid(root_string, start_string, end_string):
     return reqid
 
 
+def assert_newsfeed_logs_type(newsfeed_card_type, feed_action_card_click_log):
+    if 'News' in newsfeed_card_type:
+        LOGGER.info('Assert {log?feedAction=cardClick contains [&type=interest]}')
+        assert count_log_contain_string(decode_url(feed_action_card_click_log), ['&type=interest']) == 1
+    elif 'Small Ad' in newsfeed_card_type:
+        LOGGER.info('Assert {log?feedAction=cardClick contains [&type=sidebar_context]}')
+        assert count_log_contain_string(decode_url(feed_action_card_click_log), ['&type=sidebar_context']) == 1
+    else:
+        LOGGER.info('Assert {log?feedAction=cardClick contains [&type=zen_big_context]}')
+        assert count_log_contain_string(decode_url(feed_action_card_click_log), ['&type=zen_big_context']) == 1
+
+
 def assert_newsfeed_logs_card_size(driver, newsfeed_card_type, card_size):
     driver.refresh()
     scroll_down_to_show_ads(driver, timeout=0, total_news_base=50)
-    LOGGER.info("Get Network log after click " + newsfeed_card_type)
+    LOGGER.info("Get Network log after click " + newsfeed_card_type + ": ")
     click_newsfeed_card(driver, newsfeed_card_type)
     close_the_second_window(driver)
     feed_action_card_click_log = get_news_logs(driver, contains_string='coccoc.com/log?feedAction=cardClick')
@@ -183,6 +204,7 @@ def assert_newsfeed_logs_card_size(driver, newsfeed_card_type, card_size):
         "Assert after click " + newsfeed_card_type + " exist network logs: {log?feedAction=cardClick contains [" + card_size + "]} and {log?webhpAction=Click}")
     assert len(webhp_action_card_click_log) == 1
     assert count_log_contain_string(decode_url(feed_action_card_click_log), [card_size]) == 1
+    assert_newsfeed_logs_type(newsfeed_card_type, feed_action_card_click_log)
 
 
 def assert_newsfeed_logs_reqid(driver, newsfeed_card_type):
@@ -198,3 +220,42 @@ def assert_newsfeed_logs_reqid(driver, newsfeed_card_type):
     LOGGER.info(
         "Assert after click " + newsfeed_card_type + "requid in feedAction = webhpAction")
     assert reqid_in_feed_action in value_in_webhp_action
+
+
+def assert_newsfeed_logs_card_click(driver, newsfeed_card_type, is_right_click):
+    driver.refresh()
+    scroll_down_to_show_ads(driver, timeout=0, total_news_base=50)
+    LOGGER.info("Get Network log after click " + newsfeed_card_type)
+    click_newsfeed_card(driver, newsfeed_card_type, is_right_click)
+    close_the_second_window(driver)
+    feed_action_card_click_log = get_news_logs(driver, contains_string='coccoc.com/log?feedAction=cardClick&card_id')
+    LOGGER.info(
+        "Assert after click " + newsfeed_card_type + " exist network logs [log?feedAction=cardClick]")
+    assert len(feed_action_card_click_log) == 1
+
+
+def get_log_webhpaction_after_click_action(action, webhp_action_card_click_log):
+    if action == 'like' or action == 'dislike':
+        return count_log_contain_string(decode_url(webhp_action_card_click_log), ['Label=likeButton'])
+    elif action == 'hide':
+        return count_log_contain_string(decode_url(webhp_action_card_click_log), ['Label=dislikeMenu-hideArticle'])
+    elif action == 'hide source':
+        return count_log_contain_string(decode_url(webhp_action_card_click_log), ['Label=dislikeMenu-hideSource'])
+    else:
+        return count_log_contain_string(decode_url(webhp_action_card_click_log), ['Label=dislikeMenu-report'])
+
+
+def assert_not_send_logs_after_click_action(driver, newsfeed_card_type, action):
+    driver.refresh()
+    scroll_down_to_show_ads(driver, timeout=0, total_news_base=10)
+    LOGGER.info("Get Network log after [" + action + "] " + newsfeed_card_type)
+    newtab_log_ads_action.click_on_news_action_button(driver, newsfeed_card_type, action)
+    time.sleep(5)
+    feed_action_card_click_log = get_news_logs(driver, contains_string='coccoc.com/log?feedAction=cardClick&card_id')
+    webhp_action_card_click_log = get_news_logs(driver, contains_string='coccoc.com/log?webhpAction=Click')
+
+
+    LOGGER.info(
+        "Assert after click [" + action + "] is not send logs")
+    assert len(feed_action_card_click_log) == 0
+    assert get_log_webhpaction_after_click_action(action, webhp_action_card_click_log) == 1

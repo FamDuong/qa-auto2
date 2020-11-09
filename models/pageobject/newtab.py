@@ -145,15 +145,63 @@ class NewTabLogAdsActions(BasePageObject):
                     break
         self.new_tab_log_ads_element.find_video_ads_close_float_button(driver).click()
 
-    def click_on_news_small_news(self, driver: WebDriver):
-        self.new_tab_log_ads_element.find_news_small_news(driver).click()
+    def click_on_news_card(self, driver: WebDriver, news_type, is_right_click=False):
+        news_element = self.new_tab_log_ads_element.find_news_card(driver, news_type)
+        if is_right_click is False:
+            news_element.click()
+        else:
+            self.right_click_then_open_link_in_newtab(driver, news_element)
 
-    def click_on_news_big_news(self, driver: WebDriver):
-        self.new_tab_log_ads_element.find_news_big_news(driver).click()
+    def click_on_news_ads_card(self, driver: WebDriver, ads_type, is_right_click=False):
+        ads_element = self.new_tab_log_ads_element.find_news_ads_card(driver, ads_type)
+        if is_right_click is False:
+            ads_element.click()
+        else:
+            self.right_click_then_open_link_in_newtab(driver, ads_element)
 
-    def click_on_news_small_ads(self, driver: WebDriver):
-        self.new_tab_log_ads_element.find_news_small_ads(driver).click()
+    def click_on_news_custom_button(self, driver: WebDriver, news_type):
+        self.new_tab_log_ads_element.find_news_customs_button(driver, news_type).click()
 
-    def click_on_news_big_ads(self, driver: WebDriver):
-        self.new_tab_log_ads_element.find_news_big_ads(driver).click()
+    def click_on_news_action_button(self, driver: WebDriver, news_type, action):
+        if 'Big' in news_type:
+            news_type = 'big'
+        else:
+            news_type = 'small'
+        if action == 'like':
+            self.new_tab_log_ads_element.find_news_action_button(driver, news_type, action).click()
+        elif action == 'dislike':
+
+            self.new_tab_log_ads_element.find_news_action_button(driver, news_type, action='like').click()
+            self.new_tab_log_ads_element.find_news_action_button(driver, news_type, action).click()
+        else:
+            self.click_on_news_custom_button(driver, news_type)
+            self.new_tab_log_ads_element.find_news_action_button(driver, news_type, action).click()
+
+    # def click_on_news_small_news(self, driver: WebDriver, is_right_click=False):
+    #     small_news_element = self.new_tab_log_ads_element.find_news_card(driver)
+    #     if is_right_click is False:
+    #         small_news_element.click()
+    #     else:
+    #         self.right_click_then_open_link_in_newtab(driver, small_news_element)
+
+    # def click_on_news_big_news(self, driver: WebDriver, is_right_click=False):
+    #     big_news = self.new_tab_log_ads_element.find_news_big_news(driver)
+    #     if is_right_click is False:
+    #         big_news.click()
+    #     else:
+    #         self.right_click_then_open_link_in_newtab(driver, big_news)
+    #
+    # def click_on_news_small_ads(self, driver: WebDriver, is_right_click=False):
+    #     small_ads = self.new_tab_log_ads_element.find_news_small_ads(driver)
+    #     if is_right_click is False:
+    #         small_ads.click()
+    #     else:
+    #         self.right_click_then_open_link_in_newtab(driver, small_ads)
+    #
+    # def click_on_news_big_ads(self, driver: WebDriver, is_right_click=False):
+    #     big_ads = self.new_tab_log_ads_element.find_news_big_ads(driver)
+    #     if is_right_click is False:
+    #         big_ads.click()
+    #     else:
+    #         self.right_click_then_open_link_in_newtab(driver, big_ads)
 

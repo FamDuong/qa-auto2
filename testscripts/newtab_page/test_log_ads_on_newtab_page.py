@@ -6,7 +6,7 @@ from pytest_testrail.plugin import pytestrail
 from models.pageobject.newtab import NewTabLogAdsActions
 from testscripts.newtab_page.common import get_browser_log_entries, get_last_info_log, count_log_contain_string, \
     close_the_second_window, scroll_down_to_show_ads, get_news_logs, assert_newsfeed_logs_card_size, \
-    assert_newsfeed_logs_reqid
+    assert_newsfeed_logs_reqid, assert_newsfeed_logs_card_click, assert_not_send_logs_after_click_action
 from utils_automation.const import NewTabAdsDemoUrls
 from models.pageobject.basepage_object import BasePageObject
 
@@ -124,6 +124,28 @@ class TestLogAdsOnNewTabPage:
         assert_newsfeed_logs_reqid(browser, newsfeed_card_type='Small Ad')
         LOGGER.info("===================================================")
         assert_newsfeed_logs_reqid(browser, newsfeed_card_type='Big Ad')
+
+    @pytestrail.case('C403338')
+    def test_check_log_when_right_click_a_card(self, browser):
+        assert_newsfeed_logs_card_click(browser, newsfeed_card_type='Small News', is_right_click=True)
+        LOGGER.info("===================================================")
+        assert_newsfeed_logs_card_click(browser, newsfeed_card_type='Big News', is_right_click=True)
+        LOGGER.info("===================================================")
+        assert_newsfeed_logs_card_click(browser, newsfeed_card_type='Small Ad', is_right_click=True)
+        LOGGER.info("===================================================")
+        assert_newsfeed_logs_card_click(browser, newsfeed_card_type='Big Ad', is_right_click=True)
+        # LOGGER.info("===================================================")
+        assert_not_send_logs_after_click_action(browser, newsfeed_card_type='Small News', action='like')
+        assert_not_send_logs_after_click_action(browser, newsfeed_card_type='Small News', action='dislike')
+        assert_not_send_logs_after_click_action(browser, newsfeed_card_type='Small News', action='hide')
+        assert_not_send_logs_after_click_action(browser, newsfeed_card_type='Small News', action='hide source')
+        assert_not_send_logs_after_click_action(browser, newsfeed_card_type='Small News', action='report')
+        LOGGER.info("===================================================")
+        assert_not_send_logs_after_click_action(browser, newsfeed_card_type='Big News', action='like')
+        assert_not_send_logs_after_click_action(browser, newsfeed_card_type='Big News', action='dislike')
+        assert_not_send_logs_after_click_action(browser, newsfeed_card_type='Big News', action='hide source')
+        assert_not_send_logs_after_click_action(browser, newsfeed_card_type='Big News', action='like')
+        assert_not_send_logs_after_click_action(browser, newsfeed_card_type='Big News', action='report')
 
 
 

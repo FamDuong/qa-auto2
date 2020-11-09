@@ -96,14 +96,36 @@ class NewTabLogAdsElements(BasePageElement):
     def find_video_ads_video(self, driver):
         return self.find_element_if_exist(driver, NewTabLogAdsLocators.VIDEO_ADS_VIDEO)
 
-    def find_news_small_news(self, driver):
-        return self.find_element_if_exist(driver, NewTabLogAdsLocators.NEWS_FIRST_SMALL_NEWS)
+    def find_news_card(self, driver, news_type):
+        news_card = NewTabLogAdsLocators.NEWS_FIRST_NEWS_BY_PARAM_XPATH.replace('{param1}', news_type)
+        return self.find_element_if_exist(driver,  (By.XPATH, news_card))
 
-    def find_news_big_news(self, driver):
-        return self.find_element_if_exist(driver, NewTabLogAdsLocators.NEWS_FIRST_BIG_NEWS)
+    def find_news_ads_card(self, driver, ads_type):
+        ads_card = NewTabLogAdsLocators.NEWS_FIRST_ADS_BY_PARAM_XPATH.replace('{param1}', ads_type)
+        return self.find_element_if_exist(driver, (By.XPATH, ads_card))
 
-    def find_news_small_ads(self, driver):
-        return self.find_element_if_exist(driver, NewTabLogAdsLocators.NEWS_FIRST_SMALL_ADS)
+    def find_news_customs_button(self, driver, news_type):
+        customs_button = NewTabLogAdsLocators.NEWS_FIRST_NEWS_BY_PARAM_CUSTOMS_BUTTON_XPATH.replace('{param1}', news_type)
+        return self.find_element_if_exist(driver, (By.XPATH, customs_button))
 
-    def find_news_big_ads(self, driver):
-        return self.find_element_if_exist(driver, NewTabLogAdsLocators.NEWS_FIRST_BIG_ADS)
+    def find_news_action_button(self, driver, news_type, action):
+        if action == 'like':
+            action_element = NewTabLogAdsLocators.NEWS_FIRST_NEWS_BY_PARAM_LIKE_BUTTON_XPATH.replace('{param1}', news_type)
+        elif action == 'dislike':
+            action_element = NewTabLogAdsLocators.NEWS_FIRST_NEWS_BY_PARAM_DISLIKE_BUTTON_XPATH.replace('{param1}', news_type)
+        elif action == 'hide':
+            action_element = NewTabLogAdsLocators.NEWS_FIRST_NEWS_BY_PARAM_CUSTOMS_HIDE_ARTICLE_XPATH.replace('{param1}', news_type)
+        elif action == 'hide source':
+            action_element = NewTabLogAdsLocators.NEWS_FIRST_NEWS_BY_PARAM_CUSTOMS_HIDE_SOURCE_XPATH.replace('{param1}', news_type)
+        elif action == 'report':
+            action_element = NewTabLogAdsLocators.NEWS_FIRST_NEWS_BY_PARAM_CUSTOMS_REPORT_XPATH.replace('{param1}', news_type)
+        return self.find_element_if_exist(driver, (By.XPATH, action_element))
+
+    # def find_news_big_news(self, driver):
+    #     return self.find_element_if_exist(driver, NewTabLogAdsLocators.NEWS_FIRST_BIG_NEWS)
+    #
+    # def find_news_small_ads(self, driver):
+    #     return self.find_element_if_exist(driver, NewTabLogAdsLocators.NEWS_FIRST_SMALL_ADS)
+    #
+    # def find_news_big_ads(self, driver):
+    #     return self.find_element_if_exist(driver, NewTabLogAdsLocators.NEWS_FIRST_BIG_ADS)
