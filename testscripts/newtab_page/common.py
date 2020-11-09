@@ -247,7 +247,7 @@ def get_log_webhpaction_after_click_action(action, webhp_action_card_click_log):
 
 def assert_not_send_logs_after_click_action(driver, newsfeed_card_type, action):
     driver.refresh()
-    scroll_down_to_show_ads(driver, timeout=0, total_news_base=10)
+    scroll_down_to_show_ads(driver, timeout=0, total_news_base=50)
     LOGGER.info("Get Network log after [" + action + "] " + newsfeed_card_type)
     newtab_log_ads_action.click_on_news_action_button(driver, newsfeed_card_type, action)
     time.sleep(5)

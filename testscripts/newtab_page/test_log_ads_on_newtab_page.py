@@ -100,10 +100,10 @@ class TestLogAdsOnNewTabPage:
         LOGGER.info("Click on video ads to open the landing page of ads")
         browser.get(browser.current_url)
         self.newtab_log_ads_action.click_on_video_ads(browser)
-        close_the_second_window(browser)
         log_entries = get_browser_log_entries(browser)
+        close_the_second_window(browser)
         LOGGER.info("Assert after click video_ads exist console log contains [ntrbVASTEvent]")
-        assert count_log_contain_string(log_entries, [get_last_info_log(log_entries)]) == 1
+        assert 'ntrbVASTEvent' in get_last_info_log(log_entries)
 
     @pytestrail.case('C403341')
     def test_check_card_size_is_shown_in_card_click_log(self, get_newtab_url):
