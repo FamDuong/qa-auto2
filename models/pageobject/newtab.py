@@ -145,6 +145,11 @@ class NewTabLogAdsActions(BasePageObject):
                     break
         self.new_tab_log_ads_element.find_video_ads_close_float_button(driver).click()
 
+    def click_on_video_ads(self, driver: WebDriver):
+        time.sleep(10)
+        driver.switch_to.frame(self.new_tab_log_ads_element.find_video_ads_video_iframe(driver))
+        self.new_tab_log_ads_element.find_video_ads_video(driver).click()
+
     def click_on_news_card(self, driver: WebDriver, news_type, is_right_click=False):
         news_element = self.new_tab_log_ads_element.find_news_card(driver, news_type)
         if is_right_click is False:

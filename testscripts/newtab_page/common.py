@@ -255,7 +255,6 @@ def assert_not_send_logs_after_click_action(driver, newsfeed_card_type, action):
     webhp_action_card_click_log = get_news_logs(driver, contains_string='coccoc.com/log?webhpAction=Click')
 
 
-    LOGGER.info(
-        "Assert after click [" + action + "] is not send logs")
+    LOGGER.info("Assert after click [" + action + "] is not send logs")
     assert len(feed_action_card_click_log) == 0
     assert get_log_webhpaction_after_click_action(action, webhp_action_card_click_log) == 1

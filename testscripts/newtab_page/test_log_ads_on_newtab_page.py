@@ -7,6 +7,7 @@ from models.pageobject.newtab import NewTabLogAdsActions
 from testscripts.newtab_page.common import get_browser_log_entries, get_last_info_log, count_log_contain_string, \
     close_the_second_window, scroll_down_to_show_ads, get_news_logs, assert_newsfeed_logs_card_size, \
     assert_newsfeed_logs_reqid, assert_newsfeed_logs_card_click, assert_not_send_logs_after_click_action
+from utils_automation.common_browser import coccoc_instance
 from utils_automation.const import NewTabAdsDemoUrls
 from models.pageobject.basepage_object import BasePageObject
 
@@ -87,7 +88,7 @@ class TestLogAdsOnNewTabPage:
 
         LOGGER.info("===================================================")
         LOGGER.info("Test log ads wait for floating video completes and auto hides")
-        browser.refresh()
+        browser.get(browser.current_url)
         browser.execute_script('window.scrollTo(0, document.body.scrollHeight);')
         time.sleep(10)
         log_entries = get_browser_log_entries(browser)
@@ -97,16 +98,18 @@ class TestLogAdsOnNewTabPage:
 
         LOGGER.info("===================================================")
         LOGGER.info("Click on video ads to open the landing page of ads")
-        browser.refresh()
+        browser.get(browser.current_url)
         self.newtab_log_ads_action.click_on_video_ads(browser)
         close_the_second_window(browser)
         log_entries = get_browser_log_entries(browser)
-        last_log = get_last_info_log(log_entries)
         LOGGER.info("Assert after click video_ads exist console log contains [ntrbVASTEvent]")
-        assert 'ntrbVASTEvent' in last_log
+        assert count_log_contain_string(log_entries, [get_last_info_log(log_entries)]) == 1
 
     @pytestrail.case('C403341')
-    def test_check_card_size_is_shown_in_card_click_log(self, browser):
+    def test_check_card_size_is_shown_in_card_click_log(self, get_newtab_url):
+        browser = coccoc_instance()
+        if get_newtab_url is not None:
+            browser.get(get_newtab_url)
         assert_newsfeed_logs_card_size(browser, newsfeed_card_type='Small News', card_size='cardSize=small')
         LOGGER.info("===================================================")
         assert_newsfeed_logs_card_size(browser, newsfeed_card_type='Big News', card_size='cardSize=big')
@@ -116,7 +119,10 @@ class TestLogAdsOnNewTabPage:
         assert_newsfeed_logs_card_size(browser, newsfeed_card_type='Big Ad', card_size='cardSize=big:ad')
 
     @pytestrail.case('C410373')
-    def test_check_log_when_left_click_a_card(self, browser):
+    def test_check_log_when_left_click_a_card(self, get_newtab_url):
+        browser = coccoc_instance()
+        if get_newtab_url is not None:
+            browser.get(get_newtab_url)
         assert_newsfeed_logs_reqid(browser, newsfeed_card_type='Small News')
         LOGGER.info("===================================================")
         assert_newsfeed_logs_reqid(browser, newsfeed_card_type='Big News')
@@ -126,7 +132,10 @@ class TestLogAdsOnNewTabPage:
         assert_newsfeed_logs_reqid(browser, newsfeed_card_type='Big Ad')
 
     @pytestrail.case('C403338')
-    def test_check_log_when_right_click_a_card(self, browser):
+    def test_check_log_when_right_click_a_card(self, get_newtab_url):
+        browser = coccoc_instance()
+        if get_newtab_url is not None:
+            browser.get(get_newtab_url)
         assert_newsfeed_logs_card_click(browser, newsfeed_card_type='Small News', is_right_click=True)
         LOGGER.info("===================================================")
         assert_newsfeed_logs_card_click(browser, newsfeed_card_type='Big News', is_right_click=True)
