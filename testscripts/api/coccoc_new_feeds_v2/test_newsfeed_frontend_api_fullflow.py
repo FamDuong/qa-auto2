@@ -11,7 +11,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import shutil
 import subprocess
-from datetime import date
+
+import logging
+LOGGER = logging.getLogger(__name__)
 
 from config.environment import COCCOC_NEW_FEED_API_FE_USER_FEED
 from config.environment import COCCOC_NEW_FEED_API_FE_USER_SETTING
@@ -28,12 +30,13 @@ class TestFrontEndApi:
     common = NewFeedCommon()
     result = True
     wait_time = 1200 # 15 minutes + threshold 10 minutes
-    wait_time_interest = 2400 # 30 minutes + threshold 10 minutes
+    wait_time_interest = 1020 # 15 minutes + threshold 2 minutes
     # list_vid = ["T6rQC3J61u9rg1oTyC1uuJg1o9JGC9oJCGSyW2nBb9rofPtd8jQneKDZZdOWW"]
     # list_vid = ["693y6GJ61CGT91oTSu1u9GV1J9J6Gu996TuoW2nBb9rofPtd8jQneKDZZdOWW"]     # Browser version 83.0.4103.120
     # list_vid = ["bT9J9g3319r9o1oJSy1G9gb1oJTT9uo6GSQoW2nBb9rofPtd8jQneKDZZdOWW"]     # Browser version 83.0.4103.122
     # list_vid = ["SC3Qrgog1bg3V1oTgJ1GSJu1ub3VoTVQTGV6W2nBb9rofPtd8jQneKDZZdOWW"]     # Browser version 83.0.4103.124
-    list_vid = ["QSCrybTu1yGr61oQb91Sy3b1bTSG6yGgoT9VW2nBb9rofPtd8jQneKDZZdOWW"]     # Browser version 81.0.4044.150
+    list_vid = ["S6rJSubS13gVV1oSQr1TbGC16C9gry3T9orSW2nBb9rofPtd8jQneKDZZdOWW"]     # Browser version 84.0.4147.144
+    # list_vid = ["Vyb9uoGb1966Q1oQgo1uogQ1C6g3rSoVSJuyW2nBb9rofPtd8jQneKDZZdOWW"]     # Browser version 85.0.4183.122
     list_sid = ["kdz9reois5thzq4ew"]
 
     # Set filename
@@ -427,7 +430,7 @@ class TestFrontEndApi:
 
     # Make history
     def test_open_browser_with_urls(self, binary_path, default_directory):
-        list_url = self.common.read_to_file("list_merge_articles.txt")    # Get from BI team: 100 url category_id = 10000 (Xã hội), 200 url category_id = 13000 (Kinh tế)
+        list_url = self.common.read_to_file("list_vehicle_articles.txt")    # Get from BI team: 100 url category_id = 10000 (Xã hội), 200 url category_id = 13000 (Kinh tế)
         # Open browser to get history
         self.open_list_webpage(binary_path, default_directory, list_url)
         # Wait for BI update
@@ -554,6 +557,7 @@ class TestFrontEndApi:
     def open_list_webpage(self, binary_file, default_dir, list_url):
         browser = self.open_webpage(binary_file, default_dir)
         for url in list_url:
+            LOGGER.info(url)
             browser.get(url)
             time.sleep(1)
         browser.close()
@@ -646,8 +650,8 @@ class TestFrontEndApi:
         # sid = "ke0zz18gmji7swpd5"
         sid = None
         # Small page
-        number_of_pages = 30
-        page_size = 30
+        number_of_pages = 1
+        page_size = 1200
         number_of_editor_expect = 3
         number_of_popular_expect = 17
         number_of_interest_expect = 7
@@ -666,8 +670,8 @@ class TestFrontEndApi:
         ratio_of_interest_expect = 23.72
         ratio_of_sample_expect = 11.74
 
-
         for i in range(number_of_pages):
+            LOGGER.info("Page %s" %i)
             params = self.newsfeed_api.set_user_feed_data(vid=vid, sid=sid, page=i, size=page_size)
             api_data = self.newsfeed_api.request_get_new_feeds(COCCOC_NEW_FEED_API_FE_USER_FEED, params=params)
             api_data_articles = api_data["news"]
@@ -706,12 +710,39 @@ class TestFrontEndApi:
 
         assert self.result == False
 
+    # NF-260: User have click on feed with get update articles after 10 minutes, feed need filter articles shown more than 3 times or already clicked by this user
+    def test_interest_articles_appear_3_times(self):
+        vid = self.list_vid[0]
+        # sid = "ke0zz18gmji7swpd5"
+        sid = None
+        article_title = "Cựu Chủ tịch Petroland Bùi Minh Chính làm thất thoát 50 tỷ"
+        # Small page
+        loop = 5
+        wait_time_update = 1200 # Wait for 20 minutes
+
+        for i in range(loop):
+            LOGGER.info("Page %s" %i)
+            params = self.newsfeed_api.set_user_feed_data(vid=vid, sid=sid, page=0, size=1200)
+            api_data = self.newsfeed_api.request_get_new_feeds(COCCOC_NEW_FEED_API_FE_USER_FEED, params=params)
+            api_data_articles = api_data["news"]
+            print("Number of articles: ", len(api_data_articles))
+
+            if i > 3:
+                time.sleep(wait_time_update)    # Wait update cache
+            for j in range(len(api_data_articles)):
+                title = api_data_articles[j]["title"]
+                if title == article_title:
+                    LOGGER.info("Found: %s : %s" % (j, title))
+                    self.result = False
+                    time.sleep(60)
+        assert self.result == True
 
     def assert_equals(self, expect, actual, fail_message = None):
         global result
         if expect != actual:
             if fail_message is not None:
-                print("ERROR: %s are not equal: expect %s != actual %s" % (fail_message, expect, actual))
+                LOGGER.info("ERROR: %s are not equal: expect %s != actual %s" % (fail_message, expect, actual))
+                # print("ERROR: %s are not equal: expect %s != actual %s" % (fail_message, expect, actual))
             result = False
 
 

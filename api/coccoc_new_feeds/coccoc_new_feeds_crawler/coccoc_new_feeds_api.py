@@ -9,7 +9,8 @@ import os
 from config.environment import COCCOC_NEW_FEED_DATA_URL
 from config.environment import COCCOC_NEW_FEED_API_CMS_RULE
 from config.environment import COCCOC_NEW_FEED_API_CMS_INIT_USER
-
+import logging
+LOGGER = logging.getLogger(__name__)
 
 class NewsFeedAPI:
     full_api_url = ""
@@ -24,7 +25,8 @@ class NewsFeedAPI:
             response = session.get(api_url, params=params, headers=headers)
             if params != None:
                 self.full_api_url = api_url + "?" + '&'.join(f'{k}={v}' for k, v in params.items())
-                print(self.full_api_url)
+                LOGGER.info(self.full_api_url)
+                # print(self.full_api_url)
             # print(response.status_code)
         if format == "json":
             api_data = json.loads(response.content)
@@ -47,11 +49,12 @@ class NewsFeedAPI:
 
     # Commond methods
     def request_post_new_feeds(self, api_url, data = None, headers = {'Content-type': 'application/json'}, wait = 3):
+        LOGGER.info(api_url)
         with requests.Session() as session:
             initial_response = session.get(api_url)
             response = session.post(api_url, headers=headers, data=data)
             time.sleep(wait)
-            print("Resonse status : ", response.status_code)
+            LOGGER.info("Resonse status : %s" % response.status_code)
         # assert response.status_code != 422
         return response.status_code
 
