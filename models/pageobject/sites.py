@@ -1,4 +1,5 @@
 import time
+import logging
 from datetime import datetime
 
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
@@ -11,6 +12,8 @@ from models.pagelocators.sites import AnySite
 from models.pageobject.basepage_object import BasePageObject
 from utils_automation.common import WebElements
 from utils_automation.setup import WaitAfterEach
+
+LOGGER = logging.getLogger(__name__)
 
 
 class YoutubePageObject(BasePageObject):
@@ -73,8 +76,25 @@ class AnySitePageObject(BasePageObject):
                                      driver.minimize_window(),
                                      driver.maximize_window())
 
-    def mouse_over_first_video_element(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_first_video_element(driver))
+    def mouse_over_first_video_element(self, driver, element=AnySite.FIRST_VIDEO):
+        first_video_element = self.any_site_element.find_first_video_element(driver, element)
+        self.mouse_over_video_element_site(driver, first_video_element)
+        start_time = datetime.now()
+        while first_video_element is None:
+            first_video_element = self.any_site_element.find_first_video_element(driver, element)
+            self.mouse_over_video_element_site(driver, first_video_element)
+            time.sleep(2)
+            time_delta = datetime.now() - start_time
+            if time_delta.total_seconds() >= 10:
+                break
+
+    def mouse_over_nhaccuatui_music_element(self, driver):
+        music_element = self.any_site_element.find_nhaccuatui_music_element(driver)
+        self.mouse_over_video_element_site(driver, music_element)
+
+    def mouse_over_soundcloud_music_element(self, driver):
+        music_element = self.any_site_element.find_soundcloud_music_element(driver)
+        self.mouse_over_video_element_site(driver, music_element)
 
     def get_mouse_enter_event_js_element(self, driver):
         return driver.execute_script('return new Event("mouseenter")')
@@ -140,9 +160,6 @@ class AnySitePageObject(BasePageObject):
     def click_video_item_kienthuc(self, driver):
         ActionChains(driver).move_to_element(self.any_site_element.find_video_item_in_kienthuc(driver)).perform()
         self.any_site_element.find_video_item_in_kienthuc(driver).click()
-
-    def mouse_over_video_item_vietnamnet(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_vietnamnet(driver))
 
     def mouse_over_video_item_eva_vn(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_eva_vn(driver))
@@ -224,11 +241,26 @@ class AnySitePageObject(BasePageObject):
     def click_video_box_player_mot_phim(self, driver):
         self.any_site_element.find_video_box_player_mot_phim(driver).click()
 
-    def mouse_over_video_item_mot_phim(self, driver, url):
-        driver.execute_script(f'document.querySelector("#player > iframe").src="{url}"')
-        time.sleep(8)
-        driver.execute_script('document.querySelector("#player > iframe").dispatchEvent(new Event("mouseenter"));')
-        time.sleep(3)
+    def switch_to_video_iframe_mot_phimzz(self, driver):
+        driver.switch_to.frame(self.any_site_element.find_video_iframe_mot_phimzz(driver))
+
+    def click_to_play_button_mot_phimzz(self, driver):
+        self.any_site_element.find_play_button_mot_phimzz(driver).click()
+
+    def mouse_over_then_click_play_video_mot_phimzz(self, driver):
+        # self.switch_to_video_iframe_mot_phimzz(driver)
+        # self.click_to_play_button_mot_phimzz(driver)
+        self.mouse_over_video_iframe(driver, self.switch_to_video_iframe_mot_phimzz,
+                                     self.any_site_element.find_video_item_mot_phimzz, 40)
+
+
+    # def mouse_over_video_item_mot_phim(self, driver):
+    #     # iframe = driver.find_element_by_css_selector("iframe[src*='//motphimzz']")
+    #     # driver.switch_to.frame(iframe)
+    #     driver.execute_script(f'document.querySelector("#player > iframe").src="iframe[src*=\'//motphimzz\']"')
+    #     # time.sleep(8)
+    #     driver.execute_script('document.querySelector("#player > iframe").dispatchEvent(new Event("mouseenter"));')
+    #     time.sleep(3)
 
     def skip_ads_tv_hay(self, driver):
         self.any_site_element.find_skip_ads_btn_tv_hay(driver).click()
@@ -251,7 +283,7 @@ class AnySitePageObject(BasePageObject):
             if driver.execute_script('return document.querySelector(arguments[0])',
                                      'div[class="html5-vpl_time_t"]') is not None:
                 time_value = driver.execute_script('return document.querySelector(arguments[0]).textContent',
-                                      'div[class="html5-vpl_time_t"]')
+                                                   'div[class="html5-vpl_time_t"]')
                 i += 1
                 return time_value
 
@@ -293,8 +325,9 @@ class AnySitePageObject(BasePageObject):
     def mouse_over_video_giao_duc_thoi_dai(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_giao_duc_thoi_dai(driver))
 
-    def mouse_over_video_vn_express(self, driver):
-        self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_vn_express(driver))
+    def scroll_to_news_video_vnexpress_video(self, driver):
+        driver.execute_script("document.querySelector('"+AnySite.NEWS_VNEXPRESS_VIDEO_CSS+"').scrollIntoView()")
+        # self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_vn_express(driver))
 
     def mouse_over_video_thanh_nien_vn(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_thanh_nien(driver))
@@ -474,7 +507,9 @@ class AnySitePageObject(BasePageObject):
         self.click_on_element_if_exist(self.any_site_element.find_play_btn_vu_vi_phim(driver))
 
     def switch_to_iframe_vu_vi_phim(self, driver):
+        LOGGER.info("Switch to iframe")
         driver.switch_to.frame(self.any_site_element.find_frame_vu_vi_phim(driver))
+        time.sleep(3)
 
     def mouse_over_video_vu_vi_phim(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_frame_vu_vi_phim(driver))
@@ -561,12 +596,21 @@ class AnySitePageObject(BasePageObject):
         return self.any_site_element.find_nhac_cua_tui_ad_item_skip_button(driver=driver).click()
 
     def choose_watch_option_if_any(self, driver):
-        WaitAfterEach.sleep_timer_after_each_step_longer_load()
+        elements = driver.find_elements_by_xpath(AnySite.DONG_PHIM_WATCH_OPTION_XPATH)
+        start_time = datetime.now()
+        if len(elements) == 0:
+            while len(elements) == 0:
+                time.sleep(2)
+                elements = driver.find_elements_by_xpath(AnySite.DONG_PHIM_WATCH_OPTION_XPATH)
+                time_delta = datetime.now() - start_time
+                if time_delta.total_seconds() >= 15:
+                    break
         elements = driver.find_elements_by_xpath(AnySite.DONG_PHIM_WATCH_OPTION_XPATH)
         if len(elements) > 0:
-            self.any_site_element.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_WATCH_OPTION)).click()
+            self.any_site_element.wait_for_element(driver).until(
+                ec.presence_of_element_located(AnySite.DONG_PHIM_WATCH_OPTION)).click()
         else:
-            print("Cannot find button for watch options")
+            LOGGER.info("Cannot find button for watch options")
         return elements
 
     def click_video_item_dong_phim(self, driver):
@@ -621,3 +665,8 @@ class AnySitePageObject(BasePageObject):
         import time
         time.sleep(5)
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_ok_ru(driver))
+
+    def click_zingmp3_chon_giao_dien_btn(self, driver):
+        if self.any_site_element.count_zingmp3_chon_giao_dien_button(driver) > 0:
+            self.any_site_element.find_zingmp3_chon_giao_dien_button(driver).click()
+

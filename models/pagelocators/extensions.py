@@ -13,12 +13,13 @@ class ExtensionsPageLocators:
     SAVIOR_EXTENSIONS_WRAPPER_ID = 'jdfkmiabjpfjacifcmihfdjhpnjpiick'
     SAVIOR_EXTENSION_NAME_TEXT = 'Cốc Cốc Savior'
     EXTENSION_TOGGLE_BUTTON = '#enable-toggle'
-    EXTENSION_VIEW_MANAGER = '#viewManager'
     EXTENSION_DETAIL_VIEW = '#viewManager > extensions-detail-view'
     ITEMS_LIST = '#items-list'
 
     GOOGLE_TRANSLATE_ID = '#aapbdbdomjkkjkaonfhkkikfgjllcleb'
     GOOGLE_TRANSLATE_NAME_ID = '#name'
+
+    COCCOC_ADBLOCK_ID = '#jeoooddfnfogpngdoijplcijdcoeckgm'
 
 
 class UblockPlusPageLocators:
@@ -57,3 +58,14 @@ class GoogleExtensionsStorePageLocators:
 class MojiChatLocators:
     MOJICHAT_ID = '#khjkbfmldkfaplpcfmfdlceclcjekcpa'
     MOJICHAT_ON_OFF_ID = '#enable-toggle'
+
+
+class AdBlockPlusDetailsPageLocators:
+    # Extension detail page locators
+    EXTENSION_OPTIONS = '#extensions-options'
+    EXTENSION_OPTIONS_ICON_PARENT = '#icon'
+    EXTENSION_OPTIONS_ICON = '#icon > iron-icon'
+
+    # Options page locators
+    CHANGE_MODE_IFRAME = (By.ID, "content")
+    SELECT_MODE_DDL = (By.XPATH, "//div[@data-action='select-mode']/select")

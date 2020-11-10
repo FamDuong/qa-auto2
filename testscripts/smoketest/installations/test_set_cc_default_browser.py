@@ -3,6 +3,7 @@ import platform
 import pytest
 from pytest_testrail.plugin import pytestrail
 from utils_automation.common import WindowsHandler
+from utils_automation.common_browser import coccoc_instance
 from utils_automation.const import Urls
 from models.pageobject.settings import SettingsPageObject
 
@@ -46,7 +47,6 @@ class TestCcDefaultBrowser:
         install_coccoc_set_as_default()
         from testscripts.smoketest.common import set_chrome_default_browser
         set_chrome_default_browser()
-        from testscripts.smoketest.common import coccoc_instance
         driver = coccoc_instance()
         try:
             driver.get(Urls.COCCOC_SETTINGS_DEFAULT)

@@ -7,7 +7,6 @@ from testscripts.common_setup import clear_data_download, delete_all_mp4_file_do
 from utils_automation.const import Urls, ExtensionIds
 from utils_automation.setup import WaitAfterEach
 
-
 settings_page_object = SettingsPageObject()
 settings_cococ_ads_block_page_element = SettingsElements.SettingsAdsBlock()
 settings_coccoc_ads_block_page_object = SettingsPageObject.SettingsAdsBlockPageObject()
@@ -38,7 +37,8 @@ def disable_coccoc_block_ads(browser):
                              '.shadowRoot.querySelector("settings-toggle-button")' \
                              '.shadowRoot.querySelector("#control").click()'
 
-    interact_ad(browser, Urls.COCCOC_ADS_BLOCK_URL, script_get_attribute_aria_pressed, script_click_ads_block, 'disable')
+    interact_ad(browser, Urls.COCCOC_ADS_BLOCK_URL, script_get_attribute_aria_pressed, script_click_ads_block,
+                'disable')
     yield
     interact_ad(browser, Urls.COCCOC_ADS_BLOCK_URL, script_get_attribute_aria_pressed, script_click_ads_block, 'enable')
 
@@ -47,17 +47,35 @@ def disable_coccoc_block_ads(browser):
 def disable_fair_adblocker(browser):
     script_get_attribute_aria_pressed = 'return document.querySelector("body > extensions-manager")' \
                                         '.shadowRoot.querySelector("#items-list")' \
-                                        '.shadowRoot.querySelector("#lgblnfidahcdcjddiepkckcfdhpknnjh")' \
-                                        '.shadowRoot.querySelector("#enable-toggle").getAttribute("aria-pressed")'
+                                        '.shadowRoot.querySelector("#cfhdojbkjhnklbpkdaibdccddilifddb")' \
+                                        '.shadowRoot.querySelector("#enableToggle").getAttribute("aria-pressed")'
 
     script_click_ads_block = 'document.querySelector("body > extensions-manager")' \
                              '.shadowRoot.querySelector("#items-list").shadowRoot' \
-                             '.querySelector("#lgblnfidahcdcjddiepkckcfdhpknnjh")' \
-                             '.shadowRoot.querySelector("#enable-toggle").click()'
+                             '.querySelector("#cfhdojbkjhnklbpkdaibdccddilifddb")' \
+                             '.shadowRoot.querySelector("#enableToggle").click()'
 
     interact_ad(browser, Urls.COCCOC_EXTENSIONS, script_get_attribute_aria_pressed, script_click_ads_block, 'disable')
     yield
     interact_ad(browser, Urls.COCCOC_EXTENSIONS, script_get_attribute_aria_pressed, script_click_ads_block, 'enable')
+    WaitAfterEach.sleep_timer_after_each_step()
+
+
+@pytest.fixture()
+def enable_fair_adblocker(browser):
+    script_get_attribute_aria_pressed = 'return document.querySelector("body > extensions-manager")' \
+                                        '.shadowRoot.querySelector("#items-list")' \
+                                        '.shadowRoot.querySelector("#cfhdojbkjhnklbpkdaibdccddilifddb")' \
+                                        '.shadowRoot.querySelector("#enableToggle").getAttribute("aria-pressed")'
+
+    script_click_ads_block = 'document.querySelector("body > extensions-manager")' \
+                             '.shadowRoot.querySelector("#items-list").shadowRoot' \
+                             '.querySelector("#cfhdojbkjhnklbpkdaibdccddilifddb")' \
+                             '.shadowRoot.querySelector("#enableToggle").click()'
+
+    interact_ad(browser, Urls.COCCOC_EXTENSIONS, script_get_attribute_aria_pressed, script_click_ads_block, 'enable')
+    yield
+    interact_ad(browser, Urls.COCCOC_EXTENSIONS, script_get_attribute_aria_pressed, script_click_ads_block, 'disable')
     WaitAfterEach.sleep_timer_after_each_step()
 
 

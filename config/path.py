@@ -1,12 +1,15 @@
 import os
+import logging
 
 from utils_automation.path import YamlCustom
+
+LOGGER = logging.getLogger(__name__)
 
 yaml = YamlCustom()
 
 
 def get_path_info():
-    print(yaml.read_data_from_file(os.getcwd().split('testscripts')[0] + '/resources/path.yaml'))
+    LOGGER.info(yaml.read_data_from_file(os.getcwd().split('testscripts')[0] + '/resources/path.yaml'))
     return yaml.read_data_from_file(os.getcwd().split('testscripts')[0] + '/resources/path.yaml')
 
 

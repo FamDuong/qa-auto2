@@ -1,9 +1,10 @@
+from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from models.pageelements.basepage_elements import BasePageElement
 from selenium.webdriver.support import expected_conditions as ec
 from models.pagelocators.newtab import NewTabSearchLocators, NewTabIconSitesLocators, NewTabZenLocators, \
-    NewTabWidgetLocators
+    NewTabWidgetLocators, NewTabMostVisitedLocators, NewTabLogAdsLocators
 
 
 class NewTabSearchElement(BasePageElement):
@@ -41,31 +42,56 @@ class NewTabZenElements(BasePageElement):
 
 class NewTabWidgetElements(BasePageElement):
     def find_edit_widget_button(self, driver: WebDriver):
-        return self.wait_for_element(driver).until(ec.presence_of_element_located(NewTabWidgetLocators.EDIT_WIDGET_BUTTON))
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(NewTabWidgetLocators.EDIT_WIDGET_BUTTON))
 
     def find_selected_widget_element(self, driver: WebDriver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(NewTabWidgetLocators.SELECTED_WIDGET))
 
     def find_selected_background_image(self, driver: WebDriver):
-        return self.wait_for_element(driver).until(ec.presence_of_element_located(NewTabWidgetLocators.SELECTED_BACKGROUND_IMAGE))
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(NewTabWidgetLocators.SELECTED_BACKGROUND_IMAGE))
 
     def find_done_widget_button(self, driver: WebDriver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(NewTabWidgetLocators.DONE_BUTTON))
 
     def find_reset_button_element(self, driver: WebDriver):
-        return self.wait_for_element(driver).until(ec.presence_of_element_located(NewTabWidgetLocators.RESET_DEFAULT_BUTTON))
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(NewTabWidgetLocators.RESET_DEFAULT_BUTTON))
 
 
+class NewTabAdsElements(BasePageElement):
+    def find_all_most_visited_ads(self, driver: WebDriver):
+        self.find_element_if_exist(driver, NewTabMostVisitedLocators.TOTAL_MOST_VISITED_QC)
+        return driver.find_elements_by_xpath(NewTabMostVisitedLocators.TOTAL_MOST_VISITED_QC_XPATH)
+
+    def find_all_news(self, driver: WebDriver):
+        self.find_element_if_exist(driver, NewTabMostVisitedLocators.TOTAL_MOST_VISITED_QC)
+        return driver.find_elements_by_xpath(NewTabMostVisitedLocators.TOTAL_NEWS_XPATH)
+
+    def find_all_news_ads(self, driver: WebDriver):
+        self.find_element_if_exist(driver, NewTabMostVisitedLocators.TOTAL_MOST_VISITED_QC)
+        return driver.find_elements_by_xpath(NewTabMostVisitedLocators.TOTAL_NEWS_ADS_XPATH)
 
 
+class NewTabLogAdsElements(BasePageElement):
+    def find_banner_ads_640x360_iframe(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.BANNER_ADS_IFRAME)
 
+    def find_banner_ads_640x360_ads(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.BANNER_ADS_LINK)
 
+    def find_skin_ads(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.SKIN_ADS_LINK)
 
+    def find_video_ads_close_float_button(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.VIDEO_ADS_CLOSE_FLOAT_BUTTON)
 
+    def count_video_ads_close_float_button(self, driver: WebDriver):
+        return len(driver.find_elements_by_xpath(NewTabLogAdsLocators.VIDEO_ADS_CLOSE_FLOAT_BUTTON_XPATH))
 
+    def find_video_ads_video_iframe(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.VIDEO_ADS_IFRAME)
 
-
-
-
-
-
+    def find_video_ads_video(self, driver):
+        return self.find_element_if_exist(driver, NewTabLogAdsLocators.VIDEO_ADS_VIDEO)

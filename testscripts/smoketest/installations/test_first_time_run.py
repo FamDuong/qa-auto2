@@ -24,7 +24,7 @@ class TestFirstTimeRun:
         windows_handler.delete_coccoc_firewall_rules()
         from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
         uninstall_then_install_coccoc_with_default(is_needed_clean_up=True, is_needed_clear_user_data=True)
-        from testscripts.smoketest.common import chrome_options_preset
+        from utils_automation.common_browser import chrome_options_preset
         from selenium import webdriver
         driver = webdriver.Chrome(options=chrome_options_preset())
         import time
@@ -32,7 +32,7 @@ class TestFirstTimeRun:
         driver.quit()
 
     def verify_open_browser_for_the_first_time(self, coccoc_is_default):
-        from testscripts.smoketest.common import cleanup
+        from utils_automation.common_browser import cleanup
         cleanup(firefox=False)
         common.uninstall_then_install_coccoc_with_default(coccoc_is_default, is_needed_clean_up=False,
                                                           is_needed_clear_user_data=True)
@@ -55,7 +55,7 @@ class TestFirstTimeRun:
     @pytest.mark.skipif(platform.release() in ["8", "8.1", "7", "10"], reason=
     "Takes time set default browser so later and cannot detect windows from pywinauto when open monitor")
     def test_if_widevine_flash_plugin_exist_by_default_right_after_installing_browser(self):
-        from testscripts.smoketest.common import cleanup
+        from utils_automation.common_browser import cleanup
         cleanup(firefox=False)
         from testscripts.smoketest.common import change_default_browser
         change_default_browser('Google Chrome')
@@ -66,8 +66,8 @@ class TestFirstTimeRun:
         from testscripts.smoketest.common import choose_import_browser_settings
         choose_import_browser_settings(action='Continue')
         from selenium import webdriver
-        from testscripts.smoketest.common import chrome_options_preset
-        from testscripts.smoketest.common import cleanup
+        from utils_automation.common_browser import chrome_options_preset
+        from utils_automation.common_browser import cleanup
         cleanup(firefox=False)
         driver = webdriver.Chrome(options=chrome_options_preset())
         from models.pageobject.settings import SettingsComponentsPageObject
@@ -86,7 +86,7 @@ class TestFirstTimeRun:
     def test_check_task_manager_start_browser(self):
         from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
         uninstall_then_install_coccoc_with_default()
-        from testscripts.smoketest.common import cleanup
+        from utils_automation.common_browser import cleanup
         cleanup(firefox=False)
         from testscripts.smoketest.installations.common import open_browser_from_command
         try:
@@ -97,7 +97,7 @@ class TestFirstTimeRun:
             assert 'browser' in get_application_process(application_name='browser')
             assert 'CocCocCrash' in get_application_process(application_name='CocCocCrashHandler')
         finally:
-            from testscripts.smoketest.common import cleanup
+            from utils_automation.common_browser import cleanup
             cleanup(firefox=False)
 
     @pytestrail.case('C44832')
@@ -114,7 +114,7 @@ class TestFirstTimeRun:
         choose_import_browser_settings(action='Continue')
         import time
         time.sleep(5)
-        from testscripts.smoketest.common import cleanup
+        from utils_automation.common_browser import cleanup
         cleanup(firefox=False)
         # Enable coccoc mojichat by opening browser with --enable-features=CocCocMojichat
         from testscripts.smoketest.installations.common import open_browser_from_command
@@ -122,7 +122,7 @@ class TestFirstTimeRun:
         time.sleep(5)
         cleanup(firefox=False)
         from selenium import webdriver
-        from testscripts.smoketest.common import chrome_options_preset
+        from utils_automation.common_browser import chrome_options_preset
         driver = webdriver.Chrome(options=chrome_options_preset())
         from models.pageobject.settings import SettingsPageObject
         from utils_automation.const import Urls
@@ -142,7 +142,7 @@ class TestFirstTimeRun:
 
     @pytestrail.case('C44833')
     def test_folders_after_the_installation(self):
-        from testscripts.smoketest.common import cleanup
+        from utils_automation.common_browser import cleanup
         cleanup(firefox=False)
         self.pre_condition_before_run_first_time()
         from utils_automation.common import FilesHandle
@@ -170,7 +170,7 @@ class TestFirstTimeRun:
 
     @pytestrail.case('C44838')
     def test_the_company_signature_in_file_exe_and_dll(self):
-        from testscripts.smoketest.common import cleanup
+        from utils_automation.common_browser import cleanup
         cleanup(firefox=False)
         self.pre_condition_before_run_first_time()
         from utils_automation.common import FilesHandle
@@ -187,7 +187,7 @@ class TestFirstTimeRun:
 
     @pytestrail.case('C44839')
     def test_check_task_scheduler_after_installation(self):
-        from testscripts.smoketest.common import cleanup
+        from utils_automation.common_browser import cleanup
         cleanup(firefox=False)
         self.pre_condition_before_run_first_time()
         from testscripts.smoketest.installations.common import check_task_scheduler
@@ -201,7 +201,7 @@ class TestFirstTimeRun:
     def test__rule_in_firewall_of_windows_if_user_selects_allow_access_btn(self):
         # Note: Default when setting, user always select "Allow access" button
         # Inbound
-        from testscripts.smoketest.common import cleanup
+        from utils_automation.common_browser import cleanup
         cleanup(firefox=False)
         self.pre_condition_before_run_first_time()
         import time

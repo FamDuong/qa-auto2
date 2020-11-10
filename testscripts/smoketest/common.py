@@ -1,16 +1,16 @@
 import datetime
 import time
+import logging
 from datetime import datetime
 from pywinauto import Desktop
-from selenium import webdriver
 from os import path
 
-from utils_automation.common import WindowsHandler, WindowsCMD, find_text_in_file, modify_file_as_text, get_current_dir, \
-    wait_for_stable, FilesHandle
+from utils_automation.common import WindowsCMD, wait_for_stable, FilesHandle, get_current_dir
+from utils_automation.common_browser import find_text_in_file, cleanup, current_user
+
+LOGGER = logging.getLogger(__name__)
 
 files_handle_obj = FilesHandle()
-windows_handler = WindowsHandler()
-current_user = windows_handler.get_current_login_user()
 download_folder = None
 powershell_script_path = "\\resources\\powershell_scripts"
 ftp_domain = "browser3v.dev.itim.vn"
@@ -37,20 +37,6 @@ def check_if_coccoc_is_installed():
 def check_if_coccoc_installer_is_closed(coccoc_installer):
     installing_lbl_is_exist = coccoc_installer.child_window(title='coccoc.com', class_name='Static').exists()
     if installing_lbl_is_exist is False:
-        return True
-    else:
-        return False
-
-
-def check_if_preferences_is_created(user_data_path):
-    file_name = 'Preferences'
-    path = "\"" + "C:\\Users" + user_data_path + "Default\""
-    import subprocess
-    p = subprocess.Popen(["powershell.exe",
-                          f"Get-ChildItem -Path {path} -Filter {file_name} -Recurse " + "| %{$_.FullName}"],
-                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    result = p.communicate()[0]
-    if file_name in str(result):
         return True
     else:
         return False
@@ -104,10 +90,9 @@ def remove_coccoc_update_silently():
 
 
 def uninstall_old_version_remove_local_app():
-    cleanup()
+    # cleanup()
     if check_if_coccoc_is_installed():
-        from utils_automation.common import BrowserHandler
-        BrowserHandler().browser_cleanup()
+        cleanup()
         uninstall_coccoc_silently()
         remove_coccoc_update_silently()
         remove_local_app_data()
@@ -166,7 +151,7 @@ def get_list_coccoc_version_folder_name():
 
 def get_list_files_dirs_in_a_folder(application_path=None):
     import subprocess
-    print(current_user)
+    LOGGER.info("Current user: " + current_user)
     p = subprocess.Popen(["powershell.exe",
                           f"cd C:\\Users\\{current_user}\\{application_path}; ls"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
@@ -257,19 +242,6 @@ def install_coccoc_silentlty_make_coccoc_default_browser(coccoc_installer_name='
                           f"cd C:\coccoc-dev; .\\{coccoc_installer_name} /silent {cmd_options} /install"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     p.communicate()
-
-
-def cleanup(coccoc_update=True, firefox=True):
-    # Kill all unncessary task
-    if coccoc_update:
-        WindowsCMD.execute_cmd('taskkill /im CocCocUpdate.exe /f')
-    WindowsCMD.execute_cmd('taskkill /im browser.exe /f')
-    WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
-    WindowsCMD.execute_cmd('taskkill /im MicrosoftEdgeCP.exe /f')
-    WindowsCMD.execute_cmd('taskkill /im iexplore.exe /f')
-    # WindowsCMD.execute_cmd('taskkill /im chrome.exe /f')
-    if firefox:
-        WindowsCMD.execute_cmd('taskkill /im firefox.exe /f')
 
 
 def wait_for_coccoc_install_finish(coccoc_installer=Desktop(backend='uia').Cốc_Cốc_Installer):
@@ -604,40 +576,6 @@ def check_if_auto_launch_enabled_is_false():
     return find_text_in_file(user_data_local_state, '"autolaunch_enabled":true')
 
 
-def coccoc_instance(is_needed_clean_up=True):
-    if is_needed_clean_up is True:
-        cleanup()
-    else:
-        pass
-    return webdriver.Chrome(options=chrome_options_preset())
-
-
-def chrome_options_preset():
-    binary_path = f"C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.binary_location = binary_path
-    chrome_options.add_argument("--window-size=1920,1080")
-    chrome_options.add_argument("--proxy-server='direct://'")
-    chrome_options.add_argument("--proxy-bypass-list=*")
-    chrome_options.add_argument("--start-maximized")
-    chrome_options.add_argument('--disable-gpu')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--ignore-certificate-errors')
-    chrome_options.add_argument("--allow-insecure-localhost")
-    chrome_options.add_argument('--disable-application-cache')
-    chrome_options.add_argument("--disable-session-crashed-bubble")
-    chrome_options.add_argument("--disable-features=RendererCodeIntegrity")
-    chrome_options.add_experimental_option("prefs", {'safebrowsing.enabled': 'false'})
-    chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
-    split_after = binary_path.split('\\Local')
-    user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
-    chrome_options.add_argument('--user-data-dir=' + user_data_path)
-    if check_if_preferences_is_created(user_data_path):
-        modify_file_as_text(user_data_path + '\\Default\\Preferences', 'Crashed', 'none')
-    return chrome_options
-
-
 def uninstall_then_install_coccoc_with_default(coccoc_is_default='yes', is_needed_clean_up=True,
                                                is_needed_clear_user_data=False):
     if check_if_coccoc_is_installed():
@@ -692,8 +630,7 @@ def install_old_coccoc_version(is_needed_clear_user_data=True):
         if is_needed_clear_user_data is False:
             uninstall_coccoc_silently()
         else:
-            from utils_automation.common import BrowserHandler
-            BrowserHandler().browser_cleanup()
+            cleanup()
             uninstall_coccoc_silently()
             remove_coccoc_update_silently()
             remove_local_app_data()

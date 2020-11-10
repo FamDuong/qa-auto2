@@ -22,7 +22,6 @@ class SettingsPageLocators(object):
     SETTINGS_SYSTEM_START_UP_CONTROL_TEXT = '#control'
     SETTINGS_ABOUT_RELAUNCH_BROWSER_TEXT = '#relaunch'
     SETTINGS_DEFAULT_BROWSER_IS_DEFAULT_TEXT = '#isDefault'
-
     SETTINGS_DOWNLOAD_PAGE_TEXT = 'settings-downloads-page'
 
     OPEN_SPECIFIC_PAGE_OR_SET_OF_PAGES_TEXT = '[label="Open a specific page or set of pages"]'
@@ -54,6 +53,7 @@ class SettingsPageLocators(object):
     EXTENSION_SAVIOR_ID = '#jdfkmiabjpfjacifcmihfdjhpnjpiick'
     EXTENSION_RUNGRINH_ID = '#paenbjlckelooppiepeiechkeehogoha'
     EXTENSION_MOJICHAT_ID = '#paenbjlckelooppiepeiechkeehogoha'
+    EXTENSION_AD_BLOCK_PLUS = '#jeoooddfnfogpngdoijplcijdcoeckgm'
     EXTENSIONS_ITEM_LIST = '#items-list'
     EXTENSIONS_CONTENT_WRAPPER = '#content-wrapper > div:nth-child(5)'
     EXTENSIONS_DETAIL_BUTTON = '#detailsButton'
@@ -68,7 +68,6 @@ class SettingsPageLocators(object):
 
 
 class SettingsDownloadPageLocators(object):
-
     AUTOMATIC_STOP_SEEDING_TORRENTS_CHECK_BOX = '[id="checkbox"]'
 
 
@@ -76,3 +75,17 @@ class SettingsComponentsPageLocators(object):
     CHECK_FOR_UPDATE_BUTTON = '//button[@class="button-check-update"]'
     COMPONENT_VERSION_ELEMENT = '//span[@jscontent="version"]'
 
+
+class SettingsClearBrowserDataLocators(object):
+    SETTINGS_MAIN = '#main'
+    SETTINGS_PRIVACY_PAGE = 'settings-privacy-page'
+    SETTINGS_CLEAR_BROWSING_DATA_DIALOG = 'settings-clear-browsing-data-dialog'
+    SETTINGS_CLEAR_FROM_BASIC = '#clearFromBasic'
+    SETTINGS_CLEAR_DATA_BUTTON = 'cr-button#clearBrowsingDataConfirm'
+
+    SETTINGS_TIME_RANGE_DROPDOWN_MENU = '#dropdownMenu'
+    SETTINGS_BROWSING_HISTORY_CHECKBOX_BASIC = '#browsingCheckboxBasic'
+    SETTINGS_BROWSING_COOKIES_CHECKBOX_BASIC = '#cookiesCheckboxBasic'
+    SETTINGS_BROWSING_CACHED_CHECKBOX_BASIC = '#cacheCheckboxBasic'
+    SETTINGS_BROWSING_CHECKBOX = 'cr-checkbox#checkbox'
+    SETTINGS_BROWSING_CHILD_CHECKBOX = 'div#checkbox'

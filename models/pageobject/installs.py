@@ -30,5 +30,5 @@ def verify_installation_complete_popup_appears():
     # Verify element is visible
     assert install_complete_lbl.is_visible() == 1
     assert close_btn.is_visible() == 1
-    from testscripts.smoketest.common import cleanup
+    from utils_automation.common_browser import cleanup
     cleanup()

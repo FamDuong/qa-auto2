@@ -1,10 +1,13 @@
-import time
+import logging
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
+from models.pagelocators.downloads import DownloadsPageLocators
 from models.pagelocators.savior import SaviorPageLocators
+
+LOGGER = logging.getLogger(__name__)
 
 
 class SaviorElements(BasePageElement):
@@ -44,12 +47,19 @@ class SaviorElements(BasePageElement):
         return self.select_shadow_element_download_button(driver)
 
     def not_found_download_button(self, driver):
-        print('Value for assertions isssss:', self.select_shadow_element_download_button(driver))
+        LOGGER.info('Value for assertions isssss:', self.select_shadow_element_download_button(driver))
         assert self.select_shadow_element_download_button(driver) in (1, None)
 
     def find_preferred_option(self, driver):
-        return self.select_shadow_element_by_css_selector(driver, self.find_first_layer(driver)). \
-            find_element_by_css_selector(SaviorPageLocators.PREFERRED_SELECT_BTN)
+        try:
+            return self.find_shadow_element(driver, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
+        # return self.select_shadow_element_by_css_selector(driver, self.find_first_layer(driver)). \
+        #     find_element_by_css_selector(SaviorPageLocators.PREFERRED_SELECT_BTN)
+        except:
+            return None
+
+    def find_resotion_option_by_css_selector(self, driver, css_selector):
+        return self.find_shadow_element(driver, SaviorPageLocators.FIRST_LAYER, css_selector)
 
     def find_mobile_sharing_button(self, driver):
         return self.select_shadow_element_by_css_selector(driver, self.find_first_layer(driver)). \
@@ -72,7 +82,8 @@ class SaviorElements(BasePageElement):
     def get_current_video_file_size(self, driver):
         return driver.execute_script('document.querySelector(arguments[0]).shadowRoot.querySelector(arguments[1]).'
                                      'querySelector(arguments[2]).textContent',
-                                     SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.CURRENT_VIDEO_QUALITY_SELECTED_ITEM,
+                                     SaviorPageLocators.FIRST_LAYER,
+                                     SaviorPageLocators.CURRENT_VIDEO_QUALITY_SELECTED_ITEM,
                                      SaviorPageLocators.CURRENT_VIDEO_FILE_SIZE_ITEM)
 
     def get_each_quality_info_video_options(self, driver, i):
@@ -82,3 +93,8 @@ class SaviorElements(BasePageElement):
                                      'getAttribute("data-quality-value")', SaviorPageLocators.FIRST_LAYER,
                                      SaviorPageLocators.CLASS_WRAPPER_VIDEO_OPTIONS,
                                      SaviorPageLocators.ALL_VIDEO_OPTIONS_AVAILABLE, i)
+
+    def find_play_button_by_video_title(self, driver, video_title):
+        play_button_xpath = DownloadsPageLocators.PLAY_BUTTON_BY_VIDEO_TITLE.replace('{param1}', video_title)
+        play_button_element = self.find_element_if_exist(driver, (By.XPATH, play_button_xpath))
+        return play_button_element

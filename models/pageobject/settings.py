@@ -1,8 +1,15 @@
-from models.pageelements.settings import SettingsElements, SettingsComponentsPageElement
+import logging
+
+from selenium.webdriver.remote.webelement import WebElement
+
+from models.pageelements.settings import SettingsElements, SettingsComponentsPageElement, \
+    SettingsClearBrowserDataPageElement
 from models.pagelocators.settings import SettingsPageLocators
 from models.pageobject.basepage_object import BasePageObject
 from utils_automation.const import Urls, CocCocComponents
 from utils_automation.common import wait_for_stable
+
+LOGGER = logging.getLogger(__name__)
 
 
 class SettingsPageObject(BasePageObject):
@@ -23,6 +30,9 @@ class SettingsPageObject(BasePageObject):
     def click_add_a_new_page(self, driver):
         element_add_a_new_page = self.settings_elem.find_add_a_new_page(driver)
         element_add_a_new_page.click()
+
+    def open_coc_coc_extension_page(self, driver):
+        driver.get(Urls.COCCOC_EXTENSIONS)
 
     def disable_extension(self, driver, extension_id):
         self.enable_extension_toggle_dev_mode(driver)
@@ -110,24 +120,24 @@ class SettingsPageObject(BasePageObject):
             if driver.execute_script(script_get_attribute_aria_pressed) == 'true':
                 driver.execute_script(script_click_ads_block)
             elif driver.execute_script(script_get_attribute_aria_pressed) == 'false':
-                print("Button is already disabled")
+                LOGGER.info("Button is already disabled")
             else:
-                print("Problem when get attribute aria-pressed of enabled ads blcok")
+                LOGGER.info("Problem when get attribute aria-pressed of enabled ads blcok")
 
         def enable_enabled_ads_block():
             if driver.execute_script(script_get_attribute_aria_pressed) == 'true':
-                print("Button is already enabled")
+                LOGGER.info("Button is already enabled")
             elif driver.execute_script(script_get_attribute_aria_pressed) == 'false':
                 driver.execute_script(script_click_ads_block)
             else:
-                print("Problem when get attribute aria-pressed of enabled ads blcok")
+                LOGGER.info("Problem when get attribute aria-pressed of enabled ads blcok")
 
         if action == 'disable':
             return disable_enabled_ads_block()
         elif action == 'enable':
             return enable_enabled_ads_block()
         else:
-            print("Please specify the action")
+            LOGGER.info("Please specify the action")
 
     def get_text_default_browser_element(self, driver):
         from utils_automation.setup import WaitAfterEach
@@ -210,9 +220,32 @@ class SettingsComponentsPageObject(BasePageObject):
                 assert '0.0.0.0' not in version
 
 
+class SettingsClearBrowserDataPageObject(BasePageObject):
+    settings_clear_browser_data_page_element = SettingsClearBrowserDataPageElement()
 
+    def select_time_range(self, driver, option='All time'):
+        from selenium.webdriver.support.select import Select
+        select = Select(self.settings_clear_browser_data_page_element.find_time_range_dropdown(driver))
+        select.select_by_visible_text(option)
 
+    def tick_browsing_history_checkbox(self, driver):
+        element: WebElement = self.settings_clear_browser_data_page_element.\
+            find_browsing_history_checkbox(driver=driver)
+        if element.get_attribute('aria-checked') is False:
+            element.click()
 
+    def tick_cookies_and_other_site_data_checkbox(self, driver):
+        element: WebElement = self.settings_clear_browser_data_page_element.\
+            find_cookies_and_other_site_data_checkbox(driver=driver)
+        if element.get_attribute('aria-checked') is False:
+            element.click()
 
+    def tick_cached_images_and_files_checkbox(self, driver):
+        element: WebElement = self.settings_clear_browser_data_page_element.\
+            find_cached_images_and_files_checkbox(driver=driver)
+        if element.get_attribute('aria-checked') is False:
+            element.click()
 
-
+    def click_clear_data_button(self, driver):
+        element: WebElement = self.settings_clear_browser_data_page_element.find_clear_data_button(driver)
+        element.click()

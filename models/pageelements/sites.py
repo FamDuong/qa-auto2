@@ -51,10 +51,13 @@ class GooglePageElements(BasePageElement):
 class AnySiteElements(BasePageElement):
 
     def click_first_video_element(self, driver):
-        return driver.execute_script('document.getElementsByTagName("video")[0].click()')
+        return driver.execute_script('document.getElementsByTagName("video")[1].click()')
 
-    def find_first_video_element(self, driver):
-        return driver.execute_script('return document.getElementsByTagName("video")[0]')
+    def find_first_video_element(self, driver, element):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(element))
+        # return driver.execute_script('return document.getElementsByTagName("video")[0]')
+
 
     def find_video_element_24h(self, driver):
         return self.wait_for_element(driver).until(
@@ -99,9 +102,9 @@ class AnySiteElements(BasePageElement):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.KIENTHUC_VIDEO_ITEM))
 
-    def find_video_item_vietnamnet(self, driver):
-        return self.wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.VIETNAMNET_VIDEO_ITEM))
+    # def find_video_item_vietnamnet(self, driver):
+    #     return self.wait_for_element(driver).until(
+    #         ec.presence_of_element_located(AnySite.VIETNAMNET_VIDEO_ITEM))
 
     def find_video_item_eva_vn(self, driver):
         return self.wait_for_element(driver).until(
@@ -235,6 +238,18 @@ class AnySiteElements(BasePageElement):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.TIN_TUC_VN_VIDEO_IFRAME))
 
+    def find_video_iframe_mot_phimzz(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.MOT_PHIMZZ_VIDEO_IFRAME))
+
+    def find_video_item_mot_phimzz(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.MOT_PHIMZZ_VIDEO_ITEM))
+
+    def find_play_button_mot_phimzz(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.MOT_PHIMZZ_PLAY_BUTTON))
+
     def find_video_detail_tin_tuc_online_vn(self, driver):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.TIN_TUC_VN_VIDEO_DETAIL))
@@ -245,7 +260,7 @@ class AnySiteElements(BasePageElement):
 
     def find_video_item_vn_express(self, driver):
         return self.wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.VN_EXPRESS_VIDEO_ITEM))
+            ec.presence_of_element_located(AnySite.VNEXPRESS_VIDEO_ITEM))
 
     def find_video_item_thanh_nien(self, driver):
         return self.wait_for_element(driver).until(
@@ -439,7 +454,8 @@ class AnySiteElements(BasePageElement):
         return self.find_element_if_exist(driver, AnySite.VU_VI_PHIM_IFRAME)
 
     def find_server_anime_tvn(self, driver, server_number):
-        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.anime_tvn_server(server_number)))
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.anime_tvn_server(server_number)))
 
     def find_iframe_video_item_anime_tvn(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.ANIME_TVN_IFRAME_VIDEO_ITEM))
@@ -477,13 +493,16 @@ class AnySiteElements(BasePageElement):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VLIVE_TV_VIDEO_ITEM))
 
     def find_video_wrapper_anime_hay_tv(self, driver):
-        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.ANIME_HAY_TV_WRAPPER_VIDEO_ITEM))
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.ANIME_HAY_TV_WRAPPER_VIDEO_ITEM))
 
     def find_video_iframe_anime_hay_tv(self, driver):
-        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.ANIME_HAY_TV_IFRAME_VIDEO_ITEM))
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.ANIME_HAY_TV_IFRAME_VIDEO_ITEM))
 
     def find_video_iframe_doi_song_phap_luat(self, driver):
-        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DOI_SONG_PHAP_LUAT_IFRAME_VIDEO_ITEM))
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.DOI_SONG_PHAP_LUAT_IFRAME_VIDEO_ITEM))
 
     def find_video_player_doi_song_phap_luat(self, driver):
         return self.find_element_if_exist(driver, AnySite.DOI_SONG_PHAP_LUAT_PLAYER_VIDEO)
@@ -496,10 +515,12 @@ class AnySiteElements(BasePageElement):
         return driver.find_elements_by_xpath(AnySite.VIET_SUB_TV_PLAY_MIDDLE_BUTTON_XPATH)
 
     def find_play_middle_button_viet_sub_tv(self, driver):
-        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VIET_SUB_TV_PLAY_MIDDLE_BUTTON))
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.VIET_SUB_TV_PLAY_MIDDLE_BUTTON))
 
     def find_viet_sub_tv_video_item(self, driver):
-        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VIET_SUB_TV_PLAYER_VIDEO_ITEM))
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.VIET_SUB_TV_PLAYER_VIDEO_ITEM))
 
     @staticmethod
     def find_elements_ad_not_appear(driver):
@@ -512,7 +533,8 @@ class AnySiteElements(BasePageElement):
         return driver.find_elements_by_xpath('//div[@class="iframe_video vpaid_iframe"]')
 
     def find_nhac_cua_tui_ad_item_skip_button(self, driver):
-        return self.wait_for_element(driver=driver, timeout=7).until(ec.presence_of_element_located(AnySite.NHAC_CUA_TUI_AD_ITEM_SKIP_BUTTON))
+        return self.wait_for_element(driver=driver, timeout=7).until(
+            ec.presence_of_element_located(AnySite.NHAC_CUA_TUI_AD_ITEM_SKIP_BUTTON))
 
     def find_dong_phim_video_iframe(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.DONG_PHIM_VIDEO_IFRAME))
@@ -534,7 +556,8 @@ class AnySiteElements(BasePageElement):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VTV16_INFO_NET_VIDEO_ITEM))
 
     def find_vtv16_info_net_iframe(self, driver):
-        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.VTV16_INFO_NET_IFRAME_ELEMENT))
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.VTV16_INFO_NET_IFRAME_ELEMENT))
 
     def find_bestie_vn_iframe_1(self, driver):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.BESTIE_VN_IFRAME_ELEMENT_1))
@@ -558,15 +581,28 @@ class AnySiteElements(BasePageElement):
         return self.find_element_if_exist(driver, AnySite.XEM_VTV_NET_PLAY_BTN)
 
     def find_video_item_ok_ru(self, driver):
-        return self.wait_for_element(driver).until(
-            ec.presence_of_element_located(AnySite.OK_RU_VIDEO_ITEM))
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.OK_RU_VIDEO_ITEM))
 
+    def find_nhaccuatui_video_title(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.NHACCUATUI_VIDEO_TITLE))
 
+    def find_sound_cloud_music_title(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.SOUNDCLOUD_MUSIC_TITLE))
 
+    def count_zingmp3_chon_giao_dien_button(self, driver):
+        count_chon_giao_dien_button = driver.find_elements_by_xpath(AnySite.CHON_GIAO_DIEN_SUBMIT_BTN_XPATH)
+        return len(count_chon_giao_dien_button)
 
+    def find_zingmp3_chon_giao_dien_button(self, driver):
+        if self.count_zingmp3_chon_giao_dien_button(driver) > 0:
+            return self.wait_for_element(driver).until(
+                ec.presence_of_element_located(AnySite.CHON_GIAO_DIEN_SUBMIT_BTN))
 
+    def find_video_title(self, driver, element):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(element))
 
+    def find_nhaccuatui_music_element(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.NHACCUATUI_MUDIC_DIV))
 
-
-
-
+    def find_soundcloud_music_element(self, driver):
+        return self.wait_for_element(driver).until(ec.presence_of_element_located(AnySite.SOUNDCLOUD_MUDIC_DIV))

@@ -1,5 +1,9 @@
 import  json
+import logging
+
 from api.coccoc_new_feeds.coccoc_new_feeds_crawler.coccoc_new_feeds_api import NewFeedAPI;
+
+LOGGER = logging.getLogger(__name__)
 
 new_feed_data = NewFeedAPI()
 
@@ -11,9 +15,9 @@ class TestDataCrawler:
 
         number_of_hosts = len(api_get_data['sample'])
         for i in range(number_of_hosts):
-            print(api_get_data['sample'][i]['host'])
+            LOGGER.info(api_get_data['sample'][i]['host'])
             number_of_urls = len(api_get_data['sample'][i]['urls'])
             for j in range(number_of_urls):
-                print(api_get_data['sample'][i]['urls'][j])
+                LOGGER.info(api_get_data['sample'][i]['urls'][j])
 
 

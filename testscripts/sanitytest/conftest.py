@@ -1,10 +1,9 @@
 import pytest
 
-from testscripts.smoketest.common import coccoc_instance
 from utils_automation.common import WindowsHandler
 from models.pagelocators.flags import FlagsPageLocators
 from selenium import webdriver as sele_webdriver
-from utils_automation.common import modify_file_as_text
+from utils_automation.common_browser import modify_file_as_text, cleanup, coccoc_instance
 from utils_automation.setup import WaitAfterEach
 
 windows_handler = WindowsHandler()
@@ -30,7 +29,6 @@ def enable_moji_flag(uninstall_coccoc):
     select.select_by_visible_text('Enabled')
     import time
     time.sleep(3)
-    from testscripts.smoketest.common import cleanup
     cleanup()
 
 

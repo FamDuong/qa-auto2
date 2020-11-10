@@ -35,7 +35,7 @@ class TestImportDataWhileInstalling:
             assert 'Bookmarks' in get_list_files_dirs_in_a_folder(
                 application_path="\"AppData/Local/CocCoc/Browser/User Data/Default\"")
         finally:
-            from testscripts.smoketest.common import cleanup
+            from utils_automation.common_browser import cleanup
             cleanup(coccoc_update=False, firefox=False)
 
     @pytestrail.case('C44826')
@@ -67,7 +67,7 @@ class TestImportDataWhileInstalling:
             assert 'Bookmarks' in get_list_files_dirs_in_a_folder(
                 application_path="\"AppData/Local/CocCoc/Browser/User Data/Default\"")
         finally:
-            from testscripts.smoketest.common import cleanup
+            from utils_automation.common_browser import cleanup
             cleanup(coccoc_update=False)
 
     @pytestrail.case('C44827')
@@ -91,7 +91,7 @@ class TestImportDataWhileInstalling:
             assert 'Bookmarks' in get_list_files_dirs_in_a_folder(
                 application_path="\"AppData/Local/CocCoc/Browser/User Data/Default\"")
         finally:
-            from testscripts.smoketest.common import cleanup
+            from utils_automation.common_browser import cleanup
             cleanup(coccoc_update=False, firefox=False)
 
     @pytestrail.case('C44828')
@@ -115,5 +115,5 @@ class TestImportDataWhileInstalling:
             assert 'Bookmarks' in get_list_files_dirs_in_a_folder(
                 application_path="\"AppData/Local/CocCoc/Browser/User Data/Default\"")
         finally:
-            from testscripts.smoketest.common import cleanup
+            from utils_automation.common_browser import cleanup
             cleanup(coccoc_update=False, firefox=False)

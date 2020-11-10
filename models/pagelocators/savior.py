@@ -2,15 +2,23 @@ from selenium.webdriver.common.by import By
 
 
 class SaviorPageLocators(object):
-    DOWNLOAD_BUTTON = '#download-main'
+    DOWNLOAD_BUTTON = "a:not([hidden])[class='download-btn j-quality-download']" #'#download-main'
     FIRST_LAYER = '[style="position: absolute; top: 0px;"]'
-    PREFERRED_SELECT_BTN = '[id="preferred-select"]'
+    PREFERRED_SELECT_BTN = '#preferred-select'
     CURRENT_SELECTED_RESOLUTION = 'span:not([hidden])[class="j-quality-option quality-option"]'
     BASE_OVERLAY_CLASS = '[class="base overlay"]'
     HIGH_PREFERRED_SELECT_BTN = '//span[@data-selected-value="High"]'
-    MEDIUM_SELECT_OPTION = '[data-quality-value="mp4/Medium/360p"]'
-    LOW_SELECT_OPTION = '[data-quality-value="mp4/Small/240p"]'
-    HIGH_SELECT_OPTION = '[data-quality-value="mp4/HD/720p"]'
+    QUAD_HD_SELECT_OPTION = 'div[data-quality-value*="/Quad HD/"]'
+    FULL_HD_SELECT_OPTION = 'div[data-quality-value*="/Full HD/"]'
+    HD_SELECT_OPTION = 'div[data-quality-value*="/HD/"]'
+    STANDARD_SELECT_OPTION = 'div[data-quality-value*="/Standard/"]'
+    MEDIUM_SELECT_OPTION = 'div[data-quality-value*="/Medium/"]'
+    SMALL_SELECT_OPTION = 'div[data-quality-value*="/Small/"]'
+    MOBILE_SELECT_OPTION = 'div[data-quality-value*="/Mobile/"]'
+    ORIGINAL_SELECT_OPTION = 'div[data-quality-value*="/Original/"]'
+    MP3_STANDARD_SELECT_OPTION = 'div[data-quality-value*="mp3/Standard/"]'
+    MP3_MEDIUM_SELECT_OPTION = 'div[data-quality-value*="mp3/Medium/"]'
+
     MOBILE_SHARING_VIDEO_RADIO_BUTTON = 'input[id="switch-video"]'
 
     MOBILE_SHARING_BUTTON = '#open-mobile'

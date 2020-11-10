@@ -1,4 +1,5 @@
 import time
+import logging
 from datetime import datetime
 from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
 from selenium.common.exceptions import StaleElementReferenceException
@@ -10,6 +11,8 @@ from utils_automation.common import WebElements
 from selenium.webdriver.support.wait import WebDriverWait
 from utils_automation.setup import WaitAfterEach
 import re
+
+LOGGER = logging.getLogger(__name__)
 
 
 class BasePageObject(object):
@@ -65,7 +68,7 @@ class BasePageObject(object):
                 a = find_download_button()
                 return a
         except StaleElementReferenceException as e:
-            print(e)
+            LOGGER.info(e)
 
     def get_element_first_layer_savior(self, driver):
         return driver.execute_script('return document.querySelector(arguments[0])', SaviorPageLocators.FIRST_LAYER)
@@ -79,7 +82,7 @@ class BasePageObject(object):
                 if time_delta.total_seconds() >= timeout:
                     break
             except StaleElementReferenceException as e:
-                print(e)
+                LOGGER.info(e)
 
     def verify_text_is_visible_on_page(self, driver, component_name):
         # assert self.settings_elem.find_components_by_name(driver, component_name) == 1
@@ -98,9 +101,15 @@ class BasePageObject(object):
                     element.click()
                     i += 1
         except NoSuchElementException as e:
-            print(e.stacktrace)
+            LOGGER.info(e.stacktrace)
         except ElementClickInterceptedException as intercepted:
-            print(intercepted.stacktrace)
+            LOGGER.info(intercepted.stacktrace)
 
     def scroll_to_with_scroll_height(self, driver):
         driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+
+    def scroll_to_element(self, driver, element):
+        driver.execute_script('arguments[0].scrollIntoView()', element)
+
+
+

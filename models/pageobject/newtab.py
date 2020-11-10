@@ -1,14 +1,15 @@
+import time
+
 from selenium.webdriver import ActionChains
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 
 from models.pageelements.newtab import NewTabSearchElement, NewTabIconSitesElement, NewTabZenElements, \
-    NewTabWidgetElements
+    NewTabWidgetElements, NewTabAdsElements, NewTabLogAdsElements
 from models.pageobject.basepage_object import BasePageObject
 
 
 class NewTabSearchPageObject(BasePageObject):
-
     new_tab_search_element = NewTabSearchElement()
 
     def get_css_value_search_string_element(self, driver, css_property):
@@ -25,7 +26,6 @@ class NewTabSearchPageObject(BasePageObject):
 
 
 class NewTabIconSitesPageObject(BasePageObject):
-
     new_tab_icon_site_elem = NewTabIconSitesElement()
 
     def get_total_number_most_visited_sites(self, driver):
@@ -35,7 +35,8 @@ class NewTabIconSitesPageObject(BasePageObject):
         return len(self.new_tab_icon_site_elem.find_all_most_paid_sites(driver))
 
     def get_attribute_any_most_visited_site_element(self, driver, nth_element, attribute_name):
-        return self.new_tab_icon_site_elem.find_all_most_visited_sites(driver)[nth_element].get_attribute(attribute_name)
+        return self.new_tab_icon_site_elem.find_all_most_visited_sites(driver)[nth_element].get_attribute(
+            attribute_name)
 
     def get_attribute_any_most_visited_paid_element(self, driver, nth_element, attribute_name):
         return self.new_tab_icon_site_elem.find_all_most_paid_sites(driver)[nth_element].get_attribute(attribute_name)
@@ -100,8 +101,51 @@ class NewTabWidgetActions(BasePageObject):
         element.click()
 
 
+class NewTabAdsActions(BasePageObject):
+    new_tab_ads_elem = NewTabAdsElements()
+
+    def count_all_most_visited_ads(self, driver: WebDriver):
+        return len(self.new_tab_ads_elem.find_all_most_visited_ads(driver))
+
+    def click_on_most_visited_ads(self, driver: WebDriver, index):
+        element: WebElement = self.new_tab_ads_elem.find_most_visited_ads_by_index(driver, index)
+        element.click()
+
+    def count_all_news(self, driver: WebDriver):
+        return len(self.new_tab_ads_elem.find_all_news(driver))
+
+    def count_all_news_ads(self, driver: WebDriver):
+        return len(self.new_tab_ads_elem.find_all_news_ads(driver))
 
 
+class NewTabLogAdsActions(BasePageObject):
+    new_tab_log_ads_element = NewTabLogAdsElements()
 
+    def switch_to_banner_ads_640x360_iframe(self, driver: WebDriver):
+        driver.switch_to.frame(self.new_tab_log_ads_element.find_banner_ads_640x360_iframe(driver))
 
+    def click_on_banner_ads_640x360_ads(self, driver: WebDriver):
+        self.new_tab_log_ads_element.find_banner_ads_640x360_ads(driver).click()
 
+    def click_on_skin_ads(self, driver: WebDriver):
+        self.new_tab_log_ads_element.find_skin_ads(driver).click()
+
+    def click_on_video_ads_close_float_button(self, driver: WebDriver):
+        time.sleep(1)
+        driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+        total_close_float_button = self.new_tab_log_ads_element.count_video_ads_close_float_button(driver)
+        from datetime import datetime
+        start_time = datetime.now()
+        if total_close_float_button == 0:
+            while total_close_float_button == 0:
+                time.sleep(1)
+                total_close_float_button = self.new_tab_log_ads_element.count_video_ads_close_float_button(driver)
+                time_delta = datetime.now() - start_time
+                if time_delta.total_seconds() >= 5:
+                    break
+        self.new_tab_log_ads_element.find_video_ads_close_float_button(driver).click()
+
+    def click_on_video_ads(self, driver: WebDriver):
+        time.sleep(10)
+        driver.switch_to.frame(self.new_tab_log_ads_element.find_video_ads_video_iframe(driver))
+        self.new_tab_log_ads_element.find_video_ads_video(driver).click()

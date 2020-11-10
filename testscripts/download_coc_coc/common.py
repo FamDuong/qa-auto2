@@ -1,3 +1,4 @@
+from testscripts.common_init_driver import init_chrome_driver
 from utils_automation.common import FilesHandle
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -74,13 +75,13 @@ def init_firefox_driver():
     return driver
 
 
-def init_chrome_driver():
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_experimental_option("prefs", {'safebrowsing.enabled': 'true'})
-    binary_path = file_handle.get_absolute_filename("\\webdriver\\chromedriver.exe")
-    binary_path = binary_path.replace('\\utils_automation', '\\resources')
-    driver = webdriver.Chrome(options=chrome_options, executable_path=binary_path)
-    return driver
+# def init_chrome_driver():
+#     chrome_options = webdriver.ChromeOptions()
+#     chrome_options.add_experimental_option("prefs", {'safebrowsing.enabled': 'true'})
+#     binary_path = file_handle.get_absolute_filename("\\webdriver\\chromedriver.exe")
+#     binary_path = binary_path.replace('\\utils_automation', '\\resources')
+#     driver = webdriver.Chrome(options=chrome_options, executable_path=binary_path)
+#     return driver
 
 
 def init_ie_driver():

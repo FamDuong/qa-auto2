@@ -1,5 +1,6 @@
 from pytest_testrail.plugin import pytestrail
-from testscripts.smoketest.common import coccoc_instance, get_default_download_folder, delete_installer_download
+from testscripts.smoketest.common import get_default_download_folder, delete_installer_download
+from utils_automation.common_browser import coccoc_instance
 from utils_automation.const import Urls
 from models.pageobject.coccocpage import sleep_with_timeout
 

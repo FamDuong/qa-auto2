@@ -1,12 +1,22 @@
+import time
 import re
+import logging
+from datetime import datetime
+
+from selenium.common.exceptions import JavascriptException
+
+from models.pageelements.basepage_elements import BasePageElement
 from models.pageelements.savior import SaviorElements
 from models.pagelocators.savior import SaviorPageLocators
 from models.pageobject.basepage_object import BasePageObject
 from utils_automation.setup import WaitAfterEach
 
+LOGGER = logging.getLogger(__name__)
+
 
 class SaviorPageObject(BasePageObject):
     savior_elements = SaviorElements()
+    base_page_element = BasePageElement()
     script = 'document.querySelector(arguments[0]).shadowRoot.querySelector(arguments[1]).click();'
     script_find = 'return document.querySelector(arguments[0]).shadowRoot.querySelector(arguments[1])' \
                   '.getAttribute("data-quality")'
@@ -20,22 +30,144 @@ class SaviorPageObject(BasePageObject):
         self.savior_elements.not_found_download_button(driver)
 
     def choose_preferred_option(self, driver):
-        driver.execute_script(
-            self.script,
-            SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
-        WaitAfterEach.sleep_timer_after_each_step()
+        try:
+            # preferred_option = self.savior_elements.find_preferred_option(driver)
+            # preferred_option.click()
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
+        except JavascriptException:
+            preferred_option = self.savior_elements.find_preferred_option(driver)
+            start_time = datetime.now()
+            if preferred_option is None:
+                while preferred_option is None:
+                    time.sleep(2)
+                    preferred_option = self.savior_elements.find_preferred_option(driver)
+                    # preferred_option.click()
+                    driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER,
+                                          SaviorPageLocators.PREFERRED_SELECT_BTN)
+
+                    time_delta = datetime.now() - start_time
+                    if time_delta.total_seconds() >= 15:
+                        break
+
+    def choose_quad_hd_option(self, driver):
+        try:
+            LOGGER.info("Select Quad HD option")
+            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+                                                                               SaviorPageLocators.QUAD_HD_SELECT_OPTION)
+            option.click()
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            LOGGER.info("Failed to select Quad HD option")
+            return e
+
+    def choose_full_hd_option(self, driver):
+        try:
+            LOGGER.info("Select Full HD option")
+            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.FULL_HD_SELECT_OPTION)
+            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+                                                                               SaviorPageLocators.FULL_HD_SELECT_OPTION)
+            option.click()
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            LOGGER.info("Failed to select Full HD option")
+            return e
+
+    def choose_hd_option(self, driver):
+        try:
+            LOGGER.info("Select HD option")
+            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.HD_SELECT_OPTION)
+            option = self.savior_elements.find_resotion_option_by_css_selector(driver, SaviorPageLocators.HD_SELECT_OPTION)
+            option.click()
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            LOGGER.info("Failed to select HD option")
+            return e
+
+    def choose_standard_option(self, driver):
+        try:
+            LOGGER.info("Select Standard option")
+            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.STANDARD_SELECT_OPTION)
+            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+                                                                               SaviorPageLocators.STANDARD_SELECT_OPTION)
+            option.click()
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            LOGGER.info("Failed to select Standard option")
+            return e
 
     def choose_medium_option(self, driver):
-        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MEDIUM_SELECT_OPTION)
-        WaitAfterEach.sleep_timer_after_each_step()
+        try:
+            LOGGER.info("Select Medium option")
+            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MEDIUM_SELECT_OPTION)
+            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+                                                                               SaviorPageLocators.MEDIUM_SELECT_OPTION)
+            option.click()
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            LOGGER.info("Failed to select Medium option")
+            return e
 
-    def choose_low_option(self, driver):
-        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.LOW_SELECT_OPTION)
-        WaitAfterEach.sleep_timer_after_each_step()
+    def choose_small_option(self, driver):
+        try:
+            LOGGER.info("Select Small option")
+            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.SMALL_SELECT_OPTION)
+            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+                                                                               SaviorPageLocators.SMALL_SELECT_OPTION)
+            option.click()
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            LOGGER.info("Failed to select Small option")
+            return e
 
-    def choose_high_option(self, driver):
-        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.HIGH_SELECT_OPTION)
-        WaitAfterEach.sleep_timer_after_each_step()
+    def choose_mobile_option(self, driver):
+        try:
+            LOGGER.info("Select Mobile option")
+            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MOBILE_SELECT_OPTION)
+            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+                                                                               SaviorPageLocators.MOBILE_SELECT_OPTION)
+            option.click()
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            LOGGER.info("Failed to select Mobile option")
+            return e
+
+    def choose_original_option(self, driver):
+        try:
+            LOGGER.info("Select Original option")
+            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.ORIGINAL_SELECT_OPTION)
+            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+                                                                               SaviorPageLocators.ORIGINAL_SELECT_OPTION)
+            option.click()
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            LOGGER.info("Failed to select Original option")
+            return e
+
+    def choose_mp3_standard_option(self, driver):
+        try:
+            LOGGER.info("Select Mp3 Standard option")
+            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER,
+            #                       SaviorPageLocators.MP3_STANDARD_SELECT_OPTION)
+            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+                                                                               SaviorPageLocators.MP3_STANDARD_SELECT_OPTION)
+            option.click()
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            LOGGER.info("Failed to select Mp3 Standard option")
+            return e
+
+    def choose_mp3_medium_option(self, driver):
+        try:
+            LOGGER.info("Select mp3 Medium option")
+            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER,
+            #                       SaviorPageLocators.MP3_MEDIUM_SELECT_OPTION)
+            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+                                                                               SaviorPageLocators.MP3_MEDIUM_SELECT_OPTION)
+            option.click()
+            WaitAfterEach.sleep_timer_after_each_step()
+        except Exception as e:
+            LOGGER.info("Failed to select mp3 Medium option")
+            return e
 
     def assert_value_preferred_quality(self, driver, assert_text):
         preferred_element = driver.execute_script(
@@ -45,13 +177,22 @@ class SaviorPageObject(BasePageObject):
         assert preferred_element == assert_text
 
     def download_file_via_savior_download_btn(self, driver):
+        start_time = datetime.now()
+        if self.savior_elements.find_download_button(driver) is None:
+            while self.savior_elements.find_download_button(driver) is None:
+                time.sleep(1)
+                time_delta = datetime.now() - start_time
+                if time_delta.total_seconds() >= 10:
+                    break
         driver.execute_script(
             self.script,
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.DOWNLOAD_BUTTON)
 
     def current_media_info(self, driver):
-        return driver.execute_script(self.script_find, SaviorPageLocators.FIRST_LAYER,
-                                        SaviorPageLocators.CURRENT_SELECTED_RESOLUTION)
+        media_info = driver.execute_script(self.script_find, SaviorPageLocators.FIRST_LAYER,
+                                           SaviorPageLocators.CURRENT_SELECTED_RESOLUTION)
+        LOGGER.info("Media info: " + media_info)
+        return media_info
 
     def download_file_title_via_savior_download_btn(self, driver, title):
         i = 0
@@ -158,8 +299,8 @@ class SaviorPageObject(BasePageObject):
             if ('Standard' or 'Medium') in text_content_list:
                 assert ('Standard' or 'Medium') in current_video_quality
         elif len_options == 1:
-            print('Current video quality for len == 1 is:', self.savior_elements.
-                  get_current_video_quality_value(driver))
+            LOGGER.info('Current video quality for len == 1 is:', self.savior_elements.
+                        get_current_video_quality_value(driver))
             assert current_video_quality is not None
         else:
             raise Exception.__traceback__
@@ -182,8 +323,8 @@ class SaviorPageObject(BasePageObject):
             if ('Standard' and 'Medium') in text_content_list:
                 assert 'Standard' in current_video_quality
         elif len_options == 1:
-            print('Current video quality for len == 1 is:', self.savior_elements.
-                  get_current_video_quality_value(driver))
+            LOGGER.info('Current video quality for len == 1 is:',
+                        self.savior_elements.get_current_video_quality_value(driver))
             assert current_video_quality is not None
         else:
             raise Exception.__traceback__
@@ -204,8 +345,8 @@ class SaviorPageObject(BasePageObject):
             else:
                 pass
         elif len_options == 1:
-            print('Current video quality for len == 1 is:', self.savior_elements.
-                  get_current_video_quality_value(driver))
+            LOGGER.info('Current video quality for len == 1 is:',
+                        self.savior_elements.get_current_video_quality_value(driver))
             assert current_video_quality is not None
         else:
             raise Exception.__traceback__

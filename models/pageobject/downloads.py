@@ -1,10 +1,11 @@
+import logging
 from datetime import datetime
-
 from selenium.webdriver import ActionChains
-
 from models.pageelements.downloads import DownloadsElement, ThePirateBayElements, PirateBaySearchResultElements
 from models.pageobject.basepage_object import BasePageObject
 from utils_automation.setup import WaitAfterEach
+
+LOGGER = logging.getLogger(__name__)
 
 
 class DownloadsPageObject(BasePageObject):
@@ -90,7 +91,7 @@ class DownloadsPageObject(BasePageObject):
             for i in range(len(elements)):
                 elements[i].click()
                 WaitAfterEach.sleep_timer_after_each_step()
-        print('Number of current running torrents :', len(elements))
+        LOGGER.info('Number of current running torrents :', len(elements))
 
     def verify_cancel_button_is_existed(self, driver):
         elements = self.downloads_elem.find_all_cancel_current_torrent_btn(driver)
@@ -107,7 +108,7 @@ class DownloadsPageObject(BasePageObject):
         if (self.downloads_elem.find_more_icon(driver) is not None) \
                 and (len(self.downloads_elem.find_elements_not_deleted(driver)) > 0):
             start_time = datetime.now()
-            while (datetime.now() - start_time).total_seconds() < 2000:
+            while (datetime.now() - start_time).total_seconds() < 6000:
                 if len(self.downloads_elem.find_play_button(driver)) > 0:
                     index += 1
                     break

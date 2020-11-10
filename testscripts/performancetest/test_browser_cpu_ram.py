@@ -7,7 +7,7 @@ import concurrent.futures
 
 from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
-from utils_automation.common import CSVHandle
+from utils_automation.common import get_from_csv, write_result_data_for_cpu_ram
 from selenium import webdriver
 from pytest_testrail.plugin import pytestrail
 from utils_automation.cleanup import Browsers
@@ -68,7 +68,7 @@ class TestCPURAM:
         browser = Browsers()
         browser.kill_all_browsers()
 
-        listweb = CSVHandle().get_from_csv(filename)
+        listweb = get_from_csv(filename)
         opts = Options()
         opts.binary_location = binary_file
         opts.add_argument("start-maximized")
@@ -117,7 +117,7 @@ class TestCPURAM:
             cpu, mem = self.benchmark(pid_list)
             res.append({"cpu": cpu, "mem": mem})
             browser.quit()
-        CSVHandle().write_result_data_for_cpu_ram(file_name_result, res, result_type='CPU RAM')
+        write_result_data_for_cpu_ram(file_name_result, res, result_type='CPU RAM')
 
     @pytestrail.case('C82490')
     def test_ram_cpu(self, binary_path, default_directory, application_path, get_enabled_adblock_extension):

@@ -3,7 +3,7 @@ from models.pageelements.mojichat import ChatElement
 from models.pageobject.mojichat import MojichatObjects
 from utils_automation.setup import Browser
 from utils_automation.const import Urls
-from testscripts.smoketest.common import coccoc_instance
+from utils_automation.common_browser import coccoc_instance
 from models.pageelements.version import VersionPageElements
 
 #browser = Browser()
