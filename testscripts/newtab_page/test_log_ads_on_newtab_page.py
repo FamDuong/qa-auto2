@@ -88,7 +88,7 @@ class TestLogAdsOnNewTabPage:
 
         LOGGER.info("===================================================")
         LOGGER.info("Test log ads wait for floating video completes and auto hides")
-        browser.get(browser.current_url)
+        browser.refresh()
         browser.execute_script('window.scrollTo(0, document.body.scrollHeight);')
         time.sleep(10)
         log_entries = get_browser_log_entries(browser)
@@ -98,7 +98,7 @@ class TestLogAdsOnNewTabPage:
 
         LOGGER.info("===================================================")
         LOGGER.info("Click on video ads to open the landing page of ads")
-        browser.get(browser.current_url)
+        browser.refresh()
         self.newtab_log_ads_action.click_on_video_ads(browser)
         log_entries = get_browser_log_entries(browser)
         close_the_second_window(browser)
