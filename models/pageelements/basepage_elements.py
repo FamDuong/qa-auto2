@@ -39,7 +39,7 @@ class BasePageElement(object):
             LOGGER.info("Cannot find text: %s" % expect_text)
 
     @staticmethod
-    def wait_for_element(driver, timeout=10):
+    def wait_for_element(driver, timeout=20):
         return WebDriverWait(driver, timeout)
 
     def find_element_if_exist(self, driver, locator):

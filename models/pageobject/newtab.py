@@ -149,3 +149,43 @@ class NewTabLogAdsActions(BasePageObject):
         time.sleep(10)
         driver.switch_to.frame(self.new_tab_log_ads_element.find_video_ads_video_iframe(driver))
         self.new_tab_log_ads_element.find_video_ads_video(driver).click()
+
+    def click_on_news_card(self, driver: WebDriver, news_type, is_right_click=False):
+        news_element = self.new_tab_log_ads_element.find_news_card(driver, news_type)
+        if is_right_click is False:
+            news_element.click()
+        else:
+            self.right_click_then_open_link_in_newtab(driver, news_element)
+
+    def click_on_news_ads_card(self, driver: WebDriver, ads_type, is_right_click=False):
+        ads_element = self.new_tab_log_ads_element.find_news_ads_card(driver, ads_type)
+        if is_right_click is False:
+            ads_element.click()
+        else:
+            self.right_click_then_open_link_in_newtab(driver, ads_element)
+
+    def click_on_news_custom_button(self, driver: WebDriver, news_type):
+        self.new_tab_log_ads_element.find_news_customs_button(driver, news_type).click()
+
+    def click_on_news_action_button(self, driver: WebDriver, news_type, action):
+        if 'Big' in news_type:
+            news_type = 'big'
+        else:
+            news_type = 'small'
+        if action == 'like':
+            self.new_tab_log_ads_element.find_news_action_button(driver, news_type, action).click()
+        elif action == 'dislike':
+
+            self.new_tab_log_ads_element.find_news_action_button(driver, news_type, action='like').click()
+            self.new_tab_log_ads_element.find_news_action_button(driver, news_type, action).click()
+        else:
+            self.click_on_news_custom_button(driver, news_type)
+            self.new_tab_log_ads_element.find_news_action_button(driver, news_type, action).click()
+
+    def scroll_to_news_card(self, driver: WebDriver, news_type):
+        news_element = self.new_tab_log_ads_element.find_news_card(driver, news_type)
+        self.scroll_to_element(driver, news_element)
+
+    def scroll_to_news_ads_card(self, driver: WebDriver, ads_type):
+        ads_element = self.new_tab_log_ads_element.find_news_ads_card(driver, ads_type)
+        self.scroll_to_element(driver, ads_element)
