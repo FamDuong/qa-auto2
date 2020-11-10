@@ -87,8 +87,15 @@ COCCOC_NEW_FEED_KAFKA_TOPIC_NRE = get_environment_info()['coccoc_new_feeds_kafka
 
 # Lucky
 COCCOC_LUCKY_API_URL = get_environment_info()['coccoc_lucky']['domain']
+COCCOC_LUCKY_API_HOME = COCCOC_LUCKY_API_URL + get_environment_info()['coccoc_lucky']['home']
 COCCOC_LUCKY_API_GET_RESULT = COCCOC_LUCKY_API_URL + get_environment_info()['coccoc_lucky']['lucky_result']
+COCCOC_LUCKY_API_MY_REWARDS = COCCOC_LUCKY_API_URL + get_environment_info()['coccoc_lucky']['my_rewards']
+COCCOC_LUCKY_API_RECENT_WINNERS = COCCOC_LUCKY_API_URL + get_environment_info()['coccoc_lucky']['recent_winner']
 COCCOC_LUCKY_DB_SERVER = get_environment_info()['coccoc_lucky']['db_info']['server']
 COCCOC_LUCKY_DB_NAME = get_environment_info()['coccoc_lucky']['db_info']['name']
 COCCOC_LUCKY_DB_USERNAME = get_environment_info()['coccoc_lucky']['db_info']['username']
 COCCOC_LUCKY_DB_PASSWORD = get_environment_info()['coccoc_lucky']['db_info']['password']
+
+COCCOC_LUCKY_REDIS_HOST = get_environment_info()['coccoc_lucky_redis']['host']
+COCCOC_LUCKY_REDIS_POST = get_environment_info()['coccoc_lucky_redis']['port']
+COCCOC_LUCKY_REDIS_PASSWORD = get_environment_info()['coccoc_lucky_redis']['password']
