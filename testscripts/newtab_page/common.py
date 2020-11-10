@@ -222,7 +222,8 @@ def get_log_with_timeout(driver, newsfeed_card_type, action='', is_right_click=F
 def assert_newsfeed_logs_type(newsfeed_card_type, feed_action_card_click_log):
     if 'News' in newsfeed_card_type:
         LOGGER.info('Assert {log?feedAction=cardClick contains [&type=interest]}')
-        assert count_log_contain_string(decode_url(feed_action_card_click_log), ['&type=interest']) == 1
+        assert count_log_contain_string(decode_url(feed_action_card_click_log), ['&type=sidebar_context']) == 0
+        assert count_log_contain_string(decode_url(feed_action_card_click_log), ['&type=zen_big_context']) == 0
     elif 'Small Ad' in newsfeed_card_type:
         LOGGER.info('Assert {log?feedAction=cardClick contains [&type=sidebar_context]}')
         assert count_log_contain_string(decode_url(feed_action_card_click_log), ['&type=sidebar_context']) == 1
