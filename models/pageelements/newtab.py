@@ -120,12 +120,3 @@ class NewTabLogAdsElements(BasePageElement):
         elif action == 'report':
             action_element = NewTabLogAdsLocators.NEWS_FIRST_NEWS_BY_PARAM_CUSTOMS_REPORT_XPATH.replace('{param1}', news_type)
         return self.find_element_if_exist(driver, (By.XPATH, action_element))
-
-    # def find_news_big_news(self, driver):
-    #     return self.find_element_if_exist(driver, NewTabLogAdsLocators.NEWS_FIRST_BIG_NEWS)
-    #
-    # def find_news_small_ads(self, driver):
-    #     return self.find_element_if_exist(driver, NewTabLogAdsLocators.NEWS_FIRST_SMALL_ADS)
-    #
-    # def find_news_big_ads(self, driver):
-    #     return self.find_element_if_exist(driver, NewTabLogAdsLocators.NEWS_FIRST_BIG_ADS)

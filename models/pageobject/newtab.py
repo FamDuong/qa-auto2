@@ -182,31 +182,10 @@ class NewTabLogAdsActions(BasePageObject):
             self.click_on_news_custom_button(driver, news_type)
             self.new_tab_log_ads_element.find_news_action_button(driver, news_type, action).click()
 
-    # def click_on_news_small_news(self, driver: WebDriver, is_right_click=False):
-    #     small_news_element = self.new_tab_log_ads_element.find_news_card(driver)
-    #     if is_right_click is False:
-    #         small_news_element.click()
-    #     else:
-    #         self.right_click_then_open_link_in_newtab(driver, small_news_element)
+    def scroll_to_news_card(self, driver: WebDriver, news_type):
+        news_element = self.new_tab_log_ads_element.find_news_card(driver, news_type)
+        self.scroll_to_element(driver, news_element)
 
-    # def click_on_news_big_news(self, driver: WebDriver, is_right_click=False):
-    #     big_news = self.new_tab_log_ads_element.find_news_big_news(driver)
-    #     if is_right_click is False:
-    #         big_news.click()
-    #     else:
-    #         self.right_click_then_open_link_in_newtab(driver, big_news)
-    #
-    # def click_on_news_small_ads(self, driver: WebDriver, is_right_click=False):
-    #     small_ads = self.new_tab_log_ads_element.find_news_small_ads(driver)
-    #     if is_right_click is False:
-    #         small_ads.click()
-    #     else:
-    #         self.right_click_then_open_link_in_newtab(driver, small_ads)
-    #
-    # def click_on_news_big_ads(self, driver: WebDriver, is_right_click=False):
-    #     big_ads = self.new_tab_log_ads_element.find_news_big_ads(driver)
-    #     if is_right_click is False:
-    #         big_ads.click()
-    #     else:
-    #         self.right_click_then_open_link_in_newtab(driver, big_ads)
-
+    def scroll_to_news_ads_card(self, driver: WebDriver, ads_type):
+        ads_element = self.new_tab_log_ads_element.find_news_ads_card(driver, ads_type)
+        self.scroll_to_element(driver, ads_element)

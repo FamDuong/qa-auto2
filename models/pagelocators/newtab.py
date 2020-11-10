@@ -50,19 +50,10 @@ class NewTabLogAdsLocators:
     VIDEO_ADS_IFRAME = (By.ID, 'ntrb-vast')
     VIDEO_ADS_VIDEO = (By.XPATH, '//video[@webkit-playsinline="true"]')
     NEWS_FIRST_NEWS_BY_PARAM_XPATH = '(//div[@data-ga-label="{param1}"]//a)[1]'
-    # NEWS_FIRST_SMALL_NEWS = (By.XPATH, '(//div[@data-ga-label="small"]//a)[1]')
-    # NEWS_FIRST_BIG_NEWS = (By.XPATH, '(//div[@data-ga-label="big"]//a)[1]')
     NEWS_FIRST_NEWS_BY_PARAM_LIKE_BUTTON_XPATH = '(//div[@data-ga-label="{param1}"]//div[@data-ga-label="likeButton"]//button)[1]'
     NEWS_FIRST_NEWS_BY_PARAM_DISLIKE_BUTTON_XPATH = '(//div[@data-ga-label="{param1}"]//div[@data-ga-label="likeButton"]//button[contains(@class,"liked")])[1]'
     NEWS_FIRST_NEWS_BY_PARAM_CUSTOMS_BUTTON_XPATH = '(//div[@data-ga-label="{param1}"]//div[@data-ga-label="likeButton"]//button[@data-ga-label="disLikeMenuButton"])[1]'
     NEWS_FIRST_NEWS_BY_PARAM_CUSTOMS_HIDE_ARTICLE_XPATH = '(//div[@data-ga-label="{param1}"]//div[@data-ga-label="likeButton"]//div[@data-ga-label="dislikeMenu-hideArticle"])[1]'
     NEWS_FIRST_NEWS_BY_PARAM_CUSTOMS_HIDE_SOURCE_XPATH = '(//div[@data-ga-label="{param1}"]//div[@data-ga-label="likeButton"]//div[@data-ga-label="dislikeMenu-hideSource"])[1]'
     NEWS_FIRST_NEWS_BY_PARAM_CUSTOMS_REPORT_XPATH = '(//div[@data-ga-label="{param1}"]//div[@data-ga-label="likeButton"]//div[@data-ga-label="dislikeMenu-report"])[1]'
-
-    # NEWS_FIRST_BIG_NEWS_LIKE_BUTTON = (By.XPATH, '(//div[@data-ga-label="big"]//div[@data-ga-label="likeButton"]//button)[1]')
-    # NEWS_FIRST_BIG_NEWS_DISLIKE_BUTTON = (By.XPATH, '(//div[@data-ga-label="big"]//div[@data-ga-label="likeButton"]//button[contains(@class,"liked")])[1]')
-    # NEWS_FIRST_BIG_NEWS_CUSTOMS_BUTTON = (By.XPATH, '(//div[@data-ga-label="big"]//div[@data-ga-label="likeButton"]//button[@data-ga-label="disLikeMenuButton"])[1]')
     NEWS_FIRST_ADS_BY_PARAM_XPATH = '(//div[@data-ga-label="{param1}:ad"]//a[2])[1]'
-    # NEWS_FIRST_SMALL_ADS = (By.XPATH, '(//div[@data-ga-label="small:ad"]//a[2])[1]')
-    # NEWS_FIRST_BIG_ADS = (By.XPATH, '(//div[@data-ga-label="big:ad"]//a[2])[1]')
-

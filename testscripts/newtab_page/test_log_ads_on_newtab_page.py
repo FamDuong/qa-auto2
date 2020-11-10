@@ -109,7 +109,8 @@ class TestLogAdsOnNewTabPage:
     def test_check_card_size_is_shown_in_card_click_log(self, get_newtab_url):
         browser = coccoc_instance()
         if get_newtab_url is not None:
-            browser.get(get_newtab_url)
+            for url in get_newtab_url:
+                browser.get(url)
         assert_newsfeed_logs_card_size(browser, newsfeed_card_type='Small News', card_size='cardSize=small')
         LOGGER.info("===================================================")
         assert_newsfeed_logs_card_size(browser, newsfeed_card_type='Big News', card_size='cardSize=big')
@@ -122,7 +123,8 @@ class TestLogAdsOnNewTabPage:
     def test_check_log_when_left_click_a_card(self, get_newtab_url):
         browser = coccoc_instance()
         if get_newtab_url is not None:
-            browser.get(get_newtab_url)
+            for url in get_newtab_url:
+                browser.get(url)
         assert_newsfeed_logs_reqid(browser, newsfeed_card_type='Small News')
         LOGGER.info("===================================================")
         assert_newsfeed_logs_reqid(browser, newsfeed_card_type='Big News')
@@ -135,7 +137,8 @@ class TestLogAdsOnNewTabPage:
     def test_check_log_when_right_click_a_card(self, get_newtab_url):
         browser = coccoc_instance()
         if get_newtab_url is not None:
-            browser.get(get_newtab_url)
+            for url in get_newtab_url:
+                browser.get(url)
         assert_newsfeed_logs_card_click(browser, newsfeed_card_type='Small News', is_right_click=True)
         LOGGER.info("===================================================")
         assert_newsfeed_logs_card_click(browser, newsfeed_card_type='Big News', is_right_click=True)
@@ -143,7 +146,7 @@ class TestLogAdsOnNewTabPage:
         assert_newsfeed_logs_card_click(browser, newsfeed_card_type='Small Ad', is_right_click=True)
         LOGGER.info("===================================================")
         assert_newsfeed_logs_card_click(browser, newsfeed_card_type='Big Ad', is_right_click=True)
-        # LOGGER.info("===================================================")
+        LOGGER.info("===================================================")
         assert_not_send_logs_after_click_action(browser, newsfeed_card_type='Small News', action='like')
         assert_not_send_logs_after_click_action(browser, newsfeed_card_type='Small News', action='dislike')
         assert_not_send_logs_after_click_action(browser, newsfeed_card_type='Small News', action='hide')
