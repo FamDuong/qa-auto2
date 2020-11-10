@@ -192,7 +192,7 @@ def get_requid(root_string, start_string, end_string):
     return reqid
 
 
-def get_log_with_timeout(driver, newsfeed_card_type, action, is_right_click=False):
+def get_log_with_timeout(driver, newsfeed_card_type, action='', is_right_click=False):
     driver.refresh()
     scroll_to_newsfeed_card(driver, newsfeed_card_type)
     LOGGER.info("Get Network log after click " + newsfeed_card_type)
@@ -232,8 +232,7 @@ def assert_newsfeed_logs_type(newsfeed_card_type, feed_action_card_click_log):
 
 
 def assert_newsfeed_logs_card_size(driver, newsfeed_card_type, card_size):
-    feed_action_card_click_log, webhp_action_card_click_log = get_log_with_timeout(driver, newsfeed_card_type,
-                                                                                   action='')
+    feed_action_card_click_log, webhp_action_card_click_log = get_log_with_timeout(driver, newsfeed_card_type)
     LOGGER.info(
         "Assert after click " + newsfeed_card_type + " exist network logs: {log?feedAction=cardClick contains [" + card_size + "]} and {log?webhpAction=Click}")
     LOGGER.info("Total webhp_action_card_click_log: " + str(len(webhp_action_card_click_log)))
@@ -245,8 +244,7 @@ def assert_newsfeed_logs_card_size(driver, newsfeed_card_type, card_size):
 
 
 def assert_newsfeed_logs_reqid(driver, newsfeed_card_type):
-    feed_action_card_click_log, webhp_action_card_click_log = get_log_with_timeout(driver, newsfeed_card_type,
-                                                                                   action='')
+    feed_action_card_click_log, webhp_action_card_click_log = get_log_with_timeout(driver, newsfeed_card_type)
 
     reqid_in_feed_action = get_requid(feed_action_card_click_log, start_string='&reqid=', end_string='&type=')
     value_in_webhp_action = get_requid(webhp_action_card_click_log, start_string='&Value=', end_string='&quota=')
@@ -256,9 +254,7 @@ def assert_newsfeed_logs_reqid(driver, newsfeed_card_type):
 
 
 def assert_newsfeed_logs_card_click(driver, newsfeed_card_type, is_right_click):
-    feed_action_card_click_log, webhp_action_card_click_log = get_log_with_timeout(driver, newsfeed_card_type,
-                                                                                   action='',
-                                                                                   is_right_click=is_right_click)
+    feed_action_card_click_log, webhp_action_card_click_log = get_log_with_timeout(driver, newsfeed_card_type, is_right_click=is_right_click)
 
     LOGGER.info(
         "Assert after click " + newsfeed_card_type + " exist network logs [log?feedAction=cardClick]")
