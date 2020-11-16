@@ -1,6 +1,7 @@
 import logging
 import time
 
+from models.pageelements.newtab import NewTabLogAdsElements
 from models.pagelocators.newtab import NewTabMostVisitedLocators
 from models.pageobject.coccoc_search.coccoc_search_page_objects import CocCocSearchPageObjects
 from models.pageobject.newtab import NewTabAdsActions, NewTabLogAdsActions
@@ -8,6 +9,8 @@ from testscripts.search.ccsearch_with_adblock_plus.common import verify_ads_is_o
 
 coccoc_search_page_object = CocCocSearchPageObjects()
 new_tab_ads_action = NewTabAdsActions()
+newtab_log_ads_action = NewTabLogAdsActions()
+newtab_log_ads_element = NewTabLogAdsElements()
 
 LOGGER = logging.getLogger(__name__)
 
@@ -142,19 +145,6 @@ def get_news_logs(driver, contains_string='coccoc.com/log?'):
     return news_logs
 
 
-newtab_log_ads_action = NewTabLogAdsActions()
-
-
-# def click_newsfeed_card(driver, newsfeed_card_type, is_right_click=False):
-#     if 'Small News' in newsfeed_card_type:
-#         newtab_log_ads_action.click_on_news_small_news(driver, is_right_click)
-#     elif 'Big News' in newsfeed_card_type:
-#         newtab_log_ads_action.click_on_news_big_news(driver, is_right_click)
-#     elif 'Small Ad' in newsfeed_card_type:
-#         newtab_log_ads_action.click_on_news_small_ads(driver, is_right_click)
-#     else:
-#         newtab_log_ads_action.click_on_news_big_ads(driver, is_right_click)
-
 def click_newsfeed_card(driver, newsfeed_card_type, is_right_click=False):
     if 'Small News' in newsfeed_card_type:
         newtab_log_ads_action.click_on_news_card(driver, news_type='small', is_right_click=is_right_click)
@@ -255,7 +245,8 @@ def assert_newsfeed_logs_reqid(driver, newsfeed_card_type):
 
 
 def assert_newsfeed_logs_card_click(driver, newsfeed_card_type, is_right_click):
-    feed_action_card_click_log, webhp_action_card_click_log = get_log_with_timeout(driver, newsfeed_card_type, is_right_click=is_right_click)
+    feed_action_card_click_log, webhp_action_card_click_log = get_log_with_timeout(driver, newsfeed_card_type,
+                                                                                   is_right_click=is_right_click)
 
     LOGGER.info(
         "Assert after click " + newsfeed_card_type + " exist network logs [log?feedAction=cardClick]")
@@ -279,3 +270,14 @@ def assert_not_send_logs_after_click_action(driver, newsfeed_card_type, action):
     LOGGER.info("Assert after click [" + action + "] is not send logs")
     assert len(feed_action_card_click_log) == 0
     assert get_log_webhpaction_after_click_action(action, webhp_action_card_click_log) == 1
+
+
+def get_log_is_ends_with_string(new_session_log, endswith):
+    total_log = 0
+    for log in new_session_log:
+        log_is_endswith = log.endswith(endswith)
+        if log_is_endswith:
+            total_log += 1
+    return total_log
+
+

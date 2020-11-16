@@ -1,12 +1,17 @@
 import logging
 import time
+from pprint import pprint
 
+from cloudinary.compat import urllib2
 from pytest_testrail.plugin import pytestrail
+from selenium import webdriver
 
 from models.pageobject.newtab import NewTabLogAdsActions
 from testscripts.newtab_page.common import get_browser_log_entries, get_last_info_log, count_log_contain_string, \
-    close_the_second_window, scroll_down_to_show_ads, get_news_logs, assert_newsfeed_logs_card_size, \
-    assert_newsfeed_logs_reqid, assert_newsfeed_logs_card_click, assert_not_send_logs_after_click_action
+    close_the_second_window, assert_newsfeed_logs_card_size, \
+    assert_newsfeed_logs_reqid, assert_newsfeed_logs_card_click, assert_not_send_logs_after_click_action, \
+    get_log_is_ends_with_string, scroll_down_to_show_ads, get_news_logs
+from utils_automation.common import FilesHandle
 from utils_automation.common_browser import coccoc_instance
 from utils_automation.const import NewTabAdsDemoUrls
 from models.pageobject.basepage_object import BasePageObject
@@ -86,7 +91,8 @@ class TestLogAdsOnNewTabPage:
                     "exist console log contains [feedPinIn, Click]")
         assert count_log_contain_string(log_entries, ['feedPinIn', 'Click']) == 1
 
-        LOGGER.info("===================================================")
+        LOGGER.info("================================================================================================")
+        LOGGER.info("===============================================================================================\n")
         LOGGER.info("Test log ads wait for floating video completes and auto hides")
         browser.refresh()
         browser.execute_script('window.scrollTo(0, document.body.scrollHeight);')
@@ -96,7 +102,8 @@ class TestLogAdsOnNewTabPage:
                     "feedPipDestroy]")
         assert count_log_contain_string(log_entries, ['feedPipDestroy']) == 1
 
-        LOGGER.info("===================================================")
+        LOGGER.info("================================================================================================")
+        LOGGER.info("===============================================================================================\n")
         LOGGER.info("Click on video ads to open the landing page of ads")
         browser.refresh()
         self.newtab_log_ads_action.click_on_video_ads(browser)
@@ -104,6 +111,18 @@ class TestLogAdsOnNewTabPage:
         close_the_second_window(browser)
         LOGGER.info("Assert after click video_ads exist console log contains [ntrbVASTEvent]")
         assert 'ntrbVASTEvent' in get_last_info_log(log_entries)
+
+        LOGGER.info("================================================================================================")
+        LOGGER.info("===============================================================================================\n")
+        LOGGER.info("Check video playback log")
+        browser.refresh()
+        time.sleep(15)
+        log_entries = get_browser_log_entries(browser)
+        assert count_log_contain_string(log_entries, ['Viewability1"']) == 1
+        assert count_log_contain_string(log_entries, ['Viewability2']) == 1
+        assert count_log_contain_string(log_entries, ['Viewability3']) == 1
+        assert count_log_contain_string(log_entries, ['Viewability5']) == 1
+        assert count_log_contain_string(log_entries, ['Viewability10']) == 1
 
     @pytestrail.case('C403341')
     def test_check_card_size_is_shown_in_card_click_log(self, get_newtab_url):
@@ -159,6 +178,53 @@ class TestLogAdsOnNewTabPage:
         assert_not_send_logs_after_click_action(browser, newsfeed_card_type='Big News', action='like')
         assert_not_send_logs_after_click_action(browser, newsfeed_card_type='Big News', action='report')
 
+    @pytestrail.case('C473028')
+    def test_check_log_when_first_time_loading_newtab(self, get_newtab_url):
+        browser = coccoc_instance()
+        time.sleep(2)
+        if get_newtab_url is not None:
+            for url in get_newtab_url:
+                browser.get(url)
+        browser.refresh()
+        time.sleep(5)
+        new_session_log = get_news_logs(browser, contains_string='nre')
+        total_log = get_log_is_ends_with_string(new_session_log, endswith='&newsession=1')
+        assert total_log == 1
+
+        scroll_down_to_show_ads(browser, timeout=0, total_news_base=80)
+        time.sleep(5)
+        new_session_log_after_scroll = get_news_logs(browser, contains_string='nre')
+        total_log_first = get_log_is_ends_with_string(new_session_log_after_scroll, endswith='&newsession=1')
+        total_log_scroll = get_log_is_ends_with_string(new_session_log_after_scroll, endswith='&size=33')
+        assert total_log_first == 1
+        assert total_log_scroll == len(new_session_log_after_scroll) - 1
+
+    file_handle = FilesHandle()
 
 
+    def test(self):
+        from browsermobproxy import Server
+        import psutil
+        import time
+        #
+        # for proc in psutil.process_iter():
+        #     # check whether the process name matches
+        #     if proc.name() == "browsermob-proxy":
+        #         proc.kill()
+        #
+        # dict = {'port': 8090}
+        server = Server('C:\\Users\\hangnt2\\Downloads\\browsermob-proxy-2.1.4\\bin\\browsermob-proxy') #, options=dict)  # Local path to BMP
+        server.start()
+        time.sleep(1)
+        proxy = server.create_proxy()
 
+        time.sleep(1)
+        driver = coccoc_instance(proxy=proxy)
+        proxy.new_har('req', options={'captureHeaders': True, 'captureContent': True})
+
+        driver.get("https://google.com")
+        pprint(proxy.har)  # returns a HAR JSON blob
+         # returns a HAR JSON blob
+
+        server.stop()
+        driver.quit()

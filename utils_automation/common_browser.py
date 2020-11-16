@@ -71,9 +71,10 @@ def check_if_preferences_is_created(user_data_path):
         return False
 
 
-def chrome_options_preset():
+def chrome_options_preset(proxy=''):
     desired_capabilities = DesiredCapabilities.CHROME
     desired_capabilities['goog:loggingPrefs'] = {'browser': 'ALL'}
+
     binary_path = f"C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = binary_path
@@ -95,6 +96,8 @@ def chrome_options_preset():
     chrome_options.add_experimental_option("prefs", {'safebrowsing.enabled': 'false'})
     chrome_options.add_experimental_option("useAutomationExtension", False)
     chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
+    if proxy != '':
+        chrome_options.add_argument('--proxy-server={host}:{port}'.format(host='localhost', port=proxy.port))
 
     split_after = binary_path.split('\\Local')
     user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
@@ -105,10 +108,10 @@ def chrome_options_preset():
     return chrome_options, desired_capabilities
 
 
-def coccoc_instance(is_needed_clean_up=True):
+def coccoc_instance(is_needed_clean_up=True, proxy=''):
     if is_needed_clean_up is True:
         cleanup()
     else:
         pass
-    chrome_options, desired_capabilities = chrome_options_preset()
+    chrome_options, desired_capabilities = chrome_options_preset(proxy)
     return webdriver.Chrome(options=chrome_options, desired_capabilities=desired_capabilities)

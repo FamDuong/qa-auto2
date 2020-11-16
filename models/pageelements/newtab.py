@@ -90,6 +90,9 @@ class NewTabLogAdsElements(BasePageElement):
     def count_video_ads_close_float_button(self, driver: WebDriver):
         return len(driver.find_elements_by_xpath(NewTabLogAdsLocators.VIDEO_ADS_CLOSE_FLOAT_BUTTON_XPATH))
 
+    def count_video_ads_video_iframe(self, driver: WebDriver):
+        return len(driver.find_elements_by_id(NewTabLogAdsLocators.VIDEO_ADS_ID))
+
     def find_video_ads_video_iframe(self, driver):
         return self.find_element_if_exist(driver, NewTabLogAdsLocators.VIDEO_ADS_IFRAME)
 
