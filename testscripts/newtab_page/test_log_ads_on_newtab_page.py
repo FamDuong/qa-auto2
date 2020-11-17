@@ -20,13 +20,14 @@ class TestLogAdsOnNewTabPage:
     @pytestrail.case('C329559')
     def test_banner_ads_check_log_events(self, browser):
         try:
-            browser.get(NewTabAdsDemoUrls.CENTER_BANNER_ADS_640x360_URL)
-            LOGGER.info("Open demo link: " + NewTabAdsDemoUrls.CENTER_BANNER_ADS_640x360_URL)
+            demo_link = NewTabAdsDemoUrls.CENTER_BANNER_ADS_640x360_URL
+            browser.get(demo_link)
+            LOGGER.info("Open demo link: " + demo_link)
             self.newtab_log_ads_action.switch_to_banner_ads_640x360_iframe(browser)
             self.newtab_log_ads_action.click_on_banner_ads_640x360_ads(browser)
-            close_the_second_window(browser)
             log_entries = get_browser_log_entries(browser)
             last_log = get_last_info_log(log_entries)
+            close_the_second_window(browser, demo_link)
             LOGGER.info("Assert after click banner_ads exist console log contains [ntrbClick]")
             assert 'ntrbClick' in last_log
         finally:

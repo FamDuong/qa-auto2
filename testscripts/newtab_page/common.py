@@ -1,6 +1,8 @@
 import logging
 import time
 
+from selenium.webdriver.chrome.webdriver import WebDriver
+
 from models.pageelements.newtab import NewTabLogAdsElements
 from models.pagelocators.newtab import NewTabMostVisitedLocators
 from models.pageobject.coccoc_search.coccoc_search_page_objects import CocCocSearchPageObjects
@@ -119,9 +121,12 @@ def count_log_contain_string(log_entries, contains_strings):
     return total_contains
 
 
-def close_the_second_window(driver):
+def close_the_second_window(driver: WebDriver, url = ''):
     windows_handles = driver.window_handles
-    if len(windows_handles) == 2:
+    current_url = driver.current_url
+    if len(windows_handles) == 1 and url != current_url and url != '':
+        driver.back()
+    elif len(windows_handles) == 2:
         driver.switch_to.window(windows_handles[1])
         driver.close()
         driver.switch_to.window(windows_handles[0])
