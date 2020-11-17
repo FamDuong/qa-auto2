@@ -8,7 +8,7 @@ from models.pageobject.newtab import NewTabAdsActions, NewTabLogAdsActions
 from testscripts.search.ccsearch_with_adblock_plus.common import verify_ads_is_oppened_in_newtab
 
 coccoc_search_page_object = CocCocSearchPageObjects()
-new_tab_ads_action = NewTabAdsActions()
+newtab_ads_action = NewTabAdsActions()
 newtab_log_ads_action = NewTabLogAdsActions()
 newtab_log_ads_element = NewTabLogAdsElements()
 
@@ -19,7 +19,7 @@ def scroll_down_to_show_ads(driver, timeout, total_news_base=1200):
     scroll_pause_time = timeout
     last_height = 5000
     while True:
-        total_news = new_tab_ads_action.count_all_news(driver)
+        total_news = newtab_ads_action.count_all_news(driver)
         driver.execute_script("window.scrollTo(0, " + str(last_height) + ");")
         time.sleep(scroll_pause_time)
         last_height += 5000
@@ -54,14 +54,14 @@ def verify_most_visited_ads_in_newtab_page(driver, total_ads, ads_locator_xpath_
 
 
 def verify_most_visited_ads_steps(driver):
-    total_ads = new_tab_ads_action.count_all_most_visited_ads(driver)
+    total_ads = newtab_ads_action.count_all_most_visited_ads(driver)
     verify_most_visited_ads_in_newtab_page(driver, total_ads,
                                            NewTabMostVisitedLocators.MOST_VISITED_QC_BY_INDEX_XPATH)
 
 
 def verify_news_ads_steps(driver):
     scroll_down_to_show_ads(driver, 0)
-    total_news_ads = new_tab_ads_action.count_all_news_ads(driver)
+    total_news_ads = newtab_ads_action.count_all_news_ads(driver)
     verify_ads_is_oppened_in_newtab(driver, total_news_ads, NewTabMostVisitedLocators.NEWS_ADS_BY_INDEX_XPATH)
 
 
