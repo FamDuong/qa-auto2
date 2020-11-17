@@ -1,13 +1,16 @@
 import logging
 import time
 
+from models.pageelements.newtab import NewTabLogAdsElements
 from models.pagelocators.newtab import NewTabMostVisitedLocators
 from models.pageobject.coccoc_search.coccoc_search_page_objects import CocCocSearchPageObjects
 from models.pageobject.newtab import NewTabAdsActions, NewTabLogAdsActions
 from testscripts.search.ccsearch_with_adblock_plus.common import verify_ads_is_oppened_in_newtab
 
 coccoc_search_page_object = CocCocSearchPageObjects()
-new_tab_ads_action = NewTabAdsActions()
+newtab_ads_action = NewTabAdsActions()
+newtab_log_ads_action = NewTabLogAdsActions()
+newtab_log_ads_element = NewTabLogAdsElements()
 
 LOGGER = logging.getLogger(__name__)
 
@@ -16,7 +19,7 @@ def scroll_down_to_show_ads(driver, timeout, total_news_base=1200):
     scroll_pause_time = timeout
     last_height = 5000
     while True:
-        total_news = new_tab_ads_action.count_all_news(driver)
+        total_news = newtab_ads_action.count_all_news(driver)
         driver.execute_script("window.scrollTo(0, " + str(last_height) + ");")
         time.sleep(scroll_pause_time)
         last_height += 5000
@@ -51,14 +54,14 @@ def verify_most_visited_ads_in_newtab_page(driver, total_ads, ads_locator_xpath_
 
 
 def verify_most_visited_ads_steps(driver):
-    total_ads = new_tab_ads_action.count_all_most_visited_ads(driver)
+    total_ads = newtab_ads_action.count_all_most_visited_ads(driver)
     verify_most_visited_ads_in_newtab_page(driver, total_ads,
                                            NewTabMostVisitedLocators.MOST_VISITED_QC_BY_INDEX_XPATH)
 
 
 def verify_news_ads_steps(driver):
     scroll_down_to_show_ads(driver, 0)
-    total_news_ads = new_tab_ads_action.count_all_news_ads(driver)
+    total_news_ads = newtab_ads_action.count_all_news_ads(driver)
     verify_ads_is_oppened_in_newtab(driver, total_news_ads, NewTabMostVisitedLocators.NEWS_ADS_BY_INDEX_XPATH)
 
 
@@ -128,7 +131,7 @@ def get_news_logs(driver, contains_string='coccoc.com/log?'):
     import json
     get_network_log_javascript = "var performance = window.performance || window.mozPerformance || " \
                                  "window.msPerformance || window.webkitPerformance || {}; var network = " \
-                                 "performance.getEntries() || {}; return network;";
+                                 "performance.getEntries() || {}; return network;"
     log = driver.execute_script(get_network_log_javascript)
 
     json_formatted_str = json.dumps(log, indent=2)
@@ -140,20 +143,6 @@ def get_news_logs(driver, contains_string='coccoc.com/log?'):
     for log in news_logs:
         LOGGER.info(log)
     return news_logs
-
-
-newtab_log_ads_action = NewTabLogAdsActions()
-
-
-# def click_newsfeed_card(driver, newsfeed_card_type, is_right_click=False):
-#     if 'Small News' in newsfeed_card_type:
-#         newtab_log_ads_action.click_on_news_small_news(driver, is_right_click)
-#     elif 'Big News' in newsfeed_card_type:
-#         newtab_log_ads_action.click_on_news_big_news(driver, is_right_click)
-#     elif 'Small Ad' in newsfeed_card_type:
-#         newtab_log_ads_action.click_on_news_small_ads(driver, is_right_click)
-#     else:
-#         newtab_log_ads_action.click_on_news_big_ads(driver, is_right_click)
 
 def click_newsfeed_card(driver, newsfeed_card_type, is_right_click=False):
     if 'Small News' in newsfeed_card_type:
@@ -255,8 +244,8 @@ def assert_newsfeed_logs_reqid(driver, newsfeed_card_type):
 
 
 def assert_newsfeed_logs_card_click(driver, newsfeed_card_type, is_right_click):
-    feed_action_card_click_log, webhp_action_card_click_log = get_log_with_timeout(driver, newsfeed_card_type, is_right_click=is_right_click)
-
+    feed_action_card_click_log, webhp_action_card_click_log = get_log_with_timeout(driver, newsfeed_card_type,
+                                                                                   is_right_click=is_right_click)
     LOGGER.info(
         "Assert after click " + newsfeed_card_type + " exist network logs [log?feedAction=cardClick]")
     assert len(feed_action_card_click_log) == 1
@@ -279,3 +268,12 @@ def assert_not_send_logs_after_click_action(driver, newsfeed_card_type, action):
     LOGGER.info("Assert after click [" + action + "] is not send logs")
     assert len(feed_action_card_click_log) == 0
     assert get_log_webhpaction_after_click_action(action, webhp_action_card_click_log) == 1
+
+
+def get_log_is_ends_with_string(new_session_log, endswith):
+    total_log = 0
+    for log in new_session_log:
+        log_is_endswith = log.endswith(endswith)
+        if log_is_endswith:
+            total_log += 1
+    return total_log

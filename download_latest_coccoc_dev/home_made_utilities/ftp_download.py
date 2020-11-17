@@ -26,7 +26,7 @@ def download_latest_coccoc_dev_installer(needed_download_version=None):
             latest_coccoc_download_dir = needed_download_version
         else:
             latest_coccoc_download_dir = get_latest_directory_by_set_up_exe_date(ftp)
-        from configs.yaml_configs import CocCocConfigs
+        from download_latest_coccoc_dev.configs.yaml_configs import CocCocConfigs
         if CocCocConfigs.COCCOC_DEV_VERSION not in latest_coccoc_download_dir:
             ftp.cwd(f"{latest_coccoc_download_dir}/installers")
             try:

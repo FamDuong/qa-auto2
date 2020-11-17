@@ -11,6 +11,6 @@ class JenkinsCommon:
         return cls.instance
 
     def jenkins_access(self):
-        from configs.yaml_configs import JenkinsConfigs
+        from download_latest_coccoc_dev.configs.yaml_configs import JenkinsConfigs
         return jenkins.Jenkins(JenkinsConfigs.JENKINS_DOMAIN, JenkinsConfigs.JENKINS_ADMIN_USERNAME
                                , JenkinsConfigs.JENKINS_ADMIN_PASSWORD)
