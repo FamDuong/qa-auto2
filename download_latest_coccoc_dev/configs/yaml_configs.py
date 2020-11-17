@@ -1,6 +1,6 @@
 import os
 
-from home_made_utilities.file_utils import YamlUtils
+from download_latest_coccoc_dev.home_made_utilities.file_utils import YamlUtils
 
 yaml_made_utils = YamlUtils()
 configuration_info = None

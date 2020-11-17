@@ -198,33 +198,3 @@ class TestLogAdsOnNewTabPage:
         total_log_scroll = get_log_is_ends_with_string(new_session_log_after_scroll, endswith='&size=33')
         assert total_log_first == 1
         assert total_log_scroll == len(new_session_log_after_scroll) - 1
-
-    file_handle = FilesHandle()
-
-
-    def test(self):
-        from browsermobproxy import Server
-        import psutil
-        import time
-        #
-        # for proc in psutil.process_iter():
-        #     # check whether the process name matches
-        #     if proc.name() == "browsermob-proxy":
-        #         proc.kill()
-        #
-        # dict = {'port': 8090}
-        server = Server('C:\\Users\\hangnt2\\Downloads\\browsermob-proxy-2.1.4\\bin\\browsermob-proxy') #, options=dict)  # Local path to BMP
-        server.start()
-        time.sleep(1)
-        proxy = server.create_proxy()
-
-        time.sleep(1)
-        driver = coccoc_instance(proxy=proxy)
-        proxy.new_har('req', options={'captureHeaders': True, 'captureContent': True})
-
-        driver.get("https://google.com")
-        pprint(proxy.har)  # returns a HAR JSON blob
-         # returns a HAR JSON blob
-
-        server.stop()
-        driver.quit()

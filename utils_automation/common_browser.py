@@ -73,7 +73,7 @@ def check_if_preferences_is_created(user_data_path):
 
 def chrome_options_preset(proxy=''):
     desired_capabilities = DesiredCapabilities.CHROME
-    desired_capabilities['goog:loggingPrefs'] = {'browser': 'ALL'}
+    desired_capabilities['goog:loggingPrefs'] = {'browser': 'ALL', 'performance': 'ALL'}
 
     binary_path = f"C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
     chrome_options = webdriver.ChromeOptions()
@@ -98,6 +98,7 @@ def chrome_options_preset(proxy=''):
     chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
     if proxy != '':
         chrome_options.add_argument('--proxy-server={host}:{port}'.format(host='localhost', port=proxy.port))
+
 
     split_after = binary_path.split('\\Local')
     user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
