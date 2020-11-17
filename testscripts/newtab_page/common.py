@@ -131,7 +131,7 @@ def get_news_logs(driver, contains_string='coccoc.com/log?'):
     import json
     get_network_log_javascript = "var performance = window.performance || window.mozPerformance || " \
                                  "window.msPerformance || window.webkitPerformance || {}; var network = " \
-                                 "performance.getEntries() || {}; return network;";
+                                 "performance.getEntries() || {}; return network;"
     log = driver.execute_script(get_network_log_javascript)
 
     json_formatted_str = json.dumps(log, indent=2)
@@ -143,7 +143,6 @@ def get_news_logs(driver, contains_string='coccoc.com/log?'):
     for log in news_logs:
         LOGGER.info(log)
     return news_logs
-
 
 def click_newsfeed_card(driver, newsfeed_card_type, is_right_click=False):
     if 'Small News' in newsfeed_card_type:
@@ -247,7 +246,6 @@ def assert_newsfeed_logs_reqid(driver, newsfeed_card_type):
 def assert_newsfeed_logs_card_click(driver, newsfeed_card_type, is_right_click):
     feed_action_card_click_log, webhp_action_card_click_log = get_log_with_timeout(driver, newsfeed_card_type,
                                                                                    is_right_click=is_right_click)
-
     LOGGER.info(
         "Assert after click " + newsfeed_card_type + " exist network logs [log?feedAction=cardClick]")
     assert len(feed_action_card_click_log) == 1
@@ -279,5 +277,3 @@ def get_log_is_ends_with_string(new_session_log, endswith):
         if log_is_endswith:
             total_log += 1
     return total_log
-
-

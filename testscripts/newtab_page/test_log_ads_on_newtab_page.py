@@ -1,17 +1,11 @@
 import logging
 import time
-from pprint import pprint
-
-from cloudinary.compat import urllib2
 from pytest_testrail.plugin import pytestrail
-from selenium import webdriver
-
 from models.pageobject.newtab import NewTabLogAdsActions
 from testscripts.newtab_page.common import get_browser_log_entries, get_last_info_log, count_log_contain_string, \
-    close_the_second_window, assert_newsfeed_logs_card_size, \
+    close_the_second_window, scroll_down_to_show_ads, get_news_logs, assert_newsfeed_logs_card_size, \
     assert_newsfeed_logs_reqid, assert_newsfeed_logs_card_click, assert_not_send_logs_after_click_action, \
-    get_log_is_ends_with_string, scroll_down_to_show_ads, get_news_logs
-from utils_automation.common import FilesHandle
+    get_log_is_ends_with_string
 from utils_automation.common_browser import coccoc_instance
 from utils_automation.const import NewTabAdsDemoUrls
 from models.pageobject.basepage_object import BasePageObject
@@ -20,7 +14,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 class TestLogAdsOnNewTabPage:
-    newtab_log_ads_action = NewTabLogAdsActions()
+    new_tab_log_ads_action = NewTabLogAdsActions()
     base_page_object = BasePageObject()
 
     @pytestrail.case('C329559')
@@ -28,8 +22,8 @@ class TestLogAdsOnNewTabPage:
         try:
             browser.get(NewTabAdsDemoUrls.CENTER_BANNER_ADS_640x360_URL)
             LOGGER.info("Open demo link: " + NewTabAdsDemoUrls.CENTER_BANNER_ADS_640x360_URL)
-            self.newtab_log_ads_action.switch_to_banner_ads_640x360_iframe(browser)
-            self.newtab_log_ads_action.click_on_banner_ads_640x360_ads(browser)
+            self.new_tab_log_ads_action.switch_to_banner_ads_640x360_iframe(browser)
+            self.new_tab_log_ads_action.click_on_banner_ads_640x360_ads(browser)
             close_the_second_window(browser)
             log_entries = get_browser_log_entries(browser)
             last_log = get_last_info_log(log_entries)
@@ -43,7 +37,7 @@ class TestLogAdsOnNewTabPage:
         try:
             browser.get(NewTabAdsDemoUrls.MAGNETIC_MASTHREAD_ADS_URL)
             LOGGER.info("Open demo link: " + NewTabAdsDemoUrls.MAGNETIC_MASTHREAD_ADS_URL)
-            self.newtab_log_ads_action.click_on_skin_ads(browser)
+            self.new_tab_log_ads_action.click_on_skin_ads(browser)
             close_the_second_window(browser)
             log_entries = get_browser_log_entries(browser)
             LOGGER.info("Assert after click magnetic_masthread_ads exist console log contains [skinClick]")
@@ -56,7 +50,7 @@ class TestLogAdsOnNewTabPage:
         try:
             browser.get(NewTabAdsDemoUrls.VIDEO_MASTHREAD_ADS_URL)
             LOGGER.info("Open demo link: " + NewTabAdsDemoUrls.VIDEO_MASTHREAD_ADS_URL)
-            self.newtab_log_ads_action.click_on_skin_ads(browser)
+            self.new_tab_log_ads_action.click_on_skin_ads(browser)
             close_the_second_window(browser)
             log_entries = get_browser_log_entries(browser)
             LOGGER.info("Assert after click video_masthead_ads exist console log contains [skinClick]")
@@ -71,7 +65,7 @@ class TestLogAdsOnNewTabPage:
             for i in range(len(urls)):
                 browser.get(urls[i])
                 LOGGER.info("Open demo link: " + urls[i])
-                self.newtab_log_ads_action.click_on_skin_ads(browser)
+                self.new_tab_log_ads_action.click_on_skin_ads(browser)
                 close_the_second_window(browser)
                 log_entries = get_browser_log_entries(browser)
                 LOGGER.info("Assert after click skin_ads exist console log contains [skinClick]")
@@ -85,7 +79,7 @@ class TestLogAdsOnNewTabPage:
         import time
         browser.get(NewTabAdsDemoUrls.VIDEO_ADS_URL)
         LOGGER.info("Open demo link: " + NewTabAdsDemoUrls.VIDEO_ADS_URL)
-        self.newtab_log_ads_action.click_on_video_ads_close_float_button(browser)
+        self.new_tab_log_ads_action.click_on_video_ads_close_float_button(browser)
         log_entries = get_browser_log_entries(browser)
         LOGGER.info("Assert after scroll down to show floating video shown and click to close floating video_ads "
                     "exist console log contains [feedPinIn, Click]")
@@ -106,7 +100,7 @@ class TestLogAdsOnNewTabPage:
         LOGGER.info("===============================================================================================\n")
         LOGGER.info("Click on video ads to open the landing page of ads")
         browser.refresh()
-        self.newtab_log_ads_action.click_on_video_ads(browser)
+        self.new_tab_log_ads_action.click_on_video_ads(browser)
         log_entries = get_browser_log_entries(browser)
         close_the_second_window(browser)
         LOGGER.info("Assert after click video_ads exist console log contains [ntrbVASTEvent]")
@@ -125,10 +119,10 @@ class TestLogAdsOnNewTabPage:
         assert count_log_contain_string(log_entries, ['Viewability10']) == 1
 
     @pytestrail.case('C403341')
-    def test_check_card_size_is_shown_in_card_click_log(self, get_newtab_url):
+    def test_check_card_size_is_shown_in_card_click_log(self, get_new_tab_url):
         browser = coccoc_instance()
-        if get_newtab_url is not None:
-            for url in get_newtab_url:
+        if get_new_tab_url is not None:
+            for url in get_new_tab_url:
                 browser.get(url)
         assert_newsfeed_logs_card_size(browser, newsfeed_card_type='Small News', card_size='cardSize=small')
         LOGGER.info("===================================================")
@@ -139,10 +133,10 @@ class TestLogAdsOnNewTabPage:
         assert_newsfeed_logs_card_size(browser, newsfeed_card_type='Big Ad', card_size='cardSize=big:ad')
 
     @pytestrail.case('C410373')
-    def test_check_log_when_left_click_a_card(self, get_newtab_url):
+    def test_check_log_when_left_click_a_card(self, get_new_tab_url):
         browser = coccoc_instance()
-        if get_newtab_url is not None:
-            for url in get_newtab_url:
+        if get_new_tab_url is not None:
+            for url in get_new_tab_url:
                 browser.get(url)
         assert_newsfeed_logs_reqid(browser, newsfeed_card_type='Small News')
         LOGGER.info("===================================================")
@@ -153,10 +147,10 @@ class TestLogAdsOnNewTabPage:
         assert_newsfeed_logs_reqid(browser, newsfeed_card_type='Big Ad')
 
     @pytestrail.case('C403338')
-    def test_check_log_when_right_click_a_card(self, get_newtab_url):
+    def test_check_log_when_right_click_a_card(self, get_new_tab_url):
         browser = coccoc_instance()
-        if get_newtab_url is not None:
-            for url in get_newtab_url:
+        if get_new_tab_url is not None:
+            for url in get_new_tab_url:
                 browser.get(url)
         assert_newsfeed_logs_card_click(browser, newsfeed_card_type='Small News', is_right_click=True)
         LOGGER.info("===================================================")
@@ -179,11 +173,11 @@ class TestLogAdsOnNewTabPage:
         assert_not_send_logs_after_click_action(browser, newsfeed_card_type='Big News', action='report')
 
     @pytestrail.case('C473028')
-    def test_check_log_when_first_time_loading_newtab(self, get_newtab_url):
+    def test_check_log_when_first_time_loading_newtab(self, get_new_tab_url):
         browser = coccoc_instance()
         time.sleep(2)
-        if get_newtab_url is not None:
-            for url in get_newtab_url:
+        if get_new_tab_url is not None:
+            for url in get_new_tab_url:
                 browser.get(url)
         browser.refresh()
         time.sleep(5)

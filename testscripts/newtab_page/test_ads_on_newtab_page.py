@@ -18,7 +18,7 @@ class TestAdsOnNewTabPage:
     new_tab_ads_action = NewTabAdsActions()
     settings_page_object = SettingsPageObject()
 
-    def test_most_visited_ads(self, get_newtab_url):
+    def test_most_visited_ads(self, get_new_tab_url):
         driver = coccoc_instance()
         driver.maximize_window()
         LOGGER.info("Open coccoc://extension")
@@ -28,9 +28,9 @@ class TestAdsOnNewTabPage:
             LOGGER.info("*** Testing in mode: " + mode)
             change_adblock_plus_mode(driver, mode)
             driver = coccoc_instance()
-            check_most_visited_ads_with_url(driver, get_newtab_url)
+            check_most_visited_ads_with_url(driver, get_new_tab_url)
 
-    def test_news_ads(self, get_newtab_url):
+    def test_news_ads(self, get_new_tab_url):
         driver = coccoc_instance()
         driver.maximize_window()
         LOGGER.info("Open coccoc://extension")
@@ -40,4 +40,4 @@ class TestAdsOnNewTabPage:
             LOGGER.info("*** Testing in mode: " + mode)
             change_adblock_plus_mode(driver, mode)
             driver = coccoc_instance()
-            check_news_ads_with_url(driver, get_newtab_url)
+            check_news_ads_with_url(driver, get_new_tab_url)

@@ -39,8 +39,40 @@ class LuckyDB:
         # print("  DB: ", rows)
         return rows
 
+    def update_lucky_db(self, sql_query, data_query = None):
+        import logging
+        connection = self.coccoc_lucky_db_interact()
+        cursor = connection.cursor()
+        if data_query is None:
+            cursor.execute(sql_query)
+        else:
+            cursor.execute(sql_query, data_query)
+        connection.commit()
+        self.coccoc_lucky_db_close(connection)
+        print(cursor.rowcount, "Record(s) affected")
+
     def get_list_db(self, db, col_index = 0):
         list_groups = []
         for row in db:
-            list_groups.append(row[col_index])
+            list_groups.append(str(row[col_index]))
         return list_groups
+
+    def select_lucky_db(self, sql_query, data_query = None):
+        import logging
+        # sql_query = f'select * from urls;'
+        connection = self.coccoc_lucky_db_interact()
+        cursor = connection.cursor()
+        if data_query is None:
+            cursor.execute(sql_query)
+        else:
+            cursor.execute(sql_query, data_query)
+        rows = cursor.fetchall()
+        logging.debug(f"Duplicate rows are : {rows}")
+        connection.commit()
+        self.coccoc_lucky_db_close(connection)
+        return rows
+
+    def get_list_lucky_db(self, sql_query, index = 0, data_query = None):
+        db_lucky = self.select_lucky_db(sql_query, data_query)
+        list_lucky = self.get_list_db(db_lucky, index)
+        return list_lucky;

@@ -6,7 +6,7 @@ def pytest_addoption(parser):
 
 
 @pytest.fixture(scope='class')
-def get_newtab_url(request):
+def get_new_tab_url(request):
     newtab_url = request.config.getoption("--newtab-url")
     if newtab_url is not None:
         newtab_url_values = newtab_url.split(",")
