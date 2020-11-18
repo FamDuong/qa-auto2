@@ -23,15 +23,15 @@ class TestLogAdsOnNewTabPage:
             demo_link = NewTabAdsDemoUrls.CENTER_BANNER_ADS_640x360_URL
             browser.get(demo_link)
             LOGGER.info("Open demo link: " + demo_link)
+
             self.newtab_log_ads_action.switch_to_banner_ads_640x360_iframe(browser)
             self.newtab_log_ads_action.click_on_banner_ads_640x360_ads(browser)
             log_entries = get_browser_log_entries(browser)
-            last_log = get_last_info_log(log_entries)
             close_the_second_window(browser, demo_link)
             LOGGER.info("Assert after click banner_ads exist console log contains [ntrbClick]")
-            assert 'ntrbClick' in last_log
+            assert count_log_contain_string(log_entries, ['ntrbClick']) == 1
         finally:
-            close_the_second_window(browser)
+            close_the_second_window(browser, demo_link)
 
     @pytestrail.case('C329655')
     def test_magnetic_masthread_ads_check_log_events(self, browser):
@@ -176,18 +176,15 @@ class TestLogAdsOnNewTabPage:
     @pytestrail.case('C473028')
     def test_check_log_when_first_time_loading_newtab(self, get_newtab_url):
         browser = coccoc_instance()
-        time.sleep(2)
         if get_newtab_url is not None:
             for url in get_newtab_url:
                 browser.get(url)
         browser.refresh()
-        time.sleep(5)
         new_session_log = get_news_logs(browser, contains_string='nre')
         total_log = get_log_is_ends_with_string(new_session_log, endswith='&newsession=1')
         assert total_log == 1
 
         scroll_down_to_show_ads(browser, timeout=0, total_news_base=80)
-        time.sleep(5)
         new_session_log_after_scroll = get_news_logs(browser, contains_string='nre')
         total_log_first = get_log_is_ends_with_string(new_session_log_after_scroll, endswith='&newsession=1')
         total_log_scroll = get_log_is_ends_with_string(new_session_log_after_scroll, endswith='&size=33')
