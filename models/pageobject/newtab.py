@@ -1,3 +1,4 @@
+import logging
 import time
 
 from selenium.webdriver import ActionChains
@@ -8,6 +9,7 @@ from models.pageelements.newtab import NewTabSearchElement, NewTabIconSitesEleme
     NewTabWidgetElements, NewTabAdsElements, NewTabLogAdsElements
 from models.pageobject.basepage_object import BasePageObject
 
+LOGGER = logging.getLogger(__name__)
 
 class NewTabSearchPageObject(BasePageObject):
     new_tab_search_element = NewTabSearchElement()
@@ -122,15 +124,19 @@ class NewTabLogAdsActions(BasePageObject):
     new_tab_log_ads_element = NewTabLogAdsElements()
 
     def switch_to_banner_ads_640x360_iframe(self, driver: WebDriver):
+        LOGGER.info("Switch to video iframe")
         driver.switch_to.frame(self.new_tab_log_ads_element.find_banner_ads_640x360_iframe(driver))
 
     def click_on_banner_ads_640x360_ads(self, driver: WebDriver):
+        LOGGER.info("Click on banner ads")
         self.new_tab_log_ads_element.find_banner_ads_640x360_ads(driver).click()
 
     def click_on_skin_ads(self, driver: WebDriver):
+        LOGGER.info("Click skin ads")
         self.new_tab_log_ads_element.find_skin_ads(driver).click()
 
     def click_on_video_ads_close_float_button(self, driver: WebDriver):
+        LOGGER.info("Click video ads and close float button")
         time.sleep(1)
         driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
         total_close_float_button = self.new_tab_log_ads_element.count_video_ads_close_float_button(driver)
@@ -146,11 +152,13 @@ class NewTabLogAdsActions(BasePageObject):
         self.new_tab_log_ads_element.find_video_ads_close_float_button(driver).click()
 
     def click_on_video_ads(self, driver: WebDriver):
+        LOGGER.info("Click video ads")
         time.sleep(10)
         driver.switch_to.frame(self.new_tab_log_ads_element.find_video_ads_video_iframe(driver))
         self.new_tab_log_ads_element.find_video_ads_video(driver).click()
 
     def click_on_news_card(self, driver: WebDriver, news_type, is_right_click=False):
+        LOGGER.info("Click "+news_type+" news")
         news_element = self.new_tab_log_ads_element.find_news_card(driver, news_type)
         if is_right_click is False:
             news_element.click()
@@ -158,6 +166,7 @@ class NewTabLogAdsActions(BasePageObject):
             self.right_click_then_open_link_in_newtab(driver, news_element)
 
     def click_on_news_ads_card(self, driver: WebDriver, ads_type, is_right_click=False):
+        LOGGER.info("Click " + ads_type + " ads")
         ads_element = self.new_tab_log_ads_element.find_news_ads_card(driver, ads_type)
         if is_right_click is False:
             ads_element.click()
@@ -165,9 +174,11 @@ class NewTabLogAdsActions(BasePageObject):
             self.right_click_then_open_link_in_newtab(driver, ads_element)
 
     def click_on_news_custom_button(self, driver: WebDriver, news_type):
+        LOGGER.info("Click news custom button")
         self.new_tab_log_ads_element.find_news_customs_button(driver, news_type).click()
 
     def click_on_news_action_button(self, driver: WebDriver, news_type, action):
+        LOGGER.info("Click news "+action+" button ")
         if 'Big' in news_type:
             news_type = 'big'
         else:
@@ -183,9 +194,11 @@ class NewTabLogAdsActions(BasePageObject):
             self.new_tab_log_ads_element.find_news_action_button(driver, news_type, action).click()
 
     def scroll_to_news_card(self, driver: WebDriver, news_type):
+        LOGGER.info("Scroll to news card: "+news_type)
         news_element = self.new_tab_log_ads_element.find_news_card(driver, news_type)
         self.scroll_to_element(driver, news_element)
 
     def scroll_to_news_ads_card(self, driver: WebDriver, ads_type):
+        LOGGER.info("Scroll to ads card: "+ads_type)
         ads_element = self.new_tab_log_ads_element.find_news_ads_card(driver, ads_type)
         self.scroll_to_element(driver, ads_element)

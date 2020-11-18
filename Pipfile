@@ -29,6 +29,8 @@ testrail-api = "*"
 google-oauth = "*"
 pygsheets = "*"
 google-api-python-client = "*"
+python-jenkins = "*"
+packaging = "*"
 
 [requires]
 python_version = "3.7"

@@ -1,8 +1,7 @@
 import logging
 import time
-
+from datetime import datetime
 from selenium.webdriver.chrome.webdriver import WebDriver
-
 from models.pageelements.newtab import NewTabLogAdsElements
 from models.pagelocators.newtab import NewTabMostVisitedLocators
 from models.pageobject.coccoc_search.coccoc_search_page_objects import CocCocSearchPageObjects
@@ -41,7 +40,7 @@ def verify_most_visited_ads_in_newtab_page(driver, total_ads, ads_locator_xpath_
             ad_url = driver.current_url
             if root_url not in ad_url:
                 LOGGER.info("Ad " + str(i + 1) + ": " + ad_url)
-            from datetime import datetime
+
             start_time = datetime.now()
             if root_url in ad_url:
                 while root_url in ad_url:
@@ -88,6 +87,7 @@ def check_news_ads_with_url(driver, url_list):
 def get_browser_log_entries(driver):
     """Get the browser console log"""
     try:
+        time.sleep(5)
         slurped_logs = driver.get_log('browser')
         for log in slurped_logs:
             LOGGER.info(log)
@@ -121,11 +121,23 @@ def count_log_contain_string(log_entries, contains_strings):
     return total_contains
 
 
-def close_the_second_window(driver: WebDriver, url = ''):
+def close_the_second_window(driver: WebDriver, demo_link=''):
     windows_handles = driver.window_handles
+
+    start_time = datetime.now()
     current_url = driver.current_url
-    if len(windows_handles) == 1 and url != current_url and url != '':
-        driver.back()
+    LOGGER.info("Current url: " + current_url)
+    LOGGER.info("Demo url: " + demo_link)
+    if demo_link != '' and len(windows_handles) == 1:
+        if demo_link == current_url:
+            while demo_link == current_url:
+                time.sleep(2)
+                current_url = driver.current_url
+                time_delta = datetime.now() - start_time
+                if time_delta.total_seconds() >= 15:
+                    break
+        if demo_link != current_url:
+            driver.back()
     elif len(windows_handles) == 2:
         driver.switch_to.window(windows_handles[1])
         driver.close()
@@ -137,17 +149,26 @@ def get_news_logs(driver, contains_string='coccoc.com/log?'):
     get_network_log_javascript = "var performance = window.performance || window.mozPerformance || " \
                                  "window.msPerformance || window.webkitPerformance || {}; var network = " \
                                  "performance.getEntries() || {}; return network;"
-    log = driver.execute_script(get_network_log_javascript)
 
+    log = driver.execute_script(get_network_log_javascript)
+    start_time = datetime.now()
+    if log == '':
+        while log == '':
+            time.sleep(2)
+            log = driver.execute_script(get_network_log_javascript)
+            time_delta = datetime.now() - start_time
+            if time_delta.total_seconds() >= 15:
+                break
     json_formatted_str = json.dumps(log, indent=2)
     network_log_json = json.loads(json_formatted_str)
     news_logs = []
     for network in network_log_json:
         if contains_string in network['name']:
             news_logs.append(network['name'])
-    for log in news_logs:
-        LOGGER.info(log)
+    for news_log in news_logs:
+        LOGGER.info(news_log)
     return news_logs
+
 
 def click_newsfeed_card(driver, newsfeed_card_type, is_right_click=False):
     if 'Small News' in newsfeed_card_type:
@@ -198,7 +219,7 @@ def get_log_with_timeout(driver, newsfeed_card_type, action='', is_right_click=F
         newtab_log_ads_action.click_on_news_action_button(driver, newsfeed_card_type, action)
     feed_action_card_click_log = get_news_logs(driver, contains_string='coccoc.com/log?feedAction=cardClick&card_id')
     webhp_action_card_click_log = get_news_logs(driver, contains_string='coccoc.com/log?webhpAction=Click')
-    from datetime import datetime
+
     start_time = datetime.now()
     if len(feed_action_card_click_log) == 0 or len(webhp_action_card_click_log) == 0:
         while len(feed_action_card_click_log) == 0 or len(webhp_action_card_click_log) == 0:
