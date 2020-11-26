@@ -96,6 +96,7 @@ def chrome_options_preset():
     chrome_options.add_experimental_option("prefs", {'safebrowsing.enabled': 'false'})
     chrome_options.add_experimental_option("useAutomationExtension", False)
     chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
+    chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
     split_after = binary_path.split('\\Local')
     user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
