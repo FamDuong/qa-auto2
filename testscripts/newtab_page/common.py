@@ -85,7 +85,7 @@ def check_news_ads_with_url(driver, url_list):
 
 
 def get_browser_log_entries(driver):
-    """Get the browser console log"""
+    LOGGER.info('Get the browser console log')
     try:
         time.sleep(5)
         slurped_logs = driver.get_log('browser')
@@ -123,21 +123,11 @@ def count_log_contain_string(log_entries, contains_strings):
 
 def close_the_second_window(driver: WebDriver, demo_link=''):
     windows_handles = driver.window_handles
-
-    start_time = datetime.now()
     current_url = driver.current_url
     LOGGER.info("Current url: " + current_url)
     LOGGER.info("Demo url: " + demo_link)
-    if demo_link != '' and len(windows_handles) == 1:
-        if demo_link == current_url:
-            while demo_link == current_url:
-                time.sleep(2)
-                current_url = driver.current_url
-                time_delta = datetime.now() - start_time
-                if time_delta.total_seconds() >= 15:
-                    break
-        if demo_link != current_url:
-            driver.back()
+    if demo_link != '' and len(windows_handles) == 1 and demo_link != current_url:
+        driver.back()
     elif len(windows_handles) == 2:
         driver.switch_to.window(windows_handles[1])
         driver.close()
