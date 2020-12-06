@@ -156,9 +156,4 @@ class TestBrowserDarkMode:
                 break
         return result
 
-    @pytestrail.case('')
-    def test_demo(self):
-        self.init_data()
-        image = (r'D:\qa-automation\testscripts\darkmode_top_sites\202012052004\techcombankcomvnfast-ebank1.png', r'D:\qa-automation\testscripts\darkmode_top_sites\202012052004\vtcvnnong-126html1.png_screenshot1.png')
-        self.verify_images(image)
 
