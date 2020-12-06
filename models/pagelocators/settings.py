@@ -89,3 +89,25 @@ class SettingsClearBrowserDataLocators(object):
     SETTINGS_BROWSING_CACHED_CHECKBOX_BASIC = '#cacheCheckboxBasic'
     SETTINGS_BROWSING_CHECKBOX = 'cr-checkbox#checkbox'
     SETTINGS_BROWSING_CHILD_CHECKBOX = 'div#checkbox'
+
+class SettingsDarkmodeLocators(object):
+    SETTINGS_ANIMATED_PAGE = 'settings-animated-pages'
+    SETTINGS_SUB_PAGE = 'settings-subpage'
+    SETTINGS_CATEGORY_DEFAULT_SETTING = 'category-default-setting'
+    SETTINGS_RADIO_GROUP = 'settings-radio-group'
+    SETTINGS_CONTROLLED_RADIO_BUTTON = 'controlled-radio-button'
+    SETTINGS_DARKMODE_LABEL = 'span#label'
+    # SETTINGS_DARKMODE_ICON_FOR_SITE = "//*[@ControlType='ControlType.Button' and @Name='Enable/Disable Coc Coc Dark Mode on this site']"
+    #SETTINGS_DARKMODE_ICON_FOR_SITE = "//*[contains(@ControlType,'ControlType.Button') and contains(@name,'Enable/Disable Coc Coc Dark Mode on this site')]"
+    SETTINGS_DARKMODE_ICON_FOR_SITE = "//*[contains(name(), 'Dark Mode')]"
+    COMPONENT_DARKMODE_BUTTON = '//*[@id="hlihchmekigeljcmpkkkhlojcmhjgjpa"]'
+    # Big monitors
+    # SETTINGS_DARKMODE_TOGGLE_COORDINATES = (1010, -754)
+    # ICON_DARKMODE_COORDINATES = (1945, -1027)
+    # ICON_DARKMODE_SWITCH_COORDINATES = (1921, -894)
+    # Small monitors
+    SETTINGS_DARKMODE_TOGGLE_COORDINATES = (498, 280)
+    SETTINGS_DARKMODE_OPTION_COORDINATES = (571, 329)
+    ICON_DARKMODE_COORDINATES = (1144, 53)
+    ICON_DARKMODE_SWITCH_COORDINATES = (1118, 224)
+    ICON_DARKMODE_SWITCH_COORDINATES_IS_EXCEPTION = (1118, 188)

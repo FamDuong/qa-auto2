@@ -12,6 +12,7 @@ def get_credentials_info():
 SKYPE_BOT_ACCOUNT_NAME = get_credentials_info()['skype']['bot']['accountname']
 SKYPE_BOT_PASSWORD = get_credentials_info()['skype']['bot']['password']
 SKYPE_GROUP_AUTOMATION_ID = get_credentials_info()['skype']['group']['qa_automation_id']
+SKYPE_GROUP_AUTOMATION_ID_1 = get_credentials_info()['skype']['group']['qa_automation_id_1']
 
 ATLASSIAN_BOT_ACCOUNT_NAME = get_credentials_info()['atlassian']['bot']['accountname']
 ATLASSIAN_BOT_PASSWORD = get_credentials_info()['atlassian']['bot']['password']

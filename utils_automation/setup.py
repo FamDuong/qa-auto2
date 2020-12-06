@@ -24,8 +24,8 @@ class Browser:
 
 class WaitAfterEach:
     @staticmethod
-    def sleep_timer_after_each_step():
-        time.sleep(2)
+    def sleep_timer_after_each_step(idle_time = 2):
+        time.sleep(idle_time)
 
     @staticmethod
     def sleep_timer_after_each_step_longer_load():

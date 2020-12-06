@@ -1,6 +1,6 @@
 import dateutil.parser
 import datetime
-
+from datetime import datetime
 
 def parse_string_to_date(string_datetime):
     your_date = dateutil.parser.parse(string_datetime)
@@ -18,6 +18,11 @@ def how_many_days_til_now(datetime_value):
 
 def how_many_seconds_between_times(previous_time, later_time):
     return later_time.time().second - previous_time.time().second
+
+def get_current_timestamp(format = "%Y%m%d%H%M%S"):
+    timestamp = datetime.now()
+    timestamp = timestamp.strftime(format)
+    return timestamp
 
 
 

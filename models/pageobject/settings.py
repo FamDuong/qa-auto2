@@ -1,13 +1,17 @@
 import logging
+import time
 
 from selenium.webdriver.remote.webelement import WebElement
 
 from models.pageelements.settings import SettingsElements, SettingsComponentsPageElement, \
-    SettingsClearBrowserDataPageElement
+    SettingsClearBrowserDataPageElement, SettingDarkmodePageElement
 from models.pagelocators.settings import SettingsPageLocators
 from models.pageobject.basepage_object import BasePageObject
 from utils_automation.const import Urls, CocCocComponents
 from utils_automation.common import wait_for_stable
+from utils_automation.setup import WaitAfterEach
+from utils_automation.url_utils import URLUtils
+from models.pagelocators.settings import SettingsDarkmodeLocators
 
 LOGGER = logging.getLogger(__name__)
 
@@ -249,3 +253,39 @@ class SettingsClearBrowserDataPageObject(BasePageObject):
     def click_clear_data_button(self, driver):
         element: WebElement = self.settings_clear_browser_data_page_element.find_clear_data_button(driver)
         element.click()
+
+class SettingsDarkmodePageObject(BasePageObject):
+    settings_elem = SettingDarkmodePageElement()
+    urls = URLUtils()
+
+    def enable_dark_mode_in_setting_page(self, driver):
+        # Using UISpy to define locator then mouse move => Need to improve
+        # driver.get(Urls.COCCOC_SETTINGS_DARKMODE)
+        self.urls.wait_for_page_to_load(driver, Urls.COCCOC_SETTINGS_DARKMODE)
+        # Temporary stupid solution
+        self.pyautogui_click_on_coordinates(SettingsDarkmodeLocators.SETTINGS_DARKMODE_OPTION_COORDINATES)
+        # Wait until all darkmode is initialize
+        # WaitAfterEach.sleep_timer_after_each_step(15)
+
+    def enable_dark_mode_for_site(self, driver):
+        elements = self.settings_elem.find_dark_mode_icon_for_site(driver)
+        # Temporary stupid solution
+        self.click_on_dark_mode_icon_for_site()
+
+    def click_on_dark_mode_icon_for_site(self, is_exception = False):
+        # Stupid solution
+        # Move to darkmode icon on ominion box
+        # self.pyautogui_click_on_coordinates(1945, -1027)
+        self.pyautogui_click_on_coordinates(SettingsDarkmodeLocators.ICON_DARKMODE_COORDINATES)
+        # Switch dark mode
+        # self.pyautogui_click_on_coordinates(1921, -894)
+        self.pyautogui_click_on_coordinates(SettingsDarkmodeLocators.ICON_DARKMODE_SWITCH_COORDINATES_IS_EXCEPTION)
+        self.pyautogui_click_on_coordinates(SettingsDarkmodeLocators.ICON_DARKMODE_SWITCH_COORDINATES)
+
+    def pyautogui_click_on_coordinates(self, coordinates):
+        import pyautogui
+        for i in reversed(range(2)):
+            pyautogui.moveTo(coordinates[0], coordinates[1])
+            WaitAfterEach.sleep_timer_after_each_step(1)
+        pyautogui.click()
+        WaitAfterEach.sleep_timer_after_each_step(1)

@@ -20,6 +20,7 @@ class BasePageElement(object):
         wait = WebDriverWait(driver, 20)
         i = 0
         root = wait.until(ec.presence_of_element_located((By.TAG_NAME, string_text[i])))
+        LOGGER.info(string_text[i])
         # root = driver.find_element_by_tag_name(string_text[i])
         while len(string_text) > (i+1):
             i = i+1

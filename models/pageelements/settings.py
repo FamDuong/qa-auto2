@@ -1,6 +1,6 @@
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.settings import SettingsPageLocators, SettingsComponentsPageLocators, \
-    SettingsClearBrowserDataLocators
+    SettingsClearBrowserDataLocators, SettingsDarkmodeLocators
 
 
 class SettingsElements(BasePageElement):
@@ -247,3 +247,19 @@ class SettingsClearBrowserDataPageElement(BasePageElement):
                                         SettingsClearBrowserDataLocators.SETTINGS_PRIVACY_PAGE,
                                         SettingsClearBrowserDataLocators.SETTINGS_CLEAR_BROWSING_DATA_DIALOG,
                                         SettingsClearBrowserDataLocators.SETTINGS_CLEAR_DATA_BUTTON)
+
+class SettingDarkmodePageElement(BasePageElement):
+    def find_alway_enable_dark_mode_element(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_COCCOC_SECTION_PAGE_TEXT,
+                                        SettingsClearBrowserDataLocators.SETTINGS_PRIVACY_PAGE,
+                                        SettingsDarkmodeLocators.SETTINGS_ANIMATED_PAGE,
+                                        SettingsDarkmodeLocators.SETTINGS_SUB_PAGE,
+                                        SettingsDarkmodeLocators.SETTINGS_CATEGORY_DEFAULT_SETTING,
+                                        SettingsDarkmodeLocators.SETTINGS_CONTROLLED_RADIO_BUTTON,
+                                        SettingsDarkmodeLocators.SETTINGS_DARKMODE_LABEL)
+
+    def find_dark_mode_icon_for_site(self, driver):
+        return driver.find_elements_by_xpath(SettingsDarkmodeLocators.SETTINGS_DARKMODE_ICON_FOR_SITE)
+
+    def find_dark_mode_rules_button(self, driver):
+        return driver.find_elements_by_xpath(SettingsDarkmodeLocators.COMPONENT_DARKMODE_BUTTON)

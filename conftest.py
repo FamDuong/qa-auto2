@@ -10,6 +10,8 @@ from utils_automation.common import FilesHandle, get_current_dir
 from utils_automation.common_browser import modify_file_as_text, coccoc_instance
 from utils_automation.const import Urls
 from utils_automation.setup import WaitAfterEach
+from config.credentials import SKYPE_GROUP_AUTOMATION_ID, SKYPE_GROUP_AUTOMATION_ID_1
+from utils_automation.skype_utils import SkypeLocalUtils
 
 driver = None
 user_data_path = None
@@ -23,6 +25,8 @@ files_handle = FilesHandle()
 
 LOGGER = logging.getLogger(__name__)
 
+def pytest_configure():
+    pytest.message = ""
 
 @pytest.mark.hookwrapper
 def pytest_runtest_makereport(item):
@@ -70,7 +74,18 @@ def browser():
     driver = coccoc_instance()
     yield driver
     driver.quit()
-#
+
+@pytest.fixture(scope='session')
+def browser_enabled_dark_mode():
+    LOGGER.info("Init coc coc browser with options...")
+    global driver
+    # pytest.message = ""
+    driver = coccoc_instance(options = "CocCocDarkMode", clear_userdata=False)
+    yield driver
+    skype = SkypeLocalUtils()
+    skype.send_message_group_skype(SKYPE_GROUP_AUTOMATION_ID_1, pytest.message)
+    driver.quit()
+
 #
 # @pytest.fixture(scope='session')
 # def get_user_data_default_and_flash_path():
@@ -173,6 +188,10 @@ def pytest_addoption(parser):
     parser.addoption("--env", action="store", default="local")
     parser.addoption("--user", action="store", default=getpass.getuser())
     parser.addoption("--enabled-adblock-extension", action="store", default="True")
+    parser.addoption("--disable-gpu")
+    parser.addoption("--disable-dev-shm-usage")
+    parser.addoption("--no-sandbox")
+    parser.addoption("--ignore-certificate-errors")
 
 
 @pytest.fixture(scope='session')

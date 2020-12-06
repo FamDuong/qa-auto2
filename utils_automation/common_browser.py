@@ -1,6 +1,14 @@
 import fileinput
 import logging
 
+# logger = logging.getLogger('comtypes')
+# logger.setLevel(logging.DEBUG)
+# ch = logging.StreamHandler()
+# ch.setLevel(logging.DEBUG)
+# formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# ch.setFormatter(formatter)
+# logger.addHandler(ch)
+
 from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities
 
@@ -42,7 +50,7 @@ def modify_file_as_text(text_file_path, text_to_search, replacement_text):
         LOGGER.info("Preferences file is not existed")
 
 
-def cleanup(coccoc_update=True, firefox=True):
+def cleanup(coccoc_update=True, firefox=True, clear_userdata=False):
     # Kill all unncessary task
     if coccoc_update:
         WindowsCMD.execute_cmd('taskkill /im CocCocUpdate.exe /f')
@@ -55,6 +63,9 @@ def cleanup(coccoc_update=True, firefox=True):
     # WindowsCMD.execute_cmd('taskkill /im chrome.exe /f')
     if firefox:
         WindowsCMD.execute_cmd('taskkill /im firefox.exe /f')
+    if clear_userdata:
+        WindowsCMD.execute_cmd('rmdir /S /Q %localappdata%\CocCoc\Browser\"User Data"')
+
 
 
 def check_if_preferences_is_created(user_data_path):
@@ -71,7 +82,7 @@ def check_if_preferences_is_created(user_data_path):
         return False
 
 
-def chrome_options_preset():
+def chrome_options_preset(options = None):
     desired_capabilities = DesiredCapabilities.CHROME
     desired_capabilities['goog:loggingPrefs'] = {'browser': 'ALL'}
 
@@ -80,6 +91,8 @@ def chrome_options_preset():
     chrome_options.binary_location = binary_path
     # chrome_options.add_extension(
     #     "C:\\Users\\Hangnt2\\Downloads\\mpbjkejclgfgadiemmefgebjfooflfhl-0.7.3-Crx4Chrome.com.crx")
+    # Set monitor location
+
     chrome_options.add_argument("--start-maximized")
     chrome_options.add_argument("--proxy-server='direct://'")
     chrome_options.add_argument("--proxy-bypass-list=*")
@@ -97,6 +110,9 @@ def chrome_options_preset():
     chrome_options.add_experimental_option("useAutomationExtension", False)
     chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
     chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    chrome_options.add_experimental_option('excludeSwitches', ['disable-popup-blocking'])
+    if options is not None:
+        chrome_options.add_argument("--enable-features=%s" % options)
 
     split_after = binary_path.split('\\Local')
     user_data_path = split_after[0] + u'\\Local\\CocCoc\\Browser\\User Data'
@@ -107,10 +123,13 @@ def chrome_options_preset():
     return chrome_options, desired_capabilities
 
 
-def coccoc_instance(is_needed_clean_up=True):
+def coccoc_instance(is_needed_clean_up=True, options = None, clear_userdata = False):
     if is_needed_clean_up is True:
-        cleanup()
+        cleanup(clear_userdata = clear_userdata)
     else:
         pass
-    chrome_options, desired_capabilities = chrome_options_preset()
+    chrome_options, desired_capabilities = chrome_options_preset(options)
     return webdriver.Chrome(options=chrome_options, desired_capabilities=desired_capabilities)
+
+
+

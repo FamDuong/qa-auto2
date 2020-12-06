@@ -28,14 +28,13 @@ class SkypeLocalUtils:
     def send_message_group_skype(self, skype_group_id, message):
         return self.access_group(skype_group_id).sendMsg(message)
 
-
-
-
-
-
-
-
-
-
+    # image_path (file): file-like object to retrieve the attachment's body
+    # image_name (str): filename displayed to other clients
+    # is_image (bool): whether to treat the file as an image
+    def send_message_group_skype_with_image(self, skype_group_id, message, image_path, image_name = "image_error.png", is_image = True):
+        skype_group = self.access_group(skype_group_id)
+        skype_group.sendMsg(message)
+        skype_group.sendFile(open(image_path, "rb"), image_name, is_image)
+        return skype_group
 
 
