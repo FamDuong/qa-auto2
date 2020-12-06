@@ -88,8 +88,9 @@ class TestBrowserDarkMode:
             self.switch_dark_mode_for_site(browser, url)
             image_website_2, image_screenshot_2 = self.get_fullpage_screenshot_dark_mode(browser, url, times = 2)
 
-            # list_images.add((image_website_1, image_screenshot_1))
-            # list_images.add((image_website_2, image_screenshot_2))
+            list_images.add((image_website_1, image_screenshot_1))
+
+            list_images.add((image_website_2, image_screenshot_2))
             images = (image_website_1, image_screenshot_1)
             image_result = self.verify_images(url, images)
             self.file.append_to_file(self.file_listweb_result, image_result)
