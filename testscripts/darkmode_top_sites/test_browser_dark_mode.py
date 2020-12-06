@@ -1,15 +1,12 @@
 import os
-import random
 import pytest
 from pytest_testrail.plugin import pytestrail
 from utils_automation.image_utils import ImageUtils
 from utils_automation.file_utils import FileUtils
-from utils_automation.log_utils import LogUtils
 from utils_automation.url_utils import URLUtils
 from utils_automation.common_utils import CommonUtils
 from utils_automation.date_time_utils import get_current_timestamp
 from utils_automation.const import Urls
-from utils_automation.skype_utils import SkypeLocalUtils
 from models.pageobject.settings import SettingsDarkmodePageObject
 from config.credentials import SKYPE_GROUP_AUTOMATION_ID, SKYPE_GROUP_AUTOMATION_ID_1
 from utils_automation.skype_utils import SkypeLocalUtils
@@ -88,9 +85,9 @@ class TestBrowserDarkMode:
             self.switch_dark_mode_for_site(browser, url)
             image_website_2, image_screenshot_2 = self.get_fullpage_screenshot_dark_mode(browser, url, times = 2)
 
-            list_images.add((image_website_1, image_screenshot_1))
+            # list_images.add((image_website_1, image_screenshot_1))
+            # list_images.add((image_website_2, image_screenshot_2))
 
-            list_images.add((image_website_2, image_screenshot_2))
             images = (image_website_1, image_screenshot_1)
             image_result = self.verify_images(url, images)
             self.file.append_to_file(self.file_listweb_result, image_result)
@@ -99,13 +96,7 @@ class TestBrowserDarkMode:
             image_result = self.verify_images(url, images)
             self.file.append_to_file(self.file_listweb_result, image_result)
 
-        # Verify images
-        # for images in list_images:
-        #    image_result = self.verify_images(images)
-        #    LOGGER.info(image_result)
-        #    self.file.append_to_file(self.file_listweb_result, image_result)
-
-        pytest.message = "Finished run dark mode capture test: \n" + str(self.number_of_failed) + "/" + str(len(list_images)) \
+        pytest.message = "Finished run dark mode capture test: \n" + str(self.number_of_failed) + "/" + str(len(urls_live) * 2) \
                          + " Failed / Total Images\nPlease check at: " + self.capture_dirname
         assert self.number_of_failed == 0
 
@@ -126,6 +117,7 @@ class TestBrowserDarkMode:
     def switch_dark_mode_for_site(self, browser, url):
         self.urls.wait_for_page_to_load(browser, url)
         self.darkmode.enable_dark_mode_for_site(browser)
+        self.urls.wait_for_page_to_load(browser, url)
 
     # Verify image after finishing capture
     def verify_images(self, url, filename):
@@ -135,6 +127,7 @@ class TestBrowserDarkMode:
 
         # Check if file is lightmode or darkmode
         dark_mode = self.image.find_subimage_in_image(image_screenshot, self.darkmode_icon)
+        LOGGER.info("The websites is dark mode: %s" % str(dark_mode))
         dominant_color = self.image.get_dominant_color(image_website)
         result = self.image.compare_dominant_color_threshold(dominant_color, dark_mode)
         if not result:
@@ -157,4 +150,4 @@ class TestBrowserDarkMode:
                 break
         return result
 
-
+ 
