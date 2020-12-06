@@ -94,3 +94,6 @@ class FileUtils():
             finally:
                 f.close()
 
+    # Copy file to other folder
+    def copy_file(self, file_source, folder_destination):
+        shutil.copy(file_source, folder_destination, follow_symlinks=True)

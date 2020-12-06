@@ -22,38 +22,54 @@ class TestBrowserDarkMode:
     common = CommonUtils()
     skype = SkypeLocalUtils()
     file_list_websites = None
-    file_list_exception_websites = None
+    file_list_websites_exception = None
     dirname = None
     capture_dirname = None
-    file_listweb_valid = None
-    file_listweb_invalid = None
-    file_listweb_result = None
+    file_list_websites_valid = None
+    file_list_websites_invalid = None
+    file_list_websites_result = None
     number_of_failed = 0
     darkmode_icon = None
+    timestamp = None
 
     def pytest_namespace(self):
         return {'message': 0}
 
-    def init_data(self):
-        timestamp = get_current_timestamp("%Y%m%d%H%M")
+    @classmethod
+    def setup_class(self):
+        self.timestamp = get_current_timestamp("%Y%m%d%H%M")
         self.dirname, runname = os.path.split(os.path.abspath(__file__))
-        self.file_list_websites = self.dirname + r"\list_websites.csv"
-        self.file_list_exception_websites = self.dirname + r"\list_exception_websites.csv"
-        self.capture_dirname = self.dirname + "\\" + timestamp
+        self.capture_dirname = self.dirname + "\\" + self.timestamp
         self.file.create_empty_folder(self.capture_dirname)
-        self.file_listweb_valid = self.capture_dirname + r"\urlvalid.csv"
-        self.file_listweb_invalid = self.capture_dirname + r"\urlinvalid.csv"
-        self.file_listweb_result = self.capture_dirname + r"\urlresults.csv"
+        self.file_list_websites = self.dirname + r"\list_websites.csv"
+        self.file_list_websites_exception = self.dirname + r"\list_websites_exception.csv"
+        self.file_list_websites_extend = self.capture_dirname + r"\list_websites_extend.csv"
+        self.file_list_websites_valid = self.capture_dirname + r"\list_websites_valid.csv"
+        self.file_list_websites_invalid = self.capture_dirname + r"\list_websites_invalid.csv"
+        self.file_list_websites_result = self.capture_dirname + r"\list_websites_result.csv"
         self.darkmode_icon = self.dirname + r'\darkmode_icon.png'
 
+    @pytestrail.case('')
+    def test_create_websites_extend(self):
+        number_sublinks = 1
+        urls_all = self.file.get_from_csv(self.file_list_websites)
+
+        # Separate valid and invalid links
+        urls_not_live = self.urls.get_all_links_in_file_are_not_alive(self.file_list_websites)
+        self.file.append_list_to_file(self.file_list_websites_invalid, urls_not_live)
+        urls_live = self.common.remove_duplicate_elements_in_lists(urls_all, urls_not_live)
+        self.file.append_list_to_file(self.file_list_websites_valid, urls_live)
+
+        for url in urls_live:
+            self.urls.get_all_website_links(url)
+            sub_urls = self.urls.get_random_valid_links(tuple(self.urls.internal_urls), number_sublinks)
+            self.file.append_to_file(self.file_list_websites_extend, url)
+            self.file.append_list_to_file(self.file_list_websites_extend, sub_urls)
 
     @pytestrail.case('')
     def test_desktop_dark_mode(self, get_enabled_dark_mode):
-        self.init_data()
-        list_images = set()
-        number_sublinks = 1
 
-        urls_all = self.file.get_from_csv(self.file_list_websites)
+        # urls_all = self.file.get_from_csv(self.file_list_websites)
         browser = get_enabled_dark_mode
 
         # For internal PC, set to open browser on second monitor
@@ -63,19 +79,8 @@ class TestBrowserDarkMode:
         self.darkmode.enable_dark_mode_in_setting_page(browser)
         self.urls.wait_for_page_to_load(browser, Urls.COCCOC_URL)
 
-        # Separate valid and invalid links
-        urls_not_live = self.urls.get_all_links_in_file_are_not_alive(self.file_list_websites)
-        self.file.append_list_to_file(self.file_listweb_invalid, urls_not_live)
-        urls_live = self.common.remove_duplicate_elements_in_lists(urls_all, urls_not_live)
-        self.file.append_list_to_file(self.file_listweb_valid, urls_live)
-
-        for url in urls_live:
-            self.urls.get_all_website_links(url)
-            sub_urls = self.urls.get_random_valid_links(tuple(self.urls.internal_urls), number_sublinks)
-            self.file.append_list_to_file(self.file_listweb_valid, sub_urls)
-
         # Get list of urls again
-        urls_live = self.file.get_from_csv(self.file_listweb_valid)
+        urls_live = self.file.get_from_csv(self.file_list_websites_extend)
         # Capture images
         for url in urls_live:
             self.switch_dark_mode_for_site(browser, url)
@@ -90,11 +95,11 @@ class TestBrowserDarkMode:
 
             images = (image_website_1, image_screenshot_1)
             image_result = self.verify_images(url, images)
-            self.file.append_to_file(self.file_listweb_result, image_result)
+            self.file.append_to_file(self.file_list_websites_result, image_result)
 
             images = (image_website_2, image_screenshot_2)
             image_result = self.verify_images(url, images)
-            self.file.append_to_file(self.file_listweb_result, image_result)
+            self.file.append_to_file(self.file_list_websites_result, image_result)
 
         pytest.message = "Finished run dark mode capture test: \n" + str(self.number_of_failed) + "/" + str(len(urls_live) * 2) \
                          + " Failed / Total Images\nPlease check at: " + self.capture_dirname
@@ -143,11 +148,10 @@ class TestBrowserDarkMode:
 
     def is_url_exception(self, url):
         result = False
-        urls_exception = self.file.get_from_csv(self.file_list_exception_websites)
+        urls_exception = self.file.get_from_csv(self.file_list_websites_exception)
         for url_2 in urls_exception:
             result = self.urls.is_same_domain(url, url_2)
             if result:
                 break
         return result
 
- 
