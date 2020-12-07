@@ -57,6 +57,30 @@ class TestFilm:
         finally:
             delete_all_mp4_file_download(get_current_download_folder_top_sites, end_with=".mp4", start_with=video_title)
 
+    def test_prepare_displayed_savior_popup(self, browser):
+        browser.get(OtherSiteUrls.PHIMMOI_VIDEO_URL)
+        browser.refresh()
+        # self.top_sites_savior_actions.open_film_in_phim_moi(browser)
+        self.top_sites_savior_actions.close_popup_ad_if_appear(browser)
+        # time.sleep(40)
+        WebElements.scroll_into_view_element(browser, self.top_sites_savior_title_elements
+                                             .find_video_phimmoi_title_element(browser))
+        any_site_page_object.mouse_over_video_element_phimmoi(browser)
+        time.sleep(400)
+
+    @pytestrail.case('C96721')
+    @pytest.mark.ten_popular_sites
+    @pytestrail.defect('PF-1219')
+    def test_download_file_phim_moi(self, browser, get_current_download_folder):
+                                    #, clear_download_page ,):
+        self.prepare_displayed_savior_popup(browser)
+        video_title_start_with = self.top_sites_savior_title_actions.get_phimmoi_video_title(browser)
+        try:
+            implement_download_file(browser, get_current_download_folder, start_with=video_title_start_with)
+        finally:
+            delete_all_mp4_file_download(get_current_download_folder, '.mp4', star_with=video_title_start_with)
+
+
 # import time
 #
 # import pytest
@@ -89,30 +113,7 @@ class TestFilm:
 #     top_sites_savior_title_actions = TopSitesSaviorTitleAction()
 #     top_sites_savior_title_elements = TopSitesSaviorTitleElements()
 #
-#     def test_prepare_displayed_savior_popup(self, browser):
-#         browser.get(OtherSiteUrls.PHIMMOI_VIDEO_URL)
-#         browser.refresh()
-#         # self.top_sites_savior_actions.open_film_in_phim_moi(browser)
-#         self.top_sites_savior_actions.close_popup_ad_if_appear(browser)
-#         # time.sleep(40)
-#         WebElements.scroll_into_view_element(browser, self.top_sites_savior_title_elements
-#                                              .find_video_phimmoi_title_element(browser))
-#         any_site_page_object.mouse_over_video_element_phimmoi(browser)
-#         time.sleep(400)
-#
-#     @pytestrail.case('C96721')
-#     @pytest.mark.ten_popular_sites
-#     @pytestrail.defect('PF-1219')
-#     def test_download_file_phim_moi(self, browser, get_current_download_folder):
-#                                     #, clear_download_page ,):
-#         self.prepare_displayed_savior_popup(browser)
-#         video_title_start_with = self.top_sites_savior_title_actions.get_phimmoi_video_title(browser)
-#         try:
-#             implement_download_file(browser, get_current_download_folder, start_with=video_title_start_with)
-#         finally:
-#             delete_all_mp4_file_download(get_current_download_folder, '.mp4', star_with=video_title_start_with)
-#
-#
+
 # class TestVuViPhim:
 #
 #     any_site_element = AnySiteElements()

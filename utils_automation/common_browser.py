@@ -106,6 +106,7 @@ def chrome_options_preset(options = None):
     chrome_options.add_argument("--disable-application-cache")
     chrome_options.add_argument("--disable-session-crashed-bubble")
     chrome_options.add_argument("--disable-features=RendererCodeIntegrity")
+    chrome_options.add_argument("--disable-popup-blocking")
     chrome_options.add_experimental_option("prefs", {'safebrowsing.enabled': 'false'})
     chrome_options.add_experimental_option("useAutomationExtension", False)
     chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])

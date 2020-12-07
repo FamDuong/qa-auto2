@@ -99,7 +99,7 @@ class TestSocialNetwork:
         self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
                                                   OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL)
 
-        self.verify_download_file_zzfacebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+        self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
                                                   OtherSiteUrls.FACEBOOK_WATCH_URL, need_opened_video=True,
                                                   need_mouse_over_video=True)
 

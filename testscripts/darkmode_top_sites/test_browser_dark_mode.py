@@ -12,7 +12,9 @@ from config.credentials import SKYPE_GROUP_AUTOMATION_ID, SKYPE_GROUP_AUTOMATION
 from utils_automation.skype_utils import SkypeLocalUtils
 
 import logging
+
 LOGGER = logging.getLogger(__name__)
+
 
 class TestBrowserDarkMode:
     darkmode = SettingsDarkmodePageObject()
@@ -54,7 +56,6 @@ class TestBrowserDarkMode:
         self.file_list_websites_result = self.capture_dirname + r"\list_websites_result.csv"
         self.darkmode_icon = self.dirname + r'\darkmode_icon.png'
 
-
     @pytestrail.case('')
     def test_create_websites_extend(self):
         self.init_websites_extend()
@@ -91,11 +92,11 @@ class TestBrowserDarkMode:
         # Capture images
         for url in urls_live:
             self.switch_dark_mode_for_site(browser, url)
-            image_website_1, image_screenshot_1 = self.get_fullpage_screenshot_dark_mode(browser, url, times = 1)
+            image_website_1, image_screenshot_1 = self.get_fullpage_screenshot_dark_mode(browser, url, times=1)
 
             # Capture second image
             self.switch_dark_mode_for_site(browser, url)
-            image_website_2, image_screenshot_2 = self.get_fullpage_screenshot_dark_mode(browser, url, times = 2)
+            image_website_2, image_screenshot_2 = self.get_fullpage_screenshot_dark_mode(browser, url, times=2)
 
             # list_images.add((image_website_1, image_screenshot_1))
             # list_images.add((image_website_2, image_screenshot_2))
@@ -107,14 +108,15 @@ class TestBrowserDarkMode:
             images = (image_website_2, image_screenshot_2)
             image_result = self.verify_images(url, images)
             self.file.append_to_file(self.file_list_websites_result, image_result)
-            self.file.remove_first_line_in_file(self.file_list_websites_extend) # Remove url in file extend
+            self.file.remove_first_line_in_file(self.file_list_websites_extend)  # Remove url in file extend
 
-        pytest.message = "Finished run dark mode capture test: \n" + str(self.number_of_failed) + "/" + str(len(urls_live) * 2) \
+        pytest.message = "Finished run dark mode capture test: \n" + str(self.number_of_failed) + "/" + str(
+            len(urls_live) * 2) \
                          + " Failed / Total Images\nPlease check at: " + self.capture_dirname
         assert self.number_of_failed == 0
 
     # Capture all images
-    def get_fullpage_screenshot_dark_mode(self, browser, url, times = 1):
+    def get_fullpage_screenshot_dark_mode(self, browser, url, times=1):
         filename = url.replace('https://', '').replace(r'/', '').replace('.', '').replace('www', '')
         filename_website = filename + str(times) + ".png"
         filename_website_full = self.capture_dirname + r"\\" + filename_website
@@ -145,8 +147,10 @@ class TestBrowserDarkMode:
         result = self.image.compare_dominant_color_threshold(dominant_color, dark_mode)
         if not result:
             self.number_of_failed += 1
-            self.skype.send_message_group_skype_with_image(SKYPE_GROUP_AUTOMATION_ID_1, "Screenshot of Error domain: %s" % url, image_screenshot)
-            self.skype.send_message_group_skype_with_image(SKYPE_GROUP_AUTOMATION_ID_1, "Website of Error domain: %s" % url, image_website)
+            self.skype.send_message_group_skype_with_image(SKYPE_GROUP_AUTOMATION_ID_1,
+                                                           "Screenshot of Error domain: %s" % url, image_screenshot)
+            self.skype.send_message_group_skype_with_image(SKYPE_GROUP_AUTOMATION_ID_1,
+                                                           "Website of Error domain: %s" % url, image_website)
         image_result = image_website + ", " + str(result)
         return image_result
 
@@ -162,4 +166,3 @@ class TestBrowserDarkMode:
             if result:
                 break
         return result
-

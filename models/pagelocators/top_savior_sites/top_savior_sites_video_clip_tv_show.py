@@ -24,3 +24,7 @@ class TopSaviorSitesVideoClipTvShowLocators:
     TIKTOK_AVATAR_CSS = 'div[class*="profile"] img'
     TIKTOK_LOGOUT_BTN = (By.XPATH, '//a[text()="Log out"]')
     TIKTOK_PROFILE_LBL_XPATH = '//p[text()="This user has not published any videos."]'
+    TIKTOK_MENU_FOLLOWING = (By.XPATH, "//div[contains(@class,'nav-wrapper')]//span[contains(text(),'Following')]")
+    TIKTOK_MENU_FOR_YOU = (By.XPATH, "//div[contains(@class,'nav-wrapper')]//span[contains(text(),'For You')]")
+
+

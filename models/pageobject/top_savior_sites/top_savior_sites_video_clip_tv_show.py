@@ -27,7 +27,8 @@ class TopSaviorSitesVideoClipTvShowActions(BasePageObject):
             password_txt = self.top_savior_sites_video_clip_tv_show_element.find_password_textbox_element(driver)
             self.clear_text_to_element(driver, password_txt)
             self.send_keys_to_element(driver, password_txt, TopSaviorSitesVideoClipTvShowLocators.ZALO_PASSWORD)
-            dang_nhap_btn = self.top_savior_sites_video_clip_tv_show_element.find_dang_nhap_voi_mat_khau_button_element(driver)
+            dang_nhap_btn = self.top_savior_sites_video_clip_tv_show_element.find_dang_nhap_voi_mat_khau_button_element(
+                driver)
             dang_nhap_btn.click()
 
     def login_tv_zing(self, driver):
@@ -78,8 +79,13 @@ class TopSaviorSitesVideoClipTvShowActions(BasePageObject):
                 email_txt = self.top_savior_sites_video_clip_tv_show_element.find_tiktok_facebook_email_textbox(driver)
                 self.clear_text_to_element(driver, email_txt)
                 self.send_keys_to_element(driver, email_txt, FacebookPageLocators.EMAIL)
-                pass_txt = self.top_savior_sites_video_clip_tv_show_element.find_tiktok_facebook_password_textbox(driver)
+                pass_txt = self.top_savior_sites_video_clip_tv_show_element.find_tiktok_facebook_password_textbox(
+                    driver)
                 self.clear_text_to_element(driver, pass_txt)
                 self.send_keys_to_element(driver, pass_txt, FacebookPageLocators.PASS)
                 self.top_savior_sites_video_clip_tv_show_element.find_tiktok_facebook_submit_button(driver).click()
-                # driver.switch_to.window(windows_handles[0])
+                driver.switch_to.window(windows_handles[0])
+
+    def click_tiktok_menu(self, driver: WebDriver, menu='For You'):
+        self.top_savior_sites_video_clip_tv_show_element.find_tiktok_menu(driver, menu).click()
+

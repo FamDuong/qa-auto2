@@ -66,3 +66,10 @@ class TopSaviorSitesVideoClipTvShowElements(BasePageElement):
 
     def find_tiktok_facebook_submit_button(self, driver: WebDriver):
         return self.find_element_if_exist(driver, TopSaviorSitesVideoClipTvShowLocators.TIKTOK_LOGIN_SUBMIT_BTN)
+
+    def find_tiktok_menu(self, driver: WebDriver, menu='For You'):
+        if menu == 'For You':
+            return self.find_element_if_exist(driver, TopSaviorSitesVideoClipTvShowLocators.TIKTOK_MENU_FOR_YOU)
+        else:
+            return self.find_element_if_exist(driver, TopSaviorSitesVideoClipTvShowLocators.TIKTOK_MENU_FOLLOWING)
+
