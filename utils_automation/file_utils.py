@@ -20,6 +20,9 @@ import time
 import csv
 import sys
 import shutil
+import os
+from shutil import move
+from tempfile import NamedTemporaryFile
 from utils_automation.setup import WaitAfterEach
 from PIL import Image
 
@@ -97,3 +100,14 @@ class FileUtils():
     # Copy file to other folder
     def copy_file(self, file_source, folder_destination):
         shutil.copy(file_source, folder_destination, follow_symlinks=True)
+
+    def remove_first_line_in_file(self, filename):
+        temp_path = None
+        with open(filename, 'r') as f_in:
+            with NamedTemporaryFile(mode='w', delete=False) as f_out:
+                temp_path = f_out.name
+                next(f_in)  # skip first line
+                for line in f_in:
+                    f_out.write(line)
+        os.remove(filename)
+        move(temp_path, filename)
