@@ -35,6 +35,7 @@ class Urls:
 class FilmUrls:
     DONG_PHIM_VIDEO_URL = 'https://dongphym.net/movie/tap-21-truong-an-nac-the-promise-of-changan_TEqiwgPP.html'
     MOT_PHIM_VIDEO_URL = 'https://motphimzz.com/xem-phim/lien-minh-thu-cung-tap-full-8332_105254.html'
+    PHIMMOI_VIDEO_URL = 'http://www.phimmoizz.net/phim/dieu-uoc-giang-sinh-cua-angela-11922/xem-phim.html'
 
 
 class VideoClipTVShowUrls:
@@ -84,9 +85,6 @@ class NewsUrls:
 
 
 class OtherSiteUrls:
-    PHIMMOI_VIDEO_URL = 'http://www.phimmoizz.net/phim/soi-100-11066/xem-phim.html'
-    PHIMMOI_URL = 'http://www.phimmoizz.net/phim/ky-su-thanh-xuan-11454/'
-
     FACEBOOK_HOMEPAGE_URL = 'https://www.facebook.com/'
     FACEBOOK_PROFILE_ME_URL = 'https://www.facebook.com/coccoc.at.1/'
     FACEBOOK_VTVGIAITRI_PAGE_URL = 'https://www.facebook.com/vtvgiaitri'

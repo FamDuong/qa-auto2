@@ -8,6 +8,8 @@ from models.pageelements.basepage_elements import BasePageElement
 from models.pageelements.sites import AnySiteElements
 from models.pageelements.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleElements
 from models.pagelocators.top_savior_sites.top_savior_sites_title import TopSaviorSitesTitleLocators
+from models.pagelocators.top_savior_sites.top_savior_sites_video_clip_tv_show import \
+    TopSaviorSitesVideoClipTvShowLocators
 from models.pageobject.basepage_object import BasePageObject
 
 LOGGER = logging.getLogger(__name__)
@@ -81,6 +83,7 @@ class TopSitesSaviorTitleAction(BasePageObject):
             video_title = driver.execute_script(
                 " return document.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_ROOT_SHADOW_CSS
                 + "\").shadowRoot.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_TITLE_CSS + "\").textContent")
+            LOGGER.info("Video title first time: "+str(video_title))
         except JavascriptException:
             video_title = None
             start_time = datetime.now()
@@ -93,7 +96,7 @@ class TopSitesSaviorTitleAction(BasePageObject):
                 time_delta = datetime.now() - start_time
                 if time_delta.total_seconds() >= 15:
                     break
-        LOGGER.info("Video title: " + video_title)
+        LOGGER.info("Video title latest time: "+str(video_title))
         return video_title
 
     def get_video_title_from_span_tag(self, driver):
@@ -112,7 +115,7 @@ class TopSitesSaviorTitleAction(BasePageObject):
                 time_delta = datetime.now() - start_time
                 if time_delta.total_seconds() >= 15:
                     break
-        LOGGER.info("Video title: "+video_title)
+        LOGGER.info("Video title: " + video_title)
         return video_title
 
     def get_fr_pornhub_video_title(self, driver):
@@ -130,3 +133,6 @@ class TopSitesSaviorTitleAction(BasePageObject):
 
     def get_video_vnexpress_video_title(self, driver):
         return self.top_sites_savior_title_elements.find_video_vnexpress_video_title_element(driver).text
+
+    def get_tiktok_video_title(self, driver, menu):
+        return self.top_sites_savior_title_elements.find_tiktok_video_title_element(driver, menu).text

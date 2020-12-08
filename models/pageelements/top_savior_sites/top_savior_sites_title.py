@@ -42,6 +42,13 @@ class TopSitesSaviorTitleElements(BasePageElement):
         return self.wait_for_element(driver).until(ec.presence_of_element_located(
             TopSaviorSitesTitleLocators.VIDEO_VNEXPRESS_VIDEO_TITLE))
 
+    def find_tiktok_video_title_element(self, driver, menu='For You'):
+        if menu == 'For You':
+            return self.wait_for_element(driver).until(ec.presence_of_element_located(TopSaviorSitesTitleLocators.TIKTOK_VIDEO_TITLE_FORYOU))
+        else:
+            return self.wait_for_element(driver).until(ec.presence_of_element_located(TopSaviorSitesTitleLocators.TIKTOK_VIDEO_TITLE_FOLLOWING))
+
+
 
 
 

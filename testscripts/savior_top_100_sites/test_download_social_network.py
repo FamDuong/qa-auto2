@@ -49,8 +49,10 @@ class TestSocialNetwork:
         LOGGER.info("Check download video on " + url)
         time.sleep(3)
         self.facebook_action.scroll_to_facebook_video(driver, url)
-        self.click_to_open_large_video(driver, need_opened_video)
-        self.mouse_over_facebook_first_video_element(driver, url, need_mouse_over_video)
+        if need_opened_video:
+            self.click_to_open_large_video(driver)
+        if need_mouse_over_video:
+            self.mouse_over_facebook_first_video_element(driver, url)
         choose_highest_resolution_of_video(driver)
         video_title_temp = self.top_sites_savior_title_action.get_video_title_by_javascript_from_span_tag(driver)
         video_title = self.top_sites_savior_title_action.replace_special_characters_by_dash_in_string(video_title_temp)
@@ -63,19 +65,19 @@ class TestSocialNetwork:
         finally:
             delete_all_mp4_file_download(download_folder, end_with=".mp4", start_with=video_title)
 
-    def click_to_open_large_video(self, driver, need_opened_video):
-        if need_opened_video:
-            self.facebook_action.click_onbu_first_video(driver)
-            time.sleep(3)
+    def click_to_open_large_video(self, driver):
+        self.facebook_action.click_on_first_video(driver)
+        time.sleep(3)
 
-    def mouse_over_facebook_first_video_element(self, driver, url, need_mouse_over_video):
-        if need_mouse_over_video:
-            if url in OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
-                self.any_site_page_object.mouse_over_first_video_element(driver, FacebookLocators.VTV_GIAITRI_PAGE_FIRST_VIDEO)
-            # elif url in OtherSiteUrls.FACEBOOK_THACH_THUC_DANH_HAI_PAGE_VIDEOS:
-            #     any_site_page_object.mouse_over_first_video_element(driver, FacebookLocators.THACHTHUC_DANHHAI_VIDEO_OPENED_LARGE)
-            else:
-                self.any_site_page_object.mouse_over_first_video_element(driver)
+    def mouse_over_facebook_first_video_element(self, driver, url):
+        if url == OtherSiteUrls.FACEBOOK_HOMEPAGE_URL or url == OtherSiteUrls.FACEBOOK_PROFILE_ME_URL \
+                or url == OtherSiteUrls.FACEBOOK_WATCH_URL or url == OtherSiteUrls.FACEBOOK_VIDEO_URL:
+            self.any_site_page_object.mouse_over_first_video_element(driver, FacebookLocators.HOME_PAGE_FIRST_VIDEO)
+        elif url == OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
+            self.any_site_page_object.mouse_over_first_video_element(driver,
+                                                                     FacebookLocators.VTV_GIAITRI_PAGE_FIRST_VIDEO)
+        else:
+            self.any_site_page_object.mouse_over_first_video_element(driver)
 
     def get_facebook_video_length_base_url(self, driver, url):
         if url in OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
@@ -94,19 +96,19 @@ class TestSocialNetwork:
 
         self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
                                                   OtherSiteUrls.FACEBOOK_HOMEPAGE_URL)
-        self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-                                                  OtherSiteUrls.FACEBOOK_PROFILE_ME_URL)
-        self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-                                                  OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL)
-
-        self.verify_download_file_zzfacebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-                                                  OtherSiteUrls.FACEBOOK_WATCH_URL, need_opened_video=True,
-                                                  need_mouse_over_video=True)
-
-        self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-                                                  OtherSiteUrls.FACEBOOK_WATCH_URL)
-        self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-                                                  OtherSiteUrls.FACEBOOK_VIDEO_URL)
+        # self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+        #                                           OtherSiteUrls.FACEBOOK_PROFILE_ME_URL)
+        # self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+        #                                           OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL)
+        #
+        # self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+        #                                           OtherSiteUrls.FACEBOOK_WATCH_URL, need_opened_video=True,
+        #                                           need_mouse_over_video=True)
+        #
+        # self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+        #                                           OtherSiteUrls.FACEBOOK_WATCH_URL)
+        # self.verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+        #                                           OtherSiteUrls.FACEBOOK_VIDEO_URL)
 
     def prepare_appear_savior_option(self, browser):
         browser.get(OtherSiteUrls.INSTAGRAM_VIDEO_URL)
