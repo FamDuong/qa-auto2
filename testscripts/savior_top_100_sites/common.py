@@ -2,6 +2,8 @@ import logging
 import time
 from datetime import datetime
 
+from selenium.common.exceptions import NoSuchElementException
+
 from models.pagelocators.top_savior_sites.top_savior_sites_social import InstagramLocators
 from models.pageobject.settings import SettingsClearBrowserDataPageObject
 from models.pagelocators.facebook import FacebookPageLocators
@@ -31,31 +33,31 @@ settings_clear_browser_data_page_object = SettingsClearBrowserDataPageObject()
 def choose_highest_resolution_of_video(driver):
     LOGGER.info("Choose resolution option")
     savior_page_object.choose_preferred_option(driver)
-    try:
-        savior_page_object.choose_quad_hd_option(driver)
-    except Exception:
-        savior_page_object.choose_full_hd_option(driver)
-    except Exception:
-        savior_page_object.choose_hd_option(driver)
-    except Exception:
-        savior_page_object.choose_standard_option(driver)
-    except Exception:
-        savior_page_object.choose_medium_option(driver)
-    except Exception:
-        savior_page_object.choose_small_option(driver)
-    except Exception:
-        savior_page_object.choose_mobile_option(driver)
-    except Exception:
-        savior_page_object.choose_original_option(driver)
+    e = savior_page_object.choose_quad_hd_option(driver)
+    if 'no such element' in str(e):
+        e = savior_page_object.choose_full_hd_option(driver)
+        if 'no such element' in str(e):
+            e = savior_page_object.choose_hd_option(driver)
+            if 'no such element' in str(e):
+                e = savior_page_object.choose_standard_option(driver)
+                if 'no such element' in str(e):
+                    savior_page_object.choose_small_option(driver)
+                    if 'no such element' in str(e):
+                        savior_page_object.choose_mobile_option(driver)
+                        if 'no such element' in str(e):
+                            savior_page_object.choose_original_option(driver)
+    savior_page_object.wait_until_finished_choose_resolution(driver)
+
 
 
 def choose_highest_resolution_of_mp3(driver):
     LOGGER.info("Choose resolution option")
     savior_page_object.choose_preferred_option(driver)
-    try:
-        savior_page_object.choose_mp3_standard_option(driver)
-    except:
+    e = savior_page_object.choose_mp3_standard_option(driver)
+    if 'no such element' in str(e):
         savior_page_object.choose_mp3_medium_option(driver)
+    savior_page_object.wait_until_finished_choose_resolution(driver)
+
 
 
 def download_and_verify_video(driver, download_folder, expect_length, start_with, end_with='.mp4',
@@ -66,6 +68,7 @@ def download_and_verify_video(driver, download_folder, expect_length, start_with
         choose_highest_resolution_of_video(driver)
     else:
         choose_highest_resolution_of_mp3(driver)
+
     media_info = download_file_via_main_download_button(driver, start_with)
     expect_height = get_resolution_info(media_info)
     try:
@@ -162,4 +165,3 @@ def login_instagram(driver):
         if len(not_now_btn) > 0:
             driver.find_element_by_xpath(InstagramLocators.TURN_ON_NOTIFICATIONS_NOT_NOW).click()
             time.sleep(3)
-

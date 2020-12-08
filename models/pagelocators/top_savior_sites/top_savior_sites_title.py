@@ -15,8 +15,9 @@ class TopSaviorSitesTitleLocators(object):
     VIDEO_TITLE_CSS = "#downloads span.filename"
     FR_PORNHUB_VIDEO_TITLE = (By.ID, 'main-container')
     VIDEO_VNEXPRESS_VIDEO_TITLE = (By.XPATH, '//*[@id="info_inner"]//h1[@class="title"]')
-    TIKTOK_VIDEO_TITLE = (By.CSS_SELECTOR,
+    TIKTOK_VIDEO_TITLE_FORYOU = (By.CSS_SELECTOR,
                               'div.video-feed-container span[class*="lazyload-wrapper"]:nth-child(1) div.tt-video-meta-caption strong')
+    TIKTOK_VIDEO_TITLE_FOLLOWING = (By.XPATH, '//h1[contains(@class,"video-meta-title")]/strong[1]')
 
 
 

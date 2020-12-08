@@ -83,6 +83,7 @@ class TopSitesSaviorTitleAction(BasePageObject):
             video_title = driver.execute_script(
                 " return document.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_ROOT_SHADOW_CSS
                 + "\").shadowRoot.querySelector(\"" + TopSaviorSitesTitleLocators.VIDEO_TITLE_CSS + "\").textContent")
+            LOGGER.info("Video title first time: "+str(video_title))
         except JavascriptException:
             video_title = None
             start_time = datetime.now()
@@ -95,7 +96,7 @@ class TopSitesSaviorTitleAction(BasePageObject):
                 time_delta = datetime.now() - start_time
                 if time_delta.total_seconds() >= 15:
                     break
-        LOGGER.info("Video title: " + video_title)
+        LOGGER.info("Video title latest time: "+str(video_title))
         return video_title
 
     def get_video_title_from_span_tag(self, driver):
@@ -133,5 +134,5 @@ class TopSitesSaviorTitleAction(BasePageObject):
     def get_video_vnexpress_video_title(self, driver):
         return self.top_sites_savior_title_elements.find_video_vnexpress_video_title_element(driver).text
 
-    def get_tiktok_video_title(self, driver):
-        return self.top_sites_savior_title_elements.find_tiktok_video_title_element(driver).text
+    def get_tiktok_video_title(self, driver, menu):
+        return self.top_sites_savior_title_elements.find_tiktok_video_title_element(driver, menu).text

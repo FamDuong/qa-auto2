@@ -1,7 +1,7 @@
 import time
 
 from selenium.webdriver.chrome.webdriver import WebDriver
-from selenium.webdriver.remote.webelement import WebElement
+from utils_automation.common import WebElements
 from models.pageelements.top_savior_sites.top_savior_sites_video_clip_tv_show import \
     TopSaviorSitesVideoClipTvShowElements
 from models.pagelocators.facebook import FacebookPageLocators
@@ -63,29 +63,40 @@ class TopSaviorSitesVideoClipTvShowActions(BasePageObject):
         #         break
         self.top_savior_sites_video_clip_tv_show_element.find_tiktok_logout_button(driver).click()
 
+    def login_tiktok_child_steps(self, driver):
+        driver.get(VideoClipTVShowUrls.TIKTOK_LOGIN_URL)
+        time.sleep(3)
+        self.top_savior_sites_video_clip_tv_show_element.find_tiktok_login_by_facebook_option(driver).click()
+        windows_handles = driver.window_handles
+        if len(windows_handles) == 2:
+            driver.switch_to.window(windows_handles[1])
+            email_txt = self.top_savior_sites_video_clip_tv_show_element.find_tiktok_facebook_email_textbox(driver)
+            self.clear_text_to_element(driver, email_txt)
+            self.send_keys_to_element(driver, email_txt, FacebookPageLocators.EMAIL)
+            pass_txt = self.top_savior_sites_video_clip_tv_show_element.find_tiktok_facebook_password_textbox(
+                driver)
+            self.clear_text_to_element(driver, pass_txt)
+            self.send_keys_to_element(driver, pass_txt, FacebookPageLocators.PASS)
+            self.top_savior_sites_video_clip_tv_show_element.find_tiktok_facebook_submit_button(driver).click()
+            driver.switch_to.window(windows_handles[0])
+
     def login_tiktok(self, driver: WebDriver):
         driver.get(VideoClipTVShowUrls.TIKTOK_VIEW_PROFILE_URL)
         user_avatar = self.top_savior_sites_video_clip_tv_show_element.count_tiktok_avatar_element(driver)
         user_profile_lbl = self.top_savior_sites_video_clip_tv_show_element.count_tiktok_profile_lbl(driver)
         if user_profile_lbl == 1 and user_avatar > 0:
             self.logout_tiktok(driver)
-        else:
-            driver.get(VideoClipTVShowUrls.TIKTOK_LOGIN_URL)
-            time.sleep(3)
-            self.top_savior_sites_video_clip_tv_show_element.find_tiktok_login_by_facebook_option(driver).click()
-            windows_handles = driver.window_handles
-            if len(windows_handles) == 2:
-                driver.switch_to.window(windows_handles[1])
-                email_txt = self.top_savior_sites_video_clip_tv_show_element.find_tiktok_facebook_email_textbox(driver)
-                self.clear_text_to_element(driver, email_txt)
-                self.send_keys_to_element(driver, email_txt, FacebookPageLocators.EMAIL)
-                pass_txt = self.top_savior_sites_video_clip_tv_show_element.find_tiktok_facebook_password_textbox(
-                    driver)
-                self.clear_text_to_element(driver, pass_txt)
-                self.send_keys_to_element(driver, pass_txt, FacebookPageLocators.PASS)
-                self.top_savior_sites_video_clip_tv_show_element.find_tiktok_facebook_submit_button(driver).click()
-                driver.switch_to.window(windows_handles[0])
+            self.login_tiktok_child_steps(driver)
+        elif user_profile_lbl == 1 and user_avatar == 0:
+            self.login_tiktok_child_steps(driver)
 
     def click_tiktok_menu(self, driver: WebDriver, menu='For You'):
         self.top_savior_sites_video_clip_tv_show_element.find_tiktok_menu(driver, menu).click()
 
+    def click_tiktok_first_video(self, driver: WebDriver, menu):
+        time.sleep(2)
+        if menu == 'Following':
+            WebElements.click_element_by_javascript(driver, TopSaviorSitesVideoClipTvShowLocators.TIKTOK_FIRST_VIDEO)
+            time.sleep(2)
+            driver.switch_to.window(driver.window_handles[1])
+            WebElements.click_element_by_javascript(driver, TopSaviorSitesVideoClipTvShowLocators.TIKTOK_FIRST_VIDEO)

@@ -13,11 +13,9 @@ class FacebookLocators(object):
     HOME_PAGE_FIRST_VIDEO = (By.XPATH,
                              '(//div[@aria-label="Change Position"])[1]//ancestor::div[contains(@data-instancekey,"id-vpuid")]//parent::div//video')
     # VTV_GIAITRI_PAGE_FIRST_VIDEO = (By.XPATH, '(//div[@data-ad-comet-preview="message"]//ancestor::div[@dir="auto" and @class=""]//following-sibling::div//video)[1]')
-    VTV_GIAITRI_PAGE_FIRST_VIDEO = (
-    By.XPATH, '(//div[@aria-label="Viết bình luận"]//ancestor::div[@data-testid="Keycommand_wrapper"]//video)[1]')
+    VTV_GIAITRI_PAGE_FIRST_VIDEO = (By.XPATH, '(//div[@aria-label="Viết bình luận"]//ancestor::div[@data-testid="Keycommand_wrapper"]//video)[1]')
     VTV_GIAITRI_DONG_DOAN_CHAT_BTN = (By.XPATH, '//div[@aria-label="Đóng đoạn chat"]')
     THACHTHUC_DANHHAI_VIDEO = (By.CSS_SELECTOR, '#permalink_video_pagelet video')
-    THACHTHUC_DANHHAI_VIDEO_OPENED_LARGE = (By.XPATH, '//div[@role="dialog"]//video')
     WATCH_FIRST_VIDEO = (By.XPATH, '//a[@aria-label="Mở rộng"]')
 
 
