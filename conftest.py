@@ -25,8 +25,10 @@ files_handle = FilesHandle()
 
 LOGGER = logging.getLogger(__name__)
 
+
 def pytest_configure():
     pytest.message = ""
+
 
 @pytest.mark.hookwrapper
 def pytest_runtest_makereport(item):
@@ -75,16 +77,18 @@ def browser():
     yield driver
     driver.quit()
 
+
 @pytest.fixture(scope='session')
 def browser_enabled_dark_mode():
     LOGGER.info("Init coc coc browser with options...")
     global driver
     # pytest.message = ""
-    driver = coccoc_instance(options = "CocCocDarkMode", clear_userdata=False)
+    driver = coccoc_instance(options="CocCocDarkMode", clear_userdata=False)
     yield driver
     skype = SkypeLocalUtils()
     skype.send_message_group_skype(SKYPE_GROUP_AUTOMATION_ID_1, pytest.message)
     driver.quit()
+
 
 #
 # @pytest.fixture(scope='session')
@@ -109,7 +113,6 @@ def browser_enabled_dark_mode():
 #     download_folder = setting_page_object.get_download_folder(driver)
 #     LOGGER.info("Get current download folder" + str(download_folder))
 #     return download_folder
-
 
 
 # def browser():
@@ -171,6 +174,7 @@ def win_app_driver():
     yield winappdriver
     winappdriver.quit()
     return
+
 
 #
 # @pytest.fixture(scope='session', autouse=True)
@@ -241,5 +245,3 @@ def get_username(request):
     global username
     username = request.config.getoption("--user")
     return username
-
-

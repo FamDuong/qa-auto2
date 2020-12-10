@@ -67,7 +67,6 @@ def cleanup(coccoc_update=True, firefox=True, clear_userdata=False):
         WindowsCMD.execute_cmd('rmdir /S /Q %localappdata%\CocCoc\Browser\"User Data"')
 
 
-
 def check_if_preferences_is_created(user_data_path):
     file_name = 'Preferences'
     path = "\"" + "C:\\Users" + user_data_path + "Default\""
@@ -82,7 +81,7 @@ def check_if_preferences_is_created(user_data_path):
         return False
 
 
-def chrome_options_preset(options = None):
+def chrome_options_preset(options=None):
     desired_capabilities = DesiredCapabilities.CHROME
     desired_capabilities['goog:loggingPrefs'] = {'browser': 'ALL'}
 
@@ -124,13 +123,10 @@ def chrome_options_preset(options = None):
     return chrome_options, desired_capabilities
 
 
-def coccoc_instance(is_needed_clean_up=True, options = None, clear_userdata = False):
+def coccoc_instance(is_needed_clean_up=True, options=None, clear_userdata=False):
     if is_needed_clean_up is True:
-        cleanup(clear_userdata = clear_userdata)
+        cleanup(clear_userdata=clear_userdata)
     else:
         pass
     chrome_options, desired_capabilities = chrome_options_preset(options)
     return webdriver.Chrome(options=chrome_options, desired_capabilities=desired_capabilities)
-
-
-

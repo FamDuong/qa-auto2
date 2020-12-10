@@ -11,9 +11,11 @@ from urllib import parse
 from utils_automation.setup import WaitAfterEach
 
 import logging
+
 LOGGER = logging.getLogger(__name__)
 
-class URLUtils():
+
+class URLUtils:
     # initialize the set of links (unique links)
     internal_urls = set()
     external_urls = set()
@@ -38,6 +40,11 @@ class URLUtils():
         except requests.exceptions.ConnectionError as er:
             is_exist = False
             LOGGER.info("%s is not reachable!!!: %s" % (url, er))
+            LOGGER.info("Connection refused by the server..")
+            LOGGER.info("Let me sleep for 5 seconds")
+            import time
+            time.sleep(5)
+            LOGGER.info("Was a nice sleep, now let me continue...")
         # except requests.exceptions.InvalidSchema as er:
         #    is_exist = False
         #    LOGGER.info("%s is not reachable!!!: %s" % (url, er))
@@ -54,9 +61,8 @@ class URLUtils():
         browser.execute_script("return window.performance.timing.loadEventEnd")
         WaitAfterEach.sleep_timer_after_each_step()
 
-
     # Get all sub links in an url which data-linktype="newsdetail"
-    def get_newest_link_in_newsfeed(self, url, no_of_urls = 2):
+    def get_newest_link_in_newsfeed(self, url, no_of_urls=2):
         headers = self.set_user_agent()
         sublinks = []
         try:
@@ -68,7 +74,7 @@ class URLUtils():
             for link in dom.xpath('//a/@href'):
                 if (bool(re.search('[0-9]{5}', link))) and ":" not in link and "www" not in link:
                     if not link.startswith('http'):
-                       link = url + link
+                        link = url + link
                     sublinks.append(link)
                     LOGGER.info("Sub links: %s" % url)
                     found = True
@@ -147,22 +153,30 @@ class URLUtils():
 
     # Remove invalid links
     def remove_invalid_links_in_list(self, urls, urls_not_live):
-        #for i in urls_not_live:
+        # for i in urls_not_live:
         #    urls_live = [ x for x in urls if i not in x ]
         urls_live = [i for i in urls if i not in urls_not_live]
         return urls_live
 
     # Get sublinks valid
-    def get_random_valid_links(self, urls, number_sublinks = 1):
+    def get_random_valid_links(self, child_urls, parent_url, number_sublinks = 1):
         result = False
+        LOGGER.info("Parent url: " + parent_url)
+        LOGGER.info("Child url: " + str(child_urls))
         while not result:
-            sub_urls = random.sample(tuple(urls), number_sublinks)
+            sub_urls = random.sample(tuple(child_urls), number_sublinks)
             for url in sub_urls:
+                sub_url_is_same_root_url = self.is_same_domain(url, parent_url)
                 result = self.is_url_exits(url)
+                if sub_url_is_same_root_url and url != parent_url and result:
+                    break
+        LOGGER.info("Child url that selected: " + str(sub_urls))
+        LOGGER.info("=================================================================")
         return sub_urls
 
     # Check if same domain
     def is_same_domain(self, url_1, url_2):
+        LOGGER.info("Verify child domain % s is/not same parent domain %s " % (url_1, url_2))
         result = False
         search_domain = parse.urlparse(url_1).hostname
         if search_domain in url_2:
