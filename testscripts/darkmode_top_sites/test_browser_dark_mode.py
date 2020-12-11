@@ -1,6 +1,8 @@
 import os
 import pytest
 from pytest_testrail.plugin import pytestrail
+
+from testscripts.darkmode_top_sites.common import click_dark_mode_enable_on_sites
 from utils_automation.image_utils import ImageUtils
 from utils_automation.file_utils import FileUtils
 from utils_automation.url_utils import URLUtils
@@ -71,7 +73,8 @@ class TestBrowserDarkMode:
 
     def switch_dark_mode_for_site(self, browser, url):
         self.urls.wait_for_page_to_load(browser, url)
-        self.darkmode.enable_dark_mode_for_site(browser)
+        click_dark_mode_enable_on_sites()
+        # self.darkmode.enable_dark_mode_for_site(browser)
         self.urls.wait_for_page_to_load(browser, url)
 
     # Verify image after finishing capture
