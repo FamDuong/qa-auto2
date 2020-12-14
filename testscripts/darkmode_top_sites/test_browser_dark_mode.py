@@ -1,6 +1,8 @@
 import os
 import pytest
 from pytest_testrail.plugin import pytestrail
+
+from testscripts.darkmode_top_sites.common import click_dark_mode_enable_on_sites
 from utils_automation.image_utils import ImageUtils
 from utils_automation.file_utils import FileUtils
 from utils_automation.url_utils import URLUtils
@@ -39,104 +41,42 @@ class TestBrowserDarkMode:
 
     def init_websites_extend(self):
         self.dirname, runname = os.path.split(os.path.abspath(__file__))
-        self.file_list_websites = self.dirname + r"\list_websites.csv"
-        # self.file_list_websites_exception = self.dirname + r"\list_websites_exception.csv"
-        self.file_list_websites_extend = self.dirname + r"\list_websites_extend.csv"
-        self.file_list_websites_valid = self.dirname + r"\list_websites_valid.csv"
-        self.file_list_websites_invalid = self.dirname + r"\list_websites_invalid.csv"
+        self.file_list_websites = self.dirname + "\\test_data" + r"\list_websites.csv"
+        self.file_list_websites_extend = self.dirname + "\\test_data" + r"\list_websites_extend.csv"
+        self.file_list_websites_valid = self.dirname + "\\test_data" + r"\list_websites_valid.csv"
+        self.file_list_websites_invalid = self.dirname + "\\test_data" + r"\list_websites_invalid.csv"
 
     def init_dark_mode(self):
         self.timestamp = get_current_timestamp("%Y%m%d%H%M")
         self.dirname, runname = os.path.split(os.path.abspath(__file__))
-        self.capture_dirname = self.dirname + "\\" + self.timestamp
+        self.capture_dirname = self.dirname + "\\screenshots\\" + self.timestamp
         self.file.create_empty_folder(self.capture_dirname)
-        self.file_list_websites = self.dirname + r"\list_websites.csv"
-        # self.file_list_websites_exception = self.dirname + r"\list_websites_exception.csv"
-        self.file_list_websites_extend = self.dirname + r"\list_websites_extend.csv"
+        self.file_list_websites = self.dirname + "\\test_data" + r"\list_websites.csv"
+        self.file_list_websites_exception = self.dirname + "\\test_data" + r"\list_websites_exception.csv"
+        self.file_list_websites_extend = self.dirname + "\\test_data" + r"\list_websites_extend.csv"
         self.file_list_websites_result = self.capture_dirname + r"\list_websites_result.csv"
-        self.darkmode_icon = self.dirname + r'\darkmode_icon.png'
+        self.darkmode_icon = self.dirname + "\\test_data" + r'\darkmode_icon.png'
 
-    @pytestrail.case('')
-    def test_create_websites_extend(self):
-        self.init_websites_extend()
-        number_sublinks = 1
-        urls_all = self.file.get_from_csv(self.file_list_websites)
+        # Capture all images
 
-        # Separate valid and invalid links
-        urls_not_live = self.urls.get_all_links_in_file_are_not_alive(self.file_list_websites)
-        self.file.append_list_to_file(self.file_list_websites_invalid, urls_not_live)
-        urls_live = self.common.remove_duplicate_elements_in_lists(urls_all, urls_not_live)
-        self.file.append_list_to_file(self.file_list_websites_valid, urls_live)
-
-        for url in urls_live:
-            self.urls.get_all_website_links(url)
-            sub_urls = self.urls.get_random_valid_links(tuple(self.urls.internal_urls), number_sublinks)
-            self.file.append_to_file(self.file_list_websites_extend, url)
-            self.file.append_list_to_file(self.file_list_websites_extend, sub_urls)
-
-    @pytestrail.case('')
-    def test_desktop_dark_mode(self, get_enabled_dark_mode):
-        self.init_dark_mode()
-        # urls_all = self.file.get_from_csv(self.file_list_websites)
-        browser = get_enabled_dark_mode
-
-        # For internal PC, set to open browser on second monitor
-        # self.move_browser_to_other_position(browser)
-
-        # Using UISpy to define locator then mouse move => Need to improve
-        self.darkmode.enable_dark_mode_in_setting_page(browser)
-        self.urls.wait_for_page_to_load(browser, Urls.COCCOC_URL)
-
-        # Get list of urls again
-        urls_live = self.file.get_from_csv(self.file_list_websites_extend)
-        # Capture images
-        for url in urls_live:
-            self.switch_dark_mode_for_site(browser, url)
-            image_website_1, image_screenshot_1 = self.get_fullpage_screenshot_dark_mode(browser, url, times=1)
-
-            # Capture second image
-            self.switch_dark_mode_for_site(browser, url)
-            image_website_2, image_screenshot_2 = self.get_fullpage_screenshot_dark_mode(browser, url, times=2)
-
-            # list_images.add((image_website_1, image_screenshot_1))
-            # list_images.add((image_website_2, image_screenshot_2))
-
-            images = (image_website_1, image_screenshot_1)
-            image_result = self.verify_images(url, images)
-            self.file.append_to_file(self.file_list_websites_result, image_result)
-
-            images = (image_website_2, image_screenshot_2)
-            image_result = self.verify_images(url, images)
-            self.file.append_to_file(self.file_list_websites_result, image_result)
-            self.file.remove_first_line_in_file(self.file_list_websites_extend)  # Remove url in file extend
-
-        pytest.message = "Finished run dark mode capture test: \n" + str(self.number_of_failed) + "/" + str(
-            len(urls_live) * 2) \
-                         + " Failed / Total Images\nPlease check at: " + self.capture_dirname
-        assert self.number_of_failed == 0
-
-    # Capture all images
     def get_fullpage_screenshot_dark_mode(self, browser, url, times=1):
         filename = url.replace('https://', '').replace(r'/', '').replace('.', '').replace('www', '')
-        filename_website = filename + str(times) + ".png"
-        filename_website_full = self.capture_dirname + r"\\" + filename_website
-        filename_screenshot = filename + "_screenshot" + str(times) + ".png"
-        filename_screenshot_full = self.capture_dirname + r"\\" + filename_screenshot
-        LOGGER.info(filename_website_full)
-        LOGGER.info(filename_screenshot_full)
-
+        filename_website = "\\" + filename + str(times) + ".png"
+        filename_website_full = self.capture_dirname + filename_website
+        filename_screenshot = "\\" + filename + "_screenshot" + str(times) + ".png"
+        filename_screenshot_full = self.capture_dirname + filename_screenshot
         self.image.get_fullpage_screenshot_screen(filename_screenshot_full)
         self.image.get_fullpage_screenshot_clipping(browser, self.capture_dirname, filename_website)
         return filename_website_full, filename_screenshot_full
 
     def switch_dark_mode_for_site(self, browser, url):
         self.urls.wait_for_page_to_load(browser, url)
-        self.darkmode.enable_dark_mode_for_site(browser)
+        click_dark_mode_enable_on_sites()
+        # self.darkmode.enable_dark_mode_for_site(browser)
         self.urls.wait_for_page_to_load(browser, url)
 
     # Verify image after finishing capture
     def verify_images(self, url, filename):
-        LOGGER.info(filename)
         image_website = filename[0]
         image_screenshot = filename[1]
 
@@ -166,3 +106,67 @@ class TestBrowserDarkMode:
             if result:
                 break
         return result
+
+    @pytestrail.case('')
+    def test_create_websites_extend(self):
+        self.init_websites_extend()
+        number_sublinks = 1
+        urls_all = self.file.get_from_csv(self.file_list_websites)
+
+        # Separate valid and invalid links
+        self.file.clear_content_file(self.file_list_websites_invalid)
+        self.file.clear_content_file(self.file_list_websites_valid)
+        self.file.clear_content_file(self.file_list_websites_extend)
+        urls_not_live = self.urls.get_all_links_in_file_are_not_alive(self.file_list_websites)
+        self.file.append_list_to_file(self.file_list_websites_invalid, urls_not_live)
+        urls_live = self.common.remove_duplicate_elements_in_lists(urls_all, urls_not_live)
+        self.file.append_list_to_file(self.file_list_websites_valid, urls_live)
+
+        for url in urls_live:
+            all_child_websites = self.urls.get_all_website_links(url)
+            sub_urls = self.urls.get_random_valid_links(tuple(all_child_websites), url, number_sublinks)
+            # sub_urls = self.urls.get_random_valid_links(tuple(self.urls.internal_urls), number_sublinks)
+            self.file.append_to_file(self.file_list_websites_extend, url)
+            self.file.append_list_to_file(self.file_list_websites_extend, sub_urls)
+
+    @pytestrail.case('')
+    def test_desktop_dark_mode(self, get_enabled_dark_mode):
+        self.init_dark_mode()
+        # urls_all = self.file.get_from_csv(self.file_list_websites)
+        browser = get_enabled_dark_mode
+
+        # For internal PC, set to open browser on second monitor
+        # self.move_browser_to_other_position(browser)
+
+        # Using UISpy to define locator then mouse move => Need to improve
+        self.darkmode.enable_dark_mode_in_setting_page(browser)
+        self.urls.wait_for_page_to_load(browser, Urls.COCCOC_URL)
+
+        # Get list of urls again
+        urls_live = self.file.get_from_csv(self.file_list_websites_extend)
+        # Capture images
+        for url in urls_live:
+            LOGGER.info("Capture website: " + url)
+            self.switch_dark_mode_for_site(browser, url)
+            image_website_1, image_screenshot_1 = self.get_fullpage_screenshot_dark_mode(browser, url, times=1)
+
+            # Capture second image
+            self.switch_dark_mode_for_site(browser, url)
+            image_website_2, image_screenshot_2 = self.get_fullpage_screenshot_dark_mode(browser, url, times=2)
+
+            # list_images.add((image_website_1, image_screenshot_1))
+            # list_images.add((image_website_2, image_screenshot_2))
+
+            images = (image_website_1, image_screenshot_1)
+            image_result = self.verify_images(url, images)
+            self.file.append_to_file(self.file_list_websites_result, image_result)
+
+            images = (image_website_2, image_screenshot_2)
+            image_result = self.verify_images(url, images)
+            self.file.append_to_file(self.file_list_websites_result, image_result)
+            self.file.remove_first_line_in_file(self.file_list_websites_extend)  # Remove url in file extend
+
+        pytest.message = "Finished run dark mode capture test: \n" + str(self.number_of_failed) + "/" + str(
+            len(urls_live) * 2) \
+                         + " Failed / Total Images\nPlease check at: " + self.capture_dirname
+        assert self.number_of_failed == 0

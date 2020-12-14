@@ -248,18 +248,36 @@ class SettingsClearBrowserDataPageElement(BasePageElement):
                                         SettingsClearBrowserDataLocators.SETTINGS_CLEAR_BROWSING_DATA_DIALOG,
                                         SettingsClearBrowserDataLocators.SETTINGS_CLEAR_DATA_BUTTON)
 
+
 class SettingDarkmodePageElement(BasePageElement):
-    def find_alway_enable_dark_mode_element(self, driver):
-        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_COCCOC_SECTION_PAGE_TEXT,
-                                        SettingsClearBrowserDataLocators.SETTINGS_PRIVACY_PAGE,
-                                        SettingsDarkmodeLocators.SETTINGS_ANIMATED_PAGE,
-                                        SettingsDarkmodeLocators.SETTINGS_SUB_PAGE,
-                                        SettingsDarkmodeLocators.SETTINGS_CATEGORY_DEFAULT_SETTING,
-                                        SettingsDarkmodeLocators.SETTINGS_CONTROLLED_RADIO_BUTTON,
-                                        SettingsDarkmodeLocators.SETTINGS_DARKMODE_LABEL)
+    # def find_alway_enable_dark_mode_element(self, driver):
+    #     return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_COCCOC_SECTION_PAGE_TEXT,
+    #                                     SettingsClearBrowserDataLocators.SETTINGS_PRIVACY_PAGE,
+    #                                     SettingsDarkmodeLocators.SETTINGS_ANIMATED_PAGE,
+    #                                     SettingsDarkmodeLocators.SETTINGS_SUB_PAGE,
+    #                                     SettingsDarkmodeLocators.SETTINGS_CATEGORY_DEFAULT_SETTING,
+    #                                     SettingsDarkmodeLocators.SETTINGS_CONTROLLED_RADIO_BUTTON,
+    #                                     SettingsDarkmodeLocators.SETTINGS_DARKMODE_LABEL)
 
     def find_dark_mode_icon_for_site(self, driver):
         return driver.find_elements_by_xpath(SettingsDarkmodeLocators.SETTINGS_DARKMODE_ICON_FOR_SITE)
+    #
+    # def find_dark_mode_rules_button(self, driver):
+    #     return driver.find_elements_by_xpath(SettingsDarkmodeLocators.COMPONENT_DARKMODE_BUTTON)
 
-    def find_dark_mode_rules_button(self, driver):
-        return driver.find_elements_by_xpath(SettingsDarkmodeLocators.COMPONENT_DARKMODE_BUTTON)
+    def find_dark_mode_blocked_on_off_element(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsClearBrowserDataLocators.SETTINGS_MAIN,
+                                        SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                        SettingsDarkmodeLocators.SETTINGS_COCCOC_DARK_MODE_PAGE,
+                                        SettingsPageLocators.SETTINGS_TOGGLE_BUTTON_TEXT,
+                                        SettingsPageLocators.SETTINGS_SYSTEM_START_UP_CONTROL_TEXT)
+
+    def find_dark_mode_always_enable_dark_mode_radio_box(self, driver):
+        return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
+                                        SettingsClearBrowserDataLocators.SETTINGS_MAIN,
+                                        SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
+                                        SettingsClearBrowserDataLocators.SETTINGS_PRIVACY_PAGE,
+                                        SettingsDarkmodeLocators.SETTINGS_DARK_MODE_CATEGORY_DEFAULT_SETTING,
+                                        SettingsDarkmodeLocators.SETTINGS_DARK_MODE_CONTROLLED_RADIO_BUTTON1,
+                                        SettingsDarkmodeLocators.SETTINGS_DARK_MODE_RADIO_BOX)

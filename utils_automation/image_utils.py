@@ -149,15 +149,16 @@ class ImageUtils():
     # Find sub image in main image
     def find_subimage_in_image(self, main_image, sub_image, threshold=0.81):
         LOGGER.info(main_image)
+        LOGGER.info(sub_image)
         # LOGGER.info(sub_image)
         is_find = True
         method = cv2.TM_CCOEFF_NORMED
 
         # Read the images from the file
-        # small_image = cv2.imread(sub_image)
-        small_image = io.imread(sub_image)
-        # large_image = cv2.imread(main_image)
-        large_image = io.imread(main_image)
+        small_image = cv2.imread(sub_image)
+        # small_image = io.imread(sub_image)
+        large_image = cv2.imread(main_image)
+        # large_image = io.imread(main_image)
 
         result = cv2.matchTemplate(small_image, large_image, method)
 
