@@ -103,11 +103,10 @@ def init_ie_driver():
     return driver
 
 
-def enable_dark_mode_lbl_is_displayed(coccoc_windows):
+def enable_dark_mode_lbl_is_displayed(parent_window):
     try:
-        enable_dark_mode_lbl = coccoc_windows.Dark_Mode.child_window(title="Try enable to view the site in dark mode",
-                                                                     control_type="Text")
-        LOGGER.info("Enable dark mode label is visible: "+str(enable_dark_mode_lbl.is_visible()))
+        enable_dark_mode_lbl = parent_window.child_window(title="Try enable to view the site in dark mode",
+                                                          control_type="Text")
         if enable_dark_mode_lbl.is_visible() == 1:
             return True
     except Exception as e:
@@ -124,6 +123,8 @@ def click_dark_mode_enable_on_sites():
                                                          control_type="Button")
     time.sleep(5)
     dark_mode_icon_omnibox.click_input()
-    if enable_dark_mode_lbl_is_displayed(coccoc_windows):
+    dark_mode_popup = coccoc_windows.child_window(title="Dark Mode", control_type="Pane")
+
+    if enable_dark_mode_lbl_is_displayed(dark_mode_popup):
         LOGGER.info("Click On dark mode")
-        coccoc_windows.Dark_Mode.Button3.click_input()
+        dark_mode_popup.Button3.click_input()

@@ -58,15 +58,13 @@ class TestBrowserDarkMode:
         self.darkmode_icon = self.dirname + "\\test_data" + r'\darkmode_icon.png'
 
         # Capture all images
+
     def get_fullpage_screenshot_dark_mode(self, browser, url, times=1):
         filename = url.replace('https://', '').replace(r'/', '').replace('.', '').replace('www', '')
-        filename_website = filename + str(times) + ".png"
-        filename_website_full = self.capture_dirname + r"\\" + filename_website
-        filename_screenshot = filename + "_screenshot" + str(times) + ".png"
-        filename_screenshot_full = self.capture_dirname + r"\\" + filename_screenshot
-        LOGGER.info(filename_website_full)
-        LOGGER.info(filename_screenshot_full)
-
+        filename_website = "\\" + filename + str(times) + ".png"
+        filename_website_full = self.capture_dirname + filename_website
+        filename_screenshot = "\\" + filename + "_screenshot" + str(times) + ".png"
+        filename_screenshot_full = self.capture_dirname + filename_screenshot
         self.image.get_fullpage_screenshot_screen(filename_screenshot_full)
         self.image.get_fullpage_screenshot_clipping(browser, self.capture_dirname, filename_website)
         return filename_website_full, filename_screenshot_full
@@ -79,7 +77,6 @@ class TestBrowserDarkMode:
 
     # Verify image after finishing capture
     def verify_images(self, url, filename):
-        LOGGER.info(filename)
         image_website = filename[0]
         image_screenshot = filename[1]
 
@@ -91,9 +88,9 @@ class TestBrowserDarkMode:
         if not result:
             self.number_of_failed += 1
             self.skype.send_message_group_skype_with_image(SKYPE_GROUP_AUTOMATION_ID_1,
-                                                               "Screenshot of Error domain: %s" % url, image_screenshot)
+                                                           "Screenshot of Error domain: %s" % url, image_screenshot)
             self.skype.send_message_group_skype_with_image(SKYPE_GROUP_AUTOMATION_ID_1,
-                                                               "Website of Error domain: %s" % url, image_website)
+                                                           "Website of Error domain: %s" % url, image_website)
         image_result = image_website + ", " + str(result)
         return image_result
 
@@ -149,6 +146,7 @@ class TestBrowserDarkMode:
         urls_live = self.file.get_from_csv(self.file_list_websites_extend)
         # Capture images
         for url in urls_live:
+            LOGGER.info("Capture website: " + url)
             self.switch_dark_mode_for_site(browser, url)
             image_website_1, image_screenshot_1 = self.get_fullpage_screenshot_dark_mode(browser, url, times=1)
 

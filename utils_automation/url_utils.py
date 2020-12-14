@@ -168,7 +168,8 @@ class URLUtils:
             for url in sub_urls:
                 sub_url_is_same_root_url = self.is_same_domain(url, parent_url)
                 result = self.is_url_exits(url)
-                if sub_url_is_same_root_url and url != parent_url and result:
+                LOGGER.info("child url"+url)
+                if sub_url_is_same_root_url and str(url) != parent_url and result:
                     break
         LOGGER.info("Child url that selected: " + str(sub_urls))
         LOGGER.info("=================================================================")
