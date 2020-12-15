@@ -55,7 +55,8 @@ class FileUtils():
         else:
             file = open(filename, 'w+', encoding="utf-8")
         for i in input_lists:
-            file.write("%s\n" % (i))
+            if i != '' and i is not None:
+                file.write("%s\n" % (i))
         file.close()
 
     # Append s ring to a file
@@ -64,7 +65,8 @@ class FileUtils():
             file = open(filename, 'a', encoding="utf-8")
         else:
             file = open(filename, 'w+', encoding="utf-8")
-        file.write("%s\n" % string)
+        if string != '' and string is not None:
+            file.write("%s\n" % string)
         file.close()
 
     def get_current_dirname(self):

@@ -128,3 +128,7 @@ def click_dark_mode_enable_on_sites():
     if enable_dark_mode_lbl_is_displayed(dark_mode_popup):
         LOGGER.info("Click On dark mode")
         dark_mode_popup.Button3.click_input()
+
+def test():
+    is_start=   'mailto://info@123doc.org'.startswith('http')
+    LOGGER.info(is_start)
