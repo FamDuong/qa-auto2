@@ -124,10 +124,10 @@ class TestBrowserDarkMode:
 
         for url in urls_live:
             all_child_websites = self.urls.get_all_website_links(url)
-            sub_urls = self.urls.get_random_valid_links(tuple(all_child_websites), url, number_sublinks)
+            sub_url = self.urls.get_random_valid_links(list(all_child_websites), url, number_sublinks)
             # sub_urls = self.urls.get_random_valid_links(tuple(self.urls.internal_urls), number_sublinks)
             self.file.append_to_file(self.file_list_websites_extend, url)
-            self.file.append_list_to_file(self.file_list_websites_extend, sub_urls)
+            self.file.append_to_file(self.file_list_websites_extend, sub_url)
 
     @pytestrail.case('')
     def test_desktop_dark_mode(self, get_enabled_dark_mode):
@@ -164,7 +164,7 @@ class TestBrowserDarkMode:
             images = (image_website_2, image_screenshot_2)
             image_result = self.verify_images(url, images)
             self.file.append_to_file(self.file_list_websites_result, image_result)
-            self.file.remove_first_line_in_file(self.file_list_websites_extend)  # Remove url in file extend
+            # self.file.remove_first_line_in_file(self.file_list_websites_extend)  # Remove url in file extend
 
         pytest.message = "Finished run dark mode capture test: \n" + str(self.number_of_failed) + "/" + str(
             len(urls_live) * 2) \

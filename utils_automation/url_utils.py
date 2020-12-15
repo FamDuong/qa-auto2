@@ -97,7 +97,13 @@ class URLUtils:
         except requests.exceptions.ConnectionError as r:
             r.status_code = "Connection refused"
             return None
-        for a_tag in soup.findAll("a"):
+        url_by_a_tag = soup.findAll("a")
+        url_by_link_tag = soup.findAll("link")
+        if len(url_by_a_tag) > 0:
+            url_list = url_by_a_tag
+        else:
+            url_list = url_by_link_tag
+        for a_tag in url_list:
             href = a_tag.attrs.get("href")
             if href == "" or href is None:
                 # href empty tag
@@ -161,19 +167,48 @@ class URLUtils:
     # Get sublinks valid
     def get_random_valid_links(self, child_urls, parent_url, number_sublinks = 1):
         result = False
+        sub_url_is_same_root_url = False
+        url_start_with_http = False
         LOGGER.info("Parent url: " + parent_url)
         LOGGER.info("Child url: " + str(child_urls))
-        while not result:
-            sub_urls = random.sample(tuple(child_urls), number_sublinks)
-            for url in sub_urls:
-                sub_url_is_same_root_url = self.is_same_domain(url, parent_url)
-                result = self.is_url_exits(url)
-                LOGGER.info("child url"+url)
-                if sub_url_is_same_root_url and str(url) != parent_url and result:
-                    break
-        LOGGER.info("Child url that selected: " + str(sub_urls))
-        LOGGER.info("=================================================================")
-        return sub_urls
+        if len(child_urls) > 0:
+            while not result and not sub_url_is_same_root_url and not url_start_with_http:
+                # sub_urls = random.sample(tuple(child_urls), number_sublinks)
+                for i in range(len(child_urls)):
+                    child_url = str(child_urls[i])
+                    LOGGER.info(child_url)
+                    url_start_with_http = child_url.startswith('http')
+                    sub_url_is_same_root_url = self.is_same_domain(child_url, parent_url)
+                    if url_start_with_http and sub_url_is_same_root_url and child_url != parent_url:
+                        result = self.is_url_exits(child_url)
+                    if result:
+                        LOGGER.info("Child url that selected: " + child_url)
+                        LOGGER.info("=================================================================")
+                        return child_url
+        else:
+            return ''
+    # def get_random_valid_links(self, child_urls, parent_url, number_sublinks = 1):
+    #     result = False
+    #     sub_url_is_same_root_url = False
+    #     url_start_with_http = False
+    #     LOGGER.info("Parent url: " + parent_url)
+    #     LOGGER.info("Child url: " + str(child_urls))
+    #     if len(tuple(child_urls)) > 0:
+    #         while not result and not sub_url_is_same_root_url and not url_start_with_http:
+    #             # sub_urls = random.sample(tuple(child_urls), number_sublinks)
+    #             for url in sub_urls:
+    #                 url_start_with_http = url.startswith('http')
+    #                 sub_url_is_same_root_url = self.is_same_domain(url, parent_url)
+    #                 if sub_url_is_same_root_url and str(url) != parent_url and url_start_with_http:
+    #                     result = self.is_url_exits(url)
+    #                 if result:
+    #                     break
+    #                 LOGGER.info("Child url that selected: " + str(sub_urls))
+    #                 LOGGER.info("=================================================================")
+    #                 return sub_urls
+    #     else:
+    #         return ''
+
 
     # Check if same domain
     def is_same_domain(self, url_1, url_2):
