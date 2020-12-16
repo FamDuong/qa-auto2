@@ -144,7 +144,7 @@ class TestBrowserDarkMode:
 
         # Get list of urls again
         urls_live = self.file.get_from_csv(self.file_list_websites_extend)
-        # Capture images
+        # Capture imagespi
         for url in urls_live:
             LOGGER.info("Capture website: " + url)
             self.switch_dark_mode_for_site(browser, url)
