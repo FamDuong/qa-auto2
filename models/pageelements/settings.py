@@ -277,7 +277,6 @@ class SettingDarkmodePageElement(BasePageElement):
         return self.find_shadow_element(driver, SettingsPageLocators.SETTINGS_UI_TEXT,
                                         SettingsClearBrowserDataLocators.SETTINGS_MAIN,
                                         SettingsPageLocators.SETTINGS_BASIC_PAGE_TEXT,
-                                        SettingsClearBrowserDataLocators.SETTINGS_PRIVACY_PAGE,
-                                        SettingsDarkmodeLocators.SETTINGS_DARK_MODE_CATEGORY_DEFAULT_SETTING,
+                                        SettingsDarkmodeLocators.SETTINGS_COCCOC_DARK_MODE_PAGE,
                                         SettingsDarkmodeLocators.SETTINGS_DARK_MODE_CONTROLLED_RADIO_BUTTON1,
                                         SettingsDarkmodeLocators.SETTINGS_DARK_MODE_RADIO_BOX)
