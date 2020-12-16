@@ -5,7 +5,6 @@ from appium import webdriver
 from selenium import webdriver as sele_webdriver
 import pytest
 import settings_master as settings
-from models.pageobject.version import VersionPageObject
 from utils_automation.common import FilesHandle, get_current_dir
 from utils_automation.common_browser import modify_file_as_text, coccoc_instance
 from utils_automation.const import Urls
