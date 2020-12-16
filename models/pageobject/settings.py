@@ -293,11 +293,13 @@ class SettingsDarkmodePageObject(BasePageObject):
 
     def tick_always_enable_dark_mode_radio_box(self, driver):
         blocked_on_off = self.settings_elem.find_dark_mode_blocked_on_off_element(driver)
+        LOGGER.info("Dark mode blocked on off bar status: " + str(blocked_on_off.get_attribute('aria-pressed')))
         if blocked_on_off.get_attribute('aria-pressed') == 'false':
             blocked_on_off.click()
-            always_enable_dark_mode_radio_box: WebElement = self.settings_elem.find_dark_mode_always_enable_dark_mode_radio_box(driver)
-            radio_box_is_selected = always_enable_dark_mode_radio_box.get_attribute('aria-checked')
-            LOGGER.info("Always enable dark mode radio box is selected: " + radio_box_is_selected)
-            if radio_box_is_selected == 'false':
-                always_enable_dark_mode_radio_box.click()
+        always_enable_dark_mode_radio_box: WebElement = self.settings_elem.find_dark_mode_always_enable_dark_mode_radio_box(driver)
+        radio_box_is_selected = always_enable_dark_mode_radio_box.get_attribute('aria-checked')
+        LOGGER.info("Dark mode always enable dark mode radio box status: "+str(radio_box_is_selected))
+        LOGGER.info("Always enable dark mode radio box is selected: " + radio_box_is_selected)
+        if radio_box_is_selected == 'false':
+            always_enable_dark_mode_radio_box.click()
 
