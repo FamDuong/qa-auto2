@@ -37,17 +37,12 @@ class URLUtils:
         try:
             response = requests.get(url)
             # response = requests.get(url, headers=headers)
-        except requests.exceptions.ConnectionError as er:
+        except requests.exceptions.ConnectionError as er_connect:
             is_exist = False
-            LOGGER.info("%s is not reachable!!!: %s" % (url, er))
-            LOGGER.info("Connection refused by the server..")
-            LOGGER.info("Let me sleep for 5 seconds")
-            import time
-            time.sleep(5)
-            LOGGER.info("Was a nice sleep, now let me continue...")
-        # except requests.exceptions.InvalidSchema as er:
-        #    is_exist = False
-        #    LOGGER.info("%s is not reachable!!!: %s" % (url, er))
+            LOGGER.info("%s is not reachable!!!: %s" % (url, er_connect))
+        except requests.exceptions.InvalidSchema as er_schema:
+            is_exist = False
+            LOGGER.info("%s is not reachable!!!: %s" % (url, er_schema))
         LOGGER.info("%s is existed: %s" % (url, str(is_exist)))
         return is_exist
 
@@ -85,6 +80,7 @@ class URLUtils:
         return sublinks
 
     def get_all_website_links(self, url):
+        self.internal_urls = set()
         """
         Returns all URLs that is found on `url` in which it belongs to the same website
         """
@@ -164,7 +160,6 @@ class URLUtils:
         urls_live = [i for i in urls if i not in urls_not_live]
         return urls_live
 
-    # Get sublinks valid
     def get_random_valid_links(self, child_urls, parent_url, number_sublinks = 1):
         result = False
         sub_url_is_same_root_url = False
@@ -186,6 +181,17 @@ class URLUtils:
         else:
             return ''
 
+    # Get any available sub link and same domain
+    def get_random_valid_links_same_domain(self, main_url, list_urls, number_sublinks = 1):
+        result = False
+        while not result:
+            sub_urls = random.sample(tuple(list_urls), number_sublinks)
+            for url in sub_urls:
+                is_url = self.is_url_exits(url)
+                is_same_domain = self.is_same_domain(main_url, url)
+                result = (is_url and is_same_domain)
+        return sub_urls
+
     # Check if same domain
     def is_same_domain(self, url_1, url_2):
         result = False
@@ -193,3 +199,4 @@ class URLUtils:
         if search_domain in url_2:
             result = True
         return result
+
