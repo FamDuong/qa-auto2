@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-pytest = "*"
+pytest = "==6.0.1"
 selenium = "*"
 requests = "*"
 pyyaml = "*"
@@ -31,6 +31,9 @@ pygsheets = "*"
 google-api-python-client = "*"
 python-jenkins = "*"
 packaging = "*"
+lxml = "*"
+importlib-metadata = "==2.1.1"
+numpy = "==1.19.3"
 
 [requires]
 python_version = "3.7"

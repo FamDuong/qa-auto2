@@ -139,10 +139,10 @@ def assert_video_height_width(end_with, actual_height, expect_height, actual_wid
         try:
             if int(actual_height) > 720:
                 expect_width = if_height_frame_so_width_frame(expect_height)
-                LOGGER.info("Assert video with high resolution" + str(actual_height) + "x" + str(expect_width))
+                LOGGER.info("Assert video with high resolution: " + str(expect_height) + "x" + str(expect_width))
                 assert actual_width == expect_width
         except Exception:
-            LOGGER.info("Assert video with Standard/ Medium/ Low resolution")
+            LOGGER.info("Assert video with Standard/ Medium/ Low resolution: ")
             if (expect_height is not None) and (expect_height != ''):
                 diff_value = abs(int(actual_height) - int(expect_height.split('p')[0]))
                 LOGGER.info("Diff height: " + str(diff_value))

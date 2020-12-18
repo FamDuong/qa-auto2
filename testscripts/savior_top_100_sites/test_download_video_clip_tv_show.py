@@ -2,24 +2,15 @@ import logging
 import pytest
 
 from models.pagelocators.top_savior_sites.top_savior_sites_news import TopSaviorSitesNewsLocators
-from models.pagelocators.top_savior_sites.top_savior_sites_video_clip_tv_show import \
-    TopSaviorSitesVideoClipTvShowLocators
 from models.pagelocators.top_savior_sites.top_savior_sites_video_length import TopSaviorSitesVideoLengthLocators
 from models.pagelocators.top_savior_sites.top_savior_sites_video_length import VideoClipTVShowVideoLengthLocators
-# from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
 from pytest_testrail.plugin import pytestrail
 from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
 from models.pageobject.top_savior_sites.top_savior_sites_video_clip_tv_show import TopSaviorSitesVideoClipTvShowActions
 from models.pageobject.top_savior_sites.top_savior_sites_video_length import TopSitesSaviorVideoLengthActions
-# from testscripts.common_setup import download_file_via_main_download_button, assert_file_download_value, \
-#     get_resolution_info
 from testscripts.savior_top_100_sites.common import download_and_verify_video
-from utils_automation.common import WebElements
-from utils_automation.common_browser import coccoc_instance
 from utils_automation.const import VideoClipTVShowUrls
-
-# savior_page_object = SaviorPageObject()
 
 LOGGER = logging.getLogger(__name__)
 
@@ -29,7 +20,6 @@ class TestVideoClipTVShow:
     top_savior_sites_video_length_action = TopSitesSaviorVideoLengthActions()
     top_savior_sites_video_clip_tv_show_action = TopSaviorSitesVideoClipTvShowActions()
     top_sites_savior_title_action = TopSitesSaviorTitleAction()
-
 
     @pytestrail.case('C96719')
     @pytest.mark.top_sites
@@ -69,31 +59,36 @@ class TestVideoClipTVShow:
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length,
                                   start_with=video_title, mouse_over_first_video=False)
 
-    @pytestrail.case('C410745')
-    @pytest.mark.top_sites
-    def test_download_file_tiktok(self, browser_top_sites, get_current_download_folder_top_sites):
-        # browser_top_sites.get(VideoClipTVShowUrls.TIKTOK_FOR_YOU_URL)
-        # LOGGER.info("Check download video on " + VideoClipTVShowUrls.TIKTOK_FOR_YOU_URL)
-        # video_title_root = self.top_sites_savior_title_action.get_website_title_by_javascript(browser_top_sites)
-        # video_title_temp = self.top_sites_savior_title_action.replace_special_characters_by_dash_in_string(
-        #     video_title_root)
-        # video_title = self.top_sites_savior_title_action.get_first_part_of_video_title(video_title_temp)
-        # expect_length = self.top_savior_sites_video_length_action. \
-        #     get_video_length(browser_top_sites, VideoClipTVShowVideoLengthLocators.TIKTOK_VIDEO_CSS,
-        #                      element="", url=VideoClipTVShowUrls.TIKTOK_FOR_YOU_URL)
-        # download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
-        self.top_savior_sites_video_clip_tv_show_action.login_tiktok(browser_top_sites)
-        browser_top_sites.get(VideoClipTVShowUrls.TIKTOK_OTHERS_ACCOUNT_URL)
-        LOGGER.info("Check download video on " + VideoClipTVShowUrls.TIKTOK_OTHERS_ACCOUNT_URL)
-        WebElements.click_element_by_javascript(browser_top_sites, TopSaviorSitesVideoClipTvShowLocators.TIKTOK_FIRST_VIDEO)
-        video_title_root = self.top_sites_savior_title_action.get_website_title_by_javascript(browser_top_sites)
+    def download_file_tiktok(self, driver, download_folder, menu, is_login=False):
+        driver.get(VideoClipTVShowUrls.TIKTOK_FOR_YOU_URL)
+        if is_login:
+            self.top_savior_sites_video_clip_tv_show_action.login_tiktok(driver)
+        self.top_savior_sites_video_clip_tv_show_action.click_tiktok_menu(driver, menu)
+        self.top_savior_sites_video_clip_tv_show_action.click_tiktok_first_video(driver, menu)
+        LOGGER.info("Check download video on " + str(driver.current_url))
+        video_title_root = self.top_sites_savior_title_action.get_tiktok_video_title(driver, menu)
         video_title_temp = self.top_sites_savior_title_action.replace_special_characters_by_dash_in_string(
             video_title_root)
         video_title = self.top_sites_savior_title_action.get_first_part_of_video_title(video_title_temp)
         expect_length = self.top_savior_sites_video_length_action. \
-            get_video_length(browser_top_sites, VideoClipTVShowVideoLengthLocators.TIKTOK_VIDEO_CSS,
+            get_video_length(driver, VideoClipTVShowVideoLengthLocators.TIKTOK_VIDEO_CSS,
                              element="", url=VideoClipTVShowUrls.TIKTOK_FOR_YOU_URL)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
+        download_and_verify_video(driver, download_folder, expect_length, video_title)
+        if menu == 'Following':
+            driver.close()
+            driver.switch_to.window(driver.window_handles[0])
+
+    @pytestrail.case('C410745')
+    @pytest.mark.top_sites
+    def test_download_file_tiktok(self, browser_top_sites, get_current_download_folder_top_sites):
+        self.download_file_tiktok(browser_top_sites, get_current_download_folder_top_sites,
+                                  menu='For You', is_login=False)
+        self.download_file_tiktok(browser_top_sites, get_current_download_folder_top_sites,
+                                  menu='Following', is_login=False)
+        self.download_file_tiktok(browser_top_sites, get_current_download_folder_top_sites,
+                                  menu='For You', is_login=True)
+        self.download_file_tiktok(browser_top_sites, get_current_download_folder_top_sites,
+                                  menu='Following', is_login=True)
 
     @pytestrail.case('C98764')
     @pytest.mark.others
@@ -101,7 +96,8 @@ class TestVideoClipTVShow:
         browser_top_sites.get(VideoClipTVShowUrls.VTC_VN_VIDEO_URL)
         LOGGER.info("Check download video on " + VideoClipTVShowUrls.VTC_VN_VIDEO_URL)
         video_title_root = self.top_sites_savior_title_action.get_website_title_by_javascript(browser_top_sites)
-        video_title_temp = self.top_sites_savior_title_action.replace_special_characters_by_dash_in_string(video_title_root)
+        video_title_temp = self.top_sites_savior_title_action.replace_special_characters_by_dash_in_string(
+            video_title_root)
         video_title = self.top_sites_savior_title_action.get_first_part_of_video_title(video_title_temp)
         self.top_savior_sites_video_clip_tv_show_action.click_vtc_play_video_button(browser_top_sites)
         expect_length = self.top_savior_sites_video_length_action. \

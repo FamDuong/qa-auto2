@@ -1,21 +1,14 @@
 import pytest
 import subprocess
-import time
-from selenium.webdriver import DesiredCapabilities
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.options import Options
-
 from models.pageelements.settings import SettingsElements
 from models.pageobject.extensions import ExtensionsPageObject
 from models.pageobject.settings import SettingsPageObject
-from testscripts.common_setup import clear_data_download, delete_all_mp4_file_download
 from utils_automation.const import Urls, ExtensionIds
 from utils_automation.setup import WaitAfterEach
 
 settings_page_object = SettingsPageObject()
 settings_cococ_ads_block_page_element = SettingsElements.SettingsAdsBlock()
-settings_coccoc_ads_block_page_object = SettingsPageObject.SettingsAdsBlockPageObject()
+settings_coccoc_ads_block_page_object = settings_page_object.SettingsAdsBlockPageObject()
 extensions_cococ_page_object = ExtensionsPageObject.UblockPlusPageObject()
 username = None
 

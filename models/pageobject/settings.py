@@ -233,19 +233,19 @@ class SettingsClearBrowserDataPageObject(BasePageObject):
         select.select_by_visible_text(option)
 
     def tick_browsing_history_checkbox(self, driver):
-        element: WebElement = self.settings_clear_browser_data_page_element.\
+        element: WebElement = self.settings_clear_browser_data_page_element. \
             find_browsing_history_checkbox(driver=driver)
         if element.get_attribute('aria-checked') is False:
             element.click()
 
     def tick_cookies_and_other_site_data_checkbox(self, driver):
-        element: WebElement = self.settings_clear_browser_data_page_element.\
+        element: WebElement = self.settings_clear_browser_data_page_element. \
             find_cookies_and_other_site_data_checkbox(driver=driver)
         if element.get_attribute('aria-checked') is False:
             element.click()
 
     def tick_cached_images_and_files_checkbox(self, driver):
-        element: WebElement = self.settings_clear_browser_data_page_element.\
+        element: WebElement = self.settings_clear_browser_data_page_element. \
             find_cached_images_and_files_checkbox(driver=driver)
         if element.get_attribute('aria-checked') is False:
             element.click()
@@ -254,16 +254,17 @@ class SettingsClearBrowserDataPageObject(BasePageObject):
         element: WebElement = self.settings_clear_browser_data_page_element.find_clear_data_button(driver)
         element.click()
 
+
 class SettingsDarkmodePageObject(BasePageObject):
     settings_elem = SettingDarkmodePageElement()
     urls = URLUtils()
 
     def enable_dark_mode_in_setting_page(self, driver):
         # Using UISpy to define locator then mouse move => Need to improve
-        # driver.get(Urls.COCCOC_SETTINGS_DARKMODE)
+        driver.get(Urls.COCCOC_SETTINGS_DARKMODE)
         self.urls.wait_for_page_to_load(driver, Urls.COCCOC_SETTINGS_DARKMODE)
         # Temporary stupid solution
-        self.pyautogui_click_on_coordinates(SettingsDarkmodeLocators.SETTINGS_DARKMODE_OPTION_COORDINATES)
+        self.tick_always_enable_dark_mode_radio_box(driver)
         # Wait until all darkmode is initialize
         # WaitAfterEach.sleep_timer_after_each_step(15)
 
@@ -272,7 +273,7 @@ class SettingsDarkmodePageObject(BasePageObject):
         # Temporary stupid solution
         self.click_on_dark_mode_icon_for_site()
 
-    def click_on_dark_mode_icon_for_site(self, is_exception = False):
+    def click_on_dark_mode_icon_for_site(self, is_exception=False):
         # Stupid solution
         # Move to darkmode icon on ominion box
         # self.pyautogui_click_on_coordinates(1945, -1027)
@@ -289,3 +290,16 @@ class SettingsDarkmodePageObject(BasePageObject):
             WaitAfterEach.sleep_timer_after_each_step(1)
         pyautogui.click()
         WaitAfterEach.sleep_timer_after_each_step(1)
+
+    def tick_always_enable_dark_mode_radio_box(self, driver):
+        blocked_on_off = self.settings_elem.find_dark_mode_blocked_on_off_element(driver)
+        LOGGER.info("Dark mode blocked on off bar status: " + str(blocked_on_off.get_attribute('aria-pressed')))
+        if blocked_on_off.get_attribute('aria-pressed') == 'false':
+            blocked_on_off.click()
+        always_enable_dark_mode_radio_box: WebElement = self.settings_elem.find_dark_mode_always_enable_dark_mode_radio_box(driver)
+        radio_box_is_selected = always_enable_dark_mode_radio_box.get_attribute('aria-checked')
+        LOGGER.info("Dark mode always enable dark mode radio box status: "+str(radio_box_is_selected))
+        LOGGER.info("Always enable dark mode radio box is selected: " + radio_box_is_selected)
+        if radio_box_is_selected == 'false':
+            always_enable_dark_mode_radio_box.click()
+

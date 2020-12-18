@@ -149,6 +149,7 @@ class ImageUtils():
     # Find sub image in main image
     def find_subimage_in_image(self, main_image, sub_image, threshold=0.81):
         LOGGER.info(main_image)
+        LOGGER.info(sub_image)
         # LOGGER.info(sub_image)
         is_find = True
         method = cv2.TM_CCOEFF_NORMED

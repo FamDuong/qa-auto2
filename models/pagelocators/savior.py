@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 
 class SaviorPageLocators(object):
     DOWNLOAD_BUTTON = "a:not([hidden])[class='download-btn j-quality-download']" #'#download-main'
-    FIRST_LAYER = '[style="position: absolute; top: 0px;"]'
+    FIRST_LAYER = "[style='position: absolute; top: 0px;']"
     PREFERRED_SELECT_BTN = '#preferred-select'
     CURRENT_SELECTED_RESOLUTION = 'span:not([hidden])[class="j-quality-option quality-option"]'
     BASE_OVERLAY_CLASS = '[class="base overlay"]'
@@ -41,6 +41,7 @@ class SaviorPageLocators(object):
 
     CURRENT_VIDEO_QUALITY_SELECTED_ITEM = '[class="quality-label j-quality selected"]'
     CURRENT_VIDEO_FILE_SIZE_ITEM = '[class="media-sub-info j-checked-size'
+    SAVIOR_RESOLUTION_TYPE = '#downloads span.selected-type'
 
     @staticmethod
     def download_option_css_locator(title):

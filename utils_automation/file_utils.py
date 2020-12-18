@@ -1,22 +1,22 @@
 import lxml.html
 import urllib.request
 import urllib
-import lxml.html
-from urllib.parse import urlsplit
-import re
-import requests
-import feedparser
-from PIL import Image
-from io import BytesIO
-import os
-from newspaper import Article
-import metadata_parser
-from bs4 import BeautifulSoup
-from newsfetch.news import newspaper
-from newsplease import NewsPlease
-from datetime import datetime
-import inspect
-import time
+# import lxml.html
+# from urllib.parse import urlsplit
+# import re
+# import requests
+# import feedparser
+# from PIL import Image
+# from io import BytesIO
+# import os
+# from newspaper import Article
+# import metadata_parser
+# from bs4 import BeautifulSoup
+# from newsfetch.news import newspaper
+# from newsplease import NewsPlease
+# from datetime import datetime
+# import inspect
+# import time
 import csv
 import sys
 import shutil
@@ -27,7 +27,9 @@ from utils_automation.setup import WaitAfterEach
 from PIL import Image
 
 import logging
+
 LOGGER = logging.getLogger(__name__)
+
 
 class FileUtils():
 
@@ -47,13 +49,14 @@ class FileUtils():
     # Append list to a file
     def append_list_to_file(self, filename, input_lists, type="list"):
         if type == "string":
-            input_lists = [ input_lists ]
+            input_lists = [input_lists]
         if os.path.exists(filename):
             file = open(filename, 'a', encoding="utf-8")
         else:
             file = open(filename, 'w+', encoding="utf-8")
         for i in input_lists:
-            file.write("%s\n" % (i))
+            if i != '' and i is not None:
+                file.write("%s\n" % (i))
         file.close()
 
     # Append s ring to a file
@@ -62,7 +65,8 @@ class FileUtils():
             file = open(filename, 'a', encoding="utf-8")
         else:
             file = open(filename, 'w+', encoding="utf-8")
-        file.write("%s\n" % string)
+        if string != '' and string is not None:
+            file.write("%s\n" % string)
         file.close()
 
     def get_current_dirname(self):
@@ -111,3 +115,7 @@ class FileUtils():
                     f_out.write(line)
         os.remove(filename)
         move(temp_path, filename)
+
+    def clear_content_file(self, file_name):
+        with open(file_name, 'a', encoding='utf-8') as file:
+            file.truncate(0)

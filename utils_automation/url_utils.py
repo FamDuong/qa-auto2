@@ -11,9 +11,11 @@ from urllib import parse
 from utils_automation.setup import WaitAfterEach
 
 import logging
+
 LOGGER = logging.getLogger(__name__)
 
-class URLUtils():
+
+class URLUtils:
     # initialize the set of links (unique links)
     internal_urls = set()
     external_urls = set()
@@ -37,10 +39,22 @@ class URLUtils():
             # response = requests.get(url, headers=headers)
         except requests.exceptions.ConnectionError as er_connect:
             is_exist = False
+<<<<<<< HEAD
             LOGGER.info("%s is not reachable!!!: %s" % (url, er_connect))
         except requests.exceptions.InvalidSchema as er_schema:
             is_exist = False
             LOGGER.info("%s is not reachable!!!: %s" % (url, er_schema))
+=======
+            LOGGER.info("%s is not reachable!!!: %s" % (url, er))
+            LOGGER.info("Connection refused by the server..")
+            LOGGER.info("Let me sleep for 5 seconds")
+            import time
+            time.sleep(5)
+            LOGGER.info("Was a nice sleep, now let me continue...")
+        # except requests.exceptions.InvalidSchema as er:
+        #    is_exist = False
+        #    LOGGER.info("%s is not reachable!!!: %s" % (url, er))
+>>>>>>> b2f21ff00d2318cf95837e21f1b36bbcc25a635b
         LOGGER.info("%s is existed: %s" % (url, str(is_exist)))
         return is_exist
 
@@ -54,9 +68,8 @@ class URLUtils():
         browser.execute_script("return window.performance.timing.loadEventEnd")
         WaitAfterEach.sleep_timer_after_each_step()
 
-
     # Get all sub links in an url which data-linktype="newsdetail"
-    def get_newest_link_in_newsfeed(self, url, no_of_urls = 2):
+    def get_newest_link_in_newsfeed(self, url, no_of_urls=2):
         headers = self.set_user_agent()
         sublinks = []
         try:
@@ -68,7 +81,7 @@ class URLUtils():
             for link in dom.xpath('//a/@href'):
                 if (bool(re.search('[0-9]{5}', link))) and ":" not in link and "www" not in link:
                     if not link.startswith('http'):
-                       link = url + link
+                        link = url + link
                     sublinks.append(link)
                     LOGGER.info("Sub links: %s" % url)
                     found = True
@@ -92,7 +105,13 @@ class URLUtils():
         except requests.exceptions.ConnectionError as r:
             r.status_code = "Connection refused"
             return None
-        for a_tag in soup.findAll("a"):
+        url_by_a_tag = soup.findAll("a")
+        url_by_link_tag = soup.findAll("link")
+        if len(url_by_a_tag) > 0:
+            url_list = url_by_a_tag
+        else:
+            url_list = url_by_link_tag
+        for a_tag in url_list:
             href = a_tag.attrs.get("href")
             if href == "" or href is None:
                 # href empty tag
@@ -148,19 +167,61 @@ class URLUtils():
 
     # Remove invalid links
     def remove_invalid_links_in_list(self, urls, urls_not_live):
-        #for i in urls_not_live:
+        # for i in urls_not_live:
         #    urls_live = [ x for x in urls if i not in x ]
         urls_live = [i for i in urls if i not in urls_not_live]
         return urls_live
 
+<<<<<<< HEAD
     # Get any available sub link
     def get_random_valid_links(self, urls, number_sublinks = 1):
+=======
+    # Get sublinks valid
+    def get_random_valid_links(self, child_urls, parent_url, number_sublinks = 1):
+>>>>>>> b2f21ff00d2318cf95837e21f1b36bbcc25a635b
         result = False
-        while not result:
-            sub_urls = random.sample(tuple(urls), number_sublinks)
-            for url in sub_urls:
-                result = self.is_url_exits(url)
-        return sub_urls
+        sub_url_is_same_root_url = False
+        url_start_with_http = False
+        LOGGER.info("Parent url: " + parent_url)
+        LOGGER.info("Child url: " + str(child_urls))
+        if len(child_urls) > 0:
+            while not result and not sub_url_is_same_root_url and not url_start_with_http:
+                # sub_urls = random.sample(tuple(child_urls), number_sublinks)
+                for i in range(len(child_urls)):
+                    child_url = str(child_urls[i])
+                    LOGGER.info(child_url)
+                    url_start_with_http = child_url.startswith('http')
+                    sub_url_is_same_root_url = self.is_same_domain(child_url, parent_url)
+                    if url_start_with_http and sub_url_is_same_root_url and child_url != parent_url:
+                        result = self.is_url_exits(child_url)
+                    if result:
+                        LOGGER.info("Child url that selected: " + child_url)
+                        LOGGER.info("=================================================================")
+                        return child_url
+        else:
+            return ''
+    # def get_random_valid_links(self, child_urls, parent_url, number_sublinks = 1):
+    #     result = False
+    #     sub_url_is_same_root_url = False
+    #     url_start_with_http = False
+    #     LOGGER.info("Parent url: " + parent_url)
+    #     LOGGER.info("Child url: " + str(child_urls))
+    #     if len(tuple(child_urls)) > 0:
+    #         while not result and not sub_url_is_same_root_url and not url_start_with_http:
+    #             # sub_urls = random.sample(tuple(child_urls), number_sublinks)
+    #             for url in sub_urls:
+    #                 url_start_with_http = url.startswith('http')
+    #                 sub_url_is_same_root_url = self.is_same_domain(url, parent_url)
+    #                 if sub_url_is_same_root_url and str(url) != parent_url and url_start_with_http:
+    #                     result = self.is_url_exits(url)
+    #                 if result:
+    #                     break
+    #                 LOGGER.info("Child url that selected: " + str(sub_urls))
+    #                 LOGGER.info("=================================================================")
+    #                 return sub_urls
+    #     else:
+    #         return ''
+
 
     # Get any available sub link and same domain
     def get_random_valid_links_same_domain(self, main_url, list_urls, number_sublinks = 1):
@@ -175,9 +236,13 @@ class URLUtils():
 
     # Check if same domain
     def is_same_domain(self, url_1, url_2):
+        LOGGER.info("Verify child domain % s is/not same parent domain %s " % (url_1, url_2))
         result = False
         search_domain = parse.urlparse(url_1).hostname
         if search_domain in url_2:
             result = True
         return result
+<<<<<<< HEAD
 
+=======
+>>>>>>> b2f21ff00d2318cf95837e21f1b36bbcc25a635b
