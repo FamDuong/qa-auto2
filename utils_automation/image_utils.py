@@ -154,10 +154,10 @@ class ImageUtils():
         method = cv2.TM_CCOEFF_NORMED
 
         # Read the images from the file
-        # small_image = cv2.imread(sub_image)
-        small_image = io.imread(sub_image)
-        # large_image = cv2.imread(main_image)
-        large_image = io.imread(main_image)
+        small_image = cv2.imread(sub_image)
+        # small_image = io.imread(sub_image)
+        large_image = cv2.imread(main_image)
+        # large_image = io.imread(main_image)
 
         result = cv2.matchTemplate(small_image, large_image, method)
 

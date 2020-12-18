@@ -99,3 +99,6 @@ COCCOC_LUCKY_DB_PASSWORD = get_environment_info()['coccoc_lucky']['db_info']['pa
 COCCOC_LUCKY_REDIS_HOST = get_environment_info()['coccoc_lucky_redis']['host']
 COCCOC_LUCKY_REDIS_POST = get_environment_info()['coccoc_lucky_redis']['port']
 COCCOC_LUCKY_REDIS_PASSWORD = get_environment_info()['coccoc_lucky_redis']['password']
+
+# CocCoc Edu
+COCCOC_EDU_API_GIFT = get_environment_info()['coccoc_edu_quiz']['domain']
