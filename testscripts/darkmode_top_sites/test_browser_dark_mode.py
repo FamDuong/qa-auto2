@@ -143,8 +143,8 @@ class TestBrowserDarkMode:
         # self.move_browser_to_other_position(browser)
 
         # Using UISpy to define locator then mouse move => Need to improve
-        #self.darkmode.enable_dark_mode_in_setting_page(browser)
-        #self.urls.wait_for_page_to_load(browser, Urls.COCCOC_URL)
+        self.darkmode.enable_dark_mode_in_setting_page(browser)
+        self.urls.wait_for_page_to_load(browser, Urls.COCCOC_URL)
 
         # Get list of urls again
         urls_live = self.file.get_from_csv(self.file_list_websites_extend)

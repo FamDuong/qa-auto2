@@ -37,10 +37,25 @@ class TopSitesUrls:
     YOUTUBE_VIDEO_URL = 'https://www.youtube.com/watch?v=RXIm1NLCSz0'
     NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summertime-cinnamons-ft-evening-cinema.w3rGuakkZzvg9.html'
     NHAC_CUA_TUI_MUSIC_ITEM = 'https://www.nhaccuatui.com/bai-hat/em-da-thuong-nguoi-ta-hon-anh-noo-phuoc-thinh.P5Z69HYydPRJ.html'
+    FACEBOOK_HOMEPAGE_URL = 'https://www.facebook.com/'
+    FACEBOOK_PROFILE_ME_URL = 'https://www.facebook.com/coccoc.at.1/'
+    FACEBOOK_VTVGIAITRI_PAGE_URL = 'https://www.facebook.com/vtvgiaitri'
+    # FACEBOOK_THACH_THUC_DANH_HAI_PAGE_VIDEOS = 'https://www.facebook.com/thachthucdanhhai/videos/2001160413351854'
+    FACEBOOK_WATCH_URL = 'https://www.facebook.com/watch/'
+    FACEBOOK_VIDEO_URL = 'https://www.facebook.com/video'
+    TIKTOK_FOR_YOU_URL = 'https://www.tiktok.com/foryou?lang=en'
+    TIKTOK_OTHERS_ACCOUNT_URL = 'https://www.tiktok.com/@mocachodien?lang=en'
+    TIKTOK_FOLLOWING_URL = 'https://www.tiktok.com/following?lang=en'
+    TIKTOK_LOGIN_URL = 'https://www.tiktok.com/login'
+    TIKTOK_VIEW_PROFILE_URL = 'https://www.tiktok.com/@user8091825019561?lang=en'
+    OK_RU = 'https://ok.ru/video/2408791542458'
+    SOUNDCLOUD_URL = 'https://soundcloud.com/mytam/mytam-chuyen-nhu-chua-bat-dau'
+    DONG_PHIM_VIDEO_URL = 'https://dongphym.net/movie/tap-21-truong-an-nac-the-promise-of-changan_TEqiwgPP.html'
+    INSTAGRAM_VIDEO_URL = 'https://www.instagram.com/p/CGkq1qXlhMY/'
+    INSTAGRAM_URL = 'https://www.instagram.com/'
 
 
 class FilmUrls:
-    DONG_PHIM_VIDEO_URL = 'https://dongphym.net/movie/tap-21-truong-an-nac-the-promise-of-changan_TEqiwgPP.html'
     MOT_PHIM_VIDEO_URL = 'https://motphimzz.com/xem-phim/lien-minh-thu-cung-tap-full-8332_105254.html'
     PHIMMOI_VIDEO_URL = 'http://www.phimmoizz.net/phim/dieu-uoc-giang-sinh-cua-angela-11922/xem-phim.html'
 
@@ -49,11 +64,7 @@ class VideoClipTVShowUrls:
     TV_ZING_VIDEO_URL = 'https://tv.zing.vn/video/id/IWZEAUO9.html'
     DAILY_MOTION_VIDEO_URL = 'https://www.dailymotion.com/video/x7lxiix'
     VTC_VN_VIDEO_URL = 'https://vtc.vn/truyen-hinh-27.html'
-    TIKTOK_FOR_YOU_URL = 'https://www.tiktok.com/foryou?lang=en'
-    TIKTOK_OTHERS_ACCOUNT_URL = 'https://www.tiktok.com/@mocachodien?lang=en'
-    TIKTOK_FOLLOWING_URL = 'https://www.tiktok.com/following?lang=en'
-    TIKTOK_LOGIN_URL = 'https://www.tiktok.com/login'
-    TIKTOK_VIEW_PROFILE_URL = 'https://www.tiktok.com/@user8091825019561?lang=en'
+
 
     @classmethod
     def all(cls):
@@ -61,7 +72,6 @@ class VideoClipTVShowUrls:
 
 
 class OnlineMusicUrls:
-    SOUNDCLOUD_URL = 'https://soundcloud.com/mytam/mytam-chuyen-nhu-chua-bat-dau'
     NHAC_VN_VIDEO_URL = 'https://nhac.vn/video/doi-that-la-phoi-phoi-hoang-yen-chibi-uni5-mvG38e'
     ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/Am-Ap-Mua-Xuan-Minh-Tam-Bui/ZW6A76B9.html'
 
@@ -89,17 +99,8 @@ class NewsUrls:
 
 
 class OtherSiteUrls:
-    FACEBOOK_HOMEPAGE_URL = 'https://www.facebook.com/'
-    FACEBOOK_PROFILE_ME_URL = 'https://www.facebook.com/coccoc.at.1/'
-    FACEBOOK_VTVGIAITRI_PAGE_URL = 'https://www.facebook.com/vtvgiaitri'
-    # FACEBOOK_THACH_THUC_DANH_HAI_PAGE_VIDEOS = 'https://www.facebook.com/thachthucdanhhai/videos/2001160413351854'
-    FACEBOOK_WATCH_URL = 'https://www.facebook.com/watch/'
-    FACEBOOK_VIDEO_URL = 'https://www.facebook.com/video'
-
     MESSENGER_CHAT_URL = 'https://www.messenger.com/t/nganhanguyen0306'
     INSTAGRAM_LOGIN_URL = 'https://www.instagram.com/accounts/login/'
-    INSTAGRAM_VIDEO_URL = 'https://www.instagram.com/p/CGkq1qXlhMY/'
-    INSTAGRAM_URL = 'https://www.instagram.com/'
     NEWS_KIENTHUC_VIDEO_URL = 'https://kienthuc.net.vn/truyen-hinh-video/video-duong-pho-ha-noi-ngap-sau-sau-mua-bao-1259721.html'
     MOJI_BIG_CHATBOX = 'https://www.messenger.com/t/100013968193318'
     TWITTER_VIDEO_URL = 'https://twitter.com/pje0n/status/1170961701455286272'
@@ -151,7 +152,6 @@ class OtherSiteUrls:
     CLIP_ANIME_VN_VIDEO_URL = 'https://clipanime.com/video/177008'
     VTV_GO_VN_VIDEO_URL = 'https://vtvgo.vn/tin-tuc/thoi-su-18h-vtv8-2892020-bat-dong-san-thoi-covid-19-dau-tu-hay-dau-co-805047.html'
     XEM_VTV_NET = 'http://ww.xemvtv.net/xem-phim/nhan-sinh-cua-bach-ho-ly-tap-1/UUWOI65.html'
-    OK_RU = 'https://ok.ru/video/2408791542458'
 
 
 class ExtensionIds:

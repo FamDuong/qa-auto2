@@ -100,5 +100,10 @@ class SaviorElements(BasePageElement):
         play_button_element = self.find_element_if_exist(driver, (By.XPATH, play_button_xpath))
         return play_button_element
 
-    def find_savior_wigdet_done_span_tag(self, driver):
-        return self.find_shadow_element(driver, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.SAVIOR_WIGDET_DONE_SPAN_CSS)
+    def get_savior_wigdet_choose_resolution_status(self, driver):
+        choose_resolution_status = driver.execute_script(
+            'return document.querySelector(arguments[0]).shadowRoot.querySelector(arguments[1]).'
+            'textContent', SaviorPageLocators.FIRST_LAYER,
+            SaviorPageLocators.SAVIOR_WIGDET_DONE_SPAN_CSS)
+        LOGGER.info("Choose resolution status: " + str(choose_resolution_status))
+        return str(choose_resolution_status)

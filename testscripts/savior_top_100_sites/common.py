@@ -2,19 +2,20 @@ import logging
 import time
 from datetime import datetime
 
-from selenium.common.exceptions import NoSuchElementException
-
-from models.pagelocators.top_savior_sites.top_savior_sites_social import InstagramLocators
+from models.pagelocators.top_savior_sites.top_savior_sites_social import InstagramLocators, FacebookLocators
+from models.pagelocators.top_savior_sites.top_savior_sites_video_length import TopSaviorSitesVideoLengthLocators
 from models.pageobject.settings import SettingsClearBrowserDataPageObject
 from models.pagelocators.facebook import FacebookPageLocators
 from models.pageobject.basepage_object import BasePageObject
 from models.pageobject.savior import SaviorPageObject
 from models.pageobject.sites import AnySitePageObject
+from models.pageobject.top_savior_sites.top_savior_sites_social import FacebookActions
+from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
+from models.pageobject.top_savior_sites.top_savior_sites_video_length import TopSitesSaviorVideoLengthActions
 from testscripts.common_setup import assert_file_download_value, delete_all_mp4_file_download, \
     download_file_via_main_download_button, get_resolution_info
 from models.pageobject.chome_store_page import ChromeStorePageObjects
-from utils_automation.common_browser import coccoc_instance
-from utils_automation.const import Urls, OtherSiteUrls, VideoClipTVShowUrls
+from utils_automation.const import Urls, OtherSiteUrls, TopSitesUrls
 
 LOGGER = logging.getLogger(__name__)
 
@@ -23,6 +24,9 @@ savior_page_object = SaviorPageObject()
 chrome_store_page_object = ChromeStorePageObjects()
 base_page_object = BasePageObject()
 settings_clear_browser_data_page_object = SettingsClearBrowserDataPageObject()
+facebook_action = FacebookActions()
+top_sites_savior_title_action = TopSitesSaviorTitleAction()
+top_savior_sites_video_length_action = TopSitesSaviorVideoLengthActions()
 
 
 # def install_adblockplus_addon(driver):
@@ -44,6 +48,7 @@ def choose_solution_is_error(e):
 def choose_highest_resolution_of_video(driver):
     LOGGER.info("Choose resolution option")
     savior_page_object.choose_preferred_option(driver)
+    time.sleep(5)
     e = savior_page_object.choose_quad_hd_option(driver)
     if choose_solution_is_error(e):
         e = savior_page_object.choose_full_hd_option(driver)
@@ -60,7 +65,6 @@ def choose_highest_resolution_of_video(driver):
     savior_page_object.wait_until_finished_choose_resolution(driver)
 
 
-
 def choose_highest_resolution_of_mp3(driver):
     LOGGER.info("Choose resolution option")
     savior_page_object.choose_preferred_option(driver)
@@ -68,7 +72,6 @@ def choose_highest_resolution_of_mp3(driver):
     if 'no such element' in str(e):
         savior_page_object.choose_mp3_medium_option(driver)
     savior_page_object.wait_until_finished_choose_resolution(driver)
-
 
 
 def download_and_verify_video(driver, download_folder, expect_length, start_with, end_with='.mp4',
@@ -176,3 +179,54 @@ def login_instagram(driver):
         if len(not_now_btn) > 0:
             driver.find_element_by_xpath(InstagramLocators.TURN_ON_NOTIFICATIONS_NOT_NOW).click()
             time.sleep(3)
+
+
+def verify_download_file_facebook_by_url(driver, download_folder, url, need_opened_video=False,
+                                         need_mouse_over_video=True):
+    login_facebook(driver)
+    driver.get(url)
+    LOGGER.info("Check download video on " + url)
+    time.sleep(3)
+    facebook_action.scroll_to_facebook_video(driver, url)
+    if need_opened_video:
+        click_to_open_large_video(driver)
+    if need_mouse_over_video:
+        mouse_over_facebook_first_video_element(driver, url)
+    choose_highest_resolution_of_video(driver)
+    video_title_temp = top_sites_savior_title_action.get_video_title_by_javascript_from_span_tag(driver)
+    video_title = top_sites_savior_title_action.replace_special_characters_by_dash_in_string(video_title_temp)
+    expect_length = get_facebook_video_length_base_url(driver, url)
+    media_info = download_file_via_main_download_button(driver, video_title)
+    resolution_info = get_resolution_info(media_info)
+    try:
+        assert_file_download_value(download_folder, resolution_info, expect_length, start_with=video_title,
+                                   end_with=".mp4")
+    finally:
+        delete_all_mp4_file_download(download_folder, end_with=".mp4", start_with=video_title)
+
+
+def click_to_open_large_video(driver):
+    facebook_action.click_on_first_video(driver)
+    time.sleep(3)
+
+
+def mouse_over_facebook_first_video_element(driver, url):
+    if url == TopSitesUrls.FACEBOOK_HOMEPAGE_URL or url == TopSitesUrls.FACEBOOK_PROFILE_ME_URL \
+            or url == TopSitesUrls.FACEBOOK_WATCH_URL or url == TopSitesUrls.FACEBOOK_VIDEO_URL:
+        any_site_page_object.mouse_over_first_video_element(driver, FacebookLocators.HOME_PAGE_FIRST_VIDEO)
+    elif url == OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
+        any_site_page_object.mouse_over_first_video_element(driver,
+                                                            FacebookLocators.VTV_GIAITRI_PAGE_FIRST_VIDEO)
+    else:
+        any_site_page_object.mouse_over_first_video_element(driver)
+
+
+def get_facebook_video_length_base_url(driver, url):
+    if url in TopSitesUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
+        return top_savior_sites_video_length_action. \
+            get_video_length(driver, css_locator="",
+                             element=TopSaviorSitesVideoLengthLocators.FACEBOOK_VIDEO_LENGTH_VTV_GIAITRI_PAGE)
+    else:
+        return top_savior_sites_video_length_action. \
+            get_video_length(driver, css_locator="",
+                             element=TopSaviorSitesVideoLengthLocators.FACEBOOK_VIDEO_LENGTH_HOME_PAGE)

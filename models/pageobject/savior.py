@@ -31,6 +31,7 @@ class SaviorPageObject(BasePageObject):
 
     def choose_preferred_option(self, driver):
         try:
+            time.sleep(2)
             # preferred_option = self.savior_elements.find_preferred_option(driver)
             # preferred_option.click()
             driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
@@ -184,14 +185,11 @@ class SaviorPageObject(BasePageObject):
             SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
         assert preferred_element == assert_text
 
-    def get_savior_widget_choose_resolution_status(self, driver):
-        choose_resolution_status = self.savior_elements.find_savior_wigdet_done_span_tag(driver).text
-        LOGGER.info("Choose resolution status: "+choose_resolution_status)
-        return choose_resolution_status
-
     def download_file_via_savior_download_btn(self, driver):
-        assert 'Error' not in self.get_savior_widget_choose_resolution_status(driver)
-        assert self.get_savior_widget_choose_resolution_status(driver) == ''
+        choose_resolution_status = self.savior_elements.get_savior_wigdet_choose_resolution_status(driver)
+        if 'Error' in choose_resolution_status:
+            LOGGER.info("Error when choose resolution!")
+        assert 'Error' not in choose_resolution_status
         start_time = datetime.now()
         if self.savior_elements.find_download_button(driver) is None:
             while self.savior_elements.find_download_button(driver) is None:

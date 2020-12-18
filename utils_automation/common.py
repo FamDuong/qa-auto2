@@ -28,7 +28,7 @@ def if_height_frame_so_width_frame(height_frame):
         width_frame = 1920
     elif int(height_frame) == 720:
         width_frame = 1280
-    LOGGER.info("Expect height x Expect width: "+str(height_frame)+str(width_frame))
+    LOGGER.info("Expect height "+str(height_frame)+"x Expect width: "+str(width_frame))
     return width_frame
 
 
