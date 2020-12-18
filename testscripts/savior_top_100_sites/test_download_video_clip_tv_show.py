@@ -19,17 +19,8 @@ class TestVideoClipTVShow:
     any_site_page_object = AnySitePageObject()
     top_savior_sites_video_length_action = TopSitesSaviorVideoLengthActions()
     top_savior_sites_video_clip_tv_show_action = TopSaviorSitesVideoClipTvShowActions()
-    top_sites_savior_title_action = TopSitesSaviorTitleAction()
 
-    @pytestrail.case('C96719')
-    @pytest.mark.top_sites
-    def test_download_youtube(self, browser_top_sites, get_current_download_folder_top_sites):
-        browser_top_sites.get(VideoClipTVShowUrls.YOUTUBE_VIDEO_URL)
-        LOGGER.info("Check download video on " + VideoClipTVShowUrls.YOUTUBE_VIDEO_URL)
-        video_title = self.top_sites_savior_title_action.get_youtube_video_title(browser_top_sites)
-        expect_length = self.top_savior_sites_video_length_action. \
-            get_video_length(browser_top_sites, TopSaviorSitesVideoLengthLocators.YOUTUBE_VIDEO_LENGTH_CSS)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
+
 
     @pytestrail.case('C96763')
     @pytest.mark.skip('Required login, checking capcha when login')

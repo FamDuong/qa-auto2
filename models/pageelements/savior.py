@@ -99,3 +99,6 @@ class SaviorElements(BasePageElement):
         play_button_xpath = DownloadsPageLocators.PLAY_BUTTON_BY_VIDEO_TITLE.replace('{param1}', video_title)
         play_button_element = self.find_element_if_exist(driver, (By.XPATH, play_button_xpath))
         return play_button_element
+
+    def find_savior_wigdet_done_span_tag(self, driver):
+        return self.find_shadow_element(driver, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.SAVIOR_WIGDET_DONE_SPAN_CSS)

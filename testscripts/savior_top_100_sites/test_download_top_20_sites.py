@@ -1,3 +1,60 @@
+import logging
+
+import pytest
+from pytest_testrail.plugin import pytestrail
+
+from models.pagelocators.top_savior_sites.top_savior_sites_video_length import TopSaviorSitesVideoLengthLocators
+from models.pageobject.sites import AnySitePageObject
+from models.pageobject.top_savior_sites.top_savior_sites_online_music import TopSaviorSitesOnlineMusicActions
+from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
+from models.pageobject.top_savior_sites.top_savior_sites_video_length import TopSitesSaviorVideoLengthActions
+from testscripts.savior_top_100_sites.common import download_and_verify_video
+from utils_automation.const import TopSitesUrls
+
+LOGGER = logging.getLogger(__name__)
+
+
+class TestTop20Sites:
+    top_savior_sites_video_length_action = TopSitesSaviorVideoLengthActions()
+    top_sites_savior_title_action = TopSitesSaviorTitleAction()
+    top_savior_sites_online_music_action = TopSaviorSitesOnlineMusicActions()
+    top_sites_savior_title_action = TopSitesSaviorTitleAction()
+    any_site_page_object = AnySitePageObject()
+
+
+    @pytestrail.case('C96719')
+    @pytest.mark.top_sites
+    def test_download_youtube(self, browser_top_sites, get_current_download_folder_top_sites):
+        browser_top_sites.get(TopSitesUrls.YOUTUBE_VIDEO_URL)
+        LOGGER.info("Check download video on " + TopSitesUrls.YOUTUBE_VIDEO_URL)
+        video_title = self.top_sites_savior_title_action.get_youtube_video_title(browser_top_sites)
+        expect_length = self.top_savior_sites_video_length_action. \
+            get_video_length(browser_top_sites, TopSaviorSitesVideoLengthLocators.YOUTUBE_VIDEO_LENGTH_CSS)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
+
+    @pytestrail.case('C96758')
+    @pytest.mark.top_sites
+    def test_download_nhaccuatui(self, browser_top_sites, get_current_download_folder_top_sites):
+        browser_top_sites.get(TopSitesUrls.NHAC_CUA_TUI_VIDEO_ITEM)
+        LOGGER.info("Check download video on " + TopSitesUrls.NHAC_CUA_TUI_VIDEO_ITEM)
+        self.top_savior_sites_online_music_action.click_on_nhac_cua_tui_marketing_popup(browser_top_sites)
+
+        video_title = self.top_sites_savior_title_action.get_nhaccuatui_video_title(browser_top_sites)
+        expect_length = self.top_savior_sites_video_length_action. \
+            get_video_length(browser_top_sites,
+                             TopSaviorSitesVideoLengthLocators.NHACCUATUI_VIDEO_LENGTH_CSS)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
+
+        browser_top_sites.get(TopSitesUrls.NHAC_CUA_TUI_MUSIC_ITEM)
+        LOGGER.info("Check download music on " + TopSitesUrls.NHAC_CUA_TUI_MUSIC_ITEM)
+        video_title = self.top_sites_savior_title_action.get_nhaccuatui_video_title(browser_top_sites)
+        expect_length = self.top_savior_sites_video_length_action. \
+            get_video_length(browser_top_sites,
+                             TopSaviorSitesVideoLengthLocators.NHACCUATUI_MP3_LENGTH_CSS)
+        self.any_site_page_object.mouse_over_nhaccuatui_music_element(browser_top_sites)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length,
+                                  video_title, end_with='.mp3', mouse_over_first_video=False)
+
 # import logging
 # import time
 # import pytest

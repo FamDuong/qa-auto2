@@ -29,22 +29,33 @@ settings_clear_browser_data_page_object = SettingsClearBrowserDataPageObject()
 #     driver.get(ChromeStoreUrls.ADSBLOCKPLUS_EXTENSION_URL)
 #     chrome_store_page_object.click_on_add_to_chrome_button(driver)
 
+def choose_solution_is_error(e):
+    exeption_list = ['no such element', 'javascript error']
+    count = 0
+    for i in range(len(exeption_list)):
+        if exeption_list[i] in str(e):
+            count = count + 1
+    if count > 0:
+        return True
+    else:
+        return False
+
 
 def choose_highest_resolution_of_video(driver):
     LOGGER.info("Choose resolution option")
     savior_page_object.choose_preferred_option(driver)
     e = savior_page_object.choose_quad_hd_option(driver)
-    if 'no such element' in str(e):
+    if choose_solution_is_error(e):
         e = savior_page_object.choose_full_hd_option(driver)
-        if 'no such element' in str(e):
+        if choose_solution_is_error(e):
             e = savior_page_object.choose_hd_option(driver)
-            if 'no such element' in str(e):
+            if choose_solution_is_error(e):
                 e = savior_page_object.choose_standard_option(driver)
-                if 'no such element' in str(e):
+                if choose_solution_is_error(e):
                     savior_page_object.choose_small_option(driver)
-                    if 'no such element' in str(e):
+                    if choose_solution_is_error(e):
                         savior_page_object.choose_mobile_option(driver)
-                        if 'no such element' in str(e):
+                        if choose_solution_is_error(e):
                             savior_page_object.choose_original_option(driver)
     savior_page_object.wait_until_finished_choose_resolution(driver)
 

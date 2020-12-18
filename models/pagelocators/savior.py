@@ -8,17 +8,16 @@ class SaviorPageLocators(object):
     CURRENT_SELECTED_RESOLUTION = 'span:not([hidden])[class="j-quality-option quality-option"]'
     BASE_OVERLAY_CLASS = '[class="base overlay"]'
     HIGH_PREFERRED_SELECT_BTN = '//span[@data-selected-value="High"]'
-    QUAD_HD_SELECT_OPTION = 'div[data-quality-value*="/Quad HD/"]'
-    FULL_HD_SELECT_OPTION = 'div[data-quality-value*="/Full HD/"]'
-    HD_SELECT_OPTION = 'div[data-quality-value*="/HD/"]'
-    STANDARD_SELECT_OPTION = 'div[data-quality-value*="/Standard/"]'
-    MEDIUM_SELECT_OPTION = 'div[data-quality-value*="/Medium/"]'
-    SMALL_SELECT_OPTION = 'div[data-quality-value*="/Small/"]'
-    MOBILE_SELECT_OPTION = 'div[data-quality-value*="/Mobile/"]'
-    ORIGINAL_SELECT_OPTION = 'div[data-quality-value*="/Original/"]'
-    MP3_STANDARD_SELECT_OPTION = 'div[data-quality-value*="mp3/Standard/"]'
-    MP3_MEDIUM_SELECT_OPTION = 'div[data-quality-value*="mp3/Medium/"]'
-
+    QUAD_HD_SELECT_OPTION = "div[data-quality-value*='/Quad HD/']"
+    FULL_HD_SELECT_OPTION = "div[data-quality-value*='/Full HD/']"
+    HD_SELECT_OPTION = "div[data-quality-value*='/HD/']"
+    STANDARD_SELECT_OPTION = "div[data-quality-value*='/Standard/']"
+    MEDIUM_SELECT_OPTION = "div[data-quality-value*='/Medium/']"
+    SMALL_SELECT_OPTION = "div[data-quality-value*='/Small/']"
+    MOBILE_SELECT_OPTION = "div[data-quality-value*='/Mobile/']"
+    ORIGINAL_SELECT_OPTION = "div[data-quality-value*='/Original/']"
+    MP3_STANDARD_SELECT_OPTION = "div[data-quality-value*='mp3/Standard/']"
+    MP3_MEDIUM_SELECT_OPTION = "div[data-quality-value*='mp3/Medium/']"
     MOBILE_SHARING_VIDEO_RADIO_BUTTON = 'input[id="switch-video"]'
 
     MOBILE_SHARING_BUTTON = '#open-mobile'
@@ -42,6 +41,7 @@ class SaviorPageLocators(object):
     CURRENT_VIDEO_QUALITY_SELECTED_ITEM = '[class="quality-label j-quality selected"]'
     CURRENT_VIDEO_FILE_SIZE_ITEM = '[class="media-sub-info j-checked-size'
     SAVIOR_RESOLUTION_TYPE = '#downloads span.selected-type'
+    SAVIOR_WIGDET_DONE_SPAN_CSS = 'span.file-size.done'
 
     @staticmethod
     def download_option_css_locator(title):

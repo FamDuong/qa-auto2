@@ -33,6 +33,12 @@ class Urls:
     CC_SEARCH_QUERY = "https://coccoc.com/search?query="
 
 
+class TopSitesUrls:
+    YOUTUBE_VIDEO_URL = 'https://www.youtube.com/watch?v=RXIm1NLCSz0'
+    NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summertime-cinnamons-ft-evening-cinema.w3rGuakkZzvg9.html'
+    NHAC_CUA_TUI_MUSIC_ITEM = 'https://www.nhaccuatui.com/bai-hat/em-da-thuong-nguoi-ta-hon-anh-noo-phuoc-thinh.P5Z69HYydPRJ.html'
+
+
 class FilmUrls:
     DONG_PHIM_VIDEO_URL = 'https://dongphym.net/movie/tap-21-truong-an-nac-the-promise-of-changan_TEqiwgPP.html'
     MOT_PHIM_VIDEO_URL = 'https://motphimzz.com/xem-phim/lien-minh-thu-cung-tap-full-8332_105254.html'
@@ -40,7 +46,6 @@ class FilmUrls:
 
 
 class VideoClipTVShowUrls:
-    YOUTUBE_VIDEO_URL = 'https://www.youtube.com/watch?v=RXIm1NLCSz0'
     TV_ZING_VIDEO_URL = 'https://tv.zing.vn/video/id/IWZEAUO9.html'
     DAILY_MOTION_VIDEO_URL = 'https://www.dailymotion.com/video/x7lxiix'
     VTC_VN_VIDEO_URL = 'https://vtc.vn/truyen-hinh-27.html'
@@ -58,8 +63,6 @@ class VideoClipTVShowUrls:
 class OnlineMusicUrls:
     SOUNDCLOUD_URL = 'https://soundcloud.com/mytam/mytam-chuyen-nhu-chua-bat-dau'
     NHAC_VN_VIDEO_URL = 'https://nhac.vn/video/doi-that-la-phoi-phoi-hoang-yen-chibi-uni5-mvG38e'
-    NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summertime-cinnamons-ft-evening-cinema.w3rGuakkZzvg9.html'
-    NHAC_CUA_TUI_MUSIC_ITEM = 'https://www.nhaccuatui.com/bai-hat/em-da-thuong-nguoi-ta-hon-anh-noo-phuoc-thinh.P5Z69HYydPRJ.html'
     ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/Am-Ap-Mua-Xuan-Minh-Tam-Bui/ZW6A76B9.html'
 
 
