@@ -41,7 +41,6 @@ class TestBrowserDarkMode:
 
     def init_websites_extend(self):
         self.dirname, runname = os.path.split(os.path.abspath(__file__))
-<<<<<<< HEAD
         self.file_list_websites = self.dirname + r"\list_websites.csv"
         # self.file_list_websites_exception = self.dirname + r"\list_websites_exception.csv"
         self.file_list_websites_extend = self.dirname + r"\list_websites_extend.csv"
@@ -50,12 +49,6 @@ class TestBrowserDarkMode:
         self.file.remove_file(self.file_list_websites_extend)
         self.file.remove_file(self.file_list_websites_valid)
         self.file.remove_file(self.file_list_websites_invalid)
-=======
-        self.file_list_websites = self.dirname + "\\test_data" + r"\list_websites.csv"
-        self.file_list_websites_extend = self.dirname + "\\test_data" + r"\list_websites_extend.csv"
-        self.file_list_websites_valid = self.dirname + "\\test_data" + r"\list_websites_valid.csv"
-        self.file_list_websites_invalid = self.dirname + "\\test_data" + r"\list_websites_invalid.csv"
->>>>>>> b2f21ff00d2318cf95837e21f1b36bbcc25a635b
 
     def init_dark_mode(self):
         self.timestamp = get_current_timestamp("%Y%m%d%H%M")
@@ -68,8 +61,7 @@ class TestBrowserDarkMode:
         self.file_list_websites_result = self.capture_dirname + r"\list_websites_result.csv"
         self.darkmode_icon = self.dirname + "\\test_data" + r'\darkmode_icon.png'
 
-        # Capture all images
-
+    # Capture all images
     def get_fullpage_screenshot_dark_mode(self, browser, url, times=1):
         filename = url.replace('https://', '').replace(r'/', '').replace('.', '').replace('www', '')
         filename_website = "\\" + filename + str(times) + ".png"
@@ -134,19 +126,12 @@ class TestBrowserDarkMode:
         self.file.append_list_to_file(self.file_list_websites_valid, urls_live)
 
         for url in urls_live:
-<<<<<<< HEAD
             self.urls.get_all_website_links(url)
             self.file.append_to_file(self.file_list_websites_extend, url)
             if len(self.urls.internal_urls) != 0:
                 sub_urls = self.urls.get_random_valid_links_same_domain(url, tuple(self.urls.internal_urls), number_sublinks)
                 self.file.append_list_to_file(self.file_list_websites_extend, sub_urls)
-=======
-            all_child_websites = self.urls.get_all_website_links(url)
-            sub_url = self.urls.get_random_valid_links(list(all_child_websites), url, number_sublinks)
-            # sub_urls = self.urls.get_random_valid_links(tuple(self.urls.internal_urls), number_sublinks)
-            self.file.append_to_file(self.file_list_websites_extend, url)
-            self.file.append_to_file(self.file_list_websites_extend, sub_url)
->>>>>>> b2f21ff00d2318cf95837e21f1b36bbcc25a635b
+
 
     @pytestrail.case('')
     def test_desktop_dark_mode(self, get_enabled_dark_mode):

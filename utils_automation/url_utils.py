@@ -39,22 +39,10 @@ class URLUtils:
             # response = requests.get(url, headers=headers)
         except requests.exceptions.ConnectionError as er_connect:
             is_exist = False
-<<<<<<< HEAD
             LOGGER.info("%s is not reachable!!!: %s" % (url, er_connect))
         except requests.exceptions.InvalidSchema as er_schema:
             is_exist = False
             LOGGER.info("%s is not reachable!!!: %s" % (url, er_schema))
-=======
-            LOGGER.info("%s is not reachable!!!: %s" % (url, er))
-            LOGGER.info("Connection refused by the server..")
-            LOGGER.info("Let me sleep for 5 seconds")
-            import time
-            time.sleep(5)
-            LOGGER.info("Was a nice sleep, now let me continue...")
-        # except requests.exceptions.InvalidSchema as er:
-        #    is_exist = False
-        #    LOGGER.info("%s is not reachable!!!: %s" % (url, er))
->>>>>>> b2f21ff00d2318cf95837e21f1b36bbcc25a635b
         LOGGER.info("%s is existed: %s" % (url, str(is_exist)))
         return is_exist
 
@@ -172,13 +160,7 @@ class URLUtils:
         urls_live = [i for i in urls if i not in urls_not_live]
         return urls_live
 
-<<<<<<< HEAD
-    # Get any available sub link
-    def get_random_valid_links(self, urls, number_sublinks = 1):
-=======
-    # Get sublinks valid
     def get_random_valid_links(self, child_urls, parent_url, number_sublinks = 1):
->>>>>>> b2f21ff00d2318cf95837e21f1b36bbcc25a635b
         result = False
         sub_url_is_same_root_url = False
         url_start_with_http = False
@@ -242,7 +224,4 @@ class URLUtils:
         if search_domain in url_2:
             result = True
         return result
-<<<<<<< HEAD
 
-=======
->>>>>>> b2f21ff00d2318cf95837e21f1b36bbcc25a635b
