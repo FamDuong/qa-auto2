@@ -37,12 +37,9 @@ class URLUtils:
         try:
             response = requests.get(url)
             # response = requests.get(url, headers=headers)
-        except requests.exceptions.ConnectionError as er_connect:
+        except (requests.exceptions.ConnectionError, requests.exceptions.InvalidSchema, requests.exceptions.TooManyRedirects) as err:
             is_exist = False
-            LOGGER.info("%s is not reachable!!!: %s" % (url, er_connect))
-        except requests.exceptions.InvalidSchema as er_schema:
-            is_exist = False
-            LOGGER.info("%s is not reachable!!!: %s" % (url, er_schema))
+            LOGGER.info("%s is not reachable!!!: %s" % (url, err))
         LOGGER.info("%s is existed: %s" % (url, str(is_exist)))
         return is_exist
 
@@ -90,7 +87,7 @@ class URLUtils:
         try:
             domain_name = urlparse(url).netloc
             soup = BeautifulSoup(requests.get(url).content, "html.parser")
-        except requests.exceptions.ConnectionError as r:
+        except (requests.exceptions.ConnectionError, requests.exceptions.TooManyRedirects) as r:
             r.status_code = "Connection refused"
             return None
         url_by_a_tag = soup.findAll("a")
