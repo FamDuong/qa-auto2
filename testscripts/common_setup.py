@@ -288,5 +288,7 @@ def get_resolution_info(media_info):
         m = m.group()
     else:
         m = ''
+
+    m = re.sub("p", "", str(m))
     LOGGER.info("Get expect height: " + str(m))
     return m

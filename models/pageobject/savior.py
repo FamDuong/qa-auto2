@@ -31,6 +31,7 @@ class SaviorPageObject(BasePageObject):
 
     def choose_preferred_option(self, driver):
         try:
+            time.sleep(2)
             # preferred_option = self.savior_elements.find_preferred_option(driver)
             # preferred_option.click()
             driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.PREFERRED_SELECT_BTN)
@@ -52,9 +53,10 @@ class SaviorPageObject(BasePageObject):
     def choose_quad_hd_option(self, driver):
         try:
             LOGGER.info("Select Quad HD option")
-            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
-                                                                               SaviorPageLocators.QUAD_HD_SELECT_OPTION)
-            option.click()
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.QUAD_HD_SELECT_OPTION)
+            # option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+            #                                                                    SaviorPageLocators.QUAD_HD_SELECT_OPTION)
+            # option.click()
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select Quad HD option")
@@ -64,10 +66,10 @@ class SaviorPageObject(BasePageObject):
     def choose_full_hd_option(self, driver):
         try:
             LOGGER.info("Select Full HD option")
-            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.FULL_HD_SELECT_OPTION)
-            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
-                                                                               SaviorPageLocators.FULL_HD_SELECT_OPTION)
-            option.click()
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.FULL_HD_SELECT_OPTION)
+            # option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+            #                                                                    SaviorPageLocators.FULL_HD_SELECT_OPTION)
+            # option.click()
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select Full HD option")
@@ -77,10 +79,10 @@ class SaviorPageObject(BasePageObject):
     def choose_hd_option(self, driver):
         try:
             LOGGER.info("Select HD option")
-            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.HD_SELECT_OPTION)
-            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
-                                                                               SaviorPageLocators.HD_SELECT_OPTION)
-            option.click()
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.HD_SELECT_OPTION)
+            # option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+            #                                                                    SaviorPageLocators.HD_SELECT_OPTION)
+            # option.click()
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select HD option")
@@ -90,10 +92,10 @@ class SaviorPageObject(BasePageObject):
     def choose_standard_option(self, driver):
         try:
             LOGGER.info("Select Standard option")
-            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.STANDARD_SELECT_OPTION)
-            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
-                                                                               SaviorPageLocators.STANDARD_SELECT_OPTION)
-            option.click()
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.STANDARD_SELECT_OPTION)
+            # option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+            #                                                                    SaviorPageLocators.STANDARD_SELECT_OPTION)
+            # option.click()
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select Standard option")
@@ -103,10 +105,10 @@ class SaviorPageObject(BasePageObject):
     def choose_medium_option(self, driver):
         try:
             LOGGER.info("Select Medium option")
-            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MEDIUM_SELECT_OPTION)
-            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
-                                                                               SaviorPageLocators.MEDIUM_SELECT_OPTION)
-            option.click()
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MEDIUM_SELECT_OPTION)
+            # option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+            #                                                                    SaviorPageLocators.MEDIUM_SELECT_OPTION)
+            # option.click()
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select Medium option")
@@ -116,10 +118,10 @@ class SaviorPageObject(BasePageObject):
     def choose_small_option(self, driver):
         try:
             LOGGER.info("Select Small option")
-            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.SMALL_SELECT_OPTION)
-            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
-                                                                               SaviorPageLocators.SMALL_SELECT_OPTION)
-            option.click()
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.SMALL_SELECT_OPTION)
+            # option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+            #                                                                    SaviorPageLocators.SMALL_SELECT_OPTION)
+            # option.click()
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select Small option")
@@ -129,10 +131,10 @@ class SaviorPageObject(BasePageObject):
     def choose_mobile_option(self, driver):
         try:
             LOGGER.info("Select Mobile option")
-            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MOBILE_SELECT_OPTION)
-            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
-                                                                               SaviorPageLocators.MOBILE_SELECT_OPTION)
-            option.click()
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MOBILE_SELECT_OPTION)
+            # option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+            #                                                                    SaviorPageLocators.MOBILE_SELECT_OPTION)
+            # option.click()
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select Mobile option")
@@ -142,10 +144,10 @@ class SaviorPageObject(BasePageObject):
     def choose_original_option(self, driver):
         try:
             LOGGER.info("Select Original option")
-            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.ORIGINAL_SELECT_OPTION)
-            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
-                                                                               SaviorPageLocators.ORIGINAL_SELECT_OPTION)
-            option.click()
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.ORIGINAL_SELECT_OPTION)
+            # option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+            #                                                                    SaviorPageLocators.ORIGINAL_SELECT_OPTION)
+            # option.click()
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select Original option")
@@ -155,11 +157,10 @@ class SaviorPageObject(BasePageObject):
     def choose_mp3_standard_option(self, driver):
         try:
             LOGGER.info("Select Mp3 Standard option")
-            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER,
-            #                       SaviorPageLocators.MP3_STANDARD_SELECT_OPTION)
-            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
-                                                                               SaviorPageLocators.MP3_STANDARD_SELECT_OPTION)
-            option.click()
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MP3_STANDARD_SELECT_OPTION)
+            # option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+            #                                                                    SaviorPageLocators.MP3_STANDARD_SELECT_OPTION)
+            # option.click()
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select Mp3 Standard option")
@@ -168,11 +169,10 @@ class SaviorPageObject(BasePageObject):
     def choose_mp3_medium_option(self, driver):
         try:
             LOGGER.info("Select mp3 Medium option")
-            # driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER,
-            #                       SaviorPageLocators.MP3_MEDIUM_SELECT_OPTION)
-            option = self.savior_elements.find_resotion_option_by_css_selector(driver,
-                                                                               SaviorPageLocators.MP3_MEDIUM_SELECT_OPTION)
-            option.click()
+            driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.MP3_MEDIUM_SELECT_OPTION)
+            # option = self.savior_elements.find_resotion_option_by_css_selector(driver,
+            #                                                                    SaviorPageLocators.MP3_MEDIUM_SELECT_OPTION)
+            # option.click()
             WaitAfterEach.sleep_timer_after_each_step()
         except Exception as e:
             LOGGER.info("Failed to select mp3 Medium option")
@@ -186,6 +186,10 @@ class SaviorPageObject(BasePageObject):
         assert preferred_element == assert_text
 
     def download_file_via_savior_download_btn(self, driver):
+        choose_resolution_status = self.savior_elements.get_savior_wigdet_choose_resolution_status(driver)
+        if 'Error' in choose_resolution_status:
+            LOGGER.info("Error when choose resolution!")
+        assert 'Error' not in choose_resolution_status
         start_time = datetime.now()
         if self.savior_elements.find_download_button(driver) is None:
             while self.savior_elements.find_download_button(driver) is None:
@@ -193,9 +197,7 @@ class SaviorPageObject(BasePageObject):
                 time_delta = datetime.now() - start_time
                 if time_delta.total_seconds() >= 10:
                     break
-        driver.execute_script(
-            self.script,
-            SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.DOWNLOAD_BUTTON)
+        driver.execute_script(self.script, SaviorPageLocators.FIRST_LAYER, SaviorPageLocators.DOWNLOAD_BUTTON)
 
     def current_media_info(self, driver):
         media_info = driver.execute_script(self.script_find, SaviorPageLocators.FIRST_LAYER,
@@ -363,12 +365,17 @@ class SaviorPageObject(BasePageObject):
 
     def wait_until_finished_choose_resolution(self, driver):
         start_time = datetime.now()
+        resolution_type = ""
         try:
             resolution_type = driver.execute_script(
                 "return document.querySelector(\"" + SaviorPageLocators.FIRST_LAYER + "\").shadowRoot.querySelector(\""
                 + SaviorPageLocators.SAVIOR_RESOLUTION_TYPE + "\").textContent")
         except Exception:
-            time.sleep(3)
+            time.sleep(5)
+            resolution_type = driver.execute_script(
+                "return document.querySelector(\"" + SaviorPageLocators.FIRST_LAYER
+                + "\").shadowRoot.querySelector(\"" +
+                SaviorPageLocators.SAVIOR_RESOLUTION_TYPE + "\").textContent")
             if resolution_type != 'Audio' or resolution_type != 'Video':
                 while resolution_type != 'Audio' or resolution_type != 'Video':
                     time.sleep(2)

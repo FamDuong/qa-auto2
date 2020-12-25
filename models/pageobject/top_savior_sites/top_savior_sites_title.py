@@ -2,6 +2,7 @@ import logging
 import time
 from datetime import datetime
 
+import regex
 from selenium.common.exceptions import JavascriptException
 
 from models.pageelements.basepage_elements import BasePageElement
@@ -26,7 +27,11 @@ class TopSitesSaviorTitleAction(BasePageObject):
         for character in special_characters:
             if character in new_string:
                 new_string = new_string.replace(character, '-')
-                LOGGER.info("Video title after replace " + character + " by -: " + new_string)
+                LOGGER.info("Video title after replace" + character + " by -: " + new_string)
+            elif new_string.startswith(' '):
+                import re
+                new_string = re.sub(r"^\s+", "-", new_string)
+                LOGGER.info("Video title after replace white space at first and last:" + new_string)
         return new_string
 
     def get_first_part_of_video_title(self, video_title):

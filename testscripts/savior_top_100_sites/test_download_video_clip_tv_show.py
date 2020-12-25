@@ -19,17 +19,7 @@ class TestVideoClipTVShow:
     any_site_page_object = AnySitePageObject()
     top_savior_sites_video_length_action = TopSitesSaviorVideoLengthActions()
     top_savior_sites_video_clip_tv_show_action = TopSaviorSitesVideoClipTvShowActions()
-    top_sites_savior_title_action = TopSitesSaviorTitleAction()
 
-    @pytestrail.case('C96719')
-    @pytest.mark.top_sites
-    def test_download_youtube(self, browser_top_sites, get_current_download_folder_top_sites):
-        browser_top_sites.get(VideoClipTVShowUrls.YOUTUBE_VIDEO_URL)
-        LOGGER.info("Check download video on " + VideoClipTVShowUrls.YOUTUBE_VIDEO_URL)
-        video_title = self.top_sites_savior_title_action.get_youtube_video_title(browser_top_sites)
-        expect_length = self.top_savior_sites_video_length_action. \
-            get_video_length(browser_top_sites, TopSaviorSitesVideoLengthLocators.YOUTUBE_VIDEO_LENGTH_CSS)
-        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
     @pytestrail.case('C96763')
     @pytest.mark.skip('Required login, checking capcha when login')
@@ -58,37 +48,6 @@ class TestVideoClipTVShow:
             get_video_length(browser_top_sites, VideoClipTVShowVideoLengthLocators.DAILY_MOTION_VIDEO_CSS)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length,
                                   start_with=video_title, mouse_over_first_video=False)
-
-    def download_file_tiktok(self, driver, download_folder, menu, is_login=False):
-        driver.get(VideoClipTVShowUrls.TIKTOK_FOR_YOU_URL)
-        if is_login:
-            self.top_savior_sites_video_clip_tv_show_action.login_tiktok(driver)
-        self.top_savior_sites_video_clip_tv_show_action.click_tiktok_menu(driver, menu)
-        self.top_savior_sites_video_clip_tv_show_action.click_tiktok_first_video(driver, menu)
-        LOGGER.info("Check download video on " + str(driver.current_url))
-        video_title_root = self.top_sites_savior_title_action.get_tiktok_video_title(driver, menu)
-        video_title_temp = self.top_sites_savior_title_action.replace_special_characters_by_dash_in_string(
-            video_title_root)
-        video_title = self.top_sites_savior_title_action.get_first_part_of_video_title(video_title_temp)
-        expect_length = self.top_savior_sites_video_length_action. \
-            get_video_length(driver, VideoClipTVShowVideoLengthLocators.TIKTOK_VIDEO_CSS,
-                             element="", url=VideoClipTVShowUrls.TIKTOK_FOR_YOU_URL)
-        download_and_verify_video(driver, download_folder, expect_length, video_title)
-        if menu == 'Following':
-            driver.close()
-            driver.switch_to.window(driver.window_handles[0])
-
-    @pytestrail.case('C410745')
-    @pytest.mark.top_sites
-    def test_download_file_tiktok(self, browser_top_sites, get_current_download_folder_top_sites):
-        self.download_file_tiktok(browser_top_sites, get_current_download_folder_top_sites,
-                                  menu='For You', is_login=False)
-        self.download_file_tiktok(browser_top_sites, get_current_download_folder_top_sites,
-                                  menu='Following', is_login=False)
-        self.download_file_tiktok(browser_top_sites, get_current_download_folder_top_sites,
-                                  menu='For You', is_login=True)
-        self.download_file_tiktok(browser_top_sites, get_current_download_folder_top_sites,
-                                  menu='Following', is_login=True)
 
     @pytestrail.case('C98764')
     @pytest.mark.others
