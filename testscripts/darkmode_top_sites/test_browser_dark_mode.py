@@ -41,11 +41,11 @@ class TestBrowserDarkMode:
 
     def init_websites_extend(self):
         self.dirname, runname = os.path.split(os.path.abspath(__file__))
-        self.file_list_websites = self.dirname + r"\list_websites.csv"
+        self.file_list_websites = self.dirname + "\\test_data" + r"\list_websites.csv"
         # self.file_list_websites_exception = self.dirname + r"\list_websites_exception.csv"
-        self.file_list_websites_extend = self.dirname + r"\list_websites_extend.csv"
-        self.file_list_websites_valid = self.dirname + r"\list_websites_valid.csv"
-        self.file_list_websites_invalid = self.dirname + r"\list_websites_invalid.csv"
+        self.file_list_websites_extend = self.dirname + "\\test_data" + r"\list_websites_extend.csv"
+        self.file_list_websites_valid = self.dirname + "\\test_data" + r"\list_websites_valid.csv"
+        self.file_list_websites_invalid = self.dirname + "\\test_data" + r"\list_websites_invalid.csv"
         self.file.remove_file(self.file_list_websites_extend)
         self.file.remove_file(self.file_list_websites_valid)
         self.file.remove_file(self.file_list_websites_invalid)
@@ -168,7 +168,7 @@ class TestBrowserDarkMode:
             images = (image_website_2, image_screenshot_2)
             image_result = self.verify_images(url, images)
             self.file.append_to_file(self.file_list_websites_result, image_result)
-            # self.file.remove_first_line_in_file(self.file_list_websites_extend)  # Remove url in file extend
+            self.file.remove_first_line_in_file(self.file_list_websites_extend)  # Remove url in file extend
 
         pytest.message = "Finished run dark mode capture test: \n" + str(self.number_of_failed) + "/" + str(
             len(urls_live) * 2) \

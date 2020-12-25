@@ -107,8 +107,8 @@ class FileUtils():
 
     def remove_first_line_in_file(self, filename):
         temp_path = None
-        with open(filename, 'r') as f_in:
-            with NamedTemporaryFile(mode='w', delete=False) as f_out:
+        with open(filename, 'r', encoding='utf-8') as f_in:
+            with NamedTemporaryFile(mode='w', delete=False, encoding='utf-8') as f_out:
                 temp_path = f_out.name
                 next(f_in)  # skip first line
                 for line in f_in:
