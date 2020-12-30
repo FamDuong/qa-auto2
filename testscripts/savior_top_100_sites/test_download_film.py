@@ -24,6 +24,30 @@ class TestFilm:
     # top_savior_sites_film_action = TopSaviorSitesFilmActions()
     top_savior_sites_video_length_action = TopSitesSaviorVideoLengthActions()
 
+    def test_prepare_displayed_savior_popup(self, browser):
+        browser.get(OtherSiteUrls.PHIMMOI_VIDEO_URL)
+        browser.refresh()
+        # self.top_sites_savior_actions.open_film_in_phim_moi(browser)
+        self.top_sites_savior_actions.close_popup_ad_if_appear(browser)
+        # time.sleep(40)
+        WebElements.scroll_into_view_element(browser, self.top_sites_savior_title_elements
+                                             .find_video_phimmoi_title_element(browser))
+        self.any_site_page_object.mouse_over_video_element_phimmoi(browser)
+        time.sleep(400)
+
+    @pytestrail.case('C98735')
+    @pytest.mark.top_sites
+    def test_download_dongphim(self, browser_top_sites, get_current_download_folder_top_sites):
+        browser_top_sites.get(FilmUrls.DONG_PHIM_VIDEO_URL)
+        LOGGER.info("Check download video on " + FilmUrls.DONG_PHIM_VIDEO_URL)
+        elements = self.any_site_page_object.choose_watch_option_if_any(browser_top_sites)
+        if len(elements) == 0:
+            self.any_site_page_object.click_video_item_dong_phim(browser_top_sites)
+        video_title = self.top_sites_savior_title_action.get_website_title_by_javascript(browser_top_sites)
+        expect_length = self.top_savior_sites_video_length_action. \
+            get_video_length(browser_top_sites, TopSaviorSitesVideoLengthLocators.DONG_PHYM_VIDEO_LENGTH_CSS)
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
+
     @pytestrail.case('C98756')
     @pytest.mark.skip('Prevented by internet provider')
     @pytest.mark.top_sites
@@ -45,17 +69,6 @@ class TestFilm:
                                        expect_length, start_with=video_title, end_with=".mp4")
         finally:
             delete_all_mp4_file_download(get_current_download_folder_top_sites, end_with=".mp4", start_with=video_title)
-
-    def test_prepare_displayed_savior_popup(self, browser):
-        browser.get(OtherSiteUrls.PHIMMOI_VIDEO_URL)
-        browser.refresh()
-        # self.top_sites_savior_actions.open_film_in_phim_moi(browser)
-        self.top_sites_savior_actions.close_popup_ad_if_appear(browser)
-        # time.sleep(40)
-        WebElements.scroll_into_view_element(browser, self.top_sites_savior_title_elements
-                                             .find_video_phimmoi_title_element(browser))
-        self.any_site_page_object.mouse_over_video_element_phimmoi(browser)
-        time.sleep(400)
 
 
 

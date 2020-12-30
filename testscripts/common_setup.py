@@ -120,7 +120,6 @@ def assert_video_length(expect_length, actual_length):
     LOGGER.info("Diff video length seconds: " + str(diff_length_date_time))
     assert diff_length_date_time < 2
 
-
 def get_hours_and_minutes_in_video_length(video_length):
     if video_length.count('.') == 2:
         video_length_hours = video_length.split(".")[1]
