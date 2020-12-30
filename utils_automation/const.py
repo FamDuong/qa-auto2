@@ -34,37 +34,41 @@ class Urls:
 
 
 class TopSitesUrls:
+    pass
+
+class OnlinePornUrls:
+    FR_PORN_HUB_URL = 'https://fr.pornhub.com/view_video.php?viewkey=ph5fa98581a7857'
+    XHAMSTER_ONE_URL = 'https://xhamster.one/videos/me-ke-mandy-flores-xhyfZNG'
+    THUMBZILLA_URL = 'https://www.thumbzilla.com/video/ph5fe91c57511a9/nelly-kent-%255C-fuck-with-it-manager'
+    FR_SPANKBANG_URL = 'https://fr.spankbang.com/4qcj0/video/ve+ac'
+
+class FilmUrls:
+    PHIMMOI_VIDEO_URL = 'http://www.phimmoizz.net/phim/dieu-uoc-giang-sinh-cua-angela-11922/xem-phim.html'
+    DONG_PHIM_VIDEO_URL = 'https://dongphym.net/movie/tap-21-truong-an-nac-the-promise-of-changan_TEqiwgPP.html'
+    MOT_PHIM_VIDEO_URL = 'https://motphimzz.com/xem-phim/lien-minh-thu-cung-tap-full-8332_105254.html'
+
+
+class VideoClipTVShowUrls:
     YOUTUBE_VIDEO_URL = 'https://www.youtube.com/watch?v=RXIm1NLCSz0'
-    NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summertime-cinnamons-ft-evening-cinema.w3rGuakkZzvg9.html'
-    NHAC_CUA_TUI_MUSIC_ITEM = 'https://www.nhaccuatui.com/bai-hat/em-da-thuong-nguoi-ta-hon-anh-noo-phuoc-thinh.P5Z69HYydPRJ.html'
+    TIKTOK_FOR_YOU_URL = 'https://www.tiktok.com/foryou?lang=en'
+    TIKTOK_OTHERS_ACCOUNT_URL = 'https://www.tiktok.com/@mocachodien?lang=en'
+    TIKTOK_LOGIN_URL = 'https://www.tiktok.com/login'
+    TIKTOK_VIEW_PROFILE_URL = 'https://www.tiktok.com/@user8091825019561?lang=en'
+    TV_ZING_VIDEO_URL = 'https://tv.zing.vn/video/id/IWZEAUO9.html'
+    DAILY_MOTION_VIDEO_URL = 'https://www.dailymotion.com/video/x7lxiix'
+    VTC_VN_VIDEO_URL = 'https://vtc.vn/truyen-hinh-27.html'
+
+
+class SocialNetworkUrls:
     FACEBOOK_HOMEPAGE_URL = 'https://www.facebook.com/'
     FACEBOOK_PROFILE_ME_URL = 'https://www.facebook.com/coccoc.at.1/'
     FACEBOOK_VTVGIAITRI_PAGE_URL = 'https://www.facebook.com/vtvgiaitri'
     # FACEBOOK_THACH_THUC_DANH_HAI_PAGE_VIDEOS = 'https://www.facebook.com/thachthucdanhhai/videos/2001160413351854'
     FACEBOOK_WATCH_URL = 'https://www.facebook.com/watch/'
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/video'
-    TIKTOK_FOR_YOU_URL = 'https://www.tiktok.com/foryou?lang=en'
-    TIKTOK_OTHERS_ACCOUNT_URL = 'https://www.tiktok.com/@mocachodien?lang=en'
-    TIKTOK_FOLLOWING_URL = 'https://www.tiktok.com/following?lang=en'
-    TIKTOK_LOGIN_URL = 'https://www.tiktok.com/login'
-    TIKTOK_VIEW_PROFILE_URL = 'https://www.tiktok.com/@user8091825019561?lang=en'
     OK_RU = 'https://ok.ru/video/2408791542458'
-    SOUNDCLOUD_URL = 'https://soundcloud.com/mytam/mytam-chuyen-nhu-chua-bat-dau'
-    DONG_PHIM_VIDEO_URL = 'https://dongphym.net/movie/tap-21-truong-an-nac-the-promise-of-changan_TEqiwgPP.html'
     INSTAGRAM_VIDEO_URL = 'https://www.instagram.com/p/CGkq1qXlhMY/'
     INSTAGRAM_URL = 'https://www.instagram.com/'
-
-
-class FilmUrls:
-    MOT_PHIM_VIDEO_URL = 'https://motphimzz.com/xem-phim/lien-minh-thu-cung-tap-full-8332_105254.html'
-    PHIMMOI_VIDEO_URL = 'http://www.phimmoizz.net/phim/dieu-uoc-giang-sinh-cua-angela-11922/xem-phim.html'
-
-
-class VideoClipTVShowUrls:
-    TV_ZING_VIDEO_URL = 'https://tv.zing.vn/video/id/IWZEAUO9.html'
-    DAILY_MOTION_VIDEO_URL = 'https://www.dailymotion.com/video/x7lxiix'
-    VTC_VN_VIDEO_URL = 'https://vtc.vn/truyen-hinh-27.html'
-
 
     @classmethod
     def all(cls):
@@ -72,8 +76,11 @@ class VideoClipTVShowUrls:
 
 
 class OnlineMusicUrls:
+    NHAC_CUA_TUI_VIDEO_ITEM = 'https://www.nhaccuatui.com/video/summertime-cinnamons-ft-evening-cinema.w3rGuakkZzvg9.html'
+    NHAC_CUA_TUI_MUSIC_ITEM = 'https://www.nhaccuatui.com/bai-hat/em-da-thuong-nguoi-ta-hon-anh-noo-phuoc-thinh.P5Z69HYydPRJ.html'
     NHAC_VN_VIDEO_URL = 'https://nhac.vn/video/doi-that-la-phoi-phoi-hoang-yen-chibi-uni5-mvG38e'
     ZING_MP3_VN_VIDEO_URL = 'https://zingmp3.vn/video-clip/Am-Ap-Mua-Xuan-Minh-Tam-Bui/ZW6A76B9.html'
+    SOUNDCLOUD_URL = 'https://soundcloud.com/mytam/mytam-chuyen-nhu-chua-bat-dau'
 
 
 class DiffFormatFileUrls:

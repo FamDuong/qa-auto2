@@ -52,29 +52,29 @@ class TestNews:
     #     browser.get(NewsUrls.VIETNAMNET_VIDEO_URL)
     #     self.any_site_page_object.mouse_over_video_item_vietnamnet(browser)
 
-    # @pytestrail.case('C96759')
-    # @pytest.mark.others
-    # def test_download_file_vietnamnet(self, browser_top_sites, get_current_download_folder_top_sites):
-    #     browser_top_sites.get(NewsUrls.VIETNAMNET_VIDEO_URL)
-    #     LOGGER.info("Check download video on " + NewsUrls.VIETNAMNET_VIDEO_URL)
-    #     video_title = self.top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
-    #
-    #     self.top_savior_sites_news_action.switch_to_vietnamnet_video_iframe(
-    #         browser_top_sites, TopSaviorSitesNewsLocators.VIETNAMNET_VIDEO_PARENT_IFRAME1)
-    #     expect_length = self.top_savior_sites_video_length_action. \
-    #         get_video_length(browser_top_sites, TopSaviorSitesNewsLocators.VIETNAMNET_VIDEO_LENGTH_CSS)
-    #     browser_top_sites.switch_to.default_content()
-    #     # self.top_savior_sites_news_action.switch_to_vietnamnet_video_iframe(
-    #     #     browser_top_sites, TopSaviorSitesNewsLocators.VIETNAMNET_VIDEO_PARENT_IFRAME2)
-    #     self.any_site_page_object.mouse_over_video_iframe(driver=browser_top_sites)
-    #     self.top_savior_sites_news_action.mouse_over_vietnamnet_video(browser_top_sites,
-    #                                                                   TopSaviorSitesNewsLocators.VIETNAMNET_VIDEO)
-    #
-    #     download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites,
-    #                               expect_length, video_title, mouse_over_first_video=False)
-        # self.prepare_savior_option_displayed(browser_top_sites)
-        # verify_download_quality_high_frame(browser_top_sites, get_current_download_folder_top_sites,
-        #                                    self.prepare_savior_option_displayed),
+    @pytestrail.case('C96759')
+    @pytest.mark.others
+    def test_download_file_vietnamnet(self, browser_top_sites, get_current_download_folder_top_sites):
+        browser_top_sites.get(NewsUrls.VIETNAMNET_VIDEO_URL)
+        LOGGER.info("Check download video on " + NewsUrls.VIETNAMNET_VIDEO_URL)
+        video_title = self.top_site_titles_action.get_website_title_by_javascript(browser_top_sites)
+
+        self.top_savior_sites_news_action.switch_to_vietnamnet_video_iframe(
+            browser_top_sites, TopSaviorSitesNewsLocators.VIETNAMNET_VIDEO_PARENT_IFRAME1)
+        expect_length = self.top_savior_sites_video_length_action. \
+            get_video_length(browser_top_sites, TopSaviorSitesNewsLocators.VIETNAMNET_VIDEO_LENGTH_CSS)
+        browser_top_sites.switch_to.default_content()
+        # self.top_savior_sites_news_action.switch_to_vietnamnet_video_iframe(
+        #     browser_top_sites, TopSaviorSitesNewsLocators.VIETNAMNET_VIDEO_PARENT_IFRAME2)
+        self.any_site_page_object.mouse_over_video_iframe(driver=browser_top_sites)
+        self.top_savior_sites_news_action.mouse_over_vietnamnet_video(browser_top_sites,
+                                                                      TopSaviorSitesNewsLocators.VIETNAMNET_VIDEO)
+
+        download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites,
+                                  expect_length, video_title, mouse_over_first_video=False)
+        self.prepare_savior_option_displayed(browser_top_sites)
+        verify_download_quality_high_frame(browser_top_sites, get_current_download_folder_top_sites,
+                                           self.prepare_savior_option_displayed),
 
     @pytestrail.case('C98754')
     @pytest.mark.others
@@ -88,7 +88,6 @@ class TestNews:
                                   expect_length, start_with=video_title)
 
     @pytestrail.case('C98765')
-    @pytestrail.defect('PF-2084')
     @pytest.mark.others
     def test_download_file_kenh14_vn(self, browser_top_sites, get_current_download_folder_top_sites):
         browser_top_sites.get(NewsUrls.KENH14_VN_VIDEO_URL)

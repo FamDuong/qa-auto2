@@ -21,9 +21,9 @@ class TopSitesSaviorVideoLengthActions(BasePageObject):
         time.sleep(3)
         if element == "":
             video_length_duration = driver.execute_script(
-                "return document.querySelector('" + css_locator + "').duration")
+                    "return document.querySelector('" + css_locator + "').duration")
             video_length_html = driver.execute_script(
-                "return document.querySelector('" + css_locator + "').textContent")
+                    "return document.querySelector('" + css_locator + "').textContent")
             if video_length_duration is not None:
                 return video_length_duration
             else:

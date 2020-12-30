@@ -329,6 +329,10 @@ class AnySiteElements(BasePageElement):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.FR_PORN_HUB_VIDEO_ITEM))
 
+    def find_play_button_video_item_xhamster_one(self, driver):
+        return self.wait_for_element(driver).until(
+            ec.presence_of_element_located(AnySite.XHAMSTER_ONE_PLAY_VIDEO_BUTTON))
+
     def find_iframe_skip_ad_phimmoi(self, driver):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(AnySite.PHIMMOI_IFRAME_SKIP_AD_ITEM))

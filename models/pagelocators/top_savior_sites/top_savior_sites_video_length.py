@@ -36,4 +36,11 @@ class NewsVideoLengthLocators(object):
 class VideoClipTVShowVideoLengthLocators(object):
     DAILY_MOTION_VIDEO_CSS = '#dmp_Video'
     TIKTOK_VIDEO_CSS = 'video:nth-child(1)'
-    
+
+
+class OnlinePornVideoLengthLocators(object):
+    FR_PORN_HUB_VIDEO_CSS = '#player video'
+    XHAMSTER_ONE_VIDEO_LENGHT_CSS = '#player-container span.eta'
+    THUMBZILLA_VIDEO_LENGHT_CSS = 'video'
+    FR_SPANKBANG_VIDEO_LENGHT_CSS = '#main_video_player_html5_api'
+

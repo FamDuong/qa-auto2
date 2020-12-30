@@ -402,6 +402,10 @@ class AnySitePageObject(BasePageObject):
     def mouse_over_video_fr_porn_hub(self, driver):
         self.mouse_over_video_element_site(driver, self.any_site_element.find_video_item_fr_porn_hub(driver))
 
+    def click_play_video_xhamster_one(self, driver):
+        play_video_btn = self.any_site_element.find_play_button_video_item_xhamster_one(driver)
+        play_video_btn.click()
+
     def click_video_vlxx(self, driver):
         ActionChains(driver).move_to_element(self.any_site_element.find_video_item_wrapper_vlxx(driver)).perform()
         self.any_site_element.find_video_item_wrapper_vlxx(driver).click()
