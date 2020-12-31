@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.top_savior_sites.top_savior_sites_social import MessengerLocators, FacebookLocators, \
     InstagramLocators
-from utils_automation.const import TopSitesUrls
+from utils_automation.const import SocialNetworkUrls
 
 
 class MessengerElements(BasePageElement):
@@ -30,14 +30,11 @@ class FacebookElements(BasePageElement):
         import time
         time.sleep(5)
         try:
-            if url == TopSitesUrls.FACEBOOK_HOMEPAGE_URL or url == TopSitesUrls.FACEBOOK_PROFILE_ME_URL \
-                    or url == TopSitesUrls.FACEBOOK_WATCH_URL or url == TopSitesUrls.FACEBOOK_VIDEO_URL:
-                return self.wait_for_element(driver).until(
-                    ec.presence_of_element_located(FacebookLocators.HOME_PAGE_FIRST_VIDEO))
-
-            elif url == TopSitesUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
+            if url == SocialNetworkUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
                 return self.wait_for_element(driver).until(
                     ec.presence_of_element_located(FacebookLocators.VTV_GIAITRI_PAGE_FIRST_VIDEO))
+            else:
+                return self.wait_for_element(driver).until(ec.presence_of_element_located(FacebookLocators.HOME_PAGE_FIRST_VIDEO))
         except:
             return None
 

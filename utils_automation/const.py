@@ -62,8 +62,9 @@ class VideoClipTVShowUrls:
 class SocialNetworkUrls:
     FACEBOOK_HOMEPAGE_URL = 'https://www.facebook.com/'
     FACEBOOK_PROFILE_ME_URL = 'https://www.facebook.com/coccoc.at.1/'
+    FACEBOOK_PROFILE_NGOCTRINH_URL = 'https://www.facebook.com/ngoctrinhfashion89'
     FACEBOOK_VTVGIAITRI_PAGE_URL = 'https://www.facebook.com/vtvgiaitri'
-    # FACEBOOK_THACH_THUC_DANH_HAI_PAGE_VIDEOS = 'https://www.facebook.com/thachthucdanhhai/videos/2001160413351854'
+    FACEBOOK_GROUP_URL = 'https://www.facebook.com/groups/632391870245809/'
     FACEBOOK_WATCH_URL = 'https://www.facebook.com/watch/'
     FACEBOOK_VIDEO_URL = 'https://www.facebook.com/video'
     OK_RU = 'https://ok.ru/video/2408791542458'

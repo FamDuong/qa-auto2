@@ -8,6 +8,7 @@ import logging
 # formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 # ch.setFormatter(formatter)
 # logger.addHandler(ch)
+import os
 
 from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities
@@ -84,16 +85,12 @@ def check_if_preferences_is_created(user_data_path):
 def chrome_options_preset(options=None):
     desired_capabilities = DesiredCapabilities.CHROME
     desired_capabilities['goog:loggingPrefs'] = {'browser': 'ALL'}
-
+    PROXY = "http://202.60.227.65:57887"  # IP:PORT or HOST:PORT
     binary_path = f"C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = binary_path
-    # chrome_options.add_extension(
-    #     "C:\\Users\\Hangnt2\\Downloads\\mpbjkejclgfgadiemmefgebjfooflfhl-0.7.3-Crx4Chrome.com.crx")
-    # Set monitor location
-
     chrome_options.add_argument("--start-maximized")
-    chrome_options.add_argument("--proxy-server='direct://'")
+    chrome_options.add_argument(f'--proxy-server={PROXY}')
     chrome_options.add_argument("--proxy-bypass-list=*")
     chrome_options.add_argument("--start-maximized")
     chrome_options.add_argument("--disable-gpu")
@@ -107,7 +104,7 @@ def chrome_options_preset(options=None):
     chrome_options.add_argument("--disable-features=RendererCodeIntegrity")
     chrome_options.add_argument("--disable-popup-blocking")
     chrome_options.add_experimental_option("prefs", {'safebrowsing.enabled': 'false'})
-    chrome_options.add_experimental_option("useAutomationExtension", False)
+    # chrome_options.add_experimental_option("useAutomationExtension", False)
     chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
     chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
     chrome_options.add_experimental_option('excludeSwitches', ['disable-popup-blocking'])

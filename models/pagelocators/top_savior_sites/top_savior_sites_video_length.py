@@ -9,12 +9,12 @@ class TopSaviorSitesVideoLengthLocators(object):
     TV_ZING_VIDEO_LENGTH_CSS = 'div.--z--control.--z--control-time span:nth-child(3)'
     DONG_PHYM_VIDEO_LENGTH_CSS = 'span.cplayer-duration-display'
     MOT_PHIMZZ_VIDEO_LENGTH = 'div.jw-icon.jw-icon-inline.jw-text.jw-reset.jw-text-duration'
-    # FACEBOOK_VIDEO_LENGTH_ONE_VIDEO = (By.XPATH, "(//span[contains(text(),'/')])[1]//following-sibling::span[contains(text(),':')]")
     FACEBOOK_VIDEO_LENGTH_HOME_PAGE = (By.XPATH,
                                        "(//div[@aria-label='Change Position'])[1]//ancestor::div[contains(@data-instancekey,'id-vpuid')]//span[contains(text(),':')][2]")
     FACEBOOK_VIDEO_LENGTH_VTV_GIAITRI_PAGE = \
         (By.XPATH,
          '(//div[@data-ad-comet-preview="message"]//ancestor::div[@dir="auto" and @class=""]//following-sibling::div//span[contains(text(),":")][2])[1]')
+    FACEBOOK_VIDEO_LENGTH_MO_RONG_VIDEO_CSS = 'div[data-pagelet="TahoeVideo"] video'
 
 
 class OnlineMusicVideoLengthLocators(object):
