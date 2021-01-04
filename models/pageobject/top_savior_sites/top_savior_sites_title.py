@@ -22,16 +22,19 @@ class TopSitesSaviorTitleAction(BasePageObject):
     base_page_element = BasePageElement()
 
     def replace_special_characters_by_dash_in_string(self, string):
-        special_characters = ['\\', '|', ':', '/', '?']
+        special_characters = ['\\', '|', ':', '/', '?', '\n', '"']
         new_string = string
         for character in special_characters:
-            if character in new_string:
+            if character in new_string and character != '\n':
                 new_string = new_string.replace(character, '-')
                 LOGGER.info("Video title after replace" + character + " by -: " + new_string)
             elif new_string.startswith(' '):
                 import re
                 new_string = re.sub(r"^\s+", "-", new_string)
                 LOGGER.info("Video title after replace white space at first and last:" + new_string)
+            elif character in new_string and character == '\n':
+                new_string = new_string.replace(character, '')
+                LOGGER.info("Video title after replace enter key:" + new_string)
         return new_string
 
     def get_first_part_of_video_title(self, video_title):

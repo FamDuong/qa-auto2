@@ -34,6 +34,7 @@ class TestOnlinePorn:
         video_title = self.top_sites_savior_title_action.replace_special_characters_by_dash_in_string(video_title_root)
         expect_length = self.top_savior_sites_video_length_action. \
             get_video_length(browser_top_sites, OnlinePornVideoLengthLocators.FR_PORN_HUB_VIDEO_CSS)
+        pause_or_play_video_by_javascript(browser_top_sites, OnlinePornVideoLengthLocators.FR_PORN_HUB_VIDEO_CSS)
         self.any_site_page_object.mouse_over_video_fr_porn_hub(browser_top_sites)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length,
                                   video_title, mouse_over_first_video=False)

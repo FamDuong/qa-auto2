@@ -15,7 +15,7 @@ from models.pageobject.top_savior_sites.top_savior_sites_video_length import Top
 from testscripts.common_setup import assert_file_download_value, delete_all_mp4_file_download, \
     download_file_via_main_download_button, get_resolution_info
 from models.pageobject.chome_store_page import ChromeStorePageObjects
-from utils_automation.const import Urls, OtherSiteUrls, TopSitesUrls
+from utils_automation.const import Urls, OtherSiteUrls, TopSitesUrls, SocialNetworkUrls
 
 LOGGER = logging.getLogger(__name__)
 
@@ -188,8 +188,11 @@ def verify_download_file_facebook_by_url(driver, download_folder, url, need_open
     LOGGER.info("Check download video on " + url)
     time.sleep(3)
     facebook_action.scroll_to_facebook_video(driver, url)
+
     if need_opened_video:
         click_to_open_large_video(driver)
+        url = driver.current_url
+        LOGGER.info("Current opened url: "+url)
     if need_mouse_over_video:
         mouse_over_facebook_first_video_element(driver, url)
     choose_highest_resolution_of_video(driver)
@@ -211,22 +214,28 @@ def click_to_open_large_video(driver):
 
 
 def mouse_over_facebook_first_video_element(driver, url):
-    if url == TopSitesUrls.FACEBOOK_HOMEPAGE_URL or url == TopSitesUrls.FACEBOOK_PROFILE_ME_URL \
-            or url == TopSitesUrls.FACEBOOK_WATCH_URL or url == TopSitesUrls.FACEBOOK_VIDEO_URL:
+    if url == SocialNetworkUrls.FACEBOOK_HOMEPAGE_URL or url == SocialNetworkUrls.FACEBOOK_PROFILE_ME_URL \
+            or url == SocialNetworkUrls.FACEBOOK_WATCH_URL or url == SocialNetworkUrls.FACEBOOK_VIDEO_URL \
+            or url == SocialNetworkUrls.FACEBOOK_PROFILE_NGOCTRINH_URL or url == SocialNetworkUrls.FACEBOOK_GROUP_URL:
         any_site_page_object.mouse_over_first_video_element(driver, FacebookLocators.HOME_PAGE_FIRST_VIDEO)
-    elif url == OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
+    elif url == SocialNetworkUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
         any_site_page_object.mouse_over_first_video_element(driver,
                                                             FacebookLocators.VTV_GIAITRI_PAGE_FIRST_VIDEO)
     else:
-        any_site_page_object.mouse_over_first_video_element(driver)
+        any_site_page_object.mouse_over_first_video_element(driver, FacebookLocators.VIDEO_MO_RONG_FIRST_VIDEO)
 
 
 def get_facebook_video_length_base_url(driver, url):
-    if url in TopSitesUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
+    if url == SocialNetworkUrls.FACEBOOK_HOMEPAGE_URL or url == SocialNetworkUrls.FACEBOOK_PROFILE_ME_URL \
+            or url == SocialNetworkUrls.FACEBOOK_WATCH_URL or url == SocialNetworkUrls.FACEBOOK_VIDEO_URL\
+            or url == SocialNetworkUrls.FACEBOOK_PROFILE_NGOCTRINH_URL or url == SocialNetworkUrls.FACEBOOK_GROUP_URL:
+        return top_savior_sites_video_length_action. \
+            get_video_length(driver, css_locator="",
+                             element=TopSaviorSitesVideoLengthLocators.FACEBOOK_VIDEO_LENGTH_HOME_PAGE)
+    elif url in SocialNetworkUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
         return top_savior_sites_video_length_action. \
             get_video_length(driver, css_locator="",
                              element=TopSaviorSitesVideoLengthLocators.FACEBOOK_VIDEO_LENGTH_VTV_GIAITRI_PAGE)
     else:
         return top_savior_sites_video_length_action. \
-            get_video_length(driver, css_locator="",
-                             element=TopSaviorSitesVideoLengthLocators.FACEBOOK_VIDEO_LENGTH_HOME_PAGE)
+            get_video_length(driver, css_locator= TopSaviorSitesVideoLengthLocators.FACEBOOK_VIDEO_LENGTH_MO_RONG_VIDEO_CSS)

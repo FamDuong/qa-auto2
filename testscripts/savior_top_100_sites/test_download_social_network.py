@@ -35,22 +35,23 @@ class TestSocialNetwork:
     @pytestrail.defect('PF-530')
     @pytest.mark.top_sites
     def test_download_file_facebook(self, browser_top_sites, get_current_download_folder_top_sites):
-
-        # verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-        #                                      SocialNetworkUrls.FACEBOOK_HOMEPAGE_URL)
+        verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+                                             SocialNetworkUrls.FACEBOOK_HOMEPAGE_URL)
         verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
                                              SocialNetworkUrls.FACEBOOK_PROFILE_ME_URL)
-        # verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-        #                                           SocialNetworkUrls.FACEBOOK_VTVGIAITRI_PAGE_URL)
-        #
-        # verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-        #                                           SocialNetworkUrls.FACEBOOK_WATCH_URL, need_opened_video=True,
-        #                                           need_mouse_over_video=True)
-        #
-        # verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-        #                                           SocialNetworkUrls.FACEBOOK_WATCH_URL)
-        # verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
-        #                                           SocialNetworkUrls.FACEBOOK_VIDEO_URL)
+        verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+                                             SocialNetworkUrls.FACEBOOK_PROFILE_NGOCTRINH_URL)
+        verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+                                            SocialNetworkUrls.FACEBOOK_WATCH_URL)
+        verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+                                             SocialNetworkUrls.FACEBOOK_VIDEO_URL)
+        verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+                                            SocialNetworkUrls.FACEBOOK_VTVGIAITRI_PAGE_URL)
+        verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+                                             SocialNetworkUrls.FACEBOOK_GROUP_URL)
+        verify_download_file_facebook_by_url(browser_top_sites, get_current_download_folder_top_sites,
+                                             SocialNetworkUrls.FACEBOOK_WATCH_URL, need_opened_video=True)
+
 
     @pytestrail.case('C204280')
     @pytest.mark.top_sites
@@ -78,20 +79,22 @@ class TestSocialNetwork:
         pause_or_play_video_by_javascript(browser_top_sites, InstagramLocators.FIRST_VIDEO_HOME_PAGE_CSS)
         LOGGER.info("Check download video on homepage " + SocialNetworkUrls.INSTAGRAM_URL)
         video_title_root = self.top_sites_savior_title_action.get_website_title_by_javascript(browser_top_sites)
-        video_title_temp = self.top_sites_savior_title_action.replace_special_characters_by_dash_in_string(video_title_root)
+        video_title_temp = self.top_sites_savior_title_action.replace_special_characters_by_dash_in_string(
+            video_title_root)
         video_title = self.top_sites_savior_title_action.get_first_part_of_video_title(video_title_temp)
-        expect_length = self.top_savior_sites_video_length_action.\
+        expect_length = self.top_savior_sites_video_length_action. \
             get_video_length(browser_top_sites, SocialNetworkVideoLengthLocators.INSTAGRAM_VIDEO_HOMEPAGE_CSS,
-                                 element="", url=SocialNetworkUrls.INSTAGRAM_URL)
+                             element="", url=SocialNetworkUrls.INSTAGRAM_URL)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
         browser_top_sites.get(SocialNetworkUrls.INSTAGRAM_VIDEO_URL)
         LOGGER.info("Check download video on " + SocialNetworkUrls.INSTAGRAM_VIDEO_URL)
         pause_or_play_video_by_javascript(browser_top_sites, InstagramLocators.FIRST_VIDEO_HOME_PAGE_CSS)
         video_title_root = self.top_sites_savior_title_action.get_website_title_by_javascript(browser_top_sites)
-        video_title_temp = self.top_sites_savior_title_action.replace_special_characters_by_dash_in_string(video_title_root)
+        video_title_temp = self.top_sites_savior_title_action.replace_special_characters_by_dash_in_string(
+            video_title_root)
         video_title = self.top_sites_savior_title_action.get_first_part_of_video_title(video_title_temp)
-        expect_length = self.top_savior_sites_video_length_action.\
+        expect_length = self.top_savior_sites_video_length_action. \
             get_video_length(browser_top_sites, SocialNetworkVideoLengthLocators.INSTAGRAM_VIDEO_OTHERS_PAGE_CSS)
         download_and_verify_video(browser_top_sites, get_current_download_folder_top_sites, expect_length, video_title)
 
