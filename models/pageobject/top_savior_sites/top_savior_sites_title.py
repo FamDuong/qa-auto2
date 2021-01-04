@@ -22,7 +22,7 @@ class TopSitesSaviorTitleAction(BasePageObject):
     base_page_element = BasePageElement()
 
     def replace_special_characters_by_dash_in_string(self, string):
-        special_characters = ['\\', '|', ':', '/', '?', '\n']
+        special_characters = ['\\', '|', ':', '/', '?', '\n', '"']
         new_string = string
         for character in special_characters:
             if character in new_string and character != '\n':
