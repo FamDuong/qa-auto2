@@ -7,6 +7,7 @@ from os import path
 
 from utils_automation.common import WindowsCMD, wait_for_stable, FilesHandle, get_current_dir
 from utils_automation.common_browser import find_text_in_file, cleanup, current_user
+from utils_automation.const import Urls
 
 LOGGER = logging.getLogger(__name__)
 
@@ -50,6 +51,8 @@ def check_if_installer_is_downloaded(download_path, language, installer_name='co
                           f"Get-ChildItem -Path {path} -Filter {file_name} -Recurse " + "| %{$_.FullName}"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     result = p.communicate()[0]
+    LOGGER.info("result: " + str(file_name))
+    LOGGER.info("result: " + str(result))
     if file_name in str(result):
         return True
     else:
@@ -643,6 +646,17 @@ def get_default_download_folder(browser):
     from utils_automation.const import Urls
     browser.maximize_window()
     browser.get(Urls.COCCOC_SETTINGS_DOWNLOAD_URL)
+    from models.pageobject.settings import SettingsPageObject
+    setting_page_object = SettingsPageObject()
+    download_folder = setting_page_object.get_download_folder(browser)
+    return download_folder
+
+
+def get_default_download_folder(browser, url=Urls.COCCOC_SETTINGS_DOWNLOAD_URL):
+    LOGGER.info("Get Default download folder...")
+    global download_folder
+    browser.maximize_window()
+    browser.get(url)
     from models.pageobject.settings import SettingsPageObject
     setting_page_object = SettingsPageObject()
     download_folder = setting_page_object.get_download_folder(browser)

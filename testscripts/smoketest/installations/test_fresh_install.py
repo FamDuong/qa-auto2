@@ -10,7 +10,7 @@ from models.pageobject.coccocpage import CocCocPageObjects
 from models.pageobject.version import VersionPageObject
 from models.pageobject.settings import SettingsPageObject
 from utils_automation.const import Urls
-from utils_automation.common import BrowserHandler, FilesHandle
+from utils_automation.common import FilesHandle
 from models.pageobject.installs import verify_installation_complete_popup_appears
 
 
@@ -18,12 +18,11 @@ class TestFreshInstall:
     coccoc_page_obj = CocCocPageObjects()
     version_page_obj = VersionPageObject()
     settings_page_obj = SettingsPageObject()
-    browser_handler_obj = BrowserHandler()
     files_handle_obj = FilesHandle()
 
     @pytestrail.case('C44777')
     @pytestrail.defect('BR-1071')
-    @pytest.mark.coccocdev
+    # @pytest.mark.coccocdev
     #@pytest.mark.skip(reason="Bug BR-1071 with installer Vietnamese")
     def test_installing_fresh_package_successfully_on_windows(self):
         # Get default download forlder
@@ -44,7 +43,7 @@ class TestFreshInstall:
                 common.delete_installer_download(download_folder, language)
 
     @pytestrail.case('C44779')
-    @pytest.mark.coccocdev
+    # @pytest.mark.coccocdev
     def test_popup_of_installer_confirm_during_the_installation(self):
         # Get download folder
         browser = utils_automation.common_browser.coccoc_instance()
@@ -63,7 +62,7 @@ class TestFreshInstall:
             common.delete_installer_download(download_folder, 'en')
 
     @pytestrail.case('C44780')
-    @pytest.mark.coccocdev
+    # @pytest.mark.coccocdev
     def test_installation_dialog_after_installing_successfully(self):
         # Get default download forlder
         browser = utils_automation.common_browser.coccoc_instance()

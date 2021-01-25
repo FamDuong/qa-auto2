@@ -17,6 +17,7 @@ class Urls:
     COCCOC_SETTINGS_CLEAR_BROWSER_DATA = 'coccoc://settings/clearBrowserData'
     COCCOC_THANK_YOU_URL_EN = 'https://dev.coccoc.com/en/win/thanks.html'
     COCCOC_THANK_YOU_URL_EN_PRO = 'https://coccoc.com/en/win/thanks.html'
+    COCCOC_THANK_YOU_URL_VI_PRO = 'https://coccoc.com/vi/win/thanks.html'
     COCCOC_THANK_YOU_URL_VI = 'https://dev.coccoc.com/vi/win/thanks.html'
     COCCOC_URL = 'https://coccoc.com'
     COCCOC_ADS_BLOCK_URL = 'coccoc://settings/adsBlock'
@@ -31,6 +32,8 @@ class Urls:
     PIRATE_BAY_URL = 'https://www.thepiratebay.asia/search'
     CC_SEARCH_URL = "https://coccoc.com/search"
     CC_SEARCH_QUERY = "https://coccoc.com/search?query="
+
+    CHROME_SETTINGS_DOWNLOAD_URL = 'chrome://settings/downloads'
 
 
 class TopSitesUrls:
