@@ -27,7 +27,7 @@ def application_path():
 
 @pytest.fixture(scope='session')
 def get_enabled_adblock_extension(request):
-    return request.config.getoption("--enabled-adblock-extension")
+    return request.config.getoption("--enabled-adblock-extension", default=True)
 
 
 

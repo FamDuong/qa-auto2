@@ -72,8 +72,8 @@ class TestPageLoadTime:
     def test_browser_plt(self):
         # Define test filename
         dirname, runname = os.path.split(os.path.abspath(__file__))
-        filename = dirname + r"\ads_block_standard.csv"
-        # filename = dirname + r"\ads_block_strict.csv"
+        filename = dirname + r'\test_data' + r"\ads_block_standard.csv"
+        # filename = dirname + r'\test_data' + r"\ads_block_strict.csv"
 
         # Test for NetworkService
         # options_list = {"--enable-features=NetworkService"}

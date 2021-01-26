@@ -151,8 +151,8 @@ class TestBrowserDarkMode:
         # Capture imagespi
         for url in urls_live:
             LOGGER.info("Capture website: " + url)
-            self.switch_dark_mode_for_site(browser, url)
-            image_website_1, image_screenshot_1 = self.get_fullpage_screenshot_dark_mode(browser, url, times=1)
+            # self.switch_dark_mode_for_site(browser, url)
+            # image_website_1, image_screenshot_1 = self.get_fullpage_screenshot_dark_mode(browser, url, times=1)
 
             # Capture second image
             self.switch_dark_mode_for_site(browser, url)
@@ -161,9 +161,9 @@ class TestBrowserDarkMode:
             # list_images.add((image_website_1, image_screenshot_1))
             # list_images.add((image_website_2, image_screenshot_2))
 
-            images = (image_website_1, image_screenshot_1)
-            image_result = self.verify_images(url, images)
-            self.file.append_to_file(self.file_list_websites_result, image_result)
+            # images = (image_website_1, image_screenshot_1)
+            # image_result = self.verify_images(url, images)
+            # self.file.append_to_file(self.file_list_websites_result, image_result)
 
             images = (image_website_2, image_screenshot_2)
             image_result = self.verify_images(url, images)
