@@ -28,7 +28,7 @@ def if_height_frame_so_width_frame(height_frame):
         width_frame = 1920
     elif int(height_frame) == 720:
         width_frame = 1280
-    LOGGER.info("Expect height "+str(height_frame)+"x Expect width: "+str(width_frame))
+    LOGGER.info("Expect height " + str(height_frame) + "x Expect width: " + str(width_frame))
     return width_frame
 
 
@@ -76,7 +76,8 @@ def write_result_data_for_page_load_time(file_name, keyname_list: list, value_li
         total_value = 0
         file.write(f"Results for {result_type} is as below :\n")
         for (keyname, value) in zip(keyname_list, value_list):
-            file.write(f"{keyname} is: {value}")
+            # file.write(f"{keyname} is: {value}")
+            file.write("%-30s %s" % (keyname, value))
             file.write('\n')
             total_value += value
         average_value = total_value / len(value_list)
@@ -281,7 +282,7 @@ class WebElements:
 
     @staticmethod
     def click_element_by_javascript(driver: WebDriver, css_locator):
-        driver.execute_script("document.querySelector('"+css_locator+"').click()")
+        driver.execute_script("document.querySelector('" + css_locator + "').click()")
 
 
 class WindowsCMD:

@@ -1,24 +1,24 @@
+import logging
 import os
 import subprocess
+import time
 
 from selenium.webdriver import DesiredCapabilities
-
-import time
 from utils_automation.common import get_from_csv, write_result_data_for_page_load_time
 from pytest_testrail.plugin import pytestrail
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from utils_automation.cleanup import Browsers
 
-startBrowser = 0
-
+start_browser = 0
+LOGGER = logging.getLogger(__name__)
 
 class TestPageLoadTime:
     def open_webpage(self, source, binary_file, default_dir, options_list=None, enabled_ads_block=None):
         browser = Browsers()
         browser.kill_all_browsers()
 
-        global startBrowser
+        global start_browser
 
         opts = Options()
         opts.binary_location = binary_file
@@ -42,7 +42,7 @@ class TestPageLoadTime:
         if options_list is not None:
             for i in options_list:
                 opts.add_argument(i)
-        startBrowser = int(round(time.time() * 1000))
+        start_browser = int(round(time.time() * 1000))
         # driver = webdriver.Chrome(executable_path=cc_driver, chrome_options=opts)
         driver = webdriver.Chrome(chrome_options=opts, desired_capabilities=caps)
         # driver = webdriver.Chrome('/Users/itim/Downloads/python/chromedriver') #Environment: MAC OS
@@ -51,25 +51,27 @@ class TestPageLoadTime:
         return driver
 
     def measureTime(self, driver):
-        global browserStartup
-        navigationStart = driver.execute_script("return window.performance.timing.navigationStart")
-        responseStart = driver.execute_script("return window.performance.timing.responseStart")
-        domComplete = driver.execute_script("return window.performance.timing.domComplete")
-        pageComplete = driver.execute_script("return window.performance.timing.loadEventEnd")
+        global browser_startup
+        navigation_start = driver.execute_script("return window.performance.timing.navigationStart")
+        response_start = driver.execute_script("return window.performance.timing.responseStart")
+        dom_complete = driver.execute_script("return window.performance.timing.domComplete")
+        page_complete = driver.execute_script("return window.performance.timing.loadEventEnd")
 
-        browserStartup = navigationStart - startBrowser
-        backendPerformance = responseStart - navigationStart
-        frontendPerformance = domComplete - responseStart
-        pageloadtime = pageComplete - navigationStart
+        browser_startup = navigation_start - start_browser
+        backend_performance = response_start - navigation_start
+        frontend_performance = dom_complete - response_start
+        page_load_time = page_complete - navigation_start
 
-        print("Browser startup time: %s" % browserStartup)
-        print("First frame displayed: %s" % backendPerformance)
-        print("DOM Load Event completed: %s" % frontendPerformance)
-        print("Total PageLoad Time: %s" % pageloadtime)
+        LOGGER.info("========================================")
+        LOGGER.info("Browser startup time: %s" % browser_startup)
+        LOGGER.info("First frame displayed: %s" % backend_performance)
+        LOGGER.info("DOM Load Event completed: %s" % frontend_performance)
+        LOGGER.info("Total PageLoad Time: %s" % page_load_time)
+        LOGGER.info("========================================")
 
         time.sleep(2)
         driver.quit()
-        return pageloadtime
+        return page_load_time
 
     def get_page_load_time(self, filename, file_name_result, binary_file, default_dir, options_list=None,
                            enabled_ads_block=None):
@@ -77,15 +79,15 @@ class TestPageLoadTime:
         loadtimes = []
         for i in listweb:
             loadtime = 0
-            looptime = 2  # 10
+            looptime = 3
             for j in range(looptime):
                 browser = self.open_webpage(i, binary_file, default_dir, options_list,
                                             enabled_ads_block=enabled_ads_block)
                 loadtime = loadtime + self.measureTime(browser)
             loadtimes.append(loadtime / looptime)
         write_result_data_for_page_load_time(file_name=file_name_result, keyname_list=listweb,
-                                                         value_list=loadtimes,
-                                                         result_type='Page load time')
+                                             value_list=loadtimes,
+                                             result_type='Page load time')
 
     @pytestrail.case('C82299')
     def test_browser_plt(self, binary_path, default_directory, application_path, get_enabled_adblock_extension):
@@ -98,7 +100,7 @@ class TestPageLoadTime:
             time.sleep(10)
             subprocess.Popen("taskkill /im browser.exe /f", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         dirname, runname = os.path.split(os.path.abspath(__file__))
-        filename = dirname + r"\testbenchmark.csv"
-        filename_result = dirname + r"\results_plt.csv"
+        filename = dirname + r'\test_data' + r"\testbenchmark.csv"
+        filename_result = dirname + r'\test_result' + r"\results_plt.csv"
         self.get_page_load_time(filename, filename_result, binary_path, default_directory, None,
                                 enabled_ads_block=enabled_adblock_extension)

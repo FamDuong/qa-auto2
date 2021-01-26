@@ -1,0 +1,24 @@
+Results for CPU RAM is as below :
+i is 0
+CPU is 3.3250000000000006, Mem is 651.4140625
+i is 1
+CPU is 0.2, Mem is 644.78515625
+i is 2
+CPU is 0.9750000000000001, Mem is 670.16015625
+i is 3
+CPU is 2.325, Mem is 660.703125
+i is 4
+CPU is 1.95, Mem is 661.8671875
+i is 5
+CPU is 2.5250000000000004, Mem is 641.03125
+i is 6
+CPU is 0.7749999999999999, Mem is 664.7578125
+i is 7
+CPU is 5.075, Mem is 639.79296875
+i is 8
+CPU is 3.5, Mem is 656.6796875
+i is 9
+CPU is 3.1250000000000004, Mem is 653.5
+Average value is :
+CPU : 1.9
+MEM : 653.9

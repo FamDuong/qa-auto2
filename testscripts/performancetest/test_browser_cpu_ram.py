@@ -130,8 +130,8 @@ class TestCPURAM:
             time.sleep(10)
             subprocess.Popen("taskkill /im browser.exe /f", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         dirname, runname = os.path.split(os.path.abspath(__file__))
-        filename = dirname + r"\testbenchmark.csv"
-        file_name_result = dirname + r"\results_cpu_ram.csv"
+        filename = dirname + r'\test_data' + r"\testbenchmark.csv"
+        file_name_result = dirname + r'\test_result' + r"\results_cpu_ram.csv"
         self.get_ram_cpu(filename, file_name_result, binary_path, default_directory, None, enabled_ads_block=enabled_adblock_extension)
 
 
