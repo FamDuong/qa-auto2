@@ -1,3 +1,4 @@
+import logging
 import subprocess
 import time
 import psutil
@@ -11,6 +12,8 @@ from utils_automation.common import get_from_csv, write_result_data_for_cpu_ram
 from selenium import webdriver
 from pytest_testrail.plugin import pytestrail
 from utils_automation.cleanup import Browsers
+
+LOGGER = logging.getLogger(__name__)
 
 
 class TestCPURAM:
@@ -109,13 +112,19 @@ class TestCPURAM:
                 driver.get(listweb[i + 1])
         return driver
 
-    def get_ram_cpu(self, filename, file_name_result, binary_file, default_dir, options_list=None, enabled_ads_block=False):
+    def get_ram_cpu(self, filename, file_name_result, binary_file, default_dir, options_list=None,
+                    enabled_ads_block=False):
         res = []
+        i = 1
+        LOGGER.info('%-25s' '%-60s' '%s' % ('No.', 'CPU', 'Memory'))
         for _ in range(10):
-            browser = self.open_webpage_withtabs(filename, binary_file, default_dir, options_list, enabled_ads_block=enabled_ads_block)
+            browser = self.open_webpage_withtabs(filename, binary_file, default_dir, options_list,
+                                                 enabled_ads_block=enabled_ads_block)
             pid_list = self.PID('browser')
             cpu, mem = self.benchmark(pid_list)
             res.append({"cpu": cpu, "mem": mem})
+            LOGGER.info('%-25s' '%-60s' '%s' % (i, cpu, mem))
+            i += 1
             browser.quit()
         write_result_data_for_cpu_ram(file_name_result, res, result_type='CPU RAM')
 
@@ -132,6 +141,5 @@ class TestCPURAM:
         dirname, runname = os.path.split(os.path.abspath(__file__))
         filename = dirname + r'\test_data' + r"\testbenchmark.csv"
         file_name_result = dirname + r'\test_result' + r"\results_cpu_ram.csv"
-        self.get_ram_cpu(filename, file_name_result, binary_path, default_directory, None, enabled_ads_block=enabled_adblock_extension)
-
-
+        self.get_ram_cpu(filename, file_name_result, binary_path, default_directory, None,
+                         enabled_ads_block=enabled_adblock_extension)
