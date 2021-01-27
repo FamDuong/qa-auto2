@@ -74,7 +74,7 @@ class TestCPURAM:
         opts.add_argument("start-maximized")
         opts.add_argument('user-data-dir=' + default_dir)
         if enabled_ads_block == "True":
-            opts.add_argument("--window-size=1920,1080")
+            opts.add_argument("--start-maximized")
             opts.add_argument("--proxy-server='direct://'")
             opts.add_argument("--proxy-bypass-list=*")
             opts.add_argument("--start-maximized")
@@ -93,7 +93,7 @@ class TestCPURAM:
                 opts.add_argument(i)
         # driver = webdriver.Chrome(executable_path=cc_driver, chrome_options=opts)
         # driver = webdriver.Chrome('/Users/itim/Downloads/python/chromedriver') #Environment: MAC OS
-        driver = webdriver.Chrome(chrome_options=opts, desired_capabilities=caps)
+        driver = webdriver.Chrome(options=opts, desired_capabilities=caps)
 
         # first tab
         driver.get(listweb[0])

@@ -26,7 +26,7 @@ class TestPageLoadTime:
         opts.add_argument('user-data-dir=' + default_dir)
         # opts.add_argument("--headless --disable-gpu")
         if enabled_ads_block == "True":
-            opts.add_argument("--window-size=1920,1080")
+            opts.add_argument("--start-maximized")
             opts.add_argument("--proxy-server='direct://'")
             opts.add_argument("--proxy-bypass-list=*")
             opts.add_argument("--start-maximized")
@@ -44,7 +44,7 @@ class TestPageLoadTime:
                 opts.add_argument(i)
         start_browser = int(round(time.time() * 1000))
         # driver = webdriver.Chrome(executable_path=cc_driver, chrome_options=opts)
-        driver = webdriver.Chrome(chrome_options=opts, desired_capabilities=caps)
+        driver = webdriver.Chrome(options=opts, desired_capabilities=caps)
         # driver = webdriver.Chrome('/Users/itim/Downloads/python/chromedriver') #Environment: MAC OS
 
         driver.get(source)
@@ -62,12 +62,10 @@ class TestPageLoadTime:
         frontend_performance = dom_complete - response_start
         page_load_time = page_complete - navigation_start
 
-        LOGGER.info("========================================")
-        LOGGER.info("Browser startup time: %s" % browser_startup)
-        LOGGER.info("First frame displayed: %s" % backend_performance)
-        LOGGER.info("DOM Load Event completed: %s" % frontend_performance)
+        # LOGGER.info("Browser startup time: %s" % browser_startup)
+        # LOGGER.info("First frame displayed: %s" % backend_performance)
+        # LOGGER.info("DOM Load Event completed: %s" % frontend_performance)
         LOGGER.info("Total PageLoad Time: %s" % page_load_time)
-        LOGGER.info("========================================")
 
         time.sleep(2)
         driver.quit()
@@ -77,7 +75,10 @@ class TestPageLoadTime:
                            enabled_ads_block=None):
         listweb = get_from_csv(filename)
         loadtimes = []
+        index = 1
         for i in listweb:
+            LOGGER.info("========================================")
+            LOGGER.info(i)
             loadtime = 0
             looptime = 3
             for j in range(looptime):
