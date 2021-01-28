@@ -108,7 +108,7 @@ class TestCPURAM:
                 jscommand = "window.open('about:blank', \'" + tabname + "\');"
                 driver.execute_script(jscommand)
                 driver.switch_to.window(tabname)
-                print("%d . Open tab page: %s" % (i + 1, listweb[i + 1]))
+                print("\n %d . Open tab page: %s" % (i + 1, listweb[i + 1]))
                 driver.get(listweb[i + 1])
         return driver
 
@@ -123,7 +123,7 @@ class TestCPURAM:
             pid_list = self.PID('browser')
             cpu, mem = self.benchmark(pid_list)
             res.append({"cpu": cpu, "mem": mem})
-            LOGGER.info('%-25s' '%-60s' '%s' % (i, cpu, mem))
+            LOGGER.info('%-25s' '%-60s' '%s' % (i, round(cpu, 2), round(mem, 2)))
             i += 1
             browser.quit()
         write_result_data_for_cpu_ram(file_name_result, res, result_type='CPU RAM')
