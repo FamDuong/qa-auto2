@@ -1,6 +1,6 @@
 class CoccocHomePageLocators:
     TAI_CC_BTN_HEADER_XPATH = "//*[@id='menu']//a//li"
-    TAI_CC_BTN_CENTER_HOME_XPATH = "//div[contains(@class,'section__browser')]//a[contains(@class,'js-show-modal-download')]"
+    TAI_CC_BTN_CENTER_HOME_XPATH = '//div[ contains(@class,"btn__download__coccoc")])[2]'
     TAI_CC_BTN_CENTER_OTHER_PAGE_XPATH = "//section[@class='section__mobile']//a[contains(@class,'js-show-modal-download')]"
     TAI_CC_BTN_FOOTER_XPATH = "//div[@class='section__download__app']//a[contains(@class,'js-show-modal-download')]"
     DONG_Y_BTN_CSS = "div.cc-modal-download-bottom.js-cc-download > a"

@@ -1,8 +1,11 @@
 import time
 from datetime import datetime
+
+from models.pagelocators.coccocpage import CocCocPageLocators
 from models.pageobject.basepage_object import BasePageObject
 from models.pageelements.coccocpage import CocCocPageElement
 from models.pageobject.downloads import DownloadsPageObject
+from utils_automation.common import WebElements
 
 
 def get_timeout_by_extension(extension):
@@ -29,11 +32,18 @@ class CocCocPageObjects(BasePageObject):
 
     def download_coccoc(self, browser, base_url, default_download_folder, os, language):
         browser.get(base_url)
-        self.coccocpage_elem.find_download_element(browser, os, language).click()
-        self.coccocpage_elem.find_privacy_button(browser).click()
+        if "dev" in base_url:
+            self.coccocpage_elem.find_download_element(browser, os, language).click()
+            self.coccocpage_elem.find_privacy_button(browser).click()
+        else:
+            self.coccocpage_elem.find_download_element_production(browser, language).click()
+            self.click_privacy_button_by_javascript(browser)
         sleep_with_timeout(default_download_folder, language)
 
     def get_path_installer(self, browser, base_url, default_download_folder, os="win", language="en"):
         self.download_coccoc(browser, base_url, default_download_folder, os, language)
-        path_downloaded = default_download_folder + '/coccoc_' + language + '.exe'
+        path_downloaded = default_download_folder + '/CocCocSetup.exe'
         return path_downloaded
+
+    def click_privacy_button_by_javascript(self, browser):
+        WebElements.click_element_by_javascript(browser, CocCocPageLocators.PRO_TOI_DA_HIEU_VA_DONG_Y_CSS)

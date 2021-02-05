@@ -7,6 +7,7 @@ from os import path
 
 from utils_automation.common import WindowsCMD, wait_for_stable, FilesHandle, get_current_dir
 from utils_automation.common_browser import find_text_in_file, cleanup, current_user
+from utils_automation.const import Urls
 
 LOGGER = logging.getLogger(__name__)
 
@@ -50,6 +51,8 @@ def check_if_installer_is_downloaded(download_path, language, installer_name='co
                           f"Get-ChildItem -Path {path} -Filter {file_name} -Recurse " + "| %{$_.FullName}"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     result = p.communicate()[0]
+    LOGGER.info("Checking installer is downloaded")
+
     if file_name in str(result):
         return True
     else:
@@ -637,18 +640,20 @@ def install_old_coccoc_version(is_needed_clear_user_data=True):
     install_coccoc_set_as_default(coccoc_installer_name='coccoc_en_old_version.exe')
 
 
-def get_default_download_folder(browser):
-    print("Get Default download folder...")
+def get_default_download_folder(browser, url=Urls.COCCOC_SETTINGS_DOWNLOAD_URL):
+    LOGGER.info("Get Default download folder...")
     global download_folder
     from utils_automation.const import Urls
     browser.maximize_window()
-    browser.get(Urls.COCCOC_SETTINGS_DOWNLOAD_URL)
+    browser.get(url)
     from models.pageobject.settings import SettingsPageObject
     setting_page_object = SettingsPageObject()
     download_folder = setting_page_object.get_download_folder(browser)
     return download_folder
 
 
-def delete_installer_download(download_folder, language, installer_name='coccoc_', extension='.exe'):
-    if files_handle_obj.is_file_exist(download_folder + installer_name + language + extension):
-        files_handle_obj.delete_files_in_folder(download_folder, installer_name + language + extension)
+def delete_installer_download(downloaded_folder, language='', installer_name='CocCocSetup',
+                              index_installer_file='', extension='.exe'):
+    if files_handle_obj.is_file_exist(downloaded_folder + installer_name + language + extension):
+        files_handle_obj.delete_files_in_folder(downloaded_folder, installer_name + language
+                                                + index_installer_file + extension)

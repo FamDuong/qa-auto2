@@ -10,7 +10,7 @@ from utils_automation.common_browser import coccoc_instance
 class TestOverrideInstall(BasePageElement):
 
     @pytestrail.case('C44773')
-    @pytest.mark.skip(reason='Take times to handle click/sendkeys on pannel in Remote Desktop')
+    #@pytest.mark.skip(reason='Take times to handle click/sendkeys on pannel in Remote Desktop')
     def test_check_install_new_version_above_old_version(self):
         old_version = self.install_old_coccoc_version()
         new_version = self.install_new_coccoc_version_without_remove_old_version()

@@ -75,6 +75,9 @@ def pytest_addoption(parser):
     parser.addoption(
         "--coccocdev", action="store_true", default=False, help="run tests with coccocdev mark"
     )
+    parser.addoption('--is-activate-host', action='store', default=True)
+    parser.addoption('--url', action='store', default='https://coccoc.com/')
+    parser.addoption('--coccoc-version', action='store', default='')
 
 
 def pytest_configure(config):
@@ -89,3 +92,27 @@ def pytest_collection_modifyitems(config, items):
     for item in items:
         if "coccocdev" in item.keywords:
             item.add_marker(skip_slow)
+
+
+@pytest.fixture
+def is_active_host(request):
+    is_active_host = request.config.getoption("--is-activate-host")
+    if is_active_host is None:
+        raise Exception
+    return is_active_host
+
+
+@pytest.fixture
+def url(request):
+    url = request.config.getoption("--url")
+    if url is None:
+        raise Exception
+    return url
+
+
+@pytest.fixture
+def coccoc_version(request):
+    coccoc_version = request.config.getoption("--coccoc-version")
+    if coccoc_version is None:
+        raise Exception
+    return coccoc_version

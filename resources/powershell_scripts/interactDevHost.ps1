@@ -2,7 +2,6 @@
 	[string]
 	$action, [switch]$Elevated)
 
-
 function Test-Admin {
   $currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
   $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
@@ -33,7 +32,7 @@ $FilePath='C:\Windows\System32\drivers\etc\hosts'
 if ($action -like 'activate')  {
  $Pattern='#+10.3.4.53'
  $Replacement='10.3.4.53'
- echo $action
+ echo $actionF
 
     Replace-Hosts $FilePath $Pattern $Replacement
     }
@@ -48,4 +47,7 @@ Replace-Hosts $FilePath $Pattern $Replacement
 
 Sleep 2
 
-Stop-Process -Name "powershell"
+Stop-Process -Id $Pid -Force
+
+
+#Stop-Process -Name "powershell"
