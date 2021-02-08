@@ -15,7 +15,7 @@ def get_timeout_by_extension(extension):
         return 120
 
 
-def sleep_with_timeout(default_download_folder, language, installer_name='coccoc_', extension='.exe'):
+def sleep_with_timeout(default_download_folder, language='', installer_name='CocCocSetup', extension='.exe'):
     download_folder_powershell = default_download_folder.replace("\\", "\\\\") + "\\\\"
     from testscripts.smoketest.common import check_if_installer_is_downloaded
     start_time = datetime.now()

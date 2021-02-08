@@ -43,15 +43,15 @@ def check_if_coccoc_installer_is_closed(coccoc_installer):
         return False
 
 
-def check_if_installer_is_downloaded(download_path, language, installer_name='coccoc_', extension='.exe'):
-    file_name = installer_name + language + extension
+def check_if_installer_is_downloaded(download_path, language, installer_name='CocCocSetup', extension='.exe'):
+    file_name = installer_name + extension
     path = "\"" + download_path + "\""
     import subprocess
     p = subprocess.Popen(["powershell.exe",
                           f"Get-ChildItem -Path {path} -Filter {file_name} -Recurse " + "| %{$_.FullName}"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     result = p.communicate()[0]
-    LOGGER.info("Checking installer is downloaded")
+    LOGGER.info("Checking installer is downloaded in "+language)
 
     if file_name in str(result):
         return True
