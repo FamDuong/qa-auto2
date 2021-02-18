@@ -1,18 +1,28 @@
-import platform
+import logging
 
-import pytest
 from pytest_testrail.plugin import pytestrail
-
+from models.pageobject.coccocpage import CocCocPageObjects
 from models.pageobject.settings import SettingsPageObject
+from testscripts.smoketest.common import get_browser_and_default_download_folder, delete_installer_download
 
+LOGGER = logging.getLogger(__name__)
 
 class TestSilentInstall:
     settings_page_object = SettingsPageObject()
+    coccoc_page_obj = CocCocPageObjects()
 
     @pytestrail.case('C44785')
-    def test_check_with_make_coccoc_default(self):
+    def test_check_with_make_coccoc_default(self, is_active_host, url):
+        browser, default_download_folder, is_activated_host = get_browser_and_default_download_folder(is_active_host)
+        delete_installer_download(default_download_folder, language='', installer_name='CocCocSetup', extension='.exe')
+        coccoc_installer_temp = self.coccoc_page_obj.get_path_installer(browser, url, default_download_folder, os='win',
+                                                                        language='en')
+        coccoc_installer = coccoc_installer_temp.replace('/CocCocSetup.exe', '\\')
+        LOGGER.info("Silent install by installer from "+coccoc_installer)
         from testscripts.smoketest.common import uninstall_then_install_coccoc_silentlty_with_option
-        uninstall_then_install_coccoc_silentlty_with_option("/forcedcmdline 'make-coccoc-default'")
+        uninstall_then_install_coccoc_silentlty_with_option(installer_path=coccoc_installer,
+                                                            coccoc_installer_name='CocCocSetup.exe',
+                                                            cmd_options="/forcedcmdline 'make-coccoc-default'")
         from utils_automation.common_browser import coccoc_instance
         driver = coccoc_instance()
         try:

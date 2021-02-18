@@ -1,5 +1,4 @@
 import logging
-import platform
 
 import pytest
 from pytest_testrail.plugin import pytestrail

@@ -28,7 +28,7 @@ def if_height_frame_so_width_frame(height_frame):
         width_frame = 1920
     elif int(height_frame) == 720:
         width_frame = 1280
-    LOGGER.info("Expect height "+str(height_frame)+"x Expect width: "+str(width_frame))
+    LOGGER.info("Expect height " + str(height_frame) + "x Expect width: " + str(width_frame))
     return width_frame
 
 
@@ -97,7 +97,7 @@ def write_result_data_for_cpu_ram(file_name, res, result_type=''):
             # file.write("i is %d\n" % i)
             # file.write("CPU is %s, Mem is %s\n" % (res[i].get("cpu"), res[i].get("mem")))
             file.write('\n')
-            file.write('%-25s' '%-60s' '%s' % (i+1, round(res[i].get("cpu"),2), round(res[i].get("mem"),2)))
+            file.write('%-25s' '%-60s' '%s' % (i + 1, round(res[i].get("cpu"), 2), round(res[i].get("mem"), 2)))
         cpu_average = cpu_total / len(res)
         mem_average = mem_total / len(res)
         file.write("\nAverage value is :\n")
@@ -284,7 +284,7 @@ class WebElements:
 
     @staticmethod
     def click_element_by_javascript(driver: WebDriver, css_locator):
-        driver.execute_script("document.querySelector('"+css_locator+"').click()")
+        driver.execute_script("document.querySelector('" + css_locator + "').click()")
 
 
 class WindowsCMD:
@@ -383,3 +383,12 @@ class WindowsHandler:
 def get_current_dir():
     before_split = os.getcwd()
     return before_split.split('\\testscripts\\')
+
+
+file_handle = FilesHandle()
+
+
+def get_resource_path():
+    resource_path_temp = file_handle.get_absolute_filename("\\resources\\")
+    resource_path = resource_path_temp.replace('\\utils_automation', '')
+    return resource_path

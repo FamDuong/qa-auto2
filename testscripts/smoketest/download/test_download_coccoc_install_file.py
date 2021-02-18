@@ -2,7 +2,6 @@ from pytest_testrail.plugin import pytestrail
 
 from testscripts.common_init_driver import init_chrome_driver
 from testscripts.smoketest.common import get_default_download_folder, delete_installer_download
-from utils_automation.common_browser import coccoc_instance
 from utils_automation.const import Urls
 from models.pageobject.coccocpage import sleep_with_timeout
 import logging
@@ -21,7 +20,7 @@ class TestDownloadCoccocInstallFile:
 
             for i in range(len(urls)):
                 child_url = str(urls[i])
-                delete_installer_download(default_download_folder, language='', installer_name='CocCocSetup', extension='.exe')
+                #delete_installer_download(default_download_folder, language='', installer_name='CocCocSetup', extension='.exe')
                 LOGGER.info("Download from " + child_url)
                 driver.get(child_url)
                 sleep_with_timeout(default_download_folder, language='', installer_name='CocCocSetup', extension='.exe')

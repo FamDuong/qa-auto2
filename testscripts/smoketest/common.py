@@ -5,6 +5,8 @@ from datetime import datetime
 from pywinauto import Desktop
 from os import path
 
+from models.pageobject.coccocpage import CocCocPageObjects
+from testscripts.common_init_driver import init_chrome_driver
 from utils_automation.common import WindowsCMD, wait_for_stable, FilesHandle, get_current_dir
 from utils_automation.common_browser import find_text_in_file, cleanup, current_user
 from utils_automation.const import Urls
@@ -12,6 +14,8 @@ from utils_automation.const import Urls
 LOGGER = logging.getLogger(__name__)
 
 files_handle_obj = FilesHandle()
+coccoc_page_obj = CocCocPageObjects()
+
 download_folder = None
 powershell_script_path = "\\resources\\powershell_scripts"
 ftp_domain = "browser3v.dev.itim.vn"
@@ -51,7 +55,7 @@ def check_if_installer_is_downloaded(download_path, language, installer_name='Co
                           f"Get-ChildItem -Path {path} -Filter {file_name} -Recurse " + "| %{$_.FullName}"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     result = p.communicate()[0]
-    LOGGER.info("Checking installer is downloaded in "+language)
+    LOGGER.info("Checking installer is downloaded in " + language)
 
     if file_name in str(result):
         return True
@@ -231,18 +235,19 @@ def login_then_download_latest_coccoc_dev_installer(coccoc_installer_name='stand
             print(f"Error download coccoc binary for {coccoc_installer_name}")
 
 
-def install_coccoc_silently(coccoc_installer_name='standalone_coccoc_en.exe'):
+def install_coccoc_silently(installer_path='C:\\coccoc-dev', coccoc_installer_name='standalone_coccoc_en.exe'):
     import subprocess
     p = subprocess.Popen(["powershell.exe",
-                          f"cd C:\coccoc-dev; .\\{coccoc_installer_name} /silent /install"],
+                          f"cd {installer_path}; .\\{coccoc_installer_name} /silent /install"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
 
-def install_coccoc_silentlty_make_coccoc_default_browser(coccoc_installer_name='standalone_coccoc_en.exe',
+def install_coccoc_silentlty_make_coccoc_default_browser(installer_path='C:\\coccoc-dev',
+                                                         coccoc_installer_name='standalone_coccoc_en.exe',
                                                          cmd_options=None):
     import subprocess
     p = subprocess.Popen(["powershell.exe",
-                          f"cd C:\coccoc-dev; .\\{coccoc_installer_name} /silent {cmd_options} /install"],
+                          f"cd {installer_path}; .\\{coccoc_installer_name} /silent {cmd_options} /install"],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     p.communicate()
 
@@ -268,10 +273,12 @@ def wait_for_panel_is_exist(panel):
             break
 
 
-def install_coccoc_not_set_as_default(is_needed_clean_up=True, coccoc_installer_name='standalone_coccoc_en.exe'):
+def install_coccoc_not_set_as_default(is_needed_clean_up=True, installer_path='C:\\coccoc-dev',
+                                      coccoc_installer_name='standalone_coccoc_en.exe'):
     import subprocess
     subprocess.Popen(["powershell.exe",
-                      f"cd C:\\coccoc-dev; .\\{coccoc_installer_name}"],
+                      # f"cd C:\\coccoc-dev; .\\{coccoc_installer_name}"],
+                      f"cd {installer_path}; .\\{coccoc_installer_name}"],
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     wait_for_window_appear()
     coccoc_installer = Desktop(backend='uia').Cốc_Cốc_Installer
@@ -285,17 +292,25 @@ def install_coccoc_not_set_as_default(is_needed_clean_up=True, coccoc_installer_
         cleanup()
 
 
-def install_coccoc_set_as_default(coccoc_installer_name='standalone_coccoc_en.exe', is_needed_clean_up=True):
+def install_coccoc_set_as_default(installer_path='C:\\coccoc-dev', coccoc_installer_name='standalone_coccoc_en.exe',
+                                  is_needed_clean_up=True):
+    if is_needed_clean_up is True:
+        cleanup()
+    LOGGER.info("Installing Coc Coc installer " + coccoc_installer_name + " from path: " + installer_path)
     import subprocess
     subprocess.Popen(["powershell.exe",
-                      f"cd C:\\coccoc-dev; .\\{coccoc_installer_name}"],
+                      # f"cd C:\\coccoc-dev; .\\{coccoc_installer_name}"],
+                      f"cd {installer_path}; .\\{coccoc_installer_name}"],
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    from pywinauto import Desktop
     wait_for_window_appear()
     coccoc_installer = Desktop(backend='uia').Cốc_Cốc_Installer
     time.sleep(5)
     coccoc_installer.Button.click()
     time.sleep(1)
-    wait_for_coccoc_install_finish()
+    # wait_for_coccoc_install_finish()
+    coccoc_newtab_window = Desktop(backend='uia').Welcome_to_Cốc_Cốc_Cốc_Cốc
+    wait_for_panel_is_exist(coccoc_newtab_window)
     if is_needed_clean_up is True:
         cleanup()
     else:
@@ -579,24 +594,29 @@ def check_if_auto_launch_enabled_is_false():
     return find_text_in_file(user_data_local_state, '"autolaunch_enabled":true')
 
 
-def uninstall_then_install_coccoc_with_default(coccoc_is_default='yes', is_needed_clean_up=True,
+def uninstall_then_install_coccoc_with_default(installer_path='C:\\coccoc-dev',
+                                               coccoc_installer_name='standalone_coccoc_en.exe'
+                                               , coccoc_is_default='yes', is_needed_clean_up=True,
                                                is_needed_clear_user_data=False):
+    LOGGER.info("Uninstall then install Coc Coc with default")
     if check_if_coccoc_is_installed():
         if is_needed_clear_user_data is False:
             uninstall_coccoc_silently()
         else:
             uninstall_old_version_remove_local_app()
     if coccoc_is_default in "yes":
-        install_coccoc_set_as_default(is_needed_clean_up=is_needed_clean_up)
+        install_coccoc_set_as_default(installer_path, coccoc_installer_name, is_needed_clean_up)
     else:
-        install_coccoc_not_set_as_default(is_needed_clean_up=is_needed_clean_up)
+        install_coccoc_not_set_as_default(is_needed_clean_up, installer_path, coccoc_installer_name)
 
 
-def uninstall_then_install_coccoc_silentlty_with_option(cmd_options):
+def uninstall_then_install_coccoc_silentlty_with_option(installer_path='C:\\coccoc-dev',
+                                                        coccoc_installer_name='standalone_coccoc_en.exe',
+                                                        cmd_options=None):
     from datetime import datetime
     if check_if_coccoc_is_installed():
         uninstall_coccoc_silently()
-    install_coccoc_silentlty_make_coccoc_default_browser(cmd_options=cmd_options)
+    install_coccoc_silentlty_make_coccoc_default_browser(installer_path, coccoc_installer_name, cmd_options)
     start_time = datetime.now()
     while check_if_coccoc_is_installed() is False:
         time.sleep(1)
@@ -628,7 +648,7 @@ def interact_dev_hosts(action="activate"):
                      stdin=subprocess.PIPE, stderr=subprocess.PIPE)
 
 
-def install_old_coccoc_version(is_needed_clear_user_data=True):
+def install_old_coccoc_version(installer_path, is_needed_clear_user_data=True):
     if check_if_coccoc_is_installed():
         if is_needed_clear_user_data is False:
             uninstall_coccoc_silently()
@@ -637,7 +657,7 @@ def install_old_coccoc_version(is_needed_clear_user_data=True):
             uninstall_coccoc_silently()
             remove_coccoc_update_silently()
             remove_local_app_data()
-    install_coccoc_set_as_default(coccoc_installer_name='coccoc_en_old_version.exe')
+    install_coccoc_set_as_default(installer_path, coccoc_installer_name='coccoc_en_old_version.exe')
 
 
 def get_default_download_folder(browser, url=Urls.COCCOC_SETTINGS_DOWNLOAD_URL):
@@ -657,3 +677,24 @@ def delete_installer_download(downloaded_folder, language='', installer_name='Co
     if files_handle_obj.is_file_exist(downloaded_folder + installer_name + language + extension):
         files_handle_obj.delete_files_in_folder(downloaded_folder, installer_name + language
                                                 + index_installer_file + extension)
+
+
+def get_browser_and_default_download_folder(is_active_host):
+    is_activated_host = False
+    if is_active_host:
+        LOGGER.info("Activate host: " + str(is_active_host))
+        interact_dev_hosts("activate")
+        is_activated_host = True
+    browser = init_chrome_driver()
+    default_download_folder = get_default_download_folder(browser, Urls.CHROME_SETTINGS_DOWNLOAD_URL)
+    return browser, default_download_folder, is_activated_host
+
+
+def download_and_get_installer_path(is_active_host, url):
+    browser, default_download_folder, is_activated_host = get_browser_and_default_download_folder(is_active_host)
+    delete_installer_download(default_download_folder, language='', installer_name='CocCocSetup', extension='.exe')
+    LOGGER.info("Download and get installer path")
+    coccoc_installer_temp = coccoc_page_obj.get_path_installer(browser, url, default_download_folder,
+                                               os='win', language='en')
+    coccoc_installer = coccoc_installer_temp.replace('/CocCocSetup.exe', '\\')
+    return browser, default_download_folder, is_activated_host, coccoc_installer
