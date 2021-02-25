@@ -1,3 +1,55 @@
+import logging
+import time
+
+import pytest
+from pytest_testrail.plugin import pytestrail
+
+from models.pagelocators.top_savior_sites.top_savior_sites_social import FacebookLocators, InstagramLocators
+from models.pagelocators.top_savior_sites.top_savior_sites_video_length import TopSaviorSitesVideoLengthLocators, \
+    VideoClipTVShowVideoLengthLocators, OnlineMusicVideoLengthLocators, SocialNetworkVideoLengthLocators, \
+    OnlinePornVideoLengthLocators
+from models.pageobject.sites import AnySitePageObject
+from models.pageobject.top_savior_sites.top_savior_sites_film import TopSaviorSitesFilmActions
+from models.pageobject.top_savior_sites.top_savior_sites_online_music import TopSaviorSitesOnlineMusicActions
+from models.pageobject.top_savior_sites.top_savior_sites_social import FacebookActions, InstagramActions
+from models.pageobject.top_savior_sites.top_savior_sites_title import TopSitesSaviorTitleAction
+from models.pageobject.top_savior_sites.top_savior_sites_video_clip_tv_show import TopSaviorSitesVideoClipTvShowActions
+from models.pageobject.top_savior_sites.top_savior_sites_video_length import TopSitesSaviorVideoLengthActions
+from testscripts.common_setup import download_file_via_main_download_button, get_resolution_info, \
+    assert_file_download_value, delete_all_mp4_file_download, pause_or_play_video_by_javascript
+from testscripts.savior_top_100_sites.common import download_and_verify_video, choose_highest_resolution_of_video, \
+    verify_download_file_facebook_by_url, login_instagram
+from utils_automation.common_browser import coccoc_instance
+from utils_automation.const import TopSitesUrls, OtherSiteUrls
+
+LOGGER = logging.getLogger(__name__)
+
+
+class TestTop20Sites:
+    top_savior_sites_video_length_action = TopSitesSaviorVideoLengthActions()
+    top_sites_savior_title_action = TopSitesSaviorTitleAction()
+    top_savior_sites_online_music_action = TopSaviorSitesOnlineMusicActions()
+    top_sites_savior_title_action = TopSitesSaviorTitleAction()
+    any_site_page_object = AnySitePageObject()
+    top_savior_sites_video_clip_tv_show_action = TopSaviorSitesVideoClipTvShowActions()
+    facebook_action = FacebookActions()
+    instagram_action = InstagramActions()
+    any_site_page_object = AnySitePageObject()
+    top_sites_savior_title_action = TopSitesSaviorTitleAction()
+    top_savior_sites_film_action = TopSaviorSitesFilmActions()
+    top_savior_sites_video_length_action = TopSitesSaviorVideoLengthActions()
+
+    # @pytestrail.case('C96721')
+    # @pytest.mark.ten_popular_sites
+    # @pytestrail.defect('PF-1219')
+    # def test_download_file_phim_moi(self, browser, get_current_download_folder):
+    #                                 #, clear_download_page ,):
+    #     self.prepare_displayed_savior_popup(browser)
+    #     video_title_start_with = self.top_sites_savior_title_actions.get_phimmoi_video_title(browser)
+    #     try:
+    #         implement_download_file(browser, get_current_download_folder, start_with=video_title_start_with)
+    #     finally:
+    #         delete_all_mp4_file_download(get_current_download_folder, '.mp4', star_with=video_title_start_with)
 # import logging
 # import time
 # import pytest

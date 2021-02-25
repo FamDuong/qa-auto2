@@ -98,6 +98,7 @@ class AnySite(object):
     XNXX_PLAY_BTN = (By.XPATH, '//div[@class="big-button play"]')
     FR_PORN_HUB_VIDEO_PLAY_BTN = (By.XPATH, '//div[@class="mhp1138_play"]')
     FR_PORN_HUB_VIDEO_ITEM = (By.ID, 'player')
+    XHAMSTER_ONE_PLAY_VIDEO_BUTTON = (By.XPATH, '(//div[contains(@class, "player-start-button")])[1]')
     VLXX_VIDEO_ITEM = (By.XPATH, '//video')
     VLXX_VIDEO_ITEM_WRAPPER = (By.ID, 'vlxx')
     SEX_TOP1_VIDEO_ITEM = (By.XPATH, '//video')

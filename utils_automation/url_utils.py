@@ -162,13 +162,11 @@ class URLUtils:
         sub_url_is_same_root_url = False
         url_start_with_http = False
         LOGGER.info("Parent url: " + parent_url)
-        LOGGER.info("Child url: " + str(child_urls))
         if len(child_urls) > 0:
             while not result and not sub_url_is_same_root_url and not url_start_with_http:
                 # sub_urls = random.sample(tuple(child_urls), number_sublinks)
                 for i in range(len(child_urls)):
                     child_url = str(child_urls[i])
-                    LOGGER.info(child_url)
                     url_start_with_http = child_url.startswith('http')
                     sub_url_is_same_root_url = self.is_same_domain(child_url, parent_url)
                     if url_start_with_http and sub_url_is_same_root_url and child_url != parent_url:
@@ -179,28 +177,6 @@ class URLUtils:
                         return child_url
         else:
             return ''
-    # def get_random_valid_links(self, child_urls, parent_url, number_sublinks = 1):
-    #     result = False
-    #     sub_url_is_same_root_url = False
-    #     url_start_with_http = False
-    #     LOGGER.info("Parent url: " + parent_url)
-    #     LOGGER.info("Child url: " + str(child_urls))
-    #     if len(tuple(child_urls)) > 0:
-    #         while not result and not sub_url_is_same_root_url and not url_start_with_http:
-    #             # sub_urls = random.sample(tuple(child_urls), number_sublinks)
-    #             for url in sub_urls:
-    #                 url_start_with_http = url.startswith('http')
-    #                 sub_url_is_same_root_url = self.is_same_domain(url, parent_url)
-    #                 if sub_url_is_same_root_url and str(url) != parent_url and url_start_with_http:
-    #                     result = self.is_url_exits(url)
-    #                 if result:
-    #                     break
-    #                 LOGGER.info("Child url that selected: " + str(sub_urls))
-    #                 LOGGER.info("=================================================================")
-    #                 return sub_urls
-    #     else:
-    #         return ''
-
 
     # Get any available sub link and same domain
     def get_random_valid_links_same_domain(self, main_url, list_urls, number_sublinks = 1):
@@ -215,7 +191,6 @@ class URLUtils:
 
     # Check if same domain
     def is_same_domain(self, url_1, url_2):
-        LOGGER.info("Verify child domain % s is/not same parent domain %s " % (url_1, url_2))
         result = False
         search_domain = parse.urlparse(url_1).hostname
         if search_domain in url_2:

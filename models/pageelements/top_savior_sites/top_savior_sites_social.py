@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from models.pageelements.basepage_elements import BasePageElement
 from models.pagelocators.top_savior_sites.top_savior_sites_social import MessengerLocators, FacebookLocators, \
     InstagramLocators
-from utils_automation.const import OtherSiteUrls
+from utils_automation.const import SocialNetworkUrls
 
 
 class MessengerElements(BasePageElement):
@@ -30,12 +30,11 @@ class FacebookElements(BasePageElement):
         import time
         time.sleep(5)
         try:
-            if url == OtherSiteUrls.FACEBOOK_HOMEPAGE_URL or url == OtherSiteUrls.FACEBOOK_PROFILE_ME_URL \
-                    or url == OtherSiteUrls.FACEBOOK_WATCH_URL or url == OtherSiteUrls.FACEBOOK_VIDEO_URL:
+            if url == SocialNetworkUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
+                return self.wait_for_element(driver).until(
+                    ec.presence_of_element_located(FacebookLocators.VTV_GIAITRI_PAGE_FIRST_VIDEO))
+            else:
                 return self.wait_for_element(driver).until(ec.presence_of_element_located(FacebookLocators.HOME_PAGE_FIRST_VIDEO))
-
-            elif url == OtherSiteUrls.FACEBOOK_VTVGIAITRI_PAGE_URL:
-                return self.wait_for_element(driver).until(ec.presence_of_element_located(FacebookLocators.VTV_GIAITRI_PAGE_FIRST_VIDEO))
         except:
             return None
 
@@ -46,9 +45,9 @@ class FacebookElements(BasePageElement):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(FacebookLocators.WATCH_FIRST_VIDEO))
 
+
 class InstagramElements(BasePageElement):
 
     def find_instagram_first_video(self, driver):
         return self.wait_for_element(driver).until(
             ec.presence_of_element_located(InstagramLocators.FIRST_VIDEO_HOME_PAGE))
-

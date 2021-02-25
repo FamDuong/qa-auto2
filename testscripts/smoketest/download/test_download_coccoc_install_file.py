@@ -27,4 +27,3 @@ class TestDownloadCoccocInstallFile:
         finally:
             delete_installer_download(default_download_folder, 'en')
             delete_installer_download(default_download_folder, 'vi')
-

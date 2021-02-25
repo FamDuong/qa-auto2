@@ -43,17 +43,12 @@ class FacebookActions(BasePageObject):
     facebook_element = FacebookElements()
 
     def scroll_to_facebook_video(self, driver, url):
-        # if url not in OtherSiteUrls.FACEBOOK_THACH_THUC_DANH_HAI_PAGE_VIDEOS:
-        #     self.facebook_element.find_dong_doan_chat_button_fanpage(driver).click()
         element = self.facebook_element.find_facebook_first_video(driver, url)
-        # driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-        driver.execute_script("window.scrollBy(0, 100);")
+        driver.execute_script("window.scrollBy(0, 2000);")
         if element is None:
             while element is None:
                 element = self.facebook_element.find_facebook_first_video(driver, url)
-                # driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-                driver.execute_script("window.scrollBy(0, 100);")
-                # driver.execute_script("arguments[0].scrollIntoView(true);", element)
+                driver.execute_script("window.scrollBy(0, 2000);")
                 if element is not None:
                     coordinates = element.location_once_scrolled_into_view  # returns dict of X, Y coordinates
                     driver.execute_script('window.scrollTo({}, {});'.format(coordinates['x'], coordinates['y']))

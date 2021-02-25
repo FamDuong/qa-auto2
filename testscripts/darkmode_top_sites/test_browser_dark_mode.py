@@ -41,11 +41,11 @@ class TestBrowserDarkMode:
 
     def init_websites_extend(self):
         self.dirname, runname = os.path.split(os.path.abspath(__file__))
-        self.file_list_websites = self.dirname + r"\list_websites.csv"
+        self.file_list_websites = self.dirname + "\\test_data" + r"\list_websites.csv"
         # self.file_list_websites_exception = self.dirname + r"\list_websites_exception.csv"
-        self.file_list_websites_extend = self.dirname + r"\list_websites_extend.csv"
-        self.file_list_websites_valid = self.dirname + r"\list_websites_valid.csv"
-        self.file_list_websites_invalid = self.dirname + r"\list_websites_invalid.csv"
+        self.file_list_websites_extend = self.dirname + "\\test_data" + r"\list_websites_extend.csv"
+        self.file_list_websites_valid = self.dirname + "\\test_data" + r"\list_websites_valid.csv"
+        self.file_list_websites_invalid = self.dirname + "\\test_data" + r"\list_websites_invalid.csv"
         self.file.remove_file(self.file_list_websites_extend)
         self.file.remove_file(self.file_list_websites_valid)
         self.file.remove_file(self.file_list_websites_invalid)
@@ -143,8 +143,8 @@ class TestBrowserDarkMode:
         # self.move_browser_to_other_position(browser)
 
         # Using UISpy to define locator then mouse move => Need to improve
-        #self.darkmode.enable_dark_mode_in_setting_page(browser)
-        #self.urls.wait_for_page_to_load(browser, Urls.COCCOC_URL)
+        self.darkmode.enable_dark_mode_in_setting_page(browser)
+        self.urls.wait_for_page_to_load(browser, Urls.COCCOC_URL)
 
         # Get list of urls again
         urls_live = self.file.get_from_csv(self.file_list_websites_extend)
@@ -152,8 +152,12 @@ class TestBrowserDarkMode:
         for url in urls_live:
             LOGGER.info("Capture website: " + url)
             # self.switch_dark_mode_for_site(browser, url)
+<<<<<<< HEAD
             self.urls.wait_for_page_to_load(browser, url)
             image_website_1, image_screenshot_1 = self.get_fullpage_screenshot_dark_mode(browser, url, times=1)
+=======
+            # image_website_1, image_screenshot_1 = self.get_fullpage_screenshot_dark_mode(browser, url, times=1)
+>>>>>>> 0725e8ff05c950169bb4bd77a164b7318261993f
 
             # Capture second image
             # self.switch_dark_mode_for_site(browser, url)
@@ -162,9 +166,9 @@ class TestBrowserDarkMode:
             # list_images.add((image_website_1, image_screenshot_1))
             # list_images.add((image_website_2, image_screenshot_2))
 
-            images = (image_website_1, image_screenshot_1)
-            image_result = self.verify_images(url, images)
-            self.file.append_to_file(self.file_list_websites_result, image_result)
+            # images = (image_website_1, image_screenshot_1)
+            # image_result = self.verify_images(url, images)
+            # self.file.append_to_file(self.file_list_websites_result, image_result)
 
             # images = (image_website_2, image_screenshot_2)
             # image_result = self.verify_images(url, images)

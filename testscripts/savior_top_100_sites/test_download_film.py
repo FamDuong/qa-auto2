@@ -1,4 +1,5 @@
 import logging
+import time
 
 import pytest
 from pytest_testrail.plugin import pytestrail
@@ -11,7 +12,8 @@ from models.pageobject.top_savior_sites.top_savior_sites_video_length import Top
 from testscripts.common_setup import download_file_via_main_download_button, get_resolution_info, \
     assert_file_download_value, delete_all_mp4_file_download
 from testscripts.savior_top_100_sites.common import download_and_verify_video, choose_highest_resolution_of_video
-from utils_automation.const import FilmUrls
+from utils_automation.common import WebElements
+from utils_automation.const import FilmUrls, OtherSiteUrls
 
 LOGGER = logging.getLogger(__name__)
 
@@ -21,6 +23,17 @@ class TestFilm:
     top_sites_savior_title_action = TopSitesSaviorTitleAction()
     # top_savior_sites_film_action = TopSaviorSitesFilmActions()
     top_savior_sites_video_length_action = TopSitesSaviorVideoLengthActions()
+
+    def test_prepare_displayed_savior_popup(self, browser):
+        browser.get(OtherSiteUrls.PHIMMOI_VIDEO_URL)
+        browser.refresh()
+        # self.top_sites_savior_actions.open_film_in_phim_moi(browser)
+        self.top_sites_savior_actions.close_popup_ad_if_appear(browser)
+        # time.sleep(40)
+        WebElements.scroll_into_view_element(browser, self.top_sites_savior_title_elements
+                                             .find_video_phimmoi_title_element(browser))
+        self.any_site_page_object.mouse_over_video_element_phimmoi(browser)
+        time.sleep(400)
 
     @pytestrail.case('C98735')
     @pytest.mark.top_sites
@@ -57,28 +70,7 @@ class TestFilm:
         finally:
             delete_all_mp4_file_download(get_current_download_folder_top_sites, end_with=".mp4", start_with=video_title)
 
-    def test_prepare_displayed_savior_popup(self, browser):
-        browser.get(OtherSiteUrls.PHIMMOI_VIDEO_URL)
-        browser.refresh()
-        # self.top_sites_savior_actions.open_film_in_phim_moi(browser)
-        self.top_sites_savior_actions.close_popup_ad_if_appear(browser)
-        # time.sleep(40)
-        WebElements.scroll_into_view_element(browser, self.top_sites_savior_title_elements
-                                             .find_video_phimmoi_title_element(browser))
-        any_site_page_object.mouse_over_video_element_phimmoi(browser)
-        time.sleep(400)
 
-    @pytestrail.case('C96721')
-    @pytest.mark.ten_popular_sites
-    @pytestrail.defect('PF-1219')
-    def test_download_file_phim_moi(self, browser, get_current_download_folder):
-                                    #, clear_download_page ,):
-        self.prepare_displayed_savior_popup(browser)
-        video_title_start_with = self.top_sites_savior_title_actions.get_phimmoi_video_title(browser)
-        try:
-            implement_download_file(browser, get_current_download_folder, start_with=video_title_start_with)
-        finally:
-            delete_all_mp4_file_download(get_current_download_folder, '.mp4', star_with=video_title_start_with)
 
 
 # import time

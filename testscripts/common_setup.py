@@ -136,20 +136,37 @@ def assert_video_height_width(end_with, actual_height, expect_height, actual_wid
     if '.mp4' in end_with:
         LOGGER.info("Actual height x Actual width: " + str(actual_height) + "x" + str(actual_width))
         LOGGER.info("Expect height: " + str(expect_height))
-        try:
-            if int(actual_height) > 720:
-                expect_width = if_height_frame_so_width_frame(expect_height)
-                LOGGER.info("Assert video with high resolution: " + str(expect_height) + "x" + str(expect_width))
-                assert actual_width == expect_width
-        except Exception:
-            LOGGER.info("Assert video with Standard/ Medium/ Low resolution: ")
-            if (expect_height is not None) and (expect_height != ''):
-                diff_value = abs(int(actual_height) - int(expect_height.split('p')[0]))
-                LOGGER.info("Diff height: " + str(diff_value))
-                assert (str(int(actual_height)) in expect_height or diff_value < 10)
-        except Exception:
-            LOGGER.info("Assert video is not None")
-            assert actual_height is not None
+        e = assert_file_resolution_greater_than_720(expect_height, actual_height, actual_width)
+        if 'AssertionError' in str(e):
+            e = assert_diff_height_less_than_10(expect_height, actual_height)
+            if 'AssertionError' in str(e):
+                assert_actual_height_is_not_none(actual_height)
+
+
+def assert_file_resolution_greater_than_720(expect_height, actual_height, actual_width):
+    try:
+        if int(actual_height) > 720:
+            expect_width = if_height_frame_so_width_frame(expect_height)
+            LOGGER.info("Assert video with high resolution: " + str(expect_height) + "x" + str(expect_width))
+            assert actual_width == expect_width
+    except AssertionError as e:
+        return e
+
+
+def assert_diff_height_less_than_10(expect_height, actual_height):
+    try:
+        LOGGER.info("Assert video with Standard/ Medium/ Low resolution: ")
+        if (expect_height is not None) and (expect_height != ''):
+            diff_value = abs(int(actual_height) - int(expect_height.split('p')[0]))
+            LOGGER.info("Diff height: " + str(diff_value))
+            assert (str(int(actual_height)) in expect_height or diff_value < 10)
+    except AssertionError as e:
+        return e
+
+
+def assert_actual_height_is_not_none(actual_height):
+    LOGGER.info("Assert video is not None")
+    assert actual_height is not None
 
 
 def assert_file_download_exist(download_folder_path, file_size=2.00, start_with=None):
@@ -288,5 +305,7 @@ def get_resolution_info(media_info):
         m = m.group()
     else:
         m = ''
+
+    m = re.sub("p", "", str(m))
     LOGGER.info("Get expect height: " + str(m))
     return m
