@@ -53,13 +53,13 @@ class TestBrowserDarkMode:
     def init_dark_mode(self):
         self.timestamp = get_current_timestamp("%Y%m%d%H%M")
         self.dirname, runname = os.path.split(os.path.abspath(__file__))
-        self.capture_dirname = self.dirname + "\\screenshots\\" + self.timestamp
+        self.capture_dirname = self.dirname + r"\\" + self.timestamp
         self.file.create_empty_folder(self.capture_dirname)
-        self.file_list_websites = self.dirname + "\\test_data" + r"\list_websites.csv"
-        self.file_list_websites_exception = self.dirname + "\\test_data" + r"\list_websites_exception.csv"
-        self.file_list_websites_extend = self.dirname + "\\test_data" + r"\list_websites_extend.csv"
+        self.file_list_websites = self.dirname + r"\list_websites.csv"
+        self.file_list_websites_exception = self.dirname + r"\list_websites_exception.csv"
+        self.file_list_websites_extend = self.dirname + r"\list_websites_extend.csv"
         self.file_list_websites_result = self.capture_dirname + r"\list_websites_result.csv"
-        self.darkmode_icon = self.dirname + "\\test_data" + r'\darkmode_icon.png'
+        self.darkmode_icon = self.dirname + r'\darkmode_icon.png'
 
     # Capture all images
     def get_fullpage_screenshot_dark_mode(self, browser, url, times=1):
@@ -151,12 +151,13 @@ class TestBrowserDarkMode:
         # Capture imagespi
         for url in urls_live:
             LOGGER.info("Capture website: " + url)
-            self.switch_dark_mode_for_site(browser, url)
+            # self.switch_dark_mode_for_site(browser, url)
+            self.urls.wait_for_page_to_load(browser, url)
             image_website_1, image_screenshot_1 = self.get_fullpage_screenshot_dark_mode(browser, url, times=1)
 
             # Capture second image
-            self.switch_dark_mode_for_site(browser, url)
-            image_website_2, image_screenshot_2 = self.get_fullpage_screenshot_dark_mode(browser, url, times=2)
+            # self.switch_dark_mode_for_site(browser, url)
+            # image_website_2, image_screenshot_2 = self.get_fullpage_screenshot_dark_mode(browser, url, times=2)
 
             # list_images.add((image_website_1, image_screenshot_1))
             # list_images.add((image_website_2, image_screenshot_2))
@@ -165,10 +166,10 @@ class TestBrowserDarkMode:
             image_result = self.verify_images(url, images)
             self.file.append_to_file(self.file_list_websites_result, image_result)
 
-            images = (image_website_2, image_screenshot_2)
-            image_result = self.verify_images(url, images)
+            # images = (image_website_2, image_screenshot_2)
+            # image_result = self.verify_images(url, images)
             self.file.append_to_file(self.file_list_websites_result, image_result)
-            # self.file.remove_first_line_in_file(self.file_list_websites_extend)  # Remove url in file extend
+            self.file.remove_first_line_in_file(self.file_list_websites_extend)  # Remove url in file extend
 
         pytest.message = "Finished run dark mode capture test: \n" + str(self.number_of_failed) + "/" + str(
             len(urls_live) * 2) \
