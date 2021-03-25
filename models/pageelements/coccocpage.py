@@ -24,3 +24,17 @@ class CocCocPageElement(BasePageElement):
             return wait.until(ec.presence_of_element_located(CocCocPageLocators.URL_DOWNLOAD_WINXP_VI))
         else:
             return wait.until(ec.presence_of_element_located(CocCocPageLocators.BUTTON_DOWNLOAD))
+
+    def find_privacy_button_production(self, driver):
+        wait = WebDriverWait(driver, 20)
+        return wait.until(ec.presence_of_element_located(CocCocPageLocators.PRO_TOI_DA_HIEU_VA_DONG_Y_BTN))
+
+    def find_language_flag_production(self, driver):
+        wait = WebDriverWait(driver, 20)
+        return wait.until(ec.presence_of_element_located(CocCocPageLocators.PRO_LANGUAGE_FLAG))
+
+    def find_download_element_production(self, driver, language):
+        wait = WebDriverWait(driver, 20)
+        if language is "en":
+            self.find_language_flag_production(driver).click()
+        return wait.until(ec.presence_of_element_located(CocCocPageLocators.PRO_BUTTON_DOWNLOAD))

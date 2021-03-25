@@ -111,11 +111,11 @@ class SettingsPageObject(BasePageObject):
         actual_auto_fill_lbl = self.settings_elem.find_left_menu_auto_fill(driver).text
         actual_default_browser_lbl = self.settings_elem.find_left_menu_default_browser(driver).text
         if language == 'en':
-            assert actual_people_lbl in 'You and Google'
-            assert actual_auto_fill_lbl in 'Auto-fill'
+            assert actual_people_lbl in 'You and Cốc Cốc'
+            assert actual_auto_fill_lbl in 'Autofill'
             assert actual_default_browser_lbl in 'Default browser'
         else:
-            assert actual_people_lbl in 'Bạn và Google'
+            assert actual_people_lbl in 'Bạn và Cốc Cốc'
             assert actual_auto_fill_lbl in 'Tự động điền'
             assert actual_default_browser_lbl in 'Trình duyệt mặc định'
 

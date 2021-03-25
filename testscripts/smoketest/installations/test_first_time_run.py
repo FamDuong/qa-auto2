@@ -1,17 +1,17 @@
 import platform
-
+import time
 import pytest
 from pytest_testrail.plugin import pytestrail
 import testscripts.smoketest.common as common
-
+import utils_automation.common_browser as common_browser
 
 class TestFirstTimeRun:
 
     def verify_new_tab_coccoc_exist(self):
         from pywinauto import Desktop
-        coccoc_instance = Desktop(backend='uia').Welcome_to_Cốc_Cốc_Cốc_Cốc
+        coccoc_instance = Desktop(backend='uia').Welcome_to_Cốc_Cốc_Cốc_Cốc_browser
         common.wait_for_panel_is_exist(coccoc_instance)
-        welcome_coccoc_tab = coccoc_instance.child_window(title='Welcome to Cốc Cốc', control_type=50019)
+        welcome_coccoc_tab = coccoc_instance.child_window(title='Welcome to Cốc Cốc browser', control_type=50019)
         new_tab = coccoc_instance.child_window(title_re='New Tab', control_type=50019)
         common.wait_for_panel_is_exist(welcome_coccoc_tab)
         common.wait_for_panel_is_exist(new_tab)
@@ -22,54 +22,55 @@ class TestFirstTimeRun:
         from utils_automation.common import WindowsHandler
         windows_handler = WindowsHandler()
         windows_handler.delete_coccoc_firewall_rules()
-        from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
-        uninstall_then_install_coccoc_with_default(is_needed_clean_up=True, is_needed_clear_user_data=True)
+        common.uninstall_then_install_coccoc_with_default(is_needed_clean_up=True, is_needed_clear_user_data=True)
         from utils_automation.common_browser import chrome_options_preset
         from selenium import webdriver
         driver = webdriver.Chrome(options=chrome_options_preset())
-        import time
         time.sleep(4)
         driver.quit()
 
-    def verify_open_browser_for_the_first_time(self, coccoc_is_default):
-        from utils_automation.common_browser import cleanup
-        cleanup(firefox=False)
-        common.uninstall_then_install_coccoc_with_default(coccoc_is_default, is_needed_clean_up=False,
+    def verify_open_browser_for_the_first_time(self, is_active_host, url, coccoc_is_default):
+        browser, default_download_folder, is_activated_host, coccoc_installer = common.download_and_get_installer_path(
+            is_active_host, url)
+        common_browser.cleanup(firefox=False)
+        common.uninstall_then_install_coccoc_with_default(installer_path=coccoc_installer,
+                                                          coccoc_installer_name='CocCocSetup.exe',
+                                                          coccoc_is_default=coccoc_is_default,
+                                                          is_needed_clean_up=False,
                                                           is_needed_clear_user_data=True)
         browser_name = common.get_browser_name()
-        common.choose_import_browser_settings('Continue', browser_name)
+        if browser_name is not None:
+            common.choose_import_browser_settings('Continue', browser_name)
         try:
             self.verify_new_tab_coccoc_exist()
         finally:
-            cleanup(firefox=False)
+            common_browser.cleanup(firefox=False)
+            browser.quit()
 
     @pytestrail.case('C44829')
-    def test_check_first_time_run(self):
-        self.verify_open_browser_for_the_first_time(coccoc_is_default='yes')
+    def test_check_first_time_run(self, is_active_host, url):
+        self.verify_open_browser_for_the_first_time(is_active_host, url, coccoc_is_default='yes')
         # In win 8, 8.1 not show checkbox "Make Cốc Cốc your default browser"
         if platform.release() not in ["8", "8.1"]:
-            self.verify_open_browser_for_the_first_time(coccoc_is_default='no')
+            self.verify_open_browser_for_the_first_time(is_active_host, url, coccoc_is_default='no')
 
     @pytestrail.case('C44830')
-    @pytestrail.defect('BR-1415', 'BR-1205')
-    @pytest.mark.skipif(platform.release() in ["8", "8.1", "7", "10"], reason=
-    "Takes time set default browser so later and cannot detect windows from pywinauto when open monitor")
-    def test_if_widevine_flash_plugin_exist_by_default_right_after_installing_browser(self):
-        from utils_automation.common_browser import cleanup
-        cleanup(firefox=False)
-        from testscripts.smoketest.common import change_default_browser
-        change_default_browser('Google Chrome')
-        from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
-        uninstall_then_install_coccoc_with_default(is_needed_clean_up=False, is_needed_clear_user_data=True)
-        from testscripts.smoketest.common import wait_for_window_appear
-        wait_for_window_appear(window_name='Import Google Chrome Settings')
-        from testscripts.smoketest.common import choose_import_browser_settings
-        choose_import_browser_settings(action='Continue')
+    # @pytestrail.defect('BR-1415', 'BR-1205')
+    # @pytest.mark.skipif(platform.release() in ["8", "8.1", "7", "10"], reason=
+    # "Takes time set default browser so later and cannot detect windows from pywinauto when open monitor")
+    def test_if_widevine_flash_plugin_exist_by_default_right_after_installing_browser(self, is_active_host, url):
+        common_browser.cleanup(firefox=False)
+        common.change_default_browser('Google Chrome')
+        browser, default_download_folder, is_activated_host, coccoc_installer = common.download_and_get_installer_path(
+            is_active_host, url)
+        common.uninstall_then_install_coccoc_with_default(installer_path=coccoc_installer,
+                                                    coccoc_installer_name='CocCocSetup.exe',
+                                                   is_needed_clean_up=False, is_needed_clear_user_data=True)
+        common.wait_for_window_appear(window_name='Import Google Chrome Settings')
+        common.choose_import_browser_settings(action='Continue')
         from selenium import webdriver
-        from utils_automation.common_browser import chrome_options_preset
-        from utils_automation.common_browser import cleanup
-        cleanup(firefox=False)
-        driver = webdriver.Chrome(options=chrome_options_preset())
+        common_browser.cleanup(firefox=False)
+        driver = webdriver.Chrome(options=common_browser.chrome_options_preset())
         from models.pageobject.settings import SettingsComponentsPageObject
         settings_component_page_object = SettingsComponentsPageObject()
         try:
@@ -80,42 +81,31 @@ class TestFirstTimeRun:
             settings_component_page_object.verify_all_components_version_is_updated(driver)
         finally:
             driver.quit()
-            cleanup(firefox=False)
+            common_browser.cleanup(firefox=False)
 
     @pytestrail.case('C44831')
     def test_check_task_manager_start_browser(self):
-        from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
-        uninstall_then_install_coccoc_with_default()
-        from utils_automation.common_browser import cleanup
-        cleanup(firefox=False)
+        common.uninstall_then_install_coccoc_with_default()
+        common_browser.cleanup(firefox=False)
         from testscripts.smoketest.installations.common import open_browser_from_command
         try:
             open_browser_from_command(browser_name='browser')
-            from testscripts.smoketest.common import get_application_process
-            import time
             time.sleep(8)
-            assert 'browser' in get_application_process(application_name='browser')
-            assert 'CocCocCrash' in get_application_process(application_name='CocCocCrashHandler')
+            assert 'browser' in common.get_application_process(application_name='browser')
+            assert 'CocCocCrash' in common.get_application_process(application_name='CocCocCrashHandler')
         finally:
-            from utils_automation.common_browser import cleanup
-            cleanup(firefox=False)
+            common_browser.cleanup(firefox=False)
 
     @pytestrail.case('C44832')
     @pytest.mark.skipif(platform.release() in ["8", "8.1", "7", "10"], reason=
     "Takes time set default browser so later and issue detect windows when not open monitor")
     def test_check_extensions_version_after_installation(self):
-        from testscripts.smoketest.common import change_default_browser
-        change_default_browser('Google Chrome')
-        from testscripts.smoketest.common import uninstall_then_install_coccoc_with_default
-        uninstall_then_install_coccoc_with_default(is_needed_clean_up=False, is_needed_clear_user_data=True)
-        from testscripts.smoketest.common import wait_for_window_appear
-        wait_for_window_appear(window_name='Import Google Chrome Settings')
-        from testscripts.smoketest.common import choose_import_browser_settings
-        choose_import_browser_settings(action='Continue')
-        import time
+        common.change_default_browser('Google Chrome')
+        common.uninstall_then_install_coccoc_with_default(is_needed_clean_up=False, is_needed_clear_user_data=True)
+        common.wait_for_window_appear(window_name='Import Google Chrome Settings')
+        common.choose_import_browser_settings(action='Continue')
         time.sleep(5)
-        from utils_automation.common_browser import cleanup
-        cleanup(firefox=False)
+        common_browser.cleanup(firefox=False)
         # Enable coccoc mojichat by opening browser with --enable-features=CocCocMojichat
         from testscripts.smoketest.installations.common import open_browser_from_command
         open_browser_from_command(browser_name='browser --enable-features=CocCocMojichat')
@@ -170,8 +160,7 @@ class TestFirstTimeRun:
 
     @pytestrail.case('C44838')
     def test_the_company_signature_in_file_exe_and_dll(self):
-        from utils_automation.common_browser import cleanup
-        cleanup(firefox=False)
+        common_browser.cleanup(firefox=False)
         self.pre_condition_before_run_first_time()
         from utils_automation.common import FilesHandle
         file = FilesHandle()
@@ -201,10 +190,8 @@ class TestFirstTimeRun:
     def test__rule_in_firewall_of_windows_if_user_selects_allow_access_btn(self):
         # Note: Default when setting, user always select "Allow access" button
         # Inbound
-        from utils_automation.common_browser import cleanup
-        cleanup(firefox=False)
+        common_browser.cleanup(firefox=False)
         self.pre_condition_before_run_first_time()
-        import time
         time.sleep(100)
         from utils_automation.common import WindowsHandler
         windows = WindowsHandler()

@@ -85,12 +85,10 @@ def check_if_preferences_is_created(user_data_path):
 def chrome_options_preset(options=None):
     desired_capabilities = DesiredCapabilities.CHROME
     desired_capabilities['goog:loggingPrefs'] = {'browser': 'ALL'}
-    PROXY = "http://202.60.227.65:57887"  # IP:PORT or HOST:PORT
     binary_path = f"C:\\Users\\{current_user}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = binary_path
     chrome_options.add_argument("--start-maximized")
-    chrome_options.add_argument(f'--proxy-server={PROXY}')
     chrome_options.add_argument("--proxy-bypass-list=*")
     chrome_options.add_argument("--start-maximized")
     chrome_options.add_argument("--disable-gpu")
@@ -120,10 +118,13 @@ def chrome_options_preset(options=None):
     return chrome_options, desired_capabilities
 
 
-def coccoc_instance(is_needed_clean_up=True, options=None, clear_userdata=False):
+def coccoc_instance(binary_path='', is_needed_clean_up=True, options=None, clear_userdata=False):
     if is_needed_clean_up is True:
         cleanup(clear_userdata=clear_userdata)
     else:
         pass
     chrome_options, desired_capabilities = chrome_options_preset(options)
-    return webdriver.Chrome(options=chrome_options, desired_capabilities=desired_capabilities)
+    if binary_path == '':
+        return webdriver.Chrome(options=chrome_options, desired_capabilities=desired_capabilities)
+    else:
+        return webdriver.Chrome(options=chrome_options, desired_capabilities=desired_capabilities, executable_path=binary_path)
