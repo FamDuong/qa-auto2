@@ -41,6 +41,7 @@ COCCOC_GAME_API_DB_PASSWORD = get_environment_info()['coccoc_game_api']['db_info
 
 COCCOC_GAME_API_DOMAIN_URL = get_environment_info()['coccoc_game_api']['api']['domain']
 
+
 # New feeds
 COCCOC_NEW_FEED_DATA_URL = get_environment_info()['coccoc_new_feeds']['data']
 COCCOC_NEW_FEED_DATA_DB_SERVER = get_environment_info()['coccoc_new_feeds']['db_info']['server']
@@ -102,3 +103,25 @@ COCCOC_LUCKY_REDIS_PASSWORD = get_environment_info()['coccoc_lucky_redis']['pass
 
 # CocCoc Edu
 COCCOC_EDU_API_GIFT = get_environment_info()['coccoc_edu_quiz']['domain']
+
+# CocCoc Account
+COCCOC_ACCOUNTS_HOME_URL = get_environment_info()['coccoc_accounts']['url']['home_url']
+COCCOC_ACCOUNTS_API_LOGIN = COCCOC_ACCOUNTS_HOME_URL + get_environment_info()['coccoc_accounts']['api']['login']
+
+# CocCoc Point
+COCCOC_POINTS_DB_SERVER = get_environment_info()['coccoc_points']['db_info']['server']
+COCCOC_POINTS_DB_NAME = get_environment_info()['coccoc_points']['db_info']['database_name']
+COCCOC_POINTS_DB_USERNAME = get_environment_info()['coccoc_points']['db_info']['username']
+COCCOC_POINTS_DB_PASSWORD = get_environment_info()['coccoc_points']['db_info']['password']
+
+COCCOC_POINTS_HOME_URL = get_environment_info()['coccoc_points']['url']['home_url']
+COCCOC_POINTS_SERVICE_LOGIN = COCCOC_ACCOUNTS_HOME_URL + "/ServiceLogin?continue=https%3A%2F%2F" + get_environment_info()['coccoc_points']['url']['home_url'] + "&passive=true&service=points"
+
+COCCOC_POINTS_API_URL = get_environment_info()['coccoc_points']['api']['domain']
+COCCOC_POINTS_API_LUCKY_PRIZES = COCCOC_POINTS_API_URL + get_environment_info()['coccoc_points']['api']['lucky_prizes']
+COCCOC_POINTS_API_RECENT_WINNER = COCCOC_POINTS_API_URL + get_environment_info()['coccoc_points']['api']['recent_winners']
+COCCOC_POINTS_API_LUCKY_RESULT = COCCOC_POINTS_API_URL + get_environment_info()['coccoc_points']['api']['lucky_result']
+
+COCCOC_POINTS_REDIS_HOST = get_environment_info()['coccoc_points']['redis']['host']
+COCCOC_POINTS_REDIS_PORT = get_environment_info()['coccoc_points']['redis']['port']
+COCCOC_POINTS_REDIS_PASSWORD = get_environment_info()['coccoc_points']['redis']['password']

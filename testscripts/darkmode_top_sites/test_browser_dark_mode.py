@@ -152,13 +152,8 @@ class TestBrowserDarkMode:
         for url in urls_live:
             LOGGER.info("Capture website: " + url)
             # self.switch_dark_mode_for_site(browser, url)
-<<<<<<< HEAD
             self.urls.wait_for_page_to_load(browser, url)
             image_website_1, image_screenshot_1 = self.get_fullpage_screenshot_dark_mode(browser, url, times=1)
-=======
-            # image_website_1, image_screenshot_1 = self.get_fullpage_screenshot_dark_mode(browser, url, times=1)
->>>>>>> 0725e8ff05c950169bb4bd77a164b7318261993f
-
             # Capture second image
             # self.switch_dark_mode_for_site(browser, url)
             # image_website_2, image_screenshot_2 = self.get_fullpage_screenshot_dark_mode(browser, url, times=2)

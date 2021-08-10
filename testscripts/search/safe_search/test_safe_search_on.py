@@ -12,7 +12,7 @@ def test_safe_search():
     query = get_from_csv(test_data)
     for item in query:
         response = requests.get(
-            "https://dev5.coccoc.com/composer?_=1625469249474&p=0&q="+item+"&reqid=cgYgveOl&safe=1&apiV=1")
+            "http://dev5.coccoc.com/composer?_=1625818544384&p=0&q="+item+"&reqid=BVO0WHZy&safe=1&apiV=1")
         response.raise_for_status()
         jsonResponse = response.json()
         new_row = [item, str(jsonResponse['search']['is_empty_due_to_safe'])]
