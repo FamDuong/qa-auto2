@@ -12,7 +12,7 @@ def get_username(request):
 
 @pytest.fixture(scope='session')
 def binary_path():
-    return f"C:\\Users\\{username}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
+    return f"C:\\Program Files (x86)\\CocCoc\\Browser\\Application\\browser.exe"
 
 
 @pytest.fixture(scope='session')
@@ -22,7 +22,7 @@ def default_directory():
 
 @pytest.fixture(scope='session')
 def application_path():
-    return f"C:\\Users\\{username}\\AppData\\Local\\CocCoc\\Browser\\Application"
+    return f"C:\\Program Files (x86)\\CocCoc\\Browser\\Application"
 
 
 @pytest.fixture(scope='session')

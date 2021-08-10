@@ -15,7 +15,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 class TestPageLoadTime:
-    def open_webpage(self, source, binary_file, default_dir, options_list=None, enabled_ads_block=None):
+    def open_webpage(self, source, binary_file, default_dir, options_list=None, enabled_ads_block=True):
         browser = Browsers()
         browser.kill_all_browsers()
 
@@ -36,7 +36,7 @@ class TestPageLoadTime:
             opts.add_argument('--no-sandbox')
             opts.add_argument('--ignore-certificate-errors')
             opts.add_argument("--allow-insecure-localhost")
-            opts.add_argument("--enable-features=CocCocBlockAdByExtension")
+            # opts.add_argument("--enable-features=CocCocBlockAdByExtension")
         caps = DesiredCapabilities().CHROME
         caps["pageLoadStrategy"] = "normal"  # complete
         # caps["pageLoadStrategy"] = "eager"
@@ -97,12 +97,12 @@ class TestPageLoadTime:
     def test_browser_plt(self, binary_path, default_directory, application_path, get_enabled_adblock_extension):
         # Define test filename
         enabled_adblock_extension = get_enabled_adblock_extension
-        if enabled_adblock_extension == "True":
-            subprocess.Popen(["powershell.exe",
-                              f"cd {application_path}; .\\browser.exe --enable-features=CocCocBlockAdByExtension"],
-                             stdin=subprocess.PIPE, stderr=subprocess.PIPE)
-            time.sleep(10)
-            subprocess.Popen("taskkill /im browser.exe /f", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        # if enabled_adblock_extension == "True":
+        #    subprocess.Popen(["powershell.exe",
+        #                      f"cd {application_path}; .\\browser.exe --enable-features=CocCocBlockAdByExtension"],
+        #                     stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+        #    time.sleep(10)
+        #    subprocess.Popen("taskkill /im browser.exe /f", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         dirname, runname = os.path.split(os.path.abspath(__file__))
         filename = dirname + r'\test_data' + r"\testbenchmark.csv"
         filename_result = dirname + r'\test_result' + r"\results_plt.csv"
