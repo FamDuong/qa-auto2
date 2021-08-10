@@ -9,6 +9,7 @@ from pytest_testrail.plugin import pytestrail
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from utils_automation.cleanup import Browsers
+from utils_automation.url_utils import URLUtils
 
 start_browser = 0
 LOGGER = logging.getLogger(__name__)
@@ -17,6 +18,7 @@ LOGGER = logging.getLogger(__name__)
 class TestPageLoadTime:
     def open_webpage(self, source, binary_file, default_dir, options_list=None):
         browser = Browsers()
+        url_utils = URLUtils()
         browser.kill_all_browsers()
 
         global start_browser
@@ -47,9 +49,10 @@ class TestPageLoadTime:
         # driver = webdriver.Chrome(executable_path=cc_driver, chrome_options=opts)
         driver = webdriver.Chrome(options=opts, desired_capabilities=caps)
         # driver = webdriver.Chrome('/Users/itim/Downloads/python/chromedriver') #Environment: MAC OS
-
-        driver.get(source)
+        if url_utils.is_url_exits(source):
+            driver.get(source)
         return driver
+
 
     def measureTime(self, driver):
         global browser_startup

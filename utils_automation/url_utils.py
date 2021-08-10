@@ -40,7 +40,7 @@ class URLUtils:
         except (requests.exceptions.ConnectionError, requests.exceptions.InvalidSchema, requests.exceptions.TooManyRedirects) as err:
             is_exist = False
             LOGGER.info("%s is not reachable!!!: %s" % (url, err))
-        LOGGER.info("%s is existed: %s" % (url, str(is_exist)))
+        # LOGGER.info("%s is existed: %s" % (url, str(is_exist)))
         return is_exist
 
     def is_url_valid(self, url):
