@@ -81,7 +81,7 @@ class TestPageLoadTime:
         listweb = get_from_csv(filename)
         loadtimes = []
         index = 1
-        LOGGER.info('%-25s' '%-60s' '%s' % ('No.', 'Url', 'Page load time Average'))
+        LOGGER.info('%-30s' '%-30s' '%s' % ('No.', 'Url', 'Page load time Average'))
         for i in listweb:
             loadtime = 0
             looptime = 3
@@ -90,7 +90,7 @@ class TestPageLoadTime:
                 loadtime = loadtime + self.measureTime(browser)
                 page_load_time_avg = round(loadtime / looptime, 1)
             loadtimes.append(page_load_time_avg)
-            LOGGER.info('%-25s' '%-60s' '%s' % (index, i, page_load_time_avg))
+            LOGGER.info('%-30s' '%-30s' '%s' % (index, i, page_load_time_avg))
             index += 1
             write_result_data_for_page_load_time(file_name=file_name_result, keyname_list=i, value_list=page_load_time_avg,
                                                  result_type='Page load time')
