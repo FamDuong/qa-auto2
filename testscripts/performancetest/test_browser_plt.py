@@ -10,6 +10,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from utils_automation.cleanup import Browsers
 from utils_automation.url_utils import URLUtils
+from utils_automation.date_time_utils import get_current_timestamp
 
 start_browser = 0
 LOGGER = logging.getLogger(__name__)
@@ -26,18 +27,20 @@ class TestPageLoadTime:
         opts = Options()
         opts.binary_location = binary_file
         opts.add_argument("start-maximized")
+        opts.add_argument("enable-automation")
         opts.add_argument('user-data-dir=' + default_dir)
-        # opts.add_argument("--headless --disable-gpu")
         #if enabled_ads_block == "True":
-        opts.add_argument("--start-maximized")
         opts.add_argument("--proxy-server='direct://'")
         opts.add_argument("--proxy-bypass-list=*")
         opts.add_argument("--start-maximized")
         opts.add_argument('--disable-gpu')
         opts.add_argument('--disable-dev-shm-usage')
+        opts.add_argument('--disable-infobars')
+        opts.add_argument('--disable-browser-side-navigation')
         opts.add_argument('--no-sandbox')
         opts.add_argument('--ignore-certificate-errors')
         opts.add_argument("--allow-insecure-localhost")
+        # opts.add_argument("--headless")  # Not use headless due to need to check UI as same as end user
         # opts.add_argument("--enable-features=CocCocBlockAdByExtension")
         caps = DesiredCapabilities().CHROME
         caps["pageLoadStrategy"] = "normal"  # complete
@@ -46,7 +49,6 @@ class TestPageLoadTime:
             for i in options_list:
                 opts.add_argument(i)
         start_browser = int(round(time.time() * 1000))
-        # driver = webdriver.Chrome(executable_path=cc_driver, chrome_options=opts)
         driver = webdriver.Chrome(options=opts, desired_capabilities=caps)
         # driver = webdriver.Chrome('/Users/itim/Downloads/python/chromedriver') #Environment: MAC OS
         if url_utils.is_url_exits(source):
@@ -90,9 +92,11 @@ class TestPageLoadTime:
             loadtimes.append(page_load_time_avg)
             LOGGER.info('%-25s' '%-60s' '%s' % (index, i, page_load_time_avg))
             index += 1
-        write_result_data_for_page_load_time(file_name=file_name_result, keyname_list=listweb,
-                                             value_list=loadtimes,
-                                             result_type='Page load time')
+            write_result_data_for_page_load_time(file_name=file_name_result, keyname_list=i, value_list=page_load_time_avg,
+                                                 result_type='Page load time')
+        #write_result_data_for_page_load_time(file_name=file_name_result, keyname_list=listweb,
+        #                                     value_list=loadtimes,
+        #                                     result_type='Page load time')
 
     @pytestrail.case('C82299')
     # def test_browser_plt(self, binary_path, default_directory, application_path, get_enabled_adblock_extension):
@@ -107,7 +111,7 @@ class TestPageLoadTime:
         #    subprocess.Popen("taskkill /im browser.exe /f", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         dirname, runname = os.path.split(os.path.abspath(__file__))
         filename = dirname + r'\test_data' + r"\testbenchmark.csv"
-        filename_result = dirname + r'\test_result' + r"\results_plt.csv"
+        filename_result = dirname + r'\test_result' + r"\results_plt_" + get_current_timestamp("%Y%m%d%H%M") + ".csv"
         # self.get_page_load_time(filename, filename_result, binary_path, default_directory, None,
         #                        enabled_ads_block=enabled_adblock_extension)
         self.get_page_load_time(filename, filename_result, binary_path, default_directory, None)

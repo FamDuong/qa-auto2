@@ -70,17 +70,24 @@ def get_from_csv(filename):
             return None
 
 
-def write_result_data_for_page_load_time(file_name, keyname_list: list, value_list: list, result_type=''):
-    with open(file_name, 'a', encoding='utf-8') as file:
-        file.truncate(0)
-        total_value = 0
+#def write_result_data_for_page_load_time(file_name, keyname_list: list, value_list: list, result_type=''):
+def write_result_data_for_page_load_time(file_name, keyname_list, value_list, result_type=''):
+    if os.path.exists(file_name):
+        file = open(file_name, 'a', encoding="utf-8")
+    else:
+        file = open(file_name, 'w+', encoding="utf-8")
         file.write(f"Results for {result_type} is as below :\n")
-        for (keyname, value) in zip(keyname_list, value_list):
-            file.write('%-60s' '%s' % (keyname, value))
-            file.write('\n')
-            total_value += value
-        average_value = total_value / len(value_list)
-        file.write(f"Average is : {average_value}")
+    #file.truncate(0)
+    #total_value = 0
+    #file.write(f"Results for {result_type} is as below :\n")
+    file.write('%-60s' '%s' % (keyname_list, value_list))
+    file.write('\n')
+    #for (keyname, value) in zip(keyname_list, value_list):
+    #    file.write('%-60s' '%s' % (keyname, value))
+    #    file.write('\n')
+    #    total_value += value
+    # average_value = total_value / len(value_list)
+    # file.write(f"Average is : {average_value}")
     file.close()
 
 
