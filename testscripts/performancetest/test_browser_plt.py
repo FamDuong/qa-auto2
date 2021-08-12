@@ -19,10 +19,10 @@ LOGGER = logging.getLogger(__name__)
 
 
 class TestPageLoadTime:
-    def open_webpage(self, source, binary_file, default_dir, options_list=None):
+    def open_webpage(self, source, binary_file, default_dir, get_browser_type, options_list=None):
         browser = Browsers()
         url_utils = URLUtils()
-        browser.kill_all_browsers()
+        browser.kill_all_browsers(get_browser_type)
 
         global start_browser
 
@@ -83,7 +83,7 @@ class TestPageLoadTime:
         driver.quit()
         return page_load_time
 
-    def get_page_load_time(self, filename, file_name_result, binary_file, default_dir, options_list=None):
+    def get_page_load_time(self, filename, file_name_result, binary_file, default_dir, get_browser_type, options_list=None):
         listweb = get_from_csv(filename)
         loadtimes = []
         index = 1
@@ -92,7 +92,7 @@ class TestPageLoadTime:
             loadtime = 0
             looptime = 3
             for j in range(looptime):
-                browser = self.open_webpage(i, binary_file, default_dir, options_list)
+                browser = self.open_webpage(i, binary_file, default_dir, get_browser_type, options_list)
                 measure_time = self.measureTime(browser)
                 loadtime = loadtime + measure_time
                 LOGGER.info('%-30s' '%-30s' '%s' % (str(index) + "." + str(j), i, measure_time))
@@ -116,4 +116,4 @@ class TestPageLoadTime:
         filename_result = dirname + r'\test_result' + r"\results_plt_20210811_chrome.csv"
         # self.get_page_load_time(filename, filename_result, binary_path, default_directory, None,
         #                        enabled_ads_block=enabled_adblock_extension)
-        self.get_page_load_time(filename, filename_result, binary_path, default_directory, None)
+        self.get_page_load_time(filename, filename_result, binary_path, default_directory, get_browser_type, None)
