@@ -112,8 +112,6 @@ class TestPageLoadTime:
         LOGGER.info("Run in %s" % get_browser_type)
         dirname, runname = os.path.split(os.path.abspath(__file__))
         filename = dirname + r'\test_data' + r"\testbenchmark.csv"
-        # filename_result = dirname + r'\test_result' + r"\results_plt_" + get_current_timestamp("%Y%m%d%H%M") + ".csv"
-        filename_result = dirname + r'\test_result' + r"\results_plt_20210811_chrome.csv"
-        # self.get_page_load_time(filename, filename_result, binary_path, default_directory, None,
-        #                        enabled_ads_block=enabled_adblock_extension)
+        filename_result = dirname + r'\test_result' + r"\results_plt_" + get_current_timestamp("%Y%m%d") \
+                          + "_" + get_browser_type + ".csv"
         self.get_page_load_time(filename, filename_result, binary_path, default_directory, get_browser_type, None)
