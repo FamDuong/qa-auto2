@@ -191,6 +191,7 @@ def pytest_addoption(parser):
     parser.addoption("--env", action="store", default="local")
     parser.addoption("--user", action="store", default=getpass.getuser())
     parser.addoption("--enabled-adblock-extension", action="store", default="True")
+    parser.addoption("--browser-type", action="store", default="CocCoc")
     parser.addoption("--disable-gpu")
     parser.addoption("--disable-dev-shm-usage")
     parser.addoption("--no-sandbox")

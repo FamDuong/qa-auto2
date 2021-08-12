@@ -260,7 +260,6 @@ class FilesHandle:
         try:
             shutil.copyfile(source, destination)
             LOGGER.info("File copied successfully.")
-
             # If source and destination are same
         except shutil.SameFileError:
             LOGGER.info("Source and destination represents the same file.")
@@ -268,11 +267,9 @@ class FilesHandle:
             # If destination is a directory.
         except IsADirectoryError:
             LOGGER.info("Destination is a directory.")
-
             # If there is any permission issue
         except PermissionError:
             LOGGER.info("Permission denied.")
-
             # For other errors
         except:
             LOGGER.info("Error occurred while copying file.")
