@@ -144,7 +144,7 @@ class TestCPURAM:
         filename = dirname + r'\test_data' + r"\testbenchmark.csv"
         file_list_websites_valid = dirname + "\\test_data" + r"\list_websites_valid.csv"
         file_list_websites_invalid = dirname + "\\test_data" + r"\list_websites_invalid.csv"
-        filename_result = dirname + r'\test_result' + r"\results_plt_" + get_current_timestamp("%Y%m%d") \
+        filename_result = dirname + r'\test_result' + r"\results_ramcpu_" + get_current_timestamp("%Y%m%d") \
                           + "_" + get_browser_type + ".csv"
 
         # Validate links before execute
