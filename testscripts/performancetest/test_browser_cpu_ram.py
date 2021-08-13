@@ -108,7 +108,7 @@ class TestCPURAM:
         # next tab - maximum should be 50
         maximum = 50
         for i in range(len(listweb)):
-            if i + 1 < max(len(listweb), maximum):
+            if i + 1 < min(len(listweb), maximum):
                 tabname = str(i + 1)
                 jscommand = "window.open('about:blank', \'" + tabname + "\');"
                 driver.execute_script(jscommand)
