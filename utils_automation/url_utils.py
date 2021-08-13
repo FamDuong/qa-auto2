@@ -205,7 +205,7 @@ class URLUtils:
         return result
 
     # Get valid url in files
-    def get_valid_urls(self, filename, file_list_websites_invalid, file_list_websites_valid):
+    def get_valid_urls(self, filename, file_list_websites_valid, file_list_websites_invalid):
         urls_all = self.file.get_from_csv(filename)
         # Separate valid and invalid links
         self.file.remove_file(file_list_websites_invalid)
