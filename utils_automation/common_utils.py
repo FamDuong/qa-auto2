@@ -11,7 +11,7 @@ class CommonUtils:
     def print_list(self, message, list, number = None):
         if number == None:
             number = len(range(list))
-        for i in list:
+        for i in number:
             LOGGER.info("Message: %s" % list[i])
 
     # Get data with reference index is
