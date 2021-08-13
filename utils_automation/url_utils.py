@@ -12,6 +12,9 @@ from utils_automation.setup import WaitAfterEach
 import http.client
 import socket
 import re
+import os
+from utils_automation.file_utils import FileUtils
+from utils_automation.common_utils import CommonUtils
 
 import logging
 
@@ -23,6 +26,8 @@ class URLUtils:
     internal_urls = set()
     external_urls = set()
     total_urls_visited = 0
+    file = FileUtils()
+    common = CommonUtils()
     colorama.init()
 
     GREEN = colorama.Fore.GREEN
@@ -30,15 +35,16 @@ class URLUtils:
     RESET = colorama.Fore.RESET
 
     def set_user_agent(self):
-        user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
+        #user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
+        user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36'
         headers = {'User-Agent': user_agent, }
         return headers
 
     def is_url_exits(self, url):
         is_exist = True
-        # headers = self.set_user_agent()
+        headers = self.set_user_agent()
         try:
-            response = requests.get(url)
+            response = requests.get(url, headers=headers)
         except (requests.exceptions.ConnectionError, requests.exceptions.InvalidSchema) as err:
             is_exist = False
             LOGGER.info("%s is not reachable!!!: %s" % (url, err))
@@ -198,3 +204,13 @@ class URLUtils:
             result = True
         return result
 
+    # Get valid url in files
+    def get_valid_urls(self, filename, file_list_websites_invalid, file_list_websites_valid):
+        urls_all = self.file.get_from_csv(filename)
+        # Separate valid and invalid links
+        self.file.clear_content_file(file_list_websites_invalid)
+        self.file.clear_content_file(file_list_websites_valid)
+        urls_not_live = self.get_all_links_in_file_are_not_alive(filename)
+        self.file.append_list_to_file(file_list_websites_invalid, urls_not_live)
+        urls_live = self.common.remove_duplicate_elements_in_lists(urls_all, urls_not_live)
+        self.file.append_list_to_file(file_list_websites_valid, urls_live)

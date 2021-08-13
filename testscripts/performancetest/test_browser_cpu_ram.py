@@ -13,15 +13,13 @@ from selenium import webdriver
 from pytest_testrail.plugin import pytestrail
 from utils_automation.cleanup import Browsers
 from utils_automation.date_time_utils import get_current_timestamp
-from utils_automation.file_utils import FileUtils
 from utils_automation.url_utils import URLUtils
-from utils_automation.common_utils import CommonUtils
 
 LOGGER = logging.getLogger(__name__)
 
 
 class TestCPURAM:
-
+    url = URLUtils()
     def get_cpu_per_single_process(self, pid):
         try:
             current_cpu_utilization = psutil.Process(pid).cpu_percent(interval=2)
@@ -107,9 +105,10 @@ class TestCPURAM:
         # first tab
         driver.get(listweb[0])
 
-        # next tab
+        # next tab - maximum should be 50
+        maximum = 50
         for i in range(len(listweb)):
-            if i + 1 < len(listweb):
+            if i + 1 < len(listweb) or i + 1 < maximum:
                 tabname = str(i + 1)
                 jscommand = "window.open('about:blank', \'" + tabname + "\');"
                 driver.execute_script(jscommand)
@@ -121,39 +120,25 @@ class TestCPURAM:
     def get_ram_cpu(self, filename, file_name_result, binary_file, default_dir, get_browser_type, options_list=None):
         res = []
         i = 1
-        LOGGER.info('%-25s' '%-60s' '%s' % ('No.', 'CPU', 'Memory'))
+        LOGGER.info('%-30s' '%-30s' '%s' % ('No.', 'CPU', 'Memory'))
         for _ in range(10):
             browser = self.open_webpage_withtabs(filename, binary_file, default_dir, get_browser_type, options_list)
             pid_list = self.PID('browser')
             cpu, mem = self.benchmark(pid_list)
             res.append({"cpu": cpu, "mem": mem})
-            LOGGER.info('%-25s' '%-60s' '%s' % (i, round(cpu, 2), round(mem, 2)))
+            LOGGER.info('%-30s' '%-30s' '%s' % (i, round(cpu, 2), round(mem, 2)))
             i += 1
             browser.close()
             browser.quit()
         write_result_data_for_cpu_ram(file_name_result, res, result_type='CPU RAM')
 
     # Remove invalid sites
-    def get_valid_urls(self, filename):
-        file = FileUtils()
-        urls = URLUtils()
-        common = CommonUtils()
-
-        # Initial
+    def test_get_valid_urls(self):
         dirname, runname = os.path.split(os.path.abspath(__file__))
+        filename = dirname + r'\test_data' + r"\testbenchmark.csv"
         file_list_websites_valid = dirname + "\\test_data" + r"\list_websites_valid.csv"
         file_list_websites_invalid = dirname + "\\test_data" + r"\list_websites_invalid.csv"
-
-        urls_all = file.get_from_csv(filename)
-
-        # Separate valid and invalid links
-        file.clear_content_file(file_list_websites_invalid)
-        file.clear_content_file(file_list_websites_valid)
-        urls_not_live = urls.get_all_links_in_file_are_not_alive(filename)
-        file.append_list_to_file(file_list_websites_invalid, urls_not_live)
-        urls_live = common.remove_duplicate_elements_in_lists(urls_all, urls_not_live)
-        file.append_list_to_file(file_list_websites_valid, urls_live)
-        return file_list_websites_valid
+        self.url.get_valid_urls(filename, file_list_websites_valid, file_list_websites_invalid)
 
     @pytestrail.case('C82490')
     #def test_ram_cpu(self, binary_path, default_directory, application_path, get_browser_type="CocCoc"):
@@ -161,9 +146,11 @@ class TestCPURAM:
         LOGGER.info("Run in %s" % get_browser_type)
         dirname, runname = os.path.split(os.path.abspath(__file__))
         filename = dirname + r'\test_data' + r"\testbenchmark.csv"
+        file_list_websites_valid = dirname + "\\test_data" + r"\list_websites_valid.csv"
+        file_list_websites_invalid = dirname + "\\test_data" + r"\list_websites_invalid.csv"
         filename_result = dirname + r'\test_result' + r"\results_plt_" + get_current_timestamp("%Y%m%d") \
                           + "_" + get_browser_type + ".csv"
 
         # Validate links before execute
-        filename = self.get_valid_urls(filename)
-        self.get_ram_cpu(filename, filename_result, binary_path, default_directory, get_browser_type, None)
+        self.url.get_valid_urls(filename, file_list_websites_valid, file_list_websites_invalid)
+        self.get_ram_cpu(file_list_websites_valid, filename_result, binary_path, default_directory, get_browser_type, None)

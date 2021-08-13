@@ -112,6 +112,11 @@ class TestPageLoadTime:
         LOGGER.info("Run in %s" % get_browser_type)
         dirname, runname = os.path.split(os.path.abspath(__file__))
         filename = dirname + r'\test_data' + r"\testbenchmark.csv"
+        file_list_websites_valid = dirname + "\\test_data" + r"\list_websites_valid.csv"
+        file_list_websites_invalid = dirname + "\\test_data" + r"\list_websites_invalid.csv"
         filename_result = dirname + r'\test_result' + r"\results_plt_" + get_current_timestamp("%Y%m%d") \
                           + "_" + get_browser_type + ".csv"
+
+        # Validate links before execute
+        self.url.get_valid_urls(filename, file_list_websites_valid, file_list_websites_invalid)
         self.get_page_load_time(filename, filename_result, binary_path, default_directory, get_browser_type, None)
