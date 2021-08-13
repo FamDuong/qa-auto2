@@ -108,7 +108,7 @@ class TestCPURAM:
         # next tab - maximum should be 50
         maximum = 50
         for i in range(len(listweb)):
-            if i + 1 < len(listweb) or i + 1 < maximum:
+            if i + 1 < max(len(listweb), maximum):
                 tabname = str(i + 1)
                 jscommand = "window.open('about:blank', \'" + tabname + "\');"
                 driver.execute_script(jscommand)
@@ -131,14 +131,6 @@ class TestCPURAM:
             browser.close()
             browser.quit()
         write_result_data_for_cpu_ram(file_name_result, res, result_type='CPU RAM')
-
-    # Remove invalid sites
-    def get_valid_urls(self):
-        dirname, runname = os.path.split(os.path.abspath(__file__))
-        filename = dirname + r'\test_data' + r"\testbenchmark.csv"
-        file_list_websites_valid = dirname + "\\test_data" + r"\list_websites_valid.csv"
-        file_list_websites_invalid = dirname + "\\test_data" + r"\list_websites_invalid.csv"
-        self.url.get_valid_urls(filename, file_list_websites_valid, file_list_websites_invalid)
 
     @pytestrail.case('C82490')
     #def test_ram_cpu(self, binary_path, default_directory, application_path, get_browser_type="CocCoc"):
