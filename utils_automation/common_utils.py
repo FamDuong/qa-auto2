@@ -8,11 +8,11 @@ class CommonUtils:
         return list
 
     # Print element in list
-    def print_list(self, message, list, number = None):
+    def print_list(message, list, number = None):
         if number == None:
-            number = len(range(list))
+            number = len(list)
         for i in range(number):
-            LOGGER.info("Message: %s" % list[i])
+            LOGGER.info("%s. %s: %s" % (i, message, list[i]))
 
     # Get data with reference index is
     def get_reference_data_in_list(self, list_1, list_2, reference):
