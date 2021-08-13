@@ -39,7 +39,7 @@ class URLUtils:
         # headers = self.set_user_agent()
         try:
             response = requests.get(url)
-        except (requests.exceptions.ConnectionError, requests.exceptions.InvalidSchema, requests.exceptions.TooManyRedirects) as err:
+        except (requests.exceptions.ConnectionError, requests.exceptions.InvalidSchema) as err:
             is_exist = False
             LOGGER.info("%s is not reachable!!!: %s" % (url, err))
         return is_exist
