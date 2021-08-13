@@ -9,6 +9,9 @@ from urllib.request import urlparse, urljoin
 from bs4 import BeautifulSoup
 from urllib import parse
 from utils_automation.setup import WaitAfterEach
+import http.client
+import socket
+import re
 
 import logging
 
@@ -40,6 +43,7 @@ class URLUtils:
             is_exist = False
             LOGGER.info("%s is not reachable!!!: %s" % (url, err))
         return is_exist
+
 
     def is_url_valid(self, url):
         parsed = urlparse(url)
@@ -135,7 +139,6 @@ class URLUtils:
     # Check all urls in files are live
     def get_all_links_in_file_are_not_alive(self, filename):
         urls_not_live = set()
-
         with open(filename, "r+", encoding="utf-8") as f:
             d = f.readlines()
             f.seek(0)

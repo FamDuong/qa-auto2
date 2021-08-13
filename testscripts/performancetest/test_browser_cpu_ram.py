@@ -13,6 +13,9 @@ from selenium import webdriver
 from pytest_testrail.plugin import pytestrail
 from utils_automation.cleanup import Browsers
 from utils_automation.date_time_utils import get_current_timestamp
+from utils_automation.file_utils import FileUtils
+from utils_automation.url_utils import URLUtils
+from utils_automation.common_utils import CommonUtils
 
 LOGGER = logging.getLogger(__name__)
 
@@ -130,11 +133,38 @@ class TestCPURAM:
             browser.quit()
         write_result_data_for_cpu_ram(file_name_result, res, result_type='CPU RAM')
 
+    # Remove invalid sites
+    def get_valid_urls(self):
+        file = FileUtils()
+        urls = URLUtils()
+        common = CommonUtils()
+
+        # Initial
+        dirname, runname = os.path.split(os.path.abspath(__file__))
+        filename = dirname + r'\test_data' + r"\testbenchmark.csv"
+        file_list_websites_valid = dirname + "\\test_data" + r"\list_websites_valid.csv"
+        file_list_websites_invalid = dirname + "\\test_data" + r"\list_websites_invalid.csv"
+
+        urls_all = file.get_from_csv(filename)
+
+        # Separate valid and invalid links
+        file.clear_content_file(file_list_websites_invalid)
+        file.clear_content_file(file_list_websites_valid)
+        urls_not_live = urls.get_all_links_in_file_are_not_alive(filename)
+        file.append_list_to_file(file_list_websites_invalid, urls_not_live)
+        urls_live = common.remove_duplicate_elements_in_lists(urls_all, urls_not_live)
+        file.append_list_to_file(file_list_websites_valid, urls_live)
+        return file_list_websites_valid
+
     @pytestrail.case('C82490')
-    def test_ram_cpu(self, binary_path, default_directory, application_path, get_browser_type="CocCoc"):
+    #def test_ram_cpu(self, binary_path, default_directory, application_path, get_browser_type="CocCoc"):
+    def test_ram_cpu(self, binary_path, default_directory, application_path, get_browser_type):
         LOGGER.info("Run in %s" % get_browser_type)
         dirname, runname = os.path.split(os.path.abspath(__file__))
         filename = dirname + r'\test_data' + r"\testbenchmark.csv"
         filename_result = dirname + r'\test_result' + r"\results_plt_" + get_current_timestamp("%Y%m%d") \
                           + "_" + get_browser_type + ".csv"
+
+        # Validate links before execute
+        filename = self.get_valid_urls(filename)
         self.get_ram_cpu(filename, filename_result, binary_path, default_directory, get_browser_type, None)
