@@ -114,7 +114,7 @@ class TestCPURAM:
                 jscommand = "window.open('about:blank', \'" + tabname + "\');"
                 driver.execute_script(jscommand)
                 driver.switch_to.window(tabname)
-                print("\n %d . Open tab page: %s" % (i + 1, listweb[i + 1]))
+                LOGGER.info("%d . Open tab page: %s" % (i + 1, listweb[i + 1]))
                 driver.get(listweb[i + 1])
         return driver
 
