@@ -147,10 +147,12 @@ class TestCPURAM:
         file_list_websites_invalid = dirname + "\\test_data" + r"\list_websites_invalid.csv"
         filename_result = dirname + r'\test_result' + r"\results_ramcpu_" + get_current_timestamp("%Y%m%d") \
                           + "_" + get_browser_type + ".csv"
-        # Print urls
-        listweb = get_from_csv(filename)
-        self.common.print_list("Open tab page: ", listweb, self.maximum)
 
         # Validate links before execute
         self.url.get_valid_urls(filename, file_list_websites_valid, file_list_websites_invalid)
+
+        # Print urls
+        self.common.print_list("Open tab page: ", get_from_csv(file_list_websites_valid), self.maximum)
+
+        # Execute the test
         self.get_ram_cpu(file_list_websites_valid, filename_result, binary_path, default_directory, get_browser_type, None)
