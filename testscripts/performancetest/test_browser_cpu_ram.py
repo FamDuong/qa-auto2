@@ -134,14 +134,13 @@ class TestCPURAM:
         write_result_data_for_cpu_ram(file_name_result, res, result_type='CPU RAM')
 
     # Remove invalid sites
-    def get_valid_urls(self):
+    def get_valid_urls(self, filename):
         file = FileUtils()
         urls = URLUtils()
         common = CommonUtils()
 
         # Initial
         dirname, runname = os.path.split(os.path.abspath(__file__))
-        filename = dirname + r'\test_data' + r"\testbenchmark.csv"
         file_list_websites_valid = dirname + "\\test_data" + r"\list_websites_valid.csv"
         file_list_websites_invalid = dirname + "\\test_data" + r"\list_websites_invalid.csv"
 
