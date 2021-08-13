@@ -208,8 +208,8 @@ class URLUtils:
     def get_valid_urls(self, filename, file_list_websites_invalid, file_list_websites_valid):
         urls_all = self.file.get_from_csv(filename)
         # Separate valid and invalid links
-        self.file.clear_content_file(file_list_websites_invalid)
-        self.file.clear_content_file(file_list_websites_valid)
+        self.file.remove_file(file_list_websites_invalid)
+        self.file.remove_file(file_list_websites_valid)
         urls_not_live = self.get_all_links_in_file_are_not_alive(filename)
         self.file.append_list_to_file(file_list_websites_invalid, urls_not_live)
         urls_live = self.common.remove_duplicate_elements_in_lists(urls_all, urls_not_live)
