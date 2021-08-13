@@ -13,7 +13,8 @@ def get_username(request):
 @pytest.fixture(scope='session')
 def binary_path(get_browser_type):
     if get_browser_type == "CocCoc":
-        return f"C:\\Users\\{username}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
+        #return f"C:\\Users\\{username}\\AppData\\Local\\CocCoc\\Browser\\Application\\browser.exe"
+        return f"C:\\Program Files (x86)\\CocCoc\\Browser\\Application\\browser.exe"
     elif get_browser_type == "Chrome":
         return f"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
 
@@ -29,7 +30,8 @@ def default_directory(get_browser_type):
 @pytest.fixture(scope='session')
 def application_path(get_browser_type):
     if get_browser_type == "CocCoc":
-        return f"C:\\Users\\{username}\\AppData\\Local\\CocCoc\\Browser\\Application"
+        #return f"C:\\Users\\{username}\\AppData\\Local\\CocCoc\\Browser\\Application"   #User mode
+        return f"C:\\Program Files (x86)\\CocCoc\\Browser\\Application"
     elif get_browser_type == "Chrome":
         return f"C:\\Program Files\\Google\\Chrome\\Application\\"
 

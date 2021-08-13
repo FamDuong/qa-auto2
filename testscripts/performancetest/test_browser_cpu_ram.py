@@ -12,6 +12,7 @@ from utils_automation.common import get_from_csv, write_result_data_for_cpu_ram
 from selenium import webdriver
 from pytest_testrail.plugin import pytestrail
 from utils_automation.cleanup import Browsers
+from utils_automation.date_time_utils import get_current_timestamp
 
 LOGGER = logging.getLogger(__name__)
 
@@ -67,26 +68,28 @@ class TestCPURAM:
         except Exception:
             print("Some pid is unavailable")
 
-    def open_webpage_withtabs(self, filename, binary_file, default_dir, options_list=None, enabled_ads_block=False):
+    def open_webpage_withtabs(self, filename, binary_file, default_dir, get_browser_type, options_list=None):
         browser = Browsers()
-        browser.kill_all_browsers()
+        browser.kill_all_browsers(get_browser_type)
 
         listweb = get_from_csv(filename)
         opts = Options()
         opts.binary_location = binary_file
         opts.add_argument("start-maximized")
         opts.add_argument('user-data-dir=' + default_dir)
-        if enabled_ads_block == "True":
-            opts.add_argument("--start-maximized")
-            opts.add_argument("--proxy-server='direct://'")
-            opts.add_argument("--proxy-bypass-list=*")
-            opts.add_argument("--start-maximized")
-            opts.add_argument('--disable-gpu')
-            opts.add_argument('--disable-dev-shm-usage')
-            opts.add_argument('--no-sandbox')
-            opts.add_argument('--ignore-certificate-errors')
-            opts.add_argument("--allow-insecure-localhost")
-            opts.add_argument("--enable-features=CocCocBlockAdByExtension")
+        opts.add_argument("enable-automation")
+        opts.add_argument("--start-maximized")
+        opts.add_argument("--proxy-server='direct://'")
+        opts.add_argument("--proxy-bypass-list=*")
+        opts.add_argument("--start-maximized")
+        opts.add_argument('--disable-gpu')
+        opts.add_argument('--disable-dev-shm-usage')
+        opts.add_argument('--disable-browser-side-navigation')
+        opts.add_argument('--no-sandbox')
+        opts.add_argument('--ignore-certificate-errors')
+        opts.add_argument("--allow-insecure-localhost")
+        opts.add_experimental_option("excludeSwitches", ["enable-automation"])
+        opts.add_experimental_option("useAutomationExtension", False)
         caps = DesiredCapabilities().CHROME
         # caps["pageLoadStrategy"] = "normal"  # complete
         caps["pageLoadStrategy"] = "eager"
@@ -112,34 +115,26 @@ class TestCPURAM:
                 driver.get(listweb[i + 1])
         return driver
 
-    def get_ram_cpu(self, filename, file_name_result, binary_file, default_dir, options_list=None,
-                    enabled_ads_block=False):
+    def get_ram_cpu(self, filename, file_name_result, binary_file, default_dir, get_browser_type, options_list=None):
         res = []
         i = 1
         LOGGER.info('%-25s' '%-60s' '%s' % ('No.', 'CPU', 'Memory'))
         for _ in range(10):
-            browser = self.open_webpage_withtabs(filename, binary_file, default_dir, options_list,
-                                                 enabled_ads_block=enabled_ads_block)
+            browser = self.open_webpage_withtabs(filename, binary_file, default_dir, get_browser_type, options_list)
             pid_list = self.PID('browser')
             cpu, mem = self.benchmark(pid_list)
             res.append({"cpu": cpu, "mem": mem})
             LOGGER.info('%-25s' '%-60s' '%s' % (i, round(cpu, 2), round(mem, 2)))
             i += 1
+            browser.close()
             browser.quit()
         write_result_data_for_cpu_ram(file_name_result, res, result_type='CPU RAM')
 
     @pytestrail.case('C82490')
-    def test_ram_cpu(self, binary_path, default_directory, application_path, get_enabled_adblock_extension):
-        # Define test filename
-        enabled_adblock_extension = get_enabled_adblock_extension
-        if enabled_adblock_extension == "True":
-            subprocess.Popen(["powershell.exe",
-                              f"cd {application_path}; .\\browser.exe --enable-features=CocCocBlockAdByExtension"],
-                             stdin=subprocess.PIPE, stderr=subprocess.PIPE)
-            time.sleep(10)
-            subprocess.Popen("taskkill /im browser.exe /f", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    def test_ram_cpu(self, binary_path, default_directory, application_path, get_browser_type="CocCoc"):
+        LOGGER.info("Run in %s" % get_browser_type)
         dirname, runname = os.path.split(os.path.abspath(__file__))
         filename = dirname + r'\test_data' + r"\testbenchmark.csv"
-        file_name_result = dirname + r'\test_result' + r"\results_cpu_ram.csv"
-        self.get_ram_cpu(filename, file_name_result, binary_path, default_directory, None,
-                         enabled_ads_block=enabled_adblock_extension)
+        filename_result = dirname + r'\test_result' + r"\results_plt_" + get_current_timestamp("%Y%m%d") \
+                          + "_" + get_browser_type + ".csv"
+        self.get_ram_cpu(filename, filename_result, binary_path, default_directory, get_browser_type, None)
