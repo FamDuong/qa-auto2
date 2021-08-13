@@ -20,7 +20,7 @@ LOGGER = logging.getLogger(__name__)
 
 class TestPageLoadTime:
     url = URLUtils()
-    
+
     def open_webpage(self, source, binary_file, default_dir, get_browser_type, options_list=None):
         browser = Browsers()
         browser.kill_all_browsers(get_browser_type)

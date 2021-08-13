@@ -14,12 +14,17 @@ from pytest_testrail.plugin import pytestrail
 from utils_automation.cleanup import Browsers
 from utils_automation.date_time_utils import get_current_timestamp
 from utils_automation.url_utils import URLUtils
+from utils_automation.common_utils import CommonUtils
 
 LOGGER = logging.getLogger(__name__)
 
-
 class TestCPURAM:
     url = URLUtils()
+    common = CommonUtils
+    maximum = 50
+    browser = ["CocCoc", "Chrome"]
+    process_id = ["browser", "chrome"]
+
     def get_cpu_per_single_process(self, pid):
         try:
             current_cpu_utilization = psutil.Process(pid).cpu_percent(interval=2)
@@ -106,14 +111,13 @@ class TestCPURAM:
         driver.get(listweb[0])
 
         # next tab - maximum should be 50
-        maximum = 50
         for i in range(len(listweb)):
-            if i + 1 < min(len(listweb), maximum):
+            if i + 1 < min(len(listweb), self.maximum):
                 tabname = str(i + 1)
                 jscommand = "window.open('about:blank', \'" + tabname + "\');"
                 driver.execute_script(jscommand)
                 driver.switch_to.window(tabname)
-                LOGGER.info("%d . Open tab page: %s" % (i + 1, listweb[i + 1]))
+                #LOGGER.info("%d . Open tab page: %s" % (i + 1, listweb[i + 1]))
                 driver.get(listweb[i + 1])
         return driver
 
@@ -121,13 +125,10 @@ class TestCPURAM:
         res = []
         i = 1
         LOGGER.info('%-30s' '%-30s' '%s' % ('No.', 'CPU', 'Memory'))
-        if get_browser_type == "CocCoc":
-            id = "browser"
-        elif get_browser_type == "Chrome":
-            id = "chrome"
+        process = self.common.get_reference_data_in_list(self.browser, self.process_id, get_browser_type)
         for _ in range(10):
             browser = self.open_webpage_withtabs(filename, binary_file, default_dir, get_browser_type, options_list)
-            pid_list = self.PID(id)
+            pid_list = self.PID(process[0])
             cpu, mem = self.benchmark(pid_list)
             res.append({"cpu": cpu, "mem": mem})
             LOGGER.info('%-30s' '%-30s' '%s' % (i, round(cpu, 2), round(mem, 2)))
@@ -146,6 +147,9 @@ class TestCPURAM:
         file_list_websites_invalid = dirname + "\\test_data" + r"\list_websites_invalid.csv"
         filename_result = dirname + r'\test_result' + r"\results_ramcpu_" + get_current_timestamp("%Y%m%d") \
                           + "_" + get_browser_type + ".csv"
+        # Print urls
+        listweb = get_from_csv(filename)
+        self.common.print_list("Open tab page: ", listweb, self.maximum)
 
         # Validate links before execute
         self.url.get_valid_urls(filename, file_list_websites_valid, file_list_websites_invalid)
