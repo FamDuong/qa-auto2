@@ -121,9 +121,13 @@ class TestCPURAM:
         res = []
         i = 1
         LOGGER.info('%-30s' '%-30s' '%s' % ('No.', 'CPU', 'Memory'))
+        if get_browser_type == "CocCoc":
+            id = "browser"
+        elif get_browser_type == "Chrome":
+            id = "chrome"
         for _ in range(10):
             browser = self.open_webpage_withtabs(filename, binary_file, default_dir, get_browser_type, options_list)
-            pid_list = self.PID('browser')
+            pid_list = self.PID(id)
             cpu, mem = self.benchmark(pid_list)
             res.append({"cpu": cpu, "mem": mem})
             LOGGER.info('%-30s' '%-30s' '%s' % (i, round(cpu, 2), round(mem, 2)))
