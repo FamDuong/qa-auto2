@@ -70,7 +70,7 @@ def get_from_csv(filename):
             return None
 
 
-# Write result for page load time
+# Write result for page load time: Write each result , not all
 def write_result_data_for_page_load_time(file_name, keyname_list, value_list, result_type=''):
     if os.path.exists(file_name):
         file = open(file_name, 'a', encoding="utf-8")
@@ -81,8 +81,8 @@ def write_result_data_for_page_load_time(file_name, keyname_list, value_list, re
     file.write('\n')
     file.close()
 
-# Write result for CPU & RAN
-def write_result_data_for_cpu_ram(file_name, res, result_type=''):
+# Write result for CPU & RAM: Write all results
+def write_result_data_for_cpu_ram(file_name, index, res, result_type=''):
     if os.path.exists(file_name):
         file = open(file_name, 'a', encoding="utf-8")
     else:
@@ -91,16 +91,16 @@ def write_result_data_for_cpu_ram(file_name, res, result_type=''):
         cpu_total = 0
         mem_total = 0
         file.write('%-25s' '%-60s' '%s' % ('No.', 'CPU', 'Memory'))
-        for i in range(len(res)):
-            cpu_total += int(res[i].get("cpu"))
-            mem_total += int(res[i].get("mem"))
-            file.write('\n')
-            file.write('%-25s' '%-60s' '%s' % (i + 1, round(res[i].get("cpu"), 2), round(res[i].get("mem"), 2)))
-        cpu_average = cpu_total / len(res)
-        mem_average = mem_total / len(res)
-        file.write("\nAverage value is :\n")
-        file.write(f"CPU : {cpu_average}\n")
-        file.write(f"MEM : {mem_average}")
+        #for i in range(len(res)):
+        cpu_total += int(res.get("cpu"))
+        mem_total += int(res.get("mem"))
+        file.write('\n')
+        file.write('%-25s' '%-60s' '%s' % (index, round(res.get("cpu"), 2), round(res.get("mem"), 2)))
+        #cpu_average = cpu_total / len(res)
+        #mem_average = mem_total / len(res)
+        #file.write("\nAverage value is :\n")
+        #file.write(f"CPU : {cpu_average}\n")
+        #file.write(f"MEM : {mem_average}")
     file.close()
 
 
