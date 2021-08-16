@@ -88,14 +88,14 @@ def write_result_data_for_cpu_ram(file_name, index, res, result_type=''):
     else:
         file = open(file_name, 'w+', encoding="utf-8")
         file.write(f"Results for {result_type} is as below :\n")
-        cpu_total = 0
-        mem_total = 0
         file.write('%-25s' '%-60s' '%s' % ('No.', 'CPU', 'Memory'))
+        #cpu_total = 0
+        #mem_total = 0
         #for i in range(len(res)):
-        cpu_total += int(res.get("cpu"))
-        mem_total += int(res.get("mem"))
-        file.write('\n')
-        file.write('%-25s' '%-60s' '%s' % (index, round(res.get("cpu"), 2), round(res.get("mem"), 2)))
+        #cpu_total += int(res.get("cpu"))
+        #mem_total += int(res.get("mem"))
+    file.write('\n')
+    file.write('%-25s' '%-60s' '%s' % (index, round(res.get("cpu"), 2), round(res.get("mem"), 2)))
         #cpu_average = cpu_total / len(res)
         #mem_average = mem_total / len(res)
         #file.write("\nAverage value is :\n")
