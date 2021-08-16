@@ -120,4 +120,4 @@ class TestPageLoadTime:
 
         # Validate links before execute
         self.url.get_valid_urls(filename, file_list_websites_valid, file_list_websites_invalid)
-        self.get_page_load_time(filename, filename_result, binary_path, default_directory, get_browser_type, None)
+        self.get_page_load_time(file_list_websites_valid, filename_result, binary_path, default_directory, get_browser_type, None)
