@@ -138,8 +138,8 @@ class TestCPURAM:
         #write_result_data_for_cpu_ram(file_name_result, res, result_type='CPU RAM')
 
     @pytestrail.case('C82490')
-    def test_ram_cpu(self, binary_path, default_directory, application_path, get_browser_type="CocCoc"):
-    #def test_ram_cpu(self, binary_path, default_directory, application_path, get_browser_type):
+    #def test_ram_cpu(self, binary_path, default_directory, application_path, get_browser_type="CocCoc"):
+    def test_ram_cpu(self, binary_path, default_directory, application_path, get_browser_type):
         LOGGER.info("Run in %s" % get_browser_type)
         dirname, runname = os.path.split(os.path.abspath(__file__))
         filename = dirname + r'\test_data' + r"\testbenchmark.csv"
