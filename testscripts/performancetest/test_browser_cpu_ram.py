@@ -117,12 +117,11 @@ class TestCPURAM:
                 jscommand = "window.open('about:blank', \'" + tabname + "\');"
                 driver.execute_script(jscommand)
                 driver.switch_to.window(tabname)
-                #LOGGER.info("%d . Open tab page: %s" % (i + 1, listweb[i + 1]))
                 driver.get(listweb[i + 1])
         return driver
 
     def get_ram_cpu(self, filename, file_name_result, binary_file, default_dir, get_browser_type, options_list=None):
-        res = []
+        #res = []
         i = 1
         LOGGER.info('%-30s' '%-30s' '%s' % ('No.', 'CPU', 'Memory'))
         process = self.common.get_reference_data_in_list(self.browser, self.process_id, get_browser_type)
@@ -130,12 +129,13 @@ class TestCPURAM:
             browser = self.open_webpage_withtabs(filename, binary_file, default_dir, get_browser_type, options_list)
             pid_list = self.PID(process[0])
             cpu, mem = self.benchmark(pid_list)
-            res.append({"cpu": cpu, "mem": mem})
+            res = {"cpu": cpu, "mem": mem}
             LOGGER.info('%-30s' '%-30s' '%s' % (i, round(cpu, 2), round(mem, 2)))
             i += 1
             browser.close()
             browser.quit()
-        write_result_data_for_cpu_ram(file_name_result, res, result_type='CPU RAM')
+            write_result_data_for_cpu_ram(file_name_result, i, res, result_type='CPU RAM')
+        #write_result_data_for_cpu_ram(file_name_result, res, result_type='CPU RAM')
 
     @pytestrail.case('C82490')
     def test_ram_cpu(self, binary_path, default_directory, application_path, get_browser_type="CocCoc"):
