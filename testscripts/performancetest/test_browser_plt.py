@@ -91,7 +91,7 @@ class TestPageLoadTime:
         if get_browser_type == "CocCoc":
             coccoc_windows = Desktop(backend="uia").window(title_re='.* - Cốc Cốc.*')
         else:
-            coccoc_windows = Desktop(backend="uia").window(title_re='.* - Chrome.*')
+            coccoc_windows = Desktop(backend="uia").window(title_re='.* - Google Chrome.*')
         load_icon_omnibox = coccoc_windows.child_window(title="Reload", control_type="Button")
         self.start_time = int(round(time.time() * 1000))
         load_icon_omnibox.click_input()
