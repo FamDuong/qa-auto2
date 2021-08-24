@@ -122,16 +122,17 @@ class TestPageLoadTime:
             loadtimes.append(page_load_time_avg)
             loadtimes_by_loading_icon.append(page_load_time_by_loading_icon_avg)
             LOGGER.info('%-30s' '%-30s' '%-30s' '%s' % ("Average", i, page_load_time_avg, page_load_time_by_loading_icon_avg))
-            index += 1
             write_result_data_for_page_load_time(file_name=file_name_result, keyname_list=i, value_list=[page_load_time_avg, page_load_time_by_loading_icon_avg],
                                                  result_type='Page load time')
-        page_load_time_avg = round(sum(loadtimes) / len(listweb), 1)
+            index += 1
+        loadtime_avg = round(sum(loadtimes) / len(listweb), 1)
+        loadtime_by_loading_icon_avg = round(sum(loadtimes_by_loading_icon) / len(listweb), 1)
         write_result_data_for_page_load_time(file_name=file_name_result, keyname_list="Average",
-                                             value_list=loadtimes,
+                                             value_list=[loadtime_avg, loadtime_by_loading_icon_avg],
                                              result_type='Page load time')
 
     @pytestrail.case('C82299')
-    def test_browser_plt(self, binary_path, default_directory, application_path, get_browser_type = "CocCoc"):
+    def test_browser_plt(self, binary_path, default_directory, application_path, get_browser_type):
         LOGGER.info("Run in %s" % get_browser_type)
         dirname, runname = os.path.split(os.path.abspath(__file__))
         filename = dirname + r'\test_data' + r"\testbenchmark.csv"
