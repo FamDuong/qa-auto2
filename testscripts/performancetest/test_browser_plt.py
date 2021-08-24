@@ -65,9 +65,9 @@ class TestPageLoadTime:
         return driver
 
     def close_browser(self, driver):
+        time.sleep(2)
         driver.close()
         driver.quit()
-        time.sleep(2)
 
     def measureTime(self, driver):
         global browser_startup
@@ -85,6 +85,7 @@ class TestPageLoadTime:
         # LOGGER.info("First frame displayed: %s" % backend_performance)
         # LOGGER.info("DOM Load Event completed: %s" % frontend_performance)
         # LOGGER.info("Total PageLoad Time: %s" % page_load_time)
+        time.sleep(2)
         return page_load_time
 
     def measureTimebyLoadingIcon(self, get_browser_type):
