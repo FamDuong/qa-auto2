@@ -7,12 +7,12 @@ from utils_automation.common import get_from_csv, write_result_data_for_page_loa
 from pytest_testrail.plugin import pytestrail
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
 from utils_automation.cleanup import Browsers
 from utils_automation.url_utils import URLUtils
 from utils_automation.date_time_utils import get_current_timestamp
 from selenium.common.exceptions import TimeoutException
 from pywinauto import Desktop
+from pywinauto.keyboard import send_keys
 
 start_browser = 0
 LOGGER = logging.getLogger(__name__)
@@ -94,8 +94,11 @@ class TestPageLoadTime:
         else:
             coccoc_windows = Desktop(backend="uia").window(title_re='.* - Google Chrome.*')
         load_icon_omnibox = coccoc_windows.child_window(title="Reload", control_type="Button")
+        load_icon_omnibox.wait("visible")
+        # Start calculate time
         self.start_time = int(round(time.time() * 1000))
-        load_icon_omnibox.click_input()
+        send_keys('^{F5}')
+        #load_icon_omnibox.click_input()
         load_icon_omnibox.wait("visible")
         self.end_time = int(round(time.time() * 1000))
         return self.end_time - self.start_time
@@ -133,7 +136,7 @@ class TestPageLoadTime:
                                              result_type='Page load time')
 
     @pytestrail.case('C82299')
-    def test_browser_plt(self, binary_path, default_directory, application_path, get_browser_type):
+    def test_browser_plt(self, binary_path, default_directory, application_path, get_browser_type = "CocCoc"):
         LOGGER.info("Run in %s" % get_browser_type)
         dirname, runname = os.path.split(os.path.abspath(__file__))
         filename = dirname + r'\test_data' + r"\testbenchmark.csv"
