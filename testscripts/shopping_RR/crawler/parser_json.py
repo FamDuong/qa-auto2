@@ -27,18 +27,26 @@ class TestShoppingCrawler:
             merchant_shop_id = product[0]
             merchant_product_id = product[1]
             name = product[2]
-            lstProduct_array = [merchant_shop_id, merchant_product_id, name]
+            lstProduct_array.append(merchant_shop_id, merchant_product_id, name)
         return lstProduct_array
 
+    # get json list product review from source
     def get_list_review_json_from_source(self):
         list_url_api_of_products_review = self.shopping_db.get_product_review_db()
+        lstData_array = []
         for url in list_url_api_of_products_review:
             url_api = url[1]
             r = requests.get(url_api)
             data_json = r.json()
             data = data_json['data']['ratings']
-            product_review_id = data['cmtid']
-            user_name = data['author_username']
+            for item in data:
+                product_review_id = item['cmtid']
+                user_name = item['author_username']
+                rating = item['rating_star']
+                comment = item['comment']
+                lstData_array.insert([product_review_id, user_name, rating, comment])
+        print("---review from source ", lstData_array)
+        return lstData_array
 
     def get_list_review_data_from_db(self):
         list_id_of_products_review = self.shopping_db.get_product_review_db()
@@ -47,14 +55,12 @@ class TestShoppingCrawler:
             product_id = id[0]
             lst_review = self.shopping_db.get_review_db(product_id)
             for review in lst_review:
-                product_id = review[0]
-                product_review_id = review[1]
-                user_name = review[2]
-                rating = review[3]
-                comment = review[4]
-                review_time = review[5]
-                lst_review_array = [product_id, product_review_id, user_name, rating, comment, review_time]
-                print("========", lst_review_array)
+                product_review_id = review[0]
+                user_name = review[1]
+                rating = review[2]
+                comment = review[3]
+                lst_review_array.append([product_review_id, user_name, rating, comment])
+        print("==", lst_review_array)
         return lst_review_array
 
     def test_crawler_product_detail_type_json(self):
@@ -76,4 +82,10 @@ class TestShoppingCrawler:
                     print("NOK")
 
     def test_crawler_product_review_type_json(self):
+        self.get_list_review_data_from_db()
+        # self.get_list_review_json_from_source()
+        # if self.get_list_review_json_from_source() == self.get_list_review_data_from_db():
+        #     print("OK")
+        # else:
+        #     print("NOK")
 
