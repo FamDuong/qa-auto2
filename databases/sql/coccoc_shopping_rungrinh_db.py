@@ -30,4 +30,37 @@ class shoppingDB:
         connection.commit()
         return rows
 
+    def get_products_list_db(self, product_api_url):
+        import logging
+        sql_query = f'SELECT merchant_shop_id, merchant_product_id, name FROM shopping.products where product_api_url = "{product_api_url}";'
+        connection = self.coccoc_shopping_db_interact()
+        cursor = connection.cursor()
+        cursor.execute(sql_query)
+        rows = cursor.fetchall()
+        logging.debug(f"Duplicate rows are : {rows}")
+        connection.commit()
+        return rows
+
+    def get_product_review_db(self):
+        import logging
+        sql_query = f'select product_id, product_review_api_url from shopping.products where review_crawl_status = "crawled";'
+        connection = self.coccoc_shopping_db_interact()
+        cursor = connection.cursor()
+        cursor.execute(sql_query)
+        rows = cursor.fetchall()
+        logging.debug(f"Duplicate rows are : {rows}")
+        connection.commit()
+        return rows
+
+    def get_review_db(self, product_id):
+        import logging
+        sql_query = f'SELECT product_id, product_review_id, user_name, rating, comment, review_time  FROM shopping.product_reviews where product_id = "{product_id}";'
+        connection = self.coccoc_shopping_db_interact()
+        cursor = connection.cursor()
+        cursor.execute(sql_query)
+        rows = cursor.fetchall()
+        logging.debug(f"Duplicate rows are : {rows}")
+        connection.commit()
+        return rows
+
 
