@@ -36,6 +36,7 @@ class TestShoppingCrawler:
         lstData_array = []
         for url in list_url_api_of_products_review:
             url_api = url[1]
+            # print("===url: ", url_api)
             r = requests.get(url_api)
             data_json = r.json()
             data = data_json['data']['ratings']
@@ -44,8 +45,7 @@ class TestShoppingCrawler:
                 user_name = item['author_username']
                 rating = item['rating_star']
                 comment = item['comment']
-                lstData_array.insert([product_review_id, user_name, rating, comment])
-        print("---review from source ", lstData_array)
+                lstData_array.append([product_review_id, user_name, rating, comment])
         return lstData_array
 
     def get_list_review_data_from_db(self):
@@ -60,7 +60,6 @@ class TestShoppingCrawler:
                 rating = review[2]
                 comment = review[3]
                 lst_review_array.append([product_review_id, user_name, rating, comment])
-        print("==", lst_review_array)
         return lst_review_array
 
     def test_crawler_product_detail_type_json(self):
@@ -76,16 +75,18 @@ class TestShoppingCrawler:
                 line_count += 1
                 print("++++", jsonData)
                 print("++++", dbData)
+                # assert jsonData == dbData
                 if jsonData == dbData:
                     print("OK")
                 else:
                     print("NOK")
 
     def test_crawler_product_review_type_json(self):
-        self.get_list_review_data_from_db()
+        # print("log==", len(self.get_list_review_data_from_db()))
         # self.get_list_review_json_from_source()
-        # if self.get_list_review_json_from_source() == self.get_list_review_data_from_db():
-        #     print("OK")
-        # else:
-        #     print("NOK")
+        assert len(self.get_list_review_json_from_source()) == len(self.get_list_review_data_from_db())
+        if len(self.get_list_review_json_from_source()) == len(self.get_list_review_data_from_db()):
+            print("OK")
+        else:
+            print("NOK")
 
