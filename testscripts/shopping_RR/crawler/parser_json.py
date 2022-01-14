@@ -1,4 +1,9 @@
 import json
+import urllib
+from urllib.request import Request
+
+from bs4 import BeautifulSoup
+from lxml import etree
 
 from databases.sql.coccoc_shopping_rungrinh_db import shoppingDB
 import requests
@@ -6,6 +11,14 @@ import csv
 
 class TestShoppingCrawler:
     shopping_db = shoppingDB()
+
+    # get source url
+    def get_source_url(self, type):
+        lst_source_url = []
+        source_urls = self.shopping_db.get_product_api_url(type)
+        for source_url in source_urls:
+            lst_source_url.append(source_url[0])
+        return lst_source_url
 
     # get json data from source
     def get_product_json_data_from_source(self, url):
@@ -18,16 +31,31 @@ class TestShoppingCrawler:
         lstData_array = [shopid, itemid, name]
         return lstData_array
 
+    # get html data from source
+    def get_product_html_data_from_source(self):
+        # url = 'https://vnexpress.net'
+        url = 'https://thegioididong.com/laptop/acer-predator-triton-300-pt315-53-71dj-i7'
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+        page = requests.get(url, headers=headers)
+        soup = BeautifulSoup(page.content, 'html.parser', from_encoding="iso-8859-1")
+        dom = etree.HTML(str(soup))
+        title = soup.find('h1')
+        price = soup.find("p", class_= "box-price-present")
+        category_name = dom.xpath('//ul[@class="breadcrumb"]/li[last()]/a')[0]
+        print('title---------', title.text)
+        print('price---------', price.text)
+        print('category_name---------', category_name.text)
+
     # get product from db
     def get_product_data_from_db(self, product_api_url):
         list_products = self.shopping_db.get_products_list_db(product_api_url)
         lstProduct_array = []
         for product in list_products:
-            # print("=========merchant_shop_id", product[0])
             merchant_shop_id = product[0]
             merchant_product_id = product[1]
             name = product[2]
-            lstProduct_array.append(merchant_shop_id, merchant_product_id, name)
+            lstProduct_array = [merchant_shop_id, merchant_product_id, name]
         return lstProduct_array
 
     # get json list product review from source
@@ -48,6 +76,7 @@ class TestShoppingCrawler:
                 lstData_array.append([product_review_id, user_name, rating, comment])
         return lstData_array
 
+    # get list product review from db
     def get_list_review_data_from_db(self):
         list_id_of_products_review = self.shopping_db.get_product_review_db()
         lst_review_array = []
@@ -62,29 +91,23 @@ class TestShoppingCrawler:
                 lst_review_array.append([product_review_id, user_name, rating, comment])
         return lst_review_array
 
+    def test(self):
+        self.get_product_html_data_from_source()
+
     def test_crawler_product_detail_type_json(self):
-        # read csv file
-        with open('data/product_api_url_data_csv.txt', mode='r') as csv_file:
-            csv_reader = csv.DictReader(csv_file)
-            line_count = 0
-            for row in csv_reader:
-                print(f'\t{row["url"]}')
-                url = row["url"]
-                jsonData = self.get_product_json_data_from_source(url)
-                dbData = self.get_product_data_from_db(url)
-                line_count += 1
-                print("++++", jsonData)
-                print("++++", dbData)
-                # assert jsonData == dbData
-                if jsonData == dbData:
-                    print("OK")
-                else:
-                    print("NOK")
+        lst_source = self.get_source_url("json")
+        for source in lst_source:
+            jsonData = self.get_product_json_data_from_source(source)
+            dbData = self.get_product_data_from_db(source)
+            print("++++", jsonData)
+            print("++++", dbData)
+            if jsonData == dbData:
+                print("OK")
+            else:
+                print("NOK")
 
     def test_crawler_product_review_type_json(self):
-        # print("log==", len(self.get_list_review_data_from_db()))
-        # self.get_list_review_json_from_source()
-        assert len(self.get_list_review_json_from_source()) == len(self.get_list_review_data_from_db())
+        # assert len(self.get_list_review_json_from_source()) == len(self.get_list_review_data_from_db())
         if len(self.get_list_review_json_from_source()) == len(self.get_list_review_data_from_db()):
             print("OK")
         else:
