@@ -33,8 +33,6 @@ class TestShoppingCrawlerHTML:
             element = dom.xpath('//p[contains(@class,"price-old")]')[0]
             list_price = element.text.strip("₫ *").replace(".", "")
             discount_rate = str(round((int(list_price) - int(price)) / int(list_price), 6))
-            print('list_price---------', list_price)
-            print('discount_rate---------', discount_rate)
         lstData_array = [title, category_name, price, list_price, discount_rate]
         return lstData_array
 
