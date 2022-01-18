@@ -1,6 +1,0 @@
-url
-https://shopee.vn/api/v4/item/get?itemid=1162253813&shopid=5970475
-https://shopee.vn/api/v4/item/get?itemid=1422875672&shopid=755434
-https://shopee.vn/api/v4/item/get?itemid=1555990258&shopid=48340714
-https://shopee.vn/api/v4/item/get?itemid=1650191495&shopid=20224069
-https://shopee.vn/api/v4/item/get?itemid=1830473501&shopid=119029675
