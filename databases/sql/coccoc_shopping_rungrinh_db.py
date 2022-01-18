@@ -78,4 +78,32 @@ class shoppingDB:
         connection.commit()
         return rows
 
+    def get_product_api_url_html(self, type, domain):
+        import logging
+        sql_query = f'select url from products p where p.domain in (select distinct domain from merchant_datafeeds ' \
+                    f'where  merchant_datafeeds.type = "{type}") and p.status = "crawled" and p.domain= "{domain}";'
+        connection = self.coccoc_shopping_db_interact()
+        cursor = connection.cursor()
+        cursor.execute(sql_query)
+        rows = cursor.fetchall()
+        logging.debug(f"Duplicate rows are : {rows}")
+        #print(rows)
+        connection.commit()
+        return rows
+
+    def get_products_list_db_all(self, product_api_url):
+        import logging
+        sql_query = f'SELECT * FROM shopping.products where product_api_url LIKE \'%{product_api_url}%\' OR url LIKE \'%{product_api_url}%\';'
+        connection = self.coccoc_shopping_db_interact()
+        cursor = connection.cursor()
+        # print(sql_query)
+        cursor.execute(sql_query)
+        rows = cursor.fetchall()
+        logging.debug(f"Duplicate rows are : {rows}")
+        connection.commit()
+        # print(rows)
+        return rows
+
+
+
 
