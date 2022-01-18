@@ -75,19 +75,6 @@ class TestShoppingCrawler:
             lstProduct_array = [name, category_name, price, list_price, discount_rate]
         return lstProduct_array
 
-    def get_product_data_from_db_html(self, product_url):
-        list_products = self.shopping_db.get_products_list_db_all(product_url)
-        lstProduct_array = []
-        for product in list_products:
-            merchant_shop_id = product[1]
-            merchant_product_id = product[0]
-            name = product[6]
-            price = product[11]
-            category = product[4]
-            lstProduct_array = [name, price, category]
-        return lstProduct_array
-
-
     # get json list product review from source
     def get_list_review_json_from_source(self, domain):
         list_url_api_of_products_review = self.shopping_db.get_product_review_db(domain)
