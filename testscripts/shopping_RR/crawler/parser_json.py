@@ -27,7 +27,7 @@ class TestShoppingCrawler:
         data = data_json['data']
         name = data['name']
         price = data['price'] / 100000
-        list_price = data['price_before_discount']/100000
+        list_price = data['price_before_discount'] / 100000
         if list_price > 0:
             discount = str(round((int(list_price) - int(price)) / int(list_price), 6))
         else:
@@ -59,7 +59,7 @@ class TestShoppingCrawler:
         data_json = r.json()
         data = data_json['data']
         name = data['name']
-        price = data['price']
+        price = data['final_price']
         list_price = data['final_price_max']
         if list_price > 0:
             discount = str(round((int(list_price) - int(price)) / int(list_price), 6))
@@ -213,7 +213,6 @@ class TestShoppingCrawler:
                     print("", j[3])
                 print("NOK")
 
-    # shopee OK
     def test_crawler_product_review_type_json_shopee(self):
         lst_source = self.get_review_source_url("shopee.vn")
         for source in lst_source:

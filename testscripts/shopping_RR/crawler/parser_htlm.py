@@ -54,9 +54,10 @@ class TestShoppingCrawlerHTML:
         for source in lst_source:
             htmlData = self.get_product_html_data_from_source(source)
             dbData = self.get_product_data_from_db(source)
-            print("++++", htmlData)
-            print("++++", dbData)
-            if htmlData == dbData:
-                print("OK")
+            res = [x for x in htmlData + dbData if x not in htmlData or x not in dbData]
+            if not res:
+                print("")
             else:
+                print("fromsource++", htmlData)
+                print("fromDB++++++", dbData)
                 print("NOK")
