@@ -49,7 +49,7 @@ class TestShoppingCrawlerHTML:
             lstProduct_array = [name, category_name, price, list_price, discount_rate]
         return lstProduct_array
 
-    def test_crawler_product_detail_type_html(self):
+    def test_crawler_product_detail_type_html_thegioididong(self):
         lst_source = self.get_source_url("thegioididong.com")
         for source in lst_source:
             htmlData = self.get_product_html_data_from_source(source)
