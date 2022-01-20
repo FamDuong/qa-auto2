@@ -29,13 +29,20 @@ class TestShoppingCrawler:
         price = data['price'] / 100000
         list_price = data['price_before_discount'] / 100000
         if list_price > 0:
-            discount = str(round((int(list_price) - int(price)) / int(list_price), 6))
+            discount = round((int(list_price) - int(price)) / int(list_price), 6)
         else:
             discount = None
         categories = data['categories']
         for category in categories:
             category_name = category['display_name']
-        lstData_array = [name, category_name, price, list_price, discount]
+        description = data['description']
+        sold_count = data['sold']
+        sku = ""
+        rating_average = data['item_rating']['rating_star']
+        review_count = data['item_rating']['rating_count'][0]
+        brand_name = data['brand']
+        lstData_array = [name, category_name, price, list_price, discount, sold_count, sku, rating_average,
+                         review_count, brand_name, description]
         return lstData_array
 
     def get_product_json_data_from_source_tiki(self, url):
@@ -45,13 +52,20 @@ class TestShoppingCrawler:
         price = data_json['price']
         list_price = data_json['list_price']
         if list_price > 0:
-            discount = str(round((int(list_price) - int(price)) / int(list_price), 6))
+            discount = round((int(list_price) - int(price)) / int(list_price), 6)
         else:
             discount = None
         categories = data_json['breadcrumbs']
         for category in categories:
             category_name = category['name']
-        lstData_array = [name, category_name, price, list_price, discount]
+        description = data_json['description']
+        sold_count = data_json['all_time_quantity_sold']
+        sku = data_json['sku']
+        rating_average = data_json['rating_average']
+        review_count = data_json['review_count']
+        brand_name = data_json['brand']['name']
+        lstData_array = [name, category_name, price, list_price, discount, sold_count, sku, rating_average,
+                         review_count, brand_name, description]
         return lstData_array
 
     def get_product_json_data_from_source_sendo(self, url):
@@ -60,15 +74,25 @@ class TestShoppingCrawler:
         data = data_json['data']
         name = data['name']
         price = data['final_price']
-        list_price = data['final_price_max']
+        list_price = data['price']
         if list_price > 0:
-            discount = str(round((int(list_price) - int(price)) / int(list_price), 6))
+            discount = round((int(list_price) - int(price)) / int(list_price), 6)
         else:
             discount = None
         categories = data['category_info']
         for category in categories:
             category_name = category['title']
-        lstData_array = [name, category_name, price, list_price, discount]
+        description = data['description_info']['description']
+        sold_count = data['order_count']
+        sku = data['sku_user']
+        rating_average = data['rating_info']['percent_star']
+        review_count = data['rating_info']['total_rated']
+        brand_info = data['brand_info']
+        if "name" in brand_info:
+            brand_name = data['brand_info']['name']
+        else:
+            brand_name = ''
+        lstData_array = [name, category_name, price, list_price, discount, sold_count, sku, rating_average, review_count, brand_name, description]
         return lstData_array
 
     # get product from db
@@ -81,7 +105,13 @@ class TestShoppingCrawler:
             price = product[2]
             list_price = product[3]
             discount_rate = product[4]
-            lstProduct_array = [name, category_name, price, list_price, discount_rate]
+            sold_count = product[5]
+            sku = product[6]
+            rating_average = product[7]
+            review_count = product[8]
+            brand_name = product[9]
+            description = product[10]
+            lstProduct_array = [name, category_name, price, list_price, discount_rate, sold_count, sku, rating_average, review_count, brand_name, description]
         return lstProduct_array
 
     # get source url

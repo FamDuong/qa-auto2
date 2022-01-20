@@ -29,11 +29,20 @@ class TestShoppingCrawlerHTML:
         price = dom.xpath('//p[contains(@class,"box-price-present")]')[0].text.strip("₫ *").replace(".", "")
         discount_rate = 0
         list_price = 0
-        if dom.xpath('//p[contains(@class,"price-old")]'):
-            element = dom.xpath('//p[contains(@class,"price-old")]')[0]
+        if dom.xpath('//p[contains(@class,"box-price-old")]'):
+            element = dom.xpath('//p[contains(@class,"box-price-old")]')[0]
             list_price = element.text.strip("₫ *").replace(".", "")
-            discount_rate = str(round((int(list_price) - int(price)) / int(list_price), 6))
-        lstData_array = [title, category_name, price, list_price, discount_rate]
+            discount_rate = round((int(list_price) - int(price)) / int(list_price), 6)
+        sold_count = ""
+        sku = ""
+        description = ""
+        rating_average = dom.xpath('//p[@class="point"]')[0].text
+        review_count = dom.xpath('//*[@class="rating-total"]')[0].text
+        brand_name = ""
+        if dom.xpath('//p[@class="manu-info-popup__content__title"]'):
+            brand_name = dom.xpath('//p[@class="manu-info-popup__content__title"]')[0].text
+        lstData_array = [title, category_name, price, list_price, discount_rate, sold_count, sku, rating_average,
+                         review_count, brand_name, description]
         return lstData_array
 
     # get product from db
@@ -46,7 +55,14 @@ class TestShoppingCrawlerHTML:
             price = product[2]
             list_price = product[3]
             discount_rate = product[4]
-            lstProduct_array = [name, category_name, price, list_price, discount_rate]
+            sold_count = product[5]
+            sku = product[6]
+            rating_average = product[7]
+            review_count = product[8]
+            brand_name = product[9]
+            description = product[10]
+            lstProduct_array = [name, category_name, price, list_price, discount_rate, sold_count, sku, rating_average,
+                                review_count, brand_name, description]
         return lstProduct_array
 
     def test_crawler_product_detail_type_html_thegioididong(self):
