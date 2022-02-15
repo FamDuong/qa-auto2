@@ -59,7 +59,10 @@ class TestShoppingCrawler:
         for category in categories:
             category_name = category['name']
         description = data_json['description']
-        sold_count = data_json['all_time_quantity_sold']
+        if "all_time_quantity_sold" in data_json:
+            sold_count = data_json['all_time_quantity_sold']
+        else:
+            sold_count = 0
         sku = data_json['sku']
         rating_average = data_json['rating_average']
         review_count = data_json['review_count']
@@ -189,6 +192,7 @@ class TestShoppingCrawler:
             if not res:
                 print("")
             else:
+                print("name, category_name, price, list_price, discount_rate, sold_count, sku, rating_average, review_count, brand_name, description")
                 print("fromsource++", jsonData)
                 print("fromDB++++++", dbData)
                 print("NOK")
@@ -202,6 +206,7 @@ class TestShoppingCrawler:
             if not res:
                 print("")
             else:
+                print("name, category_name, price, list_price, discount_rate, sold_count, sku, rating_average, review_count, brand_name, description")
                 print("fromsource++", jsonData)
                 print("fromDB++++++", dbData)
                 print("NOK")
@@ -215,6 +220,7 @@ class TestShoppingCrawler:
             if not res:
                 print("")
             else:
+                print("name, category_name, price, list_price, discount_rate, sold_count, sku, rating_average, review_count, brand_name, description")
                 print("fromsource++", jsonData)
                 print("fromDB++++++", dbData)
                 print("NOK")

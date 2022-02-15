@@ -18,7 +18,7 @@ class TestShoppingCrawlerHTML:
 
     # get html data from source
     def get_product_html_data_from_source(self, url):
-        url = 'https://' + url
+        # url = 'https://' + url
         headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
         page = requests.get(url, headers=headers)
@@ -36,11 +36,15 @@ class TestShoppingCrawlerHTML:
         sold_count = ""
         sku = ""
         description = ""
-        rating_average = dom.xpath('//p[@class="point"]')[0].text
-        review_count = dom.xpath('//*[@class="rating-total"]')[0].text
+        rating_average = 0
+        if dom.xpath('//p[@class="point"]'):
+            rating_average = dom.xpath('//p[@class="point"]')[0].text
+        review_count = 0
+        if dom.xpath('//*[@class="rating-total"]'):
+            review_count = dom.xpath('//*[@class="rating-total"]')[0].text.strip(" Ä\x91Ã¡nh giÃ¡")
         brand_name = ""
         if dom.xpath('//p[@class="manu-info-popup__content__title"]'):
-            brand_name = dom.xpath('//p[@class="manu-info-popup__content__title"]')[0].text
+            brand_name = dom.xpath('//p[@class="manu-info-popup__content__title"]/img/@alt')[0]
         lstData_array = [title, category_name, price, list_price, discount_rate, sold_count, sku, rating_average,
                          review_count, brand_name, description]
         return lstData_array
@@ -52,13 +56,13 @@ class TestShoppingCrawlerHTML:
         for product in list_products:
             name = product[0]
             category_name = product[1]
-            price = product[2]
-            list_price = product[3]
-            discount_rate = product[4]
+            price = int(product[2])
+            list_price = int(product[3])
+            discount_rate = int(product[4])
             sold_count = product[5]
             sku = product[6]
-            rating_average = product[7]
-            review_count = product[8]
+            rating_average = int(product[7])
+            review_count = int(product[8])
             brand_name = product[9]
             description = product[10]
             lstProduct_array = [name, category_name, price, list_price, discount_rate, sold_count, sku, rating_average,
@@ -74,6 +78,7 @@ class TestShoppingCrawlerHTML:
             if not res:
                 print("")
             else:
+                print("name, category_name, price, list_price, discount_rate, sold_count, sku, rating_average, review_count, brand_name, description")
                 print("fromsource++", htmlData)
                 print("fromDB++++++", dbData)
                 print("NOK")
