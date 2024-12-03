@@ -1,6 +1,7 @@
 from pywinauto import Desktop
 from utils_automation.common import FilesHandle
 import logging
+import time
 
 LOGGER = logging.getLogger(__name__)
 file_handle = FilesHandle()
