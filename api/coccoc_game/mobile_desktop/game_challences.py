@@ -2,7 +2,7 @@
 This example shows how to send a reply from the proxy immediately
 without sending any data to the remote server.
 """
-from mitmproxy import http
+from mitmproxy import https
 import requests
 
 def request(flow: http.HTTPFlow) -> None:
